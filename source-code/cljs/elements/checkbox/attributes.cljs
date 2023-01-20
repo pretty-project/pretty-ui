@@ -8,7 +8,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn checkbox-option-helper-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) checkbox-id
   ; @param (map) checkbox-props
@@ -23,7 +23,7 @@
    :data-line-height    :native})
 
 (defn checkbox-option-label-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) checkbox-id
   ; @param (map) checkbox-props
@@ -40,7 +40,7 @@
        :data-line-height    :text-block}))
 
 (defn checkbox-option-button-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) checkbox-id
   ; @param (map) checkbox-props
@@ -54,7 +54,7 @@
       (pretty-css/border-attributes checkbox-props)))
 
 (defn checkbox-option-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) checkbox-id
   ; @param (map) checkbox-props
@@ -81,7 +81,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn checkbox-body-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) checkbox-id
   ; @param (map) checkbox-props
@@ -102,7 +102,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn checkbox-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) checkbox-id
   ; @param (map) checkbox-props

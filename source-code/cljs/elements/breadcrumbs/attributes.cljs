@@ -8,8 +8,6 @@
 ;; ----------------------------------------------------------------------------
 
 (defn static-crumb-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) breadcrumbs-id
   ; @param (map) breadcrumbs-props
   ; @param (map) crumb
@@ -32,8 +30,6 @@
    :data-text-overflow  :ellipsis})
 
 (defn button-crumb-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) breadcrumbs-id
   ; @param (map) breadcrumbs-props
   ; @param (map) crumb
@@ -68,7 +64,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn breadcrumbs-body-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) breadcrumbs-id
   ; @param (map) breadcrumbs-props
@@ -90,7 +86,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn breadcrumbs-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) breadcrumbs-id
   ; @param (map) breadcrumbs-props

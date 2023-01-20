@@ -10,7 +10,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- plain-surface
+(defn- plain-surface-structure
   ; @param (keyword) surface-id
   ; @param (map) surface-props
   ; {:content (metamorphic-content)}
@@ -18,6 +18,15 @@
   [:div {:class :l-plain-surface}
         [:div (plain-surface.attributes/surface-body-attributes surface-id surface-props)
               [x.components/content                             surface-id content]]])
+
+(defn- plain-surface
+  ; @param (keyword) surface-id
+  ; @param (map) surface-props
+  ; {}
+  [surface-id {:keys [on-mount on-unmount] :as surface-props}]
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (r/dispatch on-mount))
+                       :component-will-unmount (fn [_ _] (r/dispatch on-unmount))
+                       :reagent-render         (fn [_ _] [plain-surface-structure surface-id surface-props])}))
 
 (defn layout
   ; @param (keyword)(opt) surface-id
@@ -40,8 +49,6 @@
   ([surface-props]
    [layout (random/generate-keyword) surface-props])
 
-  ([surface-id {:keys [on-mount on-unmount] :as surface-props}]
+  ([surface-id surface-props]
    (let [layout-props (plain-surface.prototypes/surface-props-prototype surface-props)]
-        (reagent/lifecycles {:component-did-mount    (fn [_ _] (r/dispatch on-mount))
-                             :component-will-unmount (fn [_ _] (r/dispatch on-unmount))
-                             :reagent-render         (fn [_ _] [plain-surface surface-id surface-props])}))))
+        [plain-surface surface-id surface-props])))

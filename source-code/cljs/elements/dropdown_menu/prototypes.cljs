@@ -8,9 +8,12 @@
 ;; ----------------------------------------------------------------------------
 
 (defn menu-items-prototype
+  ; @ignore
+  ;
   ; @param (map) menu-props
   ; {:menu-items (maps in vector)}
   [{:keys [menu-items]}]
+  ; XXX#1239
   ; The :on-mouse-over property of items in menu-bar element takes metamorphic-events.
   ; In case of the f0 function returns the reseted value (returned by the reset! function),
   ; the returned content might being tried to be dispatched as a metamorphic-event.
@@ -22,6 +25,8 @@
          (vector/->items menu-items f1)))
 
 (defn menu-props-prototype
+  ; @ignore
+  ;
   ; @param (map) menu-props
   ; {}
   ;

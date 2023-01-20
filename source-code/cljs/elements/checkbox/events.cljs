@@ -10,7 +10,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn checkbox-did-mount
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) checkbox-id
   ; @param (map) checkbox-props
@@ -24,7 +24,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn toggle-option!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) checkbox-id
   ; @param (map) checkbox-props

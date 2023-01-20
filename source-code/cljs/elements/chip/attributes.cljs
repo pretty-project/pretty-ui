@@ -1,5 +1,5 @@
 
-(ns elements.chip.helpers
+(ns elements.chip.attributes
     (:require [pretty-css.api    :as pretty-css]
               [re-frame.api      :as r]
               [x.environment.api :as x.environment]))
@@ -9,7 +9,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn primary-button-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) chip-id
   ; @param (map) chip-props
@@ -18,13 +18,16 @@
   ;   {:on-click (metamorphic-event)}}
   ;
   ; @return (map)
-  ; {:data-click-effect (keyword)
+  ; {:class (keyword or keywords in vector)
+  ;  :data-click-effect (keyword)
   ;  :disabled (boolean)
   ;  :on-click (function)
   ;  :on-mouse-up (function)}
   [chip-id {{:keys [on-click]} :primary-button :keys [disabled?]}]
-  (if disabled? {:disabled          true}
-                {:data-click-effect :opacity
+  (if disabled? {:class             :e-chip--primary-button
+                 :disabled          true}
+                {:class             :e-chip--primary-button
+                 :data-click-effect :opacity
                  :on-click          #(r/dispatch on-click)
                  :on-mouse-up       #(x.environment/blur-element! chip-id)}))
 
@@ -32,7 +35,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn chip-body-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) chip-id
   ; @param (map) chip-props
@@ -40,14 +43,17 @@
   ;  :style (map)(opt)}
   ;
   ; @return (map)
-  ; {:data-click-effect (keyword)
+  ; {:class (keyword or keywords in vector)
+  ;  :data-click-effect (keyword)
   ;  :data-selectable (boolean)
   ;  :style (map)}
   [chip-id {:keys [on-click style] :as chip-props}]
-  (-> (if on-click {:data-click-effect :opacity
+  (-> (if on-click {:class             :e-chip--body
+                    :data-click-effect :opacity
                     :data-selectable   false
                     :style             style}
-                   {:data-selectable   false
+                   {:class             :e-chip--body
+                    :data-selectable   false
                     :style             style})
       (pretty-css/color-attributes  chip-props)
       (pretty-css/indent-attributes chip-props)))
@@ -56,12 +62,14 @@
 ;; ----------------------------------------------------------------------------
 
 (defn chip-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) chip-id
   ; @param (map) chip-props
   ;
   ; @return (map)
+  ; {}
   [_ chip-props]
-  (-> {} (pretty-css/default-attributes chip-props)
-         (pretty-css/outdent-attributes chip-props)))
+  (-> {:class :e-chip}
+      (pretty-css/default-attributes chip-props)
+      (pretty-css/outdent-attributes chip-props)))

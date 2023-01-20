@@ -13,52 +13,58 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- default-option-component
-  ; @param (keyword) box-id
-  ; @param (map) box-props
-  ; {:option-label-f (function)}
-  ; @param (map) option
-  [_ {:keys [option-label-f]} option]
-  [:div.e-combo-box--option-label (-> option option-label-f x.components/content)])
-
 (defn- combo-box-option
+  ; @ignore
+  ;
   ; @param (keyword) box-id
   ; @param (map) box-props
-  ; {:option-component (component)(opt)}
+  ; {:option-component (component)(opt)
+  ;  :option-label-f (function)}
   ; @param (integer) option-dex
   ; @param (map) option
-  [box-id {:keys [option-component] :as box-props} option-dex option]
+  [box-id {:keys [option-component option-label-f] :as box-props} option-dex option]
   ; BUG#2105 (source-code/cljs/elements/plain_field/helpers.cljs)
-  [:button.e-combo-box--option {:on-mouse-down #(.preventDefault %)
-                                :on-mouse-up   #(r/dispatch [:elements.combo-box/select-option! box-id box-props option])
-                               ;:data-selected ...
-                                :data-highlighted (= option-dex (combo-box.helpers/get-highlighted-option-dex box-id))}
-                               (if option-component [option-component         box-id box-props option]
-                                                    [default-option-component box-id box-props option])])
+  [:button {:class :e-combo-box--option
+            :on-mouse-down #(.preventDefault %)
+            :on-mouse-up   #(r/dispatch [:elements.combo-box/select-option! box-id box-props option])
+           ;:data-selected ...
+            :data-highlighted (= option-dex (combo-box.helpers/get-highlighted-option-dex box-id))}
+           (if option-component [option-component box-id box-props option]
+
+                                ; If no option component passed, displaying the option with the default :e-combo-box--option class
+                                [:div {:class :e-combo-box--option-label} (-> option option-label-f x.components/content)])])
 
 (defn- combo-box-options
+  ; @ignore
+  ;
   ; @param (keyword) box-id
   ; @param (map) box-props
   [box-id box-props]
-  ; Why the :data-options-renderer attribute has to be added?
+  ; Why the :data-options-rendered attribute is added?
   ; HACK#1450 (source-code/cljs/elements/combo_box/helpers.cljs)
   (let [options (combo-box.helpers/get-rendered-options box-id box-props)]
        (letfn [(f [option-list option-dex option]
                   ;^{:key (random/generate-react-key)}
                   (conj option-list [combo-box-option box-id box-props option-dex option]))]
-              [:div.e-combo-box--options {:data-options-rendered (-> options empty? not)
-                                          :data-scroll-axis :y}
-                                         (reduce-indexed f [:<>] options)])))
+              [:div {:class :e-combo-box--options
+                     :data-options-rendered (-> options empty? not)
+                     :data-scroll-axis :y}
+                    (reduce-indexed f [:<>] options)])))
 
 (defn- combo-box-surface
+  ; @ignore
+  ;
   ; @param (keyword) box-id
   ; @param (map) box-props
   [box-id box-props]
-  [:div.e-combo-box--surface {:data-font-size   :s
-                              :data-line-height :text-block}
-                             [combo-box-options box-id box-props]])
+  [:div {:class            :e-combo-box--surface
+         :data-font-size   :s
+         :data-line-height :text-block}
+        [combo-box-options box-id box-props]])
 
 (defn- combo-box-structure
+  ; @ignore
+  ;
   ; @param (keyword) box-id
   ; @param (map) box-props
   [box-id box-props]
@@ -66,6 +72,8 @@
        [text-field.views/element box-id box-props]))
 
 (defn- combo-box
+  ; @ignore
+  ;
   ; @param (keyword) box-id
   ; @param (map) box-props
   [box-id box-props]

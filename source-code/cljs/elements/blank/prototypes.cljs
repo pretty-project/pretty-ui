@@ -5,7 +5,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn blank-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (map) blank-props
   ;

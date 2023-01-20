@@ -8,7 +8,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn box-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) box-id
   ; @param (map) box-props

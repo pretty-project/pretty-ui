@@ -8,7 +8,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn option-checked?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) checkbox-id
   ; @param (map) checkbox-props
@@ -28,5 +28,5 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; WARNING! NON-PUBLIC! DO NOT USE!
+; @ignore
 (r/reg-sub :elements.checkbox/option-checked? option-checked?)

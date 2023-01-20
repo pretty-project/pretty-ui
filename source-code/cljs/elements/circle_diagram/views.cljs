@@ -11,7 +11,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- circle-diagram-section
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) diagram-id
   ; @param (map) diagram-props
@@ -20,7 +20,7 @@
   [:circle.e-circle-diagram--section (circle-diagram.helpers/section-attributes diagram-id diagram-props section-props)])
 
 (defn- circle-diagram-sections
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) diagram-id
   ; @param (map) diagram-props
@@ -31,7 +31,7 @@
          (reduce f [:<>] sections)))
 
 (defn circle-diagram-circle
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) diagram-id
   ; @param (map) diagram-props
@@ -42,7 +42,7 @@
                                      (circle-diagram-sections diagram-id diagram-props)]])
 
 (defn circle-diagram
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) diagram-id
   ; @param (map) diagram-props

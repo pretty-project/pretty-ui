@@ -9,7 +9,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn box-did-mount
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) box-id
   ; @param (map) box-props
@@ -22,7 +22,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn select-option!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) box-id
   ; @param (map) box-props

@@ -8,7 +8,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn store-keypress-properties!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
@@ -19,7 +19,7 @@
          (assoc-in [:elements :element-handler/meta-items button-id :on-click] on-click)))
 
 (defn remove-keypress-properties!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
@@ -31,7 +31,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn button-did-mount
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
@@ -41,7 +41,7 @@
                (return db)))
 
 (defn button-did-update
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
@@ -51,7 +51,7 @@
                (return db)))
 
 (defn button-will-unmount
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) button-id
   ; {:keypress (map)(opt)}

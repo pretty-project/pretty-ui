@@ -6,6 +6,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn toggle-color-selector-option!
+  ; @ignore
+  ;
   ; @param (keyword) selector-id
   ; @param (map) selector-props
   ; {:value-path (vector)}

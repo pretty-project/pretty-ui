@@ -9,7 +9,7 @@
 ;; ----------------------------------------------------------------------------
 
 (r/reg-event-fx :elements.combo-box/box-did-mount
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) box-id
   ; @param (map) box-props
@@ -21,7 +21,7 @@
 ;; ----------------------------------------------------------------------------
 
 (r/reg-event-fx :elements.combo-box/reg-keypress-events!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) box-id
   ; @param (map) box-props
@@ -43,7 +43,7 @@
                          [:x.environment/reg-keypress-event! :elements.text-field/ENTER on-enter-props]]})))
 
 (r/reg-event-fx :elements.combo-box/remove-keypress-events!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) box-id
   ; @param (map) box-props
@@ -57,7 +57,7 @@
 ;; ----------------------------------------------------------------------------
 
 (r/reg-event-fx :elements.combo-box/DOWN-pressed
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) box-id
   ; @param (map) box-props
@@ -66,7 +66,7 @@
               [:elements.combo-box/highlight-next-option! box-id box-props]]}))
 
 (r/reg-event-fx :elements.combo-box/UP-pressed
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) box-id
   ; @param (map) box-props
@@ -75,7 +75,7 @@
               [:elements.combo-box/highlight-prev-option! box-id box-props]]}))
 
 (r/reg-event-fx :elements.combo-box/ESC-pressed
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) box-id
   ; @param (map) box-props
@@ -94,7 +94,7 @@
           [:elements.text-field/ESC-pressed box-id box-props])))
 
 (r/reg-event-fx :elements.combo-box/ENTER-pressed
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) box-id
   ; @param (map) box-props
@@ -125,7 +125,7 @@
 ;; ----------------------------------------------------------------------------
 
 (r/reg-event-fx :elements.combo-box/select-option!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) box-id
   ; @param (map) box-props
@@ -153,7 +153,7 @@
 ;; ----------------------------------------------------------------------------
 
 (r/reg-event-fx :elements.combo-box/field-changed
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) box-id
   ; @param (map) box-props
@@ -161,7 +161,7 @@
       {:fx [:elements.combo-box/discard-option-highlighter! box-id]}))
 
 (r/reg-event-fx :elements.combo-box/field-focused
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) box-id
   ; @param (map) box-props
@@ -169,7 +169,7 @@
       [:elements.combo-box/reg-keypress-events! box-id box-props]))
 
 (r/reg-event-fx :elements.combo-box/field-blurred
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) box-id
   ; @param (map) box-props

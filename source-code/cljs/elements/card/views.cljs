@@ -9,6 +9,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- card
+  ; @ignore
+  ;
   ; @param (keyword) card-id
   ; @param (map) card-props
   ; {:on-click (metamorphic-event)(opt)}

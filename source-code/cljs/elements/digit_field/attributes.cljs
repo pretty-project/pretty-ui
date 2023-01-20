@@ -1,37 +1,37 @@
 
-(ns elements.blank.attributes
+(ns elements.digit-field.attributes
     (:require [pretty-css.api :as pretty-css]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn blank-body-attributes
+(defn field-body-attributes
   ; @ignore
   ;
-  ; @param (keyword) blank-id
-  ; @param (map) blank-props
+  ; @param (keyword) field-id
+  ; @param (map) field-props
   ; {:style (map)(opt)}
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  :style (map)}
-  [_ {:keys [style] :as blank-props}]
-  (-> {:class :e-blank--body
+  [_ {:keys [style] :as field-props}]
+  (-> {:class :e-digit-field--body
        :style style}
-      (pretty-css/indent-attributes blank-props)))
+      (pretty-css/indent-attributes field-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn blank-attributes
+(defn field-attributes
   ; @ignore
   ;
-  ; @param (keyword) blank-id
-  ; @param (map) blank-props
+  ; @param (keyword) field-id
+  ; @param (map) field-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
-  [_ blank-props]
-  (-> {:class :e-blank}
-      (pretty-css/default-attributes blank-props)
-      (pretty-css/outdent-attributes blank-props)))
+  ; {}
+  [_ field-props]
+  (-> {:class :e-digit-field}
+      (pretty-css/default-attributes field-props)
+      (pretty-css/outdent-attributes field-props)))

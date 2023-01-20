@@ -10,7 +10,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- sidebar
+(defn- sidebar-structure
   ; @param (keyword) sidebar-id
   ; @param (map) sidebar-props
   ; {:content (metamorphic-content)
@@ -22,6 +22,15 @@
              [:div {:class :l-sidebar--wrapper}
                    [:div (sidebar.attributes/sidebar-body-attributes sidebar-id sidebar-props)
                          [x.components/content                       sidebar-id content]]]]))
+
+(defn- sidebar
+  ; @param (keyword) sidebar-id
+  ; @param (map) sidebar-props
+  ; {}
+  [sidebar-id {:keys [on-mount on-unmount] :as sidebar-props}]
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (r/dispatch on-mount))
+                       :component-will-unmount (fn [_ _] (r/dispatch on-unmount))
+                       :reagent-render         (fn [_ _] [sidebar-structure sidebar-id sidebar-props])}))
 
 (defn layout
   ; @param (keyword)(opt) sidebar-id
@@ -61,8 +70,6 @@
   ([sidebar-props]
    [layout (random/generate-keyword) sidebar-props])
 
-  ([sidebar-id {:keys [on-mount on-unmount] :as sidebar-props}]
+  ([sidebar-id sidebar-props]
    (let [sidebar-props (sidebar.prototypes/sidebar-props-prototype sidebar-props)]
-        (reagent/lifecycles {:component-did-mount    (fn [_ _] (r/dispatch on-mount))
-                             :component-will-unmount (fn [_ _] (r/dispatch on-unmount))
-                             :reagent-render         (fn [_ _] [sidebar sidebar-id sidebar-props])}))))
+        [sidebar sidebar-id sidebar-props])))

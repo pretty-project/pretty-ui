@@ -10,7 +10,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- box-popup
+(defn- box-popup-structure
   ; @param (keyword) popup-id
   ; @param (map) popup-props
   ; {}
@@ -21,6 +21,15 @@
               [:div (box-popup.attributes/popup-structure-attributes popup-id popup-props)
                     [:div {:class :l-box-popup--content}
                           [x.components/content popup-id content]]]]])
+
+(defn- box-popup
+  ; @param (keyword) popup-id
+  ; @param (map) popup-props
+  ; {}
+  [popup-id {:keys [on-mount on-unmount] :as popup-props}]
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (r/dispatch on-mount))
+                       :component-will-unmount (fn [_ _] (r/dispatch on-unmount))
+                       :reagent-render         (fn [_ _] [box-popup-structure popup-id popup-props])}))
 
 (defn layout
   ; @param (keyword)(opt) popup-id
@@ -67,8 +76,6 @@
   ([popup-props]
    [layout (random/generate-keyword) popup-props])
 
-  ([popup-id {:keys [on-mount on-unmount] :as popup-props}]
+  ([popup-id popup-props]
    (let [popup-props (box-popup.prototypes/popup-props-prototype popup-props)]
-        (reagent/lifecycles {:component-did-mount    (fn [_ _] (r/dispatch on-mount))
-                             :component-will-unmount (fn [_ _] (r/dispatch on-unmount))
-                             :reagent-render         (fn [_ _] [box-popup popup-id popup-props])}))))
+        [box-popup popup-id popup-props])))

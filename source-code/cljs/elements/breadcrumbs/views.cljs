@@ -9,7 +9,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- breadcrumbs-crumb-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) breadcrumbs-id
   ; @param (map) breadcrumbs-props
@@ -22,7 +22,9 @@
       (-> label       x.components/content)))
 
 (defn- breadcrumbs-crumb
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
+  ;
+  ; @ignore
   ;
   ; @param (keyword) breadcrumbs-id
   ; @param (map) breadcrumbs-props
@@ -35,7 +37,9 @@
                      (breadcrumbs-crumb-label                        breadcrumbs-id breadcrumbs-props crumb)]))
 
 (defn- breadcrumbs-crumb-list
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
+  ;
+  ; @ignore
   ;
   ; @param (keyword) breadcrumbs-id
   ; @param (map) breadcrumbs-props
@@ -46,7 +50,9 @@
          (reduce-kv f [:<>] crumbs)))
 
 (defn- breadcrumbs
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
+  ;
+  ; @ignore
   ;
   ; @param (keyword) breadcrumbs-id
   ; @param (map) breadcrumbs-props

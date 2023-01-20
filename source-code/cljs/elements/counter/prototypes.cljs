@@ -7,7 +7,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn counter-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) counter-id
   ; @param (map) counter-props

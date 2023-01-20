@@ -50,5 +50,5 @@
   ; @return (map)
   ; {}
   [_ {:keys [stretch-orientation]}]
-  (-> {:class                    :l-box-popup
-       :data-stretch-orientation stretch-orientation}))
+  {:class                    :l-box-popup
+   :data-stretch-orientation stretch-orientation})

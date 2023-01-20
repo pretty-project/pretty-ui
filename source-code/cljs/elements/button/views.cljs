@@ -10,6 +10,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- static-button
+  ; @ignore
+  ;
   ; @param (keyword) button-id
   ; @param (map) button-props
   ; {:icon (keyword)(opt)
@@ -24,6 +26,8 @@
                                    [:<> (if label [:div (button.attributes/button-label-attributes button-id button-props) label])])])
 
 (defn- anchor-button
+  ; @ignore
+  ;
   ; @param (keyword) button-id
   ; @param (map) button-props
   ; {:icon (keyword)(opt)
@@ -38,6 +42,8 @@
                                  [:<> (if label [:div (button.attributes/button-label-attributes button-id button-props) label])])])
 
 (defn- toggle-button
+  ; @ignore
+  ;
   ; @param (keyword) button-id
   ; @param (map) button-props
   ; {:icon (keyword)(opt)
@@ -52,6 +58,8 @@
                                       [:<> (if label [:div (button.attributes/button-label-attributes button-id button-props) label])])])
 
 (defn- button-structure
+  ; @ignore
+  ;
   ; @param (keyword) button-id
   ; @param (map) button-props
   ; {:href (string)(opt)
@@ -63,6 +71,8 @@
               :static-button   [static-button button-id button-props])])
 
 (defn button
+  ; @ignore
+  ;
   ; @param (keyword) button-id
   ; @param (map) button-props
   [button-id button-props]
@@ -105,6 +115,7 @@
   ;   :inherit, :extra-light, :light, :normal, :medium, :bold, :extra-bold
   ;   Default: :medium
   ;  :gap (keyword)(opt)
+  ;   Distance between the icon and label
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :auto
   ;  :horizontal-align (keyword)(opt)
   ;   :center, :left, :right

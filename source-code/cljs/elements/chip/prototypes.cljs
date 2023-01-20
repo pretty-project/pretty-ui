@@ -6,7 +6,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn chip-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (map) chip-props
   ; {:icon (keyword)(opt)
@@ -23,6 +23,5 @@
           :fill-color :primary}
          (if icon {:icon-family :material-symbols-outlined})
          (param chip-props)
-         (if primary-button {:dbg "x"
-                             :primary-button (merge {:icon-family :material-symbols-outlined}
+         (if primary-button {:primary-button (merge {:icon-family :material-symbols-outlined}
                                                     (param primary-button))})))

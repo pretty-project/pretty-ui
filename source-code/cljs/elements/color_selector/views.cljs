@@ -11,7 +11,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- color-selector-option
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) selector-id
   ; @param (map) selector-props
@@ -22,7 +22,7 @@
                   :style {:background-color option}}]])
 
 (defn- color-selector-option-list
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) selector-id
   ; @param (map) selector-props
@@ -32,7 +32,7 @@
          (reduce f [:<>] options)))
 
 (defn color-selector-options
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) selector-id
   ; @param (map) selector-props

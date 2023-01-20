@@ -7,7 +7,7 @@
 ;; ----------------------------------------------------------------------------
 
 (r/reg-event-fx :elements.counter/counter-did-mount
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) counter-id
   ; @param (map) counter-props
@@ -19,7 +19,7 @@
 ;; ----------------------------------------------------------------------------
 
 (r/reg-event-fx :elements.counter/increase-value!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) counter-id
   ; @param (map) counter-props
@@ -28,7 +28,7 @@
        :fx [:elements.input/mark-input-as-visited! counter-id]}))
 
 (r/reg-event-fx :elements.counter/decrease-value!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) counter-id
   ; @param (map) counter-props

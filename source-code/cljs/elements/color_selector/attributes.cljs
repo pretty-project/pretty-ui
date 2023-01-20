@@ -9,7 +9,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn color-selector-option-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) selector-id
   ; @param (map) selector-props
@@ -32,7 +32,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn color-selector-body-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) selector-id
   ; @param (map) selector-props
@@ -50,7 +50,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn color-selector-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) selector-id
   ; @param (map) selector-props

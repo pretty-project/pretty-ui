@@ -9,7 +9,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- blank
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) blank-id
   ; @param (map) blank-props

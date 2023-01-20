@@ -174,6 +174,7 @@
   ;   :inherit, :extra-light, :light, :normal, :medium, :bold, :extra-bold
   ;   Default :medium
   ;  :gap (keyword)(opt)
+  ;   Distance between the icon, info-text button and label
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :auto
   ;  :horizontal-align (keyword)(opt)
   ;   :center, :left, :right

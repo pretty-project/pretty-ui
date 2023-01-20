@@ -7,6 +7,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn menu-content-attributes
+  ; @ignore
+  ;
   ; @param (keyword) menu-id
   ; @param (map) menu-props
   ;
@@ -21,6 +23,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn menu-body-attributes
+  ; @ignore
+  ;
   ; @param (keyword) menu-id
   ; @param (map) menu-props
   ; {:style (map)(opt)}
@@ -34,6 +38,8 @@
       (pretty-css/indent-attributes menu-props)))
 
 (defn menu-attributes
+  ; @ignore
+  ;
   ; @param (keyword) menu-id
   ; @param (map) menu-props
   ;

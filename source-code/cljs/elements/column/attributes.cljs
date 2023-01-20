@@ -1,12 +1,12 @@
 
-(ns elements.column.helpers
+(ns elements.column.attributes
     (:require [pretty-css.api :as pretty-css]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn column-body-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) column-id
   ; @param (map) column-props
@@ -15,7 +15,8 @@
   ; @return (map)
   ; {}
   [_ {:keys [gap horizontal-align stretch-orientation style vertical-align wrap-items?] :as column-props}]
-  (-> {:data-row-gap                 gap
+  (-> {:class                        :e-column--body
+       :data-row-gap                 gap
        :data-horizontal-column-align horizontal-align
        :data-stretch-orientation     stretch-orientation
        :data-vertical-column-align   vertical-align
@@ -29,12 +30,14 @@
 ;; ----------------------------------------------------------------------------
 
 (defn column-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) column-id
   ; @param (map) column-props
   ;
   ; @return (map)
+  ; {}
   [_ column-props]
-  (-> {} (pretty-css/default-attributes column-props)
-         (pretty-css/outdent-attributes column-props)))
+  (-> {:class :e-column}
+      (pretty-css/default-attributes column-props)
+      (pretty-css/outdent-attributes column-props)))

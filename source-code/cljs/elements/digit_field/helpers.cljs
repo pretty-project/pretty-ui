@@ -1,13 +1,12 @@
 
 (ns elements.digit-field.helpers
-    (:require [elements.digit-field.config :as digit-field.config]
-              [pretty-css.api              :as pretty-css]))
+    (:require [elements.digit-field.config :as digit-field.config]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn field-props->digits-width
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (map) field-props
   ;
@@ -15,33 +14,3 @@
   [field-props]
   (+ (* digit-field.config/DIGIT-WIDTH 4)
      (* digit-field.config/DIGIT-GAP   3)))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn field-body-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) field-id
-  ; @param (map) field-props
-  ; {:style (map)(opt)}
-  ;
-  ; @return (map)
-  ; {:style (map)}
-  [_ {:keys [style] :as field-props}]
-  (-> {:style style}
-      (pretty-css/indent-attributes field-props)))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn field-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) field-id
-  ; @param (map) field-props
-  ;
-  ; @return (map)
-  [_ field-props]
-  (-> {} (pretty-css/default-attributes field-props)
-         (pretty-css/outdent-attributes field-props)))

@@ -11,6 +11,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- dropdown-menu
+  ; @ignore
+  ;
   ; @param (keyword) menu-id
   ; @param (map) menu-props
   [menu-id menu-props]

@@ -7,6 +7,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn button-props-prototype
+  ; @ignore
+  ;
   ; @param (map) button-props
   ; {:badge-content (metamorphic-content)(opt)
   ;  :border-color (keyword)(opt)

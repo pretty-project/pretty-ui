@@ -10,7 +10,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn counter-did-mount
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) counter-id
   ; @param (map) counter-props
@@ -23,7 +23,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn decrease-value!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) counter-id
   ; @param (map) counter-props
@@ -36,7 +36,7 @@
       (return                            db)))
 
 (defn increase-value!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) counter-id
   ; @param (map) counter-props

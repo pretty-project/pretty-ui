@@ -6,7 +6,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn field-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props

@@ -6,7 +6,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn expandable-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (map) expandable-props
   ; {:icon (keyword)}

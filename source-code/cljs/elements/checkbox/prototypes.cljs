@@ -7,7 +7,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn checkbox-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) checkbox-id
   ; @param (map) checkbox-props

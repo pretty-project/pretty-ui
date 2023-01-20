@@ -5,7 +5,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn value-decreasable?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) counter-id
   ; @param (map) counter-props
@@ -20,7 +20,7 @@
                 (<     min-value value)))))
 
 (defn value-increasable?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) counter-id
   ; @param (map) counter-props

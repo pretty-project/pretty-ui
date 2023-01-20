@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn get-highlighted-option-dex
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) box-id
   ;
@@ -22,7 +22,7 @@
   (get @combo-box.state/OPTION-HIGHLIGHTS box-id))
 
 (defn any-option-highlighted?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) box-id
   ;
@@ -32,7 +32,7 @@
        (some? highlighted-option-dex)))
 
 (defn render-option?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) box-id
   ; @param (map) box-props
@@ -47,7 +47,7 @@
             (string/starts-with?   option-label field-content {:case-sensitive? false}))))
 
 (defn get-rendered-options
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) box-id
   ; @param (map) box-props
@@ -61,7 +61,7 @@
               (reduce f [] options))))
 
 (defn get-highlighted-option
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) box-id
   ; @param (map) box-props
@@ -76,7 +76,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn any-option-rendered?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) box-id
   ; @param (map) box-props

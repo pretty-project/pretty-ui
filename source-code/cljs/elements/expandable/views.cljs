@@ -1,78 +1,41 @@
 
 (ns elements.expandable.views
-    (:require [elements.expandable.helpers    :as expandable.helpers]
+    (:require [elements.expandable.attributes :as expandable.attributes]
+              [elements.expandable.helpers    :as expandable.helpers]
               [elements.expandable.prototypes :as expandable.prototypes]
-              [pretty-css.api                 :as pretty-css]
               [random.api                     :as random]
               [x.components.api               :as x.components]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- expandable-expand-button
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) expandable-id
-  ; @param (map) expandable-props
-  ; {:expanded? (boolean)}
-  [expandable-id {:keys [expanded?]}]
-  (if (expandable.helpers/expanded? expandable-id)
-      [:i.e-expandable--expand-icon {:data-icon-family :material-symbols-outlined :data-icon-size :m} :expand_less]
-      [:i.e-expandable--expand-icon {:data-icon-family :material-symbols-outlined :data-icon-size :m} :expand_more]))
-
-(defn- expandable-icon
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) expandable-id
-  ; @param (map) expandable-props
-  ; {:icon (keyword)(opt)}
-  [expandable-id {:keys [icon] :as expandable-props}]
-  (if icon [:i.e-expandable--icon (pretty-css/icon-attributes {} expandable-props)
-                                  icon]))
-
-(defn- expandable-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) expandable-id
-  ; @param (map) expandable-props
-  ; {:label (metamorphic-content)(opt)}
-  [_ {:keys [label]}]
-  (if label [:div.e-expandable--label {:data-font-size   :s
-                                       :data-font-weight :medium
-                                       :data-line-height :text-block}
-                                      (x.components/content label)]))
-
 (defn- expandable-header
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) expandable-id
   ; @param (map) expandable-props
-  [expandable-id expandable-props]
-  [:button.e-expandable--header (expandable.helpers/expandable-header-attributes expandable-id expandable-props)
-                                [expandable-icon                                 expandable-id expandable-props]
-                                [expandable-label                                expandable-id expandable-props]
-                                [expandable-expand-button                        expandable-id expandable-props]])
+  ; {}
+  [expandable-id {:keys [icon label] :as expandable-props}]
+  [:button (expandable.attributes/expandable-header-attributes expandable-id expandable-props)
+           (if icon [:i (expandable.attributes/expandable-icon-attributes expandable-id expandable-props) icon])
+           (if label [:div {:class :e-expandable--label :data-font-size :s :data-font-weight :medium :data-line-height :text-block}
+                           (x.components/content label)])
+           (if (expandable.helpers/expanded? expandable-id)
+               [:i {:class :e-expandable--expand-icon :data-icon-family :material-symbols-outlined :data-icon-size :m} :expand_less]
+               [:i {:class :e-expandable--expand-icon :data-icon-family :material-symbols-outlined :data-icon-size :m} :expand_more])])
 
-(defn- expandable-body
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+(defn expandable
+  ; @ignore
   ;
   ; @param (keyword) expandable-id
   ; @param (map) expandable-props
   ; {:content (metamorphic-content)(opt)}
   [expandable-id {:keys [content] :as expandable-props}]
-  (if (expandable.helpers/expanded? expandable-id)
-      [:div.e-expandable--body (expandable.helpers/expandable-body-attributes expandable-id expandable-props)
-                               [x.components/content                          expandable-id content]]))
-
-(defn expandable
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) expandable-id
-  ; @param (map) expandable-props
-  [expandable-id expandable-props]
-  [:div.e-expandable (expandable.helpers/expandable-attributes expandable-id expandable-props)
-                     [expandable-header                        expandable-id expandable-props]
-                     [expandable-body                          expandable-id expandable-props]])
+  [:div (expandable.attributes/expandable-attributes expandable-id expandable-props)
+        [expandable-header                           expandable-id expandable-props]
+        (if (expandable.helpers/expanded? expandable-id)
+            [:div (expandable.attributes/expandable-body-attributes expandable-id expandable-props)
+                  [x.components/content                             expandable-id content]])])
 
 (defn element
   ; @param (keyword)(opt) expandable-id

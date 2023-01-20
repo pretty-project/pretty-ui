@@ -7,7 +7,7 @@
 ;; ----------------------------------------------------------------------------
 
 (r/reg-event-fx :elements.chip-group/delete-chip!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) group-id
   ; @param (map) group-props

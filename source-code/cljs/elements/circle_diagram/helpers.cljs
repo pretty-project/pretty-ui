@@ -9,7 +9,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn diagram-props<-total-value
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (map) diagram-props
   ; {:sections (maps in vector)}
@@ -42,7 +42,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn section-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) diagram-id
   ; @param (map) diagram-props
@@ -78,7 +78,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn diagram-body-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) diagram-id
   ; @param (map) diagram-props
@@ -86,7 +86,8 @@
   ;  :style (map)(opt)}
   ;
   ; @return (map)
-  ; {:style (map)
+  ; {:class (keyword or keywords in vector)
+  ;  :style (map)
   ;   {:height (string)
   ;    :width (string)}}
   [_ {:keys [diameter style] :as diagram-props}]
@@ -98,7 +99,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn diagram-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) diagram-id
   ; @param (map) diagram-props

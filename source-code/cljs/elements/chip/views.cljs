@@ -1,6 +1,6 @@
 
 (ns elements.chip.views
-    (:require [elements.chip.helpers    :as chip.helpers]
+    (:require [elements.chip.attributes :as chip.attributes]
               [elements.chip.prototypes :as chip.prototypes]
               [random.api               :as random]
               [x.components.api         :as x.components]))
@@ -8,62 +8,26 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- chip-icon
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) chip-id
-  ; @param (map) chip-props
-  ; {:icon (keyword)(opt)
-  ;  :icon-family (keyword)(opt)}
-  [_ {:keys [icon icon-family]}]
-  (if icon [:i.e-chip--icon {:data-icon-family icon-family :data-icon-size :xs} icon]))
-
-(defn- chip-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) chip-id
-  ; @param (map) chip-props
-  ; {:label (metamorphic-content)}
-  [_ {:keys [label]}]
-  [:div.e-chip--label {:data-font-size     :xs
-                       :data-font-weight   :medium
-                       :data-line-height   :text-block
-                       :data-text-overflow :no-wrap}
-                      (x.components/content label)])
-
-(defn- chip-primary-button
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) chip-id
-  ; @param (map) chip-props
-  ; {:primary-button (map)(opt)
-  ;   {:icon (keyword)
-  ;    :icon-family (keyword)}}
-  [chip-id {{:keys [icon icon-family]} :primary-button :keys [primary-button] :as chip-props}]
-  (if primary-button [:button.e-chip--primary-button (chip.helpers/primary-button-attributes chip-id chip-props)
-                                                     [:i.e-chip--primary-button-icon {:data-icon-family icon-family}
-                                                                                     icon]]
-                     [:div.e-chip--primary-button--placeholder]))
-
-(defn- chip-body
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) chip-id
-  ; @param (map) chip-props
-  [chip-id chip-props]
-  [:div.e-chip--body (chip.helpers/chip-body-attributes chip-id chip-props)
-                     [chip-primary-button               chip-id chip-props]
-                     [chip-icon                         chip-id chip-props]
-                     [chip-label                        chip-id chip-props]])
-
 (defn- chip
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) chip-id
   ; @param (map) chip-props
-  [chip-id chip-props]
-  [:div.e-chip (chip.helpers/chip-attributes chip-id chip-props)
-               [chip-body                    chip-id chip-props]])
+  ; {}
+  [chip-id {:keys [icon icon-family label] :as chip-props}]
+  [:div (chip.attributes/chip-attributes chip-id chip-props)
+        [:div (chip.attributes/chip-body-attributes chip-id chip-props)
+              (if-let [{:keys [icon icon-family]} (:primary-button chip-props)]
+                      [:button (chip.attributes/primary-button-attributes chip-id chip-props)
+                               [:i {:class :e-chip--primary-button-icon :data-icon-family icon-family} icon]]
+                      [:div    {:class :e-chip--primary-button--placeholder}])
+              (if icon  [:i {:class :e-chip--icon :data-icon-family icon-family :data-icon-size :xs} icon])
+              (if label [:div {:class              :e-chip--label
+                               :data-font-size     :xs
+                               :data-font-weight   :medium
+                               :data-line-height   :text-block
+                               :data-text-overflow :no-wrap}
+                              (x.components/content label)])]])
 
 (defn element
   ; @param (keyword)(opt) chip-id

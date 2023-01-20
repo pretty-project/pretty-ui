@@ -8,7 +8,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn selector-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) selector-id
   ; @param (map) selector-props
@@ -37,7 +37,7 @@
                           {:options (or options color-selector.config/DEFAULT-OPTIONS)})))
 
 (defn button-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) selector-id
   ; @param (map) selector-props

@@ -341,6 +341,37 @@
 
 
 
+/***** Content swapper *****/
+/*** Body ***/
+
+.e-content-swapper--body {
+  display: flex;
+}
+
+/*** Body ***/
+
+/*** Page buttons ***/
+
+.e-content-swapper--page-buttons {
+  display: flex;
+  flex-direction: column;
+  row-gap: 12px;
+}
+
+/*** Page buttons ***/
+
+/*** Page ***/
+
+.e-content-swapper--page-header {
+  /* Makes the page back button not stretching to its container width */
+  display: flex;
+}
+
+/*** Page ***/
+/***** Content swapper *****/
+
+
+
 /***** Counter *****/
 /*** Body ***/
 

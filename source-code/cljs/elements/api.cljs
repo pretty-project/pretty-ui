@@ -51,6 +51,7 @@
               [elements.color-selector.views       :as color-selector.views]
               [elements.column.views               :as column.views]
               [elements.combo-box.views            :as combo-box.views]
+              [elements.content-swapper.views      :as content-swapper.views]
               [elements.counter.views              :as counter.views]
               [elements.date-field.views           :as date-field.views]
               [elements.digit-field.views          :as digit-field.views]
@@ -102,6 +103,7 @@
 (def color-selector       color-selector.views/element)
 (def column               column.views/element)
 (def combo-box            combo-box.views/element)
+(def content-swapper      content-swapper.views/element)
 (def counter              counter.views/element)
 (def date-field           date-field.views/element)
 (def digit-field          digit-field.views/element)

@@ -7,7 +7,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn card-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (map) card-props
   ; {:badge-content (metamorphic-content)(opt)

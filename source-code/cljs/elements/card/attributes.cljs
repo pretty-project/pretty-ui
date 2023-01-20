@@ -8,6 +8,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn toggle-card-body-attributes
+  ; @ignore
+  ;
   ; @param (keyword) card-id
   ; @param (map) card-props
   ; {}
@@ -35,6 +37,8 @@
       (pretty-css/indent-attributes           card-props)))
 
 (defn static-card-body-attributes
+  ; @ignore
+  ;
   ; @param (keyword) card-id
   ; @param (map) card-props
   ; {}
@@ -57,6 +61,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn card-attributes
+  ; @ignore
+  ;
   ; @param (keyword) card-id
   ; @param (map) card-props
   ;

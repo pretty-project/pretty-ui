@@ -10,21 +10,21 @@
 ;; ----------------------------------------------------------------------------
 
 (defn highlight-next-option!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) box-id
   ; @param (map) box-props
   [box-id box-props]
   (let [highlighted-option-dex (combo-box.helpers/get-highlighted-option-dex box-id)
         rendered-options       (combo-box.helpers/get-rendered-options       box-id box-props)]
-       ; If no option selected, then the first option has to be selected first ...
+       ; If no option selected, then the first option has to be selected at the first time ...
        (if (nil? highlighted-option-dex)
            (swap! combo-box.state/OPTION-HIGHLIGHTS assoc box-id 0)
            (let [next-option-dex (vector/next-dex rendered-options highlighted-option-dex)]
                 (swap! combo-box.state/OPTION-HIGHLIGHTS assoc box-id next-option-dex)))))
 
 (defn highlight-prev-option!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) box-id
   ; @param (map) box-props
@@ -35,14 +35,14 @@
        (swap! combo-box.state/OPTION-HIGHLIGHTS assoc box-id prev-option-dex)))
 
 (defn discard-option-highlighter!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) box-id
   [box-id]
   (swap! combo-box.state/OPTION-HIGHLIGHTS dissoc box-id))
 
 (defn use-selected-option!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) box-id
   ; @param (map) box-props
@@ -55,14 +55,14 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; WARNING! NON-PUBLIC! DO NOT USE!
+; @ignore
 (r/reg-fx :elements.combo-box/highlight-next-option! highlight-next-option!)
 
-; WARNING! NON-PUBLIC! DO NOT USE!
+; @ignore
 (r/reg-fx :elements.combo-box/highlight-prev-option! highlight-prev-option!)
 
-; WARNING! NON-PUBLIC! DO NOT USE!
+; @ignore
 (r/reg-fx :elements.combo-box/discard-option-highlighter! discard-option-highlighter!)
 
-; WARNING! NON-PUBLIC! DO NOT USE!
+; @ignore
 (r/reg-fx :elements.combo-box/use-selected-option! use-selected-option!)

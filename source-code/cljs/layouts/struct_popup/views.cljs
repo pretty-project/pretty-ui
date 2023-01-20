@@ -76,11 +76,10 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- struct-popup
+(defn- struct-popup-structure
   ; @param (keyword) popup-id
   ; @param (map) popup-props
   ; {:cover-color (keyword or string)(opt)}
-  ;  :stretch-orientation (keyword)(opt)}
   [popup-id {:keys [cover-color] :as popup-props}]
   [:div (struct-popup.attributes/popup-attributes popup-id popup-props)
         (if cover-color [:div (struct-popup.attributes/popup-cover-attributes popup-id popup-props)])
@@ -90,6 +89,15 @@
                           [body   popup-id popup-props]
                           [header popup-id popup-props]]
                     [footer popup-id popup-props]]]])
+
+(defn- struct-popup
+  ; @param (keyword) popup-id
+  ; @param (map) popup-props
+  ; {}
+  [popup-id {:keys [on-mount on-unmount] :as popup-props}]
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (r/dispatch on-mount))
+                       :component-will-unmount (fn [_ _] (r/dispatch on-unmount))
+                       :reagent-render         (fn [_ _] [struct-popup-structure popup-id popup-props])}))
 
 (defn layout
   ; @param (keyword)(opt) popup-id
@@ -138,8 +146,6 @@
   ([popup-props]
    [layout (random/generate-keyword) popup-props])
 
-  ([popup-id {:keys [on-mount on-unmount] :as popup-props}]
+  ([popup-id popup-props]
    (let [popup-props (struct-popup.prototypes/popup-props-prototype popup-props)]
-        (reagent/lifecycles {:component-did-mount    (fn [_ _] (r/dispatch on-mount))
-                             :component-will-unmount (fn [_ _] (r/dispatch on-unmount))
-                             :reagent-render         (fn [_ _] [struct-popup popup-id popup-props])}))))
+        [struct-popup popup-id popup-props])))

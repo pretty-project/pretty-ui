@@ -6,7 +6,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn element-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) element-id
   ; @param (map) element-props

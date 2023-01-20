@@ -1,6 +1,6 @@
 
 (ns elements.column.views
-    (:require [elements.column.helpers    :as column.helpers]
+    (:require [elements.column.attributes :as column.attributes]
               [elements.column.prototypes :as column.prototypes]
               [random.api                 :as random]
               [x.components.api           :as x.components]))
@@ -8,24 +8,16 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- column-body
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+(defn- column
+  ; @ignore
   ;
   ; @param (keyword) column-id
   ; @param (map) column-props
   ; {:content (metamorphic-content)}
   [column-id {:keys [content] :as column-props}]
-  [:div.e-column--body (column.helpers/column-body-attributes column-id column-props)
-                       [x.components/content                  column-id content]])
-
-(defn- column
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) column-id
-  ; @param (map) column-props
-  [column-id column-props]
-  [:div.e-column (column.helpers/column-attributes column-id column-props)
-                 [column-body                      column-id column-props]])
+  [:div (column.attributes/column-attributes column-id column-props)
+        [:div (column.attributes/column-body-attributes column-id column-props)
+              [x.components/content                     column-id content]]])
 
 (defn element
   ; @param (keyword)(opt) column-id

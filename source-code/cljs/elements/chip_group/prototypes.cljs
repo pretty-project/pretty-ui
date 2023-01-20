@@ -7,7 +7,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn chip-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) group-id
   ; @param (map) group-props
@@ -24,7 +24,7 @@
                  {:label (chip-label-f chip)}))
 
 (defn group-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) group-id
   ; @param (map) group-props

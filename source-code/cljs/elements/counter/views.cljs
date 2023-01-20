@@ -1,6 +1,6 @@
 
 (ns elements.counter.views
-    (:require [elements.counter.helpers    :as counter.helpers]
+    (:require [elements.counter.attributes :as counter.attributes]
               [elements.counter.prototypes :as counter.prototypes]
               [elements.element.views      :as element.views]
               [random.api                  :as random]
@@ -10,54 +10,25 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- counter-reset-button
+(defn- counter-structure
+  ; @ignore
+  ;
   ; @param (keyword) counter-id
   ; @param (map) counter-props
-  ; {:resetable? (boolean)(opt)}
-  [counter-id {:keys [resetable?] :as counter-props}]
-  (if resetable? [:button.e-counter--reset-button (counter.helpers/reset-button-attributes counter-id counter-props)]))
-
-(defn- counter-increase-button
-  ; @param (keyword) counter-id
-  ; @param (map) counter-props
-  ; {:disabled? (boolean)(opt)}
-  [counter-id counter-props]
-  [:button.e-counter--increase-button (counter.helpers/increase-button-attributes counter-id counter-props)])
-
-(defn- counter-decrease-button
-  ; @param (keyword) counter-id
-  ; @param (map) counter-props
-  ; {:disabled? (boolean)(opt)}r/
-  [counter-id counter-props]
-  [:button.e-counter--decrease-button (counter.helpers/decrease-button-attributes counter-id counter-props)])
-
-(defn- counter-value
-  ; @param (keyword) counter-id
-  ; @param (map) counter-props
-  ; {:value-path (vector)}
-  [_ {:keys [value-path]}]
-  (let [value @(r/subscribe [:x.db/get-item value-path])]
-       [:div.e-counter--value value]))
-
-(defn- counter-body
-  ; @param (keyword) counter-id
-  ; @param (map) counter-props
-  [counter-id counter-props]
-  [:div.e-counter--body (counter.helpers/counter-body-attributes counter-id counter-props)
-                        [counter-decrease-button                 counter-id counter-props]
-                        [counter-value                           counter-id counter-props]
-                        [counter-increase-button                 counter-id counter-props]
-                        [counter-reset-button                    counter-id counter-props]])
+  ; {}
+  [counter-id {:keys [resetable? value-path] :as counter-props}]
+  [:div (counter.attributes/counter-attributes counter-id counter-props)
+        [element.views/element-label           counter-id counter-props]
+        [:div (counter.attributes/counter-body-attributes counter-id counter-props)
+              [:button (counter.attributes/decrease-button-attributes counter-id counter-props)]
+              (let [value @(r/subscribe [:x.db/get-item value-path])]
+                   [:div {:class :e-counter--value} value])
+              [:button (counter.attributes/increase-button-attributes counter-id counter-props)]
+              (if resetable? [:button (counter.attributes/reset-button-attributes counter-id counter-props)])]])
 
 (defn- counter
-  ; @param (keyword) counter-id
-  ; @param (map) counter-props
-  [counter-id counter-props]
-  [:div.e-counter (counter.helpers/counter-attributes counter-id counter-props)
-                  [element.views/element-label        counter-id counter-props]
-                  [counter-body                       counter-id counter-props]])
-
-(defn- counter-structure
+  ; @ignore
+  ;
   ; @param (keyword) counter-id
   ; @param (map) counter-props
   [counter-id counter-props]

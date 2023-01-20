@@ -1,5 +1,5 @@
 
-(ns elements.combo-box.state
+(ns elements.content-swapper.state
     (:require [reagent.api :refer [ratom]]))
 
 ;; ----------------------------------------------------------------------------
@@ -8,4 +8,4 @@
 ; @ignore
 ;
 ; @atom (map)
-(defonce OPTION-HIGHLIGHTS (ratom {}))
+(defonce VISIBLE-PAGE (ratom {}))

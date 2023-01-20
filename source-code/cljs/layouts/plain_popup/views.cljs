@@ -10,7 +10,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- plain-popup
+(defn- plain-popup-structure
   ; @param (keyword) popup-id
   ; @param (map) popup-props
   ; {:content (metamorphic-content)}
@@ -19,6 +19,15 @@
         (if cover-color [:div (plain-popup.attributes/popup-cover-attributes popup-id popup-props)])
         (if content     [:div {:class :l-plain-popup--content}
                               [x.components/content popup-id content]])])
+
+(defn- plain-popup
+  ; @param (keyword) popup-id
+  ; @param (map) popup-props
+  ; {}
+  [popup-id {:keys [on-mount on-unmount] :as popup-props}]
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (r/dispatch on-mount))
+                       :component-will-unmount (fn [_ _] (r/dispatch on-unmount))
+                       :reagent-render         (fn [_ _] [plain-popup-structure popup-id popup-props])}))
 
 (defn layout
   ; @param (keyword)(opt) popup-id
@@ -38,8 +47,6 @@
   ([popup-props]
    [layout (random/generate-keyword) popup-props])
 
-  ([popup-id {:keys [on-mount on-unmount] :as popup-props}]
+  ([popup-id popup-props]
    (let [popup-props (plain-popup.prototypes/popup-props-prototype popup-props)]
-        (reagent/lifecycles {:component-did-mount    (fn [_ _] (r/dispatch on-mount))
-                             :component-will-unmount (fn [_ _] (r/dispatch on-unmount))
-                             :reagent-render         (fn [_ _] [plain-popup popup-id popup-props])}))))
+        [plain-popup popup-id popup-props])))

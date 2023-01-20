@@ -27,6 +27,8 @@
 
 - [combo-box](#combo-box)
 
+- [content-swapper](#content-swapper)
+
 - [counter](#counter)
 
 - [date-field](#date-field)
@@ -204,6 +206,7 @@
   :inherit, :extra-light, :light, :normal, :medium, :bold, :extra-bold
   Default: :medium
  :gap (keyword)(opt)
+  Distance between the icon and label
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :auto
  :horizontal-align (keyword)(opt)
   :center, :left, :right
@@ -682,6 +685,50 @@ To render the color-selector popup without using its button element:
 ```
 @usage
 [combo-box :my-combo-box {...}]
+```
+
+---
+
+### content-swapper
+
+```
+@description
+The :max-height, :max-width, :min-height and :min-width properties
+are applied on each page.
+```
+
+```
+@param (keyword)(opt) swapper-id
+@param (map) swapper-props
+{:class (keyword or keywords in vector)(opt)
+ :gap (keyword)(opt)
+  Distance between unfolded pages
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :auto
+ :indent (map)(opt)
+ :max-height (keyword)(opt)
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+ :max-width (keyword)(opt)
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+ :min-height (keyword)(opt)
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+ :min-width (keyword)(opt)
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+ :outdent (map)(opt)
+ :pages (maps in vector)
+  [{:content (metamorphic-content)
+    :label (metamorphic-content)}]
+ :style (map)(opt)
+ :threshold (px)(opt)}
+```
+
+```
+@usage
+[content-swapper {...}]
+```
+
+```
+@usage
+[content-swapper :my-content-swapper {...}]
 ```
 
 ---
@@ -1175,6 +1222,7 @@ To render the color-selector popup without using its button element:
   :inherit, :extra-light, :light, :normal, :medium, :bold, :extra-bold
   Default :medium
  :gap (keyword)(opt)
+  Distance between the icon, info-text button and label
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :auto
  :horizontal-align (keyword)(opt)
   :center, :left, :right

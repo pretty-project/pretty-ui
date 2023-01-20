@@ -9,7 +9,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn focus-button!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) button-id
   [button-id]
@@ -17,7 +17,7 @@
        (-> button-body-id x.environment/focus-element!)))
 
 (defn blur-button!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) button-id
   [button-id]
@@ -27,8 +27,8 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; WARNING! NON-PUBLIC! DO NOT USE!
+; @ignore
 (r/reg-fx :elements.button/focus-button! focus-button!)
 
-; WARNING! NON-PUBLIC! DO NOT USE!
+; @ignore
 (r/reg-fx :elements.button/blur-button! blur-button!)

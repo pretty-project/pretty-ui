@@ -7,7 +7,7 @@
 ;; ----------------------------------------------------------------------------
 
 (r/reg-event-fx :elements.checkbox/checkbox-did-mount
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) checkbox-id
   ; @param (map) checkbox-props
@@ -18,7 +18,7 @@
           {:db (r checkbox.events/checkbox-did-mount db checkbox-id checkbox-props)})))
 
 (r/reg-event-fx :elements.checkbox/toggle-option!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) checkbox-id
   ; @param (map) checkbox-props

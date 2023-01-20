@@ -8,7 +8,7 @@
 ;; ----------------------------------------------------------------------------
 
 (r/reg-event-fx :elements.button/button-did-mount
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
@@ -18,7 +18,7 @@
                     :dispatch [:elements.button/reg-keypress-event! button-id button-props]})))
 
 (r/reg-event-fx :elements.button/button-did-update
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) button-id
   ; @param (?) %
@@ -27,7 +27,7 @@
            (if keypress {:db (r button.events/button-did-update db button-id button-props)}))))
 
 (r/reg-event-fx :elements.button/button-will-unmount
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
@@ -40,7 +40,7 @@
 ;; ----------------------------------------------------------------------------
 
 (r/reg-event-fx :elements.button/reg-keypress-event!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
@@ -55,7 +55,7 @@
                                            :required?  (:required? keypress)}]))
 
 (r/reg-event-fx :elements.button/remove-keypress-event!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
@@ -66,14 +66,14 @@
 ;; ----------------------------------------------------------------------------
 
 (r/reg-event-fx :elements.button/key-pressed
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) button-id
   (fn [{:keys [db]} [_ button-id]]
       {:fx [:elements.button/focus-button! button-id]}))
 
 (r/reg-event-fx :elements.button/key-released
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) button-id
   (fn [{:keys [db]} [_ button-id]]

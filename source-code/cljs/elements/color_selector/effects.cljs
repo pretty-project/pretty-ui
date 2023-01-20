@@ -9,6 +9,8 @@
 ;; ----------------------------------------------------------------------------
 
 (r/reg-event-fx :elements.color-selector/render-selector!
+  ; @ignore
+  ;
   ; @param (keyword) selector-id
   ; @param (map) selector-props
   ; {:options (strings in vector)(opt)
@@ -25,6 +27,8 @@
             :dispatch [:elements.color-selector/render-options! selector-id selector-props]})))
 
 (r/reg-event-fx :elements.color-selector/render-options!
+  ; @ignore
+  ;
   ; @param (keyword) selector-id
   ; @param (map) selector-props
   (fn [_ [_ selector-id selector-props]]
@@ -35,7 +39,7 @@
 ;; ----------------------------------------------------------------------------
 
 (r/reg-event-fx :elements.color-selector/toggle-option!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) selector-id
   ; @param (map) selector-props
