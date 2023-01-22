@@ -19,9 +19,9 @@
   [:div (dropdown-menu.attributes/menu-attributes menu-id menu-props)
         [:div (dropdown-menu.attributes/menu-body-attributes menu-id menu-props)
               [menu-bar.views/element menu-id menu-props]
-              (if-let [content @dropdown-menu.state/VISIBLE-CONTENT]
+              (if-let [dropdown-content (get-in menu-props [:menu-items @dropdown-menu.state/ACTIVE-DEX :content])]
                       [:div (dropdown-menu.attributes/menu-content-attributes menu-id menu-props)
-                            [x.components/content menu-id content]])]])
+                            [x.components/content menu-id dropdown-content]])]])
 
 (defn element
   ; XXX#0715

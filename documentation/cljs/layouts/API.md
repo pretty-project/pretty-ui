@@ -38,6 +38,7 @@
   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   Default: :default
  :indent (map)(opt)
+ :lock-scroll? (boolean)(opt)
  :max-height (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
  :max-width (keyword)(opt)
@@ -74,6 +75,7 @@
 @param (map) popup-props
 {:content (metamorphic-content)(opt)
  :cover-color (keyword or string)(opt)
+ :lock-scroll? (boolean)(opt)
  :on-cover (metamorphic-event)(opt)
  :on-mount (metamorphic-event)(opt)
  :on-unmount (metamorphic-event)(opt)
@@ -190,6 +192,7 @@
  :footer (metamorphic-content)(opt)
  :header (metamorphic-content)(opt)
  :indent (map)(opt)
+ :lock-scroll? (boolean)(opt)
  :max-height (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
  :max-width (keyword)(opt)

@@ -1,5 +1,5 @@
 
-(ns elements.dropdown-menu.state
+(ns elements.select.state
     (:require [reagent.api :refer [ratom]]))
 
 ;; ----------------------------------------------------------------------------
@@ -7,5 +7,5 @@
 
 ; @ignore
 ;
-; @atom (integer)
-(defonce ACTIVE-DEX (ratom nil))
+; @atom (boolean)
+(def POPUP-VISIBLE? (ratom false))

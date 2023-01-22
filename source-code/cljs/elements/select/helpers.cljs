@@ -11,7 +11,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn render-option?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
@@ -30,7 +30,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn select-option-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
@@ -64,7 +64,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn select-button-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props

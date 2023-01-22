@@ -7,7 +7,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn select-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props

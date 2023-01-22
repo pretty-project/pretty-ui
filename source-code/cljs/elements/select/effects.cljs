@@ -15,7 +15,7 @@
 ;; ----------------------------------------------------------------------------
 
 (r/reg-event-fx :elements.select/select-button-did-mount
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
@@ -26,7 +26,7 @@
           {:db (r select.events/select-will-mount db select-id select-props)})))
 
 (r/reg-event-fx :elements.select/select-options-did-mount
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
@@ -34,7 +34,7 @@
       [:elements.select/reg-keypress-events! select-id select-props]))
 
 (r/reg-event-fx :elements.select/select-options-will-unmount
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
@@ -45,14 +45,14 @@
 ;; ----------------------------------------------------------------------------
 
 (r/reg-event-fx :elements.select/ESC-pressed
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
   [:x.ui/remove-popup! :elements.select/options])
 
 (r/reg-event-fx :elements.select/ENTER-pressed
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
@@ -64,7 +64,7 @@
 ;; ----------------------------------------------------------------------------
 
 (r/reg-event-fx :elements.select/reg-keypress-events!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
@@ -75,7 +75,7 @@
                          [:x.environment/reg-keypress-event! ::on-ENTER-pressed on-enter-props]]})))
 
 (r/reg-event-fx :elements.select/remove-keypress-events!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
@@ -87,7 +87,7 @@
 ;; ----------------------------------------------------------------------------
 
 (r/reg-event-fx :elements.select/render-options!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
@@ -119,7 +119,7 @@
 ;; ----------------------------------------------------------------------------
 
 (r/reg-event-fx :elements.select/select-option!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
@@ -135,7 +135,7 @@
                              (if on-select  {:ms select.config/ON-SELECT-DELAY       :dispatch (r/metamorphic-event<-params on-select option-value)})]})))
 
 (r/reg-event-fx :elements.select/clear-value!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
@@ -147,7 +147,7 @@
 ;; ----------------------------------------------------------------------------
 
 (r/reg-event-fx :elements.select/add-option!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props

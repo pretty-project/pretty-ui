@@ -9,7 +9,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn select-will-mount
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
@@ -23,7 +23,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn select-option!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
@@ -40,7 +40,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn clear-value!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
@@ -53,7 +53,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn add-option!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props

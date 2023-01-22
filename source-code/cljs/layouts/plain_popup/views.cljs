@@ -5,6 +5,7 @@
               [random.api                     :as random]
               [re-frame.api                   :as r]
               [reagent.api                    :as reagent]
+              [scroll-lock.api                :as scroll-lock]
               [x.components.api               :as x.components]))
 
 ;; ----------------------------------------------------------------------------
@@ -28,9 +29,11 @@
   ; @param (keyword) popup-id
   ; @param (map) popup-props
   ; {}
-  [popup-id {:keys [on-mount on-unmount] :as popup-props}]
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (r/dispatch on-mount))
-                       :component-will-unmount (fn [_ _] (r/dispatch on-unmount))
+  [popup-id {:keys [lock-scroll? on-mount on-unmount] :as popup-props}]
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (if lock-scroll? (scroll-lock/add-scroll-prohibition! popup-id))
+                                                         (if on-mount     (r/dispatch on-mount)))
+                       :component-will-unmount (fn [_ _] (if lock-scroll? (scroll-lock/remove-scroll-prohibition! popup-id))
+                                                         (if on-unmount   (r/dispatch on-unmount)))
                        :reagent-render         (fn [_ _] [plain-popup-structure popup-id popup-props])}))
 
 (defn layout
@@ -38,6 +41,7 @@
   ; @param (map) popup-props
   ; {:content (metamorphic-content)(opt)
   ;  :cover-color (keyword or string)(opt)
+  ;  :lock-scroll? (boolean)(opt)
   ;  :on-cover (metamorphic-event)(opt)
   ;  :on-mount (metamorphic-event)(opt)
   ;  :on-unmount (metamorphic-event)(opt)

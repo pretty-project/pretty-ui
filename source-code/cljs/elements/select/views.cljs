@@ -20,6 +20,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- option-field
+  ; @ignore
+  ;
   ; @param (keyword) select-id
   ; @param (map) select-props
   ; {:extendable? (boolean)(opt)
@@ -36,6 +38,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- select-option
+  ; @ignore
+  ;
   ; @param (keyword) select-id
   ; @param (map) select-props
   ; {:option-label-f (function)}
@@ -45,6 +49,8 @@
                             (-> option option-label-f x.components/content)])
 
 (defn- select-option-list-items
+  ; @ignore
+  ;
   ; @param (keyword) select-id
   ; @param (map) select-props
   [select-id select-props]
@@ -56,6 +62,8 @@
               (reduce f [:<>] options))))
 
 (defn- options-placeholder
+  ; @ignore
+  ;
   ; @param (keyword) select-id
   ; @param (map) select-props
   ; {:options-placeholder (metamorphic-content)}
@@ -66,6 +74,8 @@
                                       (x.components/content options-placeholder)])
 
 (defn- select-option-list
+  ; @ignore
+  ;
   ; @param (keyword) select-id
   ; @param (map) select-props
   [select-id select-props]
@@ -76,6 +86,8 @@
                                        [options-placeholder      select-id select-props])]))
 
 (defn- select-options-label
+  ; @ignore
+  ;
   ; @param (keyword) select-id
   ; @param (map) select-props
   ; {}
@@ -87,6 +99,8 @@
                     [:div.e-select--options--label {:data-placeholder true}]))
 
 (defn- select-options-header
+  ; @ignore
+  ;
   ; @param (keyword) select-id
   ; @param (map) select-props
   ; {}
@@ -96,6 +110,8 @@
                                   [option-field         select-id select-props]])
 
 (defn- select-options-body
+  ; @ignore
+  ;
   ; @param (keyword) select-id
   ; @param (map) select-props
   [select-id select-props]
@@ -104,6 +120,8 @@
                        :component-will-unmount (fn [_ _] (r/dispatch [:elements.select/select-options-will-unmount select-id select-props]))}))
 
 (defn- select-options
+  ; @ignore
+  ;
   ; @param (keyword) select-id
   ; @param (map) select-props
   [select-id select-props]
@@ -118,6 +136,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- select-button
+  ; @ignore
+  ;
   ; @param (keyword) select-id
   ; @param (map) select-props
   [select-id select-props]
@@ -130,6 +150,8 @@
                                                            :on-click      on-click)]))
 
 (defn- select-button-structure
+  ; @ignore
+  ;
   ; @param (keyword) select-id
   ; @param (map) select-props
   [select-id select-props]
@@ -137,6 +159,8 @@
         [select-button select-id select-props]])
 
 (defn- select-layout
+  ; @ignore
+  ;
   ; @param (keyword) select-id
   ; @param (map) select-props
   [select-id select-props]
@@ -147,7 +171,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- icon-button-layout
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
@@ -159,6 +183,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- button-layout
+  ; @ignore
+  ;
   ; @param (keyword) select-id
   ; @param (map) select-props
   [select-id select-props]
@@ -169,6 +195,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- select
+  ; @ignore
+  ;
   ; @param (keyword) select-id
   ; @param (map) select-props
   ; {:layout (keyword)}

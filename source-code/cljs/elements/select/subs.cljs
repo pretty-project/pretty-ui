@@ -8,7 +8,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn get-selected-option
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
@@ -25,7 +25,7 @@
               (some f options))))
 
 (defn get-selected-option-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
@@ -37,7 +37,7 @@
           (option-label-f selected-option)))
 
 (defn stored-value-not-passed?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
@@ -53,5 +53,5 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; WARNING! NON-PUBLIC! DO NOT USE!
+; @ignore
 (r/reg-sub :elements.select/get-selected-option-label get-selected-option-label)

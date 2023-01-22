@@ -15,7 +15,7 @@
   ;  :label (metamorphic-content)(opt)
   ;  :marker-color (keyword)(opt)}
   [element-id {:keys [helper info-text label marker-color]}]
-  ; The default label of the elements is implemented by the 'label' element.
+  ; This component is the default label of elements.
   (if label [label.views/element {:content      label
                                   :helper       helper
                                   :info-text    info-text
