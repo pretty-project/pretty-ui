@@ -1,10 +1,10 @@
 
 (ns website.menu.views
-    (:require [elements.api      :as elements]
-              [random.api        :as random]
-              [re-frame.api      :as r]
-              [x.components.api  :as x.components]
-              [x.environment.api :as x.environment]))
+    (:require [dom.api          :as dom]
+              [elements.api     :as elements]
+              [random.api       :as random]
+              [re-frame.api     :as r]
+              [x.components.api :as x.components]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -17,10 +17,10 @@
   [_ {{:menu/keys [id]} :menu-link}]
   (let [menu-items @(r/subscribe [:website-menus.handler/get-menu-items id])]
        (letfn [(f [menu-items {:keys [link label style target]}]
-                  (conj menu-items [:a {:data-click-effect :opacity}
+                  (conj menu-items [:a {:data-click-effect :opacity
                                         :class [:mt-menu--menu-item :mt-effect--underline]
                                         :style style :href link :target (case target :self "_self" :blank "_blank" "_self")
-                                        :on-mouse-up #(x.environment/blur-element!)
+                                        :on-mouse-up #(dom/blur-active-element!)}
                                        (x.components/content label)]))]
               [:div {:class :mt-menu--menu-items}
                     (reduce f [:<>] menu-items)])))

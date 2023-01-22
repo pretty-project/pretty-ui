@@ -6,6 +6,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn sidebar-props-prototype
+  ; @ignore
+  ;
   ; @param (map) sidebar-props
   ; {:border-color (keyword or string)(opt)}
   ;

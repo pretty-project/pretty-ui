@@ -1,8 +1,8 @@
 
 (ns elements.menu-bar.attributes
-    (:require [pretty-css.api    :as pretty-css]
-              [re-frame.api      :as r]
-              [x.environment.api :as x.environment]))
+    (:require [dom.api        :as dom]
+              [pretty-css.api :as pretty-css]
+              [re-frame.api   :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -47,7 +47,6 @@
   ; @param (map) bar-props
   ; @param (map) item-props
   ; {:disabled? (boolean)(opt)
-  ;  :href (string)(opt)
   ;  :on-click (metamorphic-event)(opt)
   ;  :on-mouse-over (metamorphic-event)(opt)}
   ;
@@ -55,11 +54,10 @@
   ; {:class (keyword or keywords in vector)
   ;  :data-click-effect (keyword)
   ;  :data-disabled (boolean)
-  ;  :href (string)
   ;  :on-click (function)
   ;  :on-mouse-up (function)
   ;  :on-mouse-over (function)}
-  [bar-id _ {:keys [active? disabled? href on-click on-mouse-over] :as item-props}]
+  [_ _ {:keys [active? disabled? on-click on-mouse-over] :as item-props}]
   ; BUG#7016
   ; https://www.geeksforgeeks.org/how-to-disable-mouseout-events-triggered-by-child-elements
   ; In case of the menu-bar element used up to build a dropdown menu, an on-mouse-out
@@ -70,19 +68,19 @@
   ; {:on-mouse-out #(.stopPropagation %)}
   (-> (if disabled? (cond-> {:class             :e-menu-bar--menu-item-body
                              :data-disabled     true
-                             :on-mouse-up       #(x.environment/blur-element! bar-id)
+                             :on-mouse-up       #(dom/blur-active-element!)
                              :on-mouse-out      #(.stopPropagation %)})
                     (cond-> {:class             :e-menu-bar--menu-item-body
                              :data-click-effect :opacity
-                             :on-mouse-up       #(x.environment/blur-element! bar-id)
+                             :on-mouse-up       #(dom/blur-active-element!)
                              :on-mouse-out      #(.stopPropagation %)}
-                            (some? href)          (assoc :href           (str        href))
                             (some? on-click)      (assoc :on-click      #(r/dispatch on-click))
                             (some? on-mouse-over) (assoc :on-mouse-over #(r/dispatch on-mouse-over))))
       (pretty-css/badge-attributes  item-props)
       (pretty-css/border-attributes item-props)
       (pretty-css/color-attributes  item-props)
       (pretty-css/indent-attributes item-props)
+      (pretty-css/link-attributes   item-props)
       (pretty-css/marker-attributes item-props)))
 
 ;; ----------------------------------------------------------------------------

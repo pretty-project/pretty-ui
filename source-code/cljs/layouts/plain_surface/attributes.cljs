@@ -6,6 +6,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn surface-body-attributes
+  ; @ignore
+  ;
   ; @param (keyword) surface-id
   ; @param (map) surface-props
   ; {:content-orientation (keyword)

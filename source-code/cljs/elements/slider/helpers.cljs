@@ -4,7 +4,8 @@
               [dom.api               :as dom]
               [pretty-css.api        :as pretty-css]
               [elements.slider.state :as slider.state]
-              [re-frame.api          :as r]))
+              [re-frame.api          :as r]
+              [window.api            :as window]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -56,11 +57,11 @@
        (letfn [(sliding-f      [mouse-event] (slide!               mouse-event slider-id thumb-id))
                (stop-sliding-f [mouse-event] (dom/prevent-default! mouse-event)
                                              (stop-sliding!        mouse-event slider-id thumb-id)
-                                             (dom/remove-event-listener! "mousemove" sliding-f)
-                                             (dom/remove-event-listener! "mouseup"   stop-sliding-f))]
+                                             (window/remove-event-listener! "mousemove" sliding-f)
+                                             (window/remove-event-listener! "mouseup"   stop-sliding-f))]
               (dom/prevent-default! mouse-event)
-              (dom/add-event-listener! "mousemove" sliding-f)
-              (dom/add-event-listener! "mouseup"   stop-sliding-f))))
+              (window/add-event-listener! "mousemove" sliding-f)
+              (window/add-event-listener! "mouseup"   stop-sliding-f))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

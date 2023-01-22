@@ -6,6 +6,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn header-body-attributes
+  ; @ignore
+  ;
   ; @param (keyword) header-id
   ; @param (map) header-props
   ; {:horizontal-align (keyword)
@@ -27,6 +29,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn header-attributes
+  ; @ignore
+  ;
   ; @param (keyword) header-id
   ; @param (map) header-props
   ;

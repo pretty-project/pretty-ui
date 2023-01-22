@@ -11,6 +11,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- plain-surface-structure
+  ; @ignore
+  ;
   ; @param (keyword) surface-id
   ; @param (map) surface-props
   ; {:content (metamorphic-content)}
@@ -20,6 +22,8 @@
               [x.components/content                             surface-id content]]])
 
 (defn- plain-surface
+  ; @ignore
+  ;
   ; @param (keyword) surface-id
   ; @param (map) surface-props
   ; {}

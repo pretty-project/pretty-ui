@@ -8,6 +8,7 @@
               [random.api                          :as random]
               [re-frame.api                        :as r]
               [reagent.api                         :as reagent]
+              [window-observer.api                 :as window-observer]
               [x.components.api                    :as x.components]))
 
 ;; ----------------------------------------------------------------------------
@@ -93,9 +94,9 @@
   ; If the viewport width is wider than the specified threshold,
   ; the pages are displayed unfolded near by each other
   [:div (content-swapper.attributes/swapper-attributes swapper-id swapper-props)
-        (if @(r/subscribe [:x.environment/viewport-min? threshold])
-             [content-swapper-unfolded-content swapper-id swapper-props]
-             [content-swapper-swapping-content swapper-id swapper-props])])
+        (if (window-observer/viewport-width-min? threshold)
+            [content-swapper-unfolded-content swapper-id swapper-props]
+            [content-swapper-swapping-content swapper-id swapper-props])])
 
 (defn- content-swapper
   ; @ignore

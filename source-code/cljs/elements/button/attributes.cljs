@@ -1,11 +1,10 @@
 
 (ns elements.button.attributes
-    (:require [dom.api           :as dom]
-              [hiccup.api        :as hiccup]
-              [pretty-css.api    :as pretty-css]
-              [re-frame.api      :as r]
-              [x.components.api  :as x.components]
-              [x.environment.api :as x.environment]))
+    (:require [dom.api          :as dom]
+              [hiccup.api       :as hiccup]
+              [pretty-css.api   :as pretty-css]
+              [re-frame.api     :as r]
+              [x.components.api :as x.components]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -55,7 +54,6 @@
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
-  ;  :data-click-effect (keyword)
   ;  :data-column-gap (keyword)
   ;  :data-selectable (boolean)
   ;  :disabled (boolean)
@@ -77,23 +75,24 @@
                      :data-selectable           false
                      :style                     style}
                     {:class                     :e-button--body
-                     :href                      href
                      :id                        (hiccup/value button-id "body")
                      :on-click                  #(r/dispatch  on-click)
                      :on-mouse-over             #(r/dispatch  on-mouse-over)
-                     :on-mouse-up               #(x.environment/blur-element! button-id)
+                     :on-mouse-up               #(dom/blur-active-element!)
                      :data-click-effect         :opacity
                      :data-letter-spacing       :auto
                      :data-column-gap           gap
                      :data-horizontal-row-align horizontal-align
                      :data-selectable           false
                      :style                     style})
-      (pretty-css/badge-attributes   button-props)
-      (pretty-css/border-attributes  button-props)
-      (pretty-css/color-attributes   button-props)
-      (pretty-css/font-attributes    button-props)
-      (pretty-css/indent-attributes  button-props)
-      (pretty-css/tooltip-attributes button-props)))
+      (pretty-css/badge-attributes    button-props)
+      (pretty-css/border-attributes   button-props)
+      (pretty-css/color-attributes    button-props)
+      (pretty-css/font-attributes     button-props)
+      (pretty-css/indent-attributes   button-props)
+      (pretty-css/link-attributes     button-props)
+      (pretty-css/progress-attributes button-props)
+      (pretty-css/tooltip-attributes  button-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

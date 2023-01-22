@@ -6,6 +6,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn surface-props-prototype
+  ; @ignore
+  ;
   ; @param (map) surface-props
   ; {:content-orientation (keyword)}
   [surface-props]

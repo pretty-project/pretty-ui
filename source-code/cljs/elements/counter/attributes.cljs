@@ -1,8 +1,8 @@
 
 (ns elements.counter.attributes
-    (:require [pretty-css.api    :as pretty-css]
-              [re-frame.api      :as r]
-              [x.environment.api :as x.environment]))
+    (:require [dom.api        :as dom]
+              [pretty-css.api :as pretty-css]
+              [re-frame.api   :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -32,7 +32,7 @@
                {:class             :e-counter--increase-button
                 :data-click-effect :opacity
                 :on-click          #(r/dispatch [:elements.counter/increase-value! counter-id counter-props])
-                :on-mouse-up       #(x.environment/blur-element! counter-id)})
+                :on-mouse-up       #(dom/blur-active-element!)})
            (pretty-css/border-attributes counter-props))))
 
 (defn decrease-button-attributes
@@ -60,7 +60,7 @@
                {:class             :e-counter--decrease-button
                 :data-click-effect :opacity
                 :on-click          #(r/dispatch [:elements.counter/decrease-value! counter-id counter-props])
-                :on-mouse-up       #(x.environment/blur-element! counter-id)})
+                :on-mouse-up       #(dom/blur-active-element!)})
            (pretty-css/border-attributes counter-props))))
 
 (defn reset-button-attributes

@@ -9,66 +9,25 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- static-button
-  ; @ignore
-  ;
-  ; @param (keyword) button-id
-  ; @param (map) button-props
-  ; {:icon (keyword)(opt)
-  ;  :icon-position (keyword)(opt)
-  ;  :label (string)(opt)}
-  [button-id {:keys [icon icon-position label] :as button-props}]
-  [:div (button.attributes/button-body-attributes button-id button-props)
-        (case icon-position :left  [:<> (if icon  [:i   (button.attributes/button-icon-attributes  button-id button-props) icon])
-                                        (if label [:div (button.attributes/button-label-attributes button-id button-props) label])]
-                            :right [:<> (if label [:div (button.attributes/button-label-attributes button-id button-props) label])
-                                        (if icon  [:i   (button.attributes/button-icon-attributes  button-id button-props) icon])]
-                                   [:<> (if label [:div (button.attributes/button-label-attributes button-id button-props) label])])])
-
-(defn- anchor-button
-  ; @ignore
-  ;
-  ; @param (keyword) button-id
-  ; @param (map) button-props
-  ; {:icon (keyword)(opt)
-  ;  :icon-position (keyword)(opt)
-  ;  :label (string)(opt)}
-  [button-id {:keys [icon icon-position label] :as button-props}]
-  [:a (button.attributes/button-body-attributes button-id button-props)
-      (case icon-position :left  [:<> (if icon  [:i   (button.attributes/button-icon-attributes  button-id button-props) icon])
-                                      (if label [:div (button.attributes/button-label-attributes button-id button-props) label])]
-                          :right [:<> (if label [:div (button.attributes/button-label-attributes button-id button-props) label])
-                                      (if icon  [:i   (button.attributes/button-icon-attributes  button-id button-props) icon])]
-                                 [:<> (if label [:div (button.attributes/button-label-attributes button-id button-props) label])])])
-
-(defn- toggle-button
-  ; @ignore
-  ;
-  ; @param (keyword) button-id
-  ; @param (map) button-props
-  ; {:icon (keyword)(opt)
-  ;  :icon-position (keyword)(opt)
-  ;  :label (string)(opt)}
-  [button-id {:keys [icon icon-position label] :as button-props}]
-  [:button (button.attributes/button-body-attributes button-id button-props)
-           (case icon-position :left  [:<> (if icon  [:i   (button.attributes/button-icon-attributes  button-id button-props) icon])
-                                           (if label [:div (button.attributes/button-label-attributes button-id button-props) label])]
-                               :right [:<> (if label [:div (button.attributes/button-label-attributes button-id button-props) label])
-                                           (if icon  [:i   (button.attributes/button-icon-attributes  button-id button-props) icon])]
-                                      [:<> (if label [:div (button.attributes/button-label-attributes button-id button-props) label])])])
-
 (defn- button-structure
   ; @ignore
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
   ; {:href (string)(opt)
+  ;  :icon (keyword)(opt)
+  ;  :icon-position (keyword)(opt)
+  ;  :label (string)(opt)
   ;  :on-click (metamorphic-event)(opt)}
-  [button-id {:keys [href on-click] :as button-props}]
+  [button-id {:keys [href icon icon-position label on-click] :as button-props}]
   [:div (button.attributes/button-attributes button-id button-props)
-        (cond (some? href)     [anchor-button button-id button-props]
-              (some? on-click) [toggle-button button-id button-props]
-              :static-button   [static-button button-id button-props])])
+        [(cond href :a :on-click :button :else :div)
+         (button.attributes/button-body-attributes button-id button-props)
+         (case icon-position :left  [:<> (if icon  [:i   (button.attributes/button-icon-attributes  button-id button-props) icon])
+                                         (if label [:div (button.attributes/button-label-attributes button-id button-props) label])]
+                             :right [:<> (if label [:div (button.attributes/button-label-attributes button-id button-props) label])
+                                         (if icon  [:i   (button.attributes/button-icon-attributes  button-id button-props) icon])]
+                                    [:<> (if label [:div (button.attributes/button-label-attributes button-id button-props) label])])]])
 
 (defn button
   ; @ignore
@@ -99,6 +58,12 @@
   ;  :border-position (keyword)(opt)
   ;   :all, :bottom, :top, :left, :right, :horizontal, :vertical
   ;  :border-radius (map)(opt)
+  ;   {:tl (keyword)(opt)
+  ;    :tr (keyword)(opt)
+  ;    :br (keyword)(opt)
+  ;    :bl (keyword)(opt)
+  ;    :all (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
   ;  :border-width (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;  :class (keyword or keywords in vector)(opt)
@@ -156,10 +121,19 @@
   ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
   ;  :marker-position (keyword)(opt)
   ;   :tl, :tr, :br, :bl
-  ;  :on-click (metamorphic handler)(opt)
-  ;  :on-mouse-over (metamorphic handler)(opt)
+  ;  :on-click (metamorphic-handler)(opt)
+  ;  :on-mouse-over (metamorphic-handler)(opt)
   ;  :outdent (map)(opt)
   ;   Same as the :indent property
+  ;  :progress (percent)(opt)
+  ;  :progress-color (keyword)
+  ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+  ;   Default: :muted
+  ;  :progress-direction (keyword)(opt)
+  ;   :ltr, :rtl, :ttb, :btt
+  ;   Default: :ltr
+  ;  :progress-duration (ms)(opt)
+  ;   Default: 250
   ;  :style (map)(opt)
   ;  :text-overflow (keyword)(opt)
   ;   :ellipsis, :no-wrap, :wrap

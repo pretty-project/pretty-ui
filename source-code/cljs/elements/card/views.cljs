@@ -13,11 +13,13 @@
   ;
   ; @param (keyword) card-id
   ; @param (map) card-props
-  ; {:on-click (metamorphic-event)(opt)}
-  [card-id {:keys [content on-click] :as card-props}]
+  ; {:href (string)(opt)
+  ;  :on-click (metamorphic-event)(opt)}
+  [card-id {:keys [content href on-click] :as card-props}]
   [:div (card.attributes/card-attributes card-id card-props)
-        (cond (some? on-click) [:button (card.attributes/toggle-card-body-attributes card-id card-props) content]
-              (nil?  on-click) [:div    (card.attributes/static-card-body-attributes card-id card-props) content])])
+        [(cond href :a on-click :button :else :div)
+         (card.attributes/card-body-attributes card-id card-props)
+         [x.components/content card-id content]]])
 
 (defn element
   ; XXX#3240
@@ -49,6 +51,7 @@
   ;   Default: :left
   ;  :hover-color (keyword or string)(opt)
   ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+  ;  :href (string)(opt)
   ;  :indent (map)(opt)
   ;   {:bottom (keyword)(opt)
   ;    :left (keyword)(opt)
@@ -74,7 +77,9 @@
   ;   Same as the :indent property
   ;  :stretch-orientation (keyword)(opt)
   ;   :horizontal, :vertical, :both
-  ;  :style (map)(opt)}
+  ;  :style (map)(opt)
+  ;  :target (keyword)(opt)
+  ;   :blank, :self}
   ;
   ; @usage
   ; [card {...}]

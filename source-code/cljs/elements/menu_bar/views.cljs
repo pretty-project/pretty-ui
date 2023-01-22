@@ -8,34 +8,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- toggle-item
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) bar-id
-  ; @param (map) bar-props
-  ; @param (map) item-props
-  ; {:icon (keyword)(opt)
-  ;  :label (metamorphic-content)(opt)
-  [bar-id bar-props {:keys [icon label] :as item-props}]
-  [:button (menu-bar.attributes/menu-item-body-attributes bar-id bar-props item-props)
-           (if icon  [:i   (menu-bar.attributes/menu-item-icon-attributes  bar-id bar-props item-props) icon])
-           (if label [:div (menu-bar.attributes/menu-item-label-attributes bar-id bar-props item-props)
-                           (x.components/content label)])])
-
-(defn- anchor-item
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) bar-id
-  ; @param (map) bar-props
-  ; @param (map) item-props
-  ; {:icon (keyword)(opt)
-  ;  :label (metamorphic-content)(opt)}
-  [bar-id bar-props {:keys [icon label] :as item-props}]
-  [:a (menu-bar.attributes/menu-item-body-attributes bar-id bar-props item-props)
-      (if icon  [:i   (menu-bar.attributes/menu-item-icon-attributes  bar-id bar-props item-props) icon])
-      (if label [:div (menu-bar.attributes/menu-item-label-attributes bar-id bar-props item-props)
-                      (x.components/content label)])])
-
 (defn- menu-bar-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -43,12 +15,17 @@
   ; @param (map) bar-props
   ; @param (map) item-props
   ; {:href (string)(opt)
+  ;  :icon (keyword)(opt)
+  ;  :label (metamorphic-content)(opt)
   ;  :on-click (metamorphic-event)(opt)}
-  [bar-id bar-props {:keys [href on-click] :as item-props}]
+  [bar-id bar-props {:keys [href icon label on-click] :as item-props}]
   (let [item-props (menu-bar.prototypes/item-props-prototype bar-props item-props)]
        [:div (menu-bar.attributes/menu-item-attributes bar-id bar-props item-props)
-             (cond (some? href)     [anchor-item bar-id bar-props item-props]
-                   (some? on-click) [toggle-item bar-id bar-props item-props])]))
+             [(cond href :a on-click :button :else :div)
+              (menu-bar.attributes/menu-item-body-attributes bar-id bar-props item-props)
+              (if icon  [:i   (menu-bar.attributes/menu-item-icon-attributes  bar-id bar-props item-props) icon])
+              (if label [:div (menu-bar.attributes/menu-item-label-attributes bar-id bar-props item-props)
+                              (x.components/content label)])]]))
 
 (defn- menu-bar-items
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -156,8 +133,10 @@
   ;     :href (string)(opt)
   ;     :icon (keyword)(opt)
   ;     :label (metamorphic-content)(opt)
-  ;     :on-click (metamorphic-event)(opt)}]
-  ;     :on-mouse-over (metamorphic-event)(opt)}]
+  ;     :on-click (metamorphic-event)(opt)
+  ;     :on-mouse-over (metamorphic-event)(opt)
+  ;     :target (keyword)(opt)
+  ;      :blank, :self}]
   ;  :orientation (keyword)(opt)
   ;   :horizontal, :vertical
   ;   Default: :horizontal

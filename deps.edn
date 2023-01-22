@@ -1,8 +1,11 @@
 
+; When getting rid of x5 ...
+; + cljs-window-observer
+
 {:paths ["plugins/clj" "plugins/cljs"
          "resources"
          "source-code/clj" "source-code/cljc" "source-code/cljs"]
  :deps  {bithandshake/pretty-css {:git/url "git@github.com:bithandshake/pretty-css"
-                                  :sha     "c42947a5046d737e385cd058480f71fde9803726"}
+                                  :sha     "45719a6008dd5c9393f5592352eee81825753c0f"}
          monotech-hq/x5          {:git/url "git@github.com:monotech-hq/x5"
-                                  :sha     "851e27eeeadc5d763c5f2e3b919fa5558ce321d7"}}}
+                                  :sha     "8a5bf96ab1ce87355b4b8eb6be9e471e35f0e0bb"}}}

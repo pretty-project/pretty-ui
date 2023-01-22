@@ -1,9 +1,9 @@
 
 (ns elements.color-selector.attributes
-    (:require [pretty-css.api    :as pretty-css]
-              [re-frame.api      :as r]
-              [x.environment.api :as x.environment]
-              [vector.api        :as vector]))
+    (:require [dom.api        :as dom]
+              [pretty-css.api :as pretty-css]
+              [re-frame.api   :as r]
+              [vector.api     :as vector]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -26,7 +26,7 @@
         :data-icon-family  :material-symbols-outlined
         :data-collected    (vector/contains-item? selected-options option)
         :on-click          #(r/dispatch on-click)
-        :on-mouse-up       #(x.environment/blur-element! selector-id)}))
+        :on-mouse-up       #(dom/blur-active-element!)}))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

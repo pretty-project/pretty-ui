@@ -47,6 +47,9 @@
   ; @param (keyword) picker-id
   ; @param (map) picker-props
   ; {:class (keyword or keywords in vector)(opt)
+  ;  :click-effect (keyword)(opt)
+  ;   :opacity
+  ;   Default: :opacity
   ;  :color-stamp (map)(opt)
   ;   {:border-radius (map)(opt)
   ;    :gap (keyword)(opt)
@@ -58,6 +61,8 @@
   ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;     Default: :l}
   ;  :disabled? (boolean)(opt)
+  ;  :hover-effect (keyword)(opt)
+  ;   :opacity
   ;  :indent (map)(opt)
   ;  :label (metamorphic-content)(opt)
   ;  :on-select (metamorphic-event)(opt)

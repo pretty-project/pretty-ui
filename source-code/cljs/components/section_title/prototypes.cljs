@@ -1,6 +1,6 @@
 
 (ns components.section-title.prototypes
-    (:require [re-frame.api :as r]))
+    (:require [window-observer.api :as window-observer]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -12,6 +12,6 @@
   ; {:font-size (keyword)
   ;  :font-weight (keyword)}
   [title-props]
-  (let [viewport-min? @(r/subscribe [:x.environment/viewport-min? 720])]
-       (merge title-props {:font-size (if viewport-min? :5xl :xl)
-                           :font-weight :bold})))
+  (if (window-observer/viewport-width-min? 720)
+      (merge title-props {:font-size :5xl :font-weight :bold})
+      (merge title-props {:font-size :xl  :font-weight :bold})))

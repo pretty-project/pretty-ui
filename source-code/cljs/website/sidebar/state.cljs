@@ -1,9 +1,11 @@
 
-(ns themes.lifecycles
-    (:require [x.core.api :as x.core]))
+(ns website.sidebar.state
+    (:require [reagent.api :refer [ratom]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(x.core/reg-lifecycles! ::lifecycles
-  {:on-app-boot [:x.ui/set-theme! :light]})
+; @ignore
+;
+; @atom (boolean)
+(def VISIBLE-SIDEBAR (ratom false))

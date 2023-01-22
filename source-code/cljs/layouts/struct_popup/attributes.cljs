@@ -9,6 +9,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn popup-footer-attributes
+  ; @ignore
+  ;
   ; @param (keyword) popup-id
   ; @param (map) popup-props
   ;
@@ -20,6 +22,8 @@
              {:data-shadow-position :top :data-shadow-strength :s})))
 
 (defn popup-header-attributes
+  ; @ignore
+  ;
   ; @param (keyword) popup-id
   ; @param (map) popup-props
   ; {}
@@ -32,6 +36,8 @@
              {:data-shadow-position :bottom :data-shadow-strength :s})))
 
 (defn popup-cover-attributes
+  ; @ignore
+  ;
   ; @param (keyword) popup-id
   ; @param (map) popup-props
   ;
@@ -42,6 +48,8 @@
          {:class :l-struct-popup--cover}))
 
 (defn popup-structure-attributes
+  ; @ignore
+  ;
   ; @param (keyword) popup-id
   ; @param (map) popup-props
   ;
@@ -52,6 +60,8 @@
          {:class :l-struct-popup--structure}))
 
 (defn popup-wrapper-attributes
+  ; @ignore
+  ;
   ; @param (keyword) popup-id
   ; @param (map) popup-props
   ;
@@ -62,6 +72,8 @@
          {:class :l-struct-popup--wrapper}))
 
 (defn popup-attributes
+  ; @ignore
+  ;
   ; @param (keyword) popup-id
   ; @param (map) popup-props
   ;

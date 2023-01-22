@@ -1,14 +1,14 @@
 
 (ns website.navbar.views
     (:require [site.website-menus.frontend.api]
+              [dom.api                     :as dom]
               [elements.api                :as elements]
               [random.api                  :as random]
               [re-frame.api                :as r]
               [website.menu.views          :as menu.views]
               [website.navbar.helpers      :as navbar.helpers]
               [website.scroll-sensor.views :as scroll-sensor.views]
-              [x.components.api            :as x.components]
-              [x.environment.api           :as x.environment]))
+              [x.components.api            :as x.components]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -17,11 +17,11 @@
   ; @param (keyword) component-id
   ; @param (map) component-props
   ; {:on-menu (metamorphic-event)(opt)}
-  [component-id {:keys [on-menu]}]
+  [_ {:keys [on-menu]}]
   (if on-menu [:button {:id :mt-navbar--menu-button
-                        :data-click-effect :opacity}
+                        :data-click-effect :opacity
                         :on-click    #(r/dispatch on-menu)
-                        :on-mouse-up #(x.environment/blur-element!)
+                        :on-mouse-up #(dom/blur-active-element!)}
                        [:span]]))
 
 (defn- navbar-menu-items
@@ -46,15 +46,15 @@
   ; {:class (keyword or keywords in vector)(opt)
   ;  :style (map)(opt)
   ;  :threshold (px)(opt)}
-  [component-id {:keys [class style threshold] :as component-props}]
-  (let [threshold? (<= threshold @(r/subscribe [:x.environment/get-viewport-width]))]
-       [:<> [scroll-sensor.views/component ::scroll-sensor {:callback-f navbar.helpers/scroll-f
-                                                            :style {:left "0" :position "absolute" :top "0"}}]
-            [:div {:id :mt-navbar :class class :style style
-                   :data-profile (if threshold? :desktop :mobile)}
-                  [navbar-logo component-id component-props]
-                  (if threshold? [navbar-menu-items  component-id component-props]
-                                 [navbar-menu-button component-id component-props])]]))
+  [component-id {:keys [class style threshold] :as component-props}])
+  ;(let [threshold? (<= threshold @(r/subscribe [:x.environment/get-viewport-width]))]
+  ;     [:<> [scroll-sensor.views/component ::scroll-sensor {:callback-f navbar.helpers/scroll-f
+  ;                                                          :style {:left "0" :position "absolute" :top "0"}}
+  ;          [:div {:id :mt-navbar :class class :style style
+  ;                 :data-profile (if threshold? :desktop :mobile)
+  ;                [navbar-logo component-id component-props]
+  ;                (if threshold? [navbar-menu-items  component-id component-props]
+  ;                               [navbar-menu-button component-id component-props]}])
 
 (defn component
   ; @param (keyword)(opt) component-id

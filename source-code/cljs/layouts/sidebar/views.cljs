@@ -5,25 +5,30 @@
               [random.api                 :as random]
               [re-frame.api               :as r]
               [reagent.api                :as reagent]
+              [window-observer.api        :as window-observer]
               [x.components.api           :as x.components]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn- sidebar-structure
+  ; @ignore
+  ;
   ; @param (keyword) sidebar-id
   ; @param (map) sidebar-props
   ; {:content (metamorphic-content)
   ;  :threshold (px)}
   [sidebar-id {:keys [content threshold] :as sidebar-props}]
-  (if @(r/subscribe [:x.environment/viewport-min? threshold])
-       [:div (sidebar.attributes/sidebar-attributes sidebar-id sidebar-props)
-             [:div (sidebar.attributes/sidebar-sensor-attributes sidebar-id sidebar-props)]
-             [:div {:class :l-sidebar--wrapper}
-                   [:div (sidebar.attributes/sidebar-body-attributes sidebar-id sidebar-props)
-                         [x.components/content                       sidebar-id content]]]]))
+  (if (window-observer/viewport-width-min? threshold)
+      [:div (sidebar.attributes/sidebar-attributes sidebar-id sidebar-props)
+            [:div (sidebar.attributes/sidebar-sensor-attributes sidebar-id sidebar-props)]
+            [:div {:class :l-sidebar--wrapper}
+                  [:div (sidebar.attributes/sidebar-body-attributes sidebar-id sidebar-props)
+                        [x.components/content                       sidebar-id content]]]]))
 
 (defn- sidebar
+  ; @ignore
+  ;
   ; @param (keyword) sidebar-id
   ; @param (map) sidebar-props
   ; {}

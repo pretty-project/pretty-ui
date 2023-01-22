@@ -6,6 +6,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn label-props-prototype
+  ; @ignore
+  ;
   ; @param (map) label-props
   ;
   ; @return (map)

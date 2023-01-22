@@ -7,7 +7,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn stored-value-valid?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
@@ -21,7 +21,7 @@
        ((:f validator) stored-value)))
 
 (defn stored-value-invalid?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
@@ -32,7 +32,7 @@
        (not stored-value-valid?)))
 
 (defn stored-value-not-passed?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props

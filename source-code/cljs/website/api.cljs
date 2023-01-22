@@ -2,7 +2,7 @@
 (ns website.api
     (:require [website.language-selector.effects]
               [website.sidebar.effects]
-              [website.sidebar.subs]
+              [website.sidebar.side-effects]
               [website.contacts.views           :as contacts.views]
               [website.copyright-label.views    :as copyright-label.views]
               [website.created-by-link.views    :as created-by-link.views]

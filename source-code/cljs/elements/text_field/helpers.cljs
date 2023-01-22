@@ -1,106 +1,14 @@
 
 (ns elements.text-field.helpers
-    (:require [candy.api                    :refer [return]]
-              [elements.plain-field.helpers :as plain-field.helpers]
-              [pretty-css.api               :as pretty-css]
-              [re-frame.api                 :as r]
-              [string.api                   :as string]
-              [x.components.api             :as x.components]
-              [x.environment.api            :as x.environment]))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn static-adornment-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) field-id
-  ; @param (map) field-props
-  ; @param (map) adornment-props
-  ; {:color (keyword)
-  ;  :icon (keyword)(opt)
-  ;  :icon-family (keyword)(opt)}
-  ;
-  ; @return (map)
-  ; {:data-color (keyword)
-  ;  :data-font-size (keyword)
-  ;  :data-letter-spacing (keyword)
-  ;  :data-line-height (keyword)
-  ;  :data-selectable (boolean)
-  ;  :data-icon-family (keyword)}
-  [field-id field-props {:keys [color icon icon-family]}]
-  ; BUG#2105 (source-code/cljs/elements/plain_field/helpers.cljs)
-  (merge (plain-field.helpers/field-accessory-attributes field-id field-props)
-         {:data-letter-spacing :auto
-          :data-line-height    :text-block
-          :data-reveal-effect  :delayed
-          :data-selectable     false}
-         (if icon {:data-icon-family icon-family})
-         (if icon {:data-icon-size :s}
-                  {:data-font-size :xs})))
-
-(defn button-adornment-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) field-id
-  ; @param (map) field-props
-  ; @param (map) adornment-props
-  ; {:color (keyword)
-  ;  :disabled? (boolean)(opt)
-  ;  :icon (keyword)(opt)
-  ;  :icon-family (keyword)(opt)
-  ;   :material-symbols-filled, :material-symbols-outlined
-  ;   Default: :material-symbols-outlined
-  ;  :on-click (metamorphic-event)
-  ;  :tab-indexed? (boolean)(opt)
-  ;   Default: true
-  ;  :tooltip-content (metamorphic-content)(opt)}
-  ;
-  ; @return (map)
-  ; {}
-  [field-id field-props {:keys [color disabled? icon icon-family on-click tab-indexed? tooltip-content]}]
-  ; BUG#2105 (source-code/cljs/elements/plain_field/helpers.cljs)
-  (merge (plain-field.helpers/field-accessory-attributes field-id field-props)
-         {:data-color            color
-          :data-click-effect     :opacity
-          :data-letter-spacing   :auto
-          :data-line-height      :text-block
-          :data-reveal-effect    :delayed
-          :data-selectable       false
-          :data-tooltip-content  (x.components/content tooltip-content)
-          :data-tooltip-position :left}
-         (if icon                {:data-icon-family icon-family
-                                  :data-icon-size :s}
-                                 {:data-font-size :xs})
-         (if disabled?           {:disabled   "1" :data-disabled true})
-         (if-not tab-indexed?    {:tab-index "-1"})
-         (if-not disabled?       {:on-mouse-up #(do (r/dispatch on-click)
-                                                    (x.environment/blur-element!))})))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn field-placeholder-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) field-id
-  ; @param (map) field-props
-  ;
-  ; @return (map)
-  [field-id field-props]
-  ; HACK#9760 (source-code/cljs/elements/plain_field/helpers.cljs)
-  {:data-font-size      :xs
-   :data-letter-spacing :auto
-   :data-line-height    :text-block
-   :data-reveal-effect  :delayed
-   :data-selectable     false
-   :data-text-overflow  :hidden})
+    (:require [elements.plain-field.helpers :as plain-field.helpers]
+              [noop.api                     :refer [return]]
+              [string.api                   :as string]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn empty-field-adornment-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
@@ -120,7 +28,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn field-line-count
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
@@ -141,7 +49,7 @@
                       (return 1))))
 
 (defn field-auto-height
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
@@ -175,90 +83,3 @@
        (case line-height :text-block (str "calc(var( --text-block-height-" (name font-size)   " ) * "line-count" + 12px)")
                          :native     (str "calc(var( --line-height-"       (name font-size)   " ) * "line-count" + 12px)")
                                      (str "calc(var( --line-height-"       (name line-height) " ) * "line-count" + 12px)"))))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn input-emphasize-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) field-id
-  ; @param (map) field-props
-  ;
-  ; @return (map)
-  ; {:style (map)
-  ;   {:height (string)}}
-  [field-id field-props]
-  {:style {:height (field-auto-height field-id field-props)}})
-
-(defn input-container-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) field-id
-  ; @param (map) field-props
-  ; {}
-  ;
-  ; @return (map)
-  ; {}
-  [_ {:keys [border-color border-radius border-width style] :as field-props}]
-  (-> {:data-letter-spacing :auto
-       :style               style}
-      (pretty-css/border-attributes field-props)
-      (pretty-css/font-attributes   field-props)
-      (pretty-css/indent-attributes field-props)
-      (pretty-css/marker-attributes field-props)))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn field-input-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) field-id
-  ; @param (map) field-props
-  ; {:autofill-name (keyword)
-  ;  :date-from (string)(opt)
-  ;  :date-to (string)(opt)
-  ;  :disabled? (boolean)(opt)
-  ;  :max-length (integer)(opt)
-  ;  :type (keyword)(opt)
-  ;   :password, :text}
-  ;
-  ; @return (map)
-  ; {:auto-complete (keyword)
-  ;  :max (string)
-  ;  :max-length (integer)
-  ;  :min (string)
-  ;  :name (keyword)
-  ;  :type (keyword)}
-  [field-id {:keys [autofill-name date-from date-to disabled? max-length type] :as field-props}]
-  ; HACK#9760 (source-code/cljs/elements/plain_field/helpers.cljs)
-  ;
-  ; The {:type :date} fields range could being set by the :min and :max properties.
-  (merge (plain-field.helpers/field-input-attributes field-id field-props)
-         {:data-reveal-effect :delayed
-          :max-length         max-length
-          :type               type}
-         (if disabled? {}
-                       {:auto-complete autofill-name
-                        :min           date-from
-                        :max           date-to
-                        :name          autofill-name})))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn field-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) field-id
-  ; @param (map) field-props
-  ; {:stretch-orientation (keyword)}
-  ;
-  ; @return (map)
-  ; {:data-stretch-orientation (keyword)}
-  [_ {:keys [stretch-orientation] :as field-props}]
-  (-> {:data-stretch-orientation stretch-orientation}
-      (pretty-css/default-attributes          field-props)
-      (pretty-css/element-min-size-attributes field-props)
-      (pretty-css/outdent-attributes          field-props)))

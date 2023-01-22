@@ -1,9 +1,9 @@
 
-(ns elements.toggle.helpers
-    (:require [pretty-css.api    :as pretty-css]
-              [hiccup.api        :as hiccup]
-              [re-frame.api      :as r]
-              [x.environment.api :as x.environment]))
+(ns elements.toggle.attributes
+    (:require [dom.api        :as dom]
+              [pretty-css.api :as pretty-css]
+              [hiccup.api     :as hiccup]
+              [re-frame.api   :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -14,11 +14,12 @@
   ; @param (keyword) toggle-id
   ; @param (map) toggle-props
   ; {:disabled? (boolean)(opt)
-  ;  :on-click (metamorphic-event)
+  ;  :on-click (metamorphic-event)(opt)
   ;  :on-mouse-over (metamorphic-event)(opt)}
   ;
   ; @return (map)
-  ; {:data-click-effect (keyword)
+  ; {:class (keyword or keywords in vector)
+  ;  :data-click-effect (keyword)
   ;  :data-selectable (boolean)
   ;  :data-text-overflow (keyword)
   ;  :disabled (boolean)
@@ -28,19 +29,22 @@
   ;  :on-mouse-up (function)}
   [toggle-id {:keys [disabled? on-click on-mouse-over] :as toggle-props}]
   ; XXX#4460 (source-code/cljs/elements/button/helpers.cljs)
-  (-> (if disabled? {:disabled           true
+  (-> (if disabled? {:class              :e-toggle--body
+                     :disabled           true
                      :data-selectable    false
                      :data-text-overflow :no-wrap}
-                    {:data-selectable    false
+                    {:class              :e-toggle--body
+                     :data-selectable    false
                      :data-text-overflow :no-wrap
                      :id                 (hiccup/value toggle-id "body")
                      :on-click           #(r/dispatch on-click)
                      :on-mouse-over      #(r/dispatch on-mouse-over)
-                     :on-mouse-up        #(x.environment/blur-element! toggle-id)
+                     :on-mouse-up        #(dom/blur-active-element!)
                      :data-click-effect  :opacity})
       (pretty-css/border-attributes toggle-props)
       (pretty-css/color-attributes  toggle-props)
-      (pretty-css/indent-attributes toggle-props)))
+      (pretty-css/indent-attributes toggle-props)
+      (pretty-css/link-attributes   toggle-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -53,5 +57,6 @@
   ;
   ; @return (map)
   [_ toggle-props]
-  (-> {} (pretty-css/default-attributes toggle-props)
-         (pretty-css/outdent-attributes toggle-props)))
+  (-> {:class :e-toggle}
+      (pretty-css/default-attributes toggle-props)
+      (pretty-css/outdent-attributes toggle-props)))

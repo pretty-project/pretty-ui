@@ -5,6 +5,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn list-props-prototype
+  ; @ignore
+  ;
   ; @param (map) list-props
   ;
   ; @return (map)

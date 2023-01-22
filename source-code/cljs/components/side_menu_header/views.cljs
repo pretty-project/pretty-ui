@@ -11,6 +11,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- app-home-button
+  ; @ignore
+  ;
   ; @param (keyword) header-id
   ; @param (map) header-props
   [_ _]
@@ -23,6 +25,8 @@
                                           :on-click []}]))
 
 (defn- side-menu-header
+  ; @ignore
+  ;
   ; @param (keyword) header-id
   ; @param (map) header-props
   [header-id header-props]

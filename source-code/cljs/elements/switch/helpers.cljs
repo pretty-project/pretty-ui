@@ -1,8 +1,8 @@
 
 (ns elements.switch.helpers
-    (:require [pretty-css.api    :as pretty-css]
-              [re-frame.api      :as r]
-              [x.environment.api :as x.environment]))
+    (:require [dom.api        :as dom]
+              [pretty-css.api :as pretty-css]
+              [re-frame.api   :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -41,7 +41,7 @@
                :data-switched option-switched?}
               (if disabled? {:disabled    true}
                             {:on-click    #(r/dispatch [:elements.switch/toggle-option! switch-id switch-props option])
-                             :on-mouse-up #(x.environment/blur-element! switch-id)}))))
+                             :on-mouse-up #(dom/blur-active-element!)}))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -1,64 +1,41 @@
 
 (ns elements.breadcrumbs.attributes
-    (:require [pretty-css.api    :as pretty-css]
-              [re-frame.api      :as r]
-              [x.environment.api :as x.environment]))
+    (:require [dom.api        :as dom]
+              [pretty-css.api :as pretty-css]
+              [re-frame.api   :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn static-crumb-attributes
+(defn crumb-attributes
   ; @param (keyword) breadcrumbs-id
   ; @param (map) breadcrumbs-props
-  ; @param (map) crumb
+  ; @param (map) crumb-props
+  ; {}
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
-  ;  :data-color (keyword)
-  ;  :data-font-size (keyword)
-  ;  :data-letter-spacing (keyword)
-  ;  :data-line-height (keyword)
-  ;  :data-selectable (boolean)
-  ;  :data-text-overflow (keyword)}
-  [_ _ _]
-  {:class               :e-breadcrumbs--crumb
-   :data-color          :muted
-   :data-font-size      :xs
-   :data-letter-spacing :auto
-   :data-line-height    :text-block
-   :data-selectable     false
-   :data-text-overflow  :ellipsis})
-
-(defn button-crumb-attributes
-  ; @param (keyword) breadcrumbs-id
-  ; @param (map) breadcrumbs-props
-  ; @param (map) crumb
-  ; {:route (string)}
-  ;
-  ; @return (map)
-  ; {:class (keyword or keywords in vector)
-  ;  :data-click-effect (boolean)
-  ;  :data-color (keyword)
   ;  :data-font-size (keyword)
   ;  :data-font-weight (keyword)
   ;  :data-letter-spacing (keyword)
   ;  :data-line-height (keyword)
   ;  :data-selectable (boolean)
+  ;  :data-text-overflow (keyword)
   ;  :on-click (function)
-  ;  :on-mouse-up (function)
-  ;  :data-text-overflow (keyword)}
-  [breadcrumbs-id _ {:keys [route]}]
-  {:class               :e-breadcrumbs--crumb
-   :data-click-effect   :opacity
-   :data-color          :muted
-   :data-font-size      :xs
-   :data-font-weight    :bold
-   :data-letter-spacing :auto
-   :data-line-height    :text-block
-   :data-selectable     false
-   :data-text-overflow  :ellipsis
-   :on-click    #(r/dispatch [:x.router/go-to! route])
-   :on-mouse-up #(x.environment/blur-element! breadcrumbs-id)})
+  ;  :on-mouse-up (function)}
+  [_ _ {:keys [on-click] :as crumb-props}]
+  (-> {:class               :e-breadcrumbs--crumb
+       :data-font-size      :xs
+       :data-font-weight    :bold
+       :data-letter-spacing :auto
+       :data-line-height    :text-block
+       :data-selectable     false
+       :data-text-overflow  :ellipsis
+       :on-click    #(r/dispatch on-click)
+       :on-mouse-up #(dom/blur-active-element!)}
+      (pretty-css/color-attributes  crumb-props)
+      (pretty-css/effect-attributes crumb-props)
+      (pretty-css/link-attributes   crumb-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

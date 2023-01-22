@@ -4,7 +4,7 @@
               [components.side-menu.prototypes :as side-menu.prototypes]
               [elements.api                    :as elements]
               [random.api                      :as random]
-              [re-frame.api                    :as r]
+              [window-observer.api             :as window-observer]
               [x.components.api                :as x.components]))
 
 ;; ----------------------------------------------------------------------------
@@ -53,5 +53,6 @@
 
   ([menu-id {:keys [threshold] :as menu-props}]
    (let [menu-props (side-menu.prototypes/menu-props-prototype menu-props)]
-        (if (or (not threshold) @(r/subscribe [:x.environment/viewport-min? threshold]))
+        (if (or (not                                 threshold)
+                (window-observer/viewport-width-min? threshold))
             [side-menu menu-id menu-props]))))

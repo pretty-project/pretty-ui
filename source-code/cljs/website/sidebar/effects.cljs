@@ -5,16 +5,20 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx :components.sidebar/show-sidebar!
+(r/reg-event-fx :website.sidebar/show-sidebar!
+  ; @param (keyword) sidebar-id
+  ;
   ; @usage
-  ; [:components.sidebar/show-sidebar!]
-  (fn [{:keys [db]} _]
-      {:db       (assoc-in db [:components :sidebar/meta-items :visible?] true)
-       :dispatch [:x.environment/add-scroll-prohibition! ::prohibition]}))
+  ; [:website.sidebar/show-sidebar! :my-sidebar]
+  (fn [_ [_ sidebar-id]]
+      {:fx-n [[:x.environment/add-scroll-prohibition! ::prohibition]
+              [:website.sidebar/show-sidebar! sidebar-id]]}))
 
-(r/reg-event-fx :components.sidebar/hide-sidebar!
+(r/reg-event-fx :website.sidebar/hide-sidebar!
+  ; @param (keyword) sidebar-id
+  ;
   ; @usage
-  ; [:components.sidebar/hide-sidebar!]
-  (fn [{:keys [db]} _]
-      {:db       (assoc-in db [:components :sidebar/meta-items :visible?] false)
-       :dispatch [:x.environment/enable-scroll!]}))
+  ; [:website.sidebar/hide-sidebar! :my-sidebar]
+  (fn [_ [_ sidebar-id]]
+      {:fx-n [[:x.environment/remove-scroll-prohibition! ::prohibition]
+              [:website.sidebar/hide-sidebar! sidebar-id]]}))

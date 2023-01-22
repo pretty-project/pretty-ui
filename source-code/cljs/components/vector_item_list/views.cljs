@@ -12,6 +12,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- vector-item-list-placeholder
+  ; @ignore
+  ;
   ; @param (keyword) list-id
   ; @param (map) list-props
   ; {:placeholder (map)(opt)
@@ -22,6 +24,8 @@
         (if label        [elements/label {:content label :font-size :l :font-weight :bold}])])
 
 (defn- vector-item-list-items
+  ; @ignore
+  ;
   ; @param (keyword) list-id
   ; @param (map) list-props
   ; {:item-element (symbol)
@@ -34,6 +38,8 @@
                   (reduce-kv f [:<>] items)))))
 
 (defn- vector-item-list
+  ; @ignore
+  ;
   ; @param (keyword) list-id
   ; @param (map) list-props
   [list-id list-props]

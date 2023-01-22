@@ -7,18 +7,22 @@
 ;; ----------------------------------------------------------------------------
 
 (defn popup-cover-attributes
+  ; @ignore
+  ;
   ; @param (keyword) popup-id
   ; @param (map) popup-props
   ; {}
   ;
   ; @return (map)
   ; {}
-  [popup-id {:keys [close-by-cover? cover-color]}]
+  [popup-id {:keys [cover-color on-cover]}]
   (merge {:class           :l-plain-popup--cover
-          :data-fill-color cover-color}
-         (if close-by-cover? {:on-click #(r/dispatch [:x.ui/remove-popup! popup-id])})))
+          :data-fill-color cover-color
+          :on-click #(r/dispatch on-cover)}))
 
 (defn popup-attributes
+  ; @ignore
+  ;
   ; @param (keyword) popup-id
   ; @param (map) popup-props
   ; {}

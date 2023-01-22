@@ -43,9 +43,9 @@
   ; @param (map) group-props
   [group-id group-props]
   [:div (chip-group.attributes/chip-group-attributes group-id group-props)
-        [element.views/element-label                 group-id group-props]
+        [element.views/element-label group-id group-props]
         [:div (chip-group.attributes/chip-group-body-attributes group-id group-props)
-              [chip-group-chips                                 group-id group-props]]])
+              [chip-group-chips group-id group-props]]])
 
 (defn element
   ; @param (keyword)(opt) group-id

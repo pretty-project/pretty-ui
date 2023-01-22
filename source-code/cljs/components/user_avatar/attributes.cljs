@@ -8,6 +8,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn avatar-color-attributes
+  ; @ignore
+  ;
   ; @param (keyword) avatar-id
   ; @param (map) avatar-props
   ; {:colors (strings in vector)
@@ -46,6 +48,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn avatar-body-attributes
+  ; @ignore
+  ;
   ; @param (keyword) avatar-id
   ; @param (map) avatar-props
   ; {:size (px)
@@ -64,6 +68,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn avatar-attributes
+  ; @ignore
+  ;
   ; @param (keyword) avatar-id
   ; @param (map) avatar-props
   ;

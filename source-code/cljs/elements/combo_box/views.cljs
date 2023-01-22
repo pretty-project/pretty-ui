@@ -27,7 +27,7 @@
   [:button {:class :e-combo-box--option
             :on-mouse-down #(.preventDefault %)
             :on-mouse-up   #(r/dispatch [:elements.combo-box/select-option! box-id box-props option])
-           ;:data-selected ...
+            ;:data-selected ...
             :data-highlighted (= option-dex (combo-box.helpers/get-highlighted-option-dex box-id))}
            (if option-component [option-component box-id box-props option]
 

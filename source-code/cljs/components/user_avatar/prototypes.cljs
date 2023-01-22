@@ -6,6 +6,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn avatar-props-prototype
+  ; @ignore
+  ;
   ; @param (map) avatar-props
   ;
   ; @return (map)

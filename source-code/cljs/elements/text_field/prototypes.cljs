@@ -1,8 +1,8 @@
 
 (ns elements.text-field.prototypes
-    (:require [candy.api                   :refer [param return]]
-              [elements.input.helpers      :as input.helpers]
+    (:require [elements.input.helpers      :as input.helpers]
               [elements.text-field.helpers :as text-field.helpers]
+              [noop.api                    :refer [param return]]
               [random.api                  :as random]
               [vector.api                  :as vector]))
 
@@ -10,23 +10,34 @@
 ;; ----------------------------------------------------------------------------
 
 (defn adornment-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
+  ; @param (map) field-props
   ; @param (map) adornment-props
-  ; {:icon (keyword)(opt)}
+  ; {:icon (keyword)(opt)
+  ;  :label (metamorphic-content)(opt)
+  ;  :on-click (metamorphic-event)(opt)}
   ;
   ; @return (map)
-  ; {:color (keyword)
+  ; {:click-effect (keyword)
+  ;  :color (keyword)
   ;  :icon-family (keyword)
   ;  :tab-indexed? (boolean)}
-  [{:keys [icon] :as adornment-props}]
-  (merge (if icon {:icon-family :material-symbols-outlined})
+  [field-props {:keys [icon label on-click] :as adornment-props}]
+  (merge (if icon     {:icon-family    :material-symbols-outlined
+                       :icon-size      :s})
+         (if label    {:font-size      :xxs
+                       :letter-spacing :auto
+                       :line-height    :text-block})
+         (if on-click {:click-effect :opacity})
          {:color :default
           :tab-indexed? true}
-         (param adornment-props)))
+         (param adornment-props)
+         ; Inherits the reveal effect from the field-props into the adornment-props
+         (select-keys field-props [:reveal-effect])))
 
 (defn end-adornments-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
@@ -47,7 +58,7 @@
                  (return end-adornments)))
 
 (defn field-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props

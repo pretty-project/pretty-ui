@@ -21,9 +21,10 @@
              [elements/button ::link
                               {:color     color
                                :font-size :xs
-                               :on-click  {:fx [:x.environment/open-tab! "https://www.monotech.hu"]}
+                               :href      "https://www.monotech.hu"
                                :label     copyright-information
-                               :style     {:opacity ".75"}}]]))
+                               :style     {:opacity ".75"}
+                               :target    :blank}]]))
 
 (defn component
   ; @param (keyword)(opt) component-id

@@ -13,6 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- footer-structure
+  ; @ignore
+  ;
   ; @param (keyword) popup-id
   ; @param (map) popup-props
   ; {:footer (metamorphic-content)}
@@ -22,6 +24,8 @@
               [x.components/content popup-id footer]]])
 
 (defn- footer
+  ; @ignore
+  ;
   ; @param (keyword) popup-id
   ; @param (map) popup-props
   ; {:footer (metamorphic-content)(opt)}
@@ -34,6 +38,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- header-structure
+  ; @ignore
+  ;
   ; @param (keyword) popup-id
   ; @param (map) popup-props
   ; {:header (metamorphic-content)}
@@ -43,6 +49,8 @@
               [x.components/content popup-id header]]])
 
 (defn- header
+  ; @ignore
+  ;
   ; @param (keyword) popup-id
   ; @param (map) popup-props
   ; {:header (metamorphic-content)(opt)}
@@ -55,6 +63,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- body
+  ; @ignore
+  ;
   ; @param (keyword) popup-id
   ; @param (map) popup-props
   ; {:body (metamorphic-content)
@@ -77,6 +87,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- struct-popup-structure
+  ; @ignore
+  ;
   ; @param (keyword) popup-id
   ; @param (map) popup-props
   ; {:cover-color (keyword or string)(opt)}
@@ -91,6 +103,8 @@
                     [footer popup-id popup-props]]]])
 
 (defn- struct-popup
+  ; @ignore
+  ;
   ; @param (keyword) popup-id
   ; @param (map) popup-props
   ; {}
@@ -115,7 +129,6 @@
   ;  :border-width (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;   Default: :xxs
-  ;  :close-by-cover? (boolean)(opt)
   ;  :cover-color (keyword or string)(opt)
   ;  :fill-color (keyword or string)(opt)
   ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
@@ -131,6 +144,7 @@
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;  :min-width (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;  :on-cover (metamorphic-event)(opt)
   ;  :on-mount (metamorphic-event)(opt)
   ;  :on-unmount (metamorphic-event)(opt)
   ;  :outdent (map)(opt)

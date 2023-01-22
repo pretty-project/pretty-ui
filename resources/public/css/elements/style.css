@@ -580,6 +580,38 @@
 
 
 
+/***** Icon-button *****/
+/*** Element ***/
+
+.e-icon-button {
+  align-items:    center;
+  display:        flex;
+  flex-direction: column;
+}
+
+/*** Element ***/
+
+/*** Body ***/
+
+.e-icon-button--body {
+  cursor: pointer;
+}
+
+/*** Body ***/
+
+/*** Icon-button label ***/
+
+.e-icon-button--label {
+  font-size:      var( --font-size-xxs      );
+  letter-spacing: var( --letter-spacing-xxs );
+  line-height:    var( --line-height-xxs    );
+}
+
+/*** Icon-button label ***/
+/***** Icon-button *****/
+
+
+
 /***** Label *****/
 /*** Element ***/
 
@@ -671,139 +703,6 @@
 
 /*** Section ***/
 /***** Line diagram *****/
-
-
-
-/***** Icon-button *****/
-/*** Icon-button progress *****/
-
-.e-icon-button--progress-svg {
-  height: 24px;
-  width: 24px;
-
-  /* BUG#8801
-   * Az .e-icon-button--body::before pszeudóelem abszolút pozícionálású,
-   * ezért szükséges, hogy az .e-icon-button--progress-svg is az legyen,
-   * különben a pszeudóelem eltakarná az svg elemet! */
-  position: absolute;
-}
-
-.e-icon-button--progress-circle {
-  fill: transparent;
-}
-
-/*** Icon-button progress *****/
-
-/*** Body ***/
-
-.e-icon-button--body {
-  align-items: center;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-
-  /* XXX#0990 (source-code/cljs/elements/icon_button/helpers.cljs) */
-  width: 100%;
-}
-
-.e-icon-button--body[data-hover-color]:hover {
-  /* XXX#0017
-   * Az ikon gomb elem hover-color színe nem az .e-icon-button--body elemen jelenik
-   * meg, hanem annak pszeudó-elemén! */
-  background-color: transparent;
-}
-
-/* XXX#0017 */
-.e-icon-button--body[data-border-radius="xxs"]::before { border-radius: var( --border-radius-xxs ); }
-.e-icon-button--body[data-border-radius="xs"]::before  { border-radius: var( --border-radius-xs  ); }
-.e-icon-button--body[data-border-radius="s"]::before   { border-radius: var( --border-radius-s   ); }
-.e-icon-button--body[data-border-radius="m"]::before   { border-radius: var( --border-radius-m   ); }
-.e-icon-button--body[data-border-radius="l"]::before   { border-radius: var( --border-radius-l   ); }
-.e-icon-button--body[data-border-radius="xl"]::before  { border-radius: var( --border-radius-xl  ); }
-.e-icon-button--body[data-border-radius="xxl"]::before { border-radius: var( --border-radius-xxl ); }
-.e-icon-button--body[data-border-radius="3xl"]::before { border-radius: var( --border-radius-3xl ); }
-.e-icon-button--body[data-border-radius="4xl"]::before { border-radius: var( --border-radius-4xl ); }
-.e-icon-button--body[data-border-radius="5xl"]::before { border-radius: var( --border-radius-5xl ); }
-
-/* XXX#0017 */
-[data-hover-color="var"].e-icon-button--body:hover::before       { background-color: var( --hover-color           ); }
-[data-hover-color="default"].e-icon-button--body:hover::before   { background-color: var( --hover-color-default   ); }
-[data-hover-color="muted"].e-icon-button--body:hover::before     { background-color: var( --hover-color-muted     ); }
-[data-hover-color="highlight"].e-icon-button--body:hover::before { background-color: var( --hover-color-highlight ); }
-[data-hover-color="invert"].e-icon-button--body:hover::before    { background-color: var( --hover-color-invert    ); }
-[data-hover-color="primary"].e-icon-button--body:hover::before   { background-color: var( --hover-color-primary   ); }
-[data-hover-color="secondary"].e-icon-button--body:hover::before { background-color: var( --hover-color-secondary ); }
-[data-hover-color="success"].e-icon-button--body:hover::before   { background-color: var( --hover-color-success   ); }
-[data-hover-color="warning"].e-icon-button--body:hover::before   { background-color: var( --hover-color-warning   ); }
-
-/*** Body ***/
-
-/*** Icon-button hover ***/
-
-.e-icon-button--body::before {
-  content: '';
-  left: 6px;
-  position: absolute;
-  top: 6px;
-
-  /* Azért calc(100% - 12px) magas és széles a hover-background az ikon-button
-   * elemen, mert így az érzékelési terület szélétől 6px távolságra van, ami
-   * megegyezik a legkisebb outdent méretével (XXS outdent: 6px) */
-  width: calc(100% - 12px);
-
-  /* XXX#6610
-   * Az ikon-gomb magassága a data-block-height attributtummal változik ezért szükséges
-   * a calc függvénnyel számítani a pszeudo-elem magasságát! */
-  height: calc(100% - 12px);
-}
-
-.e-icon-button--body[data-labeled="true"]::before {
-  /* TEMP
-   * Teszt: hover-color & label együtt */
-  top: 12px;
-  height: calc(100% - 24px);
-}
-
-/*** Icon-button hover ***/
-
-/*** Icon-button icon ***/
-
-.e-icon-button--icon {
-  /* BUG#0984
-   * Az .e-icon-button--body::before {background-color: ...} tulajdonsággal
-   * rendelkező pszeudo-elem eltakarná az ikont, ha az nem abszolút pozícionálással
-   * jelenne meg, mert a pszeudo-elem a {position: absolute} beállítása miatt
-   * az ikon felett jelenne meg! */
-  left: calc(50% - 12px);
-  position: absolute;
-
-  /* XXX#6610
-   * Mi az kalkulált top érték, ami különböző data-block-height értékek mellett is működik?
-   *  */
- -top: calc()}
-
-/*** Icon-button icon ***/
-
-/*** Icon-button label ***/
-
-.e-icon-button--label {
-  font-size: 9px;
-  height: 12px;
-  letter-spacing: var( --letter-spacing-xxs );
-  line-height: 12px;
-  opacity: .75;
-  text-align: center;
-  width: 100%;
-
-  /* BUG#0984 */
-  bottom: 0;
-  left: 0;
-  position: absolute;
-}
-
-/*** Icon-button label ***/
-/***** Icon-button *****/
 
 
 
@@ -1376,8 +1275,8 @@ textarea.e-text-field--input {
   width: 12px;
 }
 
-.e-text-field--button-adornment:not([data-icon-family]),
-.e-text-field--static-adornment:not([data-icon-family]) {
+.e-text-field--adornment:not([data-icon-family]),
+.e-text-field--adornment:not([data-icon-family]) {
   font-weight: 500;
   min-width: 24px;
   text-align: center;

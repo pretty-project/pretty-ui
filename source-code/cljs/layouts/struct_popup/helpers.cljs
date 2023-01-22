@@ -8,7 +8,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn header-did-mount-f
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) popup-id
   [popup-id]
@@ -17,7 +17,7 @@
          (x.environment/setup-intersection-observer! (hiccup/value popup-id "header-sensor") f)))
 
 (defn header-will-unmount-f
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) popup-id
   [popup-id]
@@ -27,7 +27,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn footer-did-mount-f
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) popup-id
   [popup-id]
@@ -36,7 +36,7 @@
          (x.environment/setup-intersection-observer! (hiccup/value popup-id "footer-sensor") f)))
 
 (defn footer-will-unmount-f
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) popup-id
   [popup-id]

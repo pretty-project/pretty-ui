@@ -6,6 +6,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn controls-props-prototype
+  ; @ignore
+  ;
   ; @param (map) controls-props
   ;
   ; @return (map)

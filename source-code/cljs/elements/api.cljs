@@ -86,7 +86,14 @@
               [elements.thumbnail.views            :as thumbnail.views]
               [elements.toggle.views               :as toggle.views]
               [elements.vertical-polarity.views    :as vertical-polarity.views]
-              [elements.vertical-separator.views   :as vertical-separator.views]))
+              [elements.vertical-separator.views   :as vertical-separator.views]
+              [window-observer.api                 :as window-observer]))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; Initializing the viewport resize observer before using subscriptions for viewport dimensions
+(window-observer/listen-to-viewport-resize!)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

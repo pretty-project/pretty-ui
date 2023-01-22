@@ -1,9 +1,8 @@
 
 (ns elements.chip.attributes
-    (:require [pretty-css.api    :as pretty-css]
-              [re-frame.api      :as r]
-              [x.environment.api :as x.environment]))
-
+    (:require [dom.api        :as dom]
+              [pretty-css.api :as pretty-css]
+              [re-frame.api   :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -23,13 +22,13 @@
   ;  :disabled (boolean)
   ;  :on-click (function)
   ;  :on-mouse-up (function)}
-  [chip-id {{:keys [on-click]} :primary-button :keys [disabled?]}]
+  [_ {{:keys [on-click]} :primary-button :keys [disabled?]}]
   (if disabled? {:class             :e-chip--primary-button
                  :disabled          true}
                 {:class             :e-chip--primary-button
                  :data-click-effect :opacity
                  :on-click          #(r/dispatch on-click)
-                 :on-mouse-up       #(x.environment/blur-element! chip-id)}))
+                 :on-mouse-up       #(dom/blur-active-element!)}))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

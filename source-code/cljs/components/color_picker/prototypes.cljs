@@ -12,7 +12,8 @@
   ; @return (map)
   ; {}
   [{:keys [color-stamp] :as picker-props}]
-  (merge {:placeholder :choose-color!}
+  (merge {:click-effect :opacity
+          :placeholder  :choose-color!}
          (param picker-props)
          {:color-stamp (merge {:height :l :width :l}
                               (param color-stamp))}))

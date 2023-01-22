@@ -32,6 +32,15 @@
   display: flex;
   max-height: 100vh;
   transform: translateY( -50% );
+
+  /* XXX#0213
+   * By setting the .l-box-popup--wrapper element's positioning to absolute
+   * it no more expands the height of the .l-box-popup element.
+   * It's neccessarry because of the Y axis offsetting with the transform property.
+   * Without absolute positioning, the .l-box-popup element would has the same
+   * height as the .l-box-popup--wrapper which is offsetted by the transform
+   * property and no longer there where it would keep its place originally. */
+  position: absolute;
 }
 
 [data-stretch-orientation="both"]       .l-box-popup--wrapper,
@@ -207,6 +216,9 @@
   display: flex;
   max-height: 100vh;
   transform: translateY( -50% );
+
+  /* XXX#0213 */
+  position: absolute;
 }
 
 [data-stretch-orientation="both"]       .l-struct-popup--wrapper,

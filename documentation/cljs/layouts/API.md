@@ -32,7 +32,6 @@
  :border-width (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   Default: :xxs
- :close-by-cover? (boolean)(opt)
  :content (metamorphic-content)
  :cover-color (keyword or string)(opt)
  :fill-color (keyword or string)(opt)
@@ -47,6 +46,7 @@
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
  :min-width (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+ :on-cover (metamorphic-event)(opt)
  :on-mount (metamorphic-event)(opt)
  :on-unmount (metamorphic-event)(opt)
  :outdent (map)(opt)
@@ -72,9 +72,9 @@
 ```
 @param (keyword)(opt) popup-id
 @param (map) popup-props
-{:close-by-cover? (boolean)(opt)
- :content (metamorphic-content)(opt)
+{:content (metamorphic-content)(opt)
  :cover-color (keyword or string)(opt)
+ :on-cover (metamorphic-event)(opt)
  :on-mount (metamorphic-event)(opt)
  :on-unmount (metamorphic-event)(opt)
  :style (map)(opt)}
@@ -183,7 +183,6 @@
  :border-width (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   Default: :xxs
- :close-by-cover? (boolean)(opt)
  :cover-color (keyword or string)(opt)
  :fill-color (keyword or string)(opt)
   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
@@ -199,6 +198,7 @@
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
  :min-width (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+ :on-cover (metamorphic-event)(opt)
  :on-mount (metamorphic-event)(opt)
  :on-unmount (metamorphic-event)(opt)
  :outdent (map)(opt)

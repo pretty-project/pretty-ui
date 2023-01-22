@@ -10,6 +10,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- duplicate-icon-button
+  ; @ignore
+  ;
   ; @param (keyword) controls-id
   ; @param (map) controls-props
   ; {:disabled? (boolean)(opt)
@@ -28,6 +30,8 @@
                               :tooltip-position tooltip-position}]))
 
 (defn- remove-icon-button
+  ; @ignore
+  ;
   ; @param (keyword) controls-id
   ; @param (map) controls-props
   ; {:disabled? (boolean)(opt)
@@ -46,6 +50,8 @@
                               :tooltip-position tooltip-position}]))
 
 (defn- move-down-icon-button
+  ; @ignore
+  ;
   ; @param (keyword) controls-id
   ; @param (map) controls-props
   ; {:disabled? (boolean)(opt)
@@ -65,6 +71,8 @@
                               :tooltip-position tooltip-position}]))
 
 (defn- move-up-icon-button
+  ; @ignore
+  ;
   ; @param (keyword) controls-id
   ; @param (map) controls-props
   ; {:disabled? (boolean)(opt)
@@ -84,6 +92,8 @@
                               :tooltip-position tooltip-position}]))
 
 (defn- vector-item-controls
+  ; @ignore
+  ;
   ; @param (keyword) controls-id
   ; @param (map) controls-props
   [controls-id controls-props]

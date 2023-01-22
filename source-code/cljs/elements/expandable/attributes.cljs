@@ -1,9 +1,9 @@
 
 (ns elements.expandable.attributes
-    (:require [elements.expandable.helpers :as expandable.helpers]
-              [pretty-css.api              :as pretty-css]
-              [x.environment.api           :as x.environment]))
-          
+    (:require [dom.api                     :as dom]
+              [elements.expandable.helpers :as expandable.helpers]
+              [pretty-css.api              :as pretty-css]))
+
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -37,7 +37,7 @@
                  :data-click-effect :opacity
                  :data-selectable   false
                  :on-click    #(expandable.helpers/toggle! expandable-id)
-                 :on-mouse-up #(x.environment/blur-element! expandable-id)}))
+                 :on-mouse-up #(dom/blur-active-element!)}))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

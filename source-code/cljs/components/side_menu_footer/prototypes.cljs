@@ -5,6 +5,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn button-props-prototype
+  ; @ignore
+  ;
   ; @param (map) footer-props
   ;
   ; @return (map)

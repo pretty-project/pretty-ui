@@ -11,6 +11,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- side-menu-footer
+  ; @ignore
+  ;
   ; @param (keyword) footer-id
   ; @param (map) footer-props
   [footer-id footer-props]

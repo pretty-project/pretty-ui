@@ -1,6 +1,7 @@
 
 (ns elements.label.attributes
-    (:require [elements.label.helpers :as label.helpers]
+    (:require [dom.api                :as dom]
+              [elements.label.helpers :as label.helpers]
               [pretty-css.api         :as pretty-css]
               [x.components.api       :as x.components]
               [x.environment.api      :as x.environment]))
@@ -28,7 +29,7 @@
    :data-icon-family  :material-symbols-outlined
    :data-icon-size    :xs
    :on-click    #(label.helpers/toggle-info-text-visiblity! label-id)
-   :on-mouse-up #(x.environment/blur-element!               label-id)})
+   :on-mouse-up #(dom/blur-active-element!)})
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

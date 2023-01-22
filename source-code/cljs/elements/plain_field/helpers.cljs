@@ -254,7 +254,8 @@
   [field-id _]
   ; XXX#4460 (source-code/cljs/elements/button/views.cljs)
   ; BUG#2105
-  {:id (hiccup/value field-id "surface")
+  {:class :e-plain-field--surface
+   :id (hiccup/value field-id "surface")
    :on-mouse-down #(.preventDefault %)})
 
 ;; ----------------------------------------------------------------------------

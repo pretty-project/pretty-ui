@@ -9,6 +9,7 @@
               [elements.select.prototypes :as select.prototypes]
               [elements.text-field.views  :as text-field.views]
               [layouts.api                :as layouts]
+              [pretty-css.api             :as pretty-css]
               [random.api                 :as random]
               [re-frame.api               :as r]
               [reagent.api                :as reagent]
@@ -110,7 +111,8 @@
                         {:body   [select-options-body   select-id select-props]
                          :header [select-options-header select-id select-props]
                          :border-radius {:all :m}
-                         :min-width     :xxs}])
+                         :min-width     :xxs
+                         :on-cover      [:x.ui/remove-popup! :elements.select/options]}])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -131,8 +133,8 @@
   ; @param (keyword) select-id
   ; @param (map) select-props
   [select-id select-props]
-  [:div.e-select-button {:data-reveal-effect :delayed}
-                        [select-button select-id select-props]])
+  [:div (pretty-css/effect-attributes {:class :e-select-button} select-props)
+        [select-button select-id select-props]])
 
 (defn- select-layout
   ; @param (keyword) select-id
@@ -233,6 +235,8 @@
   ;   Default: :no-options
   ;  :outdent (map)(opt)
   ;   Same as the :indent property
+  ;  :reveal-effect (keyword)(opt)
+  ;   :delayed, :opacity
   ;  :style (map)(opt)
   ;  :value-path (vector)(opt)}
   ;

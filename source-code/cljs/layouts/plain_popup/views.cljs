@@ -11,6 +11,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- plain-popup-structure
+  ; @ignore
+  ;
   ; @param (keyword) popup-id
   ; @param (map) popup-props
   ; {:content (metamorphic-content)}
@@ -21,6 +23,8 @@
                               [x.components/content popup-id content]])])
 
 (defn- plain-popup
+  ; @ignore
+  ;
   ; @param (keyword) popup-id
   ; @param (map) popup-props
   ; {}
@@ -32,9 +36,9 @@
 (defn layout
   ; @param (keyword)(opt) popup-id
   ; @param (map) popup-props
-  ; {:close-by-cover? (boolean)(opt)
-  ;  :content (metamorphic-content)(opt)
+  ; {:content (metamorphic-content)(opt)
   ;  :cover-color (keyword or string)(opt)
+  ;  :on-cover (metamorphic-event)(opt)
   ;  :on-mount (metamorphic-event)(opt)
   ;  :on-unmount (metamorphic-event)(opt)
   ;  :style (map)(opt)}

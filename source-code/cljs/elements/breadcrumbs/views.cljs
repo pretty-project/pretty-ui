@@ -2,56 +2,49 @@
 (ns elements.breadcrumbs.views
     (:require [elements.breadcrumbs.attributes :as breadcrumbs.attributes]
               [elements.breadcrumbs.prototypes :as breadcrumbs.prototypes]
+              [hiccup.api                      :as hiccup]
               [random.api                      :as random]
               [x.components.api                :as x.components]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- breadcrumbs-crumb-label
-  ; @ignore
-  ;
-  ; @param (keyword) breadcrumbs-id
-  ; @param (map) breadcrumbs-props
-  ; @param (map) crumb
-  ; {:label (metamorphic-content)(opt)
-  ;  :placeholder (metamorphic-content)(opt)}
-  [_ _ {:keys [label placeholder]}]
-  (if (-> label       x.components/content empty?)
-      (-> placeholder x.components/content)
-      (-> label       x.components/content)))
-
 (defn- breadcrumbs-crumb
   ; @ignore
   ;
-  ; @ignore
-  ;
   ; @param (keyword) breadcrumbs-id
   ; @param (map) breadcrumbs-props
   ; @param (map) crumb
-  ; {:route (string)(opt)
-  [breadcrumbs-id breadcrumbs-props {:keys [route] :as crumb}]
-  (if route [:button (breadcrumbs.attributes/button-crumb-attributes breadcrumbs-id breadcrumbs-props crumb)
-                     (breadcrumbs-crumb-label                        breadcrumbs-id breadcrumbs-props crumb)]
-            [:div    (breadcrumbs.attributes/static-crumb-attributes breadcrumbs-id breadcrumbs-props crumb)
-                     (breadcrumbs-crumb-label                        breadcrumbs-id breadcrumbs-props crumb)]))
+  ; {:href (string)(opt)
+  ;  :label (metamorphic-content)(opt)
+  ;  :on-click (metamorphic-event)(opt)
+  ;  :placeholder (metamorphic-content)(opt)}
+  [breadcrumbs-id breadcrumbs-props {:keys [href label on-click placeholder] :as crumb}]
+  [(cond href :a on-click :button :else :div)
+   (breadcrumbs.attributes/crumb-attributes breadcrumbs-id breadcrumbs-props crumb)
+   (if (-> label       x.components/content empty?)
+       (-> placeholder x.components/content)
+       (-> label       x.components/content))])
 
 (defn- breadcrumbs-crumb-list
-  ; @ignore
-  ;
   ; @ignore
   ;
   ; @param (keyword) breadcrumbs-id
   ; @param (map) breadcrumbs-props
   ; {:crumbs (maps in vector)}
   [breadcrumbs-id {:keys [crumbs] :as breadcrumbs-props}]
-  (letfn [(f [crumb-list dex crumb] (conj crumb-list (if (not= dex 0) [:div {:class :e-breadcrumbs--separator}])
-                                                     [breadcrumbs-crumb breadcrumbs-id breadcrumbs-props crumb]))]
-         (reduce-kv f [:<>] crumbs)))
+  ; A separator DIV placed between crumbs instead of applying CSS gap because
+  ; this way, the separator tags contain the after pseudo elements which display
+  ; a small dot between each crumbs.
+  ; In case of the crumbs contain the after pseudo elements they might be part
+  ; of the crumbs and might be clickable. And we don't want clickable dots between crumbs.
+  (letfn [(f [dex crumb-props]
+             (let [crumb-props (breadcrumbs.prototypes/crumb-props-prototype crumb-props)]
+                  [:<> (if (not= 0 dex) [:div {:class :e-breadcrumbs--separator}])
+                       [breadcrumbs-crumb breadcrumbs-id breadcrumbs-props crumb-props]]))]
+         (hiccup/put-with-indexed [:<>] crumbs f)))
 
 (defn- breadcrumbs
-  ; @ignore
-  ;
   ; @ignore
   ;
   ; @param (keyword) breadcrumbs-id
@@ -66,9 +59,10 @@
   ; @param (map) breadcrumbs-props
   ; {:class (keyword or keywords in vector)(opt)
   ;  :crumbs (maps in vector)
-  ;   [{:label (metamorphic-content)(opt)
-  ;     :placeholder (metamorphic-content)(opt)
-  ;     :route (string)(opt)}]
+  ;   [{:href (string)(opt)
+  ;     :label (metamorphic-content)(opt)
+  ;     :on-click (metamorphic-event)(opt)
+  ;     :placeholder (metamorphic-content)(opt)}]
   ;  :disabled? (boolean)(opt)
   ;  :font-size (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :inherit
@@ -94,5 +88,5 @@
    [element (random/generate-keyword) breadcrumbs-props])
 
   ([breadcrumbs-id breadcrumbs-props]
-   (let [] ; breadcrumbs-props (breadcrumbs.prototypes/breadcrumbs-props-prototype breadcrumbs-props)
+   (let [breadcrumbs-props (breadcrumbs.prototypes/breadcrumbs-props-prototype breadcrumbs-props)]
         [breadcrumbs breadcrumbs-id breadcrumbs-props])))

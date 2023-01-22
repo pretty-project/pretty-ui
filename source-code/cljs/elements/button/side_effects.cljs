@@ -1,9 +1,9 @@
 
 (ns elements.button.side-effects
-    (:require [hiccup.api        :as hiccup]
+    (:require [dom.api           :as dom]
+              [hiccup.api        :as hiccup]
               [re-frame.api      :as r]
               [x.environment.api :as x.environment]))
-
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

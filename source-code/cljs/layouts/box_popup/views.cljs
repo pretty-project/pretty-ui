@@ -11,6 +11,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- box-popup-structure
+  ; @ignore
+  ;
   ; @param (keyword) popup-id
   ; @param (map) popup-props
   ; {}
@@ -23,6 +25,8 @@
                           [x.components/content popup-id content]]]]])
 
 (defn- box-popup
+  ; @ignore
+  ;
   ; @param (keyword) popup-id
   ; @param (map) popup-props
   ; {}
@@ -46,7 +50,6 @@
   ;  :border-width (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;   Default: :xxs
-  ;  :close-by-cover? (boolean)(opt)
   ;  :content (metamorphic-content)
   ;  :cover-color (keyword or string)(opt)
   ;  :fill-color (keyword or string)(opt)
@@ -61,6 +64,7 @@
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;  :min-width (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;  :on-cover (metamorphic-event)(opt)
   ;  :on-mount (metamorphic-event)(opt)
   ;  :on-unmount (metamorphic-event)(opt)
   ;  :outdent (map)(opt)

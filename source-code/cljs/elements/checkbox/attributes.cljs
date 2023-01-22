@@ -1,8 +1,8 @@
 
 (ns elements.checkbox.attributes
-    (:require [pretty-css.api    :as pretty-css]
-              [re-frame.api      :as r]
-              [x.environment.api :as x.environment]))
+    (:require [dom.api        :as dom]
+              [pretty-css.api :as pretty-css]
+              [re-frame.api   :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -75,7 +75,7 @@
                :data-click-effect :targeted}
               (if disabled? {:disabled    true}
                             {:on-click    #(r/dispatch [:elements.checkbox/toggle-option! checkbox-id checkbox-props option])
-                             :on-mouse-up #(x.environment/blur-element! checkbox-id)}))))
+                             :on-mouse-up #(dom/blur-active-element!)}))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

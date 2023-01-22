@@ -6,6 +6,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn sidebar-sensor-attributes
+  ; @ignore
+  ;
   ; @param (keyword) sidebar-id
   ; @param (map) sidebar-props
   ; {:fill-color (keyword or string)(opt)}
@@ -24,6 +26,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn sidebar-body-attributes
+  ; @ignore
+  ;
   ; @param (keyword) sidebar-id
   ; @param (map) sidebar-props
   ; {:style (map)(opt)}
@@ -43,6 +47,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn sidebar-attributes
+  ; @ignore
+  ;
   ; @param (keyword) sidebar-id
   ; @param (map) sidebar-props
   ; {:position (keyword)}

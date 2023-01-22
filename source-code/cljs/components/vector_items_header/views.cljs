@@ -10,6 +10,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- add-icon-button
+  ; @ignore
+  ;
   ; @param (keyword) header-id
   ; @param (map) header-props
   ; {}
@@ -23,6 +25,8 @@
                               :tooltip-content :add!}]))
 
 (defn- vector-items-header
+  ; @ignore
+  ;
   ; @param (keyword) header-id
   ; @param (map) header-props
   ; {}

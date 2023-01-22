@@ -1,6 +1,7 @@
 
 (ns elements.select.helpers
-    (:require [elements.plain-field.helpers :as plain-field.helpers]
+    (:require [dom.api                      :as dom]
+              [elements.plain-field.helpers :as plain-field.helpers]
               [re-frame.api                 :as r]
               [string.api                   :as string]
               [x.components.api             :as x.components]
@@ -57,7 +58,7 @@
         :data-line-height    :text-block
         :data-selected       option-selected?
         :on-click            #(r/dispatch on-click)
-        :on-mouse-up         #(x.environment/blur-element! select-id)}))
+        :on-mouse-up         #(dom/blur-active-element!)}))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

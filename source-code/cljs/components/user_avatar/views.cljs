@@ -12,15 +12,9 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- user-avatar-color
-  ; @param (keyword) avatar-id
-  ; @param (map) avatar-props
-  ; @param (integer) dex
-  ; @param (string) color
-  [avatar-id avatar-props dex color]
-  [:circle (user-avatar.attributes/avatar-color-attributes avatar-id avatar-props dex color)])
-
 (defn- user-avatar-colors
+  ; @ignore
+  ;
   ; @param (keyword) avatar-id
   ; @param (map) avatar-props
   ; {:colors (strings in vector)
@@ -28,10 +22,13 @@
   [avatar-id {:keys [colors size] :as avatar-props}]
   (let [view-box (svg/view-box size size)]
        [:svg {:class :c-user-avatar--colors :view-box view-box :style {:width (css/px size) :height (css/px size)}}
-             (letfn [(f [colors dex color] (conj colors [user-avatar-color avatar-id avatar-props dex color]))]
+             (letfn [(f [colors dex color]
+                        (conj colors [:circle (user-avatar.attributes/avatar-color-attributes avatar-id avatar-props dex color)]))]
                     (reduce-kv f [:<>] colors))]))
 
 (defn- user-avatar
+  ; @ignore
+  ;
   ; @param (keyword) avatar-id
   ; @param (map) avatar-props
   ; {:colors (strings in map)(opt)

@@ -2,7 +2,6 @@
 (ns website.credits.views
     (:require [elements.api                  :as elements]
               [random.api                    :as random]
-              [re-frame.api                  :as r]
               [website.copyright-label.views :as copyright-label.views]
               [website.credits.prototypes    :as credits.prototypes]
               [website.mt-logo.views         :as mt-logo.views]))
@@ -26,11 +25,12 @@
   ; @param (map) component-props
   [component-id component-props]
   [elements/toggle ::created-by
-                   {:content  [:div {:style {:align-items "center" :display "flex" :flex-direction "column"}}
+                   {:content [:div {:style {:align-items "center" :display "flex" :flex-direction "column"}
                                     [mt-logo.views/component component-id component-props]
-                                    [created-by-label        component-id component-props]]
-                    :on-click {:fx [:x.environment/open-tab! "https://www.monotech.hu"]}
-                    :outdent  {:bottom :xxs}}])
+                                    [created-by-label        component-id component-props]}]
+                    :href    "https://www.monotech.hu"
+                    :outdent {:bottom :xxs}
+                    :target  :blank}])
 
 (defn- credits
   ; @param (keyword) component-id

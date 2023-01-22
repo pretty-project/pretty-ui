@@ -6,6 +6,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn button-props-prototype
+  ; @ignore
+  ;
   ; @param (map) button-props
   ; {:icon (keyword)(opt)}
   ;

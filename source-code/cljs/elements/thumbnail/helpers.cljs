@@ -1,8 +1,8 @@
 
 (ns elements.thumbnail.helpers
-    (:require [pretty-css.api    :as pretty-css]
-              [re-frame.api      :as r]
-              [x.environment.api :as x.environment]))
+    (:require [dom.api        :as dom]
+              [pretty-css.api :as pretty-css]
+              [re-frame.api   :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -16,7 +16,7 @@
   ;
   ; @return (map)
   ; {}
-  [thumbnail-id {:keys [background-size disabled? on-click style] :as thumbnail-props}]
+  [_ {:keys [background-size disabled? on-click style] :as thumbnail-props}]
   (-> (if disabled? {:disabled              true
                      :data-background-size  background-size
                      :data-selectable       false
@@ -26,7 +26,7 @@
                      :data-selectable       false
                      :style                 style
                      :on-click              #(r/dispatch on-click)
-                     :on-mouse-up           #(x.environment/blur-element! thumbnail-id)})
+                     :on-mouse-up           #(dom/blur-active-element!)})
       (pretty-css/border-attributes         thumbnail-props)
       (pretty-css/indent-attributes         thumbnail-props)
       (pretty-css/thumbnail-size-attributes thumbnail-props)))

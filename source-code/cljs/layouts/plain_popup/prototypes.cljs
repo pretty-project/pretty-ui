@@ -6,12 +6,14 @@
 ;; ----------------------------------------------------------------------------
 
 (defn popup-props-prototype
+  ; @ignore
+  ;
   ; @param (map) popup-props
   ; {}
   ;
   ; @return (map)
   ; {}
-  [{:keys [close-by-cover?] :as popup-props}]
+  [{:keys [on-cover] :as popup-props}]
   (merge {}
-         (if close-by-cover? {:cover-color :black})
+         (if on-cover {:cover-color :black})
          (param popup-props)))

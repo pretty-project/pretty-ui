@@ -1,8 +1,8 @@
 
 (ns components.color-picker.attributes
-    (:require [pretty-css.api    :as pretty-css]
-              [re-frame.api      :as r]
-              [x.environment.api :as x.environment]))
+    (:require [dom.api        :as dom]
+              [pretty-css.api :as pretty-css]
+              [re-frame.api   :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -59,12 +59,12 @@
   [picker-id {{:keys [gap]} :color-stamp :keys [on-select style value-path] :as picker-props}]
   (let [selector-props {:on-select on-select :value-path value-path}
         on-click       [:elements.color-selector/render-selector! picker-id selector-props]]
-       (-> {:class             :c-color-picker--body
-            :data-click-effect :opacity
-            :data-column-gap   gap
-            :on-click          #(r/dispatch on-click)
-            :on-mouse-up       #(x.environment/blur-element!)
-            :style             style}
+       (-> {:class           :c-color-picker--body
+            :data-column-gap gap
+            :on-click        #(r/dispatch on-click)
+            :on-mouse-up     #(dom/blur-active-element!)
+            :style           style}
+           (pretty-css/effect-attributes picker-props)
            (pretty-css/indent-attributes picker-props))))
 
 ;; ----------------------------------------------------------------------------

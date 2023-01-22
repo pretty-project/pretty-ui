@@ -7,6 +7,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn popup-cover-attributes
+  ; @ignore
+  ;
   ; @param (keyword) popup-id
   ; @param (map) popup-props
   ;
@@ -17,6 +19,8 @@
          {:class :l-box-popup--cover}))
 
 (defn popup-structure-attributes
+  ; @ignore
+  ;
   ; @param (keyword) popup-id
   ; @param (map) popup-props
   ; {:style (map)(opt)}
@@ -31,6 +35,8 @@
       (pretty-css/indent-attributes popup-props)))
 
 (defn popup-wrapper-attributes
+  ; @ignore
+  ;
   ; @param (keyword) popup-id
   ; @param (map) popup-props
   ;
@@ -43,6 +49,8 @@
       (pretty-css/outdent-attributes          popup-props)))
 
 (defn popup-attributes
+  ; @ignore
+  ;
   ; @param (keyword) popup-id
   ; @param (map) popup-props
   ; {}

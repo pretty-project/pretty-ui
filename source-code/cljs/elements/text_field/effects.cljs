@@ -8,7 +8,7 @@
 ;; ----------------------------------------------------------------------------
 
 (r/reg-event-fx :elements.text-field/field-did-mount
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
@@ -16,7 +16,7 @@
       [:elements.plain-field/field-did-mount field-id field-props]))
 
 (r/reg-event-fx :elements.text-field/field-will-unmount
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
@@ -27,7 +27,7 @@
 ;; ----------------------------------------------------------------------------
 
 (r/reg-event-fx :elements.text-field/reg-keypress-events!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
@@ -39,7 +39,7 @@
                          (if emptiable? [:x.environment/reg-keypress-event! :elements.text-field/ESC     on-esc-props])]})))
 
 (r/reg-event-fx :elements.text-field/remove-keypress-events!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
@@ -53,7 +53,7 @@
 ;; ----------------------------------------------------------------------------
 
 (r/reg-event-fx :elements.text-field/ENTER-pressed
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
@@ -62,7 +62,7 @@
       {:dispatch on-enter}))
 
 (r/reg-event-fx :elements.text-field/ESC-pressed
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
@@ -74,7 +74,7 @@
 ;; ----------------------------------------------------------------------------
 
 (r/reg-event-fx :elements.text-field/empty-field!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props

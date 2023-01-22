@@ -53,8 +53,8 @@
   ; {:surface (metamorphic-content)(opt)}
   [field-id {:keys [surface] :as field-props}]
   (if surface (if (plain-field.helpers/surface-visible? field-id)
-                  [:div.e-plain-field--surface (plain-field.helpers/field-surface-attributes field-id field-props)
-                                               [x.components/content                         field-id surface]])))
+                  [:div (plain-field.helpers/field-surface-attributes field-id field-props)
+                        [x.components/content                         field-id surface]])))
 
 (defn- plain-field-input
   ; @param (keyword) field-id

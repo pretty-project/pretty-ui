@@ -141,9 +141,10 @@
 @param (map) breadcrumbs-props
 {:class (keyword or keywords in vector)(opt)
  :crumbs (maps in vector)
-  [{:label (metamorphic-content)(opt)
-    :placeholder (metamorphic-content)(opt)
-    :route (string)(opt)}]
+  [{:href (string)(opt)
+    :label (metamorphic-content)(opt)
+    :on-click (metamorphic-event)(opt)
+    :placeholder (metamorphic-content)(opt)}]
  :disabled? (boolean)(opt)
  :font-size (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :inherit
@@ -190,6 +191,12 @@
  :border-position (keyword)(opt)
   :all, :bottom, :top, :left, :right, :horizontal, :vertical
  :border-radius (map)(opt)
+  {:tl (keyword)(opt)
+   :tr (keyword)(opt)
+   :br (keyword)(opt)
+   :bl (keyword)(opt)
+   :all (keyword)(opt)
+    :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
  :border-width (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
  :class (keyword or keywords in vector)(opt)
@@ -247,10 +254,19 @@
   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
  :marker-position (keyword)(opt)
   :tl, :tr, :br, :bl
- :on-click (metamorphic handler)(opt)
- :on-mouse-over (metamorphic handler)(opt)
+ :on-click (metamorphic-handler)(opt)
+ :on-mouse-over (metamorphic-handler)(opt)
  :outdent (map)(opt)
   Same as the :indent property
+ :progress (percent)(opt)
+ :progress-color (keyword)
+  :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+  Default: :muted
+ :progress-direction (keyword)(opt)
+  :ltr, :rtl, :ttb, :btt
+  Default: :ltr
+ :progress-duration (ms)(opt)
+  Default: 250
  :style (map)(opt)
  :text-overflow (keyword)(opt)
   :ellipsis, :no-wrap, :wrap
@@ -308,6 +324,7 @@
   Default: :left
  :hover-color (keyword or string)(opt)
   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+ :href (string)(opt)
  :indent (map)(opt)
   {:bottom (keyword)(opt)
    :left (keyword)(opt)
@@ -333,7 +350,9 @@
   Same as the :indent property
  :stretch-orientation (keyword)(opt)
   :horizontal, :vertical, :both
- :style (map)(opt)}
+ :style (map)(opt)
+ :target (keyword)(opt)
+  :blank, :self}
 ```
 
 ```
@@ -1079,6 +1098,10 @@ are applied on each page.
  :badge-position (keyword)(opt)
   :tl, :tr, :br, :bl
   Default: :tr
+ :border-color (keyword or string)(opt)
+  :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+ :border-position (keyword)(opt)
+  :all, :bottom, :top, :left, :right, :horizontal, :vertical
  :border-radius (map)(opt)
   {:tl (keyword)(opt)
    :tr (keyword)(opt)
@@ -1086,13 +1109,15 @@ are applied on each page.
    :bl (keyword)(opt)
    :all (keyword)(opt)
     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
+ :border-width (keyword)(opt)
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
  :class (keyword or keywords in vector)(opt)
  :disabled? (boolean)(opt)
- :height (keyword)(opt)
-  :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  Default: :3xl
+ :fill-color (keyword or string)(opt)
+  :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
  :hover-color (keyword or string)(opt)
   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+ :href (string)(opt)
  :icon (keyword)
  :icon-color (keyword or string)(opt)
   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
@@ -1100,6 +1125,9 @@ are applied on each page.
  :icon-family (keyword)(opt)
   :material-symbols-filled, :material-symbols-outlined
   Default: :material-symbols-filled
+ :icon-size (keyword)(opt)
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  Default: :m
  :indent (map)(opt)
   {:bottom (keyword)(opt)
    :left (keyword)(opt)
@@ -1117,19 +1145,25 @@ are applied on each page.
   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
  :marker-position (keyword)(opt)
   :tl, :tr, :br, :bl
- :on-click (metamorphic handler)(opt)
- :on-mouse-over (metamorphic handler)(opt)
+ :on-click (metamorphic-handler)(opt)
+ :on-mouse-over (metamorphic-handler)(opt)
  :outdent (map)(opt)
   Same as the :indent property
  :progress (percent)(opt)
+ :progress-color (keyword)
+  :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+  Default: :muted
+ :progress-direction (keyword)(opt)
+  :ltr, :rtl, :ttb, :btt
+  Default: :ltr
  :progress-duration (ms)(opt)
+  Default: 250
  :style (map)(opt)
+ :target (keyword)(opt)
+  :blank, :self
  :tooltip-content (metamorphic-content)(opt)
  :tooltip-position (keyword)(opt)
-  :left, :right
- :width (keyword)(opt)
-  :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  Default: :3xl}
+  :left, :right}
 ```
 
 ```
@@ -1408,8 +1442,10 @@ property or you can specify these values on each item separatelly.
     :href (string)(opt)
     :icon (keyword)(opt)
     :label (metamorphic-content)(opt)
-    :on-click (metamorphic-event)(opt)}]
-    :on-mouse-over (metamorphic-event)(opt)}]
+    :on-click (metamorphic-event)(opt)
+    :on-mouse-over (metamorphic-event)(opt)
+    :target (keyword)(opt)
+     :blank, :self}]
  :orientation (keyword)(opt)
   :horizontal, :vertical
   Default: :horizontal
@@ -1920,6 +1956,8 @@ To render the select popup without using its button element:
   Default: :no-options
  :outdent (map)(opt)
   Same as the :indent property
+ :reveal-effect (keyword)(opt)
+  :delayed, :opacity
  :style (map)(opt)
  :value-path (vector)(opt)}
 ```
@@ -2161,10 +2199,15 @@ To render the select popup without using its button element:
  :disabled? (boolean)(opt)
  :emptiable? (boolean)(opt)
  :end-adornments (maps in vector)(opt)
-  [{:color (keyword)(opt)
+  [{:click-effect (keyword)(opt)
+     :opacity
+     Default: :opacity
+    :color (keyword)(opt)
      :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
      Default: :default
     :disabled? (boolean)(opt)
+    :hover-effect (keyword)(opt)
+     :opacity
     :icon (keyword)
     :icon-family (keyword)(opt)
      :material-symbols-filled, :material-symbols-outlined
@@ -2228,6 +2271,8 @@ To render the select popup without using its button element:
  :outdent (map)(opt)
   Same as the :indent property
  :placeholder (metamorphic-content)(opt)
+ :reveal-effect (keyword)(opt)
+  :delayed, :opacity
  :start-adornments (maps in vector)(opt)
   Same as the :end-adornments property.
  :stretch-orientation (keyword)(opt)
@@ -2377,6 +2422,7 @@ To render the select popup without using its button element:
  :hover-color (keyword or string)(opt)
   :default, :highlight, :invert, :muted, :none, :primary, :secondary, :success, :warning
   Default: :none
+ :href (string)(opt)
  :indent (map)(opt)
   {:bottom (keyword)(opt)
    :left (keyword)(opt)
@@ -2389,11 +2435,13 @@ To render the select popup without using its button element:
   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
  :marker-position (keyword)(opt)
   :tl, :tr, :br, :bl
- :on-click (metamorphic-event)
+ :on-click (metamorphic-event)(opt)
  :on-right-click (metamorphic-event)(opt)
  :outdent (map)(opt)
   Same as the :indent property
- :style (map)(opt)}
+ :style (map)(opt)
+ :target (keyword)(opt)
+  :blank, :self}
 ```
 
 ```
