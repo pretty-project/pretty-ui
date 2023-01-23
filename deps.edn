@@ -11,4 +11,4 @@
  :deps  {bithandshake/pretty-css {:git/url "git@github.com:bithandshake/pretty-css"
                                   :sha     "45719a6008dd5c9393f5592352eee81825753c0f"}
          monotech-hq/x5          {:git/url "git@github.com:monotech-hq/x5"
-                                  :sha     "8ce36bca28a03b95c572644f0bc860c158964136"}}}
+                                  :sha     "296e9fe1f19ed2138f1917bb516f6cd9569101b7"}}}
