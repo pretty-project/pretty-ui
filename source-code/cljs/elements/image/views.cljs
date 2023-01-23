@@ -1,6 +1,6 @@
 
 (ns elements.image.views
-    (:require [elements.image.helpers    :as image.helpers]
+    (:require [elements.image.attributes :as image.attributes]
               [elements.image.prototypes :as image.prototypes]
               [random.api                :as random]))
 
@@ -8,13 +8,13 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- image
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) image-id
   ; @param (map) image-props
   [image-id image-props]
-  [:div.e.image (image.helpers/image-attributes image-id image-props)
-                [:img.e-image--body (image.helpers/image-body-attributes image-id image-props)]])
+  [:div (image.attributes/image-attributes image-id image-props)
+        [:img (image.attributes/image-body-attributes image-id image-props)]])
 
 (defn element
   ; @param (keyword)(opt) image-id
@@ -32,7 +32,7 @@
   ;    :horizontal (keyword)(opt)
   ;    :vertical (keyword)(opt)
   ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
-  ;  :lazy-loading? (boolean)(opt)
+  ;  :lazy-load? (boolean)(opt)
   ;   Default: false
   ;   TODO
   ;  :outdent (map)(opt)

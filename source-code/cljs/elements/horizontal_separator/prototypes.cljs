@@ -1,12 +1,12 @@
 
 (ns elements.horizontal-separator.prototypes
-    (:require [candy.api :refer [param]]))
+    (:require [noop.api :refer [param]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn separator-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (map) separator-props
   ;

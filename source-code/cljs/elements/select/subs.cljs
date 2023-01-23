@@ -1,7 +1,7 @@
 
 (ns elements.select.subs
-    (:require [candy.api           :refer [return]]
-              [elements.input.subs :as input.subs]
+    (:require [elements.input.subs :as input.subs]
+              [noop.api            :refer [return]]
               [re-frame.api        :as r :refer [r]]))
 
 ;; ----------------------------------------------------------------------------

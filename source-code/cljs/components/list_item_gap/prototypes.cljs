@@ -1,6 +1,5 @@
 
-(ns components.list-item-gap.prototypes
-    (:require [candy.api :refer [param]]))
+(ns components.list-item-gap.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

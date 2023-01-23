@@ -1,9 +1,9 @@
 
 (ns elements.multi-combo-box.prototypes
-    (:require [candy.api                        :refer [param return]]
-              [elements.input.helpers           :as input.helpers]
+    (:require [elements.input.helpers           :as input.helpers]
               [elements.multi-combo-box.helpers :as multi-combo-box.helpers]
-              [loop.api                         :refer [<-walk]]))
+              [loop.api                         :refer [<-walk]]
+              [noop.api                         :refer [param return]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -1,7 +1,7 @@
 
 (ns elements.slider.events
-    (:require [candy.api             :refer [return]]
-              [elements.input.events :as input.events]
+    (:require [elements.input.events :as input.events]
+              [noop.api              :refer [return]]
               [re-frame.api          :as r :refer [r]]))
 
 ;; ----------------------------------------------------------------------------

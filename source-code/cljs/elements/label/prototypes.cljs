@@ -1,14 +1,14 @@
 
 (ns elements.label.prototypes
-    (:require [candy.api        :refer [param]]
-              [hiccup.api       :as hiccup]
+    (:require [hiccup.api       :as hiccup]
+              [noop.api         :refer [param]]
               [x.components.api :as x.components]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn label-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (map) label-props
   ; {:border-color (keyword or string)(opt)

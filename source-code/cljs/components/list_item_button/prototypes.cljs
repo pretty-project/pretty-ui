@@ -1,6 +1,6 @@
 
 (ns components.list-item-button.prototypes
-    (:require [candy.api :refer [param]]))
+    (:require [noop.api :refer [param]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -1,8 +1,8 @@
 
 (ns elements.password-field.prototypes
-    (:require [candy.api                       :refer [param]]
-              [elements.password-field.helpers :as password-field.helpers]
+    (:require [elements.password-field.helpers :as password-field.helpers]
               [elements.plain-field.helpers    :as plain-field.helpers]
+              [noop.api                        :refer [param]]
               [vector.api                      :as vector]
               [x.user.api                      :as x.user]))
 

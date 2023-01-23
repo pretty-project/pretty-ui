@@ -1,6 +1,6 @@
 
 (ns elements.horizontal-separator.views
-    (:require [elements.horizontal-separator.helpers    :as horizontal-separator.helpers]
+    (:require [elements.horizontal-separator.attributes :as horizontal-separator.attributes]
               [elements.horizontal-separator.prototypes :as horizontal-separator.prototypes]
               [random.api                               :as random]))
 
@@ -24,4 +24,4 @@
 
   ([separator-id separator-props]
    (let [separator-props (horizontal-separator.prototypes/separator-props-prototype separator-props)]
-        [:div.e-horizontal-separator (horizontal-separator.helpers/separator-attributes separator-id separator-props)])))
+        [:div (horizontal-separator.attributes/separator-attributes separator-id separator-props)])))

@@ -1,19 +1,50 @@
 
 (ns elements.input.side-effects
-    (:require [elements.input.helpers :as input.helpers]
-              [re-frame.api           :as r]))
+    (:require [elements.input.state :as input.state]
+              [re-frame.api         :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; WARNING! NON-PUBLIC! DO NOT USE!
-(r/reg-fx :elements.input/mark-input-as-focused! input.helpers/mark-input-as-focused!)
+(defn mark-input-as-focused!
+  ; @ignore
+  ;
+  ; @param (keyword) input-id
+  [input-id]
+  (swap! input.state/FOCUSED-INPUTS assoc input-id true))
 
-; WARNING! NON-PUBLIC! DO NOT USE!
-(r/reg-fx :elements.input/unmark-input-as-focused! input.helpers/unmark-input-as-focused!)
+(defn unmark-input-as-focused!
+  ; @ignore
+  ;
+  ; @param (keyword) input-id
+  [input-id]
+  (swap! input.state/FOCUSED-INPUTS dissoc input-id))
 
-; WARNING! NON-PUBLIC! DO NOT USE!
-(r/reg-fx :elements.input/mark-input-as-visited! input.helpers/mark-input-as-visited!)
+(defn mark-input-as-visited!
+  ; @ignore
+  ;
+  ; @param (keyword) input-id
+  [input-id]
+  (swap! input.state/VISITED-INPUTS assoc input-id true))
 
-; WARNING! NON-PUBLIC! DO NOT USE!
-(r/reg-fx :elements.input/unmark-input-as-visited! input.helpers/unmark-input-as-visited!)
+(defn unmark-input-as-visited!
+  ; @ignore
+  ;
+  ; @param (keyword) input-id
+  [input-id]
+  (swap! input.state/VISITED-INPUTS dissoc input-id))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @ignore
+(r/reg-fx :elements.input/mark-input-as-focused! mark-input-as-focused!)
+
+; @ignore
+(r/reg-fx :elements.input/unmark-input-as-focused! unmark-input-as-focused!)
+
+; @ignore
+(r/reg-fx :elements.input/mark-input-as-visited! mark-input-as-visited!)
+
+; @ignore
+(r/reg-fx :elements.input/unmark-input-as-visited! unmark-input-as-visited!)

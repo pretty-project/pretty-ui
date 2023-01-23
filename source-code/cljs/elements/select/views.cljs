@@ -1,7 +1,6 @@
 
 (ns elements.select.views
-    (:require [candy.api                  :refer [return]]
-              [elements.button.views      :as button.views]
+    (:require [elements.button.views      :as button.views]
               [elements.element.views     :as element.views]
               [elements.icon-button.views :as icon-button.views]
               [elements.input.helpers     :as input.helpers]
@@ -9,6 +8,7 @@
               [elements.select.prototypes :as select.prototypes]
               [elements.text-field.views  :as text-field.views]
               [layouts.api                :as layouts]
+              [noop.api                   :refer [return]]
               [pretty-css.api             :as pretty-css]
               [random.api                 :as random]
               [re-frame.api               :as r]

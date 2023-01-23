@@ -1,8 +1,8 @@
 
 (ns elements.combo-box.prototypes
-    (:require [candy.api              :refer [return]]
-              [elements.input.helpers :as input.helpers]
-              [loop.api               :refer [<-walk]]))
+    (:require [elements.input.helpers :as input.helpers]
+              [loop.api               :refer [<-walk]]
+              [noop.api               :refer [return]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

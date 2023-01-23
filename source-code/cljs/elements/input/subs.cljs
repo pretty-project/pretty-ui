@@ -1,6 +1,6 @@
 
 (ns elements.input.subs
-    (:require [candy.api    :refer [return]]
+    (:require [noop.api     :refer [return]]
               [re-frame.api :as r :refer [r]]
               [vector.api   :as vector]))
 
@@ -8,7 +8,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn get-input-value
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) input-id
   ; @param (map) input-props
@@ -24,7 +24,7 @@
            (return stored-value))))
 
 (defn get-input-options
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) input-id
   ; @param (map) input-props
@@ -37,7 +37,7 @@
   (or options (get-in db options-path)))
 
 (defn validate-input-value?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) input-id
   ; @param (map) input-props
@@ -48,7 +48,7 @@
   (some? validator))
 
 (defn prevalidate-input-value?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) input-id
   ; @param (map) input-props
@@ -59,7 +59,7 @@
   (:prevalidate? validator))
 
 (defn input-empty?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) input-id
   ; @param (map) input-props
@@ -76,7 +76,7 @@
             (empty?   input-value))))
 
 (defn input-nonempty?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) input-id
   ; @param (map) input-props
@@ -91,6 +91,8 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+; @ignore
+;
 ; @usage
 ; [:elements.input/get-input-value :my-input {...}]
 (r/reg-sub :elements.input/get-input-value get-input-value)

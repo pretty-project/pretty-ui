@@ -1,10 +1,10 @@
 
 (ns elements.content-swapper.views
-    (:require [candy.api :refer [return]]
-              [elements.button.views               :as button.views]
+    (:require [elements.button.views               :as button.views]
               [elements.content-swapper.attributes :as content-swapper.attributes]
               [elements.content-swapper.prototypes :as content-swapper.prototypes]
               [elements.content-swapper.state      :as content-swapper.state]
+              [noop.api                            :refer [return]]
               [random.api                          :as random]
               [re-frame.api                        :as r]
               [reagent.api                         :as reagent]

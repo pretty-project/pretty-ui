@@ -1,8 +1,8 @@
 
 (ns elements.counter.events
-    (:require [candy.api             :refer [return]]
-              [elements.counter.subs :as counter.subs]
+    (:require [elements.counter.subs :as counter.subs]
               [elements.input.events :as input.events]
+              [noop.api              :refer [return]]
               [re-frame.api          :refer [r]]
               [x.db.api              :as x.db]))
 

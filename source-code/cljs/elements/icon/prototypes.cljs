@@ -1,12 +1,12 @@
 
 (ns elements.icon.prototypes
-    (:require [candy.api :refer [param]]))
+    (:require [noop.api :refer [param]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn icon-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (map) icon-props
   ;

@@ -1,11 +1,11 @@
 
 (ns elements.combo-box.helpers
-    (:require [candy.api                    :refer [return]]
-              [dom.api                      :as dom]
+    (:require [dom.api                      :as dom]
               [elements.combo-box.state     :as combo-box.state]
               [elements.input.helpers       :as input.helpers]
               [elements.plain-field.helpers :as plain-field.helpers]
               [hiccup.api                   :as hiccup]
+              [noop.api                     :refer [return]]
               [string.api                   :as string]
               [vector.api                   :as vector]))
 

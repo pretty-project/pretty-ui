@@ -1,8 +1,8 @@
 
 (ns website.contacts.views
-    (:require [candy.api    :refer [return]]
-              [elements.api :as elements]
+    (:require [elements.api :as elements]
               [href.api     :as href]
+              [noop.api     :refer [return]]
               [random.api   :as random]
               [re-frame.api :as r]))
 

@@ -1,6 +1,6 @@
 
 (ns elements.expandable.state
-    (:require [reagent.api :refer [ratom]]))
+    (:require [reagent.core :rename {atom ratom}]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

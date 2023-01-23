@@ -1,9 +1,11 @@
 
 (ns elements.label.state
-    (:require [reagent.api :refer [ratom]]))
+    (:require [reagent.core :rename {atom ratom}]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+; @ignore
+;
 ; @atom (map)
 (def INFO-TEXT-VISIBILITY (ratom {}))

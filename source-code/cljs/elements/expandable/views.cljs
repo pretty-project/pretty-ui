@@ -17,7 +17,7 @@
   ; {}
   [expandable-id {:keys [icon label] :as expandable-props}]
   [:button (expandable.attributes/expandable-header-attributes expandable-id expandable-props)
-           (if icon [:i (expandable.attributes/expandable-icon-attributes expandable-id expandable-props) icon])
+           (if icon  [:i (expandable.attributes/expandable-icon-attributes expandable-id expandable-props) icon])
            (if label [:div {:class :e-expandable--label :data-font-size :s :data-font-weight :medium :data-line-height :text-block}
                            (x.components/content label)])
            (if (expandable.helpers/expanded? expandable-id)

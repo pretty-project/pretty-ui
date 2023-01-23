@@ -2,9 +2,9 @@
 (ns components.list-item-cell.views
     (:require [components.list-item-cell.helpers    :as list-item-cell.helpers]
               [components.list-item-cell.prototypes :as list-item-cell.prototypes]
-              [candy.api                            :refer [return]]
               [css.api                              :as css]
               [elements.api                         :as elements]
+              [noop.api                             :refer [return]]
               [random.api                           :as random]))
 
 ;; ----------------------------------------------------------------------------

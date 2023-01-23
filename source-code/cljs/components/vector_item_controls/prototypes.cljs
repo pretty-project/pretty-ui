@@ -1,6 +1,6 @@
 
 (ns components.vector-item-controls.prototypes
-    (:require [candy.api :refer [param]]))
+    (:require [noop.api :refer [param]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

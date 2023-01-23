@@ -1,28 +1,20 @@
 
 (ns elements.ghost.views
     (:require [random.api                :as random]
-              [elements.ghost.helpers    :as ghost.helpers]
+              [elements.ghost.attributes :as ghost.attributes]
               [elements.ghost.prototypes :as ghost.prototypes]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- ghost-body
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) ghost-id
-  ; @param (map) ghost-props
-  [ghost-id ghost-props]
-  [:div.e-ghost--body (ghost.helpers/ghost-body-attributes ghost-id ghost-props)])
-
 (defn ghost
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) ghost-id
   ; @param (map) ghost-props
   [ghost-id ghost-props]
-  [:div.e-ghost (ghost.helpers/ghost-attributes ghost-id ghost-props)
-                [ghost-body                     ghost-id ghost-props]])
+  [:div (ghost.attributes/ghost-attributes ghost-id ghost-props)
+        [:div (ghost.attributes/ghost-body-attributes ghost-id ghost-props)]])
 
 (defn element
   ; @param (keyword)(opt) ghost-id

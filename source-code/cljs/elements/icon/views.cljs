@@ -1,6 +1,6 @@
 
 (ns elements.icon.views
-    (:require [elements.icon.helpers    :as icon.helpers]
+    (:require [elements.icon.attributes :as icon.attributes]
               [elements.icon.prototypes :as icon.prototypes]
               [random.api               :as random]))
 
@@ -8,19 +8,18 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- icon
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) icon-id
   ; @param (map) icon-props
   ; {:icon (keyword)}
   [icon-id {:keys [icon] :as icon-props}]
-  [:div.e-icon (icon.helpers/icon-attributes icon-id icon-props)
-               [:i.e-icon--body (icon.helpers/icon-body-attributes icon-id icon-props)
-                                icon]])
+  [:div (icon.attributes/icon-attributes icon-id icon-props)
+        [:i (icon.attributes/icon-body-attributes icon-id icon-props) icon]])
 
 (defn element
-  ; XXX#0714
-  ; Some other items based on the button element and their documentations are linked to here.
+  ; XXX#0709
+  ; Some other items based on the icon element and their documentations are linked to here.
   ;
   ; @param (keyword)(opt) icon-id
   ; @param (map) icon-props

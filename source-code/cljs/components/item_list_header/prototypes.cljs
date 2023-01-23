@@ -1,6 +1,6 @@
 
 (ns components.item-list-header.prototypes
-    (:require [candy.api  :refer [param]]
+    (:require [noop.api   :refer [param]]
               [vector.api :as vector]))
 
 ;; ----------------------------------------------------------------------------

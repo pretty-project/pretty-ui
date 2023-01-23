@@ -1,7 +1,7 @@
 
 (ns elements.plain-field.prototypes
-    (:require [candy.api              :refer [param return]]
-              [elements.input.helpers :as input.helpers]))
+    (:require [elements.input.helpers :as input.helpers]
+              [noop.api               :refer [param return]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

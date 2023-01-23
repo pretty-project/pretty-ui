@@ -1201,7 +1201,7 @@ are applied on each page.
    :horizontal (keyword)(opt)
    :vertical (keyword)(opt)
     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
- :lazy-loading? (boolean)(opt)
+ :lazy-load? (boolean)(opt)
   Default: false
   TODO
  :outdent (map)(opt)

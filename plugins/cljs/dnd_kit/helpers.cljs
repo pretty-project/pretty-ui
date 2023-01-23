@@ -1,8 +1,8 @@
 
 (ns dnd-kit.helpers
-    (:require [candy.api     :refer [return]]
-              [dnd-kit.state :as state]
+    (:require [dnd-kit.state :as state]
               [map.api       :refer [dissoc-in]]
+              [noop.api      :refer [return]]
               [reagent.api   :as reagent]
               [time.api      :as time]
               [vector.api    :as vector]))

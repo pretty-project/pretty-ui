@@ -1,15 +1,15 @@
 
 (ns elements.input.events
-    (:require [candy.api           :refer [return]]
-              [elements.input.subs :as input.subs]
+    (:require [elements.input.subs :as input.subs]
               [map.api             :refer [dissoc-in]]
+              [noop.api            :refer [return]]
               [re-frame.api        :refer [r]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn backup-stored-value!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) input-id
   ; @param (map) input-props
@@ -24,7 +24,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn use-initial-options!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) input-id
   ; @param (map) input-props
@@ -40,7 +40,7 @@
                   (assoc-in options-path initial-options))))
 
 (defn use-initial-value!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) input-id
   ; @param (map) input-props
@@ -58,7 +58,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn reset-value!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) input-id
   ; @param (map) input-props
@@ -70,7 +70,7 @@
        (assoc-in db value-path backup-value)))
 
 (defn clear-value!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) input-id
   ; @param (map) input-props
@@ -81,7 +81,7 @@
   (dissoc-in db value-path))
 
 (defn set-value!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) input-id
   ; @param (map) input-props

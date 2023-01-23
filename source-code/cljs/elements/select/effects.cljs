@@ -1,7 +1,6 @@
 
 (ns elements.select.effects
-    (:require [candy.api                      :refer [return]]
-              [elements.input.events          :as input.events]
+    (:require [elements.input.events          :as input.events]
               [elements.input.helpers         :as input.helpers]
               [elements.select.config         :as select.config]
               [elements.select.events         :as select.events]
@@ -9,6 +8,7 @@
               [elements.select.views          :as select.views]
               [elements.plain-field.helpers   :as plain-field.helpers]
               [elements.text-field.prototypes :as text-field.prototypes]
+              [noop.api                       :refer [return]]
               [re-frame.api                   :as r :refer [r]]))
 
 ;; ----------------------------------------------------------------------------

@@ -1,6 +1,6 @@
 
 (ns components.popup-menu-label.prototypes
-    (:require [candy.api :refer [param]]))
+    (:require [noop.api :refer [param]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

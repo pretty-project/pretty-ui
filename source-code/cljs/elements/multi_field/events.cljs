@@ -1,7 +1,7 @@
 
 (ns elements.multi-field.events
-    (:require [candy.api                 :refer [return]]
-              [elements.multi-field.subs :as multi-field.subs]
+    (:require [elements.multi-field.subs :as multi-field.subs]
+              [noop.api                  :refer [return]]
               [re-frame.api              :refer [r]]
               [vector.api                :as vector]))
 

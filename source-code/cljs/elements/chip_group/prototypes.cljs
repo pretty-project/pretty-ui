@@ -1,6 +1,6 @@
 
 (ns elements.chip-group.prototypes
-    (:require [candy.api              :refer [param return]]
+    (:require [noop.api               :refer [param return]]
               [elements.input.helpers :as input.helpers]))
 
 ;; ----------------------------------------------------------------------------

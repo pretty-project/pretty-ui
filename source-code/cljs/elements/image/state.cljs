@@ -1,11 +1,10 @@
 
-(ns website.sidebar.state
-    (:require [reagent.core :rename {atom ratom}]))
+(ns elements.image.state)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 ; @ignore
 ;
-; @atom (boolean)
-(def VISIBLE-SIDEBAR (ratom false))
+; @atom (map)
+(def REACT-REFERENCES (atom {}))

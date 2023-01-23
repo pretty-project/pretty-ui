@@ -1,7 +1,7 @@
 
 (ns elements.multi-field.helpers
-    (:require [candy.api        :refer [return]]
-              [hiccup.api       :as hiccup]
+    (:require [hiccup.api       :as hiccup]
+              [noop.api         :refer [return]]
               [pretty-css.api   :as pretty-css]
               [re-frame.api     :as r]
               [vector.api       :as vector]

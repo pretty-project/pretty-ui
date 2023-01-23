@@ -1,7 +1,7 @@
 
 (ns elements.text.prototypes
-    (:require [candy.api        :refer [param]]
-              [x.components.api :as x.components]))
+    (:require [x.components.api :as x.components]
+              [noop.api         :refer [param]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -7,7 +7,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn on-copy-f
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) label-id
   ; @param (map) label-props
@@ -22,7 +22,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn info-text-visible?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) label-id
   ;
@@ -31,7 +31,7 @@
   (get @label.state/INFO-TEXT-VISIBILITY label-id))
 
 (defn toggle-info-text-visiblity!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) label-id
   [label-id]

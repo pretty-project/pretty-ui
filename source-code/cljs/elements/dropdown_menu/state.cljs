@@ -1,6 +1,6 @@
 
 (ns elements.dropdown-menu.state
-    (:require [reagent.api :refer [ratom]]))
+    (:require [reagent.core :rename {atom ratom}]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -1,6 +1,6 @@
 
 (ns components.data-element.prototypes
-    (:require [candy.api        :refer [param]]
+    (:require [noop.api         :refer [param]]
               [vector.api       :as vector]
               [x.components.api :as x.components]))
 

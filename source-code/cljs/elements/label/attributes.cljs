@@ -10,7 +10,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn label-info-text-button-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) label-id
   ; @param (map) label-props
@@ -35,7 +35,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn copyable-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) label-id
   ; @param (map) label-props
@@ -57,7 +57,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn content-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) label-id
   ; @param (map) label-props
@@ -75,7 +75,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn label-body-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) label-id
   ; @param (map) label-props
@@ -103,7 +103,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn label-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) label-id
   ; @param (map) label-props

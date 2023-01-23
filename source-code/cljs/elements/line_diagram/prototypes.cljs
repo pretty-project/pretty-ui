@@ -1,9 +1,9 @@
 
 (ns elements.line-diagram.prototypes
-    (:require [candy.api                     :refer [param]]
-              [elements.line-diagram.helpers :as line-diagram.helpers]
+    (:require [elements.line-diagram.helpers :as line-diagram.helpers]
+              [noop.api                      :refer [param]]
               [math.api                      :as math]))
-                    
+
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 

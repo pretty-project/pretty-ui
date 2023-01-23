@@ -1,7 +1,7 @@
 
 (ns elements.counter.prototypes
-    (:require [candy.api              :refer [param]]
-              [elements.input.helpers :as input.helpers]))
+    (:require [elements.input.helpers :as input.helpers]
+              [noop.api               :refer [param]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

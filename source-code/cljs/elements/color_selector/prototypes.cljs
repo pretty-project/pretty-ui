@@ -1,6 +1,6 @@
 
 (ns elements.color-selector.prototypes
-    (:require [candy.api                      :refer [param]]
+    (:require [noop.api                       :refer [param]]
               [elements.color-selector.config :as color-selector.config]
               [elements.input.helpers         :as input.helpers]))
 

@@ -1,9 +1,9 @@
 
 (ns elements.text.views
-    (:require [candy.api                :refer [return]]
-              [elements.element.views   :as element.views]
+    (:require [elements.element.views   :as element.views]
               [elements.text.attributes :as text.attributes]
               [elements.text.prototypes :as text.prototypes]
+              [noop.api                 :refer [return]]
               [random.api               :as random]
               [string.api               :as string]
               [x.components.api         :as x.components]))
