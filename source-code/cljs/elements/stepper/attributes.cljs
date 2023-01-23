@@ -1,33 +1,37 @@
 
-(ns elements.stepper.helpers
+(ns elements.stepper.attributes
     (:require [pretty-css.api :as pretty-css]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn stepper-body-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) stepper-id
   ; @param (map) stepper-props
   ; {:style (map)(opt)}
   ;
   ; @return (map)
-  ; {:style (map)}
+  ; {:class (keyword or keywords in vector)
+  ;  :style (map)}
   [_ {:keys [style] :as stepper-props}]
-  (-> {:style style}
+  (-> {:class :e-stepper--body
+       :style style}
       (pretty-css/indent-attributes stepper-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn stepper-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) stepper-id
   ; @param (map) stepper-props
   ;
   ; @return (map)
+  ; {:class (keyword or keywords in vector)}
   [_ stepper-props]
-  (-> {} (pretty-css/default-attributes stepper-props)
-         (pretty-css/outdent-attributes stepper-props)))
+  (-> {:class :e-stepper}
+      (pretty-css/default-attributes stepper-props)
+      (pretty-css/outdent-attributes stepper-props)))

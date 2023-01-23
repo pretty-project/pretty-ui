@@ -11,7 +11,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- label-helper
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) label-id
   ; @param (map) label-props
@@ -23,7 +23,7 @@
                    (x.components/content helper)]))
 
 (defn label-info-text
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) label-id
   ; @param (map) label-props
@@ -36,7 +36,7 @@
                               (x.components/content info-text)])))
 
 (defn label-info-text-button
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) label-id
   ; @param (map) label-props
@@ -45,7 +45,7 @@
   (if info-text [:button (label.attributes/label-info-text-button-attributes label-id label-props) :info]))
 
 (defn- label-icon
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) label-id
   ; @param (map) label-props
@@ -54,7 +54,7 @@
   (if icon [:i (pretty-css/icon-attributes {:class :e-label--icon} label-props) icon]))
 
 (defn- label-placeholder
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) label-id
   ; @param (map) label-props
@@ -80,7 +80,7 @@
                         "\u00A0")])
 
 (defn- label-content
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) label-id
   ; @param (map) label-props
@@ -110,7 +110,7 @@
                 [:<>  [:label (label.attributes/content-attributes label-id label-props) content]]))
 
 (defn- label-body
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) label-id
   ; @param (map) label-props
@@ -130,7 +130,7 @@
                                             [label-info-text-button label-id label-props]]))])
 
 (defn- label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) label-id
   ; @param (map) label-props

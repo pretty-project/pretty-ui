@@ -10,7 +10,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn empty-field!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) field-id
   [field-id]
@@ -20,7 +20,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn focus-field!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) field-id
   [field-id]
@@ -32,7 +32,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn show-surface!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) field-id
   [field-id]
@@ -49,7 +49,7 @@
   (reset! plain-field.state/VISIBLE-SURFACE field-id))
 
 (defn hide-surface!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) field-id
   [_]
@@ -58,14 +58,14 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; WARNING! NON-PUBLIC! DO NOT USE!
+; @ignore
 (r/reg-fx :elements.plain-field/empty-field! empty-field!)
 
-; WARNING! NON-PUBLIC! DO NOT USE!
+; @ignore
 (r/reg-fx :elements.plain-field/focus-field! focus-field!)
 
-; WARNING! NON-PUBLIC! DO NOT USE!
+; @ignore
 (r/reg-fx :elements.plain-field/show-surface! show-surface!)
 
-; WARNING! NON-PUBLIC! DO NOT USE!
+; @ignore
 (r/reg-fx :elements.plain-field/hide-surface! hide-surface!)

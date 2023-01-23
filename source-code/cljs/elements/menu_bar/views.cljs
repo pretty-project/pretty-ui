@@ -2,6 +2,7 @@
 (ns elements.menu-bar.views
     (:require [elements.menu-bar.attributes :as menu-bar.attributes]
               [elements.menu-bar.prototypes :as menu-bar.prototypes]
+              [hiccup.api                   :as hiccup]
               [random.api                   :as random]
               [x.components.api             :as x.components]))
 
@@ -9,7 +10,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- menu-bar-item
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) bar-id
   ; @param (map) bar-props
@@ -27,28 +28,13 @@
               (if label [:div (menu-bar.attributes/menu-item-label-attributes bar-id bar-props item-props)
                               (x.components/content label)])]]))
 
-(defn- menu-bar-items
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) bar-id
-  ; @param (map) bar-props
-  ; {:menu-items (maps in vector)
-  ;  :orientation (keyword)}
-  [bar-id {:keys [menu-items orientation] :as bar-props}]
-  (letfn [(f [item-list item-props] (conj item-list [menu-bar-item bar-id bar-props item-props]))]
-         [:div (case orientation :horizontal {:class            :e-menu-bar--menu-items
-                                              :data-orientation :horizontal
-                                              :data-scroll-axis :x}
-                                             {:class            :e-menu-bar--menu-items
-                                              :data-orientation :vertical})
-               (reduce f [:<>] menu-items)]))
-
 (defn- menu-bar
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) bar-id
   ; @param (map) bar-props
-  [bar-id bar-props]
+  ; {:menu-items (maps in vector)}
+  [bar-id {:keys [menu-items] :as bar-props}]
   ; XXX#5406
   ; For menu bars with horizontal orientation, the {overflow-x: scroll}
   ; and {display: flex} properties can only be used together (without errors)
@@ -58,7 +44,9 @@
   ; while keeping the {overflow-x: scroll} property.
   [:div (menu-bar.attributes/menu-bar-attributes bar-id bar-props)
         [:div (menu-bar.attributes/menu-bar-body-attributes bar-id bar-props)
-              [menu-bar-items                               bar-id bar-props]]])
+              (letfn [(f [item-props] [menu-bar-item bar-id bar-props item-props])]
+                     [:div (menu-bar.attributes/menu-bar-items-attributes bar-id bar-props)
+                           (hiccup/put-with [:<>] menu-items f)])]])
 
 (defn element
   ; XXX#0713

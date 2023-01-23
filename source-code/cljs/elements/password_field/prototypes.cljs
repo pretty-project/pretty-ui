@@ -10,7 +10,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn visibility-adornment-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
@@ -25,7 +25,7 @@
         :on-click        {:fx [:elements.password-field/toggle-password-visibility! field-id]}}))
 
 (defn field-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props

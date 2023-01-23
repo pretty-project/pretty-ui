@@ -7,7 +7,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn slider-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) slider-id
   ; @param (map) slider-props

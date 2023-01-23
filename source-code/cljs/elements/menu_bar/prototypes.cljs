@@ -7,7 +7,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn item-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (map) bar-props
   ; {:item-default (map)}
@@ -37,7 +37,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn bar-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (map) bar-props
   ; {:orientation (keyword)(opt)}

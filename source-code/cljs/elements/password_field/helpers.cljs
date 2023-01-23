@@ -6,7 +6,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn password-visible?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) field-id
   ;

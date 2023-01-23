@@ -6,7 +6,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn polarity-body-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) polarity-id
   ; @param (map) polarity-props
@@ -24,7 +24,7 @@
       (pretty-css/indent-attributes polarity-props)))
 
 (defn polarity-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) polarity-id
   ; @param (map) polarity-props

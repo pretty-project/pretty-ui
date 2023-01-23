@@ -6,7 +6,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn toggle-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (map) toggle-props
   ; {:border-color (keyword or string)(opt)}

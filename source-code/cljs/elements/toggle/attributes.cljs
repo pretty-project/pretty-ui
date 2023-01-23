@@ -9,7 +9,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn toggle-body-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) toggle-id
   ; @param (map) toggle-props
@@ -34,13 +34,13 @@
                      :data-selectable    false
                      :data-text-overflow :no-wrap}
                     {:class              :e-toggle--body
+                     :data-click-effect  :opacity
                      :data-selectable    false
                      :data-text-overflow :no-wrap
                      :id                 (hiccup/value toggle-id "body")
                      :on-click           #(r/dispatch on-click)
                      :on-mouse-over      #(r/dispatch on-mouse-over)
-                     :on-mouse-up        #(dom/blur-active-element!)
-                     :data-click-effect  :opacity})
+                     :on-mouse-up        #(dom/blur-active-element!)})
       (pretty-css/border-attributes toggle-props)
       (pretty-css/color-attributes  toggle-props)
       (pretty-css/indent-attributes toggle-props)
@@ -50,7 +50,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn toggle-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) toggle-id
   ; @param (map) toggle-props

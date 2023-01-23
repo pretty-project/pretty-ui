@@ -2,7 +2,7 @@
 (ns elements.notification-bubble.views
     (:require [elements.button.views                   :as button.views]
               [elements.icon-button.views              :as icon-button.views]
-              [elements.notification-bubble.helpers    :as notification-bubble.helpers]
+              [elements.notification-bubble.attributes :as notification-bubble.attributes]
               [elements.notification-bubble.prototypes :as notification-bubble.prototypes]
               [random.api                              :as random]
               [x.components.api                        :as x.components]))
@@ -11,6 +11,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- notification-bubble-secondary-button
+  ; @ignore
+  ;
   ; @param (keyword) bubble-id
   ; @param (map) bubble-props
   ; {:secondary-button (map)(opt)}
@@ -19,6 +21,8 @@
                                             [icon-button.views/element secondary-button])))
 
 (defn- notification-bubble-primary-button
+  ; @ignore
+  ;
   ; @param (keyword) bubble-id
   ; @param (map) bubble-props
   ; {:primary-button (map)(opt)}
@@ -26,29 +30,19 @@
   (if primary-button (case layout :button [button.views/element      primary-button]
                                           [icon-button.views/element primary-button])))
 
-(defn- notification-bubble-content
+(defn- notification-bubble
+  ; @ignore
+  ;
   ; @param (keyword) bubble-id
   ; @param (map) bubble-props
   ; {:content (metamorphic-content)}
   [bubble-id {:keys [content] :as bubble-props}]
-  [:div.e-notification-bubble--content (notification-bubble.helpers/bubble-content-attributes bubble-id bubble-props)
-                                       [x.components/content                                  bubble-id content]])
-
-(defn- notification-bubble-body
-  ; @param (keyword) bubble-id
-  ; @param (map) bubble-props
-  [bubble-id bubble-props]
-  [:div.e-notification-bubble--body (notification-bubble.helpers/bubble-body-attributes bubble-id bubble-props)
-                                    [notification-bubble-content                        bubble-id bubble-props]
-                                    [notification-bubble-secondary-button               bubble-id bubble-props]
-                                    [notification-bubble-primary-button                 bubble-id bubble-props]])
-
-(defn- notification-bubble
-  ; @param (keyword) bubble-id
-  ; @param (map) bubble-props
-  [bubble-id bubble-props]
-  [:div.e-notification-bubble (notification-bubble.helpers/bubble-attributes bubble-id bubble-props)
-                              [notification-bubble-body                      bubble-id bubble-props]])
+  [:div (notification-bubble.attributes/bubble-attributes bubble-id bubble-props)
+        [:div (notification-bubble.attributes/bubble-body-attributes bubble-id bubble-props)
+              [:div (notification-bubble.attributes/bubble-content-attributes bubble-id bubble-props)
+                    [x.components/content                                     bubble-id content]]
+              [notification-bubble-secondary-button bubble-id bubble-props]
+              [notification-bubble-primary-button   bubble-id bubble-props]]])
 
 (defn element
   ; XXX#0731

@@ -1,5 +1,5 @@
 
-(ns elements.switch.helpers
+(ns elements.switch.attributes
     (:require [dom.api        :as dom]
               [pretty-css.api :as pretty-css]
               [re-frame.api   :as r]))
@@ -7,8 +7,35 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn switch-option-helper-attributes
+  ; @ignore
+  ;
+  ; @param (keyword) switch-id
+  ; @param (map) switch-props
+  ; {:font-size (keyword)}
+  ;
+  ; @return (map)
+  [_ _]
+  {:class            :e-switch--option-helper
+   :data-font-size   :xs
+   :data-line-height :native})
+
+(defn switch-option-label-attributes
+  ; @ignore
+  ;
+  ; @param (keyword) switch-id
+  ; @param (map) switch-props
+  ; {:font-size (keyword)}
+  ;
+  ; @return (map)
+  [_ {:keys [font-size]}]
+  {:class            :e-switch--option-label
+   :data-font-size   font-size
+   :data-font-weight :medium
+   :data-line-height :text-block})
+
 (defn switch-option-track-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) switch-id
   ; @param (map) switch-props
@@ -18,11 +45,12 @@
   ; @return (map)
   ; {}
   [_ {{:keys [all]} :border-radius :as switch-props}]
-  (-> {:style {"--adaptive-border-radius" (pretty-css/adaptive-border-radius all 0.75)}}
+  (-> {:class :e-switch--option-track
+       :style {"--adaptive-border-radius" (pretty-css/adaptive-border-radius all 0.75)}}
       (pretty-css/border-attributes switch-props)))
 
 (defn switch-option-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) switch-id
   ; @param (map) switch-props
@@ -30,14 +58,16 @@
   ; @param (*) option
   ;
   ; @return (map)
-  ; {:data-click-effect (keyword)
+  ; {:class (keyword or keywords in vector)
+  ;  :data-click-effect (keyword)
   ;  :data-switched (boolean)
   ;  :disabled (boolean)
   ;  :on-click (function)
   ;  :on-mouse-up (function)}
   [switch-id {:keys [border-radius disabled?] :as switch-props} option]
   (let [option-switched? @(r/subscribe [:elements.switch/option-switched? switch-id switch-props option])]
-       (merge {:data-click-effect :targeted
+       (merge {:class             :e-switch--option
+               :data-click-effect :targeted
                :data-switched option-switched?}
               (if disabled? {:disabled    true}
                             {:on-click    #(r/dispatch [:elements.switch/toggle-option! switch-id switch-props option])
@@ -47,7 +77,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn switch-body-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) switch-id
   ; @param (map) switch-props
@@ -55,22 +85,26 @@
   ;  :style (map)(opt)}
   ;
   ; @return (map)
-  ; {data-options-orientation (keyword)
+  ; {:class (keyword or keywords in vector)
+  ;  :data-options-orientation (keyword)
   ;  :data-selectable (boolean)
   ;  :style (map)}
   [switch-id {:keys [options-orientation style] :as switch-props}]
-  (-> {:data-options-orientation options-orientation
+  (-> {:class                    :e-switch--body
+       :data-options-orientation options-orientation
        :data-selectable          false
        :style                    style}
       (pretty-css/indent-attributes switch-props)))
 
 (defn switch-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) switch-id
   ; @param (map) switch-props
   ;
   ; @return (map)
+  ; {}
   [_ switch-props]
-  (-> {} (pretty-css/default-attributes switch-props)
-         (pretty-css/outdent-attributes switch-props)))
+  (-> {:class :e-switch}
+      (pretty-css/default-attributes switch-props)
+      (pretty-css/outdent-attributes switch-props)))

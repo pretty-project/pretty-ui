@@ -2,8 +2,9 @@
 (ns elements.switch.views
     (:require [elements.element.views     :as element.views]
               [elements.input.helpers     :as input.helpers]
-              [elements.switch.helpers    :as switch.helpers]
+              [elements.switch.attributes :as switch.attributes]
               [elements.switch.prototypes :as switch.prototypes]
+              [hiccup.api                 :as hiccup]
               [pretty-css.api             :as pretty-css]
               [random.api                 :as random]
               [re-frame.api               :as r]
@@ -13,72 +14,47 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- switch-option-helper
+(defn- switch-option
+  ; @ignore
+  ;
   ; @param (keyword) switch-id
   ; @param (map) switch-props
-  ; {:option-helper-f (function)}
-  ; @param (*) option
-  [_ {:keys [option-helper-f]} option]
-  (if option-helper-f (let [option-helper (option-helper-f option)]
-                           [:div.e-switch--option-helper {:data-font-size   :xs
-                                                          :data-line-height :native}
-                                                         (x.components/content option-helper)])))
-
-(defn- switch-option-label
-  ; @param (keyword) switch-id
-  ; @param (map) switch-props
-  ; {:font-size (keyword)
+  ; {:option-helper-f (function)(opt)
   ;  :option-label-f (function)}
   ; @param (*) option
-  [_ {:keys [font-size option-label-f]} option]
-  (let [option-label (option-label-f option)]
-       [:div.e-switch--option-label {:data-font-size   font-size
-                                     :data-font-weight :medium
-                                     :data-line-height :text-block}
-                                    (x.components/content option-label)]))
-
-(defn- switch-option-content
-  ; @param (keyword) switch-id
-  ; @param (map) switch-props
-  ; @param (*) option
-  [switch-id switch-props option]
-  [:div.e-switch--option-content {:data-click-target :opacity}
-                                 [switch-option-label  switch-id switch-props option]
-                                 [switch-option-helper switch-id switch-props option]])
-
-(defn- switch-option
-  ; @param (keyword) switch-id
-  ; @param (map) switch-props
-  ; @param (*) option
-  [switch-id switch-props option]
-  [:button.e-switch--option (switch.helpers/switch-option-attributes switch-id switch-props option)
-                            [:div.e-switch--option-track (switch.helpers/switch-option-track-attributes switch-id switch-props)]
-                            [switch-option-content switch-id switch-props option]])
+  [switch-id {:keys [option-helper-f option-label-f] :as switch-props} option]
+  [:button (switch.attributes/switch-option-attributes switch-id switch-props option)
+           [:div (switch.attributes/switch-option-track-attributes switch-id switch-props)]
+           [:div {:class :e-switch--option-content :data-click-target :opacity}
+                 (if option-label-f  [:div (switch.attributes/switch-option-label-attributes switch-id switch-props)
+                                           (-> option option-label-f x.components/content)])
+                 (if option-helper-f [:div (switch.attributes/switch-option-helper-attributes switch-id switch-props)
+                                           (-> option option-helper-f x.components/content)])]])
 
 (defn- switch-options
+  ; @ignore
+  ;
   ; @param (keyword) switch-id
   ; @param (map) switch-props
   [switch-id switch-props]
   (let [options (input.helpers/get-input-options switch-id switch-props)]
-       (letfn [(f [option-list option] (conj option-list [switch-option switch-id switch-props option]))]
-              (reduce f [:<>] options))))
-
-(defn- switch-body
-  ; @param (keyword) switch-id
-  ; @param (map) switch-props
-  [switch-id switch-props]
-  [:div.e-switch--body (switch.helpers/switch-body-attributes switch-id switch-props)
-                       [switch-options                        switch-id switch-props]])
+       (letfn [(f [option] [switch-option switch-id switch-props option])]
+              (hiccup/put-with [:<>] options f))))
 
 (defn- switch-structure
+  ; @ignore
+  ;
   ; @param (keyword) switch-id
   ; @param (map) switch-props
   [switch-id switch-props]
-  [:div.e-switch (switch.helpers/switch-attributes switch-id switch-props)
-                 [element.views/element-label      switch-id switch-props]
-                 [switch-body                      switch-id switch-props]])
+  [:div (switch.attributes/switch-attributes switch-id switch-props)
+        [element.views/element-label         switch-id switch-props]
+        [:div (switch.attributes/switch-body-attributes switch-id switch-props)
+              [switch-options                           switch-id switch-props]]])
 
 (defn- switch
+  ; @ignore
+  ;
   ; @param (keyword) switch-id
   ; @param (map) switch-props
   [switch-id switch-props]

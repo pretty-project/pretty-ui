@@ -10,20 +10,8 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn slider-did-mount
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) slider-id
-  ; @param (map) slider-props
-  ; {:initial-value (vector)(opt)}
-  [slider-id {:keys [initial-value] :as slider-props}]
-  (if initial-value (r/dispatch [:elements.slider/slider-did-mount slider-id slider-props])))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (defn slide!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (DOM-event) mouse-event
   [mouse-event slider-id thumb-id]
@@ -34,7 +22,7 @@
        (swap! slider.state/THUMBS assoc-in [slider-id thumb-id :current-translate-x] current-translate-x)))
 
 (defn stop-sliding!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) slider-id
   ; @param (keyword) thumb-id
@@ -43,7 +31,7 @@
                                                                    :thumb-sliding? false}))
 
 (defn start-sliding!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (DOM-event) mouse-event
   ; @param (keyword) slider-id
@@ -67,7 +55,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn slider-primary-thumb-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) slider-id
   ; @param (map) slider-props
@@ -83,7 +71,7 @@
                             :transform (-> translate-x css/px css/translate-x)}}))
 
 (defn slider-secondary-thumb-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) slider-id
   ; @param (map) slider-props
@@ -102,7 +90,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn slider-line-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) slider-id
   ; @param (map) slider-props
@@ -119,7 +107,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn slider-body-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) slider-id
   ; @param (map) slider-props
@@ -135,7 +123,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn slider-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) slider-id
   ; @param (map) slider-props

@@ -1,5 +1,5 @@
 
-(ns elements.radio-button.helpers
+(ns elements.radio-button.attributes
     (:require [dom.api          :as dom]
               [pretty-css.api   :as pretty-css]
               [re-frame.api     :as r]
@@ -9,7 +9,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn clear-button-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
@@ -18,19 +18,50 @@
   ; {}
   [button-id button-props]
   (-> (if-let [any-option-selected? @(r/subscribe [:elements.radio-button/any-option-selected? button-id button-props])]
-              {:data-click-effect :opacity
-               :on-click      #(r/dispatch [:elements.radio-button/clear-value! button-id button-props])
-               :on-mouse-up   #(dom/blur-active-element!)
-               :title          (x.components/content :uncheck-selected!)}
-              {:data-disabled  true
-               :disabled       true})
+              {:class             :e-radio-button--clear-button
+               :data-click-effect :opacity
+               :on-click          #(r/dispatch [:elements.radio-button/clear-value! button-id button-props])
+               :on-mouse-up       #(dom/blur-active-element!)
+               :title             (x.components/content :uncheck-selected!)}
+              {:class             :e-radio-button--clear-button
+               :data-disabled     true
+               :disabled          true})
       (pretty-css/border-attributes button-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn radio-button-option-helper-attributes
+  ; @ignore
+  ;
+  ; @param (keyword) button-id
+  ; @param (map) button-props
+  ; {}
+  ;
+  ; @return (map)
+  ; {}
+  [_ _]
+  {:class            :e-radio-button--option-helper
+   :data-font-size   :xs
+   :data-line-height :native})
+
+(defn radio-button-option-label-attributes
+  ; @ignore
+  ;
+  ; @param (keyword) button-id
+  ; @param (map) button-props
+  ; {}
+  ;
+  ; @return (map)
+  ; {}
+  [_ {:keys [font-size]}]
+  {:class            :e-radio-button--option-label
+   :data-font-size   font-size
+   :data-font-weight :medium
+   :data-line-height :text-block})
+
 (defn radio-button-option-button-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
@@ -39,11 +70,12 @@
   ; @return (map)
   ; {}
   [_ {{:keys [all]} :border-radius :as button-props}]
-  (-> {:style {"--adaptive-border-radius" (pretty-css/adaptive-border-radius all 0.3)}}
+  (-> {:class :e-radio-button--option-button
+       :style {"--adaptive-border-radius" (pretty-css/adaptive-border-radius all 0.3)}}
       (pretty-css/border-attributes button-props)))
 
 (defn radio-button-option-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
@@ -54,7 +86,8 @@
   ; {}
   [button-id {:keys [disabled?] :as button-props} option]
   (let [option-selected? @(r/subscribe [:elements.radio-button/option-selected? button-id button-props option])]
-       (merge {:data-click-effect :targeted
+       (merge {:class             :e-radio-button--option
+               :data-click-effect :targeted
                :data-selected option-selected?}
               (if disabled? {:disabled    true}
                             {:on-click    #(r/dispatch [:elements.radio-button/select-option! button-id button-props option])
@@ -64,7 +97,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn radio-button-body-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
@@ -73,7 +106,8 @@
   ; @return (map)
   ; {}
   [_ {:keys [options-orientation style] :as button-props}]
-  (-> {:data-options-orientation options-orientation
+  (-> {:class                    :e-radio-button--body
+       :data-options-orientation options-orientation
        :data-selectable          false
        :style                    style}
       (pretty-css/indent-attributes button-props)))
@@ -82,12 +116,14 @@
 ;; ----------------------------------------------------------------------------
 
 (defn radio-button-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
   ;
   ; @return (map)
+  ; {}
   [_ button-props]
-  (-> {} (pretty-css/default-attributes button-props)
-         (pretty-css/outdent-attributes button-props)))
+  (-> {:class :e-radio-button}
+      (pretty-css/default-attributes button-props)
+      (pretty-css/outdent-attributes button-props)))

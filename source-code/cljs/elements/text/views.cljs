@@ -12,7 +12,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- text-placeholder
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) text-id
   ; @param (map) text-props
@@ -25,7 +25,7 @@
                         "\u00A0")])
 
 (defn- text-content-rows
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) text-id
   ; @param (map) text-props
@@ -43,7 +43,7 @@
              (return content))))
 
 (defn- text-content
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) text-id
   ; @param (map) text-props
@@ -56,7 +56,7 @@
                             (text-content-rows                  text-id text-props)]]))
 
 (defn- text
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) text-id
   ; @param (map) text-props

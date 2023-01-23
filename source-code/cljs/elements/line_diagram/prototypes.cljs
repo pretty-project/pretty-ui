@@ -8,7 +8,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn section-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (map) section-props
   ;
@@ -19,7 +19,7 @@
          (param section-props)))
 
 (defn diagram-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (map) diagram-props
   ; {:strength (integer)(opt)}
@@ -28,7 +28,7 @@
   ; {:strength (px)
   ;  :total-value (integer)}
   [{:keys [strength] :as diagram-props}]
-  (merge {:strength 2
-          :total-value (line-diagram.helpers/diagram-props->total-value diagram-props)}
+  (merge {:total-value (line-diagram.helpers/diagram-props->total-value diagram-props)}
          (param diagram-props)
-         (if strength {:strength (math/between! strength 1 6)})))
+         (if strength {:strength (math/between! strength 1 6)}
+                      {:strength 2})))

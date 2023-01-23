@@ -6,7 +6,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn option-selected?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
@@ -21,7 +21,7 @@
        (= stored-value option-value)))
 
 (defn any-option-selected?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
@@ -35,8 +35,8 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; WARNING! NON-PUBLIC! DO NOT USE!
+; @ignore
 (r/reg-sub :elements.radio-button/option-selected? option-selected?)
 
-; WARNING! NON-PUBLIC! DO NOT USE!
+; @ignore
 (r/reg-sub :elements.radio-button/any-option-selected? any-option-selected?)

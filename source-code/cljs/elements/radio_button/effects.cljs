@@ -7,7 +7,7 @@
 ;; ----------------------------------------------------------------------------
 
 (r/reg-event-fx :elements.radio-button/button-did-mount
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
@@ -21,7 +21,7 @@
 ;; ----------------------------------------------------------------------------
 
 (r/reg-event-fx :elements.radio-button/select-option!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
@@ -33,7 +33,7 @@
        :dispatch on-select}))
 
 (r/reg-event-fx :elements.radio-button/clear-value!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props

@@ -6,7 +6,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn bubble-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (map) bubble-props
   ; {}

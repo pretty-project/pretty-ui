@@ -2,52 +2,29 @@
 (ns elements.thumbnail.views
     (:require [css.api                       :as css]
               [elements.element.views        :as element.views]
-              [elements.thumbnail.helpers    :as thumbnail.helpers]
+              [elements.thumbnail.attributes :as thumbnail.attributes]
               [elements.thumbnail.prototypes :as thumbnail.prototypes]
               [random.api                    :as random]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- toggle-thumbnail
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) thumbnail-id
-  ; @param (map) thumbnail-props
-  ; {:background-size (keyword)
-  ;  :uri (string)(opt)}
-  [thumbnail-id {:keys [background-size uri] :as thumbnail-props}]
-  [:button.e-thumbnail--body (thumbnail.helpers/toggle-thumbnail-body-attributes thumbnail-id thumbnail-props)
-                             [:div.e-thumbnail--icon  {:data-icon-family :material-symbols-outlined :data-icon-size :s} :image]
-                             [:div.e-thumbnail--image {:style {:background-image (css/url uri)
-                                                               :background-size background-size}}]])
-
-(defn- static-thumbnail
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) thumbnail-id
-  ; @param (map) thumbnail-props
-  ; {:background-size (keyword)
-  ;  :icon (keyword)
-  ;  :icon-family (keyword)
-  ;  :uri (string)(opt)}
-  [thumbnail-id {:keys [background-size icon icon-family uri] :as thumbnail-props}]
-  [:div.e-thumbnail--body (thumbnail.helpers/static-thumbnail-body-attributes thumbnail-id thumbnail-props)
-                          [:div.e-thumbnail--icon  {:data-icon-family icon-family :data-icon-size :s} icon]
-                          [:div.e-thumbnail--image {:style {:background-image (css/url uri)
-                                                            :background-size background-size}}]])
-
 (defn- thumbnail
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) thumbnail-id
   ; @param (map) thumbnail-props
-  ; {:on-click (metamorphic-event)(opt)}
-  [thumbnail-id {:keys [on-click] :as thumbnail-props}]
-  [:div.e-thumbnail (thumbnail.helpers/thumbnail-attributes thumbnail-id thumbnail-props)
-                    [element.views/element-label thumbnail-id thumbnail-props]
-                    (cond (some? on-click) [toggle-thumbnail thumbnail-id thumbnail-props]
-                          (nil?  on-click) [static-thumbnail thumbnail-id thumbnail-props])])
+  ; {:background-size (keyword)
+  ;  :href (string)(opt)
+  ;  :on-click (metamorphic-event)(opt)
+  ;  :uri (string)(opt)}
+  [thumbnail-id {:keys [background-size href on-click uri] :as thumbnail-props}]
+  [:div (thumbnail.attributes/thumbnail-attributes thumbnail-id thumbnail-props)
+        [element.views/element-label thumbnail-id thumbnail-props]
+        [(cond href :a on-click :button :else :div)
+         (thumbnail.attributes/thumbnail-body-attributes thumbnail-id thumbnail-props)
+         [:i   {:class :e-thumbnail--icon :data-icon-family :material-symbols-outlined :data-icon-size :s} :image]
+         [:div {:class :e-thumbnail--image :style {:background-image (css/url uri) :background-size background-size}}]]])
 
 (defn element
   ; @param (keyword)(opt) thumbnail-id
@@ -76,6 +53,7 @@
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;   Default: :s
   ;  :helper (metamorphic-content)(opt)
+  ;  :href (string)(opt)
   ;  :icon (keyword)(opt)
   ;   Default: :icon
   ;  :icon-family (keyword)(opt)
@@ -95,6 +73,8 @@
   ;  :outdent (map)(opt)
   ;   Same as the :indent property
   ;  :style (map)(opt)
+  ;  :target (keyword)(opt)
+  ;   :blank, :self
   ;  :uri (string)(opt)
   ;  :width (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl

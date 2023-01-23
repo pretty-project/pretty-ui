@@ -1,9 +1,11 @@
 
 (ns elements.multi-field.views
     (:require [elements.combo-box.views        :as combo-box.views]
+              [elements.multi-field.attributes :as multi-field.attributes]
               [elements.multi-field.helpers    :as multi-field.helpers]
               [elements.multi-field.prototypes :as multi-field.prototypes]
               [elements.text-field.views       :as text-field.views]
+              [hiccup.api                      :as hiccup]
               [loop.api                        :refer [reduce-indexed]]
               [random.api                      :as random]
               [re-frame.api                    :as r]))
@@ -12,7 +14,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- multi-field-text-field
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) group-id
   ; @param (map) group-props
@@ -21,29 +23,21 @@
   (let [field-key   (multi-field.helpers/field-dex->react-key     group-id group-props field-dex)
         field-id    (multi-field.helpers/field-dex->field-id      group-id group-props field-dex)
         field-props (multi-field.prototypes/field-props-prototype group-id group-props field-dex)]
-       [:div.e-multi-field--text-field {:key field-key}
-                                       (if (or initial-options options options-path)
-                                           [combo-box.views/element  field-id field-props]
-                                           [text-field.views/element field-id field-props])]))
-
-(defn- multi-field-field-group
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) group-id
-  ; @param (map) group-props
-  [group-id group-props]
-  (let [group-value @(r/subscribe [:elements.multi-field/get-group-value group-id group-props])]
-       (letfn [(f [field-group field-dex _] (conj field-group [multi-field-text-field group-id group-props field-dex]))]
-              (reduce-indexed f [:<>] group-value))))
+       [:div {:class :e-multi-field--text-field :key field-key}
+             (if (or initial-options options options-path)
+                 [combo-box.views/element  field-id field-props]
+                 [text-field.views/element field-id field-props])]))
 
 (defn- multi-field
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) group-id
   ; @param (map) group-props
   [group-id group-props]
-  [:div.e-multi-field (multi-field.helpers/group-attributes group-id group-props)
-                      [multi-field-field-group              group-id group-props]])
+  [:div (multi-field.attributes/group-attributes group-id group-props)
+        (let [group-value @(r/subscribe [:elements.multi-field/get-group-value group-id group-props])]
+             (letfn [(f [field-dex _] [multi-field-text-field group-id group-props field-dex])]
+                    (hiccup/put-with-indexed [:<>] group-value f)))])
 
 (defn element
   ; XXX#0714 (source-code/cljs/elements/text_field/views.cljs)

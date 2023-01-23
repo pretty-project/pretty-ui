@@ -9,7 +9,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn conj-initial-value!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) group-id
   ; @param (map) group-props
@@ -24,7 +24,7 @@
            (assoc-in  db value-path [nil nil]))))
 
 (defn decrease-field-count!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) group-id
   ; @param (map) group-props
@@ -38,7 +38,7 @@
        (assoc-in db value-path updated-group-value)))
 
 (defn increase-field-count!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) group-id
   ; @param (map) group-props

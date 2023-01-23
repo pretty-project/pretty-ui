@@ -6,7 +6,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn separator-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) separator-id
   ; @param (map) separator-props

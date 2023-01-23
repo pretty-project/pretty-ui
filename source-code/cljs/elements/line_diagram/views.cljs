@@ -1,44 +1,25 @@
 
 (ns elements.line-diagram.views
-    (:require [css.api                          :as css]
-              [elements.line-diagram.helpers    :as line-diagram.helpers]
+    (:require [elements.line-diagram.attributes :as line-diagram.attributes]
               [elements.line-diagram.prototypes :as line-diagram.prototypes]
+              [hiccup.api                       :as hiccup]
               [random.api                       :as random]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- line-diagram-section
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) diagram-id
-  ; @param (map) diagram-props
-  ; @param (map) section-props
-  [diagram-id diagram-props section-props]
-  [:div.e-line-diagram--section (line-diagram.helpers/diagram-section-attributes diagram-id diagram-props section-props)])
-
-(defn- line-diagram-sections
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) diagram-id
-  ; @param (map) diagram-props
-  ; {:sections (maps in vector)
-  ;  :strength (px)}
-  [diagram-id {:keys [sections strength] :as diagram-props}]
-  (letfn [(f [sections section-props]
-             (let [section-props (line-diagram.prototypes/section-props-prototype section-props)]
-                  (conj sections [line-diagram-section diagram-id diagram-props section-props])))]
-         [:div.e-line-diagram--sections {:style {:height (css/px strength)}}
-                                        (reduce f [:<>] sections)]))
-
 (defn line-diagram
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) diagram-id
   ; @param (map) diagram-props
-  [diagram-id diagram-props]
-  [:div.e-line-diagram (line-diagram.helpers/diagram-attributes diagram-id diagram-props)
-                       [line-diagram-sections                   diagram-id diagram-props]])
+  ; {:sections (maps in vector)}
+  [diagram-id {:keys [sections] :as diagram-props}]
+  [:div (line-diagram.attributes/diagram-attributes diagram-id diagram-props)
+        (letfn [(f [section-props] (let [section-props (line-diagram.prototypes/section-props-prototype section-props)]
+                                        [:div (line-diagram.attributes/diagram-section-attributes diagram-id diagram-props section-props)]))]
+               [:div (line-diagram.attributes/diagram-sections-attributes diagram-id diagram-props)
+                     (hiccup/put-with [:<>] sections f)])])
 
 (defn element
   ; @param (keyword)(opt) diagram-id

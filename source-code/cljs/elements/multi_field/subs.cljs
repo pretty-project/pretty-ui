@@ -6,7 +6,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn max-input-count-reached?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) group-id
   ; @param (map) group-props
@@ -20,7 +20,7 @@
        (>= input-count max-input-count)))
 
 (defn get-group-value
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) group-id
   ; @param (map) group-props
@@ -35,5 +35,5 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; WARNING! NON-PUBLIC! DO NOT USE!
+; @ignore
 (r/reg-sub :elements.multi-field/get-group-value get-group-value)

@@ -7,7 +7,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn switch-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) switch-id
   ; @param (map) switch-props

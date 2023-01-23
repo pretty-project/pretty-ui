@@ -1,11 +1,11 @@
 
 (ns elements.text-field.attributes
-    (:require [dom.api                      :as dom]
-              [elements.plain-field.helpers :as plain-field.helpers]
-              [elements.text-field.helpers  :as text-field.helpers]
-              [pretty-css.api               :as pretty-css]
-              [re-frame.api                 :as r]
-              [x.components.api             :as x.components]))
+    (:require [dom.api                         :as dom]
+              [elements.plain-field.attributes :as plain-field.attributes]
+              [elements.text-field.helpers     :as text-field.helpers]
+              [pretty-css.api                  :as pretty-css]
+              [re-frame.api                    :as r]
+              [x.components.api                :as x.components]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -25,7 +25,7 @@
   ; {}
   [field-id field-props {:keys [disabled? on-click tab-indexed? tooltip-content] :as adornment-props}]
   ; BUG#2105 (source-code/cljs/elements/plain_field/helpers.cljs)
-  (-> (plain-field.helpers/field-accessory-attributes field-id field-props)
+  (-> (plain-field.attributes/field-accessory-attributes field-id field-props)
       (merge {:class                 :e-text-field--adornment
               :data-selectable       false
               :data-tooltip-content  (x.components/content tooltip-content)
@@ -107,7 +107,7 @@
   ; @return (map)
   ; {}
   [field-id field-props]
-  (merge (plain-field.helpers/field-accessory-attributes field-id field-props)
+  (merge (plain-field.attributes/field-accessory-attributes field-id field-props)
          {:class :e-text-field--adornments-placeholder}))
 
 (defn field-surface-attributes
@@ -119,7 +119,7 @@
   ; @return (map)
   ; {}
   [field-id field-props]
-  (merge (plain-field.helpers/field-surface-attributes field-id field-props)
+  (merge (plain-field.attributes/field-surface-attributes field-id field-props)
          {:class :e-tex-field--field-surface}))
 
 ;; ----------------------------------------------------------------------------
@@ -149,7 +149,7 @@
   ; HACK#9760 (source-code/cljs/elements/plain_field/helpers.cljs)
   ;
   ; The {:type :date} fields range could being set by the :min and :max properties.
-  (-> (plain-field.helpers/field-input-attributes field-id field-props)
+  (-> (plain-field.attributes/field-input-attributes field-id field-props)
       (merge {:max-length max-length
               :type       type}
              (if-not disabled? {:auto-complete autofill-name

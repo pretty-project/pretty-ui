@@ -9,7 +9,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- toggle
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) toggle-id
   ; @param (map) toggle-props

@@ -6,5 +6,5 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; WARNING! NON-PUBLIC! DO NOT USE!
+; @ignore
 (r/reg-sub :elements.switch/option-switched? checkbox.subs/option-checked?)

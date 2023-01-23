@@ -8,7 +8,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn use-option!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) box-id
   ; @param (map) box-props
@@ -22,7 +22,7 @@
        (r x.db/apply-item! db value-path vector/conj-item-once option-value)))
 
 (defn use-field-content!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) box-id
   ; @param (map) box-props

@@ -6,7 +6,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn row-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (map) row-props
   ; {}

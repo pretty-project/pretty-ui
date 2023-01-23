@@ -4,12 +4,12 @@
               [elements.vertical-polarity.prototypes :as vertical-polarity.prototypes]
               [random.api                            :as random]
               [x.components.api                      :as x.components]))
- 
+
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn- vertical-polarity
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) polarity-id
   ; @param (map) polarity-props

@@ -7,7 +7,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn text-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (map) text-props
   ; {:content (metamorphic-content)(opt)}

@@ -11,7 +11,7 @@
 ;; ----------------------------------------------------------------------------
 
 (r/reg-event-fx :elements.multi-combo-box/reg-keypress-events!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) box-id
   ; @param (map) box-props
@@ -31,7 +31,7 @@
                          [:x.environment/reg-keypress-event! :elements.text-field/COMMA on-comma-props]]})))
 
 (r/reg-event-fx :elements.multi-combo-box/remove-keypress-events!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) box-id
   ; @param (map) box-props
@@ -46,7 +46,7 @@
 ;; ----------------------------------------------------------------------------
 
 (r/reg-event-fx :elements.multi-combo-box/ENTER-pressed
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) box-id
   ; @param (map) box-props
@@ -66,7 +66,7 @@
                    [:elements.multi-combo-box/use-field-content! box-id box-props])))))
 
 (r/reg-event-fx :elements.multi-combo-box/COMMA-pressed
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) box-id
   ; @param (map) box-props
@@ -79,7 +79,7 @@
 ;; ----------------------------------------------------------------------------
 
 (r/reg-event-fx :elements.multi-combo-box/use-field-content!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) box-id
   ; @param (map) box-props
@@ -91,7 +91,7 @@
             :dispatch [:elements.text-field/empty-field! field-id field-props]})))
 
 (r/reg-event-fx :elements.multi-combo-box/use-option!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) box-id
   ; @param (map) box-props
@@ -107,7 +107,7 @@
 ;; ----------------------------------------------------------------------------
 
 (r/reg-event-fx :elements.multi-combo-box/field-changed
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) box-id
   ; @param (map) box-props
@@ -116,7 +116,7 @@
            {:fx [:elements.combo-box/discard-option-highlighter! field-id]})))
 
 (r/reg-event-fx :elements.multi-combo-box/field-focused
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) box-id
   ; @param (map) box-props
@@ -124,7 +124,7 @@
       [:elements.multi-combo-box/reg-keypress-events! box-id box-props]))
 
 (r/reg-event-fx :elements.multi-combo-box/field-blurred
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) box-id
   ; @param (map) box-props

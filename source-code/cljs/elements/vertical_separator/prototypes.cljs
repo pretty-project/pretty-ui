@@ -6,7 +6,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn separator-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (map) separator-props
   ;

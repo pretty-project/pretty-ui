@@ -8,7 +8,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn group-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) group-id
   ; @param (map) group-props
@@ -25,7 +25,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn field-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) group-id
   ; @param (map) group-props

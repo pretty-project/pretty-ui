@@ -9,7 +9,7 @@
 ;; ----------------------------------------------------------------------------
 
 (r/reg-event-fx :elements.plain-field/field-did-mount
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
@@ -25,7 +25,7 @@
                              (if initial-value [:elements.plain-field/use-initial-value! field-id field-props])]})))
 
 (r/reg-event-fx :elements.plain-field/field-will-unmount
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
@@ -42,7 +42,7 @@
 ;; ----------------------------------------------------------------------------
 
 (r/reg-event-fx :elements.plain-field/use-initial-value!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
@@ -53,7 +53,7 @@
 ;; ----------------------------------------------------------------------------
 
 (r/reg-event-fx :elements.plain-field/type-ended
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
@@ -67,7 +67,7 @@
             :db       (r plain-field.events/store-value! db field-id field-props field-content)})))
 
 (r/reg-event-fx :elements.plain-field/field-blurred
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
@@ -79,7 +79,7 @@
                     [:x.environment/quit-type-mode!]]}))
 
 (r/reg-event-fx :elements.plain-field/field-focused
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props

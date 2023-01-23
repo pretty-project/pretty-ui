@@ -1,12 +1,12 @@
 
-(ns elements.row.helpers
+(ns elements.row.attributes
     (:require [pretty-css.api :as pretty-css]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn row-body-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) row-id
   ; @param (map) row-props
@@ -18,14 +18,16 @@
   ;  :wrap-items? (boolean)(opt)}
   ;
   ; @return (map)
-  ; {:data-column-gap (keyword)
+  ; {:class (keyword or keywords in vector)
+  ;  :data-column-gap (keyword)
   ;  :data-horizontal-row-align (keyword)
   ;  :data-stretch-orientation (keyword)
   ;  :data-vertical-row-align (keyword)
   ;  :data-wrap-items (boolean)
   ;  :style (map)}
   [_ {:keys [gap horizontal-align stretch-orientation style vertical-align wrap-items?] :as row-props}]
-  (-> {:data-column-gap           gap
+  (-> {:class                     :e-row--body
+       :data-column-gap           gap
        :data-horizontal-row-align horizontal-align
        :data-stretch-orientation  stretch-orientation
        :data-vertical-row-align   vertical-align
@@ -39,12 +41,14 @@
 ;; ----------------------------------------------------------------------------
 
 (defn row-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) row-id
   ; @param (map) row-props
   ;
   ; @return (map)
+  ; {}
   [_ row-props]
-  (-> {} (pretty-css/default-attributes row-props)
-         (pretty-css/outdent-attributes row-props)))
+  (-> {:class :e-row}
+      (pretty-css/default-attributes row-props)
+      (pretty-css/outdent-attributes row-props)))

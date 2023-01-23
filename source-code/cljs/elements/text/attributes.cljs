@@ -8,7 +8,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn copyable-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) text-id
   ; @param (map) text-props
@@ -23,7 +23,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn content-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) text-id
   ; @param (map) text-props
@@ -38,7 +38,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn text-body-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) text-id
   ; @param (map) text-props
@@ -75,7 +75,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn text-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) text-id
   ; @param (map) text-props

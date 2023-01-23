@@ -1,61 +1,38 @@
 
+; WARNING! HASN'T FINISHED! DO NOT USE!
+
 (ns elements.slider.views
     (:require [elements.element.views     :as element.views]
-              [elements.slider.helpers    :as slider.helpers]
+              [elements.slider.attributes :as slider.attributes]
               [elements.slider.prototypes :as slider.prototypes]
               [random.api                 :as random]
+              [re-frame.api               :as r]
               [reagent.api                :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- slider-line
-  ; @param (keyword) slider-id
-  ; @param (map) slider-props
-  [slider-id slider-props]
-  [:div.e-slider--line (slider.helpers/slider-line-attributes slider-id slider-props)])
-
-(defn- slider-secondary-thumb
-  ; @param (keyword) slider-id
-  ; @param (map) slider-props
-  [slider-id slider-props]
-  [:div.e-slider--thumb (slider.helpers/slider-secondary-thumb-attributes slider-id slider-props)])
-
-(defn- slider-primary-thumb
-  ; @param (keyword) slider-id
-  ; @param (map) slider-props
-  [slider-id slider-props]
-  [:div.e-slider--thumb (slider.helpers/slider-primary-thumb-attributes slider-id slider-props)])
-
-(defn- slider-track
-  ; @param (keyword) slider-id
-  ; @param (map) slider-props
-  [slider-id slider-props]
-  [:div.e-slider--track])
-
-(defn- slider-body
-  ; @param (keyword) slider-id
-  ; @param (map) slider-props
-  [slider-id slider-props]
-  [:div.e-slider--body (slider.helpers/slider-body-attributes slider-id slider-props)
-                       [slider-track                          slider-id slider-props]
-                       [slider-line                           slider-id slider-props]
-                       [slider-primary-thumb                  slider-id slider-props]
-                       [slider-secondary-thumb                slider-id slider-props]])
-
 (defn- slider-structure
+  ; @ignore
+  ;
   ; @param (keyword) slider-id
   ; @param (map) slider-props
   [slider-id slider-props]
-  [:div.e-slider (slider.helpers/slider-attributes slider-id slider-props)
-                 [element.views/element-label      slider-id slider-props]
-                 [slider-body                      slider-id slider-props]])
+  [:div (slider.attributes/slider-attributes slider-id slider-props)
+        [element.views/element-label         slider-id slider-props]
+        [:div (slider.attributes/slider-body-attributes slider-id slider-props)
+              [:div {:class :e-slider--track}]
+              [:div (slider.attributes/slider-line-attributes            slider-id slider-props)]
+              [:div (slider.attributes/slider-primary-thumb-attributes   slider-id slider-props)]
+              [:div (slider.attributes/slider-secondary-thumb-attributes slider-id slider-props)]]])
 
 (defn- slider
+  ; @ignore
+  ;
   ; @param (keyword) slider-id
   ; @param (map) slider-props
   [slider-id slider-props]
-  (reagent/lifecycles {:component-did-mount (fn [_ _] (slider.helpers/slider-did-mount slider-id slider-props))
+  (reagent/lifecycles {:component-did-mount (fn [_ _] (r/dispatch [:elements.slider/slider-did-mount slider-id slider-props]))
                        :reagent-render      (fn [_ slider-props] [slider-structure slider-id slider-props])}))
 
 (defn element

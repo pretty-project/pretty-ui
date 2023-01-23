@@ -7,7 +7,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn button-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props

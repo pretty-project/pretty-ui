@@ -1,6 +1,7 @@
 
 (ns elements.plain-field.views
     (:require [elements.plain-field.helpers    :as plain-field.helpers]
+              [elements.plain-field.attributes :as plain-field.attributes]
               [elements.plain-field.prototypes :as plain-field.prototypes]
               [random.api                      :as random]
               [re-frame.api                    :as r]
@@ -11,6 +12,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- plain-field-synchronizer-debug
+  ; @ignore
+  ;
   ; @param (keyword) field-id
   ; @param (map) field-props
   ; {:field-content-f (function)
@@ -24,6 +27,8 @@
              [:br] "derived content: " (field-content-f stored-value)]))
 
 (defn- plain-field-synchronizer-sensor
+  ; @ignore
+  ;
   ; @param (keyword) field-id
   ; @param (map) field-props
   ; @param (*) stored-value
@@ -36,6 +41,8 @@
                        :reagent-render         (fn [_ _ _])}))
 
 (defn- plain-field-synchronizer
+  ; @ignore
+  ;
   ; @param (keyword) field-id
   ; @param (map) field-props
   ; {:value-path (vector)}
@@ -47,38 +54,27 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- plain-field-surface
+(defn- plain-field-structure
+  ; @ignore
+  ;
   ; @param (keyword) field-id
   ; @param (map) field-props
   ; {:surface (metamorphic-content)(opt)}
   [field-id {:keys [surface] :as field-props}]
-  (if surface (if (plain-field.helpers/surface-visible? field-id)
-                  [:div (plain-field.helpers/field-surface-attributes field-id field-props)
-                        [x.components/content                         field-id surface]])))
-
-(defn- plain-field-input
-  ; @param (keyword) field-id
-  ; @param (map) field-props
-  [field-id field-props]
-  [:input.e-plain-field--input (plain-field.helpers/field-input-attributes field-id field-props)])
-
-(defn- plain-field-body
-  ; @param (keyword) field-id
-  ; @param (map) field-props
-  [field-id field-props]
-  [:div.e-plain-field--body (plain-field.helpers/field-body-attributes field-id field-props)
-                            [plain-field-input                         field-id field-props]])
-
-(defn- plain-field-structure
-  ; @param (keyword) field-id
-  ; @param (map) field-props
-  [field-id field-props]
-  [:div.e-plain-field (plain-field.helpers/field-attributes field-id field-props)
-                      [plain-field-body                     field-id field-props]
-                      [plain-field-surface                  field-id field-props]
-                      [plain-field-synchronizer             field-id field-props]])
+  [:div (plain-field.attributes/field-attributes field-id field-props)
+        ; ...
+        [:div (plain-field.attributes/field-body-attributes field-id field-props)
+              [:input (plain-field.attributes/field-input-attributes field-id field-props)]]
+        ; ...
+        (and surface (plain-field.helpers/surface-visible? field-id)
+                     [:div (plain-field.attributes/field-surface-attributes field-id field-props)
+                           [x.components/content field-id surface]])
+        ; HACK#9910
+        [plain-field-synchronizer field-id field-props]])
 
 (defn- plain-field
+  ; @ignore
+  ;
   ; @param (keyword) field-id
   ; @param (map) field-props
   [field-id field-props]

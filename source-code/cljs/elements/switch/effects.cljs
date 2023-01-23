@@ -7,7 +7,7 @@
 ;; ----------------------------------------------------------------------------
 
 (r/reg-event-fx :elements.switch/switch-did-mount
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) switch-id
   ; @param (map) switch-props
@@ -21,7 +21,7 @@
 ;; ----------------------------------------------------------------------------
 
 (r/reg-event-fx :elements.switch/toggle-option!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) switch-id
   ; @param (map) switch-props

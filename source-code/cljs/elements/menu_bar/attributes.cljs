@@ -8,7 +8,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn menu-item-icon-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) bar-id
   ; @param (map) bar-props
@@ -24,7 +24,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn menu-item-label-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) bar-id
   ; @param (map) bar-props
@@ -41,7 +41,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn menu-item-body-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) bar-id
   ; @param (map) bar-props
@@ -87,7 +87,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn menu-item-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) bar-id
   ; @param (map) bar-props
@@ -99,11 +99,26 @@
   (-> {:class :e-menu-bar--menu-item}
       (pretty-css/outdent-attributes item-props)))
 
+(defn menu-bar-items-attributes
+  ; @ignore
+  ;
+  ; @param (keyword) bar-id
+  ; @param (map) bar-props
+  ; {}
+  ;
+  ; @return (map)
+  ; {}
+  [_ {:keys [orientation]}]
+  (merge {:class :e-menu-bar--menu-items}
+         (case orientation :horizontal {:data-orientation :horizontal
+                                        :data-scroll-axis :x}
+                                       {:data-orientation :vertical})))
+
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn menu-bar-body-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) bar-id
   ; @param (map) bar-props
@@ -126,7 +141,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn menu-bar-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) bar-id
   ; @param (map) bar-props

@@ -9,7 +9,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn field-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) box-id
   ; @param (map) box-props
@@ -25,7 +25,7 @@
               (param field-props))))
 
 (defn group-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) box-id
   ; @param (map) box-props
@@ -43,7 +43,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn box-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) box-id
   ; @param (map) box-props

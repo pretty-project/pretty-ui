@@ -8,7 +8,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn slider-did-mount
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) slider-id
   ; @param (map) slider-props
@@ -21,7 +21,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn decrease-value!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) slider-id
   ; @param (map) slider-props
@@ -31,7 +31,7 @@
   [db [_ slider-id {:keys [value-path] :as slider-props}]])
 
 (defn increase-value!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) slider-id
   ; @param (map) slider-props
@@ -40,12 +40,11 @@
   ; @return (map)
   [db [_ slider-id {:keys [value-path] :as slider-props}]])
 
-
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; WARNING! NON-PUBLIC! DO NOT USE!
+; @ignore
 (r/reg-event-db :elements.slider/decrease-value! decrease-value!)
 
-; WARNING! NON-PUBLIC! DO NOT USE!
+; @ignore
 (r/reg-event-db :elements.slider/increase-value! increase-value!)

@@ -1,7 +1,6 @@
 
 (ns elements.plain-field.helpers
     (:require [dom.api                     :as dom]
-              [pretty-css.api              :as pretty-css]
               [elements.plain-field.config :as plain-field.config]
               [elements.plain-field.state  :as plain-field.state]
               [hiccup.api                  :as hiccup]
@@ -13,7 +12,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn get-field-content
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) field-id
   ;
@@ -23,7 +22,7 @@
   (get @plain-field.state/FIELD-CONTENTS field-id))
 
 (defn get-field-output
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) field-id
   ;
@@ -33,7 +32,7 @@
   (get @plain-field.state/FIELD-OUTPUTS field-id))
 
 (defn set-field-content!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) field-id
   ; @param (string) field-content
@@ -48,7 +47,7 @@
   (swap! plain-field.state/FIELD-CONTENTS assoc field-id (str field-content)))
 
 (defn set-field-output!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) field-id
   ; @param (string) field-content
@@ -60,7 +59,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn field-empty?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) field-id
   ;
@@ -70,7 +69,7 @@
        (empty? field-content)))
 
 (defn field-filled?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) field-id
   ;
@@ -80,7 +79,7 @@
        (-> field-content empty? not)))
 
 (defn surface-visible?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) field-id
   ;
@@ -92,7 +91,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn synchronizer-did-mount-f
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
@@ -110,7 +109,7 @@
        ;        (time/set-timeout! f 350)]))
 
 (defn synchronizer-did-update-f
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) field-id
   ; @param (?) %
@@ -126,7 +125,7 @@
                   (set-field-content! field-id stored-content)))))
 
 (defn synchronizer-will-unmount-f
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
@@ -139,7 +138,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn field-changed
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
@@ -148,7 +147,7 @@
        (swap! plain-field.state/FIELD-STATES assoc field-id {:changed-at timestamp})))
 
 (defn resolve-field-change!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
@@ -169,7 +168,7 @@
              (r/dispatch-sync [:elements.plain-field/type-ended field-id field-props]))))
 
 (defn on-change-f
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
@@ -187,125 +186,3 @@
               (time/set-timeout! f plain-field.config/TYPE-ENDED-AFTER))
        (if on-changed (let [on-changed (r/metamorphic-event<-params on-changed field-content)]
                            (r/dispatch-sync on-changed)))))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn field-input-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) field-id
-  ; @param (map) field-props
-  ; {:disabled? (boolean)(opt)}
-  ;
-  ; @return (map)
-  ; {:data-autofill (keyword)
-  ;  :data-caret-color (keyword)
-  ;  :id (string)
-  ;  :on-blur (function)
-  ;  :on-change (function)
-  ;  :on-focus (function)
-  ;  :tab-index (integer)
-  ;  :type (keyword)
-  ;  :value (string)}
-  [field-id {:keys [disabled?] :as field-props}]
-  ; XXX#4460 (source-code/cljs/elements/button/views.cljs)
-  ;
-  ; BUG#8806
-  ; If the {:disabled? true} state of the plain-field element would set the
-  ; disabled="true" attribute on the input DOM element ...
-  ; ... the input loses its focus.
-  ; ... the on-blur event doesn't occur in some browsers, therefore
-  ;     the keypress handler stays in type mode and the field stays marked
-  ;     as focused.
-  ; ... after the {:disabled? true} state ends, the field doesn't get back
-  ;     its focused state.
-  ; Therefore, the input DOM element doesn't get the disabled="true" attribute!
-  ;
-  ; BUG#8809
-  ; If the {:disabled? true} state of the plain-field element removes the
-  ; :on-change property of the input DOM element ...
-  ; ... the React warns that the input stepped into uncontrolled state.
-  ; Therefore, the input DOM element must keeps its :on-change property
-  ; in {:disabled? true} state!
-  (merge {:data-autofill :remove-style
-          :type          :text
-          :id            (hiccup/value      field-id "input")
-          :value         (get-field-content field-id)}
-         (if disabled? {:data-caret-color :hidden
-                        :tab-index        -1
-                        :on-change        (fn [])}
-                       {:on-blur   #(r/dispatch [:elements.plain-field/field-blurred field-id field-props])
-                        :on-focus  #(r/dispatch [:elements.plain-field/field-focused field-id field-props])
-                        :on-change #(on-change-f field-id field-props %)})))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn field-surface-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) field-id
-  ; @param (map) field-props
-  ;
-  ; @return (map)
-  ; {:id (string)
-  ;  :on-mouse-down (function)}
-  [field-id _]
-  ; XXX#4460 (source-code/cljs/elements/button/views.cljs)
-  ; BUG#2105
-  {:class :e-plain-field--surface
-   :id (hiccup/value field-id "surface")
-   :on-mouse-down #(.preventDefault %)})
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn field-accessory-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) field-id
-  ; @param (map) field-props
-  ;
-  ; @return (map)
-  ; {:on-mouse-down (function)}
-  [field-id _]
-  ; BUG#2105
-  ; An on-mouse-down event fired on anywhere out of the input triggers the
-  ; on-blur event of the field, therefore the surface would dissapears unless
-  ; if the on-mouse-down event prevented.
-  ;
-  ; If the user clicks on a field accessory (adornment, surface, placeholder, etc.)
-  ; the field has been focused!
-  {:on-mouse-down (fn [e] (.preventDefault e)
-                          (r/dispatch-fx [:elements.plain-field/focus-field! field-id]))})
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn field-body-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) field-id
-  ; @param (map) field-props
-  ; {:style (map)(opt)}
-  ;
-  ; @return (map)
-  ; {:style (map)}
-  [_ {:keys [style] :as field-props}]
-  (-> {:style style}
-      (pretty-css/indent-attributes field-props)))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn field-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) field-id
-  ; @param (map) field-props
-  ;
-  ; @return (map)
-  [_ field-props]
-  (-> {} (pretty-css/default-attributes field-props)
-         (pretty-css/outdent-attributes field-props)))

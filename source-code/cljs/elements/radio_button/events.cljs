@@ -7,7 +7,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn button-did-mount
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
@@ -21,7 +21,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn select-option!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
@@ -34,7 +34,7 @@
        (assoc-in db value-path option-value)))
 
 (defn clear-value!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props

@@ -6,7 +6,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn thumbnail-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (map) thumbnail-props
   ; {:border-color (keyword or string)(opt)}

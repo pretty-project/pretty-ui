@@ -1,20 +1,24 @@
 
-(ns elements.notification-bubble.helpers
+(ns elements.notification-bubble.attributes
     (:require [pretty-css.api :as pretty-css]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn bubble-content-attributes
+  ; @ignore
+  ;
   ; @param (keyword) bubble-id
   ; @param (map) bubble-props
   ; {:style (map)(opt)}
   ;
   ; @return (map)
-  ; {:data-letter-spacing (keyword)
+  ; {:class (keyword or keywords in vector)
+  ;  :data-letter-spacing (keyword)
   ;  :style (map)}
   [_ {:keys [style] :as bubble-props}]
-  (-> {:style               style
+  (-> {:class               :e-notification-bubble--content
+       :style               style
        :data-letter-spacing :auto}
       (pretty-css/font-attributes             bubble-props)
       (pretty-css/element-max-size-attributes bubble-props)
@@ -25,14 +29,18 @@
 ;; ----------------------------------------------------------------------------
 
 (defn bubble-body-attributes
+  ; @ignore
+  ;
   ; @param (keyword) bubble-id
   ; @param (map) bubble-props
   ; {:selectable? (boolean)}
   ;
   ; @return (map)
-  ; {:data-selectable (boolean)}
+  ; {:class (keyword or keywords in vector)
+  ;  :data-selectable (boolean)}
   [_ {:keys [selectable?] :as bubble-props}]
-  (-> {:data-selectable selectable?}
+  (-> {:class           :e-notification-bubble--body
+       :data-selectable selectable?}
       (pretty-css/border-attributes bubble-props)
       (pretty-css/color-attributes  bubble-props)))
 
@@ -40,10 +48,14 @@
 ;; ----------------------------------------------------------------------------
 
 (defn bubble-attributes
+  ; @ignore
+  ;
   ; @param (keyword) bubble-id
   ; @param (map) bubble-props
   ;
   ; @return (map)
+  ; {:class (keyword or keywords in vector)}
   [_ bubble-props]
-  (-> {} (pretty-css/default-attributes bubble-props)
-         (pretty-css/outdent-attributes bubble-props)))
+  (-> {:class :e-notification-bubble}
+      (pretty-css/default-attributes bubble-props)
+      (pretty-css/outdent-attributes bubble-props)))

@@ -7,7 +7,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn toggle-password-visibility!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) field-id
   [field-id]
@@ -16,5 +16,5 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; WARNING! NON-PUBLIC! DO NOT USE!
+; @ignore
 (r/reg-fx :elements.password-field/toggle-password-visibility! toggle-password-visibility!)

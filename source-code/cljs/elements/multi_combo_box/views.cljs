@@ -3,6 +3,7 @@
     (:require [elements.chip-group.views           :as chip-group.views]
               [elements.combo-box.views            :as combo-box.views]
               [elements.element.views              :as element.views]
+              [elements.multi-combo-box.attributes :as multi-combo-box.attributes]
               [elements.multi-combo-box.helpers    :as multi-combo-box.helpers]
               [elements.multi-combo-box.prototypes :as multi-combo-box.prototypes]
               [random.api                          :as random]
@@ -13,7 +14,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- multi-combo-box-chip-group
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) box-id
   ; @param (map) box-props
@@ -29,7 +30,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- multi-combo-box-field
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) box-id
   ; @param (map) box-props
@@ -41,25 +42,17 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- multi-combo-box-body
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) box-id
-  ; @param (map) box-props
-  [box-id box-props]
-  [:div.e-multi-combo-box--body (multi-combo-box.helpers/box-body-attributes box-id box-props)
-                                [element.views/element-label                 box-id box-props]
-                                [multi-combo-box-chip-group                  box-id box-props]
-                                [multi-combo-box-field                       box-id box-props]])
-
 (defn- multi-combo-box
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) box-id
   ; @param (map) box-props
   [box-id box-props]
-  [:div.e-multi-combo-box (multi-combo-box.helpers/box-attributes box-id box-props)
-                          [multi-combo-box-body                   box-id box-props]])
+  [:div (multi-combo-box.attributes/box-attributes box-id box-props)
+        [:div (multi-combo-box.attributes/box-body-attributes box-id box-props)
+              [element.views/element-label                    box-id box-props]
+              [multi-combo-box-chip-group                     box-id box-props]
+              [multi-combo-box-field                          box-id box-props]]])
 
 (defn element
   ; XXX#0714 (source-code/cljs/elements/text_field/views.cljs)

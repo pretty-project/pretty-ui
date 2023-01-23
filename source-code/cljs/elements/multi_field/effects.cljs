@@ -8,7 +8,7 @@
 ;; ----------------------------------------------------------------------------
 
 (r/reg-event-fx :elements.multi-field/decrease-field-count!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) group-id
   ; @param (map) group-props
@@ -17,7 +17,7 @@
       {:db (r multi-field.events/decrease-field-count! db group-id group-props field-dex)}))
 
 (r/reg-event-fx :elements.multi-field/increase-field-count!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) group-id
   ; @param (map) group-props

@@ -9,7 +9,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn use-initial-value!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
@@ -22,7 +22,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn clear-value!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
@@ -32,7 +32,7 @@
   (r input.events/clear-value! db field-id field-props))
 
 (defn empty-field!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
@@ -45,7 +45,7 @@
        (assoc-in db value-path field-value)))
 
 (defn store-value!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
@@ -63,5 +63,5 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; WARNING! NON-PUBLIC! DO NOT USE!
+; @ignore
 (r/reg-event-db :elements.plain-field/clear-value! clear-value!)

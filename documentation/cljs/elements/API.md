@@ -2359,6 +2359,7 @@ To render the select popup without using its button element:
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   Default: :s
  :helper (metamorphic-content)(opt)
+ :href (string)(opt)
  :icon (keyword)(opt)
   Default: :icon
  :icon-family (keyword)(opt)
@@ -2378,6 +2379,8 @@ To render the select popup without using its button element:
  :outdent (map)(opt)
   Same as the :indent property
  :style (map)(opt)
+ :target (keyword)(opt)
+  :blank, :self
  :uri (string)(opt)
  :width (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl

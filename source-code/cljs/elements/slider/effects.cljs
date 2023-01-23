@@ -7,7 +7,7 @@
 ;; ----------------------------------------------------------------------------
 
 (r/reg-event-fx :elements.slider/slider-did-mount
-   ; WARNING! NON-PUBLIC! DO NOT USE!
+   ; @ignore
    ;
    ; @param (keyword) slider-id
    ; @param (map) slider-props

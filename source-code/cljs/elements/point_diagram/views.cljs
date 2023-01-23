@@ -1,35 +1,27 @@
 
-; WARNING! NOT TESTED! DO NOT USE!
+; WARNING! HASN'T FINISHED! DO NOT USE!
 
 (ns elements.point-diagram.views
-    (:require [elements.point-diagram.helpers    :as point-diagram.helpers]
+    (:require [elements.point-diagram.attributes :as point-diagram.attributes]
               [elements.point-diagram.prototypes :as point-diagram.prototypes]
               [random.api                        :as random]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- point-diagram-body
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) diagram-id
-  ; @param (map) diagram-props
-  [diagram-id diagram-props]
-  [:div.e-point-diagram--body (point-diagram.helpers/diagram-body-attributes diagram-id diagram-props)
-                              [:svg {:style {:width "100%" :height "100%"
-                                                           :preserve-aspect-ratio "none"
-                                                           :view-box              "0 0 100 100"}}
-                                    [:polyline {:points "0,100 100,1"
-                                                :style  {:fill "none" :stroke "red" :stroke-width "2px"}}]]])
-
 (defn- point-diagram
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) diagram-id
   ; @param (map) diagram-props
   [diagram-id diagram-props]
-  [:div.e-point-diagram (point-diagram.helpers/diagram-attributes diagram-id diagram-props)
-                        [point-diagram-body                       diagram-id diagram-props]])
+  [:div (point-diagram.attributes/diagram-attributes diagram-id diagram-props)
+        [:div (point-diagram.attributes/diagram-body-attributes diagram-id diagram-props)
+              [:svg {:style {:width "100%" :height "100%"
+                                           :preserve-aspect-ratio "none"
+                                           :view-box              "0 0 100 100"}}
+                    [:polyline {:points "0,100 100,1"
+                                :style  {:fill "none" :stroke "red" :stroke-width "2px"}}]]]])
 
 (defn element
   ; @param (keyword)(opt) diagram-id

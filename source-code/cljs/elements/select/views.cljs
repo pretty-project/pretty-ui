@@ -5,8 +5,10 @@
               [elements.icon-button.views :as icon-button.views]
               [elements.input.helpers     :as input.helpers]
               [elements.select.helpers    :as select.helpers]
+              [elements.select.attributes :as select.attributes]
               [elements.select.prototypes :as select.prototypes]
               [elements.text-field.views  :as text-field.views]
+              [hiccup.api                 :as hiccup]
               [layouts.api                :as layouts]
               [noop.api                   :refer [return]]
               [pretty-css.api             :as pretty-css]
@@ -37,66 +39,31 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- select-option
-  ; @ignore
-  ;
-  ; @param (keyword) select-id
-  ; @param (map) select-props
-  ; {:option-label-f (function)}
-  ; @param (*) option
-  [select-id {:keys [option-label-f] :as select-props} option]
-  [:button.e-select--option (select.helpers/select-option-attributes select-id select-props option)
-                            (-> option option-label-f x.components/content)])
-
 (defn- select-option-list-items
   ; @ignore
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
-  [select-id select-props]
+  [select-id {:keys [option-label-f] :as select-props}]
   (let [options (input.helpers/get-input-options select-id select-props)]
-       (letfn [(f [options option]
-                  (if (select.helpers/render-option? select-id select-props option)
-                      (conj   options [select-option select-id select-props option])
-                      (return options)))]
-              (reduce f [:<>] options))))
-
-(defn- options-placeholder
-  ; @ignore
-  ;
-  ; @param (keyword) select-id
-  ; @param (map) select-props
-  ; {:options-placeholder (metamorphic-content)}
-  [_ {:keys [options-placeholder]}]
-  [:div.e-select--options-placeholder {:data-font-size   :s
-                                       :data-font-weight :medium
-                                       :data-line-height :text-block}
-                                      (x.components/content options-placeholder)])
+       (letfn [(f [option] (if (select.helpers/render-option? select-id select-props option)
+                               [:button (select.attributes/select-option-attributes select-id select-props option)
+                                        (-> option option-label-f x.components/content)]))]
+              (hiccup/put-with [:<>] options f))))
 
 (defn- select-option-list
   ; @ignore
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
-  [select-id select-props]
-  (let [options (input.helpers/get-input-options select-id select-props)]
-       [:div.e-select--option-list {:data-selectable false}
-                                   (if (vector/nonempty? options)
-                                       [select-option-list-items select-id select-props]
-                                       [options-placeholder      select-id select-props])]))
-
-(defn- select-options-label
-  ; @ignore
-  ;
-  ; @param (keyword) select-id
-  ; @param (map) select-props
   ; {}
-  [_ {:keys [options-label]}]
-  (if options-label [:div.e-select--options--label {:data-font-size   :s
-                                                    :data-font-weight :bold
-                                                    :data-line-height :text-block}
-                                                   (x.components/content options-label)]
-                    [:div.e-select--options--label {:data-placeholder true}]))
+  [select-id {:keys [options-placeholder] :as select-props}]
+  (let [options (input.helpers/get-input-options select-id select-props)]
+       [:div {:class :e-select--option-list :data-selectable false}
+             (if (vector/nonempty? options)
+                 [select-option-list-items select-id select-props]
+                 [:div (select.attributes/select-options-placeholder-attributes select-id select-props)
+                       (x.components/content options-placeholder)])]))
 
 (defn- select-options-header
   ; @ignore
@@ -104,10 +71,11 @@
   ; @param (keyword) select-id
   ; @param (map) select-props
   ; {}
-  [select-id select-props]
-  [:div.e-select--options--header {:data-selectable false}
-                                  [select-options-label select-id select-props]
-                                  [option-field         select-id select-props]])
+  [select-id {:keys [options-label] :as select-props}]
+  [:div {:class :e-select--options--header :data-selectable false}
+        [:div (select.attributes/select-options-label-attributes select-id select-props)
+              (x.components/content select-id options-label)]
+        [option-field select-id select-props]])
 
 (defn- select-options-body
   ; @ignore
@@ -143,20 +111,12 @@
   [select-id select-props]
   (let [on-click [:elements.select/render-options!   select-id select-props]
         label    (select.helpers/select-button-label select-id select-props)]
-       [button.views/element select-id (assoc select-props :class         :e-select-button
-                                                           :icon          :unfold_more
-                                                           :icon-position :right
-                                                           :label         label
-                                                           :on-click      on-click)]))
-
-(defn- select-button-structure
-  ; @ignore
-  ;
-  ; @param (keyword) select-id
-  ; @param (map) select-props
-  [select-id select-props]
-  [:div (pretty-css/effect-attributes {:class :e-select-button} select-props)
-        [select-button select-id select-props]])
+       [:div (pretty-css/effect-attributes {:class :e-select-button} select-props)
+             [button.views/element select-id (assoc select-props :class         :e-select-button
+                                                                 :icon          :unfold_more
+                                                                 :icon-position :right
+                                                                 :label         label
+                                                                 :on-click      on-click)]]))
 
 (defn- select-layout
   ; @ignore
@@ -165,7 +125,7 @@
   ; @param (map) select-props
   [select-id select-props]
   (reagent/lifecycles {:component-did-mount (fn [_ _] (r/dispatch [:elements.select/select-button-did-mount select-id select-props]))
-                       :reagent-render      (fn [_ select-props] [select-button-structure select-id select-props])}))
+                       :reagent-render      (fn [_ select-props] [select-button select-id select-props])}))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

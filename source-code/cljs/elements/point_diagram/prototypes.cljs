@@ -5,7 +5,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn diagram-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (map) diagram-props
   ;

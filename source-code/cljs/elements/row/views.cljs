@@ -1,6 +1,6 @@
 
 (ns elements.row.views
-    (:require [elements.row.helpers    :as row.helpers]
+    (:require [elements.row.attributes :as row.attributes]
               [elements.row.prototypes :as row.prototypes]
               [random.api              :as random]
               [x.components.api        :as x.components]))
@@ -8,24 +8,16 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- row-body
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+(defn- row
+  ; @ignore
   ;
   ; @param (keyword) row-id
   ; @param (map) row-props
   ; {:content (metamorphic-content)(opt)}
   [row-id {:keys [content] :as row-props}]
-  [:div.e-row--body (row.helpers/row-body-attributes row-id row-props)
-                    [x.components/content            row-id content]])
-
-(defn- row
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) row-id
-  ; @param (map) row-props
-  [row-id row-props]
-  [:div.e-row (row.helpers/row-attributes row-id row-props)
-              [row-body                   row-id row-props]])
+  [:div (row.attributes/row-attributes row-id row-props)
+        [:div (row.attributes/row-body-attributes row-id row-props)
+              [x.components/content row-id content]]])
 
 (defn element
   ; @param (keyword)(opt) row-id

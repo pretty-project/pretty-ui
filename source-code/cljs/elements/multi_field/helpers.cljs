@@ -2,7 +2,6 @@
 (ns elements.multi-field.helpers
     (:require [hiccup.api       :as hiccup]
               [noop.api         :refer [return]]
-              [pretty-css.api   :as pretty-css]
               [re-frame.api     :as r]
               [vector.api       :as vector]
               [x.components.api :as x.components]))
@@ -11,7 +10,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn group-props->single-field?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) group-id
   ; @param (map) group-props
@@ -23,7 +22,7 @@
        (vector/count? group-value 1)))
 
 (defn group-props->multi-field?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) group-id
   ; @param (map) group-props
@@ -35,7 +34,7 @@
        (not single-field?)))
 
 (defn group-props->min-field-count-reached?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) group-id
   ; @param (map) group-props
@@ -47,7 +46,7 @@
        (vector/count? group-value 1)))
 
 (defn group-props->max-field-count-reached?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) group-id
   ; @param (map) group-props
@@ -60,7 +59,7 @@
        (vector/count? group-value max-input-count)))
 
 (defn field-dex->field-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) group-id
   ; @param (map) group-props
@@ -77,7 +76,7 @@
         (x.components/content {:content label :suffix (str " #" (inc field-dex))})))
 
 (defn field-dex->control-adornments
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) group-id
   ; @param (map) group-props
@@ -95,7 +94,7 @@
     :tooltip-content :remove-field!}])
 
 (defn field-dex->end-adornments
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) group-id
   ; @param (map) group-props
@@ -107,7 +106,7 @@
   (vector/concat-items end-adornments (field-dex->control-adornments group-id group-props field-dex)))
 
 (defn field-dex->autofocus?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) group-id
   ; @param (map) group-props
@@ -127,7 +126,7 @@
       (return autofocus?)))
 
 (defn field-dex->value-path
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) group-id
   ; @param (map) group-props
@@ -139,7 +138,7 @@
   (vector/conj-item value-path field-dex))
 
 (defn field-dex->react-key
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) group-id
   ; @param (map) group-props
@@ -155,7 +154,7 @@
   (hiccup/value group-id field-dex))
 
 (defn field-dex->field-id
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) group-id
   ; @param (map) group-props
@@ -170,36 +169,3 @@
   [group-id _ field-dex]
   (keyword      (namespace group-id)
            (str (name      group-id) "--" field-dex)))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn group-body-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) group-id
-  ; @param (map) group-props
-  ; {:style (map)(opt)}
-  ;
-  ; @return (map)
-  ; {:style (map)}
-  [_ {:keys [style] :as group-props}]
-  (-> {:style style}
-      (pretty-css/indent-attributes group-props)))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn group-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) group-id
-  ; @param (map) group-props
-  ;
-  ; @return (map)
-  [_ group-props]
-  ; The fields are separatelly reacts to the disabled state, therefore no need
-  ; to the group reacts to it.
-  (let [group-props (dissoc group-props :disabled?)]
-       (-> {} (pretty-css/default-attributes group-props)
-              (pretty-css/outdent-attributes group-props))))

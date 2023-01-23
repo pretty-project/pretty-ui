@@ -2,8 +2,9 @@
 (ns elements.radio-button.views
     (:require [elements.element.views           :as element.views]
               [elements.input.helpers           :as input.helpers]
-              [elements.radio-button.helpers    :as radio-button.helpers]
+              [elements.radio-button.attributes :as radio-button.attributes]
               [elements.radio-button.prototypes :as radio-button.prototypes]
+              [hiccup.api                       :as hiccup]
               [random.api                       :as random]
               [re-frame.api                     :as r]
               [reagent.api                      :as reagent]
@@ -12,81 +13,42 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- radio-button-option-helper
+(defn- radio-button-option
+  ; @ignore
+  ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  ; {:option-helper-f (function)}
-  ; @param (*) option
-  [_ {:keys [option-helper-f]} option]
-  (if option-helper-f (let [option-helper (option-helper-f option)]
-                           [:div.e-radio-button--option-helper {:data-font-size   :xs
-                                                                :data-line-height :native}
-                                                               (x.components/content option-helper)])))
-
-(defn- radio-button-option-label
-  ; @param (keyword) button-id
-  ; @param (map) button-props
-  ; {:font-size (keyword)
+  ; {:option-helper-f (function)
   ;  :option-label-f (function)}
   ; @param (*) option
-  [_ {:keys [font-size option-label-f]} option]
-  (let [option-label (option-label-f option)]
-       [:div.e-radio-button--option-label {:data-font-size   font-size
-                                           :data-font-weight :medium
-                                           :data-line-height :text-block}
-                                          (x.components/content option-label)]))
+  [button-id {:keys [option-helper-f option-label-f] :as button-props} option]
+  [:button (radio-button.attributes/radio-button-option-attributes button-id button-props option)
+           [:div (radio-button.attributes/radio-button-option-button-attributes button-id button-props)]
+           [:div {:class :e-radio-button--option-content :data-click-target :opacity}
+                 (if option-label-f  [:div (radio-button.attributes/radio-button-option-label-attributes button-id button-props)
+                                           (-> option option-label-f x.components/content)])
+                 (if option-helper-f [:div (radio-button.attributes/radio-button-option-helper-attributes button-id button-props)
+                                           (-> option option-helper-f x.components/content)])]])
 
-(defn- radio-button-option-content
-  ; @param (keyword) button-id
-  ; @param (map) button-props
-  ; @param (*) option
-  [button-id button-props option]
-  [:div.e-radio-button--option-content {:data-click-target :opacity}
-                                       [radio-button-option-label  button-id button-props option]
-                                       [radio-button-option-helper button-id button-props option]])
-
-(defn- radio-button-option
-  ; @param (keyword) button-id
-  ; @param (map) button-props
-  ; @param (*) option
-  [button-id button-props option]
-  [:button.e-radio-button--option (radio-button.helpers/radio-button-option-attributes button-id button-props option)
-                                  [:div.e-radio-button--option-button (radio-button.helpers/radio-button-option-button-attributes button-id button-props)]
-                                  [radio-button-option-content button-id button-props option]])
-
-(defn- radio-button-options
-  ; @param (keyword) button-id
-  ; @param (map) button-props
-  [button-id button-props]
-  (let [options (input.helpers/get-input-options button-id button-props)]
-       (letfn [(f [option-list option] (conj option-list [radio-button-option button-id button-props option]))]
-              (reduce f [:<>] options))))
-
-(defn- radio-button-body
-  ; @param (keyword) button-id
-  ; @param (map) button-props
-  [button-id button-props]
-  [:div.e-radio-button--body (radio-button.helpers/radio-button-body-attributes button-id button-props)
-                             [radio-button-options                              button-id button-props]])
-
-(defn- radio-button-deselect-button
+(defn- radio-button-structure
+  ; @ignore
+  ;
   ; @param (keyword) button-id
   ; @param (map) button-props
   ; {:deselectable? (boolean)(opt)}
   [button-id {:keys [deselectable?] :as button-props}]
-  (if deselectable? [:button.e-radio-button--clear-button (radio-button.helpers/clear-button-attributes button-id button-props)]))
-                                                         ;[:div.e-radio-button--clear-button-label (x.components/content :delete!)]
-
-(defn- radio-button-structure
-  ; @param (keyword) button-id
-  ; @param (map) button-props
-  [button-id button-props]
-  [:div.e-radio-button (radio-button.helpers/radio-button-attributes button-id button-props)
-                       [element.views/element-label                  button-id button-props]
-                       [radio-button-deselect-button                 button-id button-props]
-                       [radio-button-body                            button-id button-props]])
+  [:div (radio-button.attributes/radio-button-attributes button-id button-props)
+        [element.views/element-label button-id button-props]
+        (if deselectable? [:button (radio-button.attributes/clear-button-attributes button-id button-props)])
+                                   ; [:div.e-radio-button--clear-button-label (x.components/content :delete!)]
+        [:div (radio-button.attributes/radio-button-body-attributes button-id button-props)
+              (let [options (input.helpers/get-input-options button-id button-props)]
+                   (letfn [(f [option] [radio-button-option button-id button-props option])]
+                          (hiccup/put-with [:<>] options f)))]])
 
 (defn- radio-button
+  ; @ignore
+  ;
   ; @param (keyword) button-id
   ; @param (map) button-props
   [button-id button-props]
