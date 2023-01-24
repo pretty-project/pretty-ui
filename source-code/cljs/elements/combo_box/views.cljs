@@ -1,9 +1,11 @@
 
 (ns elements.combo-box.views
     (:require [elements.combo-box.helpers    :as combo-box.helpers]
+              [elements.combo-box.attributes :as combo-box.attributes]
               [elements.combo-box.prototypes :as combo-box.prototypes]
               [elements.text-field.helpers   :as text-field.helpers]
               [elements.text-field.views     :as text-field.views]
+              [hiccup.api                    :as hiccup]
               [loop.api                      :refer [reduce-indexed]]
               [random.api                    :as random]
               [re-frame.api                  :as r]
@@ -23,16 +25,11 @@
   ; @param (integer) option-dex
   ; @param (map) option
   [box-id {:keys [option-component option-label-f] :as box-props} option-dex option]
-  ; BUG#2105 (source-code/cljs/elements/plain_field/helpers.cljs)
-  [:button {:class :e-combo-box--option
-            :on-mouse-down #(.preventDefault %)
-            :on-mouse-up   #(r/dispatch [:elements.combo-box/select-option! box-id box-props option])
-            ;:data-selected ...
-            :data-highlighted (= option-dex (combo-box.helpers/get-highlighted-option-dex box-id))}
+  ; If no option component passed, displaying the option with the default :e-combo-box--option class
+  [:button (combo-box.attributes/combo-box-option-attributes box-id box-props option-dex option)
            (if option-component [option-component box-id box-props option]
-
-                                ; If no option component passed, displaying the option with the default :e-combo-box--option class
-                                [:div {:class :e-combo-box--option-label} (-> option option-label-f x.components/content)])])
+                                [:div {:class :e-combo-box--option-label}
+                                      (-> option option-label-f x.components/content)])])
 
 (defn- combo-box-options
   ; @ignore
@@ -40,16 +37,10 @@
   ; @param (keyword) box-id
   ; @param (map) box-props
   [box-id box-props]
-  ; Why the :data-options-rendered attribute is added?
-  ; HACK#1450 (source-code/cljs/elements/combo_box/helpers.cljs)
   (let [options (combo-box.helpers/get-rendered-options box-id box-props)]
-       (letfn [(f [option-list option-dex option]
-                  ;^{:key (random/generate-react-key)}
-                  (conj option-list [combo-box-option box-id box-props option-dex option]))]
-              [:div {:class :e-combo-box--options
-                     :data-options-rendered (-> options empty? not)
-                     :data-scroll-axis :y}
-                    (reduce-indexed f [:<>] options)])))
+       (letfn [(f [option-dex option] [combo-box-option box-id box-props option-dex option])]
+              [:div (combo-box.attributes/combo-box-options-attributes box-id box-props)
+                    (hiccup/put-with-indexed [:<>] options f)])))
 
 (defn- combo-box-surface
   ; @ignore
@@ -57,9 +48,7 @@
   ; @param (keyword) box-id
   ; @param (map) box-props
   [box-id box-props]
-  [:div {:class            :e-combo-box--surface
-         :data-font-size   :s
-         :data-line-height :text-block}
+  [:div (combo-box.attributes/combo-box-surface-attributes box-id box-props)
         [combo-box-options box-id box-props]])
 
 (defn- combo-box-structure

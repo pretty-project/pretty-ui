@@ -5,6 +5,9 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+; @ignore
+;
+; @constant (map)
 (def DEFAULT-CONFIG {:emulateTouch   true
                      :infiniteLoop   true
                      :showThumbs     false
@@ -14,17 +17,12 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- slider
-  ; @param (?) data
-  [data]
-  (let [configurations DEFAULT-CONFIG]
-       [:div [:> Carousel configurations
-                 data]]))
-
-(defn body
+(defn plugin
   ; @param (?)(opt) data
   ;
   ; @usage
-  ; [body ...]
+  ; [plugin ...]
   [& data]
-  [:div [slider data]])
+  (let [configurations DEFAULT-CONFIG]
+       [:div {:class :p-carousel}
+             [:> Carousel configurations data]]))

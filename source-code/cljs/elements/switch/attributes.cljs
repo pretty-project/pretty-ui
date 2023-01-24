@@ -16,9 +16,10 @@
   ;
   ; @return (map)
   [_ _]
-  {:class            :e-switch--option-helper
-   :data-font-size   :xs
-   :data-line-height :native})
+  {:class               :e-switch--option-helper
+   :data-font-size      :xs
+   :data-letter-spacing :auto
+   :data-line-height    :auto})
 
 (defn switch-option-label-attributes
   ; @ignore

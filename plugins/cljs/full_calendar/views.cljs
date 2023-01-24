@@ -10,11 +10,11 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn body
+(defn plugin
   ; @usage
-  ; [body]
+  ; [plugin]
   []
-  [:div {:style {:width "100vw" :padding "20px" :background "#a6c1ee"}}
+  [:div {:class :p-full-calendar}
         [:> FullCalendar
             {:plugins (clj->js [timeGridPlugin dayGridPlugin listPlugin interactionPlugin googleCalendarPlugin])
              :googleCalendarApiKey "xxxxxxxxxxxxxxxxx-xxxxxxxxxxxxxxxxxxxxx"

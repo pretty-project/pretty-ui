@@ -7,5 +7,8 @@
 
 ; @ignore
 ;
-; @atom (boolean)
-(def VISIBLE-SIDEBAR (ratom false))
+; @description
+; Stores the ID of the currently visible sidebar.
+;
+; @atom (keyword)
+(def VISIBLE-SIDEBAR (ratom nil))

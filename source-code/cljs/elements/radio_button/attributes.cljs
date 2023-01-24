@@ -41,9 +41,10 @@
   ; @return (map)
   ; {}
   [_ _]
-  {:class            :e-radio-button--option-helper
-   :data-font-size   :xs
-   :data-line-height :native})
+  {:class               :e-radio-button--option-helper
+   :data-font-size      :xs
+   :data-letter-spacing :auto
+   :data-line-height    :auto})
 
 (defn radio-button-option-label-attributes
   ; @ignore

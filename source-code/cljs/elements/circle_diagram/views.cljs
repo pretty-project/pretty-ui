@@ -1,55 +1,37 @@
 
 (ns elements.circle-diagram.views
-    (:require [elements.circle-diagram.helpers    :as circle-diagram.helpers]
+    (:require [elements.circle-diagram.attributes :as circle-diagram.attributes]
               [elements.circle-diagram.prototypes :as circle-diagram.prototypes]
               [elements.element.views             :as element.views]
+              [hiccup.api                         :as hiccup]
               [random.api                         :as random]
-              [svg.api                            :as svg]
-              [vector.api                         :as vector]))
+              [svg.api                            :as svg]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- circle-diagram-section
-  ; @ignore
-  ;
-  ; @param (keyword) diagram-id
-  ; @param (map) diagram-props
-  ; @param (map) section-props
-  [diagram-id diagram-props section-props]
-  [:circle.e-circle-diagram--section (circle-diagram.helpers/section-attributes diagram-id diagram-props section-props)])
-
-(defn- circle-diagram-sections
+(defn circle-diagram-sections
   ; @ignore
   ;
   ; @param (keyword) diagram-id
   ; @param (map) diagram-props
   ; {:sections (maps in vector)}
   [diagram-id {:keys [sections] :as diagram-props}]
-  (letfn [(f [sections section-props]
-             (conj sections [circle-diagram-section diagram-id diagram-props section-props]))]
-         (reduce f [:<>] sections)))
-
-(defn circle-diagram-circle
-  ; @ignore
-  ;
-  ; @param (keyword) diagram-id
-  ; @param (map) diagram-props
-  ; {:diameter (px)}
-  [diagram-id {:keys [diameter] :as diagram-props}]
-  [:div.e-circle-diagram--body (circle-diagram.helpers/diagram-body-attributes diagram-id diagram-props)
-                               [:svg (svg/wrapper-attributes  {:height diameter :width diameter})
-                                     (circle-diagram-sections diagram-id diagram-props)]])
+  (letfn [(f [section-props] [:circle (circle-diagram.attributes/section-attributes diagram-id diagram-props section-props)])]
+         (hiccup/put-with [:<>] sections f)))
 
 (defn circle-diagram
   ; @ignore
   ;
   ; @param (keyword) diagram-id
   ; @param (map) diagram-props
-  [diagram-id diagram-props]
-  [:div.e-circle-diagram (circle-diagram.helpers/diagram-attributes diagram-id diagram-props)
-                         [element.views/element-label               diagram-id diagram-props]
-                         [circle-diagram-circle                     diagram-id diagram-props]])
+  ; {:diameter (px)}
+  [diagram-id {:keys [diameter] :as diagram-props}]
+  [:div (circle-diagram.attributes/diagram-attributes diagram-id diagram-props)
+        [element.views/element-label                  diagram-id diagram-props]
+        [:div (circle-diagram.attributes/diagram-body-attributes diagram-id diagram-props)
+              [:svg (svg/wrapper-attributes  {:height diameter :width diameter})
+                    [circle-diagram-sections diagram-id diagram-props]]]])
 
 (defn element
   ; @param (keyword)(opt) diagram-id

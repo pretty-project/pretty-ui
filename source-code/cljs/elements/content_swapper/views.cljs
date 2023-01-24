@@ -43,6 +43,7 @@
                                 :horizontal-align :left
                                 :icon             :chevron_right
                                 :icon-position    :right
+                                :icon-size        :l
                                 :gap              :auto
                                 :on-click         #(f page)}]))
 

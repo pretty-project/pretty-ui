@@ -22,8 +22,7 @@
 (defn element
   ; @param (keyword)(opt) blank-id
   ; @param (map) blank-props
-  ; {:content (metamorphic-content)(opt)
-  ;  :class (keyword or keywords in vector)(opt)
+  ; {:class (keyword or keywords in vector)(opt)
   ;  :content (metamorphic-content)
   ;  :disabled? (boolean)(opt)
   ;  :indent (map)(opt)

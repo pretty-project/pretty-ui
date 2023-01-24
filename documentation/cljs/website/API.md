@@ -252,14 +252,15 @@
 ```
 @description
 This component implements the dropdown-menu element and in case of the viewport
-width is smaller than the given threshold, it displays the menu items on a sidebar
-and replaces the menu bar with a single menu button.
+width is smaller than the given threshold, it displays the menu items on
+a sidebar and replaces the menu bar with a single menu button.
 ```
 
 ```
 @param (keyword)(opt) menu-id
 @param (map) menu-props
-{:threshold (px)(opt)}
+{
+ :threshold (px)(opt)}
 ```
 
 ```
@@ -348,10 +349,25 @@ and replaces the menu bar with a single menu button.
 ### sidebar
 
 ```
-@param (keyword)(opt) component-id
-@param (map) component-props
-{:class (keyword or keywords in vector)(opt)
- :content (metamorphic-content)(opt)
+@param (keyword)(opt) sidebar-id
+@param (map) sidebar-props
+{:border-color (keyword or string)(opt)
+  :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+ :border-position (keyword)(opt)
+  :left, :right
+ :border-width (keyword)(opt)
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+ :class (keyword or keywords in vector)(opt)
+ :content (metamorphic-content)
+ :cover-color (keyword or string)(opt)
+  Default: :black
+ :fill-color (keyword or string)(opt)
+  Default: :white
+ :indent (map)(opt)
+ :outdent (map)(opt)
+ :position (keyword)(opt)
+  :left, :right
+  Default: :left
  :style (map)(opt)}
 ```
 

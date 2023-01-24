@@ -27,10 +27,7 @@
   (if (window-observer/viewport-width-min? threshold)
     [:div {:style {:display :flex}}
        [elements/dropdown-menu menu-id menu-props]
-       [elements/icon-button {:icon :menu :icon-size :xxl
-                              :on-click [:website.sidebar/show-sidebar! menu-id]}]
        [sidebar.views/component menu-id {:content [sidebar-menu menu-id menu-props]}]]))
-
 
 (defn component
   ; XXX#0715 (source-code/cljs/elements/dropdown_menu/views.cljs)
@@ -39,12 +36,13 @@
   ;
   ; @description
   ; This component implements the dropdown-menu element and in case of the viewport
-  ; width is smaller than the given threshold, it displays the menu items on a sidebar
-  ; and replaces the menu bar with a single menu button.
+  ; width is smaller than the given threshold, it displays the menu items on
+  ; a sidebar and replaces the menu bar with a single menu button.
   ;
   ; @param (keyword)(opt) menu-id
   ; @param (map) menu-props
-  ; {:threshold (px)(opt)}
+  ; {
+  ;  :threshold (px)(opt)}
   ;
   ; @usage
   ; [navbar-menu {...}]

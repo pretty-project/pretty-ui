@@ -20,7 +20,7 @@
   {:class               :e-checkbox--option-helper
    :data-font-size      :xs
    :data-letter-spacing :auto
-   :data-line-height    :native})
+   :data-line-height    :auto})
 
 (defn checkbox-option-label-attributes
   ; @ignore

@@ -16,7 +16,7 @@
   {:data-color          :default
    :data-font-size      :x
    :data-font-weight    :medium
-   :data-letter-spacing :auto
+   :data-letter-spacing :native
    :data-indent-bottom  :xs
    :data-indent-left    :xxs
    :data-line-height    :text-block})

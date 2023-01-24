@@ -5,9 +5,9 @@
 
 ### Index
 
-- [body](#body)
+- [plugin](#plugin)
 
-### body
+### plugin
 
 ```
 @param (keyword)(opt) editor-id
@@ -35,12 +35,12 @@
 
 ```
 @usage
-[body {...}]
+[plugin {...}]
 ```
 
 ```
 @usage
-[body :my-editor {...}]
+[plugin :my-editor {...}]
 ```
 
 ```
@@ -48,7 +48,7 @@
 (defn on-blur-f   [editor-id editor-props])
 (defn on-focus-f  [editor-id editor-props])
 (defn on-change-f [editor-id editor-props value])
-[body :my-editor {:on-blur   on-blur-f
-                  :on-focus  on-focus-f
-                  :on-change on-change-f}]
+[plugin :my-editor {:on-blur   on-blur-f
+                    :on-focus  on-focus-f
+                    :on-change on-change-f}]
 ```

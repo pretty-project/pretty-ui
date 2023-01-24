@@ -57,7 +57,7 @@
   ;  :line-height (keyword)}
   ;
   ; @example
-  ; (field-auto-height :my-field {:font-size :s :line-height :native})
+  ; (field-auto-height :my-field {:font-size :s :line-height :auto})
   ; =>
   ; "calc(var( --line-height-s ) * 1)"
   ;

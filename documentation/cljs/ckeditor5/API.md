@@ -5,9 +5,9 @@
 
 ### Index
 
-- [body](#body)
+- [plugin](#plugin)
 
-### body
+### plugin
 
 ```
 @param (keyword)(opt) editor-id
@@ -33,12 +33,12 @@
 
 ```
 @usage
-[body {...}]
+[plugin {...}]
 ```
 
 ```
 @usage
-[body :my-editor {...}]
+[plugin :my-editor {...}]
 ```
 
 ```

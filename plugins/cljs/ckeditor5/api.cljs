@@ -6,4 +6,4 @@
 ;; ----------------------------------------------------------------------------
 
 ; ckeditor5.views
-(def body views/body)
+(def plugin views/plugin)

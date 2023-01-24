@@ -12,6 +12,7 @@ Documentation of the [ui-set](https://monotech-hq.github.io/ui-set) Clojure / Cl
 * [dnd-kit.api](cljs/dnd-kit/API.md)
 * [full-calendar.api](cljs/full-calendar/API.md)
 * [jodit.api](cljs/jodit/API.md)
+* [react.api](cljs/react/API.md)
 * [components.api](cljs/components/API.md)
 * [elements.api](cljs/elements/API.md)
 * [layouts.api](cljs/layouts/API.md)

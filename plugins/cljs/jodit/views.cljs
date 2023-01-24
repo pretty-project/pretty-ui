@@ -1,22 +1,35 @@
 
 (ns jodit.views
-    (:require [jodit-react   :default JoditEditor]
-              [jodit.helpers :as helpers]
-              [random.api    :as random]))
+    (:require [jodit-react      :default JoditEditor]
+              [jodit.attributes :as attributes]
+              [random.api       :as random]))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @ignore
+;
+; @constant (string)
+(def STYLE "
+.p-jodit .jodit-wysiwyg {
+ background-color: var( --fill-color-default );
+ cursor:           text;
+}")
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn- jodit
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (keyword) editor-id
   ; @param (map) editor-props
   [editor-id editor-props]
-  [:div [:style {:type "text/css"} ".jodit-wysiwyg {background-color: var( --fill-color-default ); cursor: text}"]
-        [:> JoditEditor (helpers/jodit-attributes editor-id editor-props)]])
+  [:div {:class :p-jodit}
+        [:style {:type "text/css"} STYLE]
+        [:> JoditEditor (attributes/jodit-attributes editor-id editor-props)]])
 
-(defn body
+(defn plugin
   ; @param (keyword)(opt) editor-id
   ; @param (map) editor-props
   ; {:autofocus? (boolean)(opt)
@@ -40,18 +53,18 @@
   ;  :value (string)(opt)}
   ;
   ; @usage
-  ; [body {...}]
+  ; [plugin {...}]
   ;
   ; @usage
-  ; [body :my-editor {...}]
+  ; [plugin :my-editor {...}]
   ;
   ; @usage
   ; (defn on-blur-f   [editor-id editor-props])
   ; (defn on-focus-f  [editor-id editor-props])
   ; (defn on-change-f [editor-id editor-props value])
-  ; [body :my-editor {:on-blur   on-blur-f
-  ;                   :on-focus  on-focus-f
-  ;                   :on-change on-change-f}]
+  ; [plugin :my-editor {:on-blur   on-blur-f
+  ;                     :on-focus  on-focus-f
+  ;                     :on-change on-change-f}]
   ([editor-props]
    [body (random/generate-keyword) editor-props])
 

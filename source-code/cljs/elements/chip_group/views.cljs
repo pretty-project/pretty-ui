@@ -31,9 +31,7 @@
                   (reduce-kv f [:div {:class :e-chip-group--chips}] chips))
 
            ; Displaying the placeholder if the data from the value-path is NOT a nonempty vector
-           (if placeholder [:div {:class            :e-chip-group--chips-placeholder
-                                  :data-font-size   :s
-                                  :data-line-height :text-block}
+           (if placeholder [:div {:class :e-chip-group--chips-placeholder :data-font-size :s :data-line-height :text-block}
                                  (x.components/content placeholder)]))))
 
 (defn- chip-group

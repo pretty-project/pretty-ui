@@ -1,4 +1,81 @@
 
+
+/***** Sidebar *****/
+/*** Component ***/
+
+.w-sidebar {
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  width: 100%;
+
+  /* You can place a sidebar anywhere in the DOM structure it's always being
+   * the upper UI element when visible */
+  z-index: 9999;
+}
+
+.w-sidebar[data-position="left"]  { left:  0; }
+.w-sidebar[data-position="right"] { right: 0; }
+
+/*** Component ***/
+
+/*** Cover ***/
+
+.w-sidebar--cover {
+  animation-fill-mode: both;
+  animation-duration: .15s;
+  -animation-timing-function: linear;
+  height: 100%;
+  opacity: .85;
+  position: fixed;
+  width: 100%;
+}
+
+.w-sidebar.r-mounting .w-sidebar--cover {
+  animation-delay: .15s;
+  animation-name: translate-x--110vw-0;
+}
+
+.w-sidebar.r-unmounting .w-sidebar--cover {
+  animation-name: translate-x-0--110vw;
+}
+
+/*** Cover ***/
+
+/*** Body ***/
+
+.w-sidebar--body {
+  animation-fill-mode: both;
+  animation-duration: .15s;
+  overflow-x: hidden;
+  height: 100vh;
+  width: 320px;
+}
+
+.w-sidebar.r-mounting .w-sidebar--body {
+  animation-name: translate-x--110vw-0;
+}
+
+.w-sidebar.r-unmounting .w-sidebar--body {
+  animation-delay: .15s;
+  animation-name: translate-x-0--110vw;
+}
+
+@media only screen and (min-width: 0) and (max-width: 479px) {
+.w-sidebar--body { width: calc(100% - 60px); }}
+
+@media only screen and (min-width: 480px) and (max-width: 640px) {
+.w-sidebar--body { width: calc(100% - 120px); }}
+
+/*** Body ***/
+/***** Sidebar *****/
+
+
+
+
+
+
+
 /***** Follow us *****/
 
 #mt-follow-us i {

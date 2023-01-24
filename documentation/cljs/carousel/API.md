@@ -5,9 +5,9 @@
 
 ### Index
 
-- [body](#body)
+- [plugin](#plugin)
 
-### body
+### plugin
 
 ```
 @param (?)(opt) data
@@ -15,5 +15,5 @@
 
 ```
 @usage
-[body ...]
+[plugin ...]
 ```

@@ -6,4 +6,4 @@
 ;; ----------------------------------------------------------------------------
 
 ; jodit.views
-(def body views/body)
+(def plugin views/plugin)

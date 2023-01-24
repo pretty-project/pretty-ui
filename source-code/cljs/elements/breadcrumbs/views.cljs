@@ -34,9 +34,9 @@
   ; {:crumbs (maps in vector)}
   [breadcrumbs-id {:keys [crumbs] :as breadcrumbs-props}]
   ; A separator DIV placed between crumbs instead of applying CSS gap because
-  ; this way, the separator tags contain the after pseudo elements which display
-  ; a small dot between each crumbs.
-  ; In case of the crumbs contain the after pseudo elements they might be part
+  ; this way, the separator DIVs contain pseudo elements which displays a small
+  ; dot between each crumbs.
+  ; In case of the crumbs contain those pseudo elements they might be part
   ; of the crumbs and might be clickable. And we don't want clickable dots between crumbs.
   (letfn [(f [dex crumb-props]
              (let [crumb-props (breadcrumbs.prototypes/crumb-props-prototype crumb-props)]

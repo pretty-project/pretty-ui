@@ -104,8 +104,7 @@
 ```
 @param (keyword)(opt) blank-id
 @param (map) blank-props
-{:content (metamorphic-content)(opt)
- :class (keyword or keywords in vector)(opt)
+{:class (keyword or keywords in vector)(opt)
  :content (metamorphic-content)
  :disabled? (boolean)(opt)
  :indent (map)(opt)
@@ -449,6 +448,8 @@
  :fill-color (keyword or string)(opt)
   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   Default: :primary
+ :href (string)(opt)
+  TODO Makes the chip clickable
  :icon (keyword)(opt)
  :icon-family (keyword)(opt)
   :material-symbols-filled, :material-symbols-outlined
@@ -463,7 +464,7 @@
     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
  :label (metamorphic-content)
  :on-click (metamorphic-event)(opt)
-  TODO Makes the chip element clickable
+  TODO Makes the chip clickable
  :outdent (map)(opt)
   Same as the :indent property
  :primary-button (map)(opt)
@@ -472,7 +473,10 @@
     :material-symbols-filled, :material-symbols-outlined
     Default: :material-symbols-outlined
    :on-click (metamorphic-event)}
- :style (map)(opt)}
+ :style (map)(opt)
+ :target (keyword)(opt)
+  :blank, :self
+  TODO Makes the chip clickable}
 ```
 
 ```

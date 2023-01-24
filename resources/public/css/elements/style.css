@@ -355,7 +355,7 @@
 .e-content-swapper--page-buttons {
   display: flex;
   flex-direction: column;
-  row-gap: 12px;
+  row-gap: 6px;
 }
 
 /*** Page buttons ***/

@@ -39,6 +39,19 @@
          ; the updated menu items vector.
          (vector/->items-indexed menu-items f2)))
 
+(defn surface-prototype
+  ; @ignore
+  ;
+  ; @param (map) menu-props
+  ; {}
+  ;
+  ; @return (map)
+  ; {}
+  [{:keys [border-color surface] :as menu-props}]
+  (merge (if border-color {:border-position :all
+                           :border-width    :xxs})
+         (param surface)))
+
 (defn menu-props-prototype
   ; @ignore
   ;
@@ -48,7 +61,5 @@
   ; @return (map)
   ; {}
   [{:keys [border-color] :as menu-props}]
-  (merge (if border-color {:border-position :all
-                           :border-width    :xxs})
-         (param menu-props)
-         {:menu-items (menu-items-prototype menu-props)}))
+  (merge menu-props {:menu-items (menu-items-prototype menu-props)
+                     :surface    (surface-prototype    menu-props)}))

@@ -5,11 +5,11 @@
 
 ### Index
 
-- [body](#body)
+- [plugin](#plugin)
 
-### body
+### plugin
 
 ```
 @usage
-[body]
+[plugin]
 ```

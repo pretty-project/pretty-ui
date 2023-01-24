@@ -1,43 +1,51 @@
 
 (ns website.sidebar.views
-    (:require [elements.api            :as elements]
-              [random.api              :as random]
-              [re-frame.api            :as r]
-              [x.components.api        :as x.components]
-              [x.environment.api       :as x.environment]))
+    (:require [elements.api               :as elements]
+              [random.api                 :as random]
+              [react.api                  :as react]
+              [website.sidebar.attributes :as sidebar.attributes]
+              [website.sidebar.prototypes :as sidebar.prototypes]
+              [website.sidebar.state      :as sidebar.state]
+              [x.components.api           :as x.components]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(defn- sidebar-close-button
-  ; @param (keyword) component-id
-  ; @param (map) component-props
-  [_ _]
-  [:div {:style {:position "absolute" :right "12px" :top "12px"}}
-        [elements/icon-button ::sidebar-close-button
-                              {:icon :close :on-click [:components.sidebar/hide-sidebar!]
-                               :color :inherit}]])
 
 (defn- sidebar
-  ; @param (keyword) component-id
-  ; @param (map) component-props
-  ; {:class (keyword or keywords in vector)(opt)
-  ;  :content (metamorphic-content)
-  ;  :style (map)(opt)}
-  [component-id {:keys [class content style] :as component-props}])
-  ;(let [sidebar-visible? @(r/subscribe [:components.sidebar/sidebar-visible?])]
-  ;     [:div {:id :mt-sidebar :class class :style style
-  ;            :data-visible (boolean sidebar-visible?)
-  ;           [:div {:id :mt-sidebar--cover :on-click #(r/dispatch [:components.sidebar/hide-sidebar!])}]
-  ;;           [:div {:id :mt-sidebar--content}
-    ;               [x.components/content component-id content]
-    ;               [sidebar-close-button component-id component-props]}])
+  ; @ignore
+  ;
+  ; @param (keyword) sidebar-id
+  ; @param (map) sidebar-props
+  ; {:content (metamorphic-content)}
+  [sidebar-id {:keys [content] :as sidebar-props}]
+  [:<> [elements/icon-button (sidebar.prototypes/menu-button-props-prototype sidebar-id sidebar-props)]
+       [react/mount-animation {:mounted? (= sidebar-id @sidebar.state/VISIBLE-SIDEBAR)}
+                              [:div (sidebar.attributes/sidebar-attributes sidebar-id sidebar-props)
+                                    [:div (sidebar.attributes/sidebar-cover-attributes sidebar-id sidebar-props)]
+                                    [:div (sidebar.attributes/sidebar-body-attributes sidebar-id sidebar-props)
+                                          [:div {:class :w-sidebar--content}
+                                                [x.components/content sidebar-id content]]]]]])
 
 (defn component
-  ; @param (keyword)(opt) component-id
-  ; @param (map) component-props
-  ; {:class (keyword or keywords in vector)(opt)
-  ;  :content (metamorphic-content)(opt)
+  ; @param (keyword)(opt) sidebar-id
+  ; @param (map) sidebar-props
+  ; {:border-color (keyword or string)(opt)
+  ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+  ;  :border-position (keyword)(opt)
+  ;   :left, :right
+  ;  :border-width (keyword)(opt)
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;  :class (keyword or keywords in vector)(opt)
+  ;  :content (metamorphic-content)
+  ;  :cover-color (keyword or string)(opt)
+  ;   Default: :black
+  ;  :fill-color (keyword or string)(opt)
+  ;   Default: :white
+  ;  :indent (map)(opt)
+  ;  :outdent (map)(opt)
+  ;  :position (keyword)(opt)
+  ;   :left, :right
+  ;   Default: :left
   ;  :style (map)(opt)}
   ;
   ; @usage
@@ -45,8 +53,9 @@
   ;
   ; @usage
   ; [sidebar :my-sidebar {...}]
-  ([component-props]
-   [component (random/generate-keyword) component-props])
+  ([sidebar-props]
+   [component (random/generate-keyword) sidebar-props])
 
-  ([component-id component-props]
-   [sidebar component-id component-props]))
+  ([sidebar-id sidebar-props]
+   (let [sidebar-props (sidebar.prototypes/sidebar-props-prototype sidebar-props)]
+        [sidebar sidebar-id sidebar-props])))
