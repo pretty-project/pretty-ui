@@ -6,18 +6,33 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn menu-content-attributes
+(defn menu-surface-body-attributes
   ; @ignore
   ;
   ; @param (keyword) menu-id
   ; @param (map) menu-props
+  ; {}
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)}
-  [_ menu-props]
-  (-> {:class :e-dropdown-menu--content}
-      (pretty-css/border-attributes menu-props)
-      (pretty-css/color-attributes  menu-props)))
+  [_ {:keys [surface]}]
+  (-> {:class :e-dropdown-menu--surface-body}
+      (pretty-css/border-attributes surface)
+      (pretty-css/color-attributes  surface)
+      (pretty-css/indent-attributes surface)))
+
+(defn menu-surface-attributes
+  ; @ignore
+  ;
+  ; @param (keyword) menu-id
+  ; @param (map) menu-props
+  ; {}
+  ;
+  ; @return (map)
+  ; {:class (keyword or keywords in vector)}
+  [_ {:keys [surface]}]
+  (-> {:class :e-dropdown-menu--surface}
+      (pretty-css/outdent-attributes surface)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -33,8 +48,8 @@
   ; {:class (keyword or keywords in vector)
   ;  :style (map)}
   [_ {:keys [style] :as menu-props}]
-  (-> {:class                 :e-dropdown-menu--body
-       :style                 style}
+  (-> {:class :e-dropdown-menu--body
+       :style style}
       (pretty-css/indent-attributes menu-props)))
 
 (defn menu-attributes

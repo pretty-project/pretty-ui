@@ -258,7 +258,7 @@
  :outdent (map)(opt)
   Same as the :indent property
  :progress (percent)(opt)
- :progress-color (keyword)
+ :progress-color (keyword)(opt)
   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   Default: :muted
  :progress-direction (keyword)(opt)
@@ -872,7 +872,15 @@ are applied on each page.
 @param (keyword)(opt) menu-id
 @param (map) menu-props
 {:menu-items (maps in vector)
-  [{:content (metamorphic-content)}]}
+  [{:content (metamorphic-content)}]
+ :surface (map)(opt)
+  {:border-color (keyword or string)(opt)
+   :border-position (keyword)(opt)
+   :border-radius (map)(opt)
+   :border-width (keyword)(opt)
+   :fill-color (keyword or string)
+   :indent (map)(opt)
+   :outdent (map)(opt)}}
 ```
 
 ```

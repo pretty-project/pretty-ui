@@ -47,7 +47,7 @@
   ;
   ; @return (map)
   ; {}
-  [{:keys [border-color surface] :as menu-props}]
+  [{{:keys [border-color]} :surface :keys [surface] :as menu-props}]
   (merge (if border-color {:border-position :all
                            :border-width    :xxs})
          (param surface)))

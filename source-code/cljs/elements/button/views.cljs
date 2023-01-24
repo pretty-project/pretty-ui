@@ -126,7 +126,7 @@
   ;  :outdent (map)(opt)
   ;   Same as the :indent property
   ;  :progress (percent)(opt)
-  ;  :progress-color (keyword)
+  ;  :progress-color (keyword)(opt)
   ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;   Default: :muted
   ;  :progress-direction (keyword)(opt)

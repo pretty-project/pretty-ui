@@ -498,16 +498,16 @@
 
 
 /***** Dropdown menu *****/
-/*** Content ***/
+/*** Surface ***/
 
-.e-dropdown-menu--content {
+.e-dropdown-menu--surface {
   left: 0;
   min-width: 100%;
   position: absolute;
   z-index: 9999;
 }
 
-/*** Content ***/
+/*** Surface ***/
 /***** Dropdown menu *****/
 
 

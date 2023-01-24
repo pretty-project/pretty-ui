@@ -16,10 +16,10 @@
   {:data-color          :default
    :data-font-size      :x
    :data-font-weight    :medium
-   :data-letter-spacing :native
+   :data-letter-spacing :auto
+   :data-line-height    :text-block
    :data-indent-bottom  :xs
-   :data-indent-left    :xxs
-   :data-line-height    :text-block})
+   :data-indent-left    :xxs})
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -19,9 +19,10 @@
   [:div (dropdown-menu.attributes/menu-attributes menu-id menu-props)
         [:div (dropdown-menu.attributes/menu-body-attributes menu-id menu-props)
               [menu-bar.views/element menu-id menu-props]
-              (if-let [dropdown-content (get-in menu-props [:menu-items @dropdown-menu.state/ACTIVE-DEX :content])]
-                      [:div (dropdown-menu.attributes/menu-content-attributes menu-id menu-props)
-                            [x.components/content menu-id dropdown-content]])]])
+              (if-let [surface-content (get-in menu-props [:menu-items @dropdown-menu.state/ACTIVE-DEX :content])]
+                      [:div (dropdown-menu.attributes/menu-surface-attributes menu-id menu-props)
+                            [:div (dropdown-menu.attributes/menu-surface-body-attributes menu-id menu-props)
+                                  [x.components/content menu-id surface-content]]])]])
 
 (defn element
   ; XXX#0715
@@ -34,7 +35,15 @@
   ; @param (keyword)(opt) menu-id
   ; @param (map) menu-props
   ; {:menu-items (maps in vector)
-  ;   [{:content (metamorphic-content)}]}
+  ;   [{:content (metamorphic-content)}]
+  ;  :surface (map)(opt)
+  ;   {:border-color (keyword or string)(opt)
+  ;    :border-position (keyword)(opt)
+  ;    :border-radius (map)(opt)
+  ;    :border-width (keyword)(opt)
+  ;    :fill-color (keyword or string)
+  ;    :indent (map)(opt)
+  ;    :outdent (map)(opt)}}
   ;
   ; @usage
   ; [dropdown-menu {...}]
