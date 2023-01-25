@@ -4,7 +4,7 @@
               [elements.input.events :as input.events]
               [noop.api              :refer [return]]
               [re-frame.api          :refer [r]]
-              [x.db.api              :as x.db]))
+              [re-frame.db.api       :as r.db]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -32,7 +32,7 @@
   ; @return (map)
   [db [_ counter-id {:keys [value-path] :as counter-props}]]
   (if (r counter.subs/value-decreasable? db counter-id counter-props)
-      (r x.db/apply-item!                db value-path dec)
+      (r r.db/apply-item!                db value-path dec)
       (return                            db)))
 
 (defn increase-value!
@@ -45,5 +45,5 @@
   ; @return (map)
   [db [_ counter-id {:keys [value-path] :as counter-props}]]
   (if (r counter.subs/value-increasable? db counter-id counter-props)
-      (r x.db/apply-item!                db value-path inc)
+      (r r.db/apply-item!                db value-path inc)
       (return                            db)))

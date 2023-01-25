@@ -57,7 +57,7 @@
   ; @param (keyword) component-id
   ; @param (map) component-props
   [component-id component-props]
-  (let [contact-groups @(r/subscribe [:x.db/get-item [:website-contacts :handler/transfered-content :contact-groups]])]
+  (let [contact-groups @(r/subscribe [:get-item [:website-contacts :handler/transfered-content :contact-groups]])]
        [:div {:id :mt-contacts--contact-groups}
              (letfn [(f [groups group-props]
                         (conj groups [contact-group component-id component-props group-props]))]
@@ -97,7 +97,7 @@
   ; @param (keyword) component-id
   ; @param (map) component-props
   [component-id component-props]
-  (let [address-groups @(r/subscribe [:x.db/get-item [:website-contacts :handler/transfered-content :address-groups]])]
+  (let [address-groups @(r/subscribe [:get-item [:website-contacts :handler/transfered-content :address-groups]])]
        [:div {:id :mt-contacts--address-groups}
              (letfn [(f [groups group-props]
                         (conj groups [address-group component-id component-props group-props]))]

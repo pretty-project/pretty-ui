@@ -20,7 +20,7 @@
   ; {:placeholder (metamorphic-content)(opt)
   ;  :value-path (vector)}
   [group-id {:keys [placeholder value-path] :as group-props}]
-  (let [chips @(r/subscribe [:x.db/get-item value-path])]
+  (let [chips @(r/subscribe [:get-item value-path])]
        (if (vector/nonempty? chips)
 
            ; Iterating over the data read from the value-path if it's a nonempty vector

@@ -3,8 +3,8 @@
     (:require [elements.input.events :as input.events]
               [elements.input.subs   :as input.subs]
               [re-frame.api          :refer [r]]
-              [vector.api            :as vector]
-              [x.db.api              :as x.db]))
+              [re-frame.db.api       :as r.db]
+              [vector.api            :as vector]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -45,5 +45,5 @@
   (let [options      (r input.subs/get-input-options db checkbox-id checkbox-props)
         option-value (option-value-f option)]
        (if (vector/min? options 2)
-           (r x.db/apply-item!        db value-path vector/toggle-item option-value)
-           (r x.db/toggle-item-value! db value-path                    option-value))))
+           (r r.db/apply-item!        db value-path vector/toggle-item option-value)
+           (r r.db/toggle-item-value! db value-path                    option-value))))

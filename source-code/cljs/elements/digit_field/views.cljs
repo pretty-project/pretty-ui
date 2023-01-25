@@ -25,7 +25,7 @@
            ; XXX#4460 (source-code/cljs/elements/button/helpers.cljs)
            :id (hiccup/value field-id "input")
            :on-change #(let [v (dom/event->value %)]
-                            (r/dispatch-sync [:x.db/set-item! (:value-path field-props) (str v)]))}])
+                            (r/dispatch-sync [:set-item! (:value-path field-props) (str v)]))}])
 
 (defn- digit-field-cover
   ; @ignore

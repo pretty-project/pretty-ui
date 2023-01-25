@@ -1,8 +1,8 @@
 
 (ns elements.multi-combo-box.events
-    (:require [re-frame.api :refer [r]]
-              [vector.api   :as vector]
-              [x.db.api     :as x.db]))
+    (:require [re-frame.api    :refer [r]]
+              [re-frame.db.api :as r.db]
+              [vector.api      :as vector]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -19,7 +19,7 @@
   ; @return (map)
   [db [_ _ {:keys [option-value-f value-path]} selected-option]]
   (let [option-value (option-value-f selected-option)]
-       (r x.db/apply-item! db value-path vector/conj-item-once option-value)))
+       (r r.db/apply-item! db value-path vector/conj-item-once option-value)))
 
 (defn use-field-content!
   ; @ignore
@@ -33,4 +33,4 @@
   ; @return (map)
   [db [_ _ {:keys [field-value-f value-path]} field-content]]
   (let [field-value (field-value-f field-content)]
-       (r x.db/apply-item! db value-path vector/conj-item-once field-value)))
+       (r r.db/apply-item! db value-path vector/conj-item-once field-value)))

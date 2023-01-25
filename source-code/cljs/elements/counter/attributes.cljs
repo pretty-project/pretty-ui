@@ -24,7 +24,7 @@
   ;  :on-click (function)
   ;  :on-mouse-up (function)}
   [counter-id {:keys [disabled? max-value value-path] :as counter-props}]
-  (let [value @(r/subscribe [:x.db/get-item value-path])]
+  (let [value @(r/subscribe [:get-item value-path])]
        (-> (if (or disabled? (= max-value value))
                {:class             :e-counter--increase-button
                 :disabled          true
@@ -52,7 +52,7 @@
   ;  :on-click (function)
   ;  :on-mouse-up (function)}
   [counter-id {:keys [disabled? min-value value-path] :as counter-props}]
-  (let [value @(r/subscribe [:x.db/get-item value-path])]
+  (let [value @(r/subscribe [:get-item value-path])]
        (-> (if (or disabled? (= min-value value))
                {:class             :e-counter--decrease-button
                 :disabled          true

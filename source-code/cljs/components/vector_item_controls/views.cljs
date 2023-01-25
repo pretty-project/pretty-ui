@@ -20,7 +20,7 @@
   ;  :tooltip-position (keyword)
   ;  :value-path (vector)}
   [_ {:keys [disabled? item-dex on-change tooltip-position value-path]}]
-  (let [duplicate-event [:x.db/apply-item! value-path vector/duplicate-nth-item item-dex]]
+  (let [duplicate-event [:apply-item! value-path vector/duplicate-nth-item item-dex]]
        [elements/icon-button {:border-radius    {:all :s}
                               :disabled?        disabled?
                               :hover-color      :highlight
@@ -40,7 +40,7 @@
   ;  :tooltip-position (keyword)
   ;  :value-path (vector)}
   [_ {:keys [disabled? item-dex on-change tooltip-position value-path]}]
-  (let [remove-event [:x.db/apply-item! value-path vector/remove-nth-item item-dex]]
+  (let [remove-event [:apply-item! value-path vector/remove-nth-item item-dex]]
        [elements/icon-button {:border-radius    {:all :s}
                               :disabled?        disabled?
                               :hover-color      :highlight
@@ -60,8 +60,8 @@
   ;  :tooltip-position (keyword)
   ;  :value-path (vector)}
   [_ {:keys [disabled? item-dex on-change tooltip-position value-path]}]
-  (let [move-event    [:x.db/apply-item! value-path vector/move-nth-item-fwd item-dex]
-        single-item? @(r/subscribe [:x.db/get-applied-item value-path vector/count? 1])]
+  (let [move-event    [:apply-item! value-path vector/move-nth-item-fwd item-dex]
+        single-item? @(r/subscribe [:get-applied-item value-path vector/count? 1])]
        [elements/icon-button {:border-radius    {:all :s}
                               :disabled?        (or disabled? single-item?)
                               :hover-color      :highlight
@@ -81,8 +81,8 @@
   ;  :tooltip-position (keyword)
   ;  :value-path (vector)}
   [_ {:keys [disabled? item-dex on-change tooltip-position value-path]}]
-  (let [move-event    [:x.db/apply-item! value-path vector/move-nth-item-bwd item-dex]
-        single-item? @(r/subscribe [:x.db/get-applied-item value-path vector/count? 1])]
+  (let [move-event [:apply-item! value-path vector/move-nth-item-bwd item-dex]
+        single-item? @(r/subscribe [:get-applied-item value-path vector/count? 1])]
        [elements/icon-button {:border-radius    {:all :s}
                               :disabled?        (or disabled? single-item?)
                               :hover-color      :highlight

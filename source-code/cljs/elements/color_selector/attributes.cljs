@@ -20,7 +20,7 @@
   ; {}
   [selector-id {:keys [value-path] :as selector-props} option]
   (let [on-click [:elements.color-selector/toggle-option! selector-id selector-props option]
-        selected-options @(r/subscribe [:x.db/get-item value-path])]
+        selected-options @(r/subscribe [:get-item value-path])]
        {:class             :e-color-selector--option
         :data-click-effect :opacity
         :data-icon-family  :material-symbols-outlined

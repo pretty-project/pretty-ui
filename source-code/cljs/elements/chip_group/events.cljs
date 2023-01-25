@@ -1,8 +1,8 @@
 
 (ns elements.chip-group.events
-    (:require [re-frame.api :refer [r]]
-              [vector.api   :as vector]
-              [x.db.api     :as x.db]))
+    (:require [re-frame.api    :refer [r]]
+              [re-frame.db.api :as r.db]
+              [vector.api      :as vector]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -17,4 +17,4 @@
   ;
   ; @return (map)
   [db [_ _ {:keys [value-path]} chip-dex]]
-  (r x.db/apply-item! db value-path vector/remove-nth-item chip-dex))
+  (r r.db/apply-item! db value-path vector/remove-nth-item chip-dex))

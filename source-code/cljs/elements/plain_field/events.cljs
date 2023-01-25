@@ -3,7 +3,7 @@
     (:require [elements.input.events  :as input.events]
               [elements.input.helpers :as input.helpers]
               [re-frame.api           :as r :refer [r]]
-              [x.db.api               :as x.db]))
+              [re-frame.db.api        :as r.db]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -57,8 +57,8 @@
   [db [_ _ {:keys [field-value-f value-path]} field-content]]
   (let [field-value (field-value-f field-content)]
        (if (input.helpers/value-path->vector-item? value-path)
-           (r x.db/set-vector-item! db value-path field-value)
-           (r x.db/set-item!        db value-path field-value))))
+           (r r.db/set-vector-item! db value-path field-value)
+           (r r.db/set-item!        db value-path field-value))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

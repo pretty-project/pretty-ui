@@ -17,7 +17,7 @@
   ; {:disabled? (boolean)(opt)
   ;  :value-path (vector)}
   [picker-id {:keys [value-path] :as picker-props}]
-  (let [picked-colors @(r/subscribe [:x.db/get-item value-path])]
+  (let [picked-colors @(r/subscribe [:get-item value-path])]
        (letfn [(f [picked-colors color]
                   (conj picked-colors [:div (color-picker.attributes/picked-color-attributes picker-id picker-props color)]))]
               (reduce f [:<>] picked-colors))))
@@ -34,7 +34,7 @@
         ; Color picker body
         [:div (color-picker.attributes/picker-body-attributes picker-id picker-props)
               ; Checks whether any color picked ...
-              (let [picked-colors @(r/subscribe [:x.db/get-item value-path])]
+              (let [picked-colors @(r/subscribe [:get-item value-path])]
                    (if (empty? picked-colors)
                        ; If no color picked, displays a placeholder
                        [:div (color-picker.attributes/placeholder-attributes picker-id picker-props)

@@ -42,7 +42,7 @@
   ;     :options property.
   ; (B) If the :options property hasn't been set, the options derived from the
   ;     application state by using the :options-path property.
-  (or options @(r/subscribe [:x.db/get-item options-path])))
+  (or options @(r/subscribe [:get-item options-path])))
 
 (defn default-options-path
   ; @ignore

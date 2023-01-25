@@ -20,7 +20,7 @@
   ;  :value-path (vector)}
   [field-id {:keys [field-content-f value-path]}]
   ; HACK#9910
-  (let [stored-value @(r/subscribe [:x.db/get-item value-path])]
+  (let [stored-value @(r/subscribe [:get-item value-path])]
        [:div [:br] "field content:   " (plain-field.helpers/get-field-content field-id)
              [:br] "field output:    " (plain-field.helpers/get-field-output  field-id)
              [:br] "stored value:    " (str             stored-value)
@@ -48,7 +48,7 @@
   ; {:value-path (vector)}
   [field-id {:keys [value-path] :as field-props}]
   ; HACK#9910
-  (let [stored-value @(r/subscribe [:x.db/get-item value-path])]
+  (let [stored-value @(r/subscribe [:get-item value-path])]
        [plain-field-synchronizer-sensor field-id field-props stored-value]))
 
 ;; ----------------------------------------------------------------------------

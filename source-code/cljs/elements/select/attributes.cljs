@@ -29,7 +29,7 @@
   ;  :on-click (function)
   ;  :on-mouse-up (function)}
   [select-id {:keys [option-value-f value-path] :as select-props} option]
-  (let [selected-value  @(r/subscribe [:x.db/get-item value-path])
+  (let [selected-value  @(r/subscribe [:get-item value-path])
         option-value     (option-value-f option)
         option-selected? (= selected-value option-value)
         on-click         [:elements.select/select-option! select-id select-props option]]

@@ -99,7 +99,7 @@
   ;  :value-path (vector)}
   [field-id {:keys [field-content-f value-path]}]
   ; HACK#9910 (source-code/cljs/elements/plain_field/views.cljs)
-  (let [stored-value  @(r/subscribe [:x.db/get-item value-path])
+  (let [stored-value  @(r/subscribe [:get-item value-path])
         stored-content (field-content-f stored-value)]
        (set-field-content! field-id stored-content)))
 

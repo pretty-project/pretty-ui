@@ -32,7 +32,7 @@
   ;  :value-path (vector)}
   [list-id {:keys [item-element value-path] :as list-props}]
   (letfn [(f [items item-dex _] (conj items [item-element item-dex]))]
-         (let [items @(r/subscribe [:x.db/get-item value-path])]
+         (let [items @(r/subscribe [:get-item value-path])]
               (if (empty? items)
                   [vector-item-list-placeholder list-id list-props]
                   (reduce-kv f [:<>] items)))))

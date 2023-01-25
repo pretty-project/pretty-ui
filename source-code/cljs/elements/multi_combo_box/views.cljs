@@ -20,7 +20,7 @@
   ; @param (map) box-props
   ; {:value-path (vector)}
   [box-id {:keys [value-path] :as box-props}]
-  (if-let [chips @(r/subscribe [:x.db/get-item value-path])]
+  (if-let [chips @(r/subscribe [:get-item value-path])]
           (if (vector/nonempty? chips)
               (let [group-id    (multi-combo-box.helpers/box-id->group-id         box-id)
                     group-props (multi-combo-box.prototypes/group-props-prototype box-id box-props)]
