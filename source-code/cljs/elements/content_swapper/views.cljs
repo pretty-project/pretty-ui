@@ -2,8 +2,11 @@
 (ns elements.content-swapper.views
     (:require [elements.button.views               :as button.views]
               [elements.content-swapper.attributes :as content-swapper.attributes]
+              [elements.content-swapper.helpers    :as content-swapper.helpers]
               [elements.content-swapper.prototypes :as content-swapper.prototypes]
               [elements.content-swapper.state      :as content-swapper.state]
+              [elements.label.views                :as label.views]
+              [hiccup.api                          :as hiccup]
               [noop.api                            :refer [return]]
               [random.api                          :as random]
               [re-frame.api                        :as r]
@@ -14,38 +17,61 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn- content-swapper-label
+  ; @ignore
+  ;
+  ; @param (keyword) swapper-id
+  ; @param (map) swapper-props
+  ; {}
+  [_ {:keys [label]}]
+  [label.views/element {:border-color     :highlight
+                        :border-position  :bottom
+                        :content          label
+                        :horizontal-align :left
+                        :icon             :more_vert
+                        :icon-color       :highlight
+                        :icon-size        :l
+                        :indent           {:all :xs}}])
+
 (defn- content-swapper-back-button
   ; @ignore
   ;
   ; @param (keyword) swapper-id
   ; @param (map) swapper-props
-  ; @param (map) page
   ; {}
-  [swapper-id _ {:keys [label]}]
-  (letfn [(f [] (swap! content-swapper.state/VISIBLE-PAGE dissoc swapper-id))]
-         [button.views/element {:horizontal-align :left
+  [swapper-id {:keys [label]}]
+  (letfn [(f [] (swap! content-swapper.state/SWAPPERS dissoc swapper-id))]
+         [button.views/element {:border-color     :highlight
+                                :border-position  :bottom
+                                :horizontal-align :left
                                 :icon             :arrow_back
-                                :on-click         #(f)
-                                :outdent          {:bottom :xs}}]))
+                                :icon-size        :l
+                                :indent           {:all :xs}
+                                :label            label
+                                :on-click         #(f)}]))
 
 (defn- content-swapper-page-button
   ; @ignore
   ;
   ; @param (keyword) swapper-id
   ; @param (map) swapper-props
-  ; @param (map) page
+  ; @param (integer) page-dex
+  ; @param (map) page-props
   ; {}
-  [swapper-id _ {:keys [label] :as page}]
+  [swapper-id _ page-dex {:keys [label]}]
   ; XXX#1239 (source-code/cljs/elements/dropdown_menu/prototypes.cljs)
-  (letfn [(f [page] (swap! content-swapper.state/VISIBLE-PAGE assoc swapper-id page)
-                    (return nil))]
+  (letfn [(f [] (swap! content-swapper.state/SWAPPERS assoc-in [swapper-id :active-dex] page-dex)
+                (return nil))]
          [button.views/element {:label            label
                                 :horizontal-align :left
                                 :icon             :chevron_right
                                 :icon-position    :right
-                                :icon-size        :l
+                                :icon-size        :xl
                                 :gap              :auto
-                                :on-click         #(f page)}]))
+                                :on-click         #(f)}]))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn- content-swapper-swapping-content
   ; @ignore
@@ -54,23 +80,25 @@
   ; @param (map) swapper-props
   ; {}
   [swapper-id {:keys [pages] :as swapper-props}]
-  [:div (content-swapper.attributes/swapper-body-attributes swapper-id swapper-props)
-        (if-let [page (swapper-id @content-swapper.state/VISIBLE-PAGE)]
+  [:<> [:div {:class :e-content-swapper--header}
+             (if-let [swapping-content (content-swapper.helpers/get-swapping-content swapper-id swapper-props)]
+                     [content-swapper-back-button swapper-id swapper-props]
+                     [content-swapper-label       swapper-id swapper-props])]
+       [:div (content-swapper.attributes/swapper-body-attributes swapper-id swapper-props)
+             (if-let [swapping-content (content-swapper.helpers/get-swapping-content swapper-id swapper-props)]
 
-                ; Selected page
-                [:div (content-swapper.attributes/swapper-page-attributes swapper-id swapper-props)
-                      [:div {:class :e-content-swapper--page-header}
-                            [content-swapper-back-button swapper-id swapper-props page]]
-                      [x.components/content swapper-id (:content page)]]
+                     ; Selected page
+                     [:<>
+                          [:div (content-swapper.attributes/swapper-page-attributes swapper-id swapper-props)
+                                [x.components/content swapper-id swapping-content]]]
 
-                ; Page buttons
-                ; The page buttons displayed on a page to give them a container
-                ; with the same size attributes as of content pages
-                (letfn [(f [button-list {:keys [label] :as page}]
-                           (conj button-list [content-swapper-page-button swapper-id swapper-props page]))]
-                       [:div (content-swapper.attributes/swapper-page-attributes swapper-id swapper-props)
-                             [:div {:class :e-content-swapper--page-buttons}
-                                   (reduce f [:<>] pages)]]))])
+                     ; Page buttons
+                     ; The page buttons displayed on a page to give them a container
+                     ; with the same size attributes as of content pages
+                     (letfn [(f [page-dex page-props] [content-swapper-page-button swapper-id swapper-props page-dex page-props])]
+                            [:div (content-swapper.attributes/swapper-page-attributes swapper-id swapper-props)
+                                  [:div {:class :e-content-swapper--page-buttons}
+                                        (hiccup/put-with-indexed [:<>] pages f)]]))]])
 
 (defn- content-swapper-unfolded-content
   ; @ignore
@@ -80,10 +108,9 @@
   ; {}
   [swapper-id {:keys [pages] :as swapper-props}]
   [:div (content-swapper.attributes/swapper-body-attributes swapper-id swapper-props)
-        (letfn [(f [page-list {:keys [content]}]
-                   (conj page-list [:div (content-swapper.attributes/swapper-page-attributes swapper-id swapper-props)
-                                         [x.components/content swapper-id content]]))]
-               (reduce f [:<>] pages))])
+        (letfn [(f [{:keys [content]}] [:div (content-swapper.attributes/swapper-page-attributes swapper-id swapper-props)
+                                             [x.components/content swapper-id content]])]
+               (hiccup/put-with [:<>] pages f))])
 
 (defn- content-swapper-structure
   ; @ignore
@@ -92,8 +119,8 @@
   ; @param (map) swapper-props
   ; {}
   [swapper-id {:keys [threshold] :as swapper-props}]
-  ; If the viewport width is wider than the specified threshold,
-  ; the pages are displayed unfolded near by each other
+  ; If the viewport wider than the specified threshold, the pages are displayed
+  ; unfolded near by each other
   [:div (content-swapper.attributes/swapper-attributes swapper-id swapper-props)
         (if (window-observer/viewport-width-min? threshold)
             [content-swapper-unfolded-content swapper-id swapper-props]
@@ -108,7 +135,7 @@
   [swapper-id {:keys [on-mount on-unmount] :as swapper-props}]
   (reagent/lifecycles {:component-did-mount    (fn [_ _] (r/dispatch on-mount))
                        :component-will-unmount (fn [_ _] (r/dispatch on-unmount)
-                                                         (swap! content-swapper.state/VISIBLE-PAGE dissoc swapper-id))
+                                                         (swap! content-swapper.state/SWAPPERS dissoc swapper-id))
                        :reagent-render         (fn [_ _] [content-swapper-structure swapper-id swapper-props])}))
 
 (defn element
@@ -123,6 +150,7 @@
   ;   Distance between unfolded pages
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :auto
   ;  :indent (map)(opt)
+  ;  :label (metamorphic-content)(opt)
   ;  :max-height (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;  :max-width (keyword)(opt)

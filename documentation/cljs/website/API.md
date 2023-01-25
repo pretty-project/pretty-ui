@@ -21,9 +21,9 @@
 
 - [mt-logo](#mt-logo)
 
-- [navbar](#navbar)
+- [multi-menu](#multi-menu)
 
-- [navbar-menu](#navbar-menu)
+- [navbar](#navbar)
 
 - [scroll-icon](#scroll-icon)
 
@@ -219,6 +219,34 @@
 
 ---
 
+### multi-menu
+
+```
+@description
+This component implements the dropdown-menu element and in case of the viewport
+width is smaller than the given threshold, it displays the menu items
+on a sidebar menu and replaces the menu bar with a single menu button.
+```
+
+```
+@param (keyword)(opt) menu-id
+@param (map) menu-props
+{
+ :threshold (px)(opt)}
+```
+
+```
+@usage
+[multi-menu {...}]
+```
+
+```
+@usage
+[multi-menu :my-multi-menu {...}]
+```
+
+---
+
 ### navbar
 
 ```
@@ -243,34 +271,6 @@
 ```
 @usage
 [navbar :my-navbar {...}]
-```
-
----
-
-### navbar-menu
-
-```
-@description
-This component implements the dropdown-menu element and in case of the viewport
-width is smaller than the given threshold, it displays the menu items on
-a sidebar and replaces the menu bar with a single menu button.
-```
-
-```
-@param (keyword)(opt) menu-id
-@param (map) menu-props
-{
- :threshold (px)(opt)}
-```
-
-```
-@usage
-[navbar-menu {...}]
-```
-
-```
-@usage
-[navbar-menu :my-navbar-menu {...}]
 ```
 
 ---

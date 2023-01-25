@@ -728,6 +728,7 @@ are applied on each page.
   Distance between unfolded pages
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :auto
  :indent (map)(opt)
+ :label (metamorphic-content)(opt)
  :max-height (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
  :max-width (keyword)(opt)
@@ -2291,7 +2292,20 @@ To render the select popup without using its button element:
   :horizontal, :none
   Default: :none
  :style (map)(opt)
+
+
  :surface (metamorphic-content)(opt)
+ :surface (map)(opt)
+  {:border-color (keyword or string)(opt)
+   :border-position (keyword)(opt)
+   :border-radius (map)(opt)
+   :border-width (keyword)(opt)
+   :content (metamorphic-content)(opt)
+   :fill-color (keyword or string)
+   :indent (map)(opt)
+   :outdent (map)(opt)}}
+
+
  :validator (map)(opt)
   {:f (function)
    :invalid-message (metamorphic-content)(opt)

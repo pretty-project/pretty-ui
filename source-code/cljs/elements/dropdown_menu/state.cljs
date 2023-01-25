@@ -7,5 +7,6 @@
 
 ; @ignore
 ;
-; @atom (integer)
-(defonce ACTIVE-DEX (ratom nil))
+; @atom (map)
+; {:my-menu {:active-dex 42} ...}
+(defonce MENUS (ratom {}))

@@ -10,22 +10,23 @@
 (defn menu-items-prototype
   ; @ignore
   ;
+  ; @param (keyword) menu-id
   ; @param (map) menu-props
   ; {:menu-items (maps in vector)}
-  [{:keys [item-default menu-items]}]
+  [menu-id {:keys [item-default menu-items]}]
   (letfn [; XXX#1239
           ; The :on-mouse-over property of items in menu-bar element takes metamorphic-events.
           ; In case of the f0 function returns the reseted value (returned by the reset! function),
           ; the on-mouse-over handler might try to dispatch it as a metamorphic-event.
           ; Therefore the f0 function returns a nil to avoid this.
-          (f0 [dex %] (reset! dropdown-menu.state/ACTIVE-DEX dex)
+          (f0 [dex %] (swap! dropdown-menu.state/MENUS assoc-in [menu-id :active-dex] dex)
                       (return nil))
 
           ; If an item's index matches with the active index, sets the hover color
           ; of the item as its fill color to makes the item looks like an active one.
           ; If the item has no hover color it tries to set the default hover color
           ; read from the item-default map (which contains the default settings of items).
-          (f1 [dex %] (if (= @dropdown-menu.state/ACTIVE-DEX dex)
+          (f1 [dex %] (if (= dex (-> @dropdown-menu.state/MENUS menu-id :active-dex))
                           (or (:hover-color %)
                               (:hover-color item-default))))
 
@@ -42,12 +43,13 @@
 (defn surface-prototype
   ; @ignore
   ;
+  ; @param (keyword) menu-id
   ; @param (map) menu-props
   ; {}
   ;
   ; @return (map)
   ; {}
-  [{{:keys [border-color]} :surface :keys [surface] :as menu-props}]
+  [_ {{:keys [border-color]} :surface :keys [surface] :as menu-props}]
   (merge (if border-color {:border-position :all
                            :border-width    :xxs})
          (param surface)))
@@ -55,11 +57,26 @@
 (defn menu-props-prototype
   ; @ignore
   ;
+  ; @param (keyword) menu-id
   ; @param (map) menu-props
-  ; {}
   ;
   ; @return (map)
   ; {}
-  [{:keys [border-color] :as menu-props}]
-  (merge menu-props {:menu-items (menu-items-prototype menu-props)
-                     :surface    (surface-prototype    menu-props)}))
+  [menu-id menu-props]
+  (merge menu-props {:menu-items (menu-items-prototype menu-id menu-props)
+                     :surface    (surface-prototype    menu-id menu-props)}))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn bar-props-prototype
+  ; @ignore
+  ;
+  ; @param (map) menu-props
+  ;
+  ; @return (map)
+  ; {}
+  [menu-props]
+  ; Filters the menu bar properties to avoid duplications in the dropdown-menu
+  ; element and the implemented menu-bar element.
+  (dissoc menu-props :class :indent :outdent :style))

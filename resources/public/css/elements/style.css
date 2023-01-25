@@ -342,6 +342,13 @@
 
 
 /***** Content swapper *****/
+/*** Header ***/
+
+.e-content-swapper--header {
+}
+
+/*** Header ***/
+
 /*** Body ***/
 
 .e-content-swapper--body {
@@ -362,9 +369,8 @@
 
 /*** Page ***/
 
-.e-content-swapper--page-header {
-  /* Makes the page back button not stretching to its container width */
-  display: flex;
+.e-content-swapper--page {
+  width: 100%;
 }
 
 /*** Page ***/

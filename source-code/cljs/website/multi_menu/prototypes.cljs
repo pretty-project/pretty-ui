@@ -1,5 +1,5 @@
 
-(ns website.navbar-menu.prototypes
+(ns website.multi-menu.prototypes
     (:require [noop.api :refer [param]]))
 
 ;; ----------------------------------------------------------------------------

@@ -8,4 +8,5 @@
 ; @ignore
 ;
 ; @atom (map)
-(defonce VISIBLE-PAGE (ratom {}))
+; {:my-swapper {:active-dex 42} ...}
+(defonce SWAPPERS (ratom {}))

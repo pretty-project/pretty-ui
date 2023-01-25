@@ -1,6 +1,7 @@
 
 (ns elements.dropdown-menu.views
     (:require [elements.dropdown-menu.attributes :as dropdown-menu.attributes]
+              [elements.dropdown-menu.helpers    :as dropdown-menu.helpers]
               [elements.dropdown-menu.prototypes :as dropdown-menu.prototypes]
               [elements.dropdown-menu.state      :as dropdown-menu.state]
               [elements.menu-bar.views           :as menu-bar.views]
@@ -18,8 +19,9 @@
   [menu-id menu-props]
   [:div (dropdown-menu.attributes/menu-attributes menu-id menu-props)
         [:div (dropdown-menu.attributes/menu-body-attributes menu-id menu-props)
-              [menu-bar.views/element menu-id menu-props]
-              (if-let [surface-content (get-in menu-props [:menu-items @dropdown-menu.state/ACTIVE-DEX :content])]
+              (let [bar-props (dropdown-menu.prototypes/bar-props-prototype menu-props)]
+                   [menu-bar.views/element menu-id bar-props])
+              (if-let [surface-content (dropdown-menu.helpers/get-surface-content menu-id menu-props)]
                       [:div (dropdown-menu.attributes/menu-surface-attributes menu-id menu-props)
                             [:div (dropdown-menu.attributes/menu-surface-body-attributes menu-id menu-props)
                                   [x.components/content menu-id surface-content]]])]])
@@ -54,5 +56,5 @@
    [element (random/generate-keyword) menu-props])
 
   ([menu-id menu-props]
-   (let [menu-props (dropdown-menu.prototypes/menu-props-prototype menu-props)]
+   (let [menu-props (dropdown-menu.prototypes/menu-props-prototype menu-id menu-props)]
         [dropdown-menu menu-id menu-props])))

@@ -212,7 +212,20 @@
   ;   :horizontal, :none
   ;   Default: :none
   ;  :style (map)(opt)
+
+
   ;  :surface (metamorphic-content)(opt)
+  ;  :surface (map)(opt)
+  ;   {:border-color (keyword or string)(opt)
+  ;    :border-position (keyword)(opt)
+  ;    :border-radius (map)(opt)
+  ;    :border-width (keyword)(opt)
+  ;    :content (metamorphic-content)(opt)
+  ;    :fill-color (keyword or string)
+  ;    :indent (map)(opt)
+  ;    :outdent (map)(opt)}}
+
+
   ;  :validator (map)(opt)
   ;   {:f (function)
   ;    :invalid-message (metamorphic-content)(opt)
