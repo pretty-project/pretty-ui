@@ -1,9 +1,7 @@
 
 (ns layouts.struct-popup.attributes
     (:require [layouts.box-popup.attributes :as box-popup.attributes]
-              [layouts.struct-popup.state   :as struct-popup.state]
-              [pretty-css.api               :as pretty-css]
-              [re-frame.api                 :as r]))
+              [layouts.struct-popup.state   :as struct-popup.state]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
