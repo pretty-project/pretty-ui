@@ -1,7 +1,7 @@
 
 (ns elements.radio-button.prototypes
-    (:require [elements.input.helpers :as input.helpers]
-              [noop.api               :refer [param return]]))
+    (:require [elements.input.utils :as input.utils]
+              [noop.api             :refer [param return]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -30,8 +30,8 @@
           :border-width        :xs
           :font-size           :s
           :options-orientation :vertical
-          :options-path        (input.helpers/default-options-path button-id)
-          :value-path          (input.helpers/default-value-path   button-id)
+          :options-path        (input.utils/default-options-path button-id)
+          :value-path          (input.utils/default-value-path   button-id)
           :option-label-f      return
           :option-value-f      return}
          (param button-props)))

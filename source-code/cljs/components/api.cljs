@@ -57,7 +57,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; components.*.views
-(def action-bar               action-bar.views/component)
+(def action-bar_               action-bar.views/component)
 (def color-picker             color-picker.views/component)
 (def compact-list-header      compact-list-header.views/component)
 (def copyright-label          copyright-label.views/component)

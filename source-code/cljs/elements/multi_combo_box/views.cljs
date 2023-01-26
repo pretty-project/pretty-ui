@@ -4,8 +4,8 @@
               [elements.combo-box.views            :as combo-box.views]
               [elements.element.views              :as element.views]
               [elements.multi-combo-box.attributes :as multi-combo-box.attributes]
-              [elements.multi-combo-box.helpers    :as multi-combo-box.helpers]
               [elements.multi-combo-box.prototypes :as multi-combo-box.prototypes]
+              [elements.multi-combo-box.utils      :as multi-combo-box.utils]
               [random.api                          :as random]
               [re-frame.api                        :as r]
               [vector.api                          :as vector]))
@@ -22,7 +22,7 @@
   [box-id {:keys [value-path] :as box-props}]
   (if-let [chips @(r/subscribe [:get-item value-path])]
           (if (vector/nonempty? chips)
-              (let [group-id    (multi-combo-box.helpers/box-id->group-id         box-id)
+              (let [group-id    (multi-combo-box.utils/box-id->group-id           box-id)
                     group-props (multi-combo-box.prototypes/group-props-prototype box-id box-props)]
                    [chip-group.views/element group-id group-props]))))
 
@@ -35,7 +35,7 @@
   ; @param (keyword) box-id
   ; @param (map) box-props
   [box-id box-props]
-  (let [field-id    (multi-combo-box.helpers/box-id->field-id         box-id)
+  (let [field-id    (multi-combo-box.utils/box-id->field-id           box-id)
         field-props (multi-combo-box.prototypes/field-props-prototype box-id box-props)]
        [combo-box.views/combo-box field-id field-props]))
 
@@ -55,7 +55,7 @@
               [multi-combo-box-field                          box-id box-props]]])
 
 (defn element
-  ; XXX#0714 (source-code/cljs/elements/text_field/views.cljs)
+  ; XXX#0711 (source-code/cljs/elements/text_field/views.cljs)
   ; The multi-combo-box element is based on the text-field element.
   ; For more information check out the documentation of the text-field element.
   ;

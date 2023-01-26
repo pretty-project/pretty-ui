@@ -1,5 +1,5 @@
 
-(ns elements.image.helpers
+(ns elements.image.utils
     (:require [dom.api               :as dom]
               [elements.image.config :as image.config]
               [react.api             :as react]))

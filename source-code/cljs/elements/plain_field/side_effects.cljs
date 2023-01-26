@@ -1,10 +1,36 @@
 
 (ns elements.plain-field.side-effects
-    (:require [elements.plain-field.helpers :as plain-field.helpers]
-              [elements.plain-field.state   :as plain-field.state]
-              [hiccup.api                   :as hiccup]
-              [re-frame.api                 :as r]
-              [x.environment.api            :as x.environment]))
+    (:require [elements.plain-field.state :as plain-field.state]
+              [hiccup.api                 :as hiccup]
+              [re-frame.api               :as r]
+              [x.environment.api          :as x.environment]))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn set-field-content!
+  ; @ignore
+  ;
+  ; @param (keyword) field-id
+  ; @param (string) field-content
+  [field-id field-content]
+  ; HACK#9910
+  ;
+  ; BUG#3401
+  ; The 'field-content' has to be converted to string type!
+  ; It may occur, that a non-seqable type (e.g. integer) being written into
+  ; the field and the empty? function may throws an error in case of taking
+  ; a non-seqable value as its argument.
+  (swap! plain-field.state/FIELD-CONTENTS assoc field-id (str field-content)))
+
+(defn set-field-output!
+  ; @ignore
+  ;
+  ; @param (keyword) field-id
+  ; @param (string) field-content
+  [field-id field-content]
+  ; HACK#9910
+  (swap! plain-field.state/FIELD-OUTPUTS assoc field-id field-content))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -14,7 +40,7 @@
   ;
   ; @param (keyword) field-id
   [field-id]
-  (plain-field.helpers/set-field-content! field-id ""))
+  (set-field-content! field-id ""))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

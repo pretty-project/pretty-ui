@@ -1,7 +1,7 @@
 
 (ns elements.switch.views
     (:require [elements.element.views     :as element.views]
-              [elements.input.helpers     :as input.helpers]
+              [elements.input.env         :as input.env]
               [elements.switch.attributes :as switch.attributes]
               [elements.switch.prototypes :as switch.prototypes]
               [hiccup.api                 :as hiccup]
@@ -37,7 +37,7 @@
   ; @param (keyword) switch-id
   ; @param (map) switch-props
   [switch-id switch-props]
-  (let [options (input.helpers/get-input-options switch-id switch-props)]
+  (let [options (input.env/get-input-options switch-id switch-props)]
        (letfn [(f [option] [switch-option switch-id switch-props option])]
               (hiccup/put-with [:<>] options f))))
 

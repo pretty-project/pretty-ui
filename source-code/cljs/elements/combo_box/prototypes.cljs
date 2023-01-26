@@ -1,8 +1,8 @@
 
 (ns elements.combo-box.prototypes
-    (:require [elements.input.helpers :as input.helpers]
-              [loop.api               :refer [<-walk]]
-              [noop.api               :refer [return]]))
+    (:require [elements.input.utils :as input.utils]
+              [loop.api             :refer [<-walk]]
+              [noop.api             :refer [return]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -42,8 +42,8 @@
            :field-value-f   return
            :option-label-f  return
            :option-value-f  return
-           :options-path    (input.helpers/default-options-path box-id)
-           :value-path      (input.helpers/default-value-path   box-id)}
+           :options-path    (input.utils/default-options-path box-id)
+           :value-path      (input.utils/default-value-path   box-id)}
           (fn [%] (merge % box-props))
           (fn [%] (merge % {:on-blur   [:elements.combo-box/field-blurred box-id %]
                             :on-change [:elements.combo-box/field-changed box-id %]

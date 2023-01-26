@@ -1,8 +1,8 @@
 
-(ns elements.text-field.helpers
-    (:require [elements.plain-field.helpers :as plain-field.helpers]
-              [noop.api                     :refer [return]]
-              [string.api                   :as string]))
+(ns elements.text-field.env
+    (:require [elements.plain-field.env :as plain-field.env]
+              [noop.api                 :refer [return]]
+              [string.api               :as string]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -19,7 +19,7 @@
   ;  :on-click (metamorphic-event)
   ;  :tooltip (metamorphic-content)}
   [field-id field-props]
-  {:disabled?       (plain-field.helpers/field-empty? field-id)
+  {:disabled?       (plain-field.env/field-empty? field-id)
    :icon            :close
    :on-click        [:elements.text-field/empty-field! field-id field-props]
    :tooltip-content :empty-field!})
@@ -36,7 +36,7 @@
   ;
   ; @return (integer)
   [field-id {:keys [multiline?]}]
-  (let [field-content (plain-field.helpers/get-field-content field-id)]
+  (let [field-content (plain-field.env/get-field-content field-id)]
        (if multiline? (let [line-count (-> field-content string/line-count inc)]
                            ; BUG#1481
                            ; Google Chrome Version 89.0.4389.114

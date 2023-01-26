@@ -2,7 +2,7 @@
 (ns elements.content-swapper.views
     (:require [elements.button.views               :as button.views]
               [elements.content-swapper.attributes :as content-swapper.attributes]
-              [elements.content-swapper.helpers    :as content-swapper.helpers]
+              [elements.content-swapper.env        :as content-swapper.env]
               [elements.content-swapper.prototypes :as content-swapper.prototypes]
               [elements.content-swapper.state      :as content-swapper.state]
               [elements.label.views                :as label.views]
@@ -81,11 +81,11 @@
   ; {}
   [swapper-id {:keys [pages] :as swapper-props}]
   [:<> [:div {:class :e-content-swapper--header}
-             (if-let [swapping-content (content-swapper.helpers/get-swapping-content swapper-id swapper-props)]
+             (if-let [swapping-content (content-swapper.env/get-swapping-content swapper-id swapper-props)]
                      [content-swapper-back-button swapper-id swapper-props]
                      [content-swapper-label       swapper-id swapper-props])]
        [:div (content-swapper.attributes/swapper-body-attributes swapper-id swapper-props)
-             (if-let [swapping-content (content-swapper.helpers/get-swapping-content swapper-id swapper-props)]
+             (if-let [swapping-content (content-swapper.env/get-swapping-content swapper-id swapper-props)]
 
                      ; Selected page
                      [:<>

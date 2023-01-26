@@ -1,10 +1,11 @@
 
 (ns elements.label.attributes
-    (:require [dom.api                :as dom]
-              [elements.label.helpers :as label.helpers]
-              [pretty-css.api         :as pretty-css]
-              [x.components.api       :as x.components]
-              [x.environment.api      :as x.environment]))
+    (:require [dom.api                     :as dom]
+              [elements.label.side-effects :as label.side-effects]
+              [elements.label.utils        :as label.utils]
+              [pretty-css.api              :as pretty-css]
+              [x.components.api            :as x.components]
+              [x.environment.api           :as x.environment]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -28,7 +29,7 @@
    :data-selectable   false
    :data-icon-family  :material-symbols-outlined
    :data-icon-size    :xs
-   :on-click    #(label.helpers/toggle-info-text-visiblity! label-id)
+   :on-click    #(label.side-effects/toggle-info-text-visiblity! label-id)
    :on-mouse-up #(dom/blur-active-element!)})
 
 ;; ----------------------------------------------------------------------------
@@ -51,7 +52,7 @@
    :data-click-effect     :opacity
    :data-tooltip-position :right
    :data-tooltip-content  (x.components/content :copy!)
-   :on-click              (label.helpers/on-copy-f label-id label-props)})
+   :on-click              (label.utils/on-copy-f label-id label-props)})
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

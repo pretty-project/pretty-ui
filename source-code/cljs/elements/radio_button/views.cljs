@@ -1,7 +1,7 @@
 
 (ns elements.radio-button.views
     (:require [elements.element.views           :as element.views]
-              [elements.input.helpers           :as input.helpers]
+              [elements.input.env               :as input.env]
               [elements.radio-button.attributes :as radio-button.attributes]
               [elements.radio-button.prototypes :as radio-button.prototypes]
               [hiccup.api                       :as hiccup]
@@ -42,7 +42,7 @@
         (if deselectable? [:button (radio-button.attributes/clear-button-attributes button-id button-props)])
                                    ; [:div.e-radio-button--clear-button-label (x.components/content :delete!)]
         [:div (radio-button.attributes/radio-button-body-attributes button-id button-props)
-              (let [options (input.helpers/get-input-options button-id button-props)]
+              (let [options (input.env/get-input-options button-id button-props)]
                    (letfn [(f [option] [radio-button-option button-id button-props option])]
                           (hiccup/put-with [:<>] options f)))]])
 

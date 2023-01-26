@@ -1,11 +1,7 @@
 
 (ns elements.select.attributes
-    (:require [dom.api                      :as dom]
-              [elements.plain-field.helpers :as plain-field.helpers]
-              [re-frame.api                 :as r]
-              [string.api                   :as string]
-              [x.components.api             :as x.components]
-              [x.environment.api            :as x.environment]))
+    (:require [dom.api      :as dom]
+              [re-frame.api :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

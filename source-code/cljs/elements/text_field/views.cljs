@@ -1,10 +1,10 @@
 
 (ns elements.text-field.views
     (:require [elements.element.views         :as element.views]
-              [elements.plain-field.helpers   :as plain-field.helpers]
+              [elements.plain-field.env       :as plain-field.env]
               [elements.plain-field.views     :as plain-field.views]
               [elements.text-field.attributes :as text-field.attributes]
-              [elements.text-field.helpers    :as text-field.helpers]
+              [elements.text-field.env        :as text-field.env]
               [elements.text-field.prototypes :as text-field.prototypes]
               [hiccup.api                     :as hiccup]
               [random.api                     :as random]
@@ -80,7 +80,7 @@
               ; ...
               [:div {:class :e-text-field--input-structure}
                     ; ...
-                    (if placeholder (if-let [field-empty? (plain-field.helpers/field-empty? field-id)]
+                    (if placeholder (if-let [field-empty? (plain-field.env/field-empty? field-id)]
                                             [:div (text-field.attributes/field-placeholder-attributes field-id field-props)
                                                   (x.components/content placeholder)]))
                     ; ...
@@ -90,7 +90,7 @@
               ; ...
               [field-end-adornments field-id field-props]
               ; ...
-              (if surface (if (plain-field.helpers/surface-visible? field-id)
+              (if surface (if (plain-field.env/surface-visible? field-id)
                               [:div (text-field.attributes/field-surface-attributes field-id field-props)
                                     [x.components/content field-id surface]]))]
         ; ...

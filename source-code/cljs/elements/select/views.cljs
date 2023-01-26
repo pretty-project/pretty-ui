@@ -3,9 +3,9 @@
     (:require [elements.button.views      :as button.views]
               [elements.element.views     :as element.views]
               [elements.icon-button.views :as icon-button.views]
-              [elements.input.helpers     :as input.helpers]
-              [elements.select.helpers    :as select.helpers]
+              [elements.input.env         :as input.env]
               [elements.select.attributes :as select.attributes]
+              [elements.select.env        :as select.env]
               [elements.select.prototypes :as select.prototypes]
               [elements.text-field.views  :as text-field.views]
               [hiccup.api                 :as hiccup]
@@ -45,8 +45,8 @@
   ; @param (keyword) select-id
   ; @param (map) select-props
   [select-id {:keys [option-label-f] :as select-props}]
-  (let [options (input.helpers/get-input-options select-id select-props)]
-       (letfn [(f [option] (if (select.helpers/render-option? select-id select-props option)
+  (let [options (input.env/get-input-options select-id select-props)]
+       (letfn [(f [option] (if (select.env/render-option? select-id select-props option)
                                [:button (select.attributes/select-option-attributes select-id select-props option)
                                         (-> option option-label-f x.components/content)]))]
               (hiccup/put-with [:<>] options f))))
@@ -58,7 +58,7 @@
   ; @param (map) select-props
   ; {}
   [select-id {:keys [options-placeholder] :as select-props}]
-  (let [options (input.helpers/get-input-options select-id select-props)]
+  (let [options (input.env/get-input-options select-id select-props)]
        [:div {:class :e-select--option-list :data-selectable false}
              (if (vector/nonempty? options)
                  [select-option-list-items select-id select-props]
@@ -109,8 +109,8 @@
   ; @param (keyword) select-id
   ; @param (map) select-props
   [select-id select-props]
-  (let [on-click [:elements.select/render-options!   select-id select-props]
-        label    (select.helpers/select-button-label select-id select-props)]
+  (let [on-click [:elements.select/render-options! select-id select-props]
+        label    (select.env/select-button-label   select-id select-props)]
        [:div (pretty-css/effect-attributes {:class :e-select-button} select-props)
              [button.views/element select-id (assoc select-props :class         :e-select-button
                                                                  :icon          :unfold_more

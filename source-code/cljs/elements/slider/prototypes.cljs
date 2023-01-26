@@ -1,7 +1,7 @@
 
 (ns elements.slider.prototypes
-    (:require [elements.input.helpers :as input.helpers]
-              [noop.api               :refer [param]]))
+    (:require [elements.input.utils :as input.utils]
+              [noop.api             :refer [param]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -21,5 +21,5 @@
   (merge {:max-value     100
           :min-value     0
           :initial-value [0 100]
-          :value-path    (input.helpers/default-value-path slider-id)}
+          :value-path    (input.utils/default-value-path slider-id)}
          (param slider-props)))

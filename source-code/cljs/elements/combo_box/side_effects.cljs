@@ -1,10 +1,10 @@
 
 (ns elements.combo-box.side-effects
-    (:require [elements.combo-box.helpers   :as combo-box.helpers]
-              [elements.combo-box.state     :as combo-box.state]
-              [elements.plain-field.helpers :as plain-field.helpers]
-              [re-frame.api                 :as r]
-              [vector.api                   :as vector]))
+    (:require [elements.combo-box.env            :as combo-box.env]
+              [elements.combo-box.state          :as combo-box.state]
+              [elements.plain-field.side-effects :as plain-field.side-effects]
+              [re-frame.api                      :as r]
+              [vector.api                        :as vector]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -15,8 +15,8 @@
   ; @param (keyword) box-id
   ; @param (map) box-props
   [box-id box-props]
-  (let [highlighted-option-dex (combo-box.helpers/get-highlighted-option-dex box-id)
-        rendered-options       (combo-box.helpers/get-rendered-options       box-id box-props)]
+  (let [highlighted-option-dex (combo-box.env/get-highlighted-option-dex box-id)
+        rendered-options       (combo-box.env/get-rendered-options       box-id box-props)]
        ; If no option selected, then the first option has to be selected at the first time ...
        (if (nil? highlighted-option-dex)
            (swap! combo-box.state/OPTION-HIGHLIGHTS assoc box-id 0)
@@ -29,8 +29,8 @@
   ; @param (keyword) box-id
   ; @param (map) box-props
   [box-id box-props]
-  (let [highlighted-option-dex (combo-box.helpers/get-highlighted-option-dex box-id)
-        rendered-options       (combo-box.helpers/get-rendered-options       box-id box-props)
+  (let [highlighted-option-dex (combo-box.env/get-highlighted-option-dex box-id)
+        rendered-options       (combo-box.env/get-rendered-options       box-id box-props)
         prev-option-dex        (vector/prev-dex rendered-options highlighted-option-dex)]
        (swap! combo-box.state/OPTION-HIGHLIGHTS assoc box-id prev-option-dex)))
 
@@ -50,7 +50,7 @@
   ; @param (*) selected-option
   [box-id {:keys [option-label-f] :as box-props} selected-option]
   (let [option-label (option-label-f selected-option)]
-       (plain-field.helpers/set-field-content! box-id option-label)))
+       (plain-field.side-effects/set-field-content! box-id option-label)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

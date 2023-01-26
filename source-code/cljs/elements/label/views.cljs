@@ -1,7 +1,7 @@
 
 (ns elements.label.views
     (:require [elements.label.attributes :as label.attributes]
-              [elements.label.helpers    :as label.helpers]
+              [elements.label.env        :as label.env]
               [elements.label.prototypes :as label.prototypes]
               [pretty-css.api            :as pretty-css]
               [random.api                :as random]
@@ -29,7 +29,7 @@
   ; @param (map) label-props
   ; {:info-text (metamorphic-content)(opt)}
   [label-id {:keys [info-text]}]
-  (if info-text (if-let [info-text-visible? (label.helpers/info-text-visible? label-id)]
+  (if info-text (if-let [info-text-visible? (label.env/info-text-visible? label-id)]
                         [:div {:class            :e-label--info-text
                                :data-font-size   :xs
                                :data-line-height :text-block}
@@ -85,18 +85,18 @@
   ; @param (keyword) label-id
   ; @param (map) label-props
   ; {:content (string)
-  ;  :copyable? (boolean)(opt)
+  ;  :on-copy (boolean)(opt)
   ;  :target-id (keyword)(opt)}
-  [label-id {:keys [content copyable? target-id] :as label-props}]
+  [label-id {:keys [content on-copy target-id] :as label-props}]
   ; https://css-tricks.com/html-inputs-and-labels-a-love-story/
   ; ... it is always the best idea to use an explicit label instead of an implicit label.
   ;
   ; XXX#7009 (source-code/cljs/elements/label/prototypes.cljs)
   ;
-  ; XXX#7030 Why the {:copyable? true} setting needs the .e-label--copyable element?
-  ; 1. By using the 'label' element with {:copyable? true} setting, ...
+  ; XXX#7030 Why the {:on-copy ...} setting needs the .e-label--copyable element?
+  ; 1. By using the 'label' element with {:on-copy ...} setting, ...
   ;    ... the content will be a clickable sensor and by clicking on it, it copies
-  ;        the content to the clipboard.
+  ;        the content to the clipboard by using the given event.
   ;    ... when the user moves the pointer over the sensor, a tooltip shown up with
   ;        the label 'Copy' (as a pseudo-element).
   ;    ... The tooltip is implemented by the {:data-tooltip-content ...} CSS preset,
@@ -105,9 +105,9 @@
   ;    not capable to be applied with the {:data-tooltip-content ...} preset.
   ; 3. The .e-label--body element always fits with its environment in width, therefore
   ;    it's often too wide to be the sensor element.
-  (if copyable? [:div (label.attributes/copyable-attributes label-id label-props)
-                      [:label (label.attributes/content-attributes label-id label-props) content]]
-                [:<>  [:label (label.attributes/content-attributes label-id label-props) content]]))
+  (if on-copy [:div (label.attributes/copyable-attributes label-id label-props)
+                    [:label (label.attributes/content-attributes label-id label-props) content]]
+              [:<>  [:label (label.attributes/content-attributes label-id label-props) content]]))
 
 (defn- label-body
   ; @ignore
@@ -164,8 +164,6 @@
   ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
   ;   Default: :inherit
   ;  :content (metamorphic-content)
-  ;  :copyable? (boolean)(opt)
-  ;   Default: false
   ;  :disabled? (boolean)(opt)
   ;  :font-size (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
@@ -212,6 +210,8 @@
   ;   :tl, :tr, :br, :bl
   ;  :min-width (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;  :on-copy (metamorphic-event)(opt)
+  ;   This event takes the label content as its last parameter
   ;  :outdent (map)(opt)
   ;   Same as the :indent property
   ;  :placeholder (metamorphic-content)(opt)

@@ -1,5 +1,5 @@
 
-(ns elements.multi-combo-box.helpers
+(ns elements.multi-combo-box.utils
     (:require [keyword.api :as keyword]))
 
 ;; ----------------------------------------------------------------------------

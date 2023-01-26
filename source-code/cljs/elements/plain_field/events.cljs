@@ -1,9 +1,9 @@
 
 (ns elements.plain-field.events
-    (:require [elements.input.events  :as input.events]
-              [elements.input.helpers :as input.helpers]
-              [re-frame.api           :as r :refer [r]]
-              [re-frame.db.api        :as r.db]))
+    (:require [elements.input.events :as input.events]
+              [elements.input.utils  :as input.utils]
+              [re-frame.api          :as r :refer [r]]
+              [re-frame.db.api       :as r.db]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -56,7 +56,7 @@
   ; @return (map)
   [db [_ _ {:keys [field-value-f value-path]} field-content]]
   (let [field-value (field-value-f field-content)]
-       (if (input.helpers/value-path->vector-item? value-path)
+       (if (input.utils/value-path->vector-item? value-path)
            (r r.db/set-vector-item! db value-path field-value)
            (r r.db/set-item!        db value-path field-value))))
 

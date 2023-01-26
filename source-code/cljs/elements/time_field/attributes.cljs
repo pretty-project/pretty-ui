@@ -1,5 +1,5 @@
 
-(ns elements.time-field.helpers
+(ns elements.time-field.attributes
     (:require [pretty-css.api :as pretty-css]))
 
 ;; ----------------------------------------------------------------------------
@@ -16,7 +16,7 @@
   ; {:class (keyword or keywords in vector)
   ;  :style (map)}
   [_ {:keys [style] :as field-props}]
-  (-> {:class :e-time-field--body 
+  (-> {:class :e-time-field--body
        :style style}
       (pretty-css/indent-attributes field-props)))
 

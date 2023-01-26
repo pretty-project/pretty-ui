@@ -47,13 +47,13 @@
   ;
   ; @param (keyword) text-id
   ; @param (map) text-props
-  ; {:copyable? (boolean)(opt)}
-  [text-id {:keys [copyable?] :as text-props}]
-  (if copyable? [:div (text.attributes/copyable-attributes text-id text-props)
-                      [:div (text.attributes/content-attributes text-id text-props)
-                            (text-content-rows                  text-id text-props)]]
-                [:<>  [:div (text.attributes/content-attributes text-id text-props)
-                            (text-content-rows                  text-id text-props)]]))
+  ; {:on-copy (metamorphic-event)(opt)}
+  [text-id {:keys [on-copy] :as text-props}]
+  (if on-copy [:div (text.attributes/copyable-attributes text-id text-props)
+                    [:div (text.attributes/content-attributes text-id text-props)
+                          (text-content-rows                  text-id text-props)]]
+              [:<>  [:div (text.attributes/content-attributes text-id text-props)
+                          (text-content-rows                  text-id text-props)]]))
 
 (defn- text
   ; @ignore
@@ -101,6 +101,8 @@
   ;   :inherit, :native, :text-block, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;   Default: :text-block
   ;  :max-lines (integer)(opt)
+  ;  :on-copy (metamorphic-event)(opt)
+  ;   This event takes the text content as its last parameter
   ;  :outdent (map)(opt)
   ;   Same as the :indent property
   ;  :placeholder (metamorphic-content)(opt)

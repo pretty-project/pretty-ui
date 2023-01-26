@@ -10,14 +10,13 @@
 (defn- illustration
   ; @param (keyword) illustration-id
   ; @param (map) illustration-props
-  ; {:illustration (keyword)
-  ;  :height (keyword)
+  ; {:height (keyword)
+  ;  :uri (string)
   ;  :width (keyword)}
-  [_ {:keys [illustration height width]}]
-  (let [illustration-url (str "/illustrations/" (name illustration) ".webp")]
-       [:div.c-illustration [:div.c-illustration--body {:style {:background-image (css/url illustration-url)}
-                                                        :data-element-height height
-                                                        :data-element-width  width}]]))
+  [_ {:keys [height uri width]}]
+  [:div.c-illustration [:div.c-illustration--body {:style {:background-image (css/url uri)}
+                                                   :data-element-height height
+                                                   :data-element-width  width}]])
 
 (defn component
   ; @param (keyword)(opt) illustration-id
@@ -26,7 +25,7 @@
   ;  :height (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;   Default: :xxl
-  ;  :illustration (keyword)
+  ;  :uri (string)
   ;  :style (map)(opt)
   ;  :width (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl

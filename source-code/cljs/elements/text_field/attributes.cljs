@@ -2,7 +2,7 @@
 (ns elements.text-field.attributes
     (:require [dom.api                         :as dom]
               [elements.plain-field.attributes :as plain-field.attributes]
-              [elements.text-field.helpers     :as text-field.helpers]
+              [elements.text-field.env         :as text-field.env]
               [pretty-css.api                  :as pretty-css]
               [re-frame.api                    :as r]
               [x.components.api                :as x.components]))
@@ -24,7 +24,7 @@
   ; @return (map)
   ; {}
   [field-id field-props {:keys [disabled? on-click tab-indexed? tooltip-content] :as adornment-props}]
-  ; BUG#2105 (source-code/cljs/elements/plain_field/helpers.cljs)
+  ; BUG#2105 (source-code/cljs/elements/plain_field/attributes.cljs)
   (-> (plain-field.attributes/field-accessory-attributes field-id field-props)
       (merge {:class                 :e-text-field--adornment
               :data-selectable       false
@@ -51,7 +51,7 @@
   ; @return (map)
   ; {}
   [_ field-props]
-  ; HACK#9760 (source-code/cljs/elements/plain_field/helpers.cljs)
+  ; HACK#9760 (source-code/cljs/elements/plain_field/utils.cljs)
   (-> {:class               :e-text-field--placeholder
        :data-font-size      :xs
        :data-letter-spacing :auto
@@ -75,7 +75,7 @@
   ;   {:height (string)}}
   [field-id field-props]
   {:class :e-text-field--input-emphasize
-   :style {:height (text-field.helpers/field-auto-height field-id field-props)}})
+   :style {:height (text-field.env/field-auto-height field-id field-props)}})
 
 (defn input-container-attributes
   ; @ignore
@@ -146,7 +146,7 @@
   ;  :name (keyword)
   ;  :type (keyword)}
   [field-id {:keys [autofill-name date-from date-to disabled? max-length type] :as field-props}]
-  ; HACK#9760 (source-code/cljs/elements/plain_field/helpers.cljs)
+  ; HACK#9760 (source-code/cljs/elements/plain_field/utils.cljs)
   ;
   ; The {:type :date} fields range could being set by the :min and :max properties.
   (-> (plain-field.attributes/field-input-attributes field-id field-props)

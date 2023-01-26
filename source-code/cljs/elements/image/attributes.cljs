@@ -1,8 +1,8 @@
 
 (ns elements.image.attributes
-    (:require [elements.image.helpers :as image.helpers]
-              [pretty-css.api         :as pretty-css]
-              [react.api              :as react]))
+    (:require [elements.image.utils :as image.utils]
+              [pretty-css.api       :as pretty-css]
+              [react.api            :as react]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -21,8 +21,8 @@
   ;  :style (map)}
   [image-id {:keys [style] :as image-props}]
   (-> {:class    :e-image--body
-       :on-error (image.helpers/on-error-f image-id)
-       :ref      (react/set-reference-f    image-id)
+       :on-error (image.utils/on-error-f image-id)
+       :ref      (react/set-reference-f  image-id)
        :style    style}
       (pretty-css/indent-attributes image-props)))
 

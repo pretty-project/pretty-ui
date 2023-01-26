@@ -1,12 +1,12 @@
 
 (ns elements.select.effects
-    (:require [elements.input.events          :as input.events]
-              [elements.input.helpers         :as input.helpers]
+    (:require [elements.input.env             :as input.env]
+              [elements.input.events          :as input.events]
               [elements.select.config         :as select.config]
               [elements.select.events         :as select.events]
               [elements.select.prototypes     :as select.prototypes]
               [elements.select.views          :as select.views]
-              [elements.plain-field.helpers   :as plain-field.helpers]
+              [elements.plain-field.env       :as plain-field.env]
               [elements.text-field.prototypes :as text-field.prototypes]
               [noop.api                       :refer [return]]
               [re-frame.api                   :as r :refer [r]]))
@@ -57,7 +57,7 @@
   ; @param (keyword) select-id
   ; @param (map) select-props
   (fn [_ [_ select-id select-props]]
-      (if-let [option-field-focused? (input.helpers/input-focused? :elements.select/option-field)]
+      (if-let [option-field-focused? (input.env/input-focused? :elements.select/option-field)]
               [:elements.select/add-option! select-id select-props])))
 
 ;; ----------------------------------------------------------------------------
@@ -153,10 +153,10 @@
   ; @param (map) select-props
   ; {:add-option-f (function)}
   (fn [{:keys [db]} [_ select-id {:keys [add-option-f] :as select-props}]]
-      (if-let [option-field-filled? (plain-field.helpers/field-filled? :elements.select/option-field)]
+      (if-let [option-field-filled? (plain-field.env/field-filled? :elements.select/option-field)]
               (let [field-id      :elements.select/option-field
                     field-props   (text-field.prototypes/field-props-prototype field-id {})
-                    field-content (plain-field.helpers/get-field-content       field-id)
+                    field-content (plain-field.env/get-field-content           field-id)
                     option        (add-option-f field-content)]
                    {:db       (r select.events/add-option! db select-id select-props option)
                     :dispatch [:elements.text-field/empty-field! field-id field-props]}))))

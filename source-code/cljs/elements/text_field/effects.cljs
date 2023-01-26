@@ -1,8 +1,8 @@
 
 (ns elements.text-field.effects
-    (:require [elements.plain-field.helpers :as plain-field.helpers]
-              [elements.plain-field.events  :as plain-field.events]
-              [re-frame.api                 :as r :refer [r]]))
+    (:require [elements.plain-field.env    :as plain-field.env]
+              [elements.plain-field.events :as plain-field.events]
+              [re-frame.api                :as r :refer [r]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -80,7 +80,7 @@
   ; @param (map) field-props
   ; {:on-empty (metamorphic-event)(opt)}
   (fn [{:keys [db]} [_ field-id {:keys [on-empty] :as field-props}]]
-      (if (plain-field.helpers/field-filled? field-id)
+      (if (plain-field.env/field-filled? field-id)
           {:dispatch (if on-empty (r/metamorphic-event<-params on-empty ""))
            :db       (r plain-field.events/empty-field! db field-id field-props)
            :fx       [:elements.plain-field/empty-field! field-id]})))

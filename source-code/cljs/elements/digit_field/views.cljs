@@ -5,8 +5,8 @@
     (:require [css.api                         :as css]
               [dom.api                         :as dom]
               [elements.digit-field.attributes :as digit-field.attributes]
-              [elements.digit-field.helpers    :as digit-field.helpers]
               [elements.digit-field.prototypes :as digit-field.prototypes]
+              [elements.digit-field.utils      :as digit-field.utils]
               [hiccup.api                      :as hiccup]
               [random.api                      :as random]
               [re-frame.api                    :as r]))
@@ -22,7 +22,7 @@
   [field-id field-props]
   [:input {:class :e-digit-field--input
            :type "text"
-           ; XXX#4460 (source-code/cljs/elements/button/helpers.cljs)
+           ; XXX#4460 (source-code/cljs/elements/button/attributes.cljs)
            :id (hiccup/value field-id "input")
            :on-change #(let [v (dom/event->value %)]
                             (r/dispatch-sync [:set-item! (:value-path field-props) (str v)]))}])
@@ -38,7 +38,7 @@
                                       ; prevent selecting
                                       :on-mouse-down #(.preventDefault %)}
                                      (string.api/get-nth-character (:value field-props) %2)]))
-    [:div {:class :e-digit-field--cover :style {:width (-> field-props digit-field.helpers/field-props->digits-width css/px)}}]
+    [:div {:class :e-digit-field--cover :style {:width (-> field-props digit-field.utils/field-props->digits-width css/px)}}]
     (range 4)))
 
 (defn- digit-field

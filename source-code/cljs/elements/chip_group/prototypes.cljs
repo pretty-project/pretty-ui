@@ -1,7 +1,7 @@
 
 (ns elements.chip-group.prototypes
-    (:require [noop.api               :refer [param return]]
-              [elements.input.helpers :as input.helpers]))
+    (:require [noop.api             :refer [param return]]
+              [elements.input.utils :as input.utils]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -33,5 +33,5 @@
   ; {}
   [group-id group-props]
   (merge {:chip-label-f return
-          :value-path (input.helpers/default-value-path group-id)}
+          :value-path (input.utils/default-value-path group-id)}
          (param group-props)))

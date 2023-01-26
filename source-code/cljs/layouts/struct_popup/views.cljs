@@ -1,7 +1,7 @@
 
 (ns layouts.struct-popup.views
     (:require [layouts.struct-popup.attributes :as struct-popup.attributes]
-              [layouts.struct-popup.helpers    :as struct-popup.helpers]
+              [layouts.struct-popup.env        :as struct-popup.env]
               [layouts.struct-popup.prototypes :as struct-popup.prototypes]
               [hiccup.api                      :as hiccup]
               [random.api                      :as random]
@@ -31,8 +31,8 @@
   ; @param (map) popup-props
   ; {:footer (metamorphic-content)(opt)}
   [popup-id {:keys [footer] :as popup-props}]
-  (if footer (reagent/lifecycles {:component-did-mount    (fn [] (struct-popup.helpers/footer-did-mount-f    popup-id))
-                                  :component-will-unmount (fn [] (struct-popup.helpers/footer-will-unmount-f popup-id))
+  (if footer (reagent/lifecycles {:component-did-mount    (fn [] (struct-popup.env/footer-did-mount-f    popup-id))
+                                  :component-will-unmount (fn [] (struct-popup.env/footer-will-unmount-f popup-id))
                                   :reagent-render         (fn [] [footer-structure popup-id popup-props])})))
 
 ;; ----------------------------------------------------------------------------
@@ -56,8 +56,8 @@
   ; @param (map) popup-props
   ; {:header (metamorphic-content)(opt)}
   [popup-id {:keys [header] :as popup-props}]
-  (if header (reagent/lifecycles {:component-did-mount    (fn [] (struct-popup.helpers/header-did-mount-f    popup-id))
-                                  :component-will-unmount (fn [] (struct-popup.helpers/header-will-unmount-f popup-id))
+  (if header (reagent/lifecycles {:component-did-mount    (fn [] (struct-popup.env/header-did-mount-f    popup-id))
+                                  :component-will-unmount (fn [] (struct-popup.env/header-will-unmount-f popup-id))
                                   :reagent-render         (fn [] [header-structure popup-id popup-props])})))
 
 ;; ----------------------------------------------------------------------------

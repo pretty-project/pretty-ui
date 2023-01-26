@@ -1,5 +1,5 @@
 
-(ns elements.digit-field.helpers
+(ns elements.digit-field.utils
     (:require [elements.digit-field.config :as digit-field.config]))
 
 ;; ----------------------------------------------------------------------------

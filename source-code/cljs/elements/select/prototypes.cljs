@@ -1,7 +1,7 @@
 
 (ns elements.select.prototypes
-    (:require [elements.input.helpers :as input.helpers]
-              [noop.api               :refer [param return]]))
+    (:require [elements.input.utils :as input.utils]
+              [noop.api             :refer [param return]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -30,8 +30,8 @@
           :option-value-f           return
           :layout                   :select
           :options-placeholder      :no-options
-          :options-path             (input.helpers/default-options-path select-id)
-          :value-path               (input.helpers/default-value-path   select-id)}
+          :options-path             (input.utils/default-options-path select-id)
+          :value-path               (input.utils/default-value-path   select-id)}
          (if border-color {:border-position :all
                            :border-width    :xxs})
          (param select-props)))

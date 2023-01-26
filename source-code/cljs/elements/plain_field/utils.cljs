@@ -1,91 +1,13 @@
 
-(ns elements.plain-field.helpers
-    (:require [dom.api                     :as dom]
-              [elements.plain-field.config :as plain-field.config]
-              [elements.plain-field.state  :as plain-field.state]
-              [hiccup.api                  :as hiccup]
-              [re-frame.api                :as r]
-              [reagent.api                 :as reagent]
-              [time.api                    :as time]))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn get-field-content
-  ; @ignore
-  ;
-  ; @param (keyword) field-id
-  ;
-  ; @return (string)
-  [field-id]
-  ; HACK#9910
-  (get @plain-field.state/FIELD-CONTENTS field-id))
-
-(defn get-field-output
-  ; @ignore
-  ;
-  ; @param (keyword) field-id
-  ;
-  ; @return (string)
-  [field-id]
-  ; HACK#9910
-  (get @plain-field.state/FIELD-OUTPUTS field-id))
-
-(defn set-field-content!
-  ; @ignore
-  ;
-  ; @param (keyword) field-id
-  ; @param (string) field-content
-  [field-id field-content]
-  ; HACK#9910
-  ;
-  ; BUG#3401
-  ; The 'field-content' has to be converted to string type!
-  ; It may occur, that a non-seqable type (e.g. integer) being written into
-  ; the field and the empty? function may throws an error in case of taking
-  ; a non-seqable value as its argument.
-  (swap! plain-field.state/FIELD-CONTENTS assoc field-id (str field-content)))
-
-(defn set-field-output!
-  ; @ignore
-  ;
-  ; @param (keyword) field-id
-  ; @param (string) field-content
-  [field-id field-content]
-  ; HACK#9910
-  (swap! plain-field.state/FIELD-OUTPUTS assoc field-id field-content))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn field-empty?
-  ; @ignore
-  ;
-  ; @param (keyword) field-id
-  ;
-  ; @return (boolean)
-  [field-id]
-  (let [field-content (get-field-content field-id)]
-       (empty? field-content)))
-
-(defn field-filled?
-  ; @ignore
-  ;
-  ; @param (keyword) field-id
-  ;
-  ; @return (boolean)
-  [field-id]
-  (let [field-content (get-field-content field-id)]
-       (-> field-content empty? not)))
-
-(defn surface-visible?
-  ; @ignore
-  ;
-  ; @param (keyword) field-id
-  ;
-  ; @return (boolean)
-  [field-id]
-  (= field-id @plain-field.state/VISIBLE-SURFACE))
+(ns elements.plain-field.utils
+    (:require [dom.api                           :as dom]
+              [elements.plain-field.config       :as plain-field.config]
+              [elements.plain-field.env          :as plain-field.env]
+              [elements.plain-field.side-effects :as plain-field.side-effects]
+              [elements.plain-field.state        :as plain-field.state]
+              [re-frame.api                      :as r]
+              [reagent.api                       :as reagent]
+              [time.api                          :as time]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -101,10 +23,10 @@
   ; HACK#9910 (source-code/cljs/elements/plain_field/views.cljs)
   (let [stored-value  @(r/subscribe [:get-item value-path])
         stored-content (field-content-f stored-value)]
-       (set-field-content! field-id stored-content)))
+       (plain-field.side-effects/set-field-content! field-id stored-content)))
 
        ; HACK#9760
-       ; This war an experimental solution for avoiding flickering of input contents.
+       ; This was an experimental solution to avoid flickering of input contents.
        ; (letfn [(f [] (set-field-content! field-id stored-content))]
        ;        (time/set-timeout! f 350)]))
 
@@ -121,8 +43,8 @@
   ; the stored value.
   (let [[_ {:keys [field-content-f] :as field-props} stored-value] (reagent/arguments %)]
        (let [stored-content (field-content-f stored-value)]
-            (when (not= stored-content (get-field-content field-id))
-                  (set-field-content! field-id stored-content)))))
+            (when (not= stored-content (plain-field.env/get-field-content field-id))
+                  (plain-field.side-effects/set-field-content! field-id stored-content)))))
 
 (defn synchronizer-will-unmount-f
   ; @ignore
@@ -131,13 +53,13 @@
   ; @param (map) field-props
   [field-id _]
   ; HACK#9910 (source-code/cljs/elements/plain_field/views.cljs)
-  (set-field-content! field-id nil)
-  (set-field-output!  field-id nil))
+  (plain-field.side-effects/set-field-content! field-id nil)
+  (plain-field.side-effects/set-field-output!  field-id nil))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn field-changed
+(defn field-changed-f
   ; @ignore
   ;
   ; @param (keyword) field-id
@@ -146,7 +68,7 @@
   (let [timestamp (time/elapsed)]
        (swap! plain-field.state/FIELD-STATES assoc field-id {:changed-at timestamp})))
 
-(defn resolve-field-change!
+(defn resolve-field-change-f
   ; @ignore
   ;
   ; @param (keyword) field-id
@@ -180,9 +102,9 @@
   [field-id {:keys [modifier on-changed] :as field-props} event]
   (let [field-content (if modifier (-> event dom/event->value modifier)
                                    (-> event dom/event->value))]
-       (field-changed      field-id field-props)
-       (set-field-content! field-id field-content)
-       (letfn [(f [] (resolve-field-change! field-id field-props))]
+       (field-changed-f field-id field-props)
+       (plain-field.side-effects/set-field-content! field-id field-content)
+       (letfn [(f [] (resolve-field-change-f field-id field-props))]
               (time/set-timeout! f plain-field.config/TYPE-ENDED-AFTER))
        (if on-changed (let [on-changed (r/metamorphic-event<-params on-changed field-content)]
                            (r/dispatch-sync on-changed)))))

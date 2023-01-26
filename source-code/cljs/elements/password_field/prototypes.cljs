@@ -1,10 +1,10 @@
 
 (ns elements.password-field.prototypes
-    (:require [elements.password-field.helpers :as password-field.helpers]
-              [elements.plain-field.helpers    :as plain-field.helpers]
-              [noop.api                        :refer [param]]
-              [vector.api                      :as vector]
-              [x.user.api                      :as x.user]))
+    (:require [elements.password-field.env :as password-field.env]
+              [elements.plain-field.env    :as plain-field.env]
+              [noop.api                    :refer [param]]
+              [vector.api                  :as vector]
+              [x.user.api                  :as x.user]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -18,7 +18,7 @@
   ; @return (map)
   ; {}
   [field-id _]
-  (let [password-visible? (password-field.helpers/password-visible? field-id)]
+  (let [password-visible? (password-field.env/password-visible? field-id)]
        {:icon-family     :material-symbols-filled
         :icon            (if password-visible? :visibility_off :visibility)
         :tooltip-content (if password-visible? :hide-password! :show-password!)
@@ -40,8 +40,8 @@
   ;   {:f (function)
   ;    :invalid-message (keyword)}}
   [field-id {:keys [end-adornments validate?] :as field-props}]
-  (let [field-empty?      (plain-field.helpers/field-empty?         field-id)
-        password-visible? (password-field.helpers/password-visible? field-id)]
+  (let [field-empty?      (plain-field.env/field-empty?         field-id)
+        password-visible? (password-field.env/password-visible? field-id)]
        (merge {:label :password
                :type  (if password-visible? :text :password)}
               (param field-props)

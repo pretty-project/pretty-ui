@@ -1,9 +1,10 @@
 
 (ns elements.plain-field.attributes
-    (:require [elements.plain-field.helpers :as plain-field.helpers]
-              [pretty-css.api               :as pretty-css]
-              [hiccup.api                   :as hiccup]
-              [re-frame.api                 :as r]))
+    (:require [elements.plain-field.env   :as plain-field.env]
+              [elements.plain-field.utils :as plain-field.utils]
+              [pretty-css.api             :as pretty-css]
+              [hiccup.api                 :as hiccup]
+              [re-frame.api               :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -50,13 +51,13 @@
           :data-autofill :remove-style
           :type          :text
           :id            (hiccup/value field-id "input")
-          :value         (plain-field.helpers/get-field-content field-id)}
+          :value         (plain-field.env/get-field-content field-id)}
          (if disabled? {:data-caret-color :hidden
                         :tab-index        -1
                         :on-change        (fn [])}
                        {:on-blur   #(r/dispatch [:elements.plain-field/field-blurred field-id field-props])
                         :on-focus  #(r/dispatch [:elements.plain-field/field-focused field-id field-props])
-                        :on-change #(plain-field.helpers/on-change-f field-id field-props %)})))
+                        :on-change #(plain-field.utils/on-change-f field-id field-props %)})))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

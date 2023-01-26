@@ -1,5 +1,5 @@
 
-(ns elements.input.helpers
+(ns elements.input.env
     (:require [elements.input.state :as input.state]
               [re-frame.api         :as r]))
 
@@ -43,40 +43,3 @@
   ; (B) If the :options property hasn't been set, the options derived from the
   ;     application state by using the :options-path property.
   (or options @(r/subscribe [:get-item options-path])))
-
-(defn default-options-path
-  ; @ignore
-  ;
-  ; @param (keyword) input-id
-  ;
-  ; @return (vector)
-  [input-id]
-  [:elements :element-handler/input-options input-id])
-
-(defn default-value-path
-  ; @ignore
-  ;
-  ; @param (keyword) input-id
-  ;
-  ; @return (vector)
-  [input-id]
-  [:elements :element-handler/input-values input-id])
-
-(defn value-path->vector-item?
-  ; @ignore
-  ;
-  ; @param (vector) value-path
-  ;
-  ; @example
-  ; (value-path->vector-item? [:my-value])
-  ; =>
-  ; false
-  ;
-  ; @example
-  ; (value-path->vector-item? [:my-value 2])
-  ; =>
-  ; true
-  ;
-  ; @return (boolean)
-  [value-path]
-  (-> value-path last integer?))

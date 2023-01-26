@@ -3,7 +3,7 @@
     (:require [elements.checkbox.attributes :as checkbox.attributes]
               [elements.checkbox.prototypes :as checkbox.prototypes]
               [elements.element.views       :as element.views]
-              [elements.input.helpers       :as input.helpers]
+              [elements.input.env           :as input.env]
               [random.api                   :as random]
               [re-frame.api                 :as r]
               [reagent.api                  :as reagent]
@@ -36,7 +36,7 @@
   ; @param (map) checkbox-props
   [checkbox-id checkbox-props]
   (letfn [(f [option-list option] (conj option-list [checkbox-option checkbox-id checkbox-props option]))]
-         (let [options (input.helpers/get-input-options checkbox-id checkbox-props)]
+         (let [options (input.env/get-input-options checkbox-id checkbox-props)]
               (reduce f [:<>] options))))
 
 (defn- checkbox-structure

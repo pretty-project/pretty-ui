@@ -1,8 +1,9 @@
 
 (ns elements.plain-field.views
-    (:require [elements.plain-field.helpers    :as plain-field.helpers]
-              [elements.plain-field.attributes :as plain-field.attributes]
+    (:require [elements.plain-field.attributes :as plain-field.attributes]
+              [elements.plain-field.env        :as plain-field.env]
               [elements.plain-field.prototypes :as plain-field.prototypes]
+              [elements.plain-field.utils      :as plain-field.utils]
               [random.api                      :as random]
               [re-frame.api                    :as r]
               [reagent.api                     :as reagent]
@@ -21,8 +22,8 @@
   [field-id {:keys [field-content-f value-path]}]
   ; HACK#9910
   (let [stored-value @(r/subscribe [:get-item value-path])]
-       [:div [:br] "field content:   " (plain-field.helpers/get-field-content field-id)
-             [:br] "field output:    " (plain-field.helpers/get-field-output  field-id)
+       [:div [:br] "field content:   " (plain-field.env/get-field-content field-id)
+             [:br] "field output:    " (plain-field.env/get-field-output  field-id)
              [:br] "stored value:    " (str             stored-value)
              [:br] "derived content: " (field-content-f stored-value)]))
 
@@ -34,9 +35,9 @@
   ; @param (*) stored-value
   [field-id field-props stored-value]
   ; HACK#9910
-  (reagent/lifecycles {:component-will-unmount (fn [_ _ _] (plain-field.helpers/synchronizer-will-unmount-f field-id field-props))
-                       :component-did-mount    (fn [_ _ _] (plain-field.helpers/synchronizer-did-mount-f    field-id field-props))
-                       :component-did-update   (fn [%]     (plain-field.helpers/synchronizer-did-update-f   field-id %))
+  (reagent/lifecycles {:component-will-unmount (fn [_ _ _] (plain-field.utils/synchronizer-will-unmount-f field-id field-props))
+                       :component-did-mount    (fn [_ _ _] (plain-field.utils/synchronizer-did-mount-f    field-id field-props))
+                       :component-did-update   (fn [%]     (plain-field.utils/synchronizer-did-update-f   field-id %))
                       ;:reagent-render         (fn [_ _ _] [plain-field-synchronizer-debug                  field-id field-props])
                        :reagent-render         (fn [_ _ _])}))
 
@@ -66,7 +67,7 @@
         [:div (plain-field.attributes/field-body-attributes field-id field-props)
               [:input (plain-field.attributes/field-input-attributes field-id field-props)]]
         ; ...
-        (and surface (plain-field.helpers/surface-visible? field-id)
+        (and surface (plain-field.env/surface-visible? field-id)
                      [:div (plain-field.attributes/field-surface-attributes field-id field-props)
                            [x.components/content field-id surface]])
         ; HACK#9910

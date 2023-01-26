@@ -1,7 +1,7 @@
 
 (ns elements.counter.prototypes
-    (:require [elements.input.helpers :as input.helpers]
-              [noop.api               :refer [param]]))
+    (:require [elements.input.utils :as input.utils]
+              [noop.api             :refer [param]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -27,5 +27,5 @@
           :border-width    :xs
           :font-size       :s
           :initial-value   0
-          :value-path      (input.helpers/default-value-path counter-id)}
+          :value-path      (input.utils/default-value-path counter-id)}
          (param counter-props)))

@@ -1,13 +1,13 @@
 
-(ns elements.combo-box.helpers
-    (:require [dom.api                      :as dom]
-              [elements.combo-box.state     :as combo-box.state]
-              [elements.input.helpers       :as input.helpers]
-              [elements.plain-field.helpers :as plain-field.helpers]
-              [hiccup.api                   :as hiccup]
-              [noop.api                     :refer [return]]
-              [string.api                   :as string]
-              [vector.api                   :as vector]))
+(ns elements.combo-box.env
+    (:require [dom.api                  :as dom]
+              [elements.combo-box.state :as combo-box.state]
+              [elements.input.env       :as input.env]
+              [elements.plain-field.env :as plain-field.env]
+              [hiccup.api               :as hiccup]
+              [noop.api                 :refer [return]]
+              [string.api               :as string]
+              [vector.api               :as vector]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -41,7 +41,8 @@
   ;
   ; @return (boolean)
   [box-id {:keys [option-label-f] :as box-props} option]
-  (let [field-content (plain-field.helpers/get-field-content box-id)
+  ; XXX#0569
+  (let [field-content (plain-field.env/get-field-content box-id)
         option-label  (option-label-f option)]
        (and (string/not-pass-with? option-label field-content {:case-sensitive? false})
             (string/starts-with?   option-label field-content {:case-sensitive? false}))))
@@ -54,7 +55,7 @@
   ;
   ; @return (vector)
   [box-id box-props]
-  (let [options (input.helpers/get-input-options box-id box-props)]
+  (let [options (input.env/get-input-options box-id box-props)]
        (letfn [(f [options option] (if (render-option? box-id box-props option)
                                        (conj   options option)
                                        (return options)))]

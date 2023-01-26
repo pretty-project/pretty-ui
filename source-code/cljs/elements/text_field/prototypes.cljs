@@ -1,10 +1,10 @@
 
 (ns elements.text-field.prototypes
-    (:require [elements.input.helpers      :as input.helpers]
-              [elements.text-field.helpers :as text-field.helpers]
-              [noop.api                    :refer [param return]]
-              [random.api                  :as random]
-              [vector.api                  :as vector]))
+    (:require [elements.input.utils    :as input.utils]
+              [elements.text-field.env :as text-field.env]
+              [noop.api                :refer [param return]]
+              [random.api              :as random]
+              [vector.api              :as vector]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -53,7 +53,7 @@
   ; Az a komponens és leszármazottai, amelyikben az end-adornments-prototype függvény
   ; meghívásra kerül, minden esetben újrarenderelődnek, amikor a szövegmező értéke
   ; üres és nem üres állapot között változik.
-  (if emptiable? (let [empty-field-adornment-props (text-field.helpers/empty-field-adornment-props field-id field-props)]
+  (if emptiable? (let [empty-field-adornment-props (text-field.env/empty-field-adornment-props field-id field-props)]
                       (vector/conj-item end-adornments empty-field-adornment-props))
                  (return end-adornments)))
 
@@ -97,7 +97,7 @@
           :font-weight     :normal
           :line-height     :text-block
           :type            :text
-          :value-path      (input.helpers/default-value-path field-id)}
+          :value-path      (input.utils/default-value-path field-id)}
          (if border-color  {:border-position :all
                             :border-width    :xxs})
          (if marker-color  {:marker-position :tr})

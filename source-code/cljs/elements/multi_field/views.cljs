@@ -2,8 +2,8 @@
 (ns elements.multi-field.views
     (:require [elements.combo-box.views        :as combo-box.views]
               [elements.multi-field.attributes :as multi-field.attributes]
-              [elements.multi-field.helpers    :as multi-field.helpers]
               [elements.multi-field.prototypes :as multi-field.prototypes]
+              [elements.multi-field.utils      :as multi-field.utils]
               [elements.text-field.views       :as text-field.views]
               [hiccup.api                      :as hiccup]
               [loop.api                        :refer [reduce-indexed]]
@@ -20,8 +20,8 @@
   ; @param (map) group-props
   ; @param (integer) field-dex
   [group-id {:keys [initial-options options options-path] :as group-props} field-dex]
-  (let [field-key   (multi-field.helpers/field-dex->react-key     group-id group-props field-dex)
-        field-id    (multi-field.helpers/field-dex->field-id      group-id group-props field-dex)
+  (let [field-key   (multi-field.utils/field-dex->react-key       group-id group-props field-dex)
+        field-id    (multi-field.utils/field-dex->field-id        group-id group-props field-dex)
         field-props (multi-field.prototypes/field-props-prototype group-id group-props field-dex)]
        [:div {:class :e-multi-field--text-field :key field-key}
              (if (or initial-options options options-path)
@@ -40,7 +40,7 @@
                     (hiccup/put-with-indexed [:<>] group-value f)))])
 
 (defn element
-  ; XXX#0714 (source-code/cljs/elements/text_field/views.cljs)
+  ; XXX#0711 (source-code/cljs/elements/text_field/views.cljs)
   ; The multi-field element is based on the text-field or the combo-box element.
   ; For more information check out the documentation of the text-field or the combo-box element.
   ;

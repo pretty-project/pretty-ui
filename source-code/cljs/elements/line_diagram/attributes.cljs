@@ -1,8 +1,8 @@
 
 (ns elements.line-diagram.attributes
-    (:require [css.api                       :as css]
-              [elements.line-diagram.helpers :as line-diagram.helpers]
-              [pretty-css.api                :as pretty-css]))
+    (:require [css.api                     :as css]
+              [elements.line-diagram.utils :as line-diagram.utils]
+              [pretty-css.api              :as pretty-css]))
 
 
 ;; ----------------------------------------------------------------------------
@@ -21,7 +21,7 @@
   ;  :style (map)
   ;   {:width (string)}}
   [_ diagram-props {:keys [color] :as section-props}]
-  (let [value-ratio (line-diagram.helpers/section-props->value-ratio diagram-props section-props)]
+  (let [value-ratio (line-diagram.utils/section-props->value-ratio diagram-props section-props)]
        {:class :e-line-diagram--section
         :data-fill-color color
         :style {:width (css/percent value-ratio)}}))

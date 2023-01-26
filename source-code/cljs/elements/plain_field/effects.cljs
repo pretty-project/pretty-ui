@@ -1,9 +1,9 @@
 
 (ns elements.plain-field.effects
-    (:require [elements.input.helpers       :as input.helpers]
-              [elements.plain-field.events  :as plain-field.events]
-              [elements.plain-field.helpers :as plain-field.helpers]
-              [re-frame.api                 :as r :refer [r]]))
+    (:require [elements.input.env          :as input.env]
+              [elements.plain-field.events :as plain-field.events]
+              [elements.plain-field.env    :as plain-field.env]
+              [re-frame.api                :as r :refer [r]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -60,8 +60,8 @@
   ; {:on-type-ended (metamorphic-event)(opt)}
   (fn [{:keys [db]} [_ field-id {:keys [on-type-ended] :as field-props}]]
       ; BUG#6071 (source-code/cljs/elements/plain_field/side_effects.cljs)
-      (let [field-content  (plain-field.helpers/get-field-content field-id)
-            field-focused? (input.helpers/input-focused?         field-id)]
+      (let [field-content  (plain-field.env/get-field-content field-id)
+            field-focused? (input.env/input-focused? field-id)]
            {:dispatch (if on-type-ended  (r/metamorphic-event<-params on-type-ended field-content))
             :fx       (if field-focused? [:elements.plain-field/show-surface! field-id])
             :db       (r plain-field.events/store-value! db field-id field-props field-content)})))

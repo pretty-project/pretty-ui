@@ -1,5 +1,5 @@
 
-(ns elements.circle-diagram.helpers
+(ns elements.circle-diagram.utils
     (:require [css.api                        :as css]
               [math.api                       :as math]
               [elements.circle-diagram.config :as circle-diagram.config]

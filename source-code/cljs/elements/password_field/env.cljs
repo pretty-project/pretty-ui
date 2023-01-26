@@ -1,5 +1,5 @@
 
-(ns elements.password-field.helpers
+(ns elements.password-field.env
     (:require [elements.password-field.state :as password-field.state]))
 
 ;; ----------------------------------------------------------------------------

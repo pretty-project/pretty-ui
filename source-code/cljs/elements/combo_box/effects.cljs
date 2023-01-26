@@ -1,9 +1,9 @@
 
 (ns elements.combo-box.effects
-    (:require [elements.combo-box.events    :as combo-box.events]
-              [elements.combo-box.helpers   :as combo-box.helpers]
-              [elements.plain-field.helpers :as plain-field.helpers]
-              [re-frame.api                 :as r :refer [r]]))
+    (:require [elements.combo-box.events :as combo-box.events]
+              [elements.combo-box.env    :as combo-box.env]
+              [elements.plain-field.env  :as plain-field.env]
+              [re-frame.api               :as r :refer [r]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -87,8 +87,8 @@
       ; ... doesn't display any options, pressing the ESC button:
       ;     - fires the original ESC event of the text-field.
       ;
-      ; HACK#1450 (source-code/cljs/elements/combo_box/helpers.cljs)
-      (if (combo-box.helpers/any-option-rendered? box-id box-props)
+      ; HACK#1450 (source-code/cljs/elements/combo_box/env.cljs)
+      (if (combo-box.env/any-option-rendered? box-id box-props)
           {:fx-n [[:elements.plain-field/hide-surface!             box-id]
                   [:elements.combo-box/discard-option-highlighter! box-id]]}
           [:elements.text-field/ESC-pressed box-id box-props])))
@@ -115,8 +115,8 @@
       ; If the surface of the combo-box isn't visible ...
       ; ... pressing the ENTER button:
       ;     - fires the original ENTER event of the text-field.
-      (if (plain-field.helpers/surface-visible? box-id)
-          (if-let [highlighted-option (combo-box.helpers/get-highlighted-option box-id box-props)]
+      (if (plain-field.env/surface-visible? box-id)
+          (if-let [highlighted-option (combo-box.env/get-highlighted-option box-id box-props)]
                   {:dispatch [:elements.combo-box/select-option!  box-id box-props highlighted-option]}
                   {:fx       [:elements.plain-field/hide-surface! box-id]})
           [:elements.text-field/ENTER-pressed box-id box-props])))

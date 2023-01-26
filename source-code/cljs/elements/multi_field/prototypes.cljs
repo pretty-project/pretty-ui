@@ -1,8 +1,9 @@
 
 (ns elements.multi-field.prototypes
-    (:require [elements.input.helpers       :as input.helpers]
-              [elements.multi-field.helpers :as multi-field.helpers]
-              [noop.api                     :refer [param]]))
+    (:require [elements.input.utils       :as input.utils]
+              [elements.multi-field.env   :as multi-field.env]
+              [elements.multi-field.utils :as multi-field.utils]
+              [noop.api                   :refer [param]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -18,7 +19,7 @@
   ;  :value-path (vector)}
   [group-id group-props]
   (merge {:max-input-count 8
-          :value-path (input.helpers/default-value-path group-id)}
+          :value-path (input.utils/default-value-path group-id)}
          (param group-props)))
 
 ;; ----------------------------------------------------------------------------
@@ -35,7 +36,7 @@
   ; {}
   [group-id group-props field-dex]
   (merge (dissoc group-props :indent :outdent :style)
-         {:autofocus?     (multi-field.helpers/field-dex->autofocus?     group-id group-props field-dex)
-          :end-adornments (multi-field.helpers/field-dex->end-adornments group-id group-props field-dex)
-          :label          (multi-field.helpers/field-dex->field-label    group-id group-props field-dex)
-          :value-path     (multi-field.helpers/field-dex->value-path     group-id group-props field-dex)}))
+         {:autofocus?     (multi-field.utils/field-dex->autofocus?   group-id group-props field-dex)
+          :end-adornments (multi-field.env/field-dex->end-adornments group-id group-props field-dex)
+          :label          (multi-field.env/field-dex->field-label    group-id group-props field-dex)
+          :value-path     (multi-field.utils/field-dex->value-path   group-id group-props field-dex)}))

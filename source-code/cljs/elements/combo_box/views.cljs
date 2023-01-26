@@ -1,9 +1,8 @@
 
 (ns elements.combo-box.views
-    (:require [elements.combo-box.helpers    :as combo-box.helpers]
+    (:require [elements.combo-box.env        :as combo-box.env]
               [elements.combo-box.attributes :as combo-box.attributes]
               [elements.combo-box.prototypes :as combo-box.prototypes]
-              [elements.text-field.helpers   :as text-field.helpers]
               [elements.text-field.views     :as text-field.views]
               [hiccup.api                    :as hiccup]
               [loop.api                      :refer [reduce-indexed]]
@@ -37,7 +36,7 @@
   ; @param (keyword) box-id
   ; @param (map) box-props
   [box-id box-props]
-  (let [options (combo-box.helpers/get-rendered-options box-id box-props)]
+  (let [options (combo-box.env/get-rendered-options box-id box-props)]
        (letfn [(f [option-dex option] [combo-box-option box-id box-props option-dex option])]
               [:div (combo-box.attributes/combo-box-options-attributes box-id box-props)
                     (hiccup/put-with-indexed [:<>] options f)])))
@@ -70,7 +69,7 @@
                        :reagent-render      (fn [_ box-props] [combo-box-structure box-id box-props])}))
 
 (defn element
-  ; XXX#0714 (source-code/cljs/elements/text_field/views.cljs)
+  ; XXX#0711 (source-code/cljs/elements/text_field/views.cljs)
   ; The combo-box element is based on the text-field element.
   ; For more information check out the documentation of the text-field element.
   ;

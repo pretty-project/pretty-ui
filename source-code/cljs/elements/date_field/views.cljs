@@ -8,7 +8,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn element
-  ; XXX#0714 (source-code/cljs/elements/text_field/views.cljs)
+  ; XXX#0711 (source-code/cljs/elements/text_field/views.cljs)
   ; The date-field element is based on the text-field element.
   ; For more information check out the documentation of the text-field element.
   ;

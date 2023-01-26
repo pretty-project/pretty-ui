@@ -1,6 +1,6 @@
 
 (ns elements.circle-diagram.prototypes
-    (:require [elements.circle-diagram.helpers :as circle-diagram.helpers]))
+    (:require [elements.circle-diagram.utils :as circle-diagram.utils]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -18,4 +18,4 @@
   ; XXX#1218 (source-code/cljs/elements/circle_diagram/helpers.cljs)
   (merge {:diameter 48
           :strength  2}
-         (circle-diagram.helpers/diagram-props<-total-value diagram-props)))
+         (circle-diagram.utils/diagram-props<-total-value diagram-props)))

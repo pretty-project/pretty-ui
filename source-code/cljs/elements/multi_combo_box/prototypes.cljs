@@ -1,9 +1,9 @@
 
 (ns elements.multi-combo-box.prototypes
-    (:require [elements.input.helpers           :as input.helpers]
-              [elements.multi-combo-box.helpers :as multi-combo-box.helpers]
-              [loop.api                         :refer [<-walk]]
-              [noop.api                         :refer [param return]]))
+    (:require [elements.input.utils           :as input.utils]
+              [elements.multi-combo-box.utils :as multi-combo-box.utils]
+              [loop.api                       :refer [<-walk]]
+              [noop.api                       :refer [param return]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -19,9 +19,9 @@
   [box-id box-props]
   ; XXX#5061
   ; XXX#5062
-  (let [field-id    (multi-combo-box.helpers/box-id->field-id box-id)
+  (let [field-id    (multi-combo-box.utils/box-id->field-id box-id)
         field-props (dissoc box-props :class :helper :indent :label :outdent :style :value-path)]
-       (merge {:value-path (input.helpers/default-value-path field-id)}
+       (merge {:value-path (input.utils/default-value-path field-id)}
               (param field-props))))
 
 (defn group-props-prototype
@@ -74,8 +74,8 @@
   (<-walk {:field-value-f  return
            :option-label-f return
            :option-value-f return
-           :options-path   (input.helpers/default-options-path box-id)
-           :value-path     (input.helpers/default-value-path   box-id)}
+           :options-path   (input.utils/default-options-path box-id)
+           :value-path     (input.utils/default-value-path   box-id)}
          (fn [%] (merge % box-props))
          (fn [%] (merge % {:on-blur   [:elements.multi-combo-box/field-blurred box-id %]
                            :on-change [:elements.multi-combo-box/field-changed box-id %]

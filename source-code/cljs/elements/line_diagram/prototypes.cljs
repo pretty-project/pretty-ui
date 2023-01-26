@@ -1,8 +1,8 @@
 
 (ns elements.line-diagram.prototypes
-    (:require [elements.line-diagram.helpers :as line-diagram.helpers]
-              [noop.api                      :refer [param]]
-              [math.api                      :as math]))
+    (:require [elements.line-diagram.utils :as line-diagram.utils]
+              [noop.api                    :refer [param]]
+              [math.api                    :as math]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -28,7 +28,7 @@
   ; {:strength (px)
   ;  :total-value (integer)}
   [{:keys [strength] :as diagram-props}]
-  (merge {:total-value (line-diagram.helpers/diagram-props->total-value diagram-props)}
+  (merge {:total-value (line-diagram.utils/diagram-props->total-value diagram-props)}
          (param diagram-props)
          (if strength {:strength (math/between! strength 1 6)}
                       {:strength 2})))

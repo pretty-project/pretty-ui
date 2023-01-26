@@ -1,10 +1,10 @@
 
 (ns elements.slider.attributes
-    (:require [css.api                 :as css]
-              [pretty-css.api          :as pretty-css]
-              [elements.slider.helpers :as slider.helpers]
-              [elements.slider.state   :as slider.state]
-              [re-frame.api            :as r]))
+    (:require [css.api                      :as css]
+              [pretty-css.api               :as pretty-css]
+              [elements.slider.side-effects :as slider.side-effects]
+              [elements.slider.state        :as slider.state]
+              [re-frame.api                 :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -22,7 +22,7 @@
   (let [translate-x (get-in @slider.state/THUMBS [slider-id :primary :current-translate-x] 0)]
        {:class             :e-slider--thumb
         :data-click-effect :opacity
-        :on-mouse-down     #(slider.helpers/start-sliding! % slider-id :primary)
+        :on-mouse-down     #(slider.side-effects/start-sliding! % slider-id :primary)
         :style             {:left      (->           0 css/px)
                             :transform (-> translate-x css/px css/translate-x)}}))
 
@@ -39,7 +39,7 @@
   (let [translate-x (get-in @slider.state/THUMBS [slider-id :secondary :current-translate-x] 0)]
        {:class             :e-slider--thumb
         :data-click-effect :opacity
-        :on-mouse-down     #(slider.helpers/start-sliding! % slider-id :secondary)
+        :on-mouse-down     #(slider.side-effects/start-sliding! % slider-id :secondary)
         :style             {:right     (->           0 css/px)
                             :transform (-> translate-x css/px css/translate-x)}}))
 

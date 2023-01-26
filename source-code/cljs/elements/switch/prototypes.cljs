@@ -1,7 +1,7 @@
 
 (ns elements.switch.prototypes
-    (:require [elements.input.helpers :as input.helpers]
-              [noop.api               :refer [param return]]))
+    (:require [elements.input.utils :as input.utils]
+              [noop.api             :refer [param return]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -32,6 +32,6 @@
           :option-label-f      return
           :option-value-f      return
           :options-orientation :vertical
-          :options-path        (input.helpers/default-options-path switch-id)
-          :value-path          (input.helpers/default-value-path   switch-id)}
+          :options-path        (input.utils/default-options-path switch-id)
+          :value-path          (input.utils/default-value-path   switch-id)}
          (param switch-props)))

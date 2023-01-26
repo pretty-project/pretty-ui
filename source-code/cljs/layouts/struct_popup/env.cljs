@@ -1,5 +1,5 @@
 
-(ns layouts.struct-popup.helpers
+(ns layouts.struct-popup.env
     (:require [layouts.struct-popup.state :as struct-popup.state]
               [hiccup.api                 :as hiccup]
               [x.environment.api          :as x.environment]))

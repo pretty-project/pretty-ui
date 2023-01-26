@@ -1,5 +1,5 @@
 
-(ns elements.content-swapper.helpers
+(ns elements.content-swapper.env
     (:require [elements.content-swapper.state :as content-swapper.state]))
 
 ;; ----------------------------------------------------------------------------
