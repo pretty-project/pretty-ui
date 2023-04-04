@@ -150,7 +150,8 @@
   ;
   ; The {:type :date} fields range could being set by the :min and :max properties.
   (-> (plain-field.attributes/field-input-attributes field-id field-props)
-      (merge {:max-length max-length
+      (merge {:class      :e-text-field--input
+              :max-length max-length
               :type       type}
              (if-not disabled? {:auto-complete autofill-name
                                 :min           date-from

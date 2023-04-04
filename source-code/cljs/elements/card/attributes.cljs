@@ -27,8 +27,14 @@
                      :data-horizontal-column-align horizontal-align
                      :data-stretch-orientation     stretch-orientation
                      :style                        style
-                     :on-click                     #(r/dispatch on-click)
-                     :on-mouse-up                  #(dom/blur-active-element!)})
+                     :on-click                     #(r/dispatch on-click)})
+
+                    ; BUG#9810
+                    ; A card elemben elhelyezett text-field mezőre kattintáskor,
+                    ; az on-mouse-up esemény elvette a fókuszt a mezőről!
+                    ; Miért került rá ez a kártyákra?
+                    ; :on-mouse-up #(dom/blur-active-element!)
+
       (pretty-css/badge-attributes            card-props)
       (pretty-css/border-attributes           card-props)
       (pretty-css/color-attributes            card-props)

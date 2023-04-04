@@ -23,7 +23,7 @@
   (merge {:border-color     :default
           :border-position  :bottom
           :border-width     :xs
-          :font-weight      :bold
+          :font-weight      :semi-bold
           :gap              :auto
           :icon-position    :right
           :icon-size        :xl

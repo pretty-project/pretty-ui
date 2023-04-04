@@ -3,8 +3,8 @@
 
 ### Overview
 
-The <strong>pretty-ui</strong> is ClojureScript web application UI set made for
-developing SPA and PWA web applications.
+The <strong>pretty-ui</strong> is a ClojureScript web application UI component set
+made for web applications.
 
 ### Documentation
 

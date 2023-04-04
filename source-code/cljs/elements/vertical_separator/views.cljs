@@ -10,7 +10,9 @@
 (defn element
   ; @param (keyword)(opt) separator-id
   ; @param (map) separator-props
-  ; {:width (keyword)(opt)
+  ; {:class (keyword or keywords in vector)(opt)
+  ;  :style (map)(opt)
+  ;  :width (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;   Default: :s}
   ;

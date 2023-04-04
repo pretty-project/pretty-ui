@@ -18,7 +18,7 @@
   [_ _]
   (let [app-title @(r/subscribe [:x.core/get-app-config-item :app-title])]
        [side-menu-button.views/component ::app-home-button
-                                         {:font-weight :bold
+                                         {:font-weight :semi-bold
                                           :icon        :cloud
                                           :icon-color  "#0aaaa0"
                                           :label (string/to-uppercase app-title)

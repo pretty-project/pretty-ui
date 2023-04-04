@@ -26,7 +26,7 @@
   [_ _ {:keys [on-click] :as crumb-props}]
   (-> {:class               :e-breadcrumbs--crumb
        :data-font-size      :xs
-       :data-font-weight    :bold
+       :data-font-weight    :semi-bold
        :data-letter-spacing :auto
        :data-line-height    :text-block
        :data-selectable     false

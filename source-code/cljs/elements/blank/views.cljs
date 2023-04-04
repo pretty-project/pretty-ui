@@ -33,7 +33,6 @@
   ;    :horizontal (keyword)(opt)
   ;    :vertical (keyword)(opt)
   ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
-  ;  :style (map)(opt)
   ;  :outdent (map)(opt)
   ;   Same as the :indent property
   ;  :style (map)(opt)}

@@ -98,7 +98,9 @@
       (pretty-css/font-attributes             label-props)
       (pretty-css/indent-attributes           label-props)
       (pretty-css/marker-attributes           label-props)
-      (pretty-css/text-attributes             label-props)))
+      (pretty-css/text-attributes             label-props)
+      (pretty-css/tooltip-attributes          label-props)))
+
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

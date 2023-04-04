@@ -10,9 +10,11 @@
 (defn element
   ; @param (keyword)(opt) separator-id
   ; @param (map) separator-props
-  ; {:height (keyword)(opt)
+  ; {:class (keyword or keywords in vector)(opt)
+  ;  :height (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  ;   Default: :s}
+  ;   Default: :s
+  ;  :style (map)(opt)}
   ;
   ; @usage
   ; [horizontal-separator {...}]

@@ -21,7 +21,7 @@
   ;  :on-click (metamorphic-event)(opt)}
   [button-id {:keys [href icon icon-position label on-click] :as button-props}]
   [:div (button.attributes/button-attributes button-id button-props)
-        [(cond href :a :on-click :button :else :div)
+        [(cond href :a on-click :button :else :div)
          (button.attributes/button-body-attributes button-id button-props)
          (case icon-position :left  [:<> (if icon  [:i   (button.attributes/button-icon-attributes  button-id button-props) icon])
                                          (if label [:div (button.attributes/button-label-attributes button-id button-props) label])]
@@ -77,7 +77,7 @@
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
   ;   Default: :s
   ;  :font-weight (keyword)(opt)
-  ;   :inherit, :extra-light, :light, :normal, :medium, :bold, :extra-bold
+  ;   :inherit, :thin, :extra-light, :light, :normal, :medium, :semi-bold, :bold, :extra-bold, :black
   ;   Default: :medium
   ;  :gap (keyword)(opt)
   ;   Distance between the icon and label

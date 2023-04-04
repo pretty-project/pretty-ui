@@ -13,5 +13,5 @@
   ;  :font-weight (keyword)}
   [title-props]
   (if (window-observer/viewport-width-min? 720)
-      (merge title-props {:font-size :5xl :font-weight :bold})
-      (merge title-props {:font-size :xl  :font-weight :bold})))
+      (merge title-props {:font-size :5xl :font-weight :semi-bold})
+      (merge title-props {:font-size :xl  :font-weight :semi-bold})))

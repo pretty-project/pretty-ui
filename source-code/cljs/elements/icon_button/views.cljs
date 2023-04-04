@@ -19,7 +19,7 @@
   ;  :label (metamorphic-content)(opt)}
   [button-id {:keys [href icon on-click label] :as button-props}]
   [:div (icon-button.attributes/button-attributes button-id button-props)
-        [(cond href :a :on-click :button :else :div)
+        [(cond href :a on-click :button :else :div)
          (icon-button.attributes/button-body-attributes button-id button-props)
          [:i (icon-button.attributes/button-icon-attributes button-id button-props) icon]]
         (if label [:div {:class :e-icon-button--label :data-selectable false}

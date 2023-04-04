@@ -29,7 +29,7 @@
   ; {:font-size (keyword)(opt)
   ;   Default: :5xl
   ;  :font-weight (keyword)(opt)
-  ;   Default: :bold}
+  ;   Default: :semi-bold}
   ;
   ; @usage
   ; [section-title {...}]

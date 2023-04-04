@@ -169,7 +169,7 @@
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
   ;   Default: :s
   ;  :font-weight (keyword)(opt)
-  ;   :inherit, :extra-light, :light, :normal, :medium, :bold, :extra-bold
+  ;   :inherit, :thin, :extra-light, :light, :normal, :medium, :semi-bold, :bold, :extra-bold, :black
   ;   Default :medium
   ;  :gap (keyword)(opt)
   ;   Distance between the icon, info-text button and label
@@ -227,9 +227,11 @@
   ;   Default :normal
   ;  :text-overflow (keyword)(opt)
   ;   :ellipsis, :no-wrap, :wrap
-  ;   Default: :ellipsis
   ;  :text-transform (keyword)(opt)
-  ;   :capitalize, :lowercase, :uppercase}
+  ;   :capitalize, :lowercase, :uppercase
+  ;  :tooltip-content (metamorphic-content)(opt)
+  ;  :tooltip-position (keyword)(opt)
+  ;   :left, :right}
   ;
   ; @usage
   ; [label {...}]

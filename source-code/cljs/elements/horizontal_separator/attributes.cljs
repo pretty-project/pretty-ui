@@ -18,5 +18,5 @@
   [_ {:keys [style] :as separator-props}]
   (-> {:class :e-horizontal-separator
        :style style}
-      (pretty-css/block-size-attributes separator-props)
-      (pretty-css/default-attributes    separator-props)))
+      (pretty-css/default-attributes    separator-props)
+      (pretty-css/block-size-attributes separator-props)))

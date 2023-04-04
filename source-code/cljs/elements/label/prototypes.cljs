@@ -17,7 +17,8 @@
   ;  :font-size (keyword)(opt)
   ;  :icon (keyword)(opt)
   ;  :marker-color (keyword)
-  ;  :target-id (keyword)(opt)}
+  ;  :target-id (keyword)(opt)
+  ;  :tooltip-content (metamorphic-content)(opt)}
   ;
   ; @return (map)
   ; {:border-position (keyword)
@@ -36,8 +37,9 @@
   ;  :marker-position (keyword)
   ;  :selectable? (boolean)
   ;  :target-id (string)
-  ;  :text-overflow (keyword)}
-  [{:keys [border-color color content font-size icon marker-color target-id] :as label-props}]
+  ;  :tooltip-content (string)
+  ;  :tooltip-position (keyword)}
+  [{:keys [border-color color content font-size icon marker-color target-id tooltip-content] :as label-props}]
   ; XXX#7009
   ; The 'label-props-prototype' function applies the 'x.components/content' function
   ; on the 'content' value. Therefore no need to apply the 'x.components/content'
@@ -47,15 +49,16 @@
                :font-weight      :medium
                :horizontal-align :left
                :line-height      :text-block
-               :selectable?      false
-               :text-overflow   :ellipsis}
-              (if border-color {:border-position :all
-                                :border-width    :xxs})
-              (if marker-color {:marker-position :tr})
-              (if icon         {:icon-family :material-symbols-outlined
-                                :icon-color color :icon-size (or font-size :s)
-                                :icon-position :left})
+               :selectable?      false}
+              (if border-color    {:border-position :all
+                                   :border-width    :xxs})
+              (if marker-color    {:marker-position :tr})
+              (if icon            {:icon-family :material-symbols-outlined
+                                   :icon-color color :icon-size (or font-size :s)
+                                   :icon-position :left})
+              (if tooltip-content {:tooltip-position   :right})
               (param label-props)
               {:content content}
-              (if target-id        {:target-id (hiccup/value target-id "input")})
+              (if target-id        {:target-id       (hiccup/value target-id "input")})
+              (if tooltip-content  {:tooltip-content (x.components/content tooltip-content)})
               (if (empty? content) {:copyable? false}))))

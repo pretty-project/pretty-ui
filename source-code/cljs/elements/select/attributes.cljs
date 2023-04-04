@@ -32,7 +32,7 @@
        {:class               :e-select--option
         :data-click-effect   :opacity
         :data-font-size      :s
-        :data-font-weight    (if option-selected? :bold :medium)
+        :data-font-weight    (if option-selected? :semi-bold :medium)
         :data-letter-spacing :auto
         :data-line-height    :text-block
         :data-selected       option-selected?
@@ -48,7 +48,7 @@
   [_ {:keys [options-label]}]
   (if options-label {:class            :e-select--options--label
                      :data-font-size   :s
-                     :data-font-weight :bold
+                     :data-font-weight :semi-bold
                      :data-line-height :text-block}
                     {:class            :e-select--options--label
                      :data-placeholder true}))

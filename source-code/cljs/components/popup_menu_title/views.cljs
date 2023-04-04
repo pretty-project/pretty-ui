@@ -21,7 +21,7 @@
   ;  :border-width (keyword)
   ;   Default: :xs
   ;  :font-weight (keyword)
-  ;   Default: :bold
+  ;   Default: :semi-bold
   ;  :gap (keyword)
   ;   Default: :auto
   ;  :icon-position (keyword)

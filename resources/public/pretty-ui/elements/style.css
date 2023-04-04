@@ -71,6 +71,11 @@
   display: flex;
   flex-direction: column;
   width: 100%;
+
+  /* If the card element's height is limited by its parent element, in order to
+   * apply the overflow property on the card's content, the card body element's
+   * height has to be specified! */
+  height: 100%;
 }
 
 /*** Body ***/
@@ -608,9 +613,10 @@
 /*** Icon-button label ***/
 
 .e-icon-button--label {
-  font-size:      var( --font-size-xxs      );
-  letter-spacing: var( --letter-spacing-xxs );
-  line-height:    var( --line-height-xxs    );
+  font-size:      var( --font-size-micro      );
+  font-weight:    var( --font-weight-medium   );
+  letter-spacing: var( --letter-spacing-micro );
+  line-height:    var( --line-height-micro    );
 }
 
 /*** Icon-button label ***/
@@ -678,6 +684,16 @@
 
 /*** Info-text button ***/
 /***** Label *****/
+
+
+
+/***** Line *****/
+
+.e-vertical-line--body {
+  height: 100%;
+}
+
+/***** Line *****/
 
 
 
@@ -1038,6 +1054,9 @@
 .e-horizontal-separator,
 .e-vertical-separator {
   flex-shrink: 0;
+}
+
+.e-horizontal-separator {
   width: 100%;
 }
 
