@@ -7,6 +7,6 @@
 
 {:paths ["plugins/cljs" "resources" "source-code/cljs"]
  :deps  {bithandshake/pretty-css {:git/url "git@github.com:bithandshake/pretty-css"
-                                  :sha     "e47fff455c4b8efdd0dd5efd0de8bf182a55f0ff"}
+                                  :sha     "03ff441406b38a20b1408797e269d9918de6e136"}
          monotech-hq/x5          {:git/url "git@github.com:monotech-hq/x5"
                                   :sha     "b17bafa27331d89983fc049210668d448d450fea"}}}
