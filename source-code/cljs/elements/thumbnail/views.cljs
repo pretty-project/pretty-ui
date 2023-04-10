@@ -16,7 +16,7 @@
   ; @param (map) thumbnail-props
   ; {:background-size (keyword)
   ;  :href (string)(opt)
-  ;  :on-click (metamorphic-event)(opt)
+  ;  :on-click (Re-Frame metamorphic-event)(opt)
   ;  :uri (string)(opt)}
   [thumbnail-id {:keys [background-size href on-click uri] :as thumbnail-props}]
   [:div (thumbnail.attributes/thumbnail-attributes thumbnail-id thumbnail-props)
@@ -69,7 +69,7 @@
   ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
   ;  :info-text (metamorphic-content)(opt)
   ;  :label (metamorphic-content)(opt)
-  ;  :on-click (metamorphic-event)(opt)
+  ;  :on-click (Re-Frame metamorphic-event)(opt)
   ;  :outdent (map)(opt)
   ;   Same as the :indent property
   ;  :style (map)(opt)

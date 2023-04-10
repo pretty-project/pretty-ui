@@ -68,7 +68,7 @@
   ;  :field-value-f (function)(opt)
   ;   Default: return
   ;  :initial-options (vector)(opt)
-  ;  :on-select (metamorphic-event)(opt)
+  ;  :on-select (Re-Frame metamorphic-event)(opt)
   ;  :option-label-f (function)(opt)
   ;   Default: return
   ;  :option-value-f (function)(opt)

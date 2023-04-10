@@ -4,9 +4,12 @@
 ; + scroll-lock
 ; + reagent
 ; Ha már nincs x5 a ui-set alatt, ... a reagent.api most x5 plugin
+; re-frame
 
 {:paths ["plugins/cljs" "resources" "source-code/cljs"]
- :deps  {bithandshake/pretty-css {:git/url "git@github.com:bithandshake/pretty-css"
-                                  :sha     "03ff441406b38a20b1408797e269d9918de6e136"}
-         monotech-hq/x5          {:git/url "git@github.com:monotech-hq/x5"
-                                  :sha     "b17bafa27331d89983fc049210668d448d450fea"}}}
+ :deps  {bithandshake/cljc-dictionary {:git/url "git@github.com:bithandshake/cljc-dictionary"
+                                       :sha     "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"}
+         bithandshake/pretty-css      {:git/url "git@github.com:bithandshake/pretty-css"
+                                       :sha     "25fc45eb1f38d8d44ef56510b2732f17befe9300"}
+         monotech-hq/x5               {:git/url "git@github.com:monotech-hq/x5"
+                                       :sha     "b17bafa27331d89983fc049210668d448d450fea"}}}

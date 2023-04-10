@@ -17,7 +17,7 @@
   ; @param (map) crumb
   ; {:href (string)(opt)
   ;  :label (metamorphic-content)(opt)
-  ;  :on-click (metamorphic-event)(opt)
+  ;  :on-click (Re-Frame metamorphic-event)(opt)
   ;  :placeholder (metamorphic-content)(opt)}
   [breadcrumbs-id breadcrumbs-props {:keys [href label on-click placeholder] :as crumb}]
   [(cond href :a on-click :button :else :div)
@@ -61,7 +61,7 @@
   ;  :crumbs (maps in vector)
   ;   [{:href (string)(opt)
   ;     :label (metamorphic-content)(opt)
-  ;     :on-click (metamorphic-event)(opt)
+  ;     :on-click (Re-Frame metamorphic-event)(opt)
   ;     :placeholder (metamorphic-content)(opt)}]
   ;  :disabled? (boolean)(opt)
   ;  :font-size (keyword)(opt)

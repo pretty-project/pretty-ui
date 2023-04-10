@@ -70,7 +70,7 @@
   ;    :horizontal (keyword)(opt)
   ;    :vertical (keyword)(opt)
   ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
-  ;  :on-select (metamorphic-event)(opt)
+  ;  :on-select (Re-Frame metamorphic-event)(opt)
   ;  :options (strings in vector)(opt)
   ;  :options-label (metamorphic-content)(opt)
   ;  :options-path (vector)(opt)

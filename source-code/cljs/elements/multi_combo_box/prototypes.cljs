@@ -50,9 +50,9 @@
   ;
   ; @return (map)
   ; {:field-value-f (function)
-  ;  :on-blur (metamorphic-event)
-  ;  :on-change (metamorphic-event)
-  ;  :on-focus (metamorphic-event)
+  ;  :on-blur (Re-Frame metamorphic-event)
+  ;  :on-change (Re-Frame metamorphic-event)
+  ;  :on-focus (Re-Frame metamorphic-event)
   ;  :option-label-f (function)
   ;  :option-value-f (function)
   ;  :options-path (vector)}

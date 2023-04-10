@@ -43,6 +43,6 @@
   ; @param (map) selector-props
   ;
   ; @return (map)
-  ; {:on-click (metamorphic-event)}
+  ; {:on-click (Re-Frame metamorphic-event)}
   [selector-id selector-props]
   (assoc selector-props :on-click [:elements.color-selector/render-selector! selector-id selector-props]))

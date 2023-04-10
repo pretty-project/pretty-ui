@@ -28,7 +28,7 @@
 
 (defn element
   ; XXX#0715
-  ; Some other items based on the dropdown-menu component and their documentations are linked to here.
+  ; Some other items based on the dropdown-menu component and their documentations are linked here.
   ;
   ; XXX#0713 (source-code/cljs/elements/menu_bar/views.cljs)
   ; The dropdown-menu element is based on the menu-bar element.

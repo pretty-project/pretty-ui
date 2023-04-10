@@ -24,7 +24,7 @@
   ; @param (map) adornment-props
   ; {:icon (keyword)(opt)
   ;  :label (string)(opt)
-  ;  :on-click (metamorphic-event)(opt)}
+  ;  :on-click (Re-Frame metamorphic-event)(opt)}
   [field-id field-props {:keys [icon label on-click] :as adornment-props}]
   (let [adornment-props (text-field.prototypes/adornment-props-prototype field-props adornment-props)]
        [(if on-click :button :div)
@@ -108,7 +108,7 @@
 
 (defn element
   ; XXX#0711
-  ; Some other items based on the text-field element and their documentations are linked to here.
+  ; Some other items based on the text-field element and their documentations are linked here.
   ;
   ; @param (keyword)(opt) field-id
   ; @param (map) field-props
@@ -146,7 +146,7 @@
   ;      :material-symbols-filled, :material-symbols-outlined
   ;      Default: :material-symbols-outlined
   ;     :label (string)(opt)
-  ;     :on-click (metamorphic-event)(opt)
+  ;     :on-click (Re-Frame metamorphic-event)(opt)
   ;     :tab-indexed? (boolean)(opt)
   ;      Default: true
   ;     :tooltip-content (metamorphic-content)(opt)}]
@@ -183,23 +183,23 @@
   ;  :min-width (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;  :modifier (function)(opt)
-  ;  :on-blur (metamorphic-event)(opt)
-  ;  :on-changed (metamorphic-event)(opt)
+  ;  :on-blur (Re-Frame metamorphic-event)(opt)
+  ;  :on-changed (Re-Frame metamorphic-event)(opt)
   ;   It happens BEFORE the application state gets updated with the actual value!
   ;   If you have to get the ACTUAL value from the application state, use the
   ;   :on-type-ended event instead!
   ;   It happens BEFORE the application state gets updated with the actual value!
   ;   This event takes the field content as its last parameter
-  ;  :on-empty (metamorphic-event)(opt)
+  ;  :on-empty (Re-Frame metamorphic-event)(opt)
   ;   This event takes the field content as its last parameter
-  ;  :on-enter (metamorphic-event)(opt)
+  ;  :on-enter (Re-Frame metamorphic-event)(opt)
   ;   This event takes the field content as its last parameter
-  ;  :on-focus (metamorphic-event)(opt)
-  ;  :on-mount (metamorphic-event)(opt)
+  ;  :on-focus (Re-Frame metamorphic-event)(opt)
+  ;  :on-mount (Re-Frame metamorphic-event)(opt)
   ;   This event takes the field content as its last parameter
-  ;  :on-type-ended (metamorphic-event)(opt)
+  ;  :on-type-ended (Re-Frame metamorphic-event)(opt)
   ;   This event takes the field content as its last parameter
-  ;  :on-unmount (metamorphic-event)(opt)
+  ;  :on-unmount (Re-Frame metamorphic-event)(opt)
   ;   This event takes the field content as its last parameter
   ;  :outdent (map)(opt)
   ;   Same as the :indent property

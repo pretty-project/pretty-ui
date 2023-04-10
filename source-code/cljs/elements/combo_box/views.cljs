@@ -80,7 +80,7 @@
   ;  :field-value-f (function)(opt)
   ;   Default: return
   ;  :initial-options (vector)(opt)
-  ;  :on-select (metamorphic-event)(opt)
+  ;  :on-select (Re-Frame metamorphic-event)(opt)
   ;  :option-component (component)(opt)
   ;   Default: elements.combo-box.views/default-option-component
   ;  :option-label-f (function)(opt)

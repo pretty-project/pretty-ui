@@ -68,9 +68,9 @@
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;  :min-width (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  ;  :on-cover (metamorphic-event)(opt)
-  ;  :on-mount (metamorphic-event)(opt)
-  ;  :on-unmount (metamorphic-event)(opt)
+  ;  :on-cover (Re-Frame metamorphic-event)(opt)
+  ;  :on-mount (Re-Frame metamorphic-event)(opt)
+  ;  :on-unmount (Re-Frame metamorphic-event)(opt)
   ;  :outdent (map)(opt)
   ;  :stretch-orientation (keyword)(opt)
   ;   :both, :horizontal, :vertical

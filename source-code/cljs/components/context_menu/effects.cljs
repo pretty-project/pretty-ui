@@ -12,7 +12,7 @@
   ; {:label (metamorphic-content)(opt)
   ;  :menu-items (maps in vector)
   ;   [{:label (metamorphic-content)
-  ;     :on-click (metamorphic-event)(opt)
+  ;     :on-click (Re-Frame metamorphic-event)(opt)
   ;     :placeholder (metamorphic-content)(opt)}]
   ;  :placeholder (metamorphic-content)(opt)}
   ;

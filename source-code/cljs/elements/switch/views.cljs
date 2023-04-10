@@ -99,8 +99,8 @@
   ;  :label (metamorphic-content)(opt)
   ;  :marker-color (keyword)(opt)
   ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
-  ;  :on-check (metamorphic-event)(opt)
-  ;  :on-uncheck (metamorphic-event)(opt)
+  ;  :on-check (Re-Frame metamorphic-event)(opt)
+  ;  :on-uncheck (Re-Frame metamorphic-event)(opt)
   ;  :option-helper-f (function)(opt)
   ;  :option-label-f (function)(opt)
   ;   Default: return

@@ -1,22 +1,21 @@
 
-### Basic rules of creating elements
+### Basic rules for making elements
 
-- Every element has its entry component named as `element` in the element's
-  `views.cljs` namespace.
+- Every element has its entry component named `element` in the `views.cljs` namespace.
 
-- The functional documentation of the element has to be placed in this entry
-  component's header. Every other component is ignored from documentation readers
-  by the `@ignore` tag in their headers.
+- The functional documentation of the element has to be placed in the entry
+  component's header. Every other component should be ignored from documentation
+  readers by using the `@ignore` tag in their headers.
 
-- Every element has to takes two arguments. An element ID (optional) and an element
+- Every element has to take two arguments. An element ID (optional) and an element
   properties map (required).
   The `random.api/generate-keyword` function provides the element ID in case of it
   is not passed.
 
 - Every element got its default properties by a prototype function placed in the
-  element's `prototypes.cljs` namespace.
+  `prototypes.cljs` namespace.
 
-- The second component (used up in the entry component) is named as the element itself.
+- The second component (called in the entry component) is named as the element itself.
 
 ```
 (ns elements.button.views
@@ -35,7 +34,7 @@
 (defn element
   ; @param (keyword)(opt) button-id
   ; @param (map) button-props
-  ; {:on-click (metamorphic-event)}
+  ; {:on-click (Re-Frame metamorphic-event)}
   ([button-props]
    [element (random/generate-keyword) button-props])
 
@@ -70,7 +69,6 @@ akkor az egyes listaelemekre kattintva ...
 
 ###### XXX#4004
 
-Az x4.7.6 verzióig egyetlen esetben sem volt rá szükség, hogy egy elem rendelkezzen
-DOM azonosítóval.
+Eddig egyetlen esetben sem volt rá szükség, hogy egy elem rendelkezzen DOM azonosítóval.
 
-+ Talán könnyebb a böngészőnek, ha kevesebb az azonosítóval rendelkező elem ...
++ Talán könnyebb a böngészőnek, ha kevesebb az azonosítóval rendelkező elem(?) ...

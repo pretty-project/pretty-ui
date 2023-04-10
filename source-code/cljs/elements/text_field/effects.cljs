@@ -44,7 +44,7 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   ; {:emptiable? (boolean)(opt)
-  ;  :on-enter (metamorphic-event)(opt)}
+  ;  :on-enter (Re-Frame metamorphic-event)(opt)}
   (fn [_ [_ field-id {:keys [emptiable? on-enter]}]]
       {:dispatch-n [(if on-enter   [:x.environment/remove-keypress-event! :elements.text-field/ENTER])
                     (if emptiable? [:x.environment/remove-keypress-event! :elements.text-field/ESC])]}))
@@ -57,7 +57,7 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ; {:on-enter (metamorphic-event)(opt)}
+  ; {:on-enter (Re-Frame metamorphic-event)(opt)}
   (fn [{:keys [db]} [_ field-id {:keys [on-enter]}]]
       {:dispatch on-enter}))
 
@@ -78,7 +78,7 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ; {:on-empty (metamorphic-event)(opt)}
+  ; {:on-empty (Re-Frame metamorphic-event)(opt)}
   (fn [{:keys [db]} [_ field-id {:keys [on-empty] :as field-props}]]
       (if (plain-field.env/field-filled? field-id)
           {:dispatch (if on-empty (r/metamorphic-event<-params on-empty ""))

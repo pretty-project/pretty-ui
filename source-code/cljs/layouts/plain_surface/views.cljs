@@ -41,8 +41,8 @@
   ;   Default: :vertical
   ;  :fill-color (keyword or string)(opt)
   ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
-  ;  :on-mount (metamorphic-event)(opt)
-  ;  :on-unmount (metamorphic-event)(opt)
+  ;  :on-mount (Re-Frame metamorphic-event)(opt)
+  ;  :on-unmount (Re-Frame metamorphic-event)(opt)
   ;  :style (map)(opt)}
   ;
   ; @usage

@@ -147,7 +147,7 @@
   ; @param (map) swapper-props
   ; {:class (keyword or keywords in vector)(opt)
   ;  :gap (keyword)(opt)
-  ;   Distance between unfolded pages
+  ;   Distance between the unfolded pages
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :auto
   ;  :indent (map)(opt)
   ;  :label (metamorphic-content)(opt)

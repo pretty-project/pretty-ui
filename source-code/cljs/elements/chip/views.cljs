@@ -55,7 +55,7 @@
   ;    :vertical (keyword)(opt)
   ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
   ;  :label (metamorphic-content)
-  ;  :on-click (metamorphic-event)(opt)
+  ;  :on-click (Re-Frame metamorphic-event)(opt)
   ;   TODO Makes the chip clickable
   ;  :outdent (map)(opt)
   ;   Same as the :indent property
@@ -64,7 +64,7 @@
   ;    :icon-family (keyword)(opt)
   ;     :material-symbols-filled, :material-symbols-outlined
   ;     Default: :material-symbols-outlined
-  ;    :on-click (metamorphic-event)}
+  ;    :on-click (Re-Frame metamorphic-event)}
   ;  :style (map)(opt)
   ;  :target (keyword)(opt)
   ;   :blank, :self

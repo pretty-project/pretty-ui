@@ -65,7 +65,7 @@
   ;   :opacity
   ;  :indent (map)(opt)
   ;  :label (metamorphic-content)(opt)
-  ;  :on-select (metamorphic-event)(opt)
+  ;  :on-select (Re-Frame metamorphic-event)(opt)
   ;  :outdent (map)(opt)
   ;  :placeholder (metamorphic-content)(opt)
   ;   Default: :choose-color!

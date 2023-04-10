@@ -95,7 +95,7 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   ; {:modifier (function)(opt)
-  ;  :on-changed (metamorphic-event)(opt)}
+  ;  :on-changed (Re-Frame metamorphic-event)(opt)}
   ; @param (DOM-event) event
   ;
   ; @return (function)

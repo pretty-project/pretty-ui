@@ -57,8 +57,8 @@
   ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
   ;  :marker-position (keyword)(opt)
   ;   :tl, :tr, :br, :bl
-  ;  :on-click (metamorphic-event)(opt)
-  ;  :on-right-click (metamorphic-event)(opt)
+  ;  :on-click (Re-Frame metamorphic-event)(opt)
+  ;  :on-right-click (Re-Frame metamorphic-event)(opt)
   ;  :outdent (map)(opt)
   ;   Same as the :indent property
   ;  :style (map)(opt)

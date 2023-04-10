@@ -15,7 +15,7 @@
   ; @param (map) field-props
   ; {:autofocus? (boolean)(opt)
   ;  :initial-value (*)(opt)
-  ;  :on-mount (metamorphic-event)(opt)
+  ;  :on-mount (Re-Frame metamorphic-event)(opt)
   ;  :value-path (vector)}
   (fn [{:keys [db]} [_ field-id {:keys [autofocus? initial-value on-mount value-path] :as field-props}]]
       ; The autofocus has to be delayed, otherwise the caret shown up at not at the end of the content.
@@ -30,7 +30,7 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   ; {:autoclear? (boolean)(opt)
-  ;  :on-unmount (metamorphic-event)(opt)
+  ;  :on-unmount (Re-Frame metamorphic-event)(opt)
   ;  :value-path (vector)}
   (fn [{:keys [db]} [_ field-id {:keys [autoclear? on-unmount value-path] :as field-props}]]
       (let [stored-value (get-in db value-path)]
@@ -57,7 +57,7 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ; {:on-type-ended (metamorphic-event)(opt)}
+  ; {:on-type-ended (Re-Frame metamorphic-event)(opt)}
   (fn [{:keys [db]} [_ field-id {:keys [on-type-ended] :as field-props}]]
       ; BUG#6071 (source-code/cljs/elements/plain_field/side_effects.cljs)
       (let [field-content  (plain-field.env/get-field-content field-id)
@@ -71,7 +71,7 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ; {:on-blur (metamorphic-event)(opt)}
+  ; {:on-blur (Re-Frame metamorphic-event)(opt)}
   (fn [_ [_ field-id {:keys [on-blur]}]]
       {:dispatch-n [on-blur]
        :fx-n       [[:elements.plain-field/hide-surface!      field-id]
@@ -83,7 +83,7 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ; {:on-focus (metamorphic-event)(opt)}
+  ; {:on-focus (Re-Frame metamorphic-event)(opt)}
   (fn [_ [_ field-id {:keys [on-focus]}]]
       {:dispatch-n [on-focus]
        :fx-n       [[:elements.plain-field/show-surface!    field-id]

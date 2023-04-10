@@ -25,7 +25,7 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  ; {:on-select (metamorphic-event)(opt)}
+  ; {:on-select (Re-Frame metamorphic-event)(opt)}
   ; @param (*) option
   (fn [{:keys [db]} [_ button-id {:keys [on-select] :as button-props} option]]
       {:db (r radio-button.events/select-option! db button-id button-props option)

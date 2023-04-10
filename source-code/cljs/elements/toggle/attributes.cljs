@@ -14,8 +14,8 @@
   ; @param (keyword) toggle-id
   ; @param (map) toggle-props
   ; {:disabled? (boolean)(opt)
-  ;  :on-click (metamorphic-event)(opt)
-  ;  :on-mouse-over (metamorphic-event)(opt)}
+  ;  :on-click (Re-Frame metamorphic-event)(opt)
+  ;  :on-mouse-over (Re-Frame metamorphic-event)(opt)}
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)

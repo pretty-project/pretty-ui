@@ -38,7 +38,7 @@
   (reagent/lifecycles {:component-will-unmount (fn [_ _ _] (plain-field.utils/synchronizer-will-unmount-f field-id field-props))
                        :component-did-mount    (fn [_ _ _] (plain-field.utils/synchronizer-did-mount-f    field-id field-props))
                        :component-did-update   (fn [%]     (plain-field.utils/synchronizer-did-update-f   field-id %))
-                      ;:reagent-render         (fn [_ _ _] [plain-field-synchronizer-debug                  field-id field-props])
+                      ;:reagent-render         (fn [_ _ _] [plain-field-synchronizer-debug                field-id field-props])
                        :reagent-render         (fn [_ _ _])}))
 
 (defn- plain-field-synchronizer
@@ -105,18 +105,18 @@
   ;  :initial-value (string)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;  :modifier (function)(opt)
-  ;  :on-blur (metamorphic-event)(opt)
-  ;  :on-changed (metamorphic-event)(opt)
+  ;  :on-blur (Re-Frame metamorphic-event)(opt)
+  ;  :on-changed (Re-Frame metamorphic-event)(opt)
   ;   It happens BEFORE the application state gets updated with the actual value!
   ;   If you have to get the ACTUAL value from the application state, use the
   ;   :on-type-ended event instead!
   ;   This event takes the field content as its last parameter
-  ;  :on-focus (metamorphic-event)(opt)
-  ;  :on-mount (metamorphic-event)(opt)
+  ;  :on-focus (Re-Frame metamorphic-event)(opt)
+  ;  :on-mount (Re-Frame metamorphic-event)(opt)
   ;   This event takes the field content as its last parameter
-  ;  :on-type-ended (metamorphic-event)(opt)
+  ;  :on-type-ended (Re-Frame metamorphic-event)(opt)
   ;   This event takes the field content as its last parameter
-  ;  :on-unmount (metamorphic-event)(opt)
+  ;  :on-unmount (Re-Frame metamorphic-event)(opt)
   ;   This event takes the field content as its last parameter
   ;  :outdent (map)(opt)
   ;   Same as the :indent property

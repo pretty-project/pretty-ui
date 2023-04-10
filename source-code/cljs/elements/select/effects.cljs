@@ -124,7 +124,7 @@
   ; @param (keyword) select-id
   ; @param (map) select-props
   ; {:autoclear? (boolean)(opt)
-  ;  :on-select (metamorphic-event)(opt)
+  ;  :on-select (Re-Frame metamorphic-event)(opt)
   ;  :option-value-f (function)}
   ; @param (*) option
   (fn [{:keys [db]} [_ select-id {:keys [autoclear? option-value-f on-select] :as select-props} option]]

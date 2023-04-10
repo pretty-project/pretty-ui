@@ -58,8 +58,8 @@
   ;  :indent (map)(opt)
   ;  :min-width (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  ;  :on-mount (metamorphic-event)(opt)
-  ;  :on-unmount (metamorphic-event)(opt)
+  ;  :on-mount (Re-Frame metamorphic-event)(opt)
+  ;  :on-unmount (Re-Frame metamorphic-event)(opt)
   ;  :position (keyword)(opt)
   ;   :left, :right
   ;   Default: :left

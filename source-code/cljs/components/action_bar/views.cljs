@@ -12,7 +12,7 @@
   ; @param (map) bar-props
   ; {:disabled? (boolean)(opt)
   ;  :label (metamorphic-content)
-  ;  :on-click (metamorphic-event)}
+  ;  :on-click (Re-Frame metamorphic-event)}
   [_ {:keys [disabled? label on-click]}]
   [elements/button {:color     :primary
                     :disabled? disabled?

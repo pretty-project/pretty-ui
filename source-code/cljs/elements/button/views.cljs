@@ -18,7 +18,7 @@
   ;  :icon (keyword)(opt)
   ;  :icon-position (keyword)(opt)
   ;  :label (string)(opt)
-  ;  :on-click (metamorphic-event)(opt)}
+  ;  :on-click (Re-Frame metamorphic-event)(opt)}
   [button-id {:keys [href icon icon-position label on-click] :as button-props}]
   [:div (button.attributes/button-attributes button-id button-props)
         [(cond href :a on-click :button :else :div)
@@ -42,7 +42,7 @@
 
 (defn element
   ; XXX#0714
-  ; Some other items based on the button element and their documentations are linked to here.
+  ; Some other items based on the button element and their documentations are linked here.
   ;
   ; @param (keyword)(opt) button-id
   ; @param (map) button-props
@@ -80,7 +80,7 @@
   ;   :inherit, :thin, :extra-light, :light, :normal, :medium, :semi-bold, :bold, :extra-bold, :black
   ;   Default: :medium
   ;  :gap (keyword)(opt)
-  ;   Distance between the icon and label
+  ;   Distance between the icon and the label
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :auto
   ;  :horizontal-align (keyword)(opt)
   ;   :center, :left, :right
@@ -121,8 +121,8 @@
   ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
   ;  :marker-position (keyword)(opt)
   ;   :tl, :tr, :br, :bl
-  ;  :on-click (metamorphic-handler)(opt)
-  ;  :on-mouse-over (metamorphic-handler)(opt)
+  ;  :on-click (Re-Frame metamorphic-event)(opt)
+  ;  :on-mouse-over (Re-Frame metamorphic-event)(opt)
   ;  :outdent (map)(opt)
   ;   Same as the :indent property
   ;  :progress (percent)(opt)

@@ -49,7 +49,7 @@
   ; @param (map) picker-props
   ; {:color-stamp (map)
   ;   {:gap (keyword)(opt)}
-  ;  :on-select (metamorphic-event)(opt)
+  ;  :on-select (Re-Frame metamorphic-event)(opt)
   ;  :style (map)(opt)
   ;  :value-path (vector)}
   ;

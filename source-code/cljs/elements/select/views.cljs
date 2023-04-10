@@ -209,7 +209,7 @@
   ;   Default: :select
   ;  :marker-color (keyword)(opt)
   ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
-  ;  :on-select (metamorphic-event)(opt)
+  ;  :on-select (Re-Frame metamorphic-event)(opt)
   ;  :option-field-placeholder (metamorphic-content)(opt)
   ;   Default: :add!
   ;  :option-label-f (function)(opt)

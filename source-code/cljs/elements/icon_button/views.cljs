@@ -94,8 +94,8 @@
   ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
   ;  :marker-position (keyword)(opt)
   ;   :tl, :tr, :br, :bl
-  ;  :on-click (metamorphic-handler)(opt)
-  ;  :on-mouse-over (metamorphic-handler)(opt)
+  ;  :on-click (Re-Frame metamorphic-event)(opt)
+  ;  :on-mouse-over (Re-Frame metamorphic-event)(opt)
   ;  :outdent (map)(opt)
   ;   Same as the :indent property
   ;  :progress (percent)(opt)

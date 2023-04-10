@@ -48,7 +48,7 @@
   ;  :initial-item (*)(opt)
   ;   Default: {}
   ;  :label (metamorphic-content)
-  ;  :on-change (metamorphic-event)(opt)
+  ;  :on-change (Re-Frame metamorphic-event)(opt)
   ;  :outdent (map)(opt)
   ;  :style (map)(opt)
   ;  :value-path (vector)}

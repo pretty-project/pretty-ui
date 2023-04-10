@@ -31,7 +31,7 @@
 (defn component
   ; @param (keyword)(opt) cell-id
   ; @param (map) cell-props
-  ; {:on-click (metamorphic-event)(opt)
+  ; {:on-click (Re-Frame metamorphic-event)(opt)
   ;  :rows (maps in vector)
   ;   [{:color (keyword or string)(opt)
   ;      Default: :default

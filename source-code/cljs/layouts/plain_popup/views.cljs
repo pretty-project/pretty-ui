@@ -42,9 +42,9 @@
   ; {:content (metamorphic-content)(opt)
   ;  :cover-color (keyword or string)(opt)
   ;  :lock-scroll? (boolean)(opt)
-  ;  :on-cover (metamorphic-event)(opt)
-  ;  :on-mount (metamorphic-event)(opt)
-  ;  :on-unmount (metamorphic-event)(opt)
+  ;  :on-cover (Re-Frame metamorphic-event)(opt)
+  ;  :on-mount (Re-Frame metamorphic-event)(opt)
+  ;  :on-unmount (Re-Frame metamorphic-event)(opt)
   ;  :style (map)(opt)}
   ;
   ; @usage

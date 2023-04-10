@@ -16,7 +16,7 @@
   ; @return (map)
   ; {disabled? (boolean)
   ;  :icon (keyword)
-  ;  :on-click (metamorphic-event)
+  ;  :on-click (Re-Frame metamorphic-event)
   ;  :tooltip (metamorphic-content)}
   [field-id field-props]
   {:disabled?       (plain-field.env/field-empty? field-id)

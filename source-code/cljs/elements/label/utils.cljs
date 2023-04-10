@@ -11,7 +11,7 @@
   ; @param (keyword) label-id
   ; @param (map) label-props
   ; {:content (string)(opt)
-  ;  :on-copy (metamorphic-event)}
+  ;  :on-copy (Re-Frame metamorphic-event)}
   ;
   ; @return (function)
   [_ {:keys [content on-copy]}]

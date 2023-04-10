@@ -14,7 +14,7 @@
   ; @param (keyword) card-id
   ; @param (map) card-props
   ; {:href (string)(opt)
-  ;  :on-click (metamorphic-event)(opt)}
+  ;  :on-click (Re-Frame metamorphic-event)(opt)}
   [card-id {:keys [content href on-click] :as card-props}]
   [:div (card.attributes/card-attributes card-id card-props)
         [(cond href :a on-click :button :else :div)
@@ -23,7 +23,7 @@
 
 (defn element
   ; XXX#3240
-  ; Some other items based on the card element and their documentations are linked to here.
+  ; Some other items based on the card element and their documentations are linked here.
   ;
   ; @param (keyword)(opt) card-id
   ; @param (map) card-props
@@ -72,7 +72,7 @@
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;  :min-width (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  ;  :on-click (metamorphic-event)(opt)
+  ;  :on-click (Re-Frame metamorphic-event)(opt)
   ;  :outdent (map)(opt)
   ;   Same as the :indent property
   ;  :stretch-orientation (keyword)(opt)

@@ -16,7 +16,7 @@
   ; @param (map) adornment-props
   ; {:icon (keyword)(opt)
   ;  :label (metamorphic-content)(opt)
-  ;  :on-click (metamorphic-event)(opt)}
+  ;  :on-click (Re-Frame metamorphic-event)(opt)}
   ;
   ; @return (map)
   ; {:click-effect (keyword)

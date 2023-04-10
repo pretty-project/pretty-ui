@@ -16,7 +16,7 @@
   ; @param (map) controls-props
   ; {:disabled? (boolean)(opt)
   ;  :item-dex (integer)
-  ;  :on-change (metamorphic-event)(opt)
+  ;  :on-change (Re-Frame metamorphic-event)(opt)
   ;  :tooltip-position (keyword)
   ;  :value-path (vector)}
   [_ {:keys [disabled? item-dex on-change tooltip-position value-path]}]
@@ -36,7 +36,7 @@
   ; @param (map) controls-props
   ; {:disabled? (boolean)(opt)
   ;  :item-dex (integer)
-  ;  :on-change (metamorphic-event)(opt)
+  ;  :on-change (Re-Frame metamorphic-event)(opt)
   ;  :tooltip-position (keyword)
   ;  :value-path (vector)}
   [_ {:keys [disabled? item-dex on-change tooltip-position value-path]}]
@@ -56,7 +56,7 @@
   ; @param (map) controls-props
   ; {:disabled? (boolean)(opt)
   ;  :item-dex (integer)
-  ;  :on-change (metamorphic-event)(opt)
+  ;  :on-change (Re-Frame metamorphic-event)(opt)
   ;  :tooltip-position (keyword)
   ;  :value-path (vector)}
   [_ {:keys [disabled? item-dex on-change tooltip-position value-path]}]
@@ -77,7 +77,7 @@
   ; @param (map) controls-props
   ; {:disabled? (boolean)(opt)
   ;  :item-dex (integer)
-  ;  :on-change (metamorphic-event)(opt)
+  ;  :on-change (Re-Frame metamorphic-event)(opt)
   ;  :tooltip-position (keyword)
   ;  :value-path (vector)}
   [_ {:keys [disabled? item-dex on-change tooltip-position value-path]}]
@@ -109,7 +109,7 @@
   ; @param (map) controls-props
   ; {:disabled? (boolean)(opt)
   ;  :item-dex (integer)
-  ;  :on-change (metamorphic-event)(opt)
+  ;  :on-change (Re-Frame metamorphic-event)(opt)
   ;  :tooltip-position (keyword)(opt)
   ;   :left, :right
   ;   Default: :right

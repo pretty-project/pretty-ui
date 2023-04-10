@@ -142,7 +142,7 @@
 
 (defn element
   ; XXX#0721
-  ; Some other items based on the label element and their documentations are linked to here.
+  ; Some other items based on the label element and their documentations are linked here.
   ;
   ; @param (keyword)(opt) label-id
   ; @param (map) label-props
@@ -172,7 +172,7 @@
   ;   :inherit, :thin, :extra-light, :light, :normal, :medium, :semi-bold, :bold, :extra-bold, :black
   ;   Default :medium
   ;  :gap (keyword)(opt)
-  ;   Distance between the icon, info-text button and label
+  ;   Distance between the icon, the info-text button and the label
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :auto
   ;  :horizontal-align (keyword)(opt)
   ;   :center, :left, :right
@@ -210,7 +210,7 @@
   ;   :tl, :tr, :br, :bl
   ;  :min-width (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  ;  :on-copy (metamorphic-event)(opt)
+  ;  :on-copy (Re-Frame metamorphic-event)(opt)
   ;   This event takes the label content as its last parameter
   ;  :outdent (map)(opt)
   ;   Same as the :indent property

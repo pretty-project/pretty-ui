@@ -11,7 +11,7 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ; {:on-enter (metamorphic-event)(opt)}
+  ; {:on-enter (Re-Frame metamorphic-event)(opt)}
   ;
   ; @return (map)
   ; {:start-adornments (maps in vector)}

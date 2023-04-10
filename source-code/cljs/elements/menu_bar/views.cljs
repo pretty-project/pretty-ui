@@ -18,7 +18,7 @@
   ; {:href (string)(opt)
   ;  :icon (keyword)(opt)
   ;  :label (metamorphic-content)(opt)
-  ;  :on-click (metamorphic-event)(opt)}
+  ;  :on-click (Re-Frame metamorphic-event)(opt)}
   [bar-id bar-props {:keys [href icon label on-click] :as item-props}]
   (let [item-props (menu-bar.prototypes/item-props-prototype bar-props item-props)]
        [:div (menu-bar.attributes/menu-item-attributes bar-id bar-props item-props)
@@ -50,7 +50,7 @@
 
 (defn element
   ; XXX#0713
-  ; Some other items based on the menu-bar element and their documentations are linked to here.
+  ; Some other items based on the menu-bar element and their documentations are linked here.
   ;
   ; @description
   ; You can set the default item styles and settings by using the :item-default
@@ -121,8 +121,8 @@
   ;     :href (string)(opt)
   ;     :icon (keyword)(opt)
   ;     :label (metamorphic-content)(opt)
-  ;     :on-click (metamorphic-event)(opt)
-  ;     :on-mouse-over (metamorphic-event)(opt)
+  ;     :on-click (Re-Frame metamorphic-event)(opt)
+  ;     :on-mouse-over (Re-Frame metamorphic-event)(opt)
   ;     :target (keyword)(opt)
   ;      :blank, :self}]
   ;  :orientation (keyword)(opt)

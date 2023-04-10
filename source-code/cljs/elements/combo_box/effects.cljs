@@ -98,7 +98,7 @@
   ;
   ; @param (keyword) box-id
   ; @param (map) box-props
-  ; {:on-type-ended (metamorphic-event)(opt)
+  ; {:on-type-ended (Re-Frame metamorphic-event)(opt)
   ;  :option-value-f (function)}
   (fn [{:keys [db]} [_ box-id {:keys [on-type-ended option-value-f] :as box-props}]]
       ; XXX#4146 (source-code/cljs/elements/multi_combo_box/effects.cljs)
@@ -129,7 +129,7 @@
   ;
   ; @param (keyword) box-id
   ; @param (map) box-props
-  ; {:on-type-ended (metamorphic-event)(opt)
+  ; {:on-type-ended (Re-Frame metamorphic-event)(opt)
   ;  :option-value-f (function)}
   ; @param (*) option
   (fn [{:keys [db]} [_ box-id {:keys [on-type-ended option-value-f] :as box-props} option]]

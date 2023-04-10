@@ -14,7 +14,7 @@
   ; @param (integer) cell-dex
   ; @param (map) cell-props
   ; {:label (metamorphic-content)(opt)
-  ;  :on-click (metamorphic-event)(opt)}
+  ;  :on-click (Re-Frame metamorphic-event)(opt)}
   [header-id header-props cell-dex {:keys [label] :as cell-props}]
   (let [cell-props (item-list-header.prototypes/cell-props-prototype header-id header-props cell-dex cell-props)]
        [:div.c-item-list-header--cell (item-list-header.helpers/cell-attributes cell-props)
@@ -43,7 +43,7 @@
   ;   :bottom, :top}
   ;  :cells (maps in vector)
   ;   [{:label (metamorphic-content)(opt)
-  ;     :on-click (metamorphic-event)(opt)
+  ;     :on-click (Re-Frame metamorphic-event)(opt)
   ;     :width (px)(opt)}]
   ;  :template (string)}
   ;

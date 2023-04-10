@@ -43,7 +43,7 @@
   ;
   ; @param (keyword) selector-id
   ; @param (map) selector-props
-  ; {:on-select (metamorphic-event)(opt)}
+  ; {:on-select (Re-Frame metamorphic-event)(opt)}
   ; @param (string) option
   (fn [{:keys [db]} [_ selector-id {:keys [on-select] :as selector-props} option]]
       {:db (r color-selector.events/toggle-color-selector-option! db selector-id selector-props option)

@@ -48,8 +48,8 @@
   ;  :gap (keyword)(opt)
   ;  :horizontal-align (keyword)
   ;  :href (string)(opt)
-  ;  :on-click (metamorphic-event)(opt)
-  ;  :on-mouse-over (metamorphic-event)(opt)
+  ;  :on-click (Re-Frame metamorphic-event)(opt)
+  ;  :on-mouse-over (Re-Frame metamorphic-event)(opt)
   ;  :style (map)(opt)}
   ;
   ; @return (map)

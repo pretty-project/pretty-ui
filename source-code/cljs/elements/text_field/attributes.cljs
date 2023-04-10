@@ -17,7 +17,7 @@
   ; @param (map) field-props
   ; @param (map) adornment-props
   ; {:disabled? (boolean)(opt)
-  ;  :on-click (metamorphic-event)
+  ;  :on-click (Re-Frame metamorphic-event)
   ;  :tab-indexed? (boolean)(opt)
   ;  :tooltip-content (metamorphic-content)(opt)}
   ;

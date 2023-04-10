@@ -16,7 +16,7 @@
 (defn- navbar-menu-button
   ; @param (keyword) component-id
   ; @param (map) component-props
-  ; {:on-menu (metamorphic-event)(opt)}
+  ; {:on-menu (Re-Frame metamorphic-event)(opt)}
   [_ {:keys [on-menu]}]
   (if on-menu [:button {:id :mt-navbar--menu-button
                         :data-click-effect :opacity
@@ -63,7 +63,7 @@
   ;  :logo (metamorphic-content)(opt)
   ;  :menu-link (namespaced map)
   ;   {:menu/id (string)}
-  ;  :on-menu (metamorphic-event)(opt)
+  ;  :on-menu (Re-Frame metamorphic-event)(opt)
   ;   Click event on the hamburger menu button
   ;  :style (map)(opt)
   ;  :threshold (px)(opt)

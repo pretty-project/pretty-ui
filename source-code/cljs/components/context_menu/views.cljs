@@ -14,7 +14,7 @@
   ; {:color (keyword or string)(opt)
   ;   Default: :default
   ;  :label (metamorphic-content)(opt)
-  ;  :on-click (metamorphic-event)(opt)
+  ;  :on-click (Re-Frame metamorphic-event)(opt)
   ;  :placeholder (metamorphic-content)(opt)}
   [_ _ {:keys [color label on-click placeholder]}]
   [elements/button {:color            (or color :default)
@@ -88,7 +88,7 @@
   ;   [{:color (keyword or string)(opt)
   ;      Default: :default
   ;     :label (metamorphic-content)(opt)
-  ;     :on-click (metamorphic-event)(opt)
+  ;     :on-click (Re-Frame metamorphic-event)(opt)
   ;     :placeholder (metamorphic-content)(opt)}]
   ;  :placeholder (metamorphic-content)(opt)}
   ;

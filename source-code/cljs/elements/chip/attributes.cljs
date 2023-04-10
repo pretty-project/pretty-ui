@@ -14,7 +14,7 @@
   ; @param (map) chip-props
   ; {:disabled? (boolean)(opt)
   ;  :primary-button (map)
-  ;   {:on-click (metamorphic-event)}}
+  ;   {:on-click (Re-Frame metamorphic-event)}}
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
@@ -38,7 +38,7 @@
   ;
   ; @param (keyword) chip-id
   ; @param (map) chip-props
-  ; {:on-click (metamorphic-event)(opt)
+  ; {:on-click (Re-Frame metamorphic-event)(opt)
   ;  :style (map)(opt)}
   ;
   ; @return (map)
