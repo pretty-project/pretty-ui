@@ -2,11 +2,11 @@
 (ns layouts.sidebar.views
     (:require [layouts.sidebar.attributes :as sidebar.attributes]
               [layouts.sidebar.prototypes :as sidebar.prototypes]
+              [metamorphic-content.api    :as metamorphic-content]
               [random.api                 :as random]
               [re-frame.api               :as r]
               [reagent.api                :as reagent]
-              [window-observer.api        :as window-observer]
-              [x.components.api           :as x.components]))
+              [window-observer.api        :as window-observer]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -24,7 +24,7 @@
             [:div (sidebar.attributes/sidebar-sensor-attributes sidebar-id sidebar-props)]
             [:div {:class :l-sidebar--wrapper}
                   [:div (sidebar.attributes/sidebar-body-attributes sidebar-id sidebar-props)
-                        [x.components/content                       sidebar-id content]]]]))
+                        [metamorphic-content/resolve content]]]]))
 
 (defn- sidebar
   ; @ignore

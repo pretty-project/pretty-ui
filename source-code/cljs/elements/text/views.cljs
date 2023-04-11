@@ -3,10 +3,10 @@
     (:require [elements.element.views   :as element.views]
               [elements.text.attributes :as text.attributes]
               [elements.text.prototypes :as text.prototypes]
+              [metamorphic-content.api  :as metamorphic-content]
               [noop.api                 :refer [return]]
               [random.api               :as random]
-              [string.api               :as string]
-              [x.components.api         :as x.components]))
+              [string.api               :as string]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -21,7 +21,7 @@
   ; BUG#9811 (source-code/cljs/elements/label/views.cljs)
   [:div {:class           :e-text--placeholder
          :data-selectable false}
-        (if placeholder (x.components/content placeholder)
+        (if placeholder (metamorphic-content/resolve placeholder)
                         "\u00A0")])
 
 (defn- text-content-rows

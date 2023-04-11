@@ -2,8 +2,8 @@
 (ns elements.chip.views
     (:require [elements.chip.attributes :as chip.attributes]
               [elements.chip.prototypes :as chip.prototypes]
-              [random.api               :as random]
-              [x.components.api         :as x.components]))
+              [metamorphic-content.api  :as metamorphic-content]
+              [random.api               :as random]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -27,7 +27,7 @@
                                :data-font-weight   :medium
                                :data-line-height   :text-block
                                :data-text-overflow :no-wrap}
-                              (x.components/content label)])]])
+                              (metamorphic-content/resolve label)])]])
 
 (defn element
   ; @param (keyword)(opt) chip-id

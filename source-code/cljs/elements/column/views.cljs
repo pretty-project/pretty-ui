@@ -2,8 +2,8 @@
 (ns elements.column.views
     (:require [elements.column.attributes :as column.attributes]
               [elements.column.prototypes :as column.prototypes]
-              [random.api                 :as random]
-              [x.components.api           :as x.components]))
+              [metamorphic-content.api    :as metamorphic-content]
+              [random.api                 :as random]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -17,7 +17,7 @@
   [column-id {:keys [content] :as column-props}]
   [:div (column.attributes/column-attributes column-id column-props)
         [:div (column.attributes/column-body-attributes column-id column-props)
-              [x.components/content                     column-id content]]])
+              [metamorphic-content/resolve content]]])
 
 (defn element
   ; @param (keyword)(opt) column-id

@@ -3,9 +3,9 @@
     (:require [elements.label.attributes :as label.attributes]
               [elements.label.env        :as label.env]
               [elements.label.prototypes :as label.prototypes]
+              [metamorphic-content.api   :as metamorphic-content]
               [pretty-css.api            :as pretty-css]
-              [random.api                :as random]
-              [x.components.api          :as x.components]))
+              [random.api                :as random]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -20,7 +20,7 @@
   (if helper [:div {:class            :e-label--helper
                     :data-font-size   :xs
                     :data-line-height :text-block}
-                   (x.components/content helper)]))
+                   (metamorphic-content/resolve helper)]))
 
 (defn label-info-text
   ; @ignore
@@ -33,7 +33,7 @@
                         [:div {:class            :e-label--info-text
                                :data-font-size   :xs
                                :data-line-height :text-block}
-                              (x.components/content info-text)])))
+                              (metamorphic-content/resolve info-text)])))
 
 (defn label-info-text-button
   ; @ignore
@@ -76,7 +76,7 @@
          :data-color         :highlight
          :data-selectable    false
          :data-text-overflow :ellipsis}
-        (if placeholder (x.components/content placeholder)
+        (if placeholder (metamorphic-content/resolve placeholder)
                         "\u00A0")])
 
 (defn- label-content

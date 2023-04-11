@@ -2,10 +2,10 @@
 (ns layouts.plain-surface.views
     (:require [layouts.plain-surface.attributes :as plain-surface.attributes]
               [layouts.plain-surface.prototypes :as plain-surface.prototypes]
+              [metamorphic-content.api          :as metamorphic-content]
               [random.api                       :as random]
               [re-frame.api                     :as r]
-              [reagent.api                      :as reagent]
-              [x.components.api                 :as x.components]))
+              [reagent.api                      :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -19,7 +19,7 @@
   [surface-id {:keys [content] :as surface-props}]
   [:div {:class :l-plain-surface}
         [:div (plain-surface.attributes/surface-body-attributes surface-id surface-props)
-              [x.components/content                             surface-id content]]])
+              [metamorphic-content/resolve content]]])
 
 (defn- plain-surface
   ; @ignore

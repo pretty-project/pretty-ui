@@ -5,8 +5,8 @@
               [elements.dropdown-menu.prototypes :as dropdown-menu.prototypes]
               [elements.dropdown-menu.state      :as dropdown-menu.state]
               [elements.menu-bar.views           :as menu-bar.views]
-              [random.api                        :as random]
-              [x.components.api                  :as x.components]))
+              [metamorphic-content.api           :as metamorphic-content]
+              [random.api                        :as random]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -24,7 +24,7 @@
               (if-let [surface-content (dropdown-menu.env/get-surface-content menu-id menu-props)]
                       [:div (dropdown-menu.attributes/menu-surface-attributes menu-id menu-props)
                             [:div (dropdown-menu.attributes/menu-surface-body-attributes menu-id menu-props)
-                                  [x.components/content menu-id surface-content]]])]])
+                                  [metamorphic-content/resolve surface-content]]])]])
 
 (defn element
   ; XXX#0715

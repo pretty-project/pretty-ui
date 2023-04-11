@@ -2,8 +2,8 @@
 (ns elements.row.views
     (:require [elements.row.attributes :as row.attributes]
               [elements.row.prototypes :as row.prototypes]
-              [random.api              :as random]
-              [x.components.api        :as x.components]))
+              [metamorphic-content.api :as metamorphic-content]
+              [random.api              :as random]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -17,7 +17,7 @@
   [row-id {:keys [content] :as row-props}]
   [:div (row.attributes/row-attributes row-id row-props)
         [:div (row.attributes/row-body-attributes row-id row-props)
-              [x.components/content row-id content]]])
+              [metamorphic-content/resolve content]]])
 
 (defn element
   ; @param (keyword)(opt) row-id

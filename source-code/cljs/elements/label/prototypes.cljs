@@ -1,8 +1,8 @@
 
 (ns elements.label.prototypes
-    (:require [hiccup.api       :as hiccup]
-              [noop.api         :refer [param]]
-              [x.components.api :as x.components]))
+    (:require [hiccup.api              :as hiccup]
+              [metamorphic-content.api :as metamorphic-content]
+              [noop.api                :refer [param]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -41,10 +41,10 @@
   ;  :tooltip-position (keyword)}
   [{:keys [border-color color content font-size icon marker-color target-id tooltip-content] :as label-props}]
   ; XXX#7009
-  ; The 'label-props-prototype' function applies the 'x.components/content' function
-  ; on the 'content' value. Therefore no need to apply the 'x.components/content'
-  ; function in multiple places.
-  (let [content (x.components/content content)]
+  ; The 'label-props-prototype' function applies the 'metamorphic-content/resolve' function
+  ; on the 'content' value. Therefore no need to apply the 'metamorphic-content/resolve'
+  ; function in multiple places (because it's already done in the prototype).
+  (let [content (metamorphic-content/resolve content)]
        (merge {:font-size        :s
                :font-weight      :medium
                :horizontal-align :left
@@ -56,9 +56,9 @@
               (if icon            {:icon-family :material-symbols-outlined
                                    :icon-color color :icon-size (or font-size :s)
                                    :icon-position :left})
-              (if tooltip-content {:tooltip-position   :right})
+              (if tooltip-content {:tooltip-position :right})
               (param label-props)
               {:content content}
               (if target-id        {:target-id       (hiccup/value target-id "input")})
-              (if tooltip-content  {:tooltip-content (x.components/content tooltip-content)})
+              (if tooltip-content  {:tooltip-content (metamorphic-content/resolve tooltip-content)})
               (if (empty? content) {:copyable? false}))))

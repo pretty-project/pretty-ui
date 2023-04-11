@@ -4,8 +4,8 @@
               [components.item-list-row.prototypes :as item-list-row.prototypes]
               [css.api                             :as css]
               [elements.api                        :as elements]
-              [random.api                          :as random]
-              [x.components.api                    :as x.components]))
+              [metamorphic-content.api             :as metamorphic-content]
+              [random.api                          :as random]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -16,7 +16,7 @@
   ; {:cells (vector)}
   [row-id {:keys [cells]}]
   (letfn [(f [cells cell-props]
-             (conj cells [x.components/content row-id cell-props]))]
+             (conj cells [metamorphic-content/resolve cell-props]))]
          (reduce f [:<>] cells)))
 
 (defn- item-list-row

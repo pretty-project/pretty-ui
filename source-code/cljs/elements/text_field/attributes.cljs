@@ -3,9 +3,9 @@
     (:require [dom.api                         :as dom]
               [elements.plain-field.attributes :as plain-field.attributes]
               [elements.text-field.env         :as text-field.env]
+              [metamorphic-content.api         :as metamorphic-content]
               [pretty-css.api                  :as pretty-css]
-              [re-frame.api                    :as r]
-              [x.components.api                :as x.components]))
+              [re-frame.api                    :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -28,7 +28,7 @@
   (-> (plain-field.attributes/field-accessory-attributes field-id field-props)
       (merge {:class                 :e-text-field--adornment
               :data-selectable       false
-              :data-tooltip-content  (x.components/content tooltip-content)
+              :data-tooltip-content  (metamorphic-content/resolve tooltip-content)
               :data-tooltip-position :left}
              (if disabled?        {:disabled   "1" :data-disabled true})
              (if-not tab-indexed? {:tab-index "-1"})

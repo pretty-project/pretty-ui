@@ -5,11 +5,11 @@
               [elements.switch.attributes :as switch.attributes]
               [elements.switch.prototypes :as switch.prototypes]
               [hiccup.api                 :as hiccup]
+              [metamorphic-content.api    :as metamorphic-content]
               [pretty-css.api             :as pretty-css]
               [random.api                 :as random]
               [re-frame.api               :as r]
-              [reagent.api                :as reagent]
-              [x.components.api           :as x.components]))
+              [reagent.api                :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -27,9 +27,9 @@
            [:div (switch.attributes/switch-option-track-attributes switch-id switch-props)]
            [:div {:class :e-switch--option-content :data-click-target :opacity}
                  (if option-label-f  [:div (switch.attributes/switch-option-label-attributes switch-id switch-props)
-                                           (-> option option-label-f x.components/content)])
+                                           (-> option option-label-f metamorphic-content/resolve)])
                  (if option-helper-f [:div (switch.attributes/switch-option-helper-attributes switch-id switch-props)
-                                           (-> option option-helper-f x.components/content)])]])
+                                           (-> option option-helper-f metamorphic-content/resolve)])]])
 
 (defn- switch-options
   ; @ignore

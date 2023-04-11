@@ -1,9 +1,9 @@
 
 (ns elements.select.env
     (:require [elements.plain-field.env :as plain-field.env]
+              [metamorphic-content.api  :as metamorphic-content]
               [re-frame.api             :as r]
-              [string.api               :as string]
-              [x.components.api         :as x.components]))
+              [string.api               :as string]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -20,7 +20,7 @@
   [select-id {:keys [option-label-f] :as select-props} option]
   ; XXX#0569 (source-code/cljs/elements/combo_box/env.cljs)
   (let [field-content (plain-field.env/get-field-content :elements.select/option-field)
-        option-label  (-> option option-label-f x.components/content)]
+        option-label  (-> option option-label-f metamorphic-content/resolve)]
        (and (string/not-pass-with? option-label field-content {:case-sensitive? false})
             (string/starts-with?   option-label field-content {:case-sensitive? false}))))
 
@@ -36,5 +36,5 @@
   ; @return (metamorphic-content)
   [select-id select-props]
   (if-let [selected-option-label @(r/subscribe [:elements.select/get-selected-option-label select-id select-props])]
-          (-> selected-option-label x.components/content)
-          (-> :select!              x.components/content)))
+          (-> selected-option-label metamorphic-content/resolve)
+          (-> :select!              metamorphic-content/resolve)))

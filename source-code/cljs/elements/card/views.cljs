@@ -2,8 +2,8 @@
 (ns elements.card.views
     (:require [elements.card.attributes :as card.attributes]
               [elements.card.prototypes :as card.prototypes]
-              [random.api               :as random]
-              [x.components.api         :as x.components]))
+              [metamorphic-content.api  :as metamorphic-content]
+              [random.api               :as random]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -19,7 +19,7 @@
   [:div (card.attributes/card-attributes card-id card-props)
         [(cond href :a on-click :button :else :div)
          (card.attributes/card-body-attributes card-id card-props)
-         [x.components/content card-id content]]])
+         [metamorphic-content/resolve content]]])
 
 (defn element
   ; XXX#3240

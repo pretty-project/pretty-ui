@@ -3,8 +3,8 @@
     (:require [elements.menu-bar.attributes :as menu-bar.attributes]
               [elements.menu-bar.prototypes :as menu-bar.prototypes]
               [hiccup.api                   :as hiccup]
-              [random.api                   :as random]
-              [x.components.api             :as x.components]))
+              [metamorphic-content.api      :as metamorphic-content]
+              [random.api                   :as random]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -26,7 +26,7 @@
               (menu-bar.attributes/menu-item-body-attributes bar-id bar-props item-props)
               (if icon  [:i   (menu-bar.attributes/menu-item-icon-attributes  bar-id bar-props item-props) icon])
               (if label [:div (menu-bar.attributes/menu-item-label-attributes bar-id bar-props item-props)
-                              (x.components/content label)])]]))
+                              (metamorphic-content/resolve label)])]]))
 
 (defn- menu-bar
   ; @ignore

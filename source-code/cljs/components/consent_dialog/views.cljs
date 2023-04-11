@@ -3,8 +3,8 @@
     (:require [components.consent-dialog.prototypes :as consent-dialog.prototypes]
               [elements.api                         :as elements]
               [layouts.api                          :as layouts]
-              [random.api                           :as random]
-              [x.components.api                     :as x.components]))
+              [metamorphic-content.api              :as metamorphic-content]
+              [random.api                           :as random]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -14,7 +14,7 @@
   ; @param (map) dialog-props
   ; {:content (metamorphic-content)}
   [dialog-id {:keys [content]}]
-  [x.components/content dialog-id content])
+  [metamorphic-content/resolve content])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

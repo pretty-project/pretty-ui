@@ -2,8 +2,8 @@
 (ns elements.blank.views
     (:require [elements.blank.attributes :as blank.attributes]
               [elements.blank.prototypes :as blank.prototypes]
-              [random.api                :as random]
-              [x.components.api          :as x.components]))
+              [metamorphic-content.api   :as metamorphic-content]
+              [random.api                :as random]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -17,7 +17,7 @@
   [blank-id {:keys [content] :as blank-props}]
   [:div (blank.attributes/blank-attributes blank-id blank-props)
         [:div (blank.attributes/blank-body-attributes blank-id blank-props)
-              [x.components/content blank-id content]]])
+              [metamorphic-content/resolve content]]])
 
 (defn element
   ; @param (keyword)(opt) blank-id

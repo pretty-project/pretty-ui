@@ -5,8 +5,7 @@
               [components.vector-item-list.prototypes :as vector-item-list.prototypes]
               [elements.api                           :as elements]
               [random.api                             :as random]
-              [re-frame.api                           :as r]
-              [x.components.api                       :as x.components]))
+              [re-frame.api                           :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

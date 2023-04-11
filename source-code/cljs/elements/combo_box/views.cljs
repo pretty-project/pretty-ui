@@ -6,10 +6,10 @@
               [elements.text-field.views     :as text-field.views]
               [hiccup.api                    :as hiccup]
               [loop.api                      :refer [reduce-indexed]]
+              [metamorphic-content.api       :as metamorphic-content]
               [random.api                    :as random]
               [re-frame.api                  :as r]
-              [reagent.api                   :as reagent]
-              [x.components.api              :as x.components]))
+              [reagent.api                   :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -28,7 +28,7 @@
   [:button (combo-box.attributes/combo-box-option-attributes box-id box-props option-dex option)
            (if option-component [option-component box-id box-props option]
                                 [:div {:class :e-combo-box--option-label}
-                                      (-> option option-label-f x.components/content)])])
+                                      (-> option option-label-f metamorphic-content/resolve)])])
 
 (defn- combo-box-options
   ; @ignore

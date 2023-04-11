@@ -4,10 +4,10 @@
               [elements.plain-field.env        :as plain-field.env]
               [elements.plain-field.prototypes :as plain-field.prototypes]
               [elements.plain-field.utils      :as plain-field.utils]
+              [metamorphic-content.api         :as metamorphic-content]
               [random.api                      :as random]
               [re-frame.api                    :as r]
-              [reagent.api                     :as reagent]
-              [x.components.api                :as x.components]))
+              [reagent.api                     :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -69,7 +69,7 @@
         ; ...
         (and surface (plain-field.env/surface-visible? field-id)
                      [:div (plain-field.attributes/field-surface-attributes field-id field-props)
-                           [x.components/content field-id surface]])
+                           [metamorphic-content/resolve surface]])
         ; HACK#9910
         [plain-field-synchronizer field-id field-props]])
 

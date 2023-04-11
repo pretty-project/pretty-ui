@@ -4,10 +4,10 @@
               [elements.chip-group.prototypes :as chip-group.prototypes]
               [elements.chip.views            :as chip.views]
               [elements.element.views         :as element.views]
+              [metamorphic-content.api        :as metamorphic-content]
               [random.api                     :as random]
               [re-frame.api                   :as r]
-              [vector.api                     :as vector]
-              [x.components.api               :as x.components]))
+              [vector.api                     :as vector]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -32,7 +32,7 @@
 
            ; Displaying the placeholder if the data from the value-path is NOT a nonempty vector
            (if placeholder [:div {:class :e-chip-group--chips-placeholder :data-font-size :s :data-line-height :text-block}
-                                 (x.components/content placeholder)]))))
+                                 (metamorphic-content/resolve placeholder)]))))
 
 (defn- chip-group
   ; @ignore

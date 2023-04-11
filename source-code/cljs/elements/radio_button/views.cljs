@@ -5,10 +5,10 @@
               [elements.radio-button.attributes :as radio-button.attributes]
               [elements.radio-button.prototypes :as radio-button.prototypes]
               [hiccup.api                       :as hiccup]
+              [metamorphic-content.api          :as metamorphic-content]
               [random.api                       :as random]
               [re-frame.api                     :as r]
-              [reagent.api                      :as reagent]
-              [x.components.api                 :as x.components]))
+              [reagent.api                      :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -26,9 +26,9 @@
            [:div (radio-button.attributes/radio-button-option-button-attributes button-id button-props)]
            [:div {:class :e-radio-button--option-content :data-click-target :opacity}
                  (if option-label-f  [:div (radio-button.attributes/radio-button-option-label-attributes button-id button-props)
-                                           (-> option option-label-f x.components/content)])
+                                           (-> option option-label-f metamorphic-content/resolve)])
                  (if option-helper-f [:div (radio-button.attributes/radio-button-option-helper-attributes button-id button-props)
-                                           (-> option option-helper-f x.components/content)])]])
+                                           (-> option option-helper-f metamorphic-content/resolve)])]])
 
 (defn- radio-button-structure
   ; @ignore
@@ -40,7 +40,7 @@
   [:div (radio-button.attributes/radio-button-attributes button-id button-props)
         [element.views/element-label button-id button-props]
         (if deselectable? [:button (radio-button.attributes/clear-button-attributes button-id button-props)])
-                                   ; [:div.e-radio-button--clear-button-label (x.components/content :delete!)]
+                                   ; [:div.e-radio-button--clear-button-label (metamorphic-content/resolve :delete!)]
         [:div (radio-button.attributes/radio-button-body-attributes button-id button-props)
               (let [options (input.env/get-input-options button-id button-props)]
                    (letfn [(f [option] [radio-button-option button-id button-props option])]

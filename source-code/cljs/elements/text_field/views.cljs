@@ -7,11 +7,11 @@
               [elements.text-field.env        :as text-field.env]
               [elements.text-field.prototypes :as text-field.prototypes]
               [hiccup.api                     :as hiccup]
+              [metamorphic-content.api        :as metamorphic-content]
               [random.api                     :as random]
               [re-frame.api                   :as r]
               [reagent.api                    :as reagent]
-              [vector.api                     :as vector]
-              [x.components.api               :as x.components]))
+              [vector.api                     :as vector]))
 
 ;; -- Field adornments components ---------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -29,7 +29,7 @@
   (let [adornment-props (text-field.prototypes/adornment-props-prototype field-props adornment-props)]
        [(if on-click :button :div)
         (text-field.attributes/adornment-attributes field-id field-props adornment-props)
-        (or icon (x.components/content label))]))
+        (or icon (metamorphic-content/resolve label))]))
 
 (defn field-end-adornments
   ; @ignore
@@ -82,7 +82,7 @@
                     ; ...
                     (if placeholder (if-let [field-empty? (plain-field.env/field-empty? field-id)]
                                             [:div (text-field.attributes/field-placeholder-attributes field-id field-props)
-                                                  (x.components/content placeholder)]))
+                                                  (metamorphic-content/resolve placeholder)]))
                     ; ...
                     [:div (text-field.attributes/input-emphasize-attributes field-id field-props)
                           [(if multiline? :textarea :input)
@@ -92,7 +92,7 @@
               ; ...
               (if surface (if (plain-field.env/surface-visible? field-id)
                               [:div (text-field.attributes/field-surface-attributes field-id field-props)
-                                    [x.components/content field-id surface]]))]
+                                    [metamorphic-content/resolve surface]]))]
         ; ...
         [plain-field.views/plain-field-synchronizer field-id field-props]])
 

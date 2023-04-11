@@ -1,12 +1,12 @@
 
 (ns website.sidebar.views
     (:require [elements.api               :as elements]
+              [metamorphic-content.api    :as metamorphic-content]
               [random.api                 :as random]
               [react.api                  :as react]
               [website.sidebar.attributes :as sidebar.attributes]
               [website.sidebar.prototypes :as sidebar.prototypes]
-              [website.sidebar.state      :as sidebar.state]
-              [x.components.api           :as x.components]))
+              [website.sidebar.state      :as sidebar.state]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -24,7 +24,7 @@
                                     [:div (sidebar.attributes/sidebar-cover-attributes sidebar-id sidebar-props)]
                                     [:div (sidebar.attributes/sidebar-body-attributes sidebar-id sidebar-props)
                                           [:div {:class :w-sidebar--content}
-                                                [x.components/content sidebar-id content]]]]]])
+                                                [metamorphic-content/resolve content]]]]]])
 
 (defn component
   ; @param (keyword)(opt) sidebar-id

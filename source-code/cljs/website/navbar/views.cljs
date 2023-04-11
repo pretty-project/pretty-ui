@@ -3,12 +3,12 @@
     (:require [site.website-menus.frontend.api]
               [dom.api                     :as dom]
               [elements.api                :as elements]
+              [metamorphic-content.api     :as metamorphic-content]
               [random.api                  :as random]
               [re-frame.api                :as r]
               [website.menu.views          :as menu.views]
               [website.navbar.helpers      :as navbar.helpers]
-              [website.scroll-sensor.views :as scroll-sensor.views]
-              [x.components.api            :as x.components]))
+              [website.scroll-sensor.views :as scroll-sensor.views]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -37,7 +37,7 @@
   ; {:logo (metamorphic-content)(opt)}
   [component-id {:keys [logo]}]
   (if logo [:div {:id :mt-navbar--logo}
-                 [x.components/content component-id logo]]
+                 [metamorphic-content/resolve logo]]
            [:div {:class :mt-navbar--logo-placeholder}]))
 
 (defn- navbar

@@ -3,12 +3,12 @@
     (:require [layouts.struct-popup.attributes :as struct-popup.attributes]
               [layouts.struct-popup.env        :as struct-popup.env]
               [layouts.struct-popup.prototypes :as struct-popup.prototypes]
+              [metamorphic-content.api         :as metamorphic-content]
               [hiccup.api                      :as hiccup]
               [random.api                      :as random]
               [re-frame.api                    :as r]
               [reagent.api                     :as reagent]
-              [scroll-lock.api                 :as scroll-lock]
-              [x.components.api                :as x.components]))
+              [scroll-lock.api                 :as scroll-lock]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -22,7 +22,7 @@
   [popup-id {:keys [footer] :as popup-props}]
   [:div (struct-popup.attributes/popup-footer-attributes popup-id popup-props)
         [:div {:class :l-struct-popup--footer-content}
-              [x.components/content popup-id footer]]])
+              [metamorphic-content/resolve footer]]])
 
 (defn- footer
   ; @ignore
@@ -47,7 +47,7 @@
   [popup-id {:keys [header] :as popup-props}]
   [:div (struct-popup.attributes/popup-header-attributes popup-id popup-props)
         [:div {:class :l-struct-popup--header-content}
-              [x.components/content popup-id header]]])
+              [metamorphic-content/resolve header]]])
 
 (defn- header
   ; @ignore
@@ -81,7 +81,7 @@
   [:div {:class :l-struct-popup--body :data-scroll-axis :y}
         [:div {:class :l-struct-popup--body-content}
               (if header [:div {:id (hiccup/value popup-id "header-sensor")}])
-              [x.components/content popup-id body]
+              [metamorphic-content/resolve body]
               (if footer [:div {:id (hiccup/value popup-id "footer-sensor")}])]])
 
 ;; ----------------------------------------------------------------------------

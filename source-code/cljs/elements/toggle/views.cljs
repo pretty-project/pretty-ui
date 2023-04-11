@@ -2,8 +2,8 @@
 (ns elements.toggle.views
     (:require [elements.toggle.attributes :as toggle.attributes]
               [elements.toggle.prototypes :as toggle.prototypes]
-              [random.api                 :as random]
-              [x.components.api           :as x.components]))
+              [metamorphic-content.api    :as metamorphic-content]
+              [random.api                 :as random]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -18,7 +18,7 @@
   [:div (toggle.attributes/toggle-attributes toggle-id toggle-props)
         [(cond href :a on-click :button :else :div)
          (toggle.attributes/toggle-body-attributes toggle-id toggle-props)
-         [x.components/content toggle-id content]]])
+         [metamorphic-content/resolve content]]])
 
 (defn element
   ; @param (keyword)(opt) toggle-id

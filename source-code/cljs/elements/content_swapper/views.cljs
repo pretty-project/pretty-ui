@@ -7,12 +7,12 @@
               [elements.content-swapper.state      :as content-swapper.state]
               [elements.label.views                :as label.views]
               [hiccup.api                          :as hiccup]
+              [metamorphic-content.api             :as metamorphic-content]
               [noop.api                            :refer [return]]
               [random.api                          :as random]
               [re-frame.api                        :as r]
               [reagent.api                         :as reagent]
-              [window-observer.api                 :as window-observer]
-              [x.components.api                    :as x.components]))
+              [window-observer.api                 :as window-observer]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -90,7 +90,7 @@
                      ; Selected page
                      [:<>
                           [:div (content-swapper.attributes/swapper-page-attributes swapper-id swapper-props)
-                                [x.components/content swapper-id swapping-content]]]
+                                [metamorphic-content/resolve swapping-content]]]
 
                      ; Page buttons
                      ; The page buttons displayed on a page to give them a container
@@ -109,7 +109,7 @@
   [swapper-id {:keys [pages] :as swapper-props}]
   [:div (content-swapper.attributes/swapper-body-attributes swapper-id swapper-props)
         (letfn [(f [{:keys [content]}] [:div (content-swapper.attributes/swapper-page-attributes swapper-id swapper-props)
-                                             [x.components/content swapper-id content]])]
+                                             [metamorphic-content/resolve content]])]
                (hiccup/put-with [:<>] pages f))])
 
 (defn- content-swapper-structure

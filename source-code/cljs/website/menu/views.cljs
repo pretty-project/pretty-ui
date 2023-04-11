@@ -1,10 +1,10 @@
 
 (ns website.menu.views
-    (:require [dom.api          :as dom]
-              [elements.api     :as elements]
-              [random.api       :as random]
-              [re-frame.api     :as r]
-              [x.components.api :as x.components]))
+    (:require [dom.api                 :as dom]
+              [elements.api            :as elements]
+              [metamorphic-content.api :as metamorphic-content]
+              [random.api              :as random]
+              [re-frame.api            :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -21,7 +21,7 @@
                                         :class [:mt-menu--menu-item :mt-effect--underline]
                                         :style style :href link :target (case target :self "_self" :blank "_blank" "_self")
                                         :on-mouse-up #(dom/blur-active-element!)}
-                                       (x.components/content label)]))]
+                                       (metamorphic-content/resolve label)]))]
               [:div {:class :mt-menu--menu-items}
                     (reduce f [:<>] menu-items)])))
 

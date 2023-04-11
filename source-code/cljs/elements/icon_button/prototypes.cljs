@@ -1,7 +1,7 @@
 
 (ns elements.icon-button.prototypes
-    (:require [noop.api         :refer [param]]
-              [x.components.api :as x.components]))
+    (:require [metamorphic-content.api :as metamorphic-content]
+              [noop.api                :refer [param]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -42,4 +42,4 @@
          (if tooltip-content {:tooltip-position   :right})
          (param button-props)
          (if disabled?       {:hover-color :none})
-         (if tooltip-content {:tooltip-content (x.components/content tooltip-content)})))
+         (if tooltip-content {:tooltip-content (metamorphic-content/resolve tooltip-content)})))

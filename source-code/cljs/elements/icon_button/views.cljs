@@ -2,10 +2,10 @@
 (ns elements.icon-button.views
     (:require [elements.icon-button.attributes :as icon-button.attributes]
               [elements.icon-button.prototypes :as icon-button.prototypes]
+              [metamorphic-content.api         :as metamorphic-content]
               [random.api                      :as random]
               [re-frame.api                    :as r]
-              [reagent.api                     :as reagent]
-              [x.components.api                :as x.components]))
+              [reagent.api                     :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -23,7 +23,7 @@
          (icon-button.attributes/button-body-attributes button-id button-props)
          [:i (icon-button.attributes/button-icon-attributes button-id button-props) icon]]
         (if label [:div {:class :e-icon-button--label :data-selectable false}
-                        (x.components/content label)])])
+                        (metamorphic-content/resolve label)])])
 
 (defn- icon-button
   ; @ignore

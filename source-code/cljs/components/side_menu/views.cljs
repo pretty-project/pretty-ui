@@ -3,9 +3,9 @@
     (:require [components.side-menu.helpers    :as side-menu.helpers]
               [components.side-menu.prototypes :as side-menu.prototypes]
               [elements.api                    :as elements]
+              [metamorphic-content.api         :as metamorphic-content]
               [random.api                      :as random]
-              [window-observer.api             :as window-observer]
-              [x.components.api                :as x.components]))
+              [window-observer.api             :as window-observer]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -17,7 +17,7 @@
   [menu-id {:keys [content] :as menu-props}]
   [:div.c-side-menu (side-menu.helpers/menu-attributes menu-id menu-props)
                     [:div.c-side-menu--body (side-menu.helpers/menu-body-attributes menu-id menu-props)
-                                            [x.components/content menu-id content]]])
+                                            [metamorphic-content/resolve content]]])
 
 (defn component
   ; @param (keyword)(opt) menu-id

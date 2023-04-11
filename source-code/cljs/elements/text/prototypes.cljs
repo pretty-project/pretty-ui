@@ -1,7 +1,7 @@
 
 (ns elements.text.prototypes
-    (:require [x.components.api :as x.components]
-              [noop.api         :refer [param]]))
+    (:require [metamorphic-content.api :as metamorphic-content]
+              [noop.api                :refer [param]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -29,4 +29,4 @@
           :text-overflow    :wrap}
          (param text-props)
          ; XXX#7009 (source-code/cljs/elements/label/prototypes.cljs)
-         {:content (x.components/content content)}))
+         {:content (metamorphic-content/resolve content)}))

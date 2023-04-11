@@ -2,8 +2,8 @@
 (ns elements.vertical-polarity.views
     (:require [elements.vertical-polarity.attributes :as vertical-polarity.attributes]
               [elements.vertical-polarity.prototypes :as vertical-polarity.prototypes]
-              [random.api                            :as random]
-              [x.components.api                      :as x.components]))
+              [metamorphic-content.api               :as metamorphic-content]
+              [random.api                            :as random]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -20,13 +20,13 @@
   [:div (vertical-polarity.attributes/polarity-attributes polarity-id polarity-props)
         [:div (vertical-polarity.attributes/polarity-body-attributes polarity-id polarity-props)
               (if start-content  [:div {:class :e-vertical-polarity--start-content}
-                                       [x.components/content start-content]]
+                                       [metamorphic-content/resolve start-content]]
                                  [:div {:class :e-vertical-polarity--placeholder}])
               (if middle-content [:div {:class :e-vertical-polarity--middle-content}
-                                       [x.components/content middle-content]]
+                                       [metamorphic-content/resolve middle-content]]
                                  [:div {:class :e-vertical-polarity--placeholder}])
               (if end-content    [:div {:class :e-vertical-polarity--end-content}
-                                       [x.components/content end-content]]
+                                       [metamorphic-content/resolve end-content]]
                                  [:div {:class :e-vertical-polarity--placeholder}])]])
 
 (defn element

@@ -4,9 +4,9 @@
               [components.color-picker.prototypes :as color-picker.prototypes]
               [components.component.views         :as component.views]
               [elements.api                       :as elements]
+              [metamorphic-content.api            :as metamorphic-content]
               [random.api                         :as random]
-              [re-frame.api                       :as r]
-              [x.components.api                   :as x.components]))
+              [re-frame.api                       :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -38,7 +38,7 @@
                    (if (empty? picked-colors)
                        ; If no color picked, displays a placeholder
                        [:div (color-picker.attributes/placeholder-attributes picker-id picker-props)
-                             (x.components/content picker-id placeholder)
+                             (metamorphic-content/resolve placeholder)
                              [:i {:data-icon-family :material-symbols-outlined :data-icon-size :m} :palette]]
                        ; If any color picked, displays the picked colors
                        [color-picker-value picker-id picker-props]))]])

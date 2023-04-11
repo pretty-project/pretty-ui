@@ -3,8 +3,8 @@
     (:require [components.input-table.helpers    :as input-table.helpers]
               [components.input-table.prototypes :as input-table.prototypes]
               [elements.api                      :as elements]
-              [random.api                        :as random]
-              [x.components.api                  :as x.components]))
+              [metamorphic-content.api           :as metamorphic-content]
+              [random.api                        :as random]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -14,7 +14,7 @@
   ; @param (map) table-props
   ; {:rows (vectors in vector)}
   [table-id {:keys [rows] :as table-props}]
-  (letfn [(f0 [row-blocks row-block] (conj row-blocks [x.components/content table-id row-block]))
+  (letfn [(f0 [row-blocks row-block] (conj row-blocks [metamorphic-content/resolve row-block]))
           (f1 [rows [row-template & row-blocks]]
               (conj rows [:div.c-input-table--row {:style {:grid-template-columns row-template}}
                                                   (reduce f0 [:<>] row-blocks)]))]
@@ -26,7 +26,7 @@
   ; {:label (metamorphic-content)(opt)}
   [table-id {:keys [label] :as table-props}]
   (if label [:div.c-input-table--label (input-table.helpers/table-label-attributes table-id table-props)
-                                       (x.components/content label)]))
+                                       (metamorphic-content/resolve label)]))
 
 (defn- input-table
   ; @param (keyword) table-id

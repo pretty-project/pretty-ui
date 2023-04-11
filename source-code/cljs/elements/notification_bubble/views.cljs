@@ -4,8 +4,8 @@
               [elements.icon-button.views              :as icon-button.views]
               [elements.notification-bubble.attributes :as notification-bubble.attributes]
               [elements.notification-bubble.prototypes :as notification-bubble.prototypes]
-              [random.api                              :as random]
-              [x.components.api                        :as x.components]))
+              [metamorphic-content.api                 :as metamorphic-content]
+              [random.api                              :as random]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -40,7 +40,7 @@
   [:div (notification-bubble.attributes/bubble-attributes bubble-id bubble-props)
         [:div (notification-bubble.attributes/bubble-body-attributes bubble-id bubble-props)
               [:div (notification-bubble.attributes/bubble-content-attributes bubble-id bubble-props)
-                    [x.components/content                                     bubble-id content]]
+                    [metamorphic-content/resolve content]]
               [notification-bubble-secondary-button bubble-id bubble-props]
               [notification-bubble-primary-button   bubble-id bubble-props]]])
 

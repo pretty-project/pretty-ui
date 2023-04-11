@@ -2,11 +2,11 @@
 (ns layouts.plain-popup.views
     (:require [layouts.plain-popup.attributes :as plain-popup.attributes]
               [layouts.plain-popup.prototypes :as plain-popup.prototypes]
+              [metamorphic-content.api        :as metamorphic-content]
               [random.api                     :as random]
               [re-frame.api                   :as r]
               [reagent.api                    :as reagent]
-              [scroll-lock.api                :as scroll-lock]
-              [x.components.api               :as x.components]))
+              [scroll-lock.api                :as scroll-lock]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -21,7 +21,7 @@
   [:div (plain-popup.attributes/popup-attributes popup-id popup-props)
         (if cover-color [:div (plain-popup.attributes/popup-cover-attributes popup-id popup-props)])
         (if content     [:div {:class :l-plain-popup--content}
-                              [x.components/content popup-id content]])])
+                              [metamorphic-content/resolve content]])])
 
 (defn- plain-popup
   ; @ignore

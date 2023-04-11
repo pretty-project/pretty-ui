@@ -1,8 +1,8 @@
 
 (ns components.data-element.prototypes
-    (:require [noop.api         :refer [param]]
-              [vector.api       :as vector]
-              [x.components.api :as x.components]))
+    (:require [metamorphic-content.api :as metamorphic-content]
+              [noop.api                :refer [param]]
+              [vector.api              :as vector]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -25,4 +25,4 @@
          (param element-props)
          (cond (vector/nonempty? value) {:marked? false :value value}
                (vector?          value) {:marked? false :value [nil]}
-               :return {:value [value] :marked? (and marked? (-> value x.components/content empty? not))})))
+               :return {:value [value] :marked? (and marked? (-> value metamorphic-content/resolve empty? not))})))

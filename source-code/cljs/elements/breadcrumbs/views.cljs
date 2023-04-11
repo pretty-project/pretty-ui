@@ -3,8 +3,8 @@
     (:require [elements.breadcrumbs.attributes :as breadcrumbs.attributes]
               [elements.breadcrumbs.prototypes :as breadcrumbs.prototypes]
               [hiccup.api                      :as hiccup]
-              [random.api                      :as random]
-              [x.components.api                :as x.components]))
+              [metamorphic-content.api         :as metamorphic-content]
+              [random.api                      :as random]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -22,9 +22,9 @@
   [breadcrumbs-id breadcrumbs-props {:keys [href label on-click placeholder] :as crumb}]
   [(cond href :a on-click :button :else :div)
    (breadcrumbs.attributes/crumb-attributes breadcrumbs-id breadcrumbs-props crumb)
-   (if (-> label       x.components/content empty?)
-       (-> placeholder x.components/content)
-       (-> label       x.components/content))])
+   (if (-> label       metamorphic-content/resolve empty?)
+       (-> placeholder metamorphic-content/resolve)
+       (-> label       metamorphic-content/resolve))])
 
 (defn- breadcrumbs-crumb-list
   ; @ignore

@@ -1,7 +1,7 @@
 
 (ns elements.card.prototypes
-    (:require [noop.api         :refer [param]]
-              [x.components.api :as x.components]))
+    (:require [metamorphic-content.api :as metamorphic-content]
+              [noop.api                :refer [param]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -29,5 +29,5 @@
                             :border-width    :xxs})
          (if marker-color  {:marker-position :tr})
          (param card-props)
-         (if badge-content {:badge-content (x.components/content badge-content)})
+         (if badge-content {:badge-content (metamorphic-content/resolve badge-content)})
          (if disabled?     {:hover-color :none})))

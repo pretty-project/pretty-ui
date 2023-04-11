@@ -1,9 +1,9 @@
 
 (ns elements.radio-button.attributes
-    (:require [dom.api          :as dom]
-              [pretty-css.api   :as pretty-css]
-              [re-frame.api     :as r]
-              [x.components.api :as x.components]))
+    (:require [dom.api                 :as dom]
+              [metamorphic-content.api :as metamorphic-content]
+              [pretty-css.api          :as pretty-css]
+              [re-frame.api            :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -22,7 +22,7 @@
                :data-click-effect :opacity
                :on-click          #(r/dispatch [:elements.radio-button/clear-value! button-id button-props])
                :on-mouse-up       #(dom/blur-active-element!)
-               :title             (x.components/content :uncheck-selected!)}
+               :title             (metamorphic-content/resolve :uncheck-selected!)}
               {:class             :e-radio-button--clear-button
                :data-disabled     true
                :disabled          true})

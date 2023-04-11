@@ -2,11 +2,11 @@
 (ns layouts.box-popup.views
     (:require [layouts.box-popup.attributes :as box-popup.attributes]
               [layouts.box-popup.prototypes :as box-popup.prototypes]
+              [metamorphic-content.api      :as metamorphic-content]
               [random.api                   :as random]
               [re-frame.api                 :as r]
               [reagent.api                  :as reagent]
-              [scroll-lock.api              :as scroll-lock]
-              [x.components.api             :as x.components]))
+              [scroll-lock.api              :as scroll-lock]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -23,7 +23,7 @@
         [:div (box-popup.attributes/popup-wrapper-attributes popup-id popup-props)
               [:div (box-popup.attributes/popup-structure-attributes popup-id popup-props)
                     [:div {:class :l-box-popup--content}
-                          [x.components/content popup-id content]]]]])
+                          [metamorphic-content/resolve content]]]]])
 
 (defn- box-popup
   ; @ignore

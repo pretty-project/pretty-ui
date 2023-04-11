@@ -2,9 +2,9 @@
 (ns components.surface-box.views
     (:require [components.surface-box.prototypes :as surface-box.prototypes]
               [elements.api                      :as elements]
+              [metamorphic-content.api           :as metamorphic-content]
               [random.api                        :as random]
-              [re-frame.api                      :as r]
-              [x.components.api                  :as x.components]))
+              [re-frame.api                      :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -24,19 +24,19 @@
   ; {:content (metamorphic-content)
   ;  :query (vector)
   ;  :refresh-interval (ms)(opt)}
-  [box-id {:keys [content query refresh-interval]}]
-  [x.components/querier box-id
-                        {:content          content
-                         :placeholder      #'surface-box-query-placeholder
-                         :query            query
-                         :refresh-interval refresh-interval}])
+  [box-id {:keys [content query refresh-interval]}])
+  ;[x.components/querier box-id
+  ;                      {:content          content
+  ;                       :placeholder      #'surface-box-query-placeholder
+  ;                       :query            query
+  ;                       :refresh-interval refresh-interval]}])
 
 (defn- surface-box-static-content
   ; @param (keyword) box-id
   ; @param (map) box-props
   ; {:content (metamorphic-content)}
   [_ {:keys [content]}]
-  [x.components/content content])
+  [metamorphic-content/resolve content])
 
 (defn- surface-box-content
   ; @param (keyword) box-id

@@ -1,9 +1,9 @@
 
 (ns elements.multi-field.env
-    (:require [noop.api         :refer [return]]
-              [re-frame.api     :as r]
-              [vector.api       :as vector]
-              [x.components.api :as x.components]))
+    (:require [metamorphic-content.api :as metamorphic-content]
+              [noop.api                :refer [return]]
+              [re-frame.api            :as r]
+              [vector.api              :as vector]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -72,7 +72,7 @@
         (return label)
         ; Multi-field label
         (and label (group-props->multi-field? group-id group-props field-dex))
-        (x.components/content {:content label :suffix (str " #" (inc field-dex))})))
+        (metamorphic-content/resolve {:content label :suffix (str " #" (inc field-dex))})))
 
 (defn field-dex->control-adornments
   ; @ignore

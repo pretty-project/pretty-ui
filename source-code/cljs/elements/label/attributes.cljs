@@ -3,8 +3,8 @@
     (:require [dom.api                     :as dom]
               [elements.label.side-effects :as label.side-effects]
               [elements.label.utils        :as label.utils]
+              [metamorphic-content.api     :as metamorphic-content]
               [pretty-css.api              :as pretty-css]
-              [x.components.api            :as x.components]
               [x.environment.api           :as x.environment]))
 
 ;; ----------------------------------------------------------------------------
@@ -51,7 +51,7 @@
   {:class                 :e-label--copyable
    :data-click-effect     :opacity
    :data-tooltip-position :right
-   :data-tooltip-content  (x.components/content :copy!)
+   :data-tooltip-content  (metamorphic-content/resolve :copy!)
    :on-click              (label.utils/on-copy-f label-id label-props)})
 
 ;; ----------------------------------------------------------------------------
