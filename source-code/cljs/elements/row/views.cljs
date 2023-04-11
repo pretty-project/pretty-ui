@@ -17,7 +17,7 @@
   [row-id {:keys [content] :as row-props}]
   [:div (row.attributes/row-attributes row-id row-props)
         [:div (row.attributes/row-body-attributes row-id row-props)
-              [metamorphic-content/resolve content]]])
+              [metamorphic-content/compose content]]])
 
 (defn element
   ; @param (keyword)(opt) row-id

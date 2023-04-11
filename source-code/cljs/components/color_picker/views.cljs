@@ -38,7 +38,7 @@
                    (if (empty? picked-colors)
                        ; If no color picked, displays a placeholder
                        [:div (color-picker.attributes/placeholder-attributes picker-id picker-props)
-                             (metamorphic-content/resolve placeholder)
+                             (metamorphic-content/compose placeholder)
                              [:i {:data-icon-family :material-symbols-outlined :data-icon-size :m} :palette]]
                        ; If any color picked, displays the picked colors
                        [color-picker-value picker-id picker-props]))]])

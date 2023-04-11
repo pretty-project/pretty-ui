@@ -22,7 +22,7 @@
                :data-click-effect :opacity
                :on-click          #(r/dispatch [:elements.radio-button/clear-value! button-id button-props])
                :on-mouse-up       #(dom/blur-active-element!)
-               :title             (metamorphic-content/resolve :uncheck-selected!)}
+               :title             (metamorphic-content/compose :uncheck-selected!)}
               {:class             :e-radio-button--clear-button
                :data-disabled     true
                :disabled          true})

@@ -24,7 +24,7 @@
               (if-let [surface-content (dropdown-menu.env/get-surface-content menu-id menu-props)]
                       [:div (dropdown-menu.attributes/menu-surface-attributes menu-id menu-props)
                             [:div (dropdown-menu.attributes/menu-surface-body-attributes menu-id menu-props)
-                                  [metamorphic-content/resolve surface-content]]])]])
+                                  [metamorphic-content/compose surface-content]]])]])
 
 (defn element
   ; XXX#0715

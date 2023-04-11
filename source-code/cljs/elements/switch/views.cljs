@@ -27,9 +27,9 @@
            [:div (switch.attributes/switch-option-track-attributes switch-id switch-props)]
            [:div {:class :e-switch--option-content :data-click-target :opacity}
                  (if option-label-f  [:div (switch.attributes/switch-option-label-attributes switch-id switch-props)
-                                           (-> option option-label-f metamorphic-content/resolve)])
+                                           (-> option option-label-f metamorphic-content/compose)])
                  (if option-helper-f [:div (switch.attributes/switch-option-helper-attributes switch-id switch-props)
-                                           (-> option option-helper-f metamorphic-content/resolve)])]])
+                                           (-> option option-helper-f metamorphic-content/compose)])]])
 
 (defn- switch-options
   ; @ignore

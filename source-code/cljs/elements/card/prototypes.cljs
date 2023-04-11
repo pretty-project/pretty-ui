@@ -29,5 +29,5 @@
                             :border-width    :xxs})
          (if marker-color  {:marker-position :tr})
          (param card-props)
-         (if badge-content {:badge-content (metamorphic-content/resolve badge-content)})
+         (if badge-content {:badge-content (metamorphic-content/compose badge-content)})
          (if disabled?     {:hover-color :none})))

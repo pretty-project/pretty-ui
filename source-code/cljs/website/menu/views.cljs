@@ -21,7 +21,7 @@
                                         :class [:mt-menu--menu-item :mt-effect--underline]
                                         :style style :href link :target (case target :self "_self" :blank "_blank" "_self")
                                         :on-mouse-up #(dom/blur-active-element!)}
-                                       (metamorphic-content/resolve label)]))]
+                                       (metamorphic-content/compose label)]))]
               [:div {:class :mt-menu--menu-items}
                     (reduce f [:<>] menu-items)])))
 

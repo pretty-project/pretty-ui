@@ -26,7 +26,7 @@
               (menu-bar.attributes/menu-item-body-attributes bar-id bar-props item-props)
               (if icon  [:i   (menu-bar.attributes/menu-item-icon-attributes  bar-id bar-props item-props) icon])
               (if label [:div (menu-bar.attributes/menu-item-label-attributes bar-id bar-props item-props)
-                              (metamorphic-content/resolve label)])]]))
+                              (metamorphic-content/compose label)])]]))
 
 (defn- menu-bar
   ; @ignore

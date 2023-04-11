@@ -23,7 +23,7 @@
         [:div (box-popup.attributes/popup-wrapper-attributes popup-id popup-props)
               [:div (box-popup.attributes/popup-structure-attributes popup-id popup-props)
                     [:div {:class :l-box-popup--content}
-                          [metamorphic-content/resolve content]]]]])
+                          [metamorphic-content/compose content]]]]])
 
 (defn- box-popup
   ; @ignore

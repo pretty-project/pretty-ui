@@ -27,7 +27,7 @@
                                :data-font-weight   :medium
                                :data-line-height   :text-block
                                :data-text-overflow :no-wrap}
-                              (metamorphic-content/resolve label)])]])
+                              (metamorphic-content/compose label)])]])
 
 (defn element
   ; @param (keyword)(opt) chip-id

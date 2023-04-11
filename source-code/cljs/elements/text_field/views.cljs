@@ -29,7 +29,7 @@
   (let [adornment-props (text-field.prototypes/adornment-props-prototype field-props adornment-props)]
        [(if on-click :button :div)
         (text-field.attributes/adornment-attributes field-id field-props adornment-props)
-        (or icon (metamorphic-content/resolve label))]))
+        (or icon (metamorphic-content/compose label))]))
 
 (defn field-end-adornments
   ; @ignore
@@ -82,7 +82,7 @@
                     ; ...
                     (if placeholder (if-let [field-empty? (plain-field.env/field-empty? field-id)]
                                             [:div (text-field.attributes/field-placeholder-attributes field-id field-props)
-                                                  (metamorphic-content/resolve placeholder)]))
+                                                  (metamorphic-content/compose placeholder)]))
                     ; ...
                     [:div (text-field.attributes/input-emphasize-attributes field-id field-props)
                           [(if multiline? :textarea :input)
@@ -92,7 +92,7 @@
               ; ...
               (if surface (if (plain-field.env/surface-visible? field-id)
                               [:div (text-field.attributes/field-surface-attributes field-id field-props)
-                                    [metamorphic-content/resolve surface]]))]
+                                    [metamorphic-content/compose surface]]))]
         ; ...
         [plain-field.views/plain-field-synchronizer field-id field-props]])
 

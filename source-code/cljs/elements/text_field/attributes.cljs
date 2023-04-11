@@ -28,7 +28,7 @@
   (-> (plain-field.attributes/field-accessory-attributes field-id field-props)
       (merge {:class                 :e-text-field--adornment
               :data-selectable       false
-              :data-tooltip-content  (metamorphic-content/resolve tooltip-content)
+              :data-tooltip-content  (metamorphic-content/compose tooltip-content)
               :data-tooltip-position :left}
              (if disabled?        {:disabled   "1" :data-disabled true})
              (if-not tab-indexed? {:tab-index "-1"})

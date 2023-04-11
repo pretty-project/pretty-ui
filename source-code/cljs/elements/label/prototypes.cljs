@@ -41,10 +41,10 @@
   ;  :tooltip-position (keyword)}
   [{:keys [border-color color content font-size icon marker-color target-id tooltip-content] :as label-props}]
   ; XXX#7009
-  ; The 'label-props-prototype' function applies the 'metamorphic-content/resolve' function
-  ; on the 'content' value. Therefore no need to apply the 'metamorphic-content/resolve'
+  ; The 'label-props-prototype' function applies the 'metamorphic-content/compose' function
+  ; on the 'content' value. Therefore no need to apply the 'metamorphic-content/compose'
   ; function in multiple places (because it's already done in the prototype).
-  (let [content (metamorphic-content/resolve content)]
+  (let [content (metamorphic-content/compose content)]
        (merge {:font-size        :s
                :font-weight      :medium
                :horizontal-align :left
@@ -60,5 +60,5 @@
               (param label-props)
               {:content content}
               (if target-id        {:target-id       (hiccup/value target-id "input")})
-              (if tooltip-content  {:tooltip-content (metamorphic-content/resolve tooltip-content)})
+              (if tooltip-content  {:tooltip-content (metamorphic-content/compose tooltip-content)})
               (if (empty? content) {:copyable? false}))))

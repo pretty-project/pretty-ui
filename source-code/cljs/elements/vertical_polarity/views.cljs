@@ -20,13 +20,13 @@
   [:div (vertical-polarity.attributes/polarity-attributes polarity-id polarity-props)
         [:div (vertical-polarity.attributes/polarity-body-attributes polarity-id polarity-props)
               (if start-content  [:div {:class :e-vertical-polarity--start-content}
-                                       [metamorphic-content/resolve start-content]]
+                                       [metamorphic-content/compose start-content]]
                                  [:div {:class :e-vertical-polarity--placeholder}])
               (if middle-content [:div {:class :e-vertical-polarity--middle-content}
-                                       [metamorphic-content/resolve middle-content]]
+                                       [metamorphic-content/compose middle-content]]
                                  [:div {:class :e-vertical-polarity--placeholder}])
               (if end-content    [:div {:class :e-vertical-polarity--end-content}
-                                       [metamorphic-content/resolve end-content]]
+                                       [metamorphic-content/compose end-content]]
                                  [:div {:class :e-vertical-polarity--placeholder}])]])
 
 (defn element

@@ -36,7 +36,7 @@
   ; @param (map) box-props
   ; {:content (metamorphic-content)}
   [_ {:keys [content]}]
-  [metamorphic-content/resolve content])
+  [metamorphic-content/compose content])
 
 (defn- surface-box-content
   ; @param (keyword) box-id

@@ -14,7 +14,7 @@
   ; @param (map) table-props
   ; {:rows (vectors in vector)}
   [table-id {:keys [rows] :as table-props}]
-  (letfn [(f0 [row-blocks row-block] (conj row-blocks [metamorphic-content/resolve row-block]))
+  (letfn [(f0 [row-blocks row-block] (conj row-blocks [metamorphic-content/compose row-block]))
           (f1 [rows [row-template & row-blocks]]
               (conj rows [:div.c-input-table--row {:style {:grid-template-columns row-template}}
                                                   (reduce f0 [:<>] row-blocks)]))]
@@ -26,7 +26,7 @@
   ; {:label (metamorphic-content)(opt)}
   [table-id {:keys [label] :as table-props}]
   (if label [:div.c-input-table--label (input-table.helpers/table-label-attributes table-id table-props)
-                                       (metamorphic-content/resolve label)]))
+                                       (metamorphic-content/compose label)]))
 
 (defn- input-table
   ; @param (keyword) table-id

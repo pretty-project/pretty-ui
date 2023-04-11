@@ -19,7 +19,7 @@
   [:div (card.attributes/card-attributes card-id card-props)
         [(cond href :a on-click :button :else :div)
          (card.attributes/card-body-attributes card-id card-props)
-         [metamorphic-content/resolve content]]])
+         [metamorphic-content/compose content]]])
 
 (defn element
   ; XXX#3240

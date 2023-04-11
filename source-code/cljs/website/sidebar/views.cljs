@@ -24,7 +24,7 @@
                                     [:div (sidebar.attributes/sidebar-cover-attributes sidebar-id sidebar-props)]
                                     [:div (sidebar.attributes/sidebar-body-attributes sidebar-id sidebar-props)
                                           [:div {:class :w-sidebar--content}
-                                                [metamorphic-content/resolve content]]]]]])
+                                                [metamorphic-content/compose content]]]]]])
 
 (defn component
   ; @param (keyword)(opt) sidebar-id

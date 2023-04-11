@@ -90,7 +90,7 @@
                      ; Selected page
                      [:<>
                           [:div (content-swapper.attributes/swapper-page-attributes swapper-id swapper-props)
-                                [metamorphic-content/resolve swapping-content]]]
+                                [metamorphic-content/compose swapping-content]]]
 
                      ; Page buttons
                      ; The page buttons displayed on a page to give them a container
@@ -109,7 +109,7 @@
   [swapper-id {:keys [pages] :as swapper-props}]
   [:div (content-swapper.attributes/swapper-body-attributes swapper-id swapper-props)
         (letfn [(f [{:keys [content]}] [:div (content-swapper.attributes/swapper-page-attributes swapper-id swapper-props)
-                                             [metamorphic-content/resolve content]])]
+                                             [metamorphic-content/compose content]])]
                (hiccup/put-with [:<>] pages f))])
 
 (defn- content-swapper-structure

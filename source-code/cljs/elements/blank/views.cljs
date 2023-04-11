@@ -17,7 +17,7 @@
   [blank-id {:keys [content] :as blank-props}]
   [:div (blank.attributes/blank-attributes blank-id blank-props)
         [:div (blank.attributes/blank-body-attributes blank-id blank-props)
-              [metamorphic-content/resolve content]]])
+              [metamorphic-content/compose content]]])
 
 (defn element
   ; @param (keyword)(opt) blank-id

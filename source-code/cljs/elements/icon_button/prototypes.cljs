@@ -42,4 +42,4 @@
          (if tooltip-content {:tooltip-position   :right})
          (param button-props)
          (if disabled?       {:hover-color :none})
-         (if tooltip-content {:tooltip-content (metamorphic-content/resolve tooltip-content)})))
+         (if tooltip-content {:tooltip-content (metamorphic-content/compose tooltip-content)})))

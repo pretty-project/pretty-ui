@@ -14,7 +14,7 @@
   ; @param (map) dialog-props
   ; {:content (metamorphic-content)}
   [dialog-id {:keys [content]}]
-  [metamorphic-content/resolve content])
+  [metamorphic-content/compose content])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

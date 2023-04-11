@@ -48,7 +48,7 @@
   (let [options (input.env/get-input-options select-id select-props)]
        (letfn [(f [option] (if (select.env/render-option? select-id select-props option)
                                [:button (select.attributes/select-option-attributes select-id select-props option)
-                                        (-> option option-label-f metamorphic-content/resolve)]))]
+                                        (-> option option-label-f metamorphic-content/compose)]))]
               (hiccup/put-with [:<>] options f))))
 
 (defn- select-option-list
@@ -63,7 +63,7 @@
              (if (vector/nonempty? options)
                  [select-option-list-items select-id select-props]
                  [:div (select.attributes/select-options-placeholder-attributes select-id select-props)
-                       (metamorphic-content/resolve options-placeholder)])]))
+                       (metamorphic-content/compose options-placeholder)])]))
 
 (defn- select-options-header
   ; @ignore
@@ -74,7 +74,7 @@
   [select-id {:keys [options-label] :as select-props}]
   [:div {:class :e-select--options--header :data-selectable false}
         [:div (select.attributes/select-options-label-attributes select-id select-props)
-              (metamorphic-content/resolve options-label)]
+              (metamorphic-content/compose options-label)]
         [option-field select-id select-props]])
 
 (defn- select-options-body

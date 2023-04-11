@@ -72,7 +72,7 @@
         (return label)
         ; Multi-field label
         (and label (group-props->multi-field? group-id group-props field-dex))
-        (metamorphic-content/resolve {:content label :suffix (str " #" (inc field-dex))})))
+        (metamorphic-content/compose {:content label :suffix (str " #" (inc field-dex))})))
 
 (defn field-dex->control-adornments
   ; @ignore

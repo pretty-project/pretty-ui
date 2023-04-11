@@ -25,4 +25,4 @@
          (param element-props)
          (cond (vector/nonempty? value) {:marked? false :value value}
                (vector?          value) {:marked? false :value [nil]}
-               :return {:value [value] :marked? (and marked? (-> value metamorphic-content/resolve empty? not))})))
+               :return {:value [value] :marked? (and marked? (-> value metamorphic-content/compose empty? not))})))

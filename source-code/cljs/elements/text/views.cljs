@@ -21,7 +21,7 @@
   ; BUG#9811 (source-code/cljs/elements/label/views.cljs)
   [:div {:class           :e-text--placeholder
          :data-selectable false}
-        (if placeholder (metamorphic-content/resolve placeholder)
+        (if placeholder (metamorphic-content/compose placeholder)
                         "\u00A0")])
 
 (defn- text-content-rows

@@ -17,7 +17,7 @@
   [menu-id {:keys [content] :as menu-props}]
   [:div.c-side-menu (side-menu.helpers/menu-attributes menu-id menu-props)
                     [:div.c-side-menu--body (side-menu.helpers/menu-body-attributes menu-id menu-props)
-                                            [metamorphic-content/resolve content]]])
+                                            [metamorphic-content/compose content]]])
 
 (defn component
   ; @param (keyword)(opt) menu-id

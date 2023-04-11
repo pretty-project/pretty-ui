@@ -40,7 +40,7 @@
   [:div (notification-bubble.attributes/bubble-attributes bubble-id bubble-props)
         [:div (notification-bubble.attributes/bubble-body-attributes bubble-id bubble-props)
               [:div (notification-bubble.attributes/bubble-content-attributes bubble-id bubble-props)
-                    [metamorphic-content/resolve content]]
+                    [metamorphic-content/compose content]]
               [notification-bubble-secondary-button bubble-id bubble-props]
               [notification-bubble-primary-button   bubble-id bubble-props]]])
 

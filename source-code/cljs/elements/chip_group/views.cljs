@@ -32,7 +32,7 @@
 
            ; Displaying the placeholder if the data from the value-path is NOT a nonempty vector
            (if placeholder [:div {:class :e-chip-group--chips-placeholder :data-font-size :s :data-line-height :text-block}
-                                 (metamorphic-content/resolve placeholder)]))))
+                                 (metamorphic-content/compose placeholder)]))))
 
 (defn- chip-group
   ; @ignore

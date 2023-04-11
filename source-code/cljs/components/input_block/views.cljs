@@ -15,8 +15,8 @@
   ;  :label (metamorphic-content)}
   [block-id {:keys [input label] :as block-props}]
   [:<> [:label.c-input-block--label (input-block.helpers/input-label-attributes block-id block-props)
-                                    [metamorphic-content/resolve label]]
-       [:div.c-input-block--input   [metamorphic-content/resolve input]]])
+                                    [metamorphic-content/compose label]]
+       [:div.c-input-block--input   [metamorphic-content/compose input]]])
 
 (defn component
   ; @description

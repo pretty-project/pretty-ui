@@ -18,7 +18,7 @@
   [:div (toggle.attributes/toggle-attributes toggle-id toggle-props)
         [(cond href :a on-click :button :else :div)
          (toggle.attributes/toggle-body-attributes toggle-id toggle-props)
-         [metamorphic-content/resolve content]]])
+         [metamorphic-content/compose content]]])
 
 (defn element
   ; @param (keyword)(opt) toggle-id

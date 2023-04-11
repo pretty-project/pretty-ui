@@ -37,7 +37,7 @@
   ; {:logo (metamorphic-content)(opt)}
   [component-id {:keys [logo]}]
   (if logo [:div {:id :mt-navbar--logo}
-                 [metamorphic-content/resolve logo]]
+                 [metamorphic-content/compose logo]]
            [:div {:class :mt-navbar--logo-placeholder}]))
 
 (defn- navbar

@@ -22,9 +22,9 @@
   [breadcrumbs-id breadcrumbs-props {:keys [href label on-click placeholder] :as crumb}]
   [(cond href :a on-click :button :else :div)
    (breadcrumbs.attributes/crumb-attributes breadcrumbs-id breadcrumbs-props crumb)
-   (if (-> label       metamorphic-content/resolve empty?)
-       (-> placeholder metamorphic-content/resolve)
-       (-> label       metamorphic-content/resolve))])
+   (if (-> label       metamorphic-content/compose empty?)
+       (-> placeholder metamorphic-content/compose)
+       (-> label       metamorphic-content/compose))])
 
 (defn- breadcrumbs-crumb-list
   ; @ignore

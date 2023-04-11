@@ -23,7 +23,7 @@
          (icon-button.attributes/button-body-attributes button-id button-props)
          [:i (icon-button.attributes/button-icon-attributes button-id button-props) icon]]
         (if label [:div {:class :e-icon-button--label :data-selectable false}
-                        (metamorphic-content/resolve label)])])
+                        (metamorphic-content/compose label)])])
 
 (defn- icon-button
   ; @ignore

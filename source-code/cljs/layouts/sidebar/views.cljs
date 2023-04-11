@@ -24,7 +24,7 @@
             [:div (sidebar.attributes/sidebar-sensor-attributes sidebar-id sidebar-props)]
             [:div {:class :l-sidebar--wrapper}
                   [:div (sidebar.attributes/sidebar-body-attributes sidebar-id sidebar-props)
-                        [metamorphic-content/resolve content]]]]))
+                        [metamorphic-content/compose content]]]]))
 
 (defn- sidebar
   ; @ignore

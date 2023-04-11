@@ -20,7 +20,7 @@
   (if helper [:div {:class            :e-label--helper
                     :data-font-size   :xs
                     :data-line-height :text-block}
-                   (metamorphic-content/resolve helper)]))
+                   (metamorphic-content/compose helper)]))
 
 (defn label-info-text
   ; @ignore
@@ -33,7 +33,7 @@
                         [:div {:class            :e-label--info-text
                                :data-font-size   :xs
                                :data-line-height :text-block}
-                              (metamorphic-content/resolve info-text)])))
+                              (metamorphic-content/compose info-text)])))
 
 (defn label-info-text-button
   ; @ignore
@@ -76,7 +76,7 @@
          :data-color         :highlight
          :data-selectable    false
          :data-text-overflow :ellipsis}
-        (if placeholder (metamorphic-content/resolve placeholder)
+        (if placeholder (metamorphic-content/compose placeholder)
                         "\u00A0")])
 
 (defn- label-content

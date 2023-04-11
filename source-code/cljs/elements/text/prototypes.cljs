@@ -29,4 +29,4 @@
           :text-overflow    :wrap}
          (param text-props)
          ; XXX#7009 (source-code/cljs/elements/label/prototypes.cljs)
-         {:content (metamorphic-content/resolve content)}))
+         {:content (metamorphic-content/compose content)}))

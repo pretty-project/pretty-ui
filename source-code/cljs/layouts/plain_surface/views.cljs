@@ -19,7 +19,7 @@
   [surface-id {:keys [content] :as surface-props}]
   [:div {:class :l-plain-surface}
         [:div (plain-surface.attributes/surface-body-attributes surface-id surface-props)
-              [metamorphic-content/resolve content]]])
+              [metamorphic-content/compose content]]])
 
 (defn- plain-surface
   ; @ignore

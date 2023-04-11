@@ -21,7 +21,7 @@
   [:div (plain-popup.attributes/popup-attributes popup-id popup-props)
         (if cover-color [:div (plain-popup.attributes/popup-cover-attributes popup-id popup-props)])
         (if content     [:div {:class :l-plain-popup--content}
-                              [metamorphic-content/resolve content]])])
+                              [metamorphic-content/compose content]])])
 
 (defn- plain-popup
   ; @ignore

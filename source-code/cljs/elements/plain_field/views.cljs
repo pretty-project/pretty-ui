@@ -69,7 +69,7 @@
         ; ...
         (and surface (plain-field.env/surface-visible? field-id)
                      [:div (plain-field.attributes/field-surface-attributes field-id field-props)
-                           [metamorphic-content/resolve surface]])
+                           [metamorphic-content/compose surface]])
         ; HACK#9910
         [plain-field-synchronizer field-id field-props]])
 

@@ -51,7 +51,7 @@
   {:class                 :e-label--copyable
    :data-click-effect     :opacity
    :data-tooltip-position :right
-   :data-tooltip-content  (metamorphic-content/resolve :copy!)
+   :data-tooltip-content  (metamorphic-content/compose :copy!)
    :on-click              (label.utils/on-copy-f label-id label-props)})
 
 ;; ----------------------------------------------------------------------------

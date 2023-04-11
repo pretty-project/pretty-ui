@@ -28,7 +28,7 @@
   [:button (combo-box.attributes/combo-box-option-attributes box-id box-props option-dex option)
            (if option-component [option-component box-id box-props option]
                                 [:div {:class :e-combo-box--option-label}
-                                      (-> option option-label-f metamorphic-content/resolve)])])
+                                      (-> option option-label-f metamorphic-content/compose)])])
 
 (defn- combo-box-options
   ; @ignore

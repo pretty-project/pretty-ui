@@ -16,7 +16,7 @@
   ; {:cells (vector)}
   [row-id {:keys [cells]}]
   (letfn [(f [cells cell-props]
-             (conj cells [metamorphic-content/resolve cell-props]))]
+             (conj cells [metamorphic-content/compose cell-props]))]
          (reduce f [:<>] cells)))
 
 (defn- item-list-row

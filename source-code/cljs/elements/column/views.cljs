@@ -17,7 +17,7 @@
   [column-id {:keys [content] :as column-props}]
   [:div (column.attributes/column-attributes column-id column-props)
         [:div (column.attributes/column-body-attributes column-id column-props)
-              [metamorphic-content/resolve content]]])
+              [metamorphic-content/compose content]]])
 
 (defn element
   ; @param (keyword)(opt) column-id

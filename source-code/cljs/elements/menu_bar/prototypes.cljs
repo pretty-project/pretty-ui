@@ -31,7 +31,7 @@
          (if icon          {:icon-family :material-symbols-outlined})
          (param item-default)
          (param item-props)
-         (if badge-content {:badge-content (metamorphic-content/resolve badge-content)})))
+         (if badge-content {:badge-content (metamorphic-content/compose badge-content)})))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

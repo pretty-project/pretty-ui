@@ -22,7 +22,7 @@
   [popup-id {:keys [footer] :as popup-props}]
   [:div (struct-popup.attributes/popup-footer-attributes popup-id popup-props)
         [:div {:class :l-struct-popup--footer-content}
-              [metamorphic-content/resolve footer]]])
+              [metamorphic-content/compose footer]]])
 
 (defn- footer
   ; @ignore
@@ -47,7 +47,7 @@
   [popup-id {:keys [header] :as popup-props}]
   [:div (struct-popup.attributes/popup-header-attributes popup-id popup-props)
         [:div {:class :l-struct-popup--header-content}
-              [metamorphic-content/resolve header]]])
+              [metamorphic-content/compose header]]])
 
 (defn- header
   ; @ignore
@@ -81,7 +81,7 @@
   [:div {:class :l-struct-popup--body :data-scroll-axis :y}
         [:div {:class :l-struct-popup--body-content}
               (if header [:div {:id (hiccup/value popup-id "header-sensor")}])
-              [metamorphic-content/resolve body]
+              [metamorphic-content/compose body]
               (if footer [:div {:id (hiccup/value popup-id "footer-sensor")}])]])
 
 ;; ----------------------------------------------------------------------------
