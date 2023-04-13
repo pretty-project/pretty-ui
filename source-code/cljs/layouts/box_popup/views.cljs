@@ -59,6 +59,13 @@
   ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;   Default: :default
   ;  :indent (map)(opt)
+  ;   {:bottom (keyword)(opt)
+  ;    :left (keyword)(opt)
+  ;    :right (keyword)(opt)
+  ;    :top (keyword)(opt)
+  ;    :horizontal (keyword)(opt)
+  ;    :vertical (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
   ;  :lock-scroll? (boolean)(opt)
   ;  :max-height (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
@@ -72,6 +79,7 @@
   ;  :on-mount (Re-Frame metamorphic-event)(opt)
   ;  :on-unmount (Re-Frame metamorphic-event)(opt)
   ;  :outdent (map)(opt)
+  ;   Same as the :indent property
   ;  :stretch-orientation (keyword)(opt)
   ;   :both, :horizontal, :vertical
   ;  :style (map)(opt)}

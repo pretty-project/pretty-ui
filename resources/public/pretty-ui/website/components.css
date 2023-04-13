@@ -1,4 +1,40 @@
 
+/***** Contacts *****/
+/*** Component ***/
+
+.w-contacts {
+
+}
+
+/*** Component ***/
+
+/*** Body ***/
+
+.w-contacts--body {
+  display:        flex;
+  flex-direction: column;
+  gap:            24px;
+}
+
+/*** Body ***/
+
+/*** Contact group ***/
+
+.w-contacts--contact-group--label {
+}
+
+.w-contacts--contact-group--link {
+  display: block;
+  width:   fit-content;
+}
+
+.w-contacts--contact-group--info {
+}
+
+/*** Contact group ***/
+/***** Contacts *****/
+
+
 
 /***** Sidebar *****/
 /*** Component ***/
@@ -69,6 +105,7 @@
 
 /*** Body ***/
 /***** Sidebar *****/
+
 
 
 

@@ -1,133 +1,89 @@
 
 (ns website.contacts.views
-    (:require [elements.api :as elements]
-              [href.api     :as href]
-              [noop.api     :refer [return]]
-              [random.api   :as random]
-              [re-frame.api :as r]))
+    (:require [hiccup.api                  :as hiccup]
+              [metamorphic-content.api     :as metamorphic-content]
+              [random.api                  :as random]
+              [website.contacts.attributes :as contacts.attributes]
+              [website.contacts.prototypes :as contacts.prototypes]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(defn- contacts-data-information
-  ; @param (keyword) component-id
-  ; @param (map) component-props
-  [_ _]
-  (if-let [contacts-data-information @(r/subscribe [:contents.handler/get-parsed-content [:website-contacts :handler/transfered-content :contacts-data-information]])]
-          [:div {:id :mt-contacts--contacts-data-information} contacts-data-information]))
-
-(defn- phone-number-link
-  ; @param (keyword) component-id
-  ; @param (map) component-props
-  ; @param (string) phone-number
-  [_ _ phone-number]
-  [:a {:class :mt-contacts--phone-number
-       :href  (href/phone-number phone-number)}
-      (str phone-number)])
-
-(defn- email-address-link
-  ; @param (keyword) component-id
-  ; @param (map) component-props
-  ; @param (string) email-address
-  [_ _ email-address]
-  [:a {:class :mt-contacts--email-address
-       :href  (href/email-address email-address)}
-      (str email-address)])
 
 (defn- contact-group
-  ; @param (keyword) component-id
-  ; @param (map) component-props
+  ; @ignore
+  ;
+  ; @param (keyword) contacts-id
+  ; @param (map) contacts-props
   ; @param (map) group-props
-  ; {:email-addresses (strings in vector)(opt)
-  ;  :label (string)(opt)
-  ;  :phone-numbers (strings in vector)(opt)}
-  [component-id component-props {:keys [email-addresses label phone-numbers]}]
-  [:div {:class :mt-contacts--contact-group}
-        (if label [:div {:class :mt-contacts--contact-group-label} label])
-        (letfn [(f [phone-numbers phone-number]
-                   (if phone-number (conj   phone-numbers [phone-number-link component-id component-props phone-number])
-                                    (return phone-numbers)))]
-               (reduce f [:<>] phone-numbers))
-        (letfn [(f [email-addresses email-address]
-                   (if email-address (conj   email-addresses [email-address-link component-id component-props email-address])
-                                     (return email-addresses)))]
-               (reduce f [:<>] email-addresses))])
-
-(defn- contact-groups
-  ; @param (keyword) component-id
-  ; @param (map) component-props
-  [component-id component-props]
-  (let [contact-groups @(r/subscribe [:get-item [:website-contacts :handler/transfered-content :contact-groups]])]
-       [:div {:id :mt-contacts--contact-groups}
-             (letfn [(f [groups group-props]
-                        (conj groups [contact-group component-id component-props group-props]))]
-                    (reduce f [:<>] contact-groups))]))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn- address-data-information
-  ; @param (keyword) component-id
-  ; @param (map) component-props
-  [_ _]
-  (if-let [address-data-information @(r/subscribe [:contents.handler/get-parsed-content [:website-contacts :handler/transfered-content :address-data-information]])]
-          [:div {:id :mt-contacts--address-data-information} address-data-information]))
-
-(defn- company-address-link
-  ; @param (keyword) component-id
-  ; @param (map) component-props
-  ; @param (string) company-address
-  [_ _ company-address]
-  [:a {:class :mt-contacts--company-address
-       :href  (href/address company-address)}
-      (str company-address)])
-
-(defn- address-group
-  ; @param (keyword) component-id
-  ; @param (map) component-props
-  ; @param (map) group-props
-  ; {:company-address (string)(opt)
-  ;  :label (string)(opt)}
-  [component-id component-props {:keys [company-address label]}]
-  [:div {:class :mt-contacts--address-group}
-        (if label           [:div {:class :mt-contacts--address-group-label} label])
-        (if company-address [company-address-link component-id component-props company-address])])
-
-(defn- address-groups
-  ; @param (keyword) component-id
-  ; @param (map) component-props
-  [component-id component-props]
-  (let [address-groups @(r/subscribe [:get-item [:website-contacts :handler/transfered-content :address-groups]])]
-       [:div {:id :mt-contacts--address-groups}
-             (letfn [(f [groups group-props]
-                        (conj groups [address-group component-id component-props group-props]))]
-                    (reduce f [:<>] address-groups))]))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
+  ; {:addresses (strings in vector)(opt)
+  ;  :email-addresses (strings in vector)(opt)
+  ;  :info (metamorphic-content)(opt)
+  ;  :label (metamorphic-content)(opt)
+  ;  :phone-numbers (numbers or strings in vector)(opt)}
+  [contacts-id contacts-props {:keys [addresses email-addresses info label phone-numbers] :as group-props}]
+  [:div {:class :w-contacts--contact-group}
+        ; Contact group label
+        (if label [:div (contacts.attributes/contact-group-label-attributes contacts-id contacts-props group-props)
+                        (metamorphic-content/compose label)])
+        ; Contact group phone numbers
+        (letfn [(f [%] [:a (contacts.attributes/contact-group-phone-number-attributes contacts-id contacts-props group-props %)
+                           (str %)])]
+               (hiccup/put-with [:<>] phone-numbers f))
+        ; Contact group email addresses
+        (letfn [(f [%] [:a (contacts.attributes/contact-group-email-address-attributes contacts-id contacts-props group-props %)
+                           (str %)])]
+               (hiccup/put-with [:<>] email-addresses f))
+        ; Contact group addresses
+        (letfn [(f [%] [:a (contacts.attributes/contact-group-address-attributes contacts-id contacts-props group-props %)
+                           (str %)])]
+               (hiccup/put-with [:<>] addresses f))
+        ; Contact group info
+        (if info [:div (contacts.attributes/contact-group-info-attributes contacts-id contacts-props group-props)
+                       (hiccup/parse-newlines [:<> (metamorphic-content/compose info)])])])
 
 (defn- contacts
-  ; @param (keyword) component-id
-  ; @param (map) component-props
-  [component-id component-props]
-  [:div {:id :mt-contacts}
-        [contact-groups            component-id component-props]
-        [contacts-data-information component-id component-props]
-        [address-groups            component-id component-props]
-        [address-data-information  component-id component-props]])
+  ; @ignore
+  ;
+  ; @param (keyword) contacts-id
+  ; @param (map) contacts-props
+  ; {:contact-groups (maps in vector)(opt)}
+  [contacts-id {:keys [contact-groups] :as contacts-props}]
+  [:div (contacts.attributes/contacts-attributes contacts-id contacts-props)
+        [:div (contacts.attributes/contacts-body-attributes contacts-id contacts-props)
+              (if-not (empty? contact-groups)
+                      (letfn [(f [group-props] [contact-group contacts-id contacts-props group-props])]
+                             (hiccup/put-with [:<>] contact-groups f)))]])
 
 (defn component
-  ; @param (keyword)(opt) component-id
-  ; @param (map) component-props
-  ; {}
+  ; @param (keyword)(opt) contacts-id
+  ; @param (map) contacts-props
+  ; {:contact-groups (maps in vector)(opt)
+  ;   [{:addresses (strings in vector)(opt)
+  ;     :email-addresses (strings in vector)(opt)
+  ;     :info (metamorphic-content)(opt)
+  ;     :label (metamorphic-content)(opt)
+  ;     :phone-numbers (numbers or strings in vector)(opt)}]
+  ;  :class (keyword or keywords in vector)(opt)
+  ;  :indent (map)(opt)
+  ;   {:bottom (keyword)(opt)
+  ;    :left (keyword)(opt)
+  ;    :right (keyword)(opt)
+  ;    :top (keyword)(opt)
+  ;    :horizontal (keyword)(opt)
+  ;    :vertical (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
+  ;  :outdent (map)(opt)
+  ;   Same as the :indent property
+  ;  :style (map)(opt)}
   ;
   ; @usage
   ; [contacts {...}]
   ;
   ; @usage
   ; [contacts :my-contacts {...}]
-  ([component-props]
-   [component (random/generate-keyword) component-props])
+  ([contacts-props]
+   [component (random/generate-keyword) contacts-props])
 
-  ([component-id component-props]
-   [contacts component-id component-props]))
+  ([contacts-id contacts-props]
+   (let [] ; contacts-props (contacts.prototypes/contacts-props-prototype contacts-props)
+        [contacts contacts-id contacts-props])))

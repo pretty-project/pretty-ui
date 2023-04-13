@@ -55,25 +55,15 @@
   ;  :data-click-effect (keyword)
   ;  :data-disabled (boolean)
   ;  :on-click (function)
-  ;  :on-mouse-up (function)
-  ;  :on-mouse-over (function)}
+  ;  :on-mouse-over (function)
+  ;  :on-mouse-up (function)}
   [_ _ {:keys [active? disabled? on-click on-mouse-over] :as item-props}]
-  ; BUG#7016
-  ; https://www.geeksforgeeks.org/how-to-disable-mouseout-events-triggered-by-child-elements
-  ; In case of the menu-bar element used up to build a dropdown menu, an on-mouse-out
-  ; event has to be placed on the dropdown wrapper to make the dropped down content
-  ; unvisible when the pointer leaves the menu.
-  ; Unfortunately child elements could triggers their parent's on-mouse-oute events,
-  ; therefore the on-mouse-out event bubbling has to be stopped from the menu items:
-  ; {:on-mouse-out #(.stopPropagation %)}
   (-> (if disabled? (cond-> {:class             :e-menu-bar--menu-item-body
                              :data-disabled     true
-                             :on-mouse-up       #(dom/blur-active-element!)
-                             :on-mouse-out      #(.stopPropagation %)})
+                             :on-mouse-up       #(dom/blur-active-element!)})
                     (cond-> {:class             :e-menu-bar--menu-item-body
                              :data-click-effect :opacity
-                             :on-mouse-up       #(dom/blur-active-element!)
-                             :on-mouse-out      #(.stopPropagation %)}
+                             :on-mouse-up       #(dom/blur-active-element!)}
                             (some? on-click)      (assoc :on-click      #(r/dispatch on-click))
                             (some? on-mouse-over) (assoc :on-mouse-over #(r/dispatch on-mouse-over))))
       (pretty-css/badge-attributes  item-props)

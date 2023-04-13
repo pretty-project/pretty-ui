@@ -14,11 +14,12 @@
   ; @param (map) menu-props
   ; {:menu-items (maps in vector)}
   [menu-id {:keys [item-default menu-items]}]
-  (letfn [; XXX#1239
+  (letfn [
+          ; XXX#1239
           ; The :on-mouse-over property of items in menu-bar element takes metamorphic-events.
-          ; In case of the f0 function returns the reseted value (returned by the reset! function),
-          ; the on-mouse-over handler might try to dispatch it as a metamorphic-event.
-          ; Therefore the f0 function returns a nil to avoid this.
+          ; If the f0 function returned the reseted value (by the reset! function),
+          ; the on-mouse-over handler would try to dispatch it as a metamorphic-event.
+          ; Therefore the f0 function returns a nil to avoid that.
           (f0 [dex %] (swap! dropdown-menu.state/MENUS assoc-in [menu-id :active-dex] dex)
                       (return nil))
 
@@ -77,6 +78,6 @@
   ; @return (map)
   ; {}
   [menu-props]
-  ; Filters the menu bar properties to avoid duplications in the dropdown-menu
+  ; Filters the menu bar properties to avoid duplications between the dropdown-menu
   ; element and the implemented menu-bar element.
   (dissoc menu-props :class :indent :outdent :style))

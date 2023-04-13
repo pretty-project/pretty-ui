@@ -1,5 +1,9 @@
 
-# Something for your mind, your body and your soul!
+- A {width: fit-content} CSS beállítás megoldja, hogy a block szülő elemben lévő
+  elementek ne legyenek automatikusan 100% szélesek. Pl. gomboknál! De fel kell
+  tenni az összes olyan elemre, amit érint a probléma
+
+
 
 - gombok presetjei nem szükségesek
 

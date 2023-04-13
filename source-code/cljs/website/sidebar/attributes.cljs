@@ -51,10 +51,11 @@
   ;
   ; @param (keyword) sidebar-id
   ; @param (map) sidebar-props
+  ; {:position (keyword)}
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
-  ;  :position (keyword)}
+  ;  :data-position (keyword)}
   [_ {:keys [position] :as sidebar-props}]
   (-> {:class         :w-sidebar
        :data-position position}

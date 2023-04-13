@@ -54,7 +54,7 @@
   ;
   ; @description
   ; You can set the default item styles and settings by using the :item-default
-  ; property or you can specify these values on each item separatelly.
+  ; property or you can specify these values on each item.
   ;
   ; @param (keyword)(opt) bar-id
   ; @param (map) bar-props

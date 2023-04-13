@@ -1,15 +1,14 @@
 
-/***** Anchor *****/
-/*** Body ***/
+/***** Elements *****/
 
-.e-anchor--body {
-  cursor: pointer;
-  display: block;
+.e-element {
+  /* It makes the elements not expanding to their parents.
+   * If you put a button into a DIV that has {display: block; width: 500px} settings,
+   * you don't want your button to expands to 500px. */
+  width: fit-content;
 }
-
-/*** Body ***/
-/***** Anchor *****/
-
+  
+/***** Elements *****/
 
 
 /***** Breadcrumbs *****/

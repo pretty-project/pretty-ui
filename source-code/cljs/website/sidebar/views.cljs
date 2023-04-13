@@ -42,7 +42,15 @@
   ;  :fill-color (keyword or string)(opt)
   ;   Default: :white
   ;  :indent (map)(opt)
+  ;   {:bottom (keyword)(opt)
+  ;    :left (keyword)(opt)
+  ;    :right (keyword)(opt)
+  ;    :top (keyword)(opt)
+  ;    :horizontal (keyword)(opt)
+  ;    :vertical (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
   ;  :outdent (map)(opt)
+  ;   Same as the :indent property
   ;  :position (keyword)(opt)
   ;   :left, :right
   ;   Default: :left
