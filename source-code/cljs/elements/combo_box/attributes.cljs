@@ -49,6 +49,7 @@
   ; @return (map)
   ; {}
   [_ _]
-  {:class            :e-combo-box--surface
-   :data-font-size   :s
-   :data-line-height :text-block})
+  {:class               :e-combo-box--surface
+   :data-font-size      :s
+   :data-letter-spacing :auto
+   :data-line-height    :text-block})

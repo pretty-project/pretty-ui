@@ -1,30 +1,48 @@
 
 (ns website.language-selector.views
-    (:require [random.api   :as random]
-              [re-frame.api :as r]))
+    (:require [hiccup.api                           :as hiccup]
+              [random.api                           :as random]
+              [website.language-selector.attributes :as language-selector.attributes]
+              [website.language-selector.prototypes :as language-selector.prototypes]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn- language-selector
-  ; @param (keyword) component-id
-  ; @param (map) component-props
-  ; {:languages (keywords in vector)
-  ;  :style (map)(opt)}
-  [_ {:keys [languages style]}]
-  (let [selected-language @(r/subscribe [:x.locales/get-selected-language])]
-       [:div {:id :mt-language-selector :style style}
-             (letfn [(f [languages language]
-                        (conj languages [:div {:class :mt-language-selector--language
-                                               :data-selected (= language selected-language)
-                                               :on-click #(r/dispatch [:components.language-selector/select-language! language])}
-                                              (name language)]))]
-                    (reduce f [:<>] languages))]))
+  ; @ignore
+  ;
+  ; @param (keyword) selector-id
+  ; @param (map) selector-props
+  ; {:languages (keywords in vector)}
+  [selector-id {:keys [languages] :as selector-props}]
+  [:div (language-selector.attributes/selector-attributes selector-id selector-props)
+        [:div (language-selector.attributes/selector-body-attributes selector-id selector-props)
+              (letfn [(f [language]
+                         [:button (language-selector.attributes/language-button-attributes selector-id selector-props language)
+                                  (name language)])]
+                     (hiccup/put-with [:<>] languages f))]])
 
 (defn component
-  ; @param (keyword)(opt) component-id
-  ; @param (map) component-props
-  ; {:languages (keywords in vector)
+  ; @param (keyword)(opt) selector-id
+  ; @param (map) selector-props
+  ; {:class (keyword or keywords in vector)(opt)
+  ;  :font-size (keyword)(opt)
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
+  ;   Default: :s
+  ;  :gap (keyword)(opt)
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;   Default: :xxs
+  ;  :indent (map)(opt)
+  ;   {:bottom (keyword)(opt)
+  ;    :left (keyword)(opt)
+  ;    :right (keyword)(opt)
+  ;    :top (keyword)(opt)
+  ;    :horizontal (keyword)(opt)
+  ;    :vertical (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
+  ;  :languages (keywords in vector)
+  ;  :outdent (map)(opt)
+  ;   Same as the :indent property
   ;  :style (map)(opt)}
   ;
   ; @usage
@@ -34,10 +52,10 @@
   ; [language-selector :my-language-selector {...}]
   ;
   ; @usage
-  ; [language-selector :my-language-selector
-  ;                    {:languages [:en :hu]}]
-  ([component-props]
-   [component (random/generate-keyword) component-props])
+  ; [language-selector {:languages [:en :hu]}]
+  ([selector-props]
+   [component (random/generate-keyword) selector-props])
 
-  ([component-id component-props]
-   [language-selector component-id component-props]))
+  ([selector-id selector-props]
+   (let [selector-props (language-selector.prototypes/selector-props-prototype selector-props)]
+        [language-selector selector-id selector-props])))

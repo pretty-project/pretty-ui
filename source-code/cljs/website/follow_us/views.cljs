@@ -1,40 +1,52 @@
 
-; WARNING
-; The fontawesome is no longer be part of the project-engine or the pretty-css
-; The website-kit has to be placed outside of the project-engine and has to
-; imports the fontawesome on its own!
-
 (ns website.follow-us.views
-    (:require [random.api                  :as random]
-              [website.follow-us.helpers   :as follow-us.helpers]
-              [website.scroll-sensor.views :as scroll-sensor.views]))
+    (:require [hiccup.api                   :as hiccup]
+              [random.api                   :as random]
+              [website.follow-us.env        :as follow-us.env]
+              [website.follow-us.attributes :as follow-us.attributes]
+              [website.follow-us.prototypes :as follow-us.prototypes]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn- follow-us
+  ; @ignore
+  ;
   ; @param (keyword) component-id
   ; @param (map) component-props
-  ; {:color (string)(opt)
-  ;  :links (map)
-  ;  :style (map)(opt)}
-  [_ {{:keys [facebook instagram linkedin]} :links :keys [color style]}]
-  [:<> [scroll-sensor.views/component ::scroll-sensor {:callback-f follow-us.helpers/scroll-f
-                                                       :style {:left "0" :position "absolute" :top "0"}}]
-       [:div {:id :mt-follow-us :style style}
-             (if facebook  [:a {:href facebook  :target "_blank"} [:i.fab.fa-facebook  {:style {:color (or color "white")}}]])
-             (if instagram [:a {:href instagram :target "_blank"} [:i.fab.fa-instagram {:style {:color (or color "white")}}]])
-             (if linkedin  [:a {:href linkedin  :target "_blank"} [:i.fab.fa-linkedin  {:style {:color (or color "white")}}]])]])
+  ; {:links (vectors in vector)}
+  [component-id {:keys [links] :as component-props}]
+  [:div (follow-us.attributes/component-attributes component-id component-props)
+        [:div (follow-us.attributes/component-body-attributes component-id component-props)
+              (letfn [(f [%] [:a (follow-us.attributes/component-link-attributes component-id component-props %)])]
+                     (hiccup/put-with [:<>] links f))]])
 
 (defn component
+  ; @warning
+  ; To use this component you have to add the Font Awesome icon set to your project!
+  ;
+  ; @description
+  ; This component uses Font Awesome brand icons for social media provider links.
+  ; It converts the given provider name to an icon class:
+  ; :instagram => .fab.fa-instagram
+  ;
   ; @param (keyword)(opt) component-id
   ; @param (map) component-props
-  ; {:color (string)(opt)
-  ;   Default: "white"
-  ;  :links (map)
-  ;   {:facebook (string)
-  ;    :instagram (string)
-  ;    :linkedin (string)}
+  ; {:class (keyword or keywords in vector)(opt)
+  ;  :indent (map)(opt)
+  ;   {:bottom (keyword)(opt)
+  ;    :left (keyword)(opt)
+  ;    :right (keyword)(opt)
+  ;    :top (keyword)(opt)
+  ;    :horizontal (keyword)(opt)
+  ;    :vertical (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
+  ;  :links (vectors in vector)
+  ;   [[(keyword) provider
+  ;     (string) link]
+  ;    [...]]
+  ;  :outdent (map)(opt)
+  ;   Same as the :indent property
   ;  :style (map)(opt)}
   ;
   ; @usage
@@ -42,8 +54,13 @@
   ;
   ; @usage
   ; [follow-us :my-follow-us {...}]
+  ;
+  ; @usage
+  ; [follow-us {:links [[:facebook "facebook.com/my-profile"]
+  ;                     [:instagram "instagram.com/my-profile"]]}]
   ([component-props]
    [component (random/generate-keyword) component-props])
 
   ([component-id component-props]
-   [follow-us component-id component-props]))
+   (let [] ; component-props (follow-us.prototypes/component-props-prototype component-props)
+        [follow-us component-id component-props])))

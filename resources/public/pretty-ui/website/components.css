@@ -36,6 +36,42 @@
 
 
 
+/***** Follow us *****/
+
+.w-follow-us--link {
+  align-items:     center;
+  display:         flex;
+  font-size:       24px;
+  height:          32px;
+  justify-content: center;
+  line-height:     32px;
+  width:           32px;
+}
+
+/***** Follow us *****/
+
+
+
+/***** Language selector *****/
+/*** Body ***/
+
+.w-language-selector--body {
+  display: flex;
+}
+
+/*** Body ***/
+
+/*** Language button ***/
+
+.w-language-selector--language-button {
+  text-transform: uppercase;
+}
+
+/*** Language button ***/
+/***** Language selector *****/
+
+
+
 /***** Sidebar *****/
 /*** Component ***/
 
@@ -109,17 +145,6 @@
 
 
 
-
-
-
-
-/***** Follow us *****/
-
-#mt-follow-us i {
-  display: block;
-}
-
-/***** Follow us *****/
 
 
 

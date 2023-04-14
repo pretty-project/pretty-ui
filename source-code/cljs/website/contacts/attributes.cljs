@@ -49,7 +49,6 @@
   [_ _ _]
   {:class               :w-contacts--contact-group--link
    :data-click-effect   :opacity
-   :data-color          :primary
    :data-font-size      :l
    :data-font-weight    :medium
    :data-hover-effect   :opacity

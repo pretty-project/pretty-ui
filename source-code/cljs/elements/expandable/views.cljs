@@ -18,7 +18,11 @@
   [expandable-id {:keys [icon label] :as expandable-props}]
   [:button (expandable.attributes/expandable-header-attributes expandable-id expandable-props)
            (if icon  [:i (expandable.attributes/expandable-icon-attributes expandable-id expandable-props) icon])
-           (if label [:div {:class :e-expandable--label :data-font-size :s :data-font-weight :medium :data-line-height :text-block}
+           (if label [:div {:class               :e-expandable--label
+                            :data-font-size      :s
+                            :data-font-weight    :medium
+                            :data-letter-spacing :auto
+                            :data-line-height    :text-block}
                            (metamorphic-content/compose label)])
            (if (expandable.env/expanded? expandable-id)
                [:i {:class :e-expandable--expand-icon :data-icon-family :material-symbols-outlined :data-icon-size :m} :expand_less]

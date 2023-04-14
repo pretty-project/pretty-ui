@@ -29,11 +29,13 @@
   ; {:font-size (keyword)}
   ;
   ; @return (map)
+  ; {}
   [_ {:keys [font-size]}]
-  {:class            :e-switch--option-label
-   :data-font-size   font-size
-   :data-font-weight :medium
-   :data-line-height :text-block})
+  {:class               :e-switch--option-label
+   :data-font-size      font-size
+   :data-font-weight    :medium
+   :data-letter-spacing :auto
+   :data-line-height    :text-block})
 
 (defn switch-option-track-attributes
   ; @ignore

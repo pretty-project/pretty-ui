@@ -1,17 +1,10 @@
 
 (ns website.api
-    (:require [website.language-selector.effects]
-              [website.sidebar.side-effects]
+    (:require [website.sidebar.side-effects]
               [website.contacts.views           :as contacts.views]
-              [website.copyright-label.views    :as copyright-label.views]
-              [website.created-by-link.views    :as created-by-link.views]
-              [website.credits.views            :as credits.views]
               [website.follow-us.views          :as follow-us.views]
               [website.language-selector.views  :as language-selector.views]
-              [website.mt-logo.views            :as mt-logo.views]
-              [website.menu.views               :as menu.views]
               [website.multi-menu.views         :as multi-menu.views]
-              [website.navbar.views             :as navbar.views]
               [website.sidebar.views            :as sidebar.views]
               [website.social-media-links.views :as social-media-links.views]
               [website.scroll-icon.views        :as scroll-icon.views]
@@ -20,18 +13,12 @@
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-  
+
 ; website.*.views
 (def contacts          contacts.views/component)
-(def copyright-label   copyright-label.views/component)
-(def created-by-link   created-by-link.views/component)
-(def credits           credits.views/component)
 (def follow-us         follow-us.views/component)
 (def language-selector language-selector.views/component)
-(def mt-logo           mt-logo.views/component)
-(def menu              menu.views/component)
 (def multi-menu        multi-menu.views/component)
-(def navbar            navbar.views/component)
 (def sidebar           sidebar.views/component)
 (def scroll-icon       scroll-icon.views/component)
 (def scroll-sensor     scroll-sensor.views/component)

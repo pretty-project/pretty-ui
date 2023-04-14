@@ -20,6 +20,7 @@
                                 :data-selectable false}
         [:a.c-copyright-label--anchor {:data-font-weight :medium
                                        :data-font-size :xxs
+                                       :data-letter-spacing :auto
                                        :data-line-height :text-block
                                        :style {:text-transform :uppercase}
                                        :href "https://monogo.app"

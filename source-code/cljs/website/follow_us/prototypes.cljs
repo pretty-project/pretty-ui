@@ -1,15 +1,13 @@
 
-(ns website.credits.prototypes
-    (:require [noop.api :refer [param]]))
+(ns website.follow-us.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn component-props-prototype
+  ; @ignore
+  ;
   ; @param (map) component-props
   ;
   ; @return (map)
-  ; {:color (keyword or string)}
-  [component-props]
-  (merge {:color :inherit}
-         (param component-props)))
+  [_])

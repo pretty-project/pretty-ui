@@ -62,7 +62,8 @@
   ; @return (map)
   ; {}
   [_ _]
-  {:class            :e-select--options-placeholder
-   :data-font-size   :s
-   :data-font-weight :medium
-   :data-line-height :text-block})
+  {:class               :e-select--options-placeholder
+   :data-font-size      :s
+   :data-font-weight    :medium
+   :data-letter-spacing :auto
+   :data-line-height    :text-block})

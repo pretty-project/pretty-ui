@@ -17,9 +17,10 @@
   ; @param (map) label-props
   ; {:helper (metamorphic-content)}
   [_ {:keys [helper]}]
-  (if helper [:div {:class            :e-label--helper
-                    :data-font-size   :xs
-                    :data-line-height :text-block}
+  (if helper [:div {:class               :e-label--helper
+                    :data-font-size      :xs
+                    :data-letter-spacing :auto
+                    :data-line-height    :text-block}
                    (metamorphic-content/compose helper)]))
 
 (defn label-info-text
@@ -30,9 +31,10 @@
   ; {:info-text (metamorphic-content)(opt)}
   [label-id {:keys [info-text]}]
   (if info-text (if-let [info-text-visible? (label.env/info-text-visible? label-id)]
-                        [:div {:class            :e-label--info-text
-                               :data-font-size   :xs
-                               :data-line-height :text-block}
+                        [:div {:class               :e-label--info-text
+                               :data-font-size      :xs
+                               :data-letter-spacing :auto
+                               :data-line-height    :text-block}
                               (metamorphic-content/compose info-text)])))
 
 (defn label-info-text-button
