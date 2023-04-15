@@ -1,6 +1,4 @@
 
-; WARNING! UNFINISHED! DO NOT USE!
-
 (ns elements.slider.views
     (:require [elements.element.views     :as element.views]
               [elements.slider.attributes :as slider.attributes]
@@ -36,6 +34,9 @@
                        :reagent-render      (fn [_ slider-props] [slider-structure slider-id slider-props])}))
 
 (defn element
+  ; @warning
+  ; UNFINISHED! DO NOT USE!
+  ;
   ; @param (keyword)(opt) slider-id
   ; @param (map) slider-props
   ; {:class (keyword or keywords in vector)(opt)

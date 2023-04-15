@@ -6,10 +6,8 @@
               [website.language-selector.views  :as language-selector.views]
               [website.multi-menu.views         :as multi-menu.views]
               [website.sidebar.views            :as sidebar.views]
-              [website.social-media-links.views :as social-media-links.views]
               [website.scroll-icon.views        :as scroll-icon.views]
-              [website.scroll-sensor.views      :as scroll-sensor.views]
-              [website.scroll-to-top.views      :as scroll-to-top.views]))
+              [website.scroll-sensor.views      :as scroll-sensor.views]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -22,4 +20,3 @@
 (def sidebar           sidebar.views/component)
 (def scroll-icon       scroll-icon.views/component)
 (def scroll-sensor     scroll-sensor.views/component)
-(def scroll-to-top     scroll-to-top.views/component)

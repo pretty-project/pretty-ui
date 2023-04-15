@@ -1,6 +1,4 @@
 
-; WARNING! UNFINISHED! DO NOT USE!
-
 (ns elements.stepper.views
     (:require [elements.stepper.attributes :as stepper.attributes]
               [elements.stepper.prototypes :as stepper.prototypes]
@@ -19,6 +17,9 @@
         [:div (stepper.attributes/stepper-body-attributes stepper-id stepper-props)]])
 
 (defn element
+  ; @warning
+  ; UNFINISHED! DO NOT USE!
+  ;
   ; @param (keyword)(opt) stepper-id
   ; @param (map) stepper-props
   ; {}

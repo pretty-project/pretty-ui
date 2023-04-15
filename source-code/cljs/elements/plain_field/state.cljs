@@ -1,6 +1,6 @@
 
 (ns elements.plain-field.state
-    (:require [reagent.core :rename {atom ratom}]))
+    (:require [reagent.api :refer [ratom]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

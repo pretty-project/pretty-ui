@@ -1,12 +1,4 @@
 
-- A {width: fit-content} CSS beállítás megoldja, hogy a block szülő elemben lévő
-  elementek ne legyenek automatikusan 100% szélesek. Pl. gomboknál! De fel kell
-  tenni az összes olyan elemre, amit érint a probléma
-
-
-
-- gombok presetjei nem szükségesek
-
 - Használj set-eket! #(1 2 3)
   + (set ...) set függvény!
   - Egy elem egyszer fordulhat elő benne

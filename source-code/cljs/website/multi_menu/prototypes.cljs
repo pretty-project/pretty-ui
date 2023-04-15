@@ -6,6 +6,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn menu-props-prototype
+  ; @ignore
+  ;
   ; @param (map) menu-props
   ;
   ; @return (map)

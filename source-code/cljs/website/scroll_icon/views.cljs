@@ -1,28 +1,31 @@
 
 (ns website.scroll-icon.views
-    (:require [random.api                  :as random]
-              [website.scroll-icon.helpers :as scroll-icon.helpers]
-              [website.scroll-sensor.views :as scroll-sensor.views]))
+    (:require [random.api                     :as random]
+              [website.scroll-icon.attributes :as scroll-icon.attributes]
+              [website.scroll-icon.prototypes :as scroll-icon.prototypes]
+              [website.scroll-sensor.views    :as scroll-sensor.views]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn- scroll-icon
-  ; @param (keyword) component-id
-  ; @param (map) component-props
-  ; {:color (string)(opt)
-  ;  :style (map)(opt)}
-  [_ {:keys [color style]}]
-  [:<> [scroll-sensor.views/component ::scroll-sensor {:callback-f scroll-icon.helpers/scroll-f
-                                                       :style {:left 2 :position "absolute" :top "0"}}]
-       [:div {:id :mt-scroll-icon :style style}
-             [:div {:id :mt-scroll-icon--body :style {"--icon-color" (or color "white")}}]]])
+  ; @ignore
+  ;
+  ; @param (keyword) icon-id
+  ; @param (map) icon-props
+  [icon-id icon-props]
+  [:<> [scroll-sensor.views/component (scroll-icon.attributes/sensor-attributes icon-id icon-props)]
+       [:div (scroll-icon.attributes/icon-attributes icon-id icon-props)
+             [:div (scroll-icon.attributes/icon-body-attributes icon-id icon-props)]]])
 
 (defn component
-  ; @param (keyword)(opt) component-id
-  ; @param (map) component-props
-  ; {:color (string)(opt)
-  ;   Default: "white"
+  ; @param (keyword)(opt) icon-id
+  ; @param (map) icon-props
+  ; {:class (keyword or keywords in vector)(opt)
+  ;  :color (string)(opt)
+  ;   Default: "#FFFFFF"
+  ;  :outdent (map)(opt)
+  ;   Same as the :indent property
   ;  :style (map)(opt)}
   ;
   ; @usage
@@ -30,8 +33,9 @@
   ;
   ; @usage
   ; [scroll-icon :my-scroll-icon {...}]
-  ([component-props]
-   [component (random/generate-keyword) component-props])
+  ([icon-props]
+   [component (random/generate-keyword) icon-props])
 
-  ([component-id component-props]
-   [scroll-icon component-id component-props]))
+  ([icon-id icon-props]
+   (let [icon-props (scroll-icon.prototypes/icon-props-prototype icon-props)]
+        [scroll-icon icon-id icon-props])))

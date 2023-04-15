@@ -1,6 +1,4 @@
 
-; WARNING! UNFINISHED! DO NOT USE!
-
 (ns elements.point-diagram.views
     (:require [elements.point-diagram.attributes :as point-diagram.attributes]
               [elements.point-diagram.prototypes :as point-diagram.prototypes]
@@ -24,6 +22,9 @@
                                 :style  {:fill "none" :stroke "red" :stroke-width "2px"}}]]]])
 
 (defn element
+  ; @warning
+  ; UNFINISHED! DO NOT USE!
+  ;
   ; @param (keyword)(opt) diagram-id
   ; @param (map) diagram-props
   ; {:color (keyword or string)(opt)

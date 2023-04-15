@@ -4,8 +4,7 @@
               [elements.label.side-effects :as label.side-effects]
               [elements.label.utils        :as label.utils]
               [metamorphic-content.api     :as metamorphic-content]
-              [pretty-css.api              :as pretty-css]
-              [x.environment.api           :as x.environment]))
+              [pretty-css.api              :as pretty-css]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

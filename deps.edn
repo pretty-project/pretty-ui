@@ -3,10 +3,11 @@
 ; + cljs-window-observer
 ; + scroll-lock
 ; + reagent
-; Ha már nincs x5 a ui-set alatt, ... a reagent.api most x5 plugin
-; re-frame
+; reagent-api
+; re-frame-api
 ; cljc-metamorphic-content
 ; cljs-dom
+; cljs-intersection-observer
 
 {:paths ["plugins/cljs" "resources" "source-code/cljs"]
  :deps  {bithandshake/cljc-dictionary {:git/url "git@github.com:bithandshake/cljc-dictionary"

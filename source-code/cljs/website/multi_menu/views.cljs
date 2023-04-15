@@ -16,7 +16,8 @@
   ; @param (keyword) menu-id
   ; @param (map) menu-props
   [menu-id menu-props]
-  [:div "..."])
+  [:div {:class :w-multi-menu--sidebar-menu-wrapper}
+        [elements/menu-bar (assoc menu-props :orientation :vertical)]])
 
 (defn- multi-menu
   ; @ignore

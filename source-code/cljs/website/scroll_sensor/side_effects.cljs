@@ -1,5 +1,5 @@
 
-(ns website.scroll-sensor.helpers
+(ns website.scroll-sensor.side-effects
     (:require [dom.api    :as dom]
               [hiccup.api :as hiccup]))
 
@@ -7,6 +7,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn sensor-did-mount-f
+  ; @ignore
+  ;
   ; @param (keyword) sensor-id
   ; @param (function) callback-f
   [sensor-id callback-f]

@@ -1,9 +1,9 @@
 
 (ns elements.plain-field.side-effects
-    (:require [elements.plain-field.state :as plain-field.state]
+    (:require [dom.api                    :as dom]
+              [elements.plain-field.state :as plain-field.state]
               [hiccup.api                 :as hiccup]
-              [re-frame.api               :as r]
-              [x.environment.api          :as x.environment]))
+              [re-frame.api               :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -51,8 +51,9 @@
   ; @param (keyword) field-id
   [field-id]
   (let [field-input-id (hiccup/value field-id "input")]
-       (x.environment/move-caret-to-end! field-input-id)
-       (x.environment/focus-element!     field-input-id)))
+       (when-let [field-input-element (dom/get-element-by-id field-input-id)]
+                 (dom/move-caret-to-end! field-input-element)
+                 (dom/focus-element!     field-input-element))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

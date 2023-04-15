@@ -4,7 +4,7 @@
 ### Overview
 
 The <strong>pretty-ui</strong> is a ClojureScript web application UI component set
-made for web applications.
+made for websites and web applications.
 
 ### Documentation
 
