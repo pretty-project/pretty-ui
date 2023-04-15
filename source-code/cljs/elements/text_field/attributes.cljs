@@ -167,14 +167,11 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ; {:stretch-orientation (keyword)}
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)
-  ;  :data-stretch-orientation (keyword)}
-  [_ {:keys [stretch-orientation] :as field-props}]
-  (-> {:class                    :e-text-field
-       :data-stretch-orientation stretch-orientation}
-      (pretty-css/default-attributes          field-props)
-      (pretty-css/element-min-size-attributes field-props)
-      (pretty-css/outdent-attributes          field-props)))
+  ; {:class (keyword or keywords in vector)}
+  [_ field-props]
+  (-> {:class :e-text-field}
+      (pretty-css/default-attributes      field-props)
+      (pretty-css/outdent-attributes      field-props)
+      (pretty-css/element-size-attributes field-props)))

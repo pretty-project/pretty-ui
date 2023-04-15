@@ -180,8 +180,6 @@
   ;  :marker-position (keyword)(opt)
   ;   :tl, :tr, :br, :bl
   ;  :max-length (integer)(opt)
-  ;  :min-width (keyword)(opt)
-  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;  :modifier (function)(opt)
   ;  :on-blur (Re-Frame metamorphic-event)(opt)
   ;  :on-changed (Re-Frame metamorphic-event)(opt)
@@ -208,9 +206,6 @@
   ;   :delayed, :opacity
   ;  :start-adornments (maps in vector)(opt)
   ;   Same as the :end-adornments property.
-  ;  :stretch-orientation (keyword)(opt)
-  ;   :horizontal, :none
-  ;   Default: :none
   ;  :style (map)(opt)
 
 
@@ -231,7 +226,10 @@
   ;    :invalid-message (metamorphic-content)(opt)
   ;    :invalid-message-f (function)(opt)
   ;    :prevalidate? (boolean)(opt)}
-  ;  :value-path (vector)(opt)}
+  ;  :value-path (vector)(opt)
+  ;  :width (keyword)(opt)
+  ;   :auto, :content, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;   Default: :content}
   ;
   ; @usage
   ; [text-field {...}]

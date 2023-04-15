@@ -35,7 +35,10 @@
   ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
   ;  :outdent (map)(opt)
   ;   Same as the :indent property
-  ;  :style (map)(opt)}
+  ;  :style (map)(opt)
+  ;  :width (keyword)(opt)
+  ;   :auto, :content, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;   Default: :content}
   ;
   ; @usage
   ; [blank {...}]
@@ -46,5 +49,5 @@
    [element (random/generate-keyword) blank-props])
 
   ([blank-id blank-props]
-   (let [] ; blank-props (blank.prototypes/blank-props-prototype blank-props)
+   (let [blank-props (blank.prototypes/blank-props-prototype blank-props)]
         [blank blank-id blank-props])))

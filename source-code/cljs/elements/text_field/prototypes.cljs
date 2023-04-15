@@ -30,7 +30,7 @@
                        :letter-spacing :auto
                        :line-height    :text-block})
          (if on-click {:click-effect :opacity})
-         {:color :default
+         {:color        :default
           :tab-indexed? true}
          (param adornment-props)
          ; Inherits the reveal effect from the field-props into the adornment-props
@@ -76,7 +76,8 @@
   ;  :line-height (keyword)
   ;  :marker-position (keyword)
   ;  :type (keyword)
-  ;  :value-path (vector)}
+  ;  :value-path (vector)
+  ;  :width (keyword)}
   [field-id {:keys [border-color marker-color] :as field-props}]
   ; BUG#6782
   ; https://stackoverflow.com/questions/12374442/chrome-ignores-autocomplete-off
@@ -97,7 +98,8 @@
           :font-weight     :normal
           :line-height     :text-block
           :type            :text
-          :value-path      (input.utils/default-value-path field-id)}
+          :value-path      (input.utils/default-value-path field-id)
+          :width           :content}
          (if border-color  {:border-position :all
                             :border-width    :xxs})
          (if marker-color  {:marker-position :tr})

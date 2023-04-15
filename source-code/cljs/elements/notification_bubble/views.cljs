@@ -77,6 +77,9 @@
   ;   Default :medium
   ;  :fill-color (keyword or string)(opt)
   ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+  ;  :height (keyword)(opt)
+  ;   :auto, :content, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;   Default: :content
   ;  :indent (map)(opt)
   ;   {:bottom (keyword)(opt)
   ;    :left (keyword)(opt)
@@ -105,7 +108,10 @@
   ;     Default: :icon-button}
   ;  :selectable? (boolean)(opt)
   ;   Default: false
-  ;  :style (map)(opt)}
+  ;  :style (map)(opt)
+  ;  :width (keyword)(opt)
+  ;   :auto, :content, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;   Default: :content}
   ;
   ; @usage
   ; [notification-bubble {...}]

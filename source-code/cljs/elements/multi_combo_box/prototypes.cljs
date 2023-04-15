@@ -32,11 +32,11 @@
   ; {}
   ;
   ; @return (map)
-  ; {:deletable? (boolean)
-  ;  :value-path (vector)}
+  ; {:chips-path (vector)
+  ;  :deletable? (boolean)}
   [_ {:keys [chip-group value-path]}]
-  (merge {:deletable? true
-          :value-path value-path}
+  (merge {:chips-path value-path
+          :deletable? true}
          (param chip-group)))
 
 ;; ----------------------------------------------------------------------------

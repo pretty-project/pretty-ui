@@ -12,18 +12,21 @@
   ;
   ; @param (keyword) image-id
   ; @param (map) image-props
-  ; {:style (map)(opt)}
+  ; {:src (string)
+  ;  :style (map)(opt)}
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  :on-error (function)
   ;  :ref (function)
+  ;  :src (string)
   ;  :style (map)}
-  [image-id {:keys [style] :as image-props}]
+  [image-id {:keys [src style] :as image-props}]
   (-> {:class    :e-image--body
        :on-error (image.utils/on-error-f image-id)
        :ref      (react/set-reference-f  image-id)
-       :style    style}
+       :style    style
+       :src      src}
       (pretty-css/indent-attributes image-props)))
 
 ;; ----------------------------------------------------------------------------
@@ -36,8 +39,9 @@
   ; @param (map) image-props
   ;
   ; @return (map)
-  ; {}
+  ; {:class (keyword or keywords in vector)}
   [_ image-props]
   (-> {:class :e-image}
-      (pretty-css/default-attributes image-props)
-      (pretty-css/outdent-attributes image-props)))
+      (pretty-css/default-attributes      image-props)
+      (pretty-css/outdent-attributes      image-props)
+      (pretty-css/element-size-attributes image-props)))

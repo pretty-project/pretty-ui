@@ -33,5 +33,5 @@
   ; {}
   [group-id group-props]
   (merge {:chip-label-f return
-          :value-path (input.utils/default-value-path group-id)}
+          :chips-path (input.utils/default-value-path group-id)}
          (param group-props)))

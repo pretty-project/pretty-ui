@@ -2,6 +2,7 @@
 (ns website.multi-menu.views
     (:require [elements.api                  :as elements]
               [random.api                    :as random]
+              [website.multi-menu.attributes :as multi-menu.attributes]
               [website.multi-menu.prototypes :as multi-menu.prototypes]
               [website.sidebar.views         :as sidebar.views]
               [window-observer.api           :as window-observer]))
@@ -15,7 +16,7 @@
   ; @param (keyword) menu-id
   ; @param (map) menu-props
   [menu-id menu-props]
-  [:div "xx"])
+  [:div "..."])
 
 (defn- multi-menu
   ; @ignore
@@ -25,9 +26,8 @@
   ; {}
   [menu-id {:keys [threshold] :as menu-props}]
   (if (window-observer/viewport-width-min? threshold)
-    [:div {:style {:display :flex}}
-       [elements/dropdown-menu menu-id menu-props]
-       [sidebar.views/component menu-id {:content [sidebar-menu menu-id menu-props]}]]))
+      [elements/dropdown-menu  menu-id menu-props]
+      [sidebar.views/component menu-id {:content [sidebar-menu menu-id menu-props]}]))
 
 (defn component
   ; XXX#0715 (source-code/cljs/elements/dropdown_menu/views.cljs)
@@ -41,8 +41,20 @@
   ;
   ; @param (keyword)(opt) menu-id
   ; @param (map) menu-props
-  ; {
-  ;  :threshold (px)(opt)}
+  ; {:class (keyword or keywords in vector)(opt)
+  ;  :indent (map)(opt)
+  ;   {:bottom (keyword)(opt)
+  ;    :left (keyword)(opt)
+  ;    :right (keyword)(opt)
+  ;    :top (keyword)(opt)
+  ;    :horizontal (keyword)(opt)
+  ;    :vertical (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
+  ;  :outdent (map)(opt)
+  ;   Same as the :indent property
+  ;  :style (map)(opt)
+  ;  :threshold (px)(opt)
+  ;   Default: 0}
   ;
   ; @usage
   ; [multi-menu {...}]

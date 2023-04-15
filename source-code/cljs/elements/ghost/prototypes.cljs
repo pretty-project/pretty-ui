@@ -11,7 +11,9 @@
   ; @param (map) ghost-props
   ;
   ; @return (map)
-  ; {:height (keyword)}
+  ; {:height (keyword)
+  ;  :width (keyword)}
   [ghost-props]
-  (merge {:height :s}
+  (merge {:height :s
+          :width  :auto}
          (param ghost-props)))

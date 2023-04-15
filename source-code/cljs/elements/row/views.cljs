@@ -41,6 +41,9 @@
   ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;  :gap (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :auto
+  ;  :height (keyword)(opt)
+  ;   :auto, :content, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;   Default: :content
   ;  :horizontal-align (keyword)(opt)
   ;   :center, :left, :right, :space-around, :space-between, :space-evenly
   ;   Default: :left
@@ -52,15 +55,23 @@
   ;    :horizontal (keyword)(opt)
   ;    :vertical (keyword)(opt)
   ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
+  ;  :max-height (keyword)(opt)
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;  :max-width (keyword)(opt)
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;  :min-height (keyword)(opt)
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;  :min-width (keyword)(opt)
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;  :outdent (map)(opt)
   ;   Same as the :indent property
   ;  :style (map)(opt)
-  ;  :stretch-orientation (keyword)(opt)
-  ;   :horizontal, :vertical, :both, :none
-  ;   Default: :horizontal
   ;  :vertical-align (keyword)(opt)
   ;   :top, :center, :bottom
   ;   Default: :center
+  ;  :width (keyword)(opt)
+  ;   :auto, :content, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;   Default: :content
   ;  :wrap-items? (boolean)(opt)
   ;   Default: true}
   ;

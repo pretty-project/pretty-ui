@@ -33,5 +33,6 @@
   ; {}
   [_ polarity-props]
   (-> {:class :e-vertical-polarity}
-      (pretty-css/default-attributes polarity-props)
-      (pretty-css/outdent-attributes polarity-props)))
+      (pretty-css/default-attributes      polarity-props)
+      (pretty-css/outdent-attributes      polarity-props)
+      (pretty-css/element-size-attributes polarity-props)))

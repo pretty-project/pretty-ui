@@ -1,5 +1,5 @@
 
-; WARNING! HASN'T FINISHED! DO NOT USE!
+; WARNING! UNFINISHED! DO NOT USE!
 
 (ns elements.slider.views
     (:require [elements.element.views     :as element.views]
@@ -61,7 +61,10 @@
   ;   Same as the :indent property
   ;  :resetable? (boolean)(opt)
   ;  :style (map)(opt)
-  ;  :value-path (vector)(opt)}
+  ;  :value-path (vector)(opt)
+  ;  :width (keyword)(opt)
+  ;   :auto, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;   Default: :auto}
   ;
   ; @usage
   ; [slider {...}]

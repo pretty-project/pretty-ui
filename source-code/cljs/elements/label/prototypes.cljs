@@ -38,7 +38,8 @@
   ;  :selectable? (boolean)
   ;  :target-id (string)
   ;  :tooltip-content (string)
-  ;  :tooltip-position (keyword)}
+  ;  :tooltip-position (keyword)
+  ;  :width (keyword)}
   [{:keys [border-color color content font-size icon marker-color target-id tooltip-content] :as label-props}]
   ; XXX#7009
   ; The 'label-props-prototype' function applies the 'metamorphic-content/compose' function
@@ -49,7 +50,8 @@
                :font-weight      :medium
                :horizontal-align :left
                :line-height      :text-block
-               :selectable?      false}
+               :selectable?      false
+               :width            :content}
               (if border-color    {:border-position :all
                                    :border-width    :xxs})
               (if marker-color    {:marker-position :tr})

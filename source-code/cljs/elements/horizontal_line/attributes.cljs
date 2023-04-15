@@ -34,5 +34,6 @@
   ; {:class (keyword or keywords in vector)}
   [_ line-props]
   (-> {:class :e-horizontal-line}
-      (pretty-css/default-attributes line-props)
-      (pretty-css/outdent-attributes line-props)))
+      (pretty-css/default-attributes      line-props)
+      (pretty-css/outdent-attributes      line-props)
+      (pretty-css/element-size-attributes line-props)))

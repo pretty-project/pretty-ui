@@ -31,7 +31,8 @@
                         :icon             :more_vert
                         :icon-color       :highlight
                         :icon-size        :l
-                        :indent           {:all :xs}}])
+                        :indent           {:all :xs}
+                        :width            :parent}])
 
 (defn- content-swapper-back-button
   ; @ignore
@@ -48,7 +49,8 @@
                                 :icon-size        :l
                                 :indent           {:all :xs}
                                 :label            label
-                                :on-click         #(f)}]))
+                                :on-click         #(f)
+                                :width            :parent}]))
 
 (defn- content-swapper-page-button
   ; @ignore
@@ -68,7 +70,8 @@
                                 :icon-position    :right
                                 :icon-size        :xl
                                 :gap              :auto
-                                :on-click         #(f)}]))
+                                :on-click         #(f)
+                                :width            :parent}]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -89,14 +92,14 @@
 
                      ; Selected page
                      [:<>
-                          [:div (content-swapper.attributes/swapper-page-attributes swapper-id swapper-props)
+                          [:div {:class :e-content-swapper--page}
                                 [metamorphic-content/compose swapping-content]]]
 
                      ; Page buttons
                      ; The page buttons displayed on a page to give them a container
                      ; with the same size attributes as of content pages
                      (letfn [(f [page-dex page-props] [content-swapper-page-button swapper-id swapper-props page-dex page-props])]
-                            [:div (content-swapper.attributes/swapper-page-attributes swapper-id swapper-props)
+                            [:div {:class :e-content-swapper--page}
                                   [:div {:class :e-content-swapper--page-buttons}
                                         (hiccup/put-with-indexed [:<>] pages f)]]))]])
 
@@ -108,7 +111,7 @@
   ; {}
   [swapper-id {:keys [pages] :as swapper-props}]
   [:div (content-swapper.attributes/swapper-body-attributes swapper-id swapper-props)
-        (letfn [(f [{:keys [content]}] [:div (content-swapper.attributes/swapper-page-attributes swapper-id swapper-props)
+        (letfn [(f [{:keys [content]}] [:div {:class :e-content-swapper--page}
                                              [metamorphic-content/compose content]])]
                (hiccup/put-with [:<>] pages f))])
 
@@ -139,16 +142,15 @@
                        :reagent-render         (fn [_ _] [content-swapper-structure swapper-id swapper-props])}))
 
 (defn element
-  ; @description
-  ; The :max-height, :max-width, :min-height and :min-width properties
-  ; are applied on each page.
-  ;
   ; @param (keyword)(opt) swapper-id
   ; @param (map) swapper-props
   ; {:class (keyword or keywords in vector)(opt)
   ;  :gap (keyword)(opt)
   ;   Distance between the unfolded pages
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :auto
+  ;  :height (keyword)(opt)
+  ;   :auto, :content, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;   Default: :content
   ;  :indent (map)(opt)
   ;  :label (metamorphic-content)(opt)
   ;  :max-height (keyword)(opt)
@@ -164,7 +166,10 @@
   ;   [{:content (metamorphic-content)
   ;     :label (metamorphic-content)}]
   ;  :style (map)(opt)
-  ;  :threshold (px)(opt)}
+  ;  :threshold (px)(opt)
+  ;  :width (keyword)(opt)
+  ;   :auto, :content, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;   Default: :content}
   ;
   ; @usage
   ; [content-swapper {...}]

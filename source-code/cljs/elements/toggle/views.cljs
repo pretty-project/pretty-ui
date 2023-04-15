@@ -41,6 +41,9 @@
   ;  :disabled? (boolean)(opt)
   ;  :fill-color (keyword or string)(opt)
   ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+  ;  :height (keyword)(opt)
+  ;   :auto, :content, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;   Default: :content
   ;  :hover-color (keyword or string)(opt)
   ;   :default, :highlight, :invert, :muted, :none, :primary, :secondary, :success, :warning
   ;   Default: :none
@@ -63,7 +66,10 @@
   ;   Same as the :indent property
   ;  :style (map)(opt)
   ;  :target (keyword)(opt)
-  ;   :blank, :self}
+  ;   :blank, :self
+  ;  :width (keyword)(opt)
+  ;   :auto, :content, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;   Default: :content}
   ;
   ; @usage
   ; [toggle {...}]

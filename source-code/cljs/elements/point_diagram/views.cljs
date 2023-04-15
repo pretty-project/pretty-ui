@@ -1,5 +1,5 @@
 
-; WARNING! HASN'T FINISHED! DO NOT USE!
+; WARNING! UNFINISHED! DO NOT USE!
 
 (ns elements.point-diagram.views
     (:require [elements.point-diagram.attributes :as point-diagram.attributes]
@@ -47,7 +47,7 @@
   ;    Max: 6}
   ;
   ; @usage
-  ; [line-diagram {...}]
+  ; [point-diagram {...}]
   ;
   ; @usage
   ; [point-diagram :my-point-diagram {...}]

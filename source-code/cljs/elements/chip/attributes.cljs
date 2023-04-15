@@ -67,8 +67,10 @@
   ; @param (map) chip-props
   ;
   ; @return (map)
-  ; {}
+  ; {:class (keyword or keywords in vector)}
   [_ chip-props]
   (-> {:class :e-chip}
-      (pretty-css/default-attributes chip-props)
-      (pretty-css/outdent-attributes chip-props)))
+      (pretty-css/default-attributes          chip-props)
+      (pretty-css/outdent-attributes          chip-props)
+      (pretty-css/element-min-size-attributes chip-props)
+      (pretty-css/element-size-attributes     chip-props)))

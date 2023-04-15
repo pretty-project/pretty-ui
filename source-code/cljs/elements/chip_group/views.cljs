@@ -17,20 +17,25 @@
   ;
   ; @param (keyword) group-id
   ; @param (map) group-props
-  ; {:placeholder (metamorphic-content)(opt)
-  ;  :value-path (vector)}
-  [group-id {:keys [placeholder value-path] :as group-props}]
-  (let [chips @(r/subscribe [:get-item value-path])]
+  ; {:chips (maps in vector)(opt)
+  ;  :chips-path (vector)(opt)
+  ;  :placeholder (metamorphic-content)(opt)}
+  [group-id {:keys [chips chips-path placeholder] :as group-props}]
+  ; XXX#2781 (source-code/cljs/elements/input/env.cljs)
+  ; Just like the optionable inputs the chip-group has multiple chip sources as well:
+  ; A) The :chips property
+  ; B) The application state (:chips-path property)
+  (let [chips (or chips @(r/subscribe [:get-item chips-path]))]
        (if (vector/nonempty? chips)
 
-           ; Iterating over the data read from the value-path if it's a nonempty vector
-           ; Every item of the vector displayed on a chip with applying the 'chip-label-f' on the item
+           ; Iterating over the chips if it's a nonempty vector
+           ; Every item in the vector displayed on a chip with applying the 'chip-label-f' on the item
            (letfn [(f [chip-list chip-dex chip]
                       (let [chip-props (chip-group.prototypes/chip-props-prototype group-id group-props chip-dex chip)]
                            (conj chip-list [chip.views/element chip-props])))]
                   (reduce-kv f [:div {:class :e-chip-group--chips}] chips))
 
-           ; Displaying the placeholder if the data from the value-path is NOT a nonempty vector
+           ; Displaying the placeholder if the chips is NOT a nonempty vector
            (if placeholder [:div {:class               :e-chip-group--chips-placeholder
                                   :data-font-size      :s
                                   :data-letter-spacing :auto
@@ -49,11 +54,17 @@
               [chip-group-chips group-id group-props]]])
 
 (defn element
+  ; @warning
+  ; Chips only deletable if they are read from the application state by using
+  ; the :chips-path property!
+  ;
   ; @param (keyword)(opt) group-id
   ; @param (map) group-props
   ; {:class (keyword or keywords in vector)(opt)
   ;  :chip-label-f (function)(opt)
   ;   Default: return
+  ;  :chips (maps in vector)(opt)
+  ;  :chips-path (vector)(opt)
   ;  :deletable? (boolean)(opt)
   ;   Default: false
   ;  :helper (metamorphic-content)(opt)
@@ -70,8 +81,7 @@
   ;  :outdent (map)(opt)
   ;   Same as the :indent property
   ;  :placeholder (metamorphic-content)(opt)
-  ;  :style (map)(opt)
-  ;  :value-path (vector)(opt)}
+  ;  :style (map)(opt)}
   ;
   ; @usage
   ; [chip-group {...}]

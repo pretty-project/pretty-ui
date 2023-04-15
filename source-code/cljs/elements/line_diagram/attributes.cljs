@@ -22,9 +22,9 @@
   ;   {:width (string)}}
   [_ diagram-props {:keys [color] :as section-props}]
   (let [value-ratio (line-diagram.utils/section-props->value-ratio diagram-props section-props)]
-       {:class :e-line-diagram--section
+       {:class           :e-line-diagram--section
         :data-fill-color color
-        :style {:width (css/percent value-ratio)}}))
+        :style           {:width (css/percent value-ratio)}}))
 
 (defn diagram-sections-attributes
   ; @ignore
@@ -72,5 +72,6 @@
   ; {:class (keyword or keywords in vector)}
   [_ diagram-props]
   (-> {:class :e-line-diagram}
-      (pretty-css/default-attributes diagram-props)
-      (pretty-css/outdent-attributes diagram-props)))
+      (pretty-css/default-attributes      diagram-props)
+      (pretty-css/outdent-attributes      diagram-props)
+      (pretty-css/element-size-attributes diagram-props)))

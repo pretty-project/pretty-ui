@@ -1,17 +1,29 @@
 
-/***** Elements *****/
+/***** Blank *****/
+/*** Body ***/
 
-.e-element {
-  /* It makes the elements not expanding to their parents.
-   * If you put a button into a DIV that has {display: block; width: 500px} settings,
-   * you don't want your button to expands to 500px. */
-  width: fit-content;
+.e-blank--body {
+  /* XXX#6667
+   * The blank element takes height property therefore its body has to fit into it. */
+  height: 100%;
 }
-  
-/***** Elements *****/
+
+/*** Body ***/
+/***** Blank *****/
+
 
 
 /***** Breadcrumbs *****/
+/*** Element ***/
+
+.e-breadcrumbs {
+  /* XXX#6668
+   * No need to the breadcrumbs element be wider than its content. */
+  width: fit-content;
+}
+
+/*** Element ***/
+
 /*** Body ***/
 
 .e-breadcrumbs--body {
@@ -28,8 +40,8 @@
 
 .e-breadcrumbs--separator {
   align-items: center;
-  display: flex;
-  height: 24px;
+  display:     flex;
+  height:      24px;
 }
 
 .e-breadcrumbs--separator::after {
@@ -51,10 +63,12 @@
 
 .e-button--body {
   align-items: center;
-  cursor: pointer;
-  display: flex;
+  cursor:      pointer;
+  display:     flex;
 
-  /* */
+  /* XXX#6669
+   * The body element is a BUTTON tag therefore its width has to be set to fit
+   * the body into its parent. */
   width: 100%;
 }
 
@@ -67,10 +81,10 @@
 /*** Body ***/
 
 .e-card--body {
-  display: flex;
+  display:        flex;
   flex-direction: column;
-  width: 100%;
 
+  /* XXX#6667 */
   /* If the card element's height is limited by its parent element, in order to
    * apply the overflow property on the card's content, the card body element's
    * height has to be specified! */
@@ -83,6 +97,15 @@
 
 
 /***** Checkbox *****/
+/*** Element ***/
+
+.e-checkbox {
+  /* XXX#6668 */
+  width: fit-content;
+}
+
+/*** Element ***/
+
 /*** Options ***/
 
 .e-checkbox--body[data-options-orientation="horizontal"] {
@@ -181,6 +204,15 @@
 
 
 /***** Chip-group *****/
+/*** Element ***/
+
+.e-chip-group {
+  /* XXX#6668 */
+  width: fit-content;
+}
+
+/*** Element ***/
+
 /*** Chip-group chips ***/
 
 .e-chip-group--chips {
@@ -210,6 +242,9 @@
   display:         flex;
   flex-direction:  column;
   justify-content: center;
+
+  /* XXX#6668 */
+  width: fit-content;
 }
 
 /*** Element ***/
@@ -282,18 +317,9 @@
 .e-column--body {
   display: flex;
   flex-direction: column;
-  /* BUG
-   * Az .e-column--body nem lehet {height: 100%} magas, mert akkor mindig akkora, mint a szülő elem
-   * ha azt akarod, hogy kitöltse a rendelkezésre álló helyet, akkor flex-grow tulajdonságot kell
-   * beállítani. A {height: 100%} nem jó, amikor nem egyedül van a szülő elemben!!! */
-  /* BUG
-   * Vissza kellett állítani a {height: 100%} beállítás használatát, mert enélkül az .e-column--body
-   * elem nem vette fel a .e-column elem magasságát, ezért nem működött a benne megjelenített tartalom
-   * középre igazítása. Tényleg meg lehet oldali flex-grow tulajdonság használatával, de az előző
-   * leírás szerint a {height: 100%} beállítás használatával akkor van probléma, ha:
-   * "A {height: 100%} nem jó, amikor nem egyedül van a szülő elemben!!!"
-   * De az .e-column--body mindig egyedül van a szülő elemben (.e-column)! (Vagy melyik elem van egyedül, miben?)
-   */
+
+  /* XXX#6667 */
+  /* The {height: 100%} setting is necessary to make the content vertically alignable! */
   height: 100%;
 }
 
@@ -383,6 +409,15 @@
 
 
 /***** Counter *****/
+/*** Element ***/
+
+.e-counter {
+  /* XXX#6668 */
+  width: fit-content;
+}
+
+/*** Element ***/
+
 /*** Body ***/
 
 .e-counter--body {
@@ -508,6 +543,15 @@
 
 
 /***** Dropdown menu *****/
+/*** Element ***/
+
+.e-dropdown-menu {
+  /* XXX#6668 */
+  width: fit-content;
+}
+
+/*** Element ***/
+
 /*** Surface ***/
 
 .e-dropdown-menu--surface {
@@ -523,6 +567,15 @@
 
 
 /***** Expandable *****/
+/*** Element ***/
+
+.e-expandable {
+  /* XXX#6668 */
+  width: fit-content;
+}
+
+/*** Element ***/
+
 /*** Header ***/
 
 .e-expandable--header {
@@ -578,15 +631,56 @@
 
 
 /***** Ghost *****/
+/*** Body ***/
 
 .e-ghost--body {
   animation-iteration-count: infinite;
-  animation-duration: 2s;
-  animation-name: opacity-1-05-1;
-  background-color: var( --ghost-color );
+  animation-duration:        2s;
+  animation-name:            opacity-1-05-1;
+  background-color:          var( --ghost-color );
+
+  /* XXX#6667 */
+  height: 100%;
 }
 
+/*** Body ***/
 /***** Ghost *****/
+
+
+
+/***** Horizontal polarity *****/
+/*** Body ***/
+
+.e-horizontal-polarity--body {
+  display:         flex;
+  justify-content: space-between;
+}
+
+/*** Body ***/
+
+/*** Content ***/
+
+.e-horizontal-polarity--start-content,
+.e-horizontal-polarity--middle-content,
+.e-horizontal-polarity--end-content {
+  display: flex;
+}
+
+/*** Content ***/
+/***** Horizontal polarity *****/
+
+
+
+/***** Icon *****/
+/*** Element ***/
+
+.e-icon {
+  /* XXX#6668 */
+  width: fit-content;
+}
+
+/*** Element ***/
+/***** Icon *****/
 
 
 
@@ -597,6 +691,9 @@
   align-items:    center;
   display:        flex;
   flex-direction: column;
+
+  /* XXX#6668 */
+  width: fit-content;
 }
 
 /*** Element ***/
@@ -620,6 +717,19 @@
 
 /*** Icon-button label ***/
 /***** Icon-button *****/
+
+
+
+/***** Image *****/
+/*** Body ***/
+
+.e-image--body {
+  height: 100%;
+  width:  100%;
+}
+
+/*** Body ***/
+/***** Image *****/
 
 
 
@@ -686,22 +796,12 @@
 
 
 
-/***** Line *****/
-
-.e-vertical-line--body {
-  height: 100%;
-}
-
-/***** Line *****/
-
-
-
 /***** Line diagram *****/
 /*** Element ***/
 
 .e-line-diagram {
-  display: flex;
-  flex-direction: column;
+  display:         flex;
+  flex-direction:  column;
   justify-content: center;
 }
 
@@ -728,6 +828,15 @@
 
 
 /***** Menu bar *****/
+/*** Element ***/
+
+.e-menu-bar {
+  /* XXX#6668 */
+  width: fit-content;
+}
+
+/*** Element ***/
+
 /*** Item ***/
 
 /* Az .e-menu-bar--menu-item elemben alkalmazott esztétikai távolságok (margin, padding),
@@ -774,6 +883,9 @@
   align-items:     center;
   display:         flex;
   justify-content: space-between;
+
+  /* XXX#6667 */
+  height: 100%;
 }
 
 /*** Body ***/
@@ -782,6 +894,15 @@
 
 
 /***** Radio button *****/
+/*** Element ***/
+
+.e-radio-button {
+  /* XXX#6668 */
+  width: fit-content;
+}
+
+/*** Element ***/
+
 /*** Clear button ***/
 
 .e-radio-button--clear-button {
@@ -889,16 +1010,11 @@
 
 .e-row--body {
   display: flex;
-  /* Az e-row--body elem ugyanolyan magas kell legyen, mint az e-row elem, hogy minden esetben
-   * megfelelően működjön a vertikális igazítás!
-   *
-   * Ha az e-row komponens {:style {...}} tulajdonságával beállítod az e-row elem magasságát,
-   * és {:vertical-align :center} vagy {:vertical-align :bottom} beállítást használsz, miközben
-   * a tartalom magassága kevesebb, mint az e-row elem beállított magassága, akkor a {height: 100%}
-   * tulajdonság nélkül az .e-row--body elem magassága a tartalom magasságával lenne egyenlő
-   * és nem működne a tartalom középre igazítása! */
+  width:   100%;
+
+  /* XXX#6667 */
+  /* The {height: 100%} setting is necessary to make the content vertically alignable! */
   height: 100%;
-  width: 100%;
 }
 
 .e-row--body[data-wrap-items="true"] {
@@ -910,64 +1026,17 @@
 
 
 
-/***** Polarity *****/
-
-.e-horizontal-polarity {
-  /* WARNING! DEPRECATED! DO NOT USE! */
- -height: 100%;
-  /* WARNING! DEPRECATED! DO NOT USE! */
-  width: 100%;
-}
-
-.e-horizontal-polarity--body {
-  display: flex;
-  justify-content: space-between;
-}
-
-.e-horizontal-polarity--start-content,
-.e-horizontal-polarity--middle-content,
-.e-horizontal-polarity--end-content {
-  display: flex;
-}
-
-.e-horizontal-polarity--start-content {
- -position: absolute;
-}
-.e-horizontal-polarity--end-content {
- -position: absolute;
-}
-.e-horizontal-polarity--middle-content {
- -justify-content: center;
- -position: absolute;
- -width: 100%;
-}
-
-.e-vertical-polarity {
-  /* WARNING! DEPRECATED! DO NOT USE! */
- -width: 100%;
-  /* WARNING! DEPRECATED! DO NOT USE! */
-  height: 100%;
-}
-
-.e-vertical-polarity--body {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.e-vertical-polarity--start-content,
-.e-vertical-polarity--middle-content,
-.e-vertical-polarity--end-content {
-  display: flex;
-  flex-direction: column;
-}
-
-/***** Polarity *****/
-
-
-
 /***** Select *****/
-/*** Button ***/
+/*** Select button element ***/
+
+.e-select-button {
+  /* XXX#6668 */
+  width: fit-content;
+}
+
+/*** Select button element ***/
+
+/*** Select button body ***/
 
 .e-select-button .e-button--body {
   justify-content: space-between;
@@ -981,7 +1050,7 @@
   margin-right: 12px;
 }
 
-/*** Button ***/
+/*** Select button body ***/
 
 /*** Options ***/
 
@@ -1126,6 +1195,15 @@
 
 
 /***** Switch *****/
+/*** Element ***/
+
+.e-switch {
+  /* XXX#6668 */
+  width: fit-content;
+}
+
+/*** Element ***/
+
 /*** Options ***/
 
 .e-switch--body[data-options-orientation="horizontal"] {
@@ -1189,6 +1267,15 @@
 
 
 /***** Text *****/
+/*** Element ***/
+
+.e-text {
+  /* XXX#6668 */
+  width: fit-content;
+}
+
+/*** Element ***/
+
 /*** Body ***/
 
 .e-text--body {
@@ -1352,10 +1439,24 @@ textarea.e-text-field--input {
 
 
 /***** Thumbnail *****/
+/*** Element ***/
+
+.e-thumbnail {
+  /* XXX#6668 */
+  width: fit-content;
+}
+
+/*** Element ***/
+
+/*** Body ***/
 
 .e-thumbnail--body {
   overflow: hidden;
 }
+
+/*** Body ***/
+
+/*** Image ***/
 
 .e-thumbnail--image {
   background-position: center;
@@ -1364,6 +1465,10 @@ textarea.e-text-field--input {
   height:              100%;
   width:               100%;
 }
+
+/*** Image ***/
+
+/*** Icon ***/
 
 .e-thumbnail--icon {
   background-color: var( --fill-color-highlight );
@@ -1375,6 +1480,7 @@ textarea.e-text-field--input {
   width:            100%;
 }
 
+/*** Icon ***/
 /***** Thumbnail *****/
 
 
@@ -1383,14 +1489,79 @@ textarea.e-text-field--input {
 /*** Body ***/
 
 .e-toggle--body {
-  cursor: pointer;
-  display: block;
+  cursor:      pointer;
+  display:     block;
   font-weight: 500;
-  width: 100%;
+  width:       100%;
 
   /* Overwriting the user-agent rule */
   text-align: left;
+
+  /* XXX#6667 */
+  height: 100%;
 }
 
 /*** Body ***/
 /***** Toggle *****/
+
+
+
+/***** Vertical line *****/
+/*** Element ***/
+
+.e-vertical-line {
+  /* XXX#6668 */
+  width: fit-content;
+}
+
+/*** Element ***/
+
+/*** Body ***/
+
+.e-vertical-line--body {
+  height: 100%;
+}
+
+/*** Body ***/
+/***** Vertical line *****/
+
+
+
+/***** Vertical polarity *****/
+/*** Element ***/
+
+.e-vertical-polarity {
+  /* XXX#6668 */
+  width: fit-content;
+}
+
+.e-vertical-polarity {
+  /* WARNING! DEPRECATED! DO NOT USE! */
+ -width: 100%;
+  /* WARNING! DEPRECATED! DO NOT USE! */
+  height: 100%;
+}
+
+/*** Element ***/
+
+/*** Body ***/
+
+.e-vertical-polarity--body {
+  display:         flex;
+  flex-direction:  column;
+  justify-content: space-between;
+}
+
+/*** Body ***/
+
+/*** Content ***/
+
+.e-vertical-polarity--start-content,
+.e-vertical-polarity--middle-content,
+.e-vertical-polarity--end-content {
+  display: flex;
+  flex-direction: column;
+}
+
+/*** Content ***/
+/***** Vertical polarity *****/

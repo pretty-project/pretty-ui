@@ -46,7 +46,10 @@
   ;    Min: 1
   ;    Max: 6
   ;  :total-value (integer)(opt)
-  ;   Default: A szakaszok aktuális értékének összege}
+  ;   Default: Sum of the section values
+  ;  :width (keyword)(opt)
+  ;   auto, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;   Default: :auto}
   ;
   ; @usage
   ; [line-diagram {...}]

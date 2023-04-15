@@ -11,10 +11,7 @@
   ; @return (map)
   ; {}
   [menu-props]
-  ; By default threshold is set to 0, and the menu items always visible
-  ; independetly from the viewport width
+  ; By default threshold is set to 0, and the menu items visible independently
+  ; from the viewport width.
   (merge {:threshold 0}
-         (param menu-props)
-
-         ; TEMP
-         {:threshold 1}))
+         (param menu-props)))

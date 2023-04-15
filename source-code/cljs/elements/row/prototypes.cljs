@@ -14,15 +14,17 @@
   ; @return (map)
   ; {:border-position (keyword)
   ;  :border-width (keyword)
+  ;  :height (keyword)
   ;  :horizontal-align (keyword)
-  ;  :stretch-orientation (keyword)
   ;  :vertical-align (keyword)
+  ;  :width (keyword)
   ;  :wrap-items? (boolean)}
   [{:keys [border-color] :as row-props}]
-  (merge {:horizontal-align    :left
-          :stretch-orientation :horizontal
-          :vertical-align      :center
-          :wrap-items?         true}
+  (merge {:height           :content
+          :horizontal-align :left
+          :vertical-align   :center
+          :width            :content
+          :wrap-items?      true}
          (if border-color {:border-position :all
                            :border-width    :xxs})
          (param row-props)))

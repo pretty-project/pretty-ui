@@ -12,8 +12,10 @@
   ;
   ; @return (map)
   ; {:fill-color (keyword or string)
+  ;  :height (keyword)
   ;  :strength (px)}
   [line-props]
   (merge {:fill-color :highlight
+          :height     :parent
           :strength   1}
          (param line-props)))

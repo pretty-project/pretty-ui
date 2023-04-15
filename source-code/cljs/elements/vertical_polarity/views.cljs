@@ -34,6 +34,9 @@
   ; @param (map) polarity-props
   ; {:class (keyword or keywords in vector)(opt)
   ;  :end-content (metamorphic-content)
+  ;  :height (keyword)(opt)
+  ;   :auto, :content, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;   Default: :parent
   ;  :horizontal-align (keyword)(opt)
   ;   :center, :left, :right
   ;   Default: :center

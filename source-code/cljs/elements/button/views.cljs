@@ -142,7 +142,10 @@
   ;   :capitalize, :lowercase, :uppercase
   ;  :tooltip-content (metamorphic-content)(opt)
   ;  :tooltip-position (keyword)(opt)
-  ;   :left, :right}
+  ;   :left, :right
+  ;  :width (keyword)(opt)
+  ;   :auto, :content, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;   Default: :content}
   ;
   ; @usage
   ; [button {...}]

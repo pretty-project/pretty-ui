@@ -17,7 +17,9 @@
   (merge {:color       :default
           :font-size   :s
           :font-weight :medium
-          :selectable? false}
+          :height      :content
+          :selectable? false
+          :width       :content}
          (if border-color {:border-position :all
                            :border-width    :xxs})
          (param bubble-props)))

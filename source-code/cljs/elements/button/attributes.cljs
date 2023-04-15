@@ -106,5 +106,6 @@
   ; {:class (keyword or keywords in vector)}
   [_ button-props]
   (-> {:class :e-button}
-      (pretty-css/default-attributes button-props)
-      (pretty-css/outdent-attributes button-props)))
+      (pretty-css/default-attributes      button-props)
+      (pretty-css/outdent-attributes      button-props)
+      (pretty-css/element-size-attributes button-props)))

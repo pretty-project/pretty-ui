@@ -2,7 +2,6 @@
 (ns website.follow-us.views
     (:require [hiccup.api                   :as hiccup]
               [random.api                   :as random]
-              [website.follow-us.env        :as follow-us.env]
               [website.follow-us.attributes :as follow-us.attributes]
               [website.follow-us.prototypes :as follow-us.prototypes]))
 

@@ -3,10 +3,9 @@
     (:require [elements.element.views   :as element.views]
               [elements.text.attributes :as text.attributes]
               [elements.text.prototypes :as text.prototypes]
+              [hiccup.api               :as hiccup]
               [metamorphic-content.api  :as metamorphic-content]
-              [noop.api                 :refer [return]]
-              [random.api               :as random]
-              [string.api               :as string]))
+              [random.api               :as random]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -24,36 +23,20 @@
         (if placeholder (metamorphic-content/compose placeholder)
                         "\u00A0")])
 
-(defn- text-content-rows
-  ; @ignore
-  ;
-  ; @param (keyword) text-id
-  ; @param (map) text-props
-  ; {:content (metamorphic-content)}
-  [_ {:keys [content]}]
-  ; XXX#7009 (source-code/cljs/elements/label/prototypes.cljs)
-  ;
-  ; If the content is string (it might be hiccup), splits it into HTML rows by
-  ; replacing newline characters ("\n") with [:br] tags.
-  (letfn [(f [%1 %2 %3] (if (= 0 %2) (conj %1       %3)
-                                     (conj %1 [:br] %3)))]
-         (if (string? content)
-             (let [content-rows (string/split content "\n")]
-                  (reduce-kv f [:<>] content-rows))
-             (return content))))
-
 (defn- text-content
   ; @ignore
   ;
   ; @param (keyword) text-id
   ; @param (map) text-props
-  ; {:on-copy (Re-Frame metamorphic-event)(opt)}
-  [text-id {:keys [on-copy] :as text-props}]
+  ; {:content (metamorphic-content)
+  ;  :on-copy (Re-Frame metamorphic-event)(opt)}
+  [text-id {:keys [content on-copy] :as text-props}]
+  ; XXX#7009 (source-code/cljs/elements/label/prototypes.cljs)
   (if on-copy [:div (text.attributes/copyable-attributes text-id text-props)
                     [:div (text.attributes/content-attributes text-id text-props)
-                          (text-content-rows                  text-id text-props)]]
+                          (hiccup/parse-newlines [:<> content])]]
               [:<>  [:div (text.attributes/content-attributes text-id text-props)
-                          (text-content-rows                  text-id text-props)]]))
+                          (hiccup/parse-newlines [:<> content])]]))
 
 (defn- text
   ; @ignore

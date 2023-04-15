@@ -24,11 +24,10 @@
   ;  :label (metamorphic-content)}
   [indicator-id {:keys [indent] :as indicator-props}]
   [elements/column ::popup-progress-indicator
-                   {:content             [popup-progress-label indicator-id indicator-props]
-                    :horizontal-align    :center
-                    :indent              indent
-                    :stretch-orientation :vertical
-                    :vertical-align      :center}])
+                   {:content          [popup-progress-label indicator-id indicator-props]
+                    :horizontal-align :center
+                    :indent           indent
+                    :vertical-align   :center}])
 
 (defn component
   ; @param (keyword)(opt) indicator-id

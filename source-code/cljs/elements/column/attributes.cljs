@@ -14,11 +14,10 @@
   ;
   ; @return (map)
   ; {}
-  [_ {:keys [gap horizontal-align stretch-orientation style vertical-align wrap-items?] :as column-props}]
+  [_ {:keys [gap horizontal-align style vertical-align wrap-items?] :as column-props}]
   (-> {:class                        :e-column--body
        :data-row-gap                 gap
        :data-horizontal-column-align horizontal-align
-       :data-stretch-orientation     stretch-orientation
        :data-vertical-column-align   vertical-align
        :data-wrap-items              wrap-items?
        :style                        style}
@@ -39,5 +38,8 @@
   ; {}
   [_ column-props]
   (-> {:class :e-column}
-      (pretty-css/default-attributes column-props)
-      (pretty-css/outdent-attributes column-props)))
+      (pretty-css/default-attributes          column-props)
+      (pretty-css/outdent-attributes          column-props)
+      (pretty-css/element-max-size-attributes column-props)
+      (pretty-css/element-min-size-attributes column-props)
+      (pretty-css/element-size-attributes     column-props)))

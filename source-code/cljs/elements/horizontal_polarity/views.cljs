@@ -49,7 +49,10 @@
   ;  :start-content (metamorphic-content)(opt)
   ;  :vertical-align (keyword)(opt)
   ;   :bottom, :center, :top
-  ;   Default: :center}
+  ;   Default: :center
+  ;  :width (keyword)(opt)
+  ;   :auto, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;   Default: :auto}
   ;
   ; @usage
   ; [horizontal-polarity {...}]

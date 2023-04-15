@@ -12,7 +12,6 @@
   ; @param (map) row-props
   ; {:gap (keyword)(opt)
   ;  :horizontal-align (keyword)(opt)
-  ;  :stretch-orientation (keyword)(opt)
   ;  :style (map)(opt)
   ;  :vertical-align (keyword)(opt)
   ;  :wrap-items? (boolean)(opt)}
@@ -21,15 +20,13 @@
   ; {:class (keyword or keywords in vector)
   ;  :data-column-gap (keyword)
   ;  :data-horizontal-row-align (keyword)
-  ;  :data-stretch-orientation (keyword)
   ;  :data-vertical-row-align (keyword)
   ;  :data-wrap-items (boolean)
   ;  :style (map)}
-  [_ {:keys [gap horizontal-align stretch-orientation style vertical-align wrap-items?] :as row-props}]
+  [_ {:keys [gap horizontal-align style vertical-align wrap-items?] :as row-props}]
   (-> {:class                     :e-row--body
        :data-column-gap           gap
        :data-horizontal-row-align horizontal-align
-       :data-stretch-orientation  stretch-orientation
        :data-vertical-row-align   vertical-align
        :data-wrap-items           wrap-items?
        :style                     style}
@@ -50,5 +47,8 @@
   ; {}
   [_ row-props]
   (-> {:class :e-row}
-      (pretty-css/default-attributes row-props)
-      (pretty-css/outdent-attributes row-props)))
+      (pretty-css/default-attributes          row-props)
+      (pretty-css/outdent-attributes          row-props)
+      (pretty-css/element-max-size-attributes row-props)
+      (pretty-css/element-min-size-attributes row-props)
+      (pretty-css/element-size-attributes     row-props)))

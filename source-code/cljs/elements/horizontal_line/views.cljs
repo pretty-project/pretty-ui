@@ -18,7 +18,10 @@
   ;   Same as the :indent property
   ;  :style (map)(opt)
   ;  :strength (px)(opt)
-  ;   Default: 1}
+  ;   Default: 1
+  ;  :width (keyword)(opt)
+  ;   :auto, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;   Default: :auto}
   ;
   ; @usage
   ; [horizontal-line {...}]

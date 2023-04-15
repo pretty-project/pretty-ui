@@ -56,6 +56,8 @@
   ;    :vertical (keyword)(opt)
   ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
   ;  :label (metamorphic-content)
+  ;  :min-width (keyword)(opt)
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;  :on-click (Re-Frame metamorphic-event)(opt)
   ;   TODO Makes the chip clickable
   ;  :outdent (map)(opt)
@@ -68,8 +70,12 @@
   ;    :on-click (Re-Frame metamorphic-event)}
   ;  :style (map)(opt)
   ;  :target (keyword)(opt)
+  ;   Makes the chip clickable
   ;   :blank, :self
-  ;   TODO Makes the chip clickable}
+  ;   TODO
+  ;  :width (keyword)(opt)
+  ;   :auto, :content, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;   Default: :content}
   ;
   ; @usage
   ; [chip {...}]

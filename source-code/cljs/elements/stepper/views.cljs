@@ -1,5 +1,5 @@
 
-; WARNING! HASN'T FINISHED! DO NOT USE!
+; WARNING! UNFINISHED! DO NOT USE!
 
 (ns elements.stepper.views
     (:require [elements.stepper.attributes :as stepper.attributes]

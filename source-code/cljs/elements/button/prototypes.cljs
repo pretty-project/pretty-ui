@@ -40,13 +40,15 @@
   ;  :progress-duration (ms)
   ;  :text-overflow (keyword)
   ;  :tooltip-content (string)
-  ;  :tooltip-position (keyword)}
+  ;  :tooltip-position (keyword)
+  ;  :width (keyword)}
   [{:keys [badge-content border-color disabled? font-size icon label marker-color progress tooltip-content] :as button-props}]
   (merge {:font-size        :s
           :font-weight      :medium
           :horizontal-align :center
           :line-height      :text-block
-          :text-overflow    :no-wrap}
+          :text-overflow    :no-wrap
+          :width            :content}
          (if badge-content   {:badge-color        :primary
                               :badge-position     :tr})
          (if border-color    {:border-position    :all

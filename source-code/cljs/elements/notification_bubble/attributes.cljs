@@ -20,10 +20,8 @@
   (-> {:class               :e-notification-bubble--content
        :style               style
        :data-letter-spacing :auto}
-      (pretty-css/font-attributes             bubble-props)
-      (pretty-css/element-max-size-attributes bubble-props)
-      (pretty-css/element-min-size-attributes bubble-props)
-      (pretty-css/indent-attributes           bubble-props)))
+      (pretty-css/font-attributes   bubble-props)
+      (pretty-css/indent-attributes bubble-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -57,5 +55,8 @@
   ; {:class (keyword or keywords in vector)}
   [_ bubble-props]
   (-> {:class :e-notification-bubble}
-      (pretty-css/default-attributes bubble-props)
-      (pretty-css/outdent-attributes bubble-props)))
+      (pretty-css/default-attributes          bubble-props)
+      (pretty-css/outdent-attributes          bubble-props)
+      (pretty-css/element-max-size-attributes bubble-props)
+      (pretty-css/element-min-size-attributes bubble-props)
+      (pretty-css/element-size-attributes     bubble-props)))

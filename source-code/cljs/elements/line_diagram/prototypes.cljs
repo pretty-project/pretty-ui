@@ -26,9 +26,11 @@
   ;
   ; @return (map)
   ; {:strength (px)
-  ;  :total-value (integer)}
+  ;  :total-value (integer)
+  ;  :width (keyword)}
   [{:keys [strength] :as diagram-props}]
-  (merge {:total-value (line-diagram.utils/diagram-props->total-value diagram-props)}
+  (merge {:total-value (line-diagram.utils/diagram-props->total-value diagram-props)
+          :width :auto}
          (param diagram-props)
          (if strength {:strength (math/between! strength 1 6)}
                       {:strength 2})))

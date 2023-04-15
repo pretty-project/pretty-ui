@@ -56,7 +56,9 @@
   ; @param (map) toggle-props
   ;
   ; @return (map)
+  ; {:class (keyword or keywords in vector)}
   [_ toggle-props]
   (-> {:class :e-toggle}
-      (pretty-css/default-attributes toggle-props)
-      (pretty-css/outdent-attributes toggle-props)))
+      (pretty-css/default-attributes      toggle-props)
+      (pretty-css/outdent-attributes      toggle-props)
+      (pretty-css/element-size-attributes toggle-props)))

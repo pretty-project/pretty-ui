@@ -1,38 +1,37 @@
 
-(ns elements.blank.attributes
+(ns website.multi-menu.attributes
     (:require [pretty-css.api :as pretty-css]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn blank-body-attributes
+(defn menu-body-attributes
   ; @ignore
   ;
-  ; @param (keyword) blank-id
-  ; @param (map) blank-props
+  ; @param (keyword) menu-id
+  ; @param (map) menu-props
   ; {:style (map)(opt)}
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  :style (map)}
-  [_ {:keys [style] :as blank-props}]
-  (-> {:class :e-blank--body
+  [_ {:keys [style] :as menu-props}]
+  (-> {:class :w-multi-menu--body
        :style style}
-      (pretty-css/indent-attributes blank-props)))
+      (pretty-css/indent-attributes menu-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn blank-attributes
+(defn menu-attributes
   ; @ignore
   ;
-  ; @param (keyword) blank-id
-  ; @param (map) blank-props
+  ; @param (keyword) menu-id
+  ; @param (map) menu-props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)}
-  [_ blank-props]
-  (-> {:class :e-blank}
-      (pretty-css/default-attributes      blank-props)
-      (pretty-css/outdent-attributes      blank-props)
-      (pretty-css/element-size-attributes blank-props)))
+  [_ menu-props]
+  (-> {:class :w-multi-menu}
+      (pretty-css/default-attributes menu-props)
+      (pretty-css/outdent-attributes menu-props)))

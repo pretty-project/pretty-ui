@@ -91,10 +91,12 @@
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  :data-options-orientation (keyword)
+  ;  :data-selectable (keyword)
   ;  :style (map)}
   [_ {:keys [options-orientation style] :as checkbox-props}]
   (-> {:class                    :e-checkbox--body
        :data-options-orientation options-orientation
+       :data-selectable          false
        :style                    style}
       (pretty-css/indent-attributes checkbox-props)))
 

@@ -16,5 +16,7 @@
   [swapper-props]
   ; If no threshold set, the default behaviour of the content swapper
   ; is swapping content independently from the screen width.
-  (merge {:threshold 9999}
+  (merge {:height    :content
+          :threshold 9999
+          :width     :content}
          (param swapper-props)))

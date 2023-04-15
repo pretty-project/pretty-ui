@@ -46,6 +46,9 @@
   ;  :disabled? (boolean)(opt)
   ;  :fill-color (keyword or string)(opt)
   ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+  ;  :height (keyword)(opt)
+  ;   :auto, :content, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;   Default: :content
   ;  :horizontal-align (keyword)(opt)
   ;   :center, :left, :right
   ;   Default: :left
@@ -75,11 +78,12 @@
   ;  :on-click (Re-Frame metamorphic-event)(opt)
   ;  :outdent (map)(opt)
   ;   Same as the :indent property
-  ;  :stretch-orientation (keyword)(opt)
-  ;   :horizontal, :vertical, :both
   ;  :style (map)(opt)
   ;  :target (keyword)(opt)
-  ;   :blank, :self}
+  ;   :blank, :self
+  ;  :width (keyword)(opt)
+  ;   :auto, :content, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;   Default: :content}
   ;
   ; @usage
   ; [card {...}]

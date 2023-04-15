@@ -6,12 +6,14 @@
 ;; ----------------------------------------------------------------------------
 
 (defn polarity-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @ignore
   ;
   ; @param (map) polarity-props
   ;
   ; @return (map)
-  ; {:vertical-align (keyword)}
+  ; {:vertical-align (keyword)
+  ;  :width (keyword)}
   [polarity-props]
-  (merge {:vertical-align :center}
+  (merge {:vertical-align :center
+          :width          :auto}
          (param polarity-props)))

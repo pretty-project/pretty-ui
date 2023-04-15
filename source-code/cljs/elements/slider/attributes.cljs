@@ -92,5 +92,6 @@
   ; {}
   [_ slider-props]
   (-> {:class :e-slider}
-      (pretty-css/default-attributes slider-props)
-      (pretty-css/outdent-attributes slider-props)))
+      (pretty-css/default-attributes      slider-props)
+      (pretty-css/outdent-attributes      slider-props)
+      (pretty-css/element-size-attributes slider-props)))

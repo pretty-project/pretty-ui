@@ -31,7 +31,9 @@
   ;  :class (keyword or keywords in vector)(opt)
   ;  :error-src (string)(opt)
   ;   TODO
-  ;  :height (string)(opt)
+  ;  :height (keyword)(opt)
+  ;   :content, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;   Default: :content
   ;  :indent (map)(opt)
   ;   {:bottom (keyword)(opt)
   ;    :left (keyword)(opt)
@@ -47,7 +49,9 @@
   ;   Same as the :indent property
   ;  :src (string)(opt)
   ;  :style (map)(opt)
-  ;  :width (string)(opt)}
+  ;  :width (keyword)(opt)
+  ;   :content, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;   Default: :content}
   ;
   ; @usage
   ; [image {...}]
@@ -58,5 +62,5 @@
    [element (random/generate-keyword) image-props])
 
   ([image-id image-props]
-   (let [] ; image-props (image.prototypes/image-props-prototype image-id image-props)
+   (let [image-props (image.prototypes/image-props-prototype image-props)]
         [image image-id image-props])))
