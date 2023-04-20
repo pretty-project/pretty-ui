@@ -13,7 +13,7 @@
   ; @param (keyword) select-id
   ; @param (map) select-props
   ; {:option-value-f (function)
-  ;  :value-path (vector)}
+  ;  :value-path (Re-Frame path vector)}
   ;
   ; @return (boolean)
   [db [_ select-id {:keys [option-value-f value-path] :as select-props}]]

@@ -1,8 +1,9 @@
 
 (ns elements.button.side-effects
-    (:require [dom.api      :as dom]
-              [hiccup.api   :as hiccup]
-              [re-frame.api :as r]))
+    (:require [dom.api              :as dom]
+              [hiccup.api           :as hiccup]
+              [keypress-handler.api :as keypress-handler]
+              [re-frame.api         :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -28,8 +29,55 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; @ignore
-(r/reg-fx :elements.button/focus-button! focus-button!)
+(defn key-pressed
+  ; @ignore
+  ;
+  ; @param (keyword) button-id
+  ; @param (map) button-props
+  [button-id _]
+  (focus-button! button-id))
+
+(defn key-released
+  ; @ignore
+  ;
+  ; @param (keyword) button-id
+  ; @param (map) button-props
+  ; {:on-click (Re-Frame metamorphic-event)(opt)}
+  [button-id {:keys [on-click]}]
+  (blur-button! button-id)
+  (r/dispatch   on-click))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn reg-keypress-event!
+  ; @ignore
+  ;
+  ; @param (keyword) button-id
+  ; @param (map) button-props
+  ; {:keypress (map)(opt)
+  ;   {:key-code (integer)
+  ;    :required? (boolean)(opt)}}
+  [button-id {:keys [keypress] :as button-props}]
+  (keypress-handler/reg-keypress-event! button-id {:key-code   (:key-code  keypress)
+                                                   :required?  (:required? keypress)
+                                                   :on-keydown (fn [_] (key-pressed  button-id button-props))
+                                                   :on-keyup   (fn [_] (key-released button-id button-props))
+                                                   :prevent-default? true}))
+
+(defn remove-keypress-event!
+  ; @ignore
+  ;
+  ; @param (keyword) button-id
+  ; @param (map) button-props
+  [button-id _]
+  (keypress-handler/remove-keypress-event! button-id))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 ; @ignore
-(r/reg-fx :elements.button/blur-button! blur-button!)
+(r/reg-fx :elements.button/reg-keypress-event! reg-keypress-event!)
+
+; @ignore
+(r/reg-fx :elements.button/remove-keypress-event! remove-keypress-event!)

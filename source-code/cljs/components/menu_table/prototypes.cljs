@@ -11,5 +11,5 @@
   ; @return (map)
   ; {:placeholder (metamorphic-content)}
   [table-props]
-  (merge {:placeholder :no-items-to-show}
+  (merge {:placeholder "No items to show"}
          (param table-props)))

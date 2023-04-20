@@ -51,7 +51,7 @@
   ;   {:gap (keyword)(opt)}
   ;  :on-select (Re-Frame metamorphic-event)(opt)
   ;  :style (map)(opt)
-  ;  :value-path (vector)}
+  ;  :value-path (Re-Frame path vector)}
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)

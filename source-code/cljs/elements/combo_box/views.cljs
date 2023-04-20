@@ -41,13 +41,13 @@
               [:div (combo-box.attributes/combo-box-options-attributes box-id box-props)
                     (hiccup/put-with-indexed [:<>] options f)])))
 
-(defn- combo-box-surface
+(defn- combo-box-surface-content
   ; @ignore
   ;
   ; @param (keyword) box-id
   ; @param (map) box-props
   [box-id box-props]
-  [:div (combo-box.attributes/combo-box-surface-attributes box-id box-props)
+  [:div (combo-box.attributes/combo-box-surface-content-attributes box-id box-props)
         [combo-box-options box-id box-props]])
 
 (defn- combo-box-structure
@@ -56,7 +56,7 @@
   ; @param (keyword) box-id
   ; @param (map) box-props
   [box-id box-props]
-  (let [box-props (assoc box-props :surface [combo-box-surface box-id box-props])]
+  (let [box-props (assoc-in box-props [:surface :content] [combo-box-surface-content box-id box-props])]
        [text-field.views/element box-id box-props]))
 
 (defn- combo-box
@@ -88,7 +88,7 @@
   ;  :option-value-f (function)(opt)
   ;   Default: return
   ;  :options (vector)(opt)
-  ;  :options-path (vector)(opt)}
+  ;  :options-path (Re-Frame path vector)(opt)}
   ;
   ; @usage
   ; [combo-box {...}]

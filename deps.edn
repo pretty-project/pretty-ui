@@ -1,18 +1,20 @@
 
-; When getting rid of x5 ...
-; + cljs-window-observer
-; + scroll-lock
-; + reagent
-; reagent-api
-; re-frame-api
-; cljc-metamorphic-content
-; cljs-dom
-; cljs-intersection-observer
-
 {:paths ["plugins/cljs" "resources" "source-code/cljs"]
- :deps  {bithandshake/cljc-dictionary {:git/url "git@github.com:bithandshake/cljc-dictionary"
-                                       :sha     "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"}
-         bithandshake/pretty-css      {:git/url "git@github.com:bithandshake/pretty-css"
-                                       :sha     "25fc45eb1f38d8d44ef56510b2732f17befe9300"}
-         monotech-hq/x5               {:git/url "git@github.com:monotech-hq/x5"
-                                       :sha     "b17bafa27331d89983fc049210668d448d450fea"}}}
+ :deps  {bithandshake/cljc-dictionary            {:git/url "git@github.com:bithandshake/cljc-dictionary"
+                                                  :sha     "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"}
+         bithandshake/cljc-metamorphic-content   {:git/url "git@github.com:bithandshake/cljc-metamorphic-content"
+                                                  :sha     "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"}
+         bithandshake/cljs-dom                   {:git/url "git@github.com:bithandshake/cljs-dom"
+                                                  :sha     "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"}
+         bithandshake/cljs-intersection-observer {:git/url "git@github.com:bithandshake/cljs-intersection-observer"
+                                                  :sha     "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"}
+         bithandshake/cljs-scroll-lock           {:git/url "git@github.com:bithandshake/cljs-scroll-lock"
+                                                  :sha     "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"}
+         bithandshake/cljs-window-observer       {:git/url "git@github.com:bithandshake/cljs-window-observer"
+                                                  :sha     "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"}
+         bithandshake/pretty-css                 {:git/url "git@github.com:bithandshake/pretty-css"
+                                                  :sha     "25fc45eb1f38d8d44ef56510b2732f17befe9300"}
+         bithandshake/re-frame-api               {:git/url "git@github.com:bithandshake/re-frame-api"
+                                                  :sha     "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"}
+         bithandshake/reagent-api                {:git/url "git@github.com:bithandshake/reagent-api"
+                                                  :sha     "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"}}}

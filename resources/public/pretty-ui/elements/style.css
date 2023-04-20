@@ -267,15 +267,25 @@
 /***** Color-selector *****/
 /*** Color-selector options ***/
 
-.e-color-selector--options-header {
+.e-color-selector--options {
+  /* XXX#0610
+   * Makes the popup above other contents */
+    z-index: 9999;
+}
+
+.e-color-selector--options--label {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
+
+  /* XXX#6661 */
+  padding: 6px 12px;
 }
 
 .e-color-selector--options-body {
-  display:    flex;
-  column-gap: 12px;
-  padding:    12px;
+  column-gap:      12px;
+  display:         flex;
+  justify-content: center;
+  padding:         12px;
 }
 
 /*** Color-selector options ***/
@@ -860,6 +870,18 @@
 
 
 
+/***** Multi combo-box *****/
+
+.e-multi-combo-box--body {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/***** Multi combo-box *****/
+
+
+
 /***** Multi field *****/
 /*** Element ***/
 
@@ -1054,17 +1076,23 @@
 
 /*** Options ***/
 
+.e-select--options {
+  /* XXX#0610 */
+  z-index: 9999;
+}
+
 .e-select--option-list {
   display: flex;
   flex-direction: column;
 
-  /* XXX#6667 */
+  /* XXX#6661 */
   padding-bottom: 12px;
 }
 
 .e-select--options-placeholder {
   align-self: center;
-  color: var( --color-highlight );
+  color:      var( --color-highlight );
+  padding:    0 36px;
 }
 
 /*** Options ***/
@@ -1105,7 +1133,7 @@
   display: flex;
   justify-content: center;
 
-  /* XXX#6667
+  /* XXX#6661
    * The height of this label without content is 12px (horizontal padding x 2),
    * that's the same as the bottom padding of the option list,
    * therefore in case of no label defined, the top and bottom spacings are the same. */
@@ -1419,18 +1447,16 @@ textarea.e-text-field--input {
 
 .e-text-field--surface {
   background-color: var( --fill-color-default );
-  border-radius: var( --border-radius-s );
-  box-shadow: var( --box-shadow-black-xx-light );
   left: 0;
   overflow: hidden;
   position: absolute;
-  top: 36px;
   width: 100%;
+  z-index: 9999;
 
-  /* XXX#4376 (monotech-hq/x5)
-   * The field surface has to be shown under (Z axis) the #x-app-bubbles element.
-   * (x5 UI bubbles renderer) */
-  z-index: 996;
+  /* Adding +6px to the surface Y axis offset makes the surface shadow not
+   * overlapping with the field border. */
+ -top: 36px;
+  top: 42px;
 }
 
 /*** Surface ***/

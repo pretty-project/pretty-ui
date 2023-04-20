@@ -120,7 +120,7 @@
   ; {}
   [field-id field-props]
   (merge (plain-field.attributes/field-surface-attributes field-id field-props)
-         {:class :e-tex-field--field-surface}))
+         {:class :e-text-field--surface}))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

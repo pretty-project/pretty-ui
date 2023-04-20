@@ -12,7 +12,7 @@
   ; @param (keyword) select-id
   ; @param (map) select-props
   ; {:option-value-f (function)
-  ;  :value-path (vector)}
+  ;  :value-path (Re-Frame path vector)}
   ; @param (*) option
   ;
   ; @return (map)
@@ -48,7 +48,7 @@
   [_ {:keys [options-label]}]
   (if options-label {:class            :e-select--options--label
                      :data-font-size   :s
-                     :data-font-weight :semi-bold
+                     :data-font-weight :medium
                      :data-line-height :text-block}
                     {:class            :e-select--options--label
                      :data-placeholder true}))

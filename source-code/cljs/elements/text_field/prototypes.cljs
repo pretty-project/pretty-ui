@@ -76,7 +76,7 @@
   ;  :line-height (keyword)
   ;  :marker-position (keyword)
   ;  :type (keyword)
-  ;  :value-path (vector)
+  ;  :value-path (Re-Frame path vector)
   ;  :width (keyword)}
   [field-id {:keys [border-color marker-color] :as field-props}]
   ; BUG#6782

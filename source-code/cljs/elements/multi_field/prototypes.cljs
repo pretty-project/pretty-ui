@@ -16,7 +16,7 @@
   ;
   ; @return (map)
   ; {:max-input-count (integer)
-  ;  :value-path (vector)}
+  ;  :value-path (Re-Frame path vector)}
   [group-id group-props]
   (merge {:max-input-count 8
           :value-path (input.utils/default-value-path group-id)}

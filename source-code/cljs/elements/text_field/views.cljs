@@ -108,7 +108,7 @@
 
 (defn element
   ; XXX#0711
-  ; Some other items based on the text-field element and their documentations are linked here.
+  ; Some other items based on the text-field element and their documentations link here.
   ;
   ; @param (keyword)(opt) field-id
   ; @param (map) field-props
@@ -207,26 +207,16 @@
   ;  :start-adornments (maps in vector)(opt)
   ;   Same as the :end-adornments property.
   ;  :style (map)(opt)
-
-
-  ;  :surface (metamorphic-content)(opt)
   ;  :surface (map)(opt)
-  ;   {:border-color (keyword or string)(opt)
-  ;    :border-position (keyword)(opt)
-  ;    :border-radius (map)(opt)
-  ;    :border-width (keyword)(opt)
+  ;   {:border-radius (map)(opt)
   ;    :content (metamorphic-content)(opt)
-  ;    :fill-color (keyword or string)
-  ;    :indent (map)(opt)
-  ;    :outdent (map)(opt)}}
-
-
+  ;    :indent (map)(opt)}
   ;  :validator (map)(opt)
   ;   {:f (function)
   ;    :invalid-message (metamorphic-content)(opt)
   ;    :invalid-message-f (function)(opt)
   ;    :prevalidate? (boolean)(opt)}
-  ;  :value-path (vector)(opt)
+  ;  :value-path (Re-Frame path vector)(opt)
   ;  :width (keyword)(opt)
   ;   :auto, :content, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;   Default: :content}

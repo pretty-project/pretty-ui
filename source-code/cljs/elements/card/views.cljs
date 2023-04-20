@@ -23,7 +23,7 @@
 
 (defn element
   ; XXX#3240
-  ; Some other items based on the card element and their documentations are linked here.
+  ; Some other items based on the card element and their documentations link here.
   ;
   ; @param (keyword)(opt) card-id
   ; @param (map) card-props

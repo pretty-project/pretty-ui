@@ -15,7 +15,7 @@
   ; @param (map) box-props
   ;
   ; @return (map)
-  ; {:value-path (vector)}
+  ; {:value-path (Re-Frame path vector)}
   [box-id box-props]
   ; XXX#5061
   ; XXX#5062
@@ -32,7 +32,7 @@
   ; {}
   ;
   ; @return (map)
-  ; {:chips-path (vector)
+  ; {:chips-path (Re-Frame path vector)
   ;  :deletable? (boolean)}
   [_ {:keys [chip-group value-path]}]
   (merge {:chips-path value-path
@@ -55,7 +55,7 @@
   ;  :on-focus (Re-Frame metamorphic-event)
   ;  :option-label-f (function)
   ;  :option-value-f (function)
-  ;  :options-path (vector)}
+  ;  :options-path (Re-Frame path vector)}
   [box-id box-props]
   ; XXX#5067 (source-code/cljs/elements/combo_box/prototypes.cljs)
   ; XXX#5061

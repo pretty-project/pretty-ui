@@ -40,7 +40,7 @@
         :data-options-rendered (-> options empty? not)
         :data-scroll-axis :y}))
 
-(defn combo-box-surface-attributes
+(defn combo-box-surface-content-attributes
   ; @ignore
   ;
   ; @param (keyword) box-id
@@ -49,7 +49,7 @@
   ; @return (map)
   ; {}
   [_ _]
-  {:class               :e-combo-box--surface
+  {:class               :e-combo-box--surface-content
    :data-font-size      :s
    :data-letter-spacing :auto
    :data-line-height    :text-block})

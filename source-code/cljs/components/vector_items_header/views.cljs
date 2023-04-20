@@ -51,7 +51,7 @@
   ;  :on-change (Re-Frame metamorphic-event)(opt)
   ;  :outdent (map)(opt)
   ;  :style (map)(opt)
-  ;  :value-path (vector)}
+  ;  :value-path (Re-Frame path vector)}
   ;
   ; @usage
   ; [vector-items-header {...}]

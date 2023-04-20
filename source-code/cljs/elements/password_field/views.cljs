@@ -14,8 +14,6 @@
   ;
   ; @param (keyword)(opt) field-id
   ; @param (map) field-props
-  ; {:validate? (boolean)(opt)
-  ;   Default: false}
   ;
   ; @usage
   ; [password-field {...}]

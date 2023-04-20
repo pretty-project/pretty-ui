@@ -18,7 +18,7 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   ; {:field-content-f (function)
-  ;  :value-path (vector)}
+  ;  :value-path (Re-Frame path vector)}
   [field-id {:keys [field-content-f value-path]}]
   ; HACK#9910
   (let [stored-value @(r/subscribe [:get-item value-path])]
@@ -46,7 +46,7 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ; {:value-path (vector)}
+  ; {:value-path (Re-Frame path vector)}
   [field-id {:keys [value-path] :as field-props}]
   ; HACK#9910
   (let [stored-value @(r/subscribe [:get-item value-path])]
@@ -121,8 +121,11 @@
   ;  :outdent (map)(opt)
   ;   Same as the :indent property
   ;  :style (map)(opt)
-  ;  :surface (metamorphic-content)(opt)
-  ;  :value-path (vector)(opt)}
+  ;  :surface (map)(opt)
+  ;   {:border-radius (map)(opt)
+  ;    :content (metamorphic-content)(opt)
+  ;    :indent (map)(opt)}
+  ;  :value-path (Re-Frame path vector)(opt)}
   ;
   ; @usage
   ; [plain-field {...}]

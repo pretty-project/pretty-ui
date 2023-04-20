@@ -67,16 +67,22 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
+  ; {:surface (map)(opt)}
   ;
   ; @return (map)
-  ; {:id (string)
+  ; {:class (keyword or keywords in vector)
+  ;  :data-box-shadow-color (keyword)
+  ;  :id (string)
   ;  :on-mouse-down (function)}
-  [field-id _]
+  [field-id {:keys [surface]}]
   ; XXX#4460 (source-code/cljs/elements/button/views.cljs)
   ; BUG#2105
-  {:class :e-plain-field--surface
-   :id (hiccup/value field-id "surface")
-   :on-mouse-down #(.preventDefault %)})
+  (-> {:class                 :e-plain-field--surface
+       :data-box-shadow-color :default
+       :id                    (hiccup/value field-id "surface")
+       :on-mouse-down         #(.preventDefault %)}
+      (pretty-css/border-attributes surface)
+      (pretty-css/indent-attributes surface)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

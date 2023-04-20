@@ -11,7 +11,7 @@
   ; @param (keyword) button-id
   ; @param (map) button-props
   ; {:option-value-f (function)
-  ;  :value-path (vector)}
+  ;  :value-path (Re-Frame path vector)}
   ; @param (*) option
   ;
   ; @return (boolean)
@@ -25,7 +25,7 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  ; {:value-path (vector)}
+  ; {:value-path (Re-Frame path vector)}
   ;
   ; @return (boolean)
   [db [_ _ {:keys [value-path]}]]

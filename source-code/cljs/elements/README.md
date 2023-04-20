@@ -1,5 +1,5 @@
 
-### Basic rules for making elements
+### Basic rules of making elements
 
 - Every element has its entry component named `element` in the `views.cljs` namespace.
 

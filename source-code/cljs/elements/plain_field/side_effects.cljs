@@ -3,6 +3,7 @@
     (:require [dom.api                    :as dom]
               [elements.plain-field.state :as plain-field.state]
               [hiccup.api                 :as hiccup]
+              [keypress-handler.api       :as keypress-handler]
               [re-frame.api               :as r]))
 
 ;; ----------------------------------------------------------------------------
@@ -85,6 +86,23 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn set-type-mode!
+  ; @ignore
+  ;
+  ; @param (keyword) field-id
+  [_]
+  (keypress-handler/set-type-mode!))
+
+(defn quit-type-mode!
+  ; @ignore
+  ;
+  ; @param (keyword) field-id
+  [_]
+  (keypress-handler/quit-type-mode!))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 ; @ignore
 (r/reg-fx :elements.plain-field/empty-field! empty-field!)
 
@@ -96,3 +114,9 @@
 
 ; @ignore
 (r/reg-fx :elements.plain-field/hide-surface! hide-surface!)
+
+; @ignore
+(r/reg-fx :elements.plain-field/set-type-mode! set-type-mode!)
+
+; @ignore
+(r/reg-fx :elements.plain-field/quit-type-mode! quit-type-mode!)

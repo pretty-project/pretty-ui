@@ -37,7 +37,7 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   ; {:field-value-f (function)
-  ;  :value-path (vector)}
+  ;  :value-path (Re-Frame path vector)}
   ;
   ; @return (map)
   [db [_ _ {:keys [field-value-f value-path]}]]
@@ -50,7 +50,7 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   ; {:field-value-f (function)
-  ;  :value-path (vector)}
+  ;  :value-path (Re-Frame path vector)}
   ; @param (string) field-content
   ;
   ; @return (map)

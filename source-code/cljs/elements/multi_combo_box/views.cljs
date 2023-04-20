@@ -18,7 +18,7 @@
   ;
   ; @param (keyword) box-id
   ; @param (map) box-props
-  ; {:value-path (vector)}
+  ; {:value-path (Re-Frame path vector)}
   [box-id {:keys [value-path] :as box-props}]
   (if-let [chips @(r/subscribe [:get-item value-path])]
           (if (vector/nonempty? chips)
@@ -76,7 +76,7 @@
   ;  :option-component (component)(opt)
   ;   Default: elements.combo-box/default-option-component
   ;  :options (vector)(opt)
-  ;  :options-path (vector)(opt)
+  ;  :options-path (Re-Frame path vector)(opt)
   ;  :placeholder (metamorphic-content)(opt)}
   ;
   ; @usage
@@ -89,5 +89,5 @@
 
   ([box-id box-props]
    (let [box-props (multi-combo-box.prototypes/box-props-prototype box-id box-props)
-         box-props (assoc box-props :surface [combo-box.views/combo-box-surface box-id box-props])]
+         box-props (assoc-in box-props [:surface :content] [combo-box.views/combo-box-surface-content box-id box-props])]
         [multi-combo-box box-id box-props])))

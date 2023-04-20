@@ -21,8 +21,8 @@
   ;  :option-label-f (function)
   ;  :option-value-f (function)
   ;  :options-orientation (keyword)
-  ;  :options-path (vector)
-  ;  :value-path (vector)}
+  ;  :options-path (Re-Frame path vector)
+  ;  :value-path (Re-Frame path vector)}
   [checkbox-id checkbox-props]
   (merge {:border-color        :default
           :border-position     :all

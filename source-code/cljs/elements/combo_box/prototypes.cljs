@@ -21,7 +21,7 @@
   ;  :on-focus (Re-Frame metamorphic-event)
   ;  :option-label-f (function)
   ;  :option-value-f (function)
-  ;  :options-path (vector)}
+  ;  :options-path (Re-Frame path vector)}
   [box-id box-props]
   ; XXX#5067
   ; The 'field-content-f' and 'field-value-f' properties are belongs to the

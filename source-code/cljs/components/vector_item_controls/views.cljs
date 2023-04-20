@@ -18,7 +18,7 @@
   ;  :item-dex (integer)
   ;  :on-change (Re-Frame metamorphic-event)(opt)
   ;  :tooltip-position (keyword)
-  ;  :value-path (vector)}
+  ;  :value-path (Re-Frame path vector)}
   [_ {:keys [disabled? item-dex on-change tooltip-position value-path]}]
   (let [duplicate-event [:apply-item! value-path vector/duplicate-nth-item item-dex]]
        [elements/icon-button {:border-radius    {:all :s}
@@ -38,7 +38,7 @@
   ;  :item-dex (integer)
   ;  :on-change (Re-Frame metamorphic-event)(opt)
   ;  :tooltip-position (keyword)
-  ;  :value-path (vector)}
+  ;  :value-path (Re-Frame path vector)}
   [_ {:keys [disabled? item-dex on-change tooltip-position value-path]}]
   (let [remove-event [:apply-item! value-path vector/remove-nth-item item-dex]]
        [elements/icon-button {:border-radius    {:all :s}
@@ -58,7 +58,7 @@
   ;  :item-dex (integer)
   ;  :on-change (Re-Frame metamorphic-event)(opt)
   ;  :tooltip-position (keyword)
-  ;  :value-path (vector)}
+  ;  :value-path (Re-Frame path vector)}
   [_ {:keys [disabled? item-dex on-change tooltip-position value-path]}]
   (let [move-event    [:apply-item! value-path vector/move-nth-item-fwd item-dex]
         single-item? @(r/subscribe [:get-applied-item value-path vector/count? 1])]
@@ -79,7 +79,7 @@
   ;  :item-dex (integer)
   ;  :on-change (Re-Frame metamorphic-event)(opt)
   ;  :tooltip-position (keyword)
-  ;  :value-path (vector)}
+  ;  :value-path (Re-Frame path vector)}
   [_ {:keys [disabled? item-dex on-change tooltip-position value-path]}]
   (let [move-event [:apply-item! value-path vector/move-nth-item-bwd item-dex]
         single-item? @(r/subscribe [:get-applied-item value-path vector/count? 1])]
@@ -113,7 +113,7 @@
   ;  :tooltip-position (keyword)(opt)
   ;   :left, :right
   ;   Default: :right
-  ;  :value-path (vector)}
+  ;  :value-path (Re-Frame path vector)}
   ;
   ; @usage
   ; [vector-item-controls {...}]

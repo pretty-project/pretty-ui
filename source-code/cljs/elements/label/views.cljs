@@ -144,7 +144,7 @@
 
 (defn element
   ; XXX#0721
-  ; Some other items based on the label element and their documentations are linked here.
+  ; Some other items based on the label element and their documentations link here.
   ;
   ; @param (keyword)(opt) label-id
   ; @param (map) label-props

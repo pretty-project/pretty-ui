@@ -3,6 +3,7 @@
     (:require [elements.combo-box.env            :as combo-box.env]
               [elements.combo-box.state          :as combo-box.state]
               [elements.plain-field.side-effects :as plain-field.side-effects]
+              [keypress-handler.api              :as keypress-handler]
               [re-frame.api                      :as r]
               [vector.api                        :as vector]))
 
@@ -55,6 +56,43 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn reg-keypress-events!
+  ; @ignore
+  ;
+  ; @param (keyword) box-id
+  ; @param (map) box-props
+  [box-id box-props]
+  ; XXX#4156
+  ; Overwrites the default ESC and ENTER keypress events of the text-field by using
+  ; the :elements.text-field/ESC and :elements.text-field/ENTER keypress event IDs.
+  ; The overwritten keypress events' functionality is implemented in the combo-box
+  ; field keypress events.
+  ;
+  ; The UP and DOWN keypress events has similar names (for sake of consistency).
+  (let [on-down-props  {:key-code 40 :on-keydown #(r/dispatch [:elements.combo-box/DOWN-pressed  box-id box-props]) :required? true :prevent-default? true}
+        on-up-props    {:key-code 38 :on-keydown #(r/dispatch [:elements.combo-box/UP-pressed    box-id box-props]) :required? true :prevent-default? true}
+        on-esc-props   {:key-code 27 :on-keydown #(r/dispatch [:elements.combo-box/ESC-pressed   box-id box-props]) :required? true}
+        on-enter-props {:key-code 13 :on-keydown #(r/dispatch [:elements.combo-box/ENTER-pressed box-id box-props]) :required? true}]
+       (keypress-handler/reg-keypress-event! :elements.text-field/DOWN   on-down-props)
+       (keypress-handler/reg-keypress-event! :elements.text-field/UP       on-up-props)
+       (keypress-handler/reg-keypress-event! :elements.text-field/ESC     on-esc-props)
+       (keypress-handler/reg-keypress-event! :elements.text-field/ENTER on-enter-props)))
+
+(defn remove-keypress-events!
+  ; @ignore
+  ;
+  ; @param (keyword) box-id
+  ; @param (map) box-props
+  [_ _]
+  ; XXX#4156
+  (keypress-handler/remove-keypress-event! :elements.text-field/DOWN)
+  (keypress-handler/remove-keypress-event! :elements.text-field/UP)
+  (keypress-handler/remove-keypress-event! :elements.text-field/ESC)
+  (keypress-handler/remove-keypress-event! :elements.text-field/ENTER))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 ; @ignore
 (r/reg-fx :elements.combo-box/highlight-next-option! highlight-next-option!)
 
@@ -66,3 +104,9 @@
 
 ; @ignore
 (r/reg-fx :elements.combo-box/use-selected-option! use-selected-option!)
+
+; @ignore
+(r/reg-fx :elements.combo-box/reg-keypress-events! reg-keypress-events!)
+
+; @ignore
+(r/reg-fx :elements.combo-box/remove-keypress-events! remove-keypress-events!)

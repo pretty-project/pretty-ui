@@ -29,7 +29,7 @@
   ; @param (keyword) checkbox-id
   ; @param (map) checkbox-props
   ; {:option-value-f (function)
-  ;  :value-path (vector)}
+  ;  :value-path (Re-Frame path vector)}
   ; @param (*) option
   ;
   ; @return (map)

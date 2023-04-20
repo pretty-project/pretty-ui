@@ -65,7 +65,7 @@
   ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;    :top (keyword)(opt)
   ;     :xxs, :xs, :s, :m, :l, :xl, :xxl}
-  ;  :value-path (vector)}
+  ;  :value-path (Re-Frame path vector)}
   ;
   ; @usage
   ; [digit-field {...}]

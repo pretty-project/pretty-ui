@@ -13,7 +13,7 @@
   ; @param (keyword) input-id
   ; @param (map) input-props
   ; {:default-value (*)(opt)
-  ;  :value-path (vector)}
+  ;  :value-path (Re-Frame path vector)}
   ;
   ; @return (*)
   [db [_ _ {:keys [default-value value-path] :as input-props}]]
@@ -29,7 +29,7 @@
   ; @param (keyword) input-id
   ; @param (map) input-props
   ; {:options (vector)(opt)
-  ;  :options-path (vector)(opt)}
+  ;  :options-path (Re-Frame path vector)(opt)}
   ;
   ; @return (vector)
   [db [_ _ {:keys [options options-path]}]]

@@ -18,7 +18,7 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   ; {:field-content-f (function)
-  ;  :value-path (vector)}
+  ;  :value-path (Re-Frame path vector)}
   [field-id {:keys [field-content-f value-path]}]
   ; HACK#9910 (source-code/cljs/elements/plain_field/views.cljs)
   (let [stored-value  @(r/subscribe [:get-item value-path])

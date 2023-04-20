@@ -15,7 +15,7 @@
   ; @param (keyword) picker-id
   ; @param (map) picker-props
   ; {:disabled? (boolean)(opt)
-  ;  :value-path (vector)}
+  ;  :value-path (Re-Frame path vector)}
   [picker-id {:keys [value-path] :as picker-props}]
   (let [picked-colors @(r/subscribe [:get-item value-path])]
        (letfn [(f [picked-colors color]
@@ -26,7 +26,7 @@
   ; @param (keyword) picker-id
   ; @param (map) picker-props
   ; {:placeholder (metamorphic-content)
-  ;  :value-path (vector)}
+  ;  :value-path (Re-Frame path vector)}
   [picker-id {:keys [placeholder value-path] :as picker-props}]
   [:div (color-picker.attributes/picker-attributes picker-id picker-props)
         ; Color picker label
@@ -35,6 +35,7 @@
         [:div (color-picker.attributes/picker-body-attributes picker-id picker-props)
               ; Checks whether any color picked ...
               (let [picked-colors @(r/subscribe [:get-item value-path])]
+
                    (if (empty? picked-colors)
                        ; If no color picked, displays a placeholder
                        [:div (color-picker.attributes/placeholder-attributes picker-id picker-props)
@@ -44,10 +45,13 @@
                        [color-picker-value picker-id picker-props]))]])
 
 (defn component
+  ; XXX#0709 (source-code/cljs/elements/color_selector/views.cljs)
+  ; The color-picker component is based on the color-selector element.
+  ; For more information check out the documentation of the color-selector element.
+  ;
   ; @param (keyword) picker-id
   ; @param (map) picker-props
-  ; {:class (keyword or keywords in vector)(opt)
-  ;  :click-effect (keyword)(opt)
+  ; {:click-effect (keyword)(opt)
   ;   :opacity
   ;   Default: :opacity
   ;  :color-stamp (map)(opt)
@@ -60,17 +64,10 @@
   ;    :width (keyword)(opt)
   ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;     Default: :l}
-  ;  :disabled? (boolean)(opt)
   ;  :hover-effect (keyword)(opt)
   ;   :opacity
-  ;  :indent (map)(opt)
-  ;  :label (metamorphic-content)(opt)
-  ;  :on-select (Re-Frame metamorphic-event)(opt)
-  ;  :outdent (map)(opt)
   ;  :placeholder (metamorphic-content)(opt)
-  ;   Default: :choose-color!
-  ;  :style (map)(opt)
-  ;  :value-path (vector)}
+  ;   Default: "Choose color!"}
   ;
   ; @usage
   ; [color-picker {...}]
@@ -81,5 +78,5 @@
    [component (random/generate-keyword) picker-props])
 
   ([picker-id picker-props]
-   (let [picker-props (color-picker.prototypes/picker-props-prototype picker-props)]
+   (let [picker-props (color-picker.prototypes/picker-props-prototype picker-id picker-props)]
         [color-picker picker-id picker-props])))

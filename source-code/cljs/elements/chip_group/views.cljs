@@ -18,7 +18,7 @@
   ; @param (keyword) group-id
   ; @param (map) group-props
   ; {:chips (maps in vector)(opt)
-  ;  :chips-path (vector)(opt)
+  ;  :chips-path (Re-Frame path vector)(opt)
   ;  :placeholder (metamorphic-content)(opt)}
   [group-id {:keys [chips chips-path placeholder] :as group-props}]
   ; XXX#2781 (source-code/cljs/elements/input/env.cljs)
@@ -64,7 +64,7 @@
   ;  :chip-label-f (function)(opt)
   ;   Default: return
   ;  :chips (maps in vector)(opt)
-  ;  :chips-path (vector)(opt)
+  ;  :chips-path (Re-Frame path vector)(opt)
   ;  :deletable? (boolean)(opt)
   ;   Default: false
   ;  :helper (metamorphic-content)(opt)

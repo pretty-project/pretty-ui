@@ -19,7 +19,7 @@
   ;  :border-width (keyword)
   ;  :font-size (keyword)
   ;  :initial-value (integer)
-  ;  :value-path (vector)}
+  ;  :value-path (Re-Frame path vector)}
   [counter-id counter-props]
   (merge {:border-color    :default
           :border-position :all

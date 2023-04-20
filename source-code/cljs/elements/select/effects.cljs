@@ -1,14 +1,10 @@
 
 (ns elements.select.effects
     (:require [elements.input.env             :as input.env]
-              [elements.input.events          :as input.events]
               [elements.select.config         :as select.config]
               [elements.select.events         :as select.events]
-              [elements.select.prototypes     :as select.prototypes]
-              [elements.select.views          :as select.views]
               [elements.plain-field.env       :as plain-field.env]
               [elements.text-field.prototypes :as text-field.prototypes]
-              [noop.api                       :refer [return]]
               [re-frame.api                   :as r :refer [r]]))
 
 ;; ----------------------------------------------------------------------------
@@ -31,7 +27,7 @@
   ; @param (keyword) select-id
   ; @param (map) select-props
   (fn [_ [_ select-id select-props]]
-      [:elements.select/reg-keypress-events! select-id select-props]))
+      {:fx [:elements.select/reg-keypress-events! select-id select-props]}))
 
 (r/reg-event-fx :elements.select/select-options-will-unmount
   ; @ignore
@@ -39,7 +35,7 @@
   ; @param (keyword) select-id
   ; @param (map) select-props
   (fn [_ [_ select-id select-props]]
-      [:elements.select/remove-keypress-events! select-id select-props]))
+      {:fx [:elements.select/remove-keypress-events! select-id select-props]}))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -49,7 +45,8 @@
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
-  [:x.ui/remove-popup! :elements.select/options])
+  (fn [_ [_ select-id select-props]]
+      {:fx [:elements.select/close-options! select-id select-props]}))
 
 (r/reg-event-fx :elements.select/ENTER-pressed
   ; @ignore
@@ -63,61 +60,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx :elements.select/reg-keypress-events!
-  ; @ignore
-  ;
-  ; @param (keyword) select-id
-  ; @param (map) select-props
-  (fn [{:keys [db]} [_ select-id select-props]]
-      (let [on-escape-props {:key-code 27 :required? true :on-keyup [:elements.select/ESC-pressed   select-id select-props]}
-            on-enter-props  {:key-code 13 :required? true :on-keyup [:elements.select/ENTER-pressed select-id select-props]}]
-           {:dispatch-n [[:x.environment/reg-keypress-event! ::on-ESC-pressed   on-escape-props]
-                         [:x.environment/reg-keypress-event! ::on-ENTER-pressed on-enter-props]]})))
-
-(r/reg-event-fx :elements.select/remove-keypress-events!
-  ; @ignore
-  ;
-  ; @param (keyword) select-id
-  ; @param (map) select-props
-  (fn [{:keys [db]} [_ select-id _]]
-      {:dispatch-n [[:x.environment/remove-keypress-event! ::on-ESC-pressed]
-                    [:x.environment/remove-keypress-event! ::on-ENTER-pressed]]}))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(r/reg-event-fx :elements.select/render-options!
-  ; @ignore
-  ;
-  ; @param (keyword) select-id
-  ; @param (map) select-props
-  (fn [_ [_ select-id select-props]]
-      [:x.ui/render-popup! :elements.select/options
-                           {:content [select.views/select-options select-id select-props]}]))
-
-(r/reg-event-fx :elements.select/render-select!
-  ; @param (keyword)(opt) select-id
-  ; @param (map) select-props
-  ;
-  ; @usage
-  ; [:elements.select/render-select! {...}]
-  ;
-  ; @usage
-  ; [:elements.select/render-select! :my-select {...}]
-  [r/event-vector<-id]
-  (fn [{:keys [db]} [_ select-id select-props]]
-      ; The [:elements.select/render-select! ...] event can be used independently
-      ; of the elements.api/select component.
-      ; Therefore the 'select-props-prototype' and the 'select-will-mount'
-      ; functions has to be applied here too.
-      (let [select-props (select.prototypes/select-props-prototype select-id select-props)]
-           {:db       (r select.events/select-will-mount db select-id select-props)
-            :fx       [:elements.input/mark-input-as-visited! select-id]
-            :dispatch [:elements.select/render-options!       select-id select-props]})))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (r/reg-event-fx :elements.select/select-option!
   ; @ignore
   ;
@@ -127,10 +69,10 @@
   ;  :on-select (Re-Frame metamorphic-event)(opt)
   ;  :option-value-f (function)}
   ; @param (*) option
-  (fn [{:keys [db]} [_ select-id {:keys [autoclear? option-value-f on-select] :as select-props} option]]
+  (fn [{:keys [db]} [_ select-id {:keys [autoclear? on-select option-value-f] :as select-props} option]]
       (let [option-value (option-value-f option)]
            {:db             (r select.events/select-option! db select-id select-props option)
-            :dispatch-later [               {:ms select.config/CLOSE-POPUP-DELAY     :dispatch [:x.ui/remove-popup! :elements.select/options]}
+            :dispatch-later [               {:ms select.config/CLOSE-POPUP-DELAY     :fx       [:elements.input/close-popup!  select-id select-props]}
                              (if autoclear? {:ms select.config/AUTOCLEAR-VALUE-DELAY :dispatch [:elements.select/clear-value! select-id select-props]})
                              (if on-select  {:ms select.config/ON-SELECT-DELAY       :dispatch (r/metamorphic-event<-params on-select option-value)})]})))
 

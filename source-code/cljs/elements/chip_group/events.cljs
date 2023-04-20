@@ -12,7 +12,7 @@
   ;
   ; @param (keyword) group-id
   ; @param (map) group-props
-  ; {:chips-path (vector)}
+  ; {:chips-path (Re-Frame path vector)}
   ; @param (integer) chip-dex
   ;
   ; @return (map)

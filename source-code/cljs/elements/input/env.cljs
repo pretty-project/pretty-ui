@@ -27,13 +27,25 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn popup-rendered?
+  ; @ignore
+  ;
+  ; @param (keyword) input-id
+  ;
+  ; @return (boolean)
+  [input-id]
+  (= input-id @input.state/RENDERED-POPUP))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn get-input-options
   ; @ignore
   ;
   ; @param (keyword) input-id
   ; @param (map) input-props
   ; {:options (vector)(opt)
-  ;  :options-path (vector)(opt)}
+  ;  :options-path (Re-Frame path vector)(opt)}
   ;
   ; @return (vector)
   [_ {:keys [options options-path]}]

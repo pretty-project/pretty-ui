@@ -16,7 +16,7 @@
   ; {:autofocus? (boolean)(opt)
   ;  :initial-value (*)(opt)
   ;  :on-mount (Re-Frame metamorphic-event)(opt)
-  ;  :value-path (vector)}
+  ;  :value-path (Re-Frame path vector)}
   (fn [{:keys [db]} [_ field-id {:keys [autofocus? initial-value on-mount value-path] :as field-props}]]
       ; The autofocus has to be delayed, otherwise the caret shown up at not at the end of the content.
       (let [stored-value (get-in db value-path)]
@@ -31,7 +31,7 @@
   ; @param (map) field-props
   ; {:autoclear? (boolean)(opt)
   ;  :on-unmount (Re-Frame metamorphic-event)(opt)
-  ;  :value-path (vector)}
+  ;  :value-path (Re-Frame path vector)}
   (fn [{:keys [db]} [_ field-id {:keys [autoclear? on-unmount value-path] :as field-props}]]
       (let [stored-value (get-in db value-path)]
            (if autoclear? {:db         (r plain-field.events/clear-value! db field-id field-props)
@@ -76,7 +76,7 @@
       {:dispatch-n [on-blur]
        :fx-n       [[:elements.plain-field/hide-surface!      field-id]
                     [:elements.input/unmark-input-as-focused! field-id]
-                    [:x.environment/quit-type-mode!]]}))
+                    [:elements.plain-field/quit-type-mode!    field-id]]}))
 
 (r/reg-event-fx :elements.plain-field/field-focused
   ; @ignore
@@ -88,4 +88,4 @@
       {:dispatch-n [on-focus]
        :fx-n       [[:elements.plain-field/show-surface!    field-id]
                     [:elements.input/mark-input-as-focused! field-id]
-                    [:x.environment/set-type-mode!]]}))
+                    [:elements.plain-field/set-type-mode!   field-id]]}))

@@ -14,7 +14,7 @@
   ; @param (map) counter-props
   ; {:disabled? (boolean)(opt)
   ;  :max-value (integer)(opt)
-  ;  :value-path (vector)}
+  ;  :value-path (Re-Frame path vector)}
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
@@ -42,7 +42,7 @@
   ; @param (map) counter-props
   ; {:disabled? (boolean)(opt)
   ;  :min-value (integer)(opt)
-  ;  :value-path (vector)}
+  ;  :value-path (Re-Frame path vector)}
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)

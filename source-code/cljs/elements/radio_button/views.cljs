@@ -104,11 +104,11 @@
   ;  :options-orientation (keyword)(opt)
   ;   :horizontal, :vertical
   ;   Default: :vertical
-  ;  :options-path (vector)(opt)
+  ;  :options-path (Re-Frame path vector)(opt)
   ;  :outdent (map)(opt)
   ;   Same as the :indent property
   ;  :style (map)(opt)
-  ;  :value-path (vector)(opt)}
+  ;  :value-path (Re-Frame path vector)(opt)}
   ;
   ; @usage
   ; [radio-button {...}]

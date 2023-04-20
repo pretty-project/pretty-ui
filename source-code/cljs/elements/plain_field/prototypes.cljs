@@ -15,7 +15,7 @@
   ; @return (map)
   ; {:field-content-f (function)
   ;  :field-value-f (function)
-  ;  :value-path (vector)}
+  ;  :value-path (Re-Frame path vector)}
   [field-id field-props]
   (merge {:field-content-f return
           :field-value-f   return

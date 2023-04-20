@@ -28,7 +28,7 @@
   ; @param (keyword) list-id
   ; @param (map) list-props
   ; {:item-element (symbol)
-  ;  :value-path (vector)}
+  ;  :value-path (Re-Frame path vector)}
   [list-id {:keys [item-element value-path] :as list-props}]
   (letfn [(f [items item-dex _] (conj items [item-element item-dex]))]
          (let [items @(r/subscribe [:get-item value-path])]
@@ -58,7 +58,7 @@
   ;   {:illustration (string)(opt)
   ;    :label (metamorphic-content)(opt)}
   ;  :style (map)(opt)
-  ;  :value-path (vector)}
+  ;  :value-path (Re-Frame path vector)}
   ;
   ; @usage
   ; [vector-item-list {...}]

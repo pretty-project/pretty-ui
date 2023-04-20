@@ -19,7 +19,7 @@
 
 (defn element
   ; XXX#0709
-  ; Some other items based on the icon element and their documentations are linked here.
+  ; Some other items based on the icon element and their documentations link here.
   ;
   ; @param (keyword)(opt) icon-id
   ; @param (map) icon-props

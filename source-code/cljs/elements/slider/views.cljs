@@ -62,7 +62,7 @@
   ;   Same as the :indent property
   ;  :resetable? (boolean)(opt)
   ;  :style (map)(opt)
-  ;  :value-path (vector)(opt)
+  ;  :value-path (Re-Frame path vector)(opt)
   ;  :width (keyword)(opt)
   ;   :auto, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;   Default: :auto}

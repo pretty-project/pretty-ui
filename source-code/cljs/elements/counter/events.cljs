@@ -27,7 +27,7 @@
   ;
   ; @param (keyword) counter-id
   ; @param (map) counter-props
-  ; {:value-path (vector)}
+  ; {:value-path (Re-Frame path vector)}
   ;
   ; @return (map)
   [db [_ counter-id {:keys [value-path] :as counter-props}]]
@@ -40,7 +40,7 @@
   ;
   ; @param (keyword) counter-id
   ; @param (map) counter-props
-  ; {:value-path (vector)}
+  ; {:value-path (Re-Frame path vector)}
   ;
   ; @return (map)
   [db [_ counter-id {:keys [value-path] :as counter-props}]]

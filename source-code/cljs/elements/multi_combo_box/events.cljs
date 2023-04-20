@@ -13,7 +13,7 @@
   ; @param (keyword) box-id
   ; @param (map) box-props
   ; {:option-value-f (function)
-  ;  :value-path (vector)}
+  ;  :value-path (Re-Frame path vector)}
   ; @param (*) selected-option
   ;
   ; @return (map)
@@ -27,7 +27,7 @@
   ; @param (keyword) box-id
   ; @param (map) box-props
   ; {:field-value-f (function)
-  ;  :value-path (vector)}
+  ;  :value-path (Re-Frame path vector)}
   ; @param (*) field-content
   ;
   ; @return (map)

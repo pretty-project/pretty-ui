@@ -77,7 +77,7 @@
   ;  :resetable? (boolean)(opt)
   ;   Default: false
   ;  :style (map)(opt)
-  ;  :value-path (vector)(opt)}
+  ;  :value-path (Re-Frame path vector)(opt)}
   ;
   ; @usage
   ; [counter {...}]

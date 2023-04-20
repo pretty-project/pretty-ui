@@ -1,39 +1,18 @@
 
 (ns elements.color-selector.effects
-    (:require [elements.color-selector.events     :as color-selector.events]
-              [elements.color-selector.prototypes :as color-selector.prototypes]
-              [elements.color-selector.views      :as color-selector.views]
-              [re-frame.api                       :as r :refer [r]]))
+    (:require [elements.color-selector.events :as color-selector.events]
+              [re-frame.api                   :as r :refer [r]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx :elements.color-selector/render-selector!
+(r/reg-event-fx :elements.color-selector/options-did-mount
   ; @ignore
   ;
   ; @param (keyword) selector-id
   ; @param (map) selector-props
-  ; {:options (strings in vector)(opt)
-  ;  :options-label (metamorphic-content)(opt)
-  ;  :options-path (vector)(opt)
-  ;  :value-path (vector)(opt)}
-  ;
-  ; @usage
-  ; [:elements.color-selector/render-selector! {...}]
-  [r/event-vector<-id]
   (fn [{:keys [db]} [_ selector-id selector-props]]
-      (let [selector-props (r color-selector.prototypes/selector-props-prototype db selector-id selector-props)]
-           {:fx       [:elements.input/mark-input-as-visited!   selector-id]
-            :dispatch [:elements.color-selector/render-options! selector-id selector-props]})))
-
-(r/reg-event-fx :elements.color-selector/render-options!
-  ; @ignore
-  ;
-  ; @param (keyword) selector-id
-  ; @param (map) selector-props
-  (fn [_ [_ selector-id selector-props]]
-      [:x.ui/render-popup! :elements.color-selector/options
-                           {:content [color-selector.views/color-selector-options selector-id selector-props]}]))
+      {:db (r color-selector.events/options-did-mount db selector-id selector-props)}))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -3,8 +3,7 @@
     (:require [elements.password-field.env :as password-field.env]
               [elements.plain-field.env    :as plain-field.env]
               [noop.api                    :refer [param]]
-              [vector.api                  :as vector]
-              [x.user.api                  :as x.user]))
+              [vector.api                  :as vector]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -35,21 +34,13 @@
   ; @return (map)
   ; {:helper (metamorphic-content)
   ;  :label (metamorphic-content)
-  ;  :type (keyword)
-  ;  :validator (map)
-  ;   {:f (function)
-  ;    :invalid-message (keyword)}}
-  [field-id {:keys [end-adornments validate?] :as field-props}]
+  ;  :type (keyword)}
+  [field-id {:keys [end-adornments] :as field-props}]
   (let [field-empty?      (plain-field.env/field-empty?         field-id)
         password-visible? (password-field.env/password-visible? field-id)]
        (merge {:label :password
                :type  (if password-visible? :text :password)}
               (param field-props)
-
-              ; ...
-              (if validate? {:helper    {:content :valid-password-rules :replacements ["8"]}
-                             :validator {:f x.user/password?
-                                         :invalid-message :password-is-too-weak}})
 
               ; ...
               (let [visibility-adornment (visibility-adornment-prototype field-id field-props)]

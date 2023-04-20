@@ -3,8 +3,8 @@
 
 ### Overview
 
-The <strong>pretty-ui</strong> is a ClojureScript web application UI component set
-made for websites and web applications.
+The <strong>pretty-ui</strong> is a ClojureScript/Reagent web application UI 
+component set made for websites and web applications using Re-Frame as state handler.
 
 ### Documentation
 
@@ -23,6 +23,10 @@ The <strong>pretty-ui</strong> functional documentation is [available here](docu
 - [Event handlers](#event-handlers)
 
 - [Content types](#content-types)
+
+- [Value paths of inputs](#value-paths-of-inputs)
+
+- [Options paths of optionable inputs](#options-paths-of-optionable-inputs)
 
 # Usage
 
@@ -67,3 +71,30 @@ function returns a valid Re-Frame metamorphic-event or a `NIL` value.
 ```
 
 ### Content types
+
+### Value paths of inputs
+
+Input elements and components can take `:value-path` property which points its
+value stored in the Re-Frame state.
+
+```
+(ns my-namespace
+    (:require [elements.api :as elements]))
+
+[elements/text-field {:value-path [:my-value]}]
+```
+
+Every element or component that takes `:value-path` property can generates a path
+in case of you don't want to specify it.
+
+In the following example the text-field element uses its default value path:
+`[:elements :element-handler/input-values *element-id*]`
+
+```
+(ns my-namespace
+    (:require [elements.api :as elements]))
+
+[elements/text-field {}]
+```
+
+### Options paths of optionable inputs

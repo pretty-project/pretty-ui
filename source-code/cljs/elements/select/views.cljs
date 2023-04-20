@@ -1,7 +1,6 @@
 
 (ns elements.select.views
     (:require [elements.button.views      :as button.views]
-              [elements.element.views     :as element.views]
               [elements.icon-button.views :as icon-button.views]
               [elements.input.env         :as input.env]
               [elements.select.attributes :as select.attributes]
@@ -11,7 +10,6 @@
               [hiccup.api                 :as hiccup]
               [layouts.api                :as layouts]
               [metamorphic-content.api    :as metamorphic-content]
-              [noop.api                   :refer [return]]
               [pretty-css.api             :as pretty-css]
               [random.api                 :as random]
               [re-frame.api               :as r]
@@ -65,18 +63,6 @@
                  [:div (select.attributes/select-options-placeholder-attributes select-id select-props)
                        (metamorphic-content/compose options-placeholder)])]))
 
-(defn- select-options-header
-  ; @ignore
-  ;
-  ; @param (keyword) select-id
-  ; @param (map) select-props
-  ; {}
-  [select-id {:keys [options-label] :as select-props}]
-  [:div {:class :e-select--options--header :data-selectable false}
-        [:div (select.attributes/select-options-label-attributes select-id select-props)
-              (metamorphic-content/compose options-label)]
-        [option-field select-id select-props]])
-
 (defn- select-options-body
   ; @ignore
   ;
@@ -87,18 +73,32 @@
                        :component-did-mount    (fn [_ _] (r/dispatch [:elements.select/select-options-did-mount    select-id select-props]))
                        :component-will-unmount (fn [_ _] (r/dispatch [:elements.select/select-options-will-unmount select-id select-props]))}))
 
+(defn- select-options-header
+  ; @ignore
+  ;
+  ; @param (keyword) select-id
+  ; @param (map) select-props
+  ; {:popup (map)(opt)
+  ;   {:label (metamorphic-content)(opt)}}
+  [select-id {{:keys [label]} :popup :as select-props}]
+  [:div {:class :e-select--options--header :data-selectable false}
+        [:div (select.attributes/select-options-label-attributes select-id select-props)
+              (metamorphic-content/compose label)]
+        [option-field select-id select-props]])
+
 (defn- select-options
   ; @ignore
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
-  [select-id select-props]
-  [layouts/struct-popup :elements.select/options
-                        {:body   [select-options-body   select-id select-props]
-                         :header [select-options-header select-id select-props]
-                         :border-radius {:all :m}
-                         :min-width     :xxs
-                         :on-cover      [:x.ui/remove-popup! :elements.select/options]}])
+  ; {:popup (map)(opt)}
+  [select-id {:keys [popup] :as select-props}]
+  (if (input.env/popup-rendered? select-id)
+      [:div {:class :e-select--options}
+            [layouts/struct-popup :elements.select/options
+                                  (assoc popup :body     [select-options-body   select-id select-props]
+                                               :header   [select-options-header select-id select-props]
+                                               :on-cover {:fx [:elements.input/close-popup! select-id select-props]})]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -109,8 +109,8 @@
   ; @param (keyword) select-id
   ; @param (map) select-props
   [select-id select-props]
-  (let [on-click [:elements.select/render-options! select-id select-props]
-        label    (select.env/select-button-label   select-id select-props)]
+  (let [on-click {:fx [:elements.input/render-popup! select-id select-props]}
+        label    (select.env/select-button-label select-id select-props)]
        [:div (pretty-css/effect-attributes {:class :e-select-button} select-props)
              [button.views/element select-id (assoc select-props :class         :e-select-button
                                                                  :icon          :unfold_more
@@ -118,7 +118,7 @@
                                                                  :label         label
                                                                  :on-click      on-click)]]))
 
-(defn- select-layout
+(defn- select-button-layout
   ; @ignore
   ;
   ; @param (keyword) select-id
@@ -136,7 +136,7 @@
   ; @param (keyword) select-id
   ; @param (map) select-props
   [select-id select-props]
-  (let [on-click [:elements.select/render-options! select-id select-props]]
+  (let [on-click {:fx [:elements.input/render-popup! select-id select-props]}]
        [icon-button.views/element select-id (assoc select-props :on-click on-click)]))
 
 ;; ----------------------------------------------------------------------------
@@ -148,7 +148,7 @@
   ; @param (keyword) select-id
   ; @param (map) select-props
   [select-id select-props]
-  (let [on-click [:elements.select/render-options! select-id select-props]]
+  (let [on-click {:fx [:elements.input/render-popup! select-id select-props]}]
        [button.views/element select-id (assoc select-props :on-click on-click)]))
 
 ;; ----------------------------------------------------------------------------
@@ -161,15 +161,12 @@
   ; @param (map) select-props
   ; {:layout (keyword)}
   [select-id {:keys [layout] :as select-props}]
-  (case layout :button      [button-layout      select-id select-props]
-               :icon-button [icon-button-layout select-id select-props]
-               :select      [select-layout      select-id select-props]))
+  [:<> (case layout :button        [button-layout        select-id select-props]
+                    :icon-button   [icon-button-layout   select-id select-props]
+                    :select-button [select-button-layout select-id select-props])
+       [select-options select-id select-props]])
 
 (defn element
-  ; @description
-  ; To render the select popup without using its button element:
-  ; [:elements.select/render-options! :my-select {...}]
-  ;
   ; @param (keyword)(opt) select-id
   ; @param (map) select-props
   ; {:add-option-f (function)(opt)
@@ -205,8 +202,8 @@
   ;  :initial-value (*)(opt)
   ;  :label (metamorphic-content)(opt)
   ;  :layout (keyword)(opt)
-  ;   :button, :icon-button, :select
-  ;   Default: :select
+  ;   :button, :icon-button, :select-button
+  ;   Default: :select-button
   ;  :marker-color (keyword)(opt)
   ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
   ;  :on-select (Re-Frame metamorphic-event)(opt)
@@ -218,15 +215,28 @@
   ;   Default: return
   ;  :options (vector)(opt)
   ;  :options-label (metamorphic-content)(opt)
-  ;  :options-path (vector)(opt)
+  ;  :options-path (Re-Frame path vector)(opt)
   ;  :options-placeholder (metamorphic-content)(opt)
   ;   Default: :no-options
   ;  :outdent (map)(opt)
   ;   Same as the :indent property
+  ;  :popup (map)(opt)
+  ;   {:border-color (keyword or string)(opt)
+  ;    :border-position (keyword)(opt)
+  ;    :border-radius (map)(opt)
+  ;    :border-width (keyword)(opt)
+  ;    :cover-color (keyword or string)(opt)
+  ;     Default: :black
+  ;    :fill-color (keyword or string)(opt)
+  ;     Default: :default
+  ;    :indent (map)(opt)
+  ;    :label (metamorphic-content)(opt)
+  ;    :min-width (keyword)(opt)
+  ;    :outdent (map)(opt)}
   ;  :reveal-effect (keyword)(opt)
   ;   :delayed, :opacity
   ;  :style (map)(opt)
-  ;  :value-path (vector)(opt)}
+  ;  :value-path (Re-Frame path vector)(opt)}
   ;
   ; @usage
   ; [select {...}]

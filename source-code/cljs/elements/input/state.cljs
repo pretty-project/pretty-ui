@@ -7,6 +7,11 @@
 
 ; @ignore
 ;
+; @atom (keyword)
+(def RENDERED-POPUP (ratom nil))
+ 
+; @ignore
+;
 ; @atom (map)
 (def FOCUSED-INPUTS (ratom {}))
 

@@ -10,41 +10,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx :elements.multi-combo-box/reg-keypress-events!
-  ; @ignore
-  ;
-  ; @param (keyword) box-id
-  ; @param (map) box-props
-  (fn [_ [_ box-id box-props]]
-      ; XXX#4156 (source-code/cljs/elements/combo_box/effects.cljs)
-      (let [field-id    (multi-combo-box.utils/box-id->field-id           box-id)
-            field-props (multi-combo-box.prototypes/field-props-prototype box-id box-props)
-            on-down-props  {:key-code  40 :on-keydown [:elements.combo-box/DOWN-pressed    field-id field-props] :required? true :prevent-default? true}
-            on-up-props    {:key-code  38 :on-keydown [:elements.combo-box/UP-pressed      field-id field-props] :required? true :prevent-default? true}
-            on-esc-props   {:key-code  27 :on-keydown [:elements.combo-box/ESC-pressed     field-id field-props] :required? true}
-            on-enter-props {:key-code  13 :on-keydown [:elements.multi-combo-box/ENTER-pressed box-id box-props] :required? true}
-            on-comma-props {:key-code 188 :on-keydown [:elements.multi-combo-box/COMMA-pressed box-id box-props] :required? true :prevent-default? true}]
-           {:dispatch-n [[:x.environment/reg-keypress-event! :elements.text-field/DOWN   on-down-props]
-                         [:x.environment/reg-keypress-event! :elements.text-field/UP       on-up-props]
-                         [:x.environment/reg-keypress-event! :elements.text-field/ESC     on-esc-props]
-                         [:x.environment/reg-keypress-event! :elements.text-field/ENTER on-enter-props]
-                         [:x.environment/reg-keypress-event! :elements.text-field/COMMA on-comma-props]]})))
-
-(r/reg-event-fx :elements.multi-combo-box/remove-keypress-events!
-  ; @ignore
-  ;
-  ; @param (keyword) box-id
-  ; @param (map) box-props
-  ; XXX#4156 (source-code/cljs/elements/combo_box/effects.cljs)
-  {:dispatch-n [[:x.environment/remove-keypress-event! :elements.text-field/DOWN]
-                [:x.environment/remove-keypress-event! :elements.text-field/UP]
-                [:x.environment/remove-keypress-event! :elements.text-field/ESC]
-                [:x.environment/remove-keypress-event! :elements.text-field/ENTER]
-                [:x.environment/remove-keypress-event! :elements.text-field/COMMA]]})
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (r/reg-event-fx :elements.multi-combo-box/ENTER-pressed
   ; @ignore
   ;
@@ -121,7 +86,7 @@
   ; @param (keyword) box-id
   ; @param (map) box-props
   (fn [_ [_ box-id box-props]]
-      [:elements.multi-combo-box/reg-keypress-events! box-id box-props]))
+      {:fx [:elements.multi-combo-box/reg-keypress-events! box-id box-props]}))
 
 (r/reg-event-fx :elements.multi-combo-box/field-blurred
   ; @ignore
@@ -138,6 +103,6 @@
       ; Szóval ez most egy UX teszt.
       (let [field-id (multi-combo-box.utils/box-id->field-id box-id)]
            (if (plain-field.env/field-empty? field-id)
-               {:dispatch    [:elements.multi-combo-box/remove-keypress-events! box-id box-props]}
-               {:dispatch-n [[:elements.multi-combo-box/remove-keypress-events! box-id box-props]
-                             [:elements.multi-combo-box/use-field-content!      box-id box-props]]}))))
+               {:fx       [:elements.multi-combo-box/remove-keypress-events! box-id box-props]}
+               {:fx       [:elements.multi-combo-box/remove-keypress-events! box-id box-props]
+                :dispatch [:elements.multi-combo-box/use-field-content!      box-id box-props]}))))

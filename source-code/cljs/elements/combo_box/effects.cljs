@@ -3,7 +3,7 @@
     (:require [elements.combo-box.events :as combo-box.events]
               [elements.combo-box.env    :as combo-box.env]
               [elements.plain-field.env  :as plain-field.env]
-              [re-frame.api               :as r :refer [r]]))
+              [re-frame.api              :as r :refer [r]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -16,42 +16,6 @@
   ; {:initial-options (vector)(opt)}
   (fn [{:keys [db]} [_ box-id {:keys [initial-options] :as box-props}]]
       (if initial-options {:db (r combo-box.events/box-did-mount db box-id box-props)})))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(r/reg-event-fx :elements.combo-box/reg-keypress-events!
-  ; @ignore
-  ;
-  ; @param (keyword) box-id
-  ; @param (map) box-props
-  (fn [_ [_ box-id box-props]]
-      ; XXX#4156
-      ; Overwrites the default ESC and ENTER keypress events of the text-field by using
-      ; the :elements.text-field/ESC and :elements.text-field/ENTER keypress event IDs.
-      ; The overwritten keypress events' functionality is implemented in the combo-box
-      ; field keypress events.
-      ;
-      ; The UP and DOWN keypress events has similar names (for keeping consistency).
-      (let [on-down-props  {:key-code 40 :on-keydown [:elements.combo-box/DOWN-pressed  box-id box-props] :required? true :prevent-default? true}
-            on-up-props    {:key-code 38 :on-keydown [:elements.combo-box/UP-pressed    box-id box-props] :required? true :prevent-default? true}
-            on-esc-props   {:key-code 27 :on-keydown [:elements.combo-box/ESC-pressed   box-id box-props] :required? true}
-            on-enter-props {:key-code 13 :on-keydown [:elements.combo-box/ENTER-pressed box-id box-props] :required? true}]
-           {:dispatch-n [[:x.environment/reg-keypress-event! :elements.text-field/DOWN   on-down-props]
-                         [:x.environment/reg-keypress-event! :elements.text-field/UP       on-up-props]
-                         [:x.environment/reg-keypress-event! :elements.text-field/ESC     on-esc-props]
-                         [:x.environment/reg-keypress-event! :elements.text-field/ENTER on-enter-props]]})))
-
-(r/reg-event-fx :elements.combo-box/remove-keypress-events!
-  ; @ignore
-  ;
-  ; @param (keyword) box-id
-  ; @param (map) box-props
-  ; XXX#4156
-  {:dispatch-n [[:x.environment/remove-keypress-event! :elements.text-field/DOWN]
-                [:x.environment/remove-keypress-event! :elements.text-field/UP]
-                [:x.environment/remove-keypress-event! :elements.text-field/ESC]
-                [:x.environment/remove-keypress-event! :elements.text-field/ENTER]]})
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -166,7 +130,7 @@
   ; @param (keyword) box-id
   ; @param (map) box-props
   (fn [_ [_ box-id box-props]]
-      [:elements.combo-box/reg-keypress-events! box-id box-props]))
+      {:fx [:elements.combo-box/reg-keypress-events! box-id box-props]}))
 
 (r/reg-event-fx :elements.combo-box/field-blurred
   ; @ignore
@@ -174,4 +138,4 @@
   ; @param (keyword) box-id
   ; @param (map) box-props
   (fn [_ [_ box-id box-props]]
-      [:elements.combo-box/remove-keypress-events! box-id box-props]))
+      {:fx [:elements.combo-box/remove-keypress-events! box-id box-props]}))
