@@ -3,20 +3,33 @@
 
 ### Overview
 
-The <strong>pretty-ui</strong> is a ClojureScript/Reagent web application UI 
+The <strong>pretty-ui</strong> is a ClojureScript/Reagent web application UI
 component set made for websites and web applications using Re-Frame as state handler.
 
 ### Documentation
 
 The <strong>pretty-ui</strong> functional documentation is [available here](documentation/COVER.md).
 
-#### What's in this kit?
+### deps.edn
 
-- 50+ UI elements
+```
+{:deps {bithandshake/pretty-ui {:git/url "https://github.com/bithandshake/pretty-ui"
+                                :sha     "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"}}
+```
 
-- 50+ UI components
+### Current version
 
-- UI layout templates such as surfaces, popups, sidebars and menus
+Check out the latest commit on the [release branch](https://github.com/bithandshake/pretty-ui/tree/release).
+
+### Documentation
+
+The <strong>pretty-ui</strong> functional documentation is [available here](documentation/COVER.md).
+
+### Changelog
+
+You can track the changes of the <strong>pretty-ui</strong> library [here](CHANGES.md).
+
+# Usage
 
 ### Index
 
@@ -27,8 +40,6 @@ The <strong>pretty-ui</strong> functional documentation is [available here](docu
 - [Value paths of inputs](#value-paths-of-inputs)
 
 - [Options paths of optionable inputs](#options-paths-of-optionable-inputs)
-
-# Usage
 
 ### Event handlers
 
