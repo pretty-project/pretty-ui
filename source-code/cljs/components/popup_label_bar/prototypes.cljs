@@ -7,25 +7,27 @@
 
 (defn bar-props-prototype
   ; @param (map) bar-props
-  ; {:primary-button (map)
-  ;  :secondary-button (map)}
+  ; {:label (map)(opt)
+  ;  :primary-button (map)(opt)
+  ;  :secondary-button (map)(opt)}
   ;
   ; @return (map)
-  ; {:primary-button (map)
+  ; {:label (map)
+  ;  :primary-button (map)
   ;  :secondary-button (map)}
-  [{:keys [primary-button secondary-button] :as bar-props}]
-  (merge {}
-         (param bar-props)
-         (if primary-button   {:primary-button   (merge {:color       :primary
-                                                         :font-size   :xs
-                                                        ;:font-weight :semi-bold
-                                                         :hover-color :highlight
-                                                         :indent      {:horizontal :xxs :vertical :xxs}
-                                                         :keypress    {:key-code 13}}
-                                                        (param primary-button))})
-         (if secondary-button {:secondary-button (merge {:font-size   :xs
-                                                        ;:font-weight :semi-bold
-                                                         :hover-color :highlight
-                                                         :indent      {:horizontal :xxs :vertical :xxs}
-                                                         :keypress    {:key-code 27}}
-                                                        (param secondary-button))})))
+  [{:keys [label primary-button secondary-button] :as bar-props}]
+  (merge bar-props (if label            {:label            (merge {:indent {:all :xxs}}
+                                                                  (param label))})
+                   (if primary-button   {:primary-button   (merge {:color       :primary
+                                                                   :font-size   :xs
+                                                                   :hover-color :highlight
+                                                                   :indent      {:all :xxs}
+                                                                   :outdent     {:all :xxs}
+                                                                   :keypress    {:key-code 13}}
+                                                                  (param primary-button))})
+                   (if secondary-button {:secondary-button (merge {:font-size   :xs
+                                                                   :hover-color :highlight
+                                                                   :indent      {:all :xxs}
+                                                                   :outdent     {:all :xxs}
+                                                                   :keypress    {:key-code 27}}
+                                                                  (param secondary-button))})))

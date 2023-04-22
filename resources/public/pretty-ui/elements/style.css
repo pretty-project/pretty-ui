@@ -673,7 +673,8 @@
 .e-horizontal-polarity--start-content,
 .e-horizontal-polarity--middle-content,
 .e-horizontal-polarity--end-content {
-  display: flex;
+  /* DEPRECATED! What was the purpose? */
+  -display: flex;
 }
 
 /*** Content ***/

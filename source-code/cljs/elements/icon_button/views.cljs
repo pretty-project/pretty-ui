@@ -31,9 +31,9 @@
   ; @param (keyword) button-id
   ; @param (map) button-props
   [button-id button-props]
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (r/dispatch :elements.button/button-did-mount    button-id button-props))
-                       :component-will-unmount (fn [_ _] (r/dispatch :elements.button/button-will-unmount button-id button-props))
-                       :component-did-update   (fn [%]   (r/dispatch :elements.button/button-did-update   button-id %))
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (r/dispatch [:elements.button/button-did-mount    button-id button-props]))
+                       :component-will-unmount (fn [_ _] (r/dispatch [:elements.button/button-will-unmount button-id button-props]))
+                       :component-did-update   (fn [%]   (r/dispatch [:elements.button/button-did-update   button-id %]))
                        :reagent-render         (fn [_ button-props] [icon-button-structure button-id button-props])}))
 
 (defn element

@@ -329,6 +329,19 @@
 
 
 
+/***** Popup label bar *****/
+/*** Body ***/
+
+.c-popup-label-bar--body {
+  display:         flex;
+  justify-content: space-between;
+}
+
+/*** Body ***/
+/***** Popup label bar *****/
+
+
+
 /***** Side menu *****/
 /*** Body ***/
 

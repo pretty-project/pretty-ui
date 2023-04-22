@@ -7,51 +7,38 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- popup-label-bar-label
-  ; @param (keyword) bar-id
-  ; @param (map) bar-props
-  ; {:label (metamorphic-content)(opt)}
-  [_ {:keys [label]}]
-  (if label [elements/label {:content label
-                             :indent  {:horizontal :xs}}]))
-
-(defn- popup-secondary-button
-  ; @param (keyword) bar-id
-  ; @param (map) bar-props
-  ; {:secondary-button (map)}
-  [_ {:keys [secondary-button]}]
-  [elements/button secondary-button])
-
-(defn- popup-primary-button
-  ; @param (keyword) popup-id
-  ; @param (map) bar-props
-  ; {:primary-button (map)}
-  [_ {:keys [primary-button]}]
-  ; Ha szeretnéd, hogy a popup primary-button gombjának eseménye megtörténjen
-  ; az ENTER billentyű lenyomására akkor is, ha egy szövegmező fókuszált
-  ; állapotban van, amely állapot letiltja a {:required? false} keypress
-  ; eseményeket, akkor az egyes mezők {:on-enter ...} tulajdonságaként
-  ; is add meg az eseményt!
-  [elements/button primary-button])
-
 (defn- popup-label-bar
+  ; @ignore
+  ;
   ; @param (keyword) bar-id
   ; @param (map) bar-props
-  [bar-id bar-props]
-  [elements/horizontal-polarity {:start-content  [popup-secondary-button bar-id bar-props]
-                                 :middle-content [popup-label-bar-label  bar-id bar-props]
-                                 :end-content    [popup-primary-button   bar-id bar-props]}])
+  ; {:label (map)(opt)
+  ;  :primary-button (map)(opt)
+  ;  :secondary-button (map)(opt)}
+  [_ {:keys [label primary-button secondary-button]}]
+  ; If you want to primary-button on-click event to be fired when the ENTER key
+  ; is pressed even if a text field is focused and the keypress handler is in
+  ; type mode, then set the on-click event as the on-enter event of the field as well.
+  [:div {:class :c-popup-label-bar}
+        [:div {:class :c-popup-label-bar--body}
+              (if secondary-button [elements/button secondary-button]
+                                   [:div {:class :c-popup-label-bar--placeholder}])
+              (if label            [elements/label label]
+                                   [:div {:class :c-popup-label-bar--placeholder}])
+              (if primary-button   [elements/button primary-button]
+                                   [:div {:class :c-popup-label-bar--placeholder}])]])
 
 (defn component
   ; @param (keyword)(opt) bar-id
   ; @param (map) bar-props
-  ; {:label (metamorphic-content)(opt)
+  ; {:label (map)(opt)
+  ;   {:content (metamorphic-content)}
   ;  :primary-button (map)(opt)
   ;   {:label (metamorphic-content)
-  ;    :on-click (metamorphic-even)}
+  ;    :on-click (metamorphic-event)}
   ;  :secondary-button (map)(opt)
   ;   {:label (metamorphic-content)
-  ;    :on-click (metamorphic-even)}}
+  ;    :on-click (metamorphic-event)}}
   ;
   ; @usage
   ; [popup-label-bar {...}]
