@@ -58,3 +58,24 @@
           {:dispatch (if on-empty (r/metamorphic-event<-params on-empty ""))
            :db       (r plain-field.events/empty-field! db field-id field-props)
            :fx       [:elements.plain-field/empty-field! field-id]})))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(r/reg-event-fx :elements.text-field/field-blurred
+  ; @ignore
+  ;
+  ; @param (keyword) field-id
+  ; @param (map) field-props
+  (fn [_ [_ field-id field-props]]
+      {:dispatch [:elements.plain-field/field-blurred          field-id field-props]
+       :fx       [:elements.text-field/remove-keypress-events! field-id field-props]}))
+
+(r/reg-event-fx :elements.text-field/field-focused
+  ; @ignore
+  ;
+  ; @param (keyword) field-id
+  ; @param (map) field-props
+  (fn [_ [_ field-id field-props]]
+      {:dispatch [:elements.plain-field/field-focused       field-id field-props]
+       :fx       [:elements.text-field/reg-keypress-events! field-id field-props]}))

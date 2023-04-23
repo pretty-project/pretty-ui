@@ -382,35 +382,102 @@
 
 
 /***** Content swapper *****/
-/*** Header ***/
+/*** Element ***/
 
-.e-content-swapper--header {
+.e-content-swapper {
+  /* XXX#0517 (source-code/cljs/elements/content_swapper/views.cljs) */
+  height: 100%;
+  width:  100%;
 }
 
-/*** Header ***/
+/*** Element ***/
 
 /*** Body ***/
 
 .e-content-swapper--body {
-  display: flex;
+  /* XXX#0517 (source-code/cljs/elements/content_swapper/views.cljs) */
+  height: 100%;
+  width:  100%;
 }
 
 /*** Body ***/
 
-/*** Page buttons ***/
+/*** Animations ***/
 
-.e-content-swapper--page-buttons {
-  display: flex;
-  flex-direction: column;
-  row-gap: 6px;
+@keyframes e-content-swapper--swap-fwd-in {
+  from {
+    opacity:   0;
+    transform: translateX(10%);
+  }
+  to {
+    opacity:   1;
+    transform: translateX(0);
+  }
 }
 
-/*** Page buttons ***/
+@keyframes e-content-swapper--swap-fwd-out {
+  from {
+    opacity:   1;
+    transform: translateX(0);
+  }
+  to {
+    opacity:   0;
+    transform: translateX(-10%);
+  }
+}
+
+@keyframes e-content-swapper--swap-bwd-in {
+  from {
+    opacity:   0;
+    transform: translateX(-10%);
+  }
+  to {
+    opacity:   1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes e-content-swapper--swap-bwd-out {
+  from {
+    opacity:   1;
+    transform: translateX(0);
+  }
+  to {
+    opacity:   0;
+    transform: translateX(10%);
+  }
+}
+
+/*** Animations ***/
 
 /*** Page ***/
 
 .e-content-swapper--page {
-  width: 100%;
+  animation-duration:  .3s;
+  animation-fill-mode: both;
+  position:            absolute;
+  top:                 0;
+
+  /* If the content-swapper body element has indent padding, the absolute
+   * positioned page shouldn't inherit its size (100%) from the body! */
+  height: -webkit-fill-available;
+  width:  -webkit-fill-available;
+}
+
+.e-content-swapper--body[data-animation-direction="fwd"] .e-content-swapper--page.r-mounting {
+  animation-name: e-content-swapper--swap-fwd-in;
+}
+
+.e-content-swapper--body[data-animation-direction="fwd"] .e-content-swapper--page.r-unmounting {
+  animation-name: e-content-swapper--swap-fwd-out;
+}
+
+.e-content-swapper--body[data-animation-direction="bwd"] .e-content-swapper--page.r-mounting {
+  animation-name: e-content-swapper--swap-bwd-in;
+}
+
+.e-content-swapper--body[data-animation-direction="bwd"] .e-content-swapper--page.r-unmounting {
+  animation-name: e-content-swapper--swap-bwd-out;
 }
 
 /*** Page ***/
@@ -576,6 +643,11 @@
 
 
 
+/***** Element group *****/
+/***** Element group *****/
+
+
+
 /***** Expandable *****/
 /*** Element ***/
 
@@ -655,6 +727,19 @@
 
 /*** Body ***/
 /***** Ghost *****/
+
+
+
+/***** Horizontal group *****/
+/*** Body ***/
+
+.e-horizontal-group--body {
+  display: flex;
+  flex-direction: row;
+}
+
+/*** Body ***/
+/***** Horizontal group *****/
 
 
 

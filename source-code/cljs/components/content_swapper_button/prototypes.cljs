@@ -1,26 +1,25 @@
 
-(ns components.popup-menu-button.prototypes
+(ns components.content-swapper-button.prototypes
     (:require [noop.api :refer [param]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn button-props-prototype
+  ; @ignore
+  ;
   ; @param (map) button-props
   ;
   ; @return (map)
   ; {}
   [button-props]
-  (merge {:border-radius    {:all :s}
-          :font-size        :xs
-          :gap              :xs
+  (merge {:font-size        :xs
+          :gap              :auto
           :horizontal-align :left
           :hover-color      :highlight
+          :icon             :chevron_right
+          :icon-position    :right
           :icon-size        :m
-          :indent           {:horizontal :xxs :vertical :xxs}
+          :indent           {:all :xs}
           :width            :auto}
-
-          ; A VERTICAL outdent már tulságosan megköti/szabályozza a komponens használatát!
-          ; Deprecated!
-          ;:outdent          {:vertical :xs}}
          (param button-props)))

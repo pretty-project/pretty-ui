@@ -1,6 +1,7 @@
 
 (ns elements.content-swapper.attributes
-    (:require [pretty-css.api :as pretty-css]))
+    (:require [elements.content-swapper.state :as content-swapper.state]
+              [pretty-css.api                 :as pretty-css]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -10,13 +11,14 @@
   ;
   ; @param (keyword) swapper-id
   ; @param (map) swapper-props
+  ; {}
   ;
   ; @return (map)
   ; {}
-  [_ {:keys [gap style] :as swapper-props}]
-  (-> {:class           :e-content-swapper--body
-       :data-column-gap gap
-       :style           style}
+  [swapper-id {:keys [style] :as swapper-props}]
+  (-> {:class                    :e-content-swapper--body
+       :data-animation-direction (-> @content-swapper.state/SWAPPERS swapper-id :animation-direction)
+       :style                    style}
       (pretty-css/indent-attributes swapper-props)))
 
 (defn swapper-attributes
@@ -29,8 +31,5 @@
   ; {}
   [_ swapper-props]
   (-> {:class :e-content-swapper}
-      (pretty-css/default-attributes          swapper-props)
-      (pretty-css/outdent-attributes          swapper-props)
-      (pretty-css/element-max-size-attributes swapper-props)
-      (pretty-css/element-min-size-attributes swapper-props)
-      (pretty-css/element-size-attributes     swapper-props)))
+      (pretty-css/default-attributes swapper-props)
+      (pretty-css/outdent-attributes swapper-props)))

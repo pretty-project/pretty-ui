@@ -73,10 +73,10 @@
   ; @param (map) field-props
   ; {:on-blur (Re-Frame metamorphic-event)(opt)}
   (fn [_ [_ field-id {:keys [on-blur]}]]
-      {:dispatch-n [on-blur]
-       :fx-n       [[:elements.plain-field/hide-surface!      field-id]
-                    [:elements.input/unmark-input-as-focused! field-id]
-                    [:elements.plain-field/quit-type-mode!    field-id]]}))
+      {:dispatch on-blur
+       :fx-n [[:elements.plain-field/hide-surface!      field-id]
+              [:elements.input/unmark-input-as-focused! field-id]
+              [:elements.plain-field/quit-type-mode!    field-id]]}))
 
 (r/reg-event-fx :elements.plain-field/field-focused
   ; @ignore
@@ -85,7 +85,7 @@
   ; @param (map) field-props
   ; {:on-focus (Re-Frame metamorphic-event)(opt)}
   (fn [_ [_ field-id {:keys [on-focus]}]]
-      {:dispatch-n [on-focus]
-       :fx-n       [[:elements.plain-field/show-surface!    field-id]
-                    [:elements.input/mark-input-as-focused! field-id]
-                    [:elements.plain-field/set-type-mode!   field-id]]}))
+      {:dispatch on-focus
+       :fx-n [[:elements.plain-field/show-surface!    field-id]
+              [:elements.input/mark-input-as-focused! field-id]
+              [:elements.plain-field/set-type-mode!   field-id]]}))

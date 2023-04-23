@@ -17,14 +17,12 @@
   ;  :height (keyword)
   ;  :horizontal-align (keyword)
   ;  :vertical-align (keyword)
-  ;  :width (keyword)
-  ;  :wrap-items? (boolean)}
+  ;  :width (keyword)}
   [{:keys [border-color] :as row-props}]
   (merge {:height           :content
           :horizontal-align :left
           :vertical-align   :center
-          :width            :content
-          :wrap-items?      true}
+          :width            :content}
          (if border-color {:border-position :all
                            :border-width    :xxs})
          (param row-props)))

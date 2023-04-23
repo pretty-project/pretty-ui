@@ -34,7 +34,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; @ignore
-(r/reg-fx :elements.multi-combo-box/reg-keypress-events! reg-keypress-events!)
+(r/reg-fx :elements.text-field/reg-keypress-events! reg-keypress-events!)
 
 ; @ignore
-(r/reg-fx :elements.multi-combo-box/remove-keypress-events! remove-keypress-events!)
+(r/reg-fx :elements.text-field/remove-keypress-events! remove-keypress-events!)

@@ -212,11 +212,11 @@
 }
 
 .w-sidebar.r-mounting .w-sidebar--cover {
-  animation-delay: .15s;
   animation-name: translate-x--110vw-0;
 }
 
 .w-sidebar.r-unmounting .w-sidebar--cover {
+  animation-delay: .15s;
   animation-name: translate-x-0--110vw;
 }
 
@@ -233,11 +233,11 @@
 }
 
 .w-sidebar.r-mounting .w-sidebar--body {
+  animation-delay: .15s;
   animation-name: translate-x--110vw-0;
 }
 
 .w-sidebar.r-unmounting .w-sidebar--body {
-  animation-delay: .15s;
   animation-name: translate-x-0--110vw;
 }
 

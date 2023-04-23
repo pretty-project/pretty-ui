@@ -1,18 +1,17 @@
 
-(ns elements.content-swapper.prototypes
+(ns elements.horizontal-group.prototypes
     (:require [noop.api :refer [param]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn swapper-props-prototype
+(defn group-props-prototype
   ; @ignore
   ;
-  ; @param (map) swapper-props
+  ; @param (map) group-props
   ;
   ; @return (map)
-  ; {}
-  [swapper-props]
-  (merge {:height :content
-          :width  :content}
-         (param swapper-props)))
+  ; {:width (keyword)}
+  [group-props]
+  (merge {:width :content}
+         (param group-props)))

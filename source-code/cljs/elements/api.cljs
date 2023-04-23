@@ -12,6 +12,7 @@
               [elements.combo-box.effects]
               [elements.combo-box.events]
               [elements.combo-box.side-effects]
+              [elements.content-swapper.side-effects]
               [elements.counter.effects]
               [elements.counter.events]
               [elements.counter.subs]
@@ -62,6 +63,7 @@
               [elements.element.views              :as element.views]
               [elements.expandable.views           :as expandable.views]
               [elements.ghost.views                :as ghost.views]
+              [elements.horizontal-group.views     :as horizontal-group.views]
               [elements.horizontal-line.views      :as horizontal-line.views]
               [elements.horizontal-polarity.views  :as horizontal-polarity.views]
               [elements.horizontal-separator.views :as horizontal-separator.views]
@@ -89,6 +91,7 @@
               [elements.text-field.views           :as text-field.views]
               [elements.thumbnail.views            :as thumbnail.views]
               [elements.toggle.views               :as toggle.views]
+              [elements.vertical-group.views       :as vertical-group.views]
               [elements.vertical-line.views        :as vertical-line.views]
               [elements.vertical-polarity.views    :as vertical-polarity.views]
               [elements.vertical-separator.views   :as vertical-separator.views]
@@ -123,6 +126,7 @@
 (def element-label        element.views/element-label)
 (def expandable           expandable.views/element)
 (def ghost                ghost.views/element)
+(def horizontal-group     horizontal-group.views/element)
 (def horizontal-line      horizontal-line.views/element)
 (def horizontal-polarity  horizontal-polarity.views/element)
 (def horizontal-separator horizontal-separator.views/element)
@@ -150,6 +154,7 @@
 (def text-field           text-field.views/element)
 (def thumbnail            thumbnail.views/element)
 (def toggle               toggle.views/element)
+(def vertical-group       vertical-group.views/element)
 (def vertical-line        vertical-line.views/element)
 (def vertical-polarity    vertical-polarity.views/element)
 (def vertical-separator   vertical-separator.views/element)

@@ -33,7 +33,9 @@
   ;  :outdent (map)
   ;   Default: {:bottom :s}
   ;  :text-transform (keyword)(opt)
-  ;   Default: :uppercase}
+  ;   Default: :uppercase
+  ;  :width (keyword)(opt)
+  ;   Default: :auto}
   ;
   ; @usage
   ; [popup-menu-title {...}]

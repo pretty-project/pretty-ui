@@ -144,6 +144,8 @@
   ;  :max-length (integer)
   ;  :min (string)
   ;  :name (keyword)
+  ;  :on-blur (function)
+  ;  :on-focus (function)
   ;  :type (keyword)}
   [field-id {:keys [autofill-name date-from date-to disabled? max-length type] :as field-props}]
   ; HACK#9760 (source-code/cljs/elements/plain_field/utils.cljs)
@@ -156,7 +158,9 @@
              (if-not disabled? {:auto-complete autofill-name
                                 :min           date-from
                                 :max           date-to
-                                :name          autofill-name}))
+                                :name          autofill-name
+                                :on-blur       #(r/dispatch [:elements.text-field/field-blurred field-id field-props])
+                                :on-focus      #(r/dispatch [:elements.text-field/field-focused field-id field-props])}))
       (pretty-css/effect-attributes field-props)))
 
 ;; ----------------------------------------------------------------------------

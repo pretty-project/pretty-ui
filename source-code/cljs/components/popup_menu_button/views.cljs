@@ -33,7 +33,9 @@
   ;  :outdent (map)(opt)
   ;   Default: {:vertical :xs}
   ;  :preset (keyword)(opt)
-  ;   :highlight}
+  ;   :highlight
+  ;  :width (keyword)(opt)
+  ;   Default: :auto}
   ;
   ; @usage
   ; [popup-menu-button {...}]

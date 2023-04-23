@@ -8,5 +8,10 @@
 ; @ignore
 ;
 ; @atom (map)
-; {:my-swapper {:active-dex 42} ...}
+; {:my-swapper {:animation-direction (keyword)
+;                :bwd, :fwd
+;               :current-page (keyword)
+;                :a, :b
+;               :page-a (metamorphic-content)
+;               :page-b (metamorphic-content)}}
 (defonce SWAPPERS (ratom {}))

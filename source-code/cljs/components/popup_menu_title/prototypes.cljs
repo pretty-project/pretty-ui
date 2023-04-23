@@ -18,7 +18,8 @@
   ;  :icon-size (keyword)
   ;  :indent (map)
   ;  :outdent (map)
-  ;  :text-transform (keyword)}
+  ;  :text-transform (keyword)
+  ;  :width (keyword)}
   [title-props]
   (merge {:border-color     :default
           :border-position  :bottom
@@ -29,5 +30,6 @@
           :icon-size        :xl
           :indent           {:bottom :xxs}
           :outdent          {:bottom :s}
-          :text-transform   :uppercase}
+          :text-transform   :uppercase
+          :width            :auto}
          (param title-props)))
