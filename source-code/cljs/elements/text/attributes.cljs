@@ -51,18 +51,18 @@
   ;  :data-cropped (boolean)
   ;  :data-letter-spacing (keyword)
   ;  :style (map)}
-  [text-id {:keys [font-size horizontal-align max-lines style] :as text-props}]
+  [text-id {:keys [font-size horizontal-align horizontal-position max-lines style] :as text-props}]
   (-> (if max-lines (let [line-height-var (css/var  (str "line-height-" (name font-size)))
                           height-calc     (css/calc (str max-lines" * "line-height-var))]
                          {:class                        :e-text--body
                           :data-cropped                 true
-                          :data-horizontal-column-align horizontal-align
+                          :data-horizontal-column-align horizontal-position
                           :data-horizontal-text-align   horizontal-align
                           :data-letter-spacing          :auto
                           :style (merge style {:max-height height-calc})})
                     (let []
                          {:class                        :e-text--body
-                          :data-horizontal-column-align horizontal-align
+                          :data-horizontal-column-align horizontal-position
                           :data-horizontal-text-align   horizontal-align
                           :style                        style
                           :data-letter-spacing          :auto}))
@@ -84,5 +84,7 @@
   ; {}
   [_ text-props]
   (-> {:class :e-text}
-      (pretty-css/default-attributes text-props)
-      (pretty-css/outdent-attributes text-props)))
+      (pretty-css/default-attributes          text-props)
+      (pretty-css/outdent-attributes          text-props)
+      (pretty-css/element-min-size-attributes text-props)
+      (pretty-css/element-size-attributes     text-props)))

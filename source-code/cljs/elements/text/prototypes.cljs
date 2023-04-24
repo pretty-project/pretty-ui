@@ -19,14 +19,16 @@
   ;  :horizontal-align (keyword)
   ;  :line-height (keyword)
   ;  :selectable? (boolean)
-  ;  :text-overflow (keyword)}
+  ;  :text-overflow (keyword)
+  ;  :width (keyword)}
   [{:keys [content] :as text-props}]
   (merge {:font-size        :s
           :font-weight      :normal
           :horizontal-align :left
           :line-height      :text-block
           :selectable?      true
-          :text-overflow    :wrap}
+          :text-overflow    :wrap
+          :width            :content}
          (param text-props)
          ; XXX#7009 (source-code/cljs/elements/label/prototypes.cljs)
          {:content (metamorphic-content/compose content)}))

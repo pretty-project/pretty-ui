@@ -70,6 +70,8 @@
   ;  :horizontal-align (keyword)(opt)
   ;   :center, :left, :right
   ;   Default: :left
+  ;  :horizontal-position (keyword)(opt)
+  ;   :center, :left, :right
   ;  :indent (map)(opt)
   ;   {:bottom (keyword)(opt)
   ;    :left (keyword)(opt)
@@ -81,9 +83,11 @@
   ;  :info-text (metamorphic-content)(opt)
   ;  :label (metamorphic-content)(opt)
   ;  :line-height (keyword)(opt)
-  ;   :inherit, :native, :text-block, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;   :auto, :inherit, :text-block, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;   Default: :text-block
   ;  :max-lines (integer)(opt)
+  ;  :min-width (keyword)(opt)
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;  :on-copy (Re-Frame metamorphic-event)(opt)
   ;   This event takes the text content as its last parameter
   ;  :outdent (map)(opt)
@@ -97,7 +101,10 @@
   ;   Default :normal
   ;  :text-overflow (keyword)(opt)
   ;   :ellipsis, :wrap
-  ;   Default: :wrap}
+  ;   Default: :wrap
+  ;  :width (keyword)(opt)
+  ;   :auto, :content, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;   Default: :content}
   ;
   ; @usage
   ; [text {...}]

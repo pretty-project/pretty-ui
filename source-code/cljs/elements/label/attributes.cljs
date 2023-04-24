@@ -84,13 +84,13 @@
   ; @return (map)
   ; {}
   [_ {:keys [gap horizontal-align horizontal-position style vertical-position] :as label-props}]
-  (-> {:class                     :e-label--body
-       :data-column-gap           gap
-       :data-horizontal-position  horizontal-position
-       :data-horizontal-row-align horizontal-align
-       :data-vertical-position    vertical-position
-       :style                     style
-       :data-letter-spacing       :auto}
+  (-> {:class                      :e-label--body
+       :data-column-gap            gap
+       :data-horizontal-row-align  horizontal-position
+       :data-horizontal-text-align horizontal-align
+       :data-vertical-position     vertical-position
+       :style                      style
+       :data-letter-spacing        :auto}
       (pretty-css/border-attributes  label-props)
       (pretty-css/color-attributes   label-props)
       (pretty-css/font-attributes    label-props)

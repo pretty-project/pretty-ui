@@ -21,7 +21,7 @@
   ;  :marker-position (keyword)
   ;  :width (keyword)}
   [{:keys [border-color disabled? marker-color] :as toggle-props}]
-  (merge {:height :content
+  (merge {:height :auto
           :width  :content}
          (if marker-color {:marker-position :tr})
          (if border-color {:border-position :all

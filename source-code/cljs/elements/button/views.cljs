@@ -98,6 +98,8 @@
   ;   Default: :center
   ;  :hover-color (keyword or string)(opt)
   ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+  ;  :hover-effect (keyword)(opt)
+  ;   :opacity
   ;  :href (string)(opt)
   ;  :icon (keyword)(opt)
   ;  :icon-color (keyword or string)(opt)
@@ -121,12 +123,13 @@
   ;    :vertical (keyword)(opt)
   ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
   ;  :keypress (map)(opt)
-  ;   {:key-code (integer)
+  ;   {:exclusive? (boolean)(opt)
+  ;    :key-code (integer)
   ;    :required? (boolean)(opt)
   ;     Default: false}
   ;  :label (metamorphic-content)(opt)
   ;  :line-height (keyword)(opt)
-  ;   :inherit, :native, :text-block, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;   :auto, :inherit, :text-block, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;   Default: :text-block
   ;  :marker-color (keyword)(opt)
   ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning

@@ -16,13 +16,14 @@
   ;
   ; @return (map)
   ; {}
-  [card-id {:keys [disabled? horizontal-align href on-click style] :as card-props}]
+  [card-id {:keys [disabled? horizontal-align hover-effect href on-click style] :as card-props}]
   (-> (if disabled? {:class                        :e-card--body
                      :data-horizontal-column-align horizontal-align
                      :disabled                     true
                      :style                        style}
                     {:class                        :e-card--body
                      :data-click-effect            (if (or href on-click) :opacity)
+                     :data-hover-effect            hover-effect
                      :data-horizontal-column-align horizontal-align
                      :style                        style
                      :on-click                     #(r/dispatch on-click)})

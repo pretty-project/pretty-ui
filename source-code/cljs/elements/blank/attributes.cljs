@@ -18,6 +18,8 @@
   [_ {:keys [style] :as blank-props}]
   (-> {:class :e-blank--body
        :style style}
+      (pretty-css/border-attributes blank-props)
+      (pretty-css/color-attributes  blank-props)
       (pretty-css/indent-attributes blank-props)))
 
 ;; ----------------------------------------------------------------------------

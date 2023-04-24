@@ -12,6 +12,7 @@
               [elements.combo-box.effects]
               [elements.combo-box.events]
               [elements.combo-box.side-effects]
+              [elements.content-swapper.effects]
               [elements.content-swapper.side-effects]
               [elements.counter.effects]
               [elements.counter.events]

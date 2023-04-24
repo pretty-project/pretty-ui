@@ -17,7 +17,7 @@
   (merge {:color       :default
           :font-size   :s
           :font-weight :medium
-          :height      :content
+          :height      :auto
           :selectable? false
           :width       :content}
          (if border-color {:border-position :all

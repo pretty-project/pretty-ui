@@ -81,5 +81,5 @@
   ; XXX#0886 (bithandshake/pretty-css)
   (let [line-count (field-line-count field-id field-props)]
        (case line-height :text-block (str "calc(var( --text-block-height-" (name font-size)   " ) * "line-count" + 12px)")
-                         :native     (str "calc(var( --line-height-"       (name font-size)   " ) * "line-count" + 12px)")
+                         :auto       (str "calc(var( --line-height-"       (name font-size)   " ) * "line-count" + 12px)")
                                      (str "calc(var( --line-height-"       (name line-height) " ) * "line-count" + 12px)"))))

@@ -59,8 +59,9 @@
   ;   {:key-code (integer)
   ;    :required? (boolean)(opt)}}
   [button-id {:keys [keypress] :as button-props}]
-  (keypress-handler/reg-keypress-event! button-id {:key-code   (:key-code  keypress)
-                                                   :required?  (:required? keypress)
+  (keypress-handler/reg-keypress-event! button-id {:exclusive? (:exclusive? keypress)
+                                                   :key-code   (:key-code   keypress)
+                                                   :required?  (:required?  keypress)
                                                    :on-keydown (fn [_] (key-pressed  button-id button-props))
                                                    :on-keyup   (fn [_] (key-released button-id button-props))
                                                    :prevent-default? true}))

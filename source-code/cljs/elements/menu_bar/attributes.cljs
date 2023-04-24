@@ -46,7 +46,9 @@
   ; @param (keyword) bar-id
   ; @param (map) bar-props
   ; @param (map) item-props
-  ; {:disabled? (boolean)(opt)
+  ; {:active? (boolean)(opt)
+  ;  :disabled? (boolean)(opt)
+  ;  :hover-effect (keyword)(opt)
   ;  :on-click (Re-Frame metamorphic-event)(opt)
   ;  :on-mouse-over (Re-Frame metamorphic-event)(opt)}
   ;
@@ -57,12 +59,13 @@
   ;  :on-click (function)
   ;  :on-mouse-over (function)
   ;  :on-mouse-up (function)}
-  [_ _ {:keys [active? disabled? on-click on-mouse-over] :as item-props}]
+  [_ _ {:keys [active? disabled? hover-effect on-click on-mouse-over] :as item-props}]
   (-> (if disabled? (cond-> {:class             :e-menu-bar--menu-item-body
                              :data-disabled     true
                              :on-mouse-up       #(dom/blur-active-element!)})
                     (cond-> {:class             :e-menu-bar--menu-item-body
                              :data-click-effect :opacity
+                             :data-hover-effect hover-effect
                              :on-mouse-up       #(dom/blur-active-element!)}
                             (some? on-click)      (assoc :on-click      #(r/dispatch on-click))
                             (some? on-mouse-over) (assoc :on-mouse-over #(r/dispatch on-mouse-over))))

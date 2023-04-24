@@ -1,6 +1,7 @@
 
 (ns website.api
-    (:require [website.sidebar.side-effects]
+    (:require [website.sidebar.effects]
+              [website.sidebar.side-effects]
               [website.contacts.views           :as contacts.views]
               [website.follow-us.views          :as follow-us.views]
               [website.language-selector.views  :as language-selector.views]

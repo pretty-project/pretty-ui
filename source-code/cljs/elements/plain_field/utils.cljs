@@ -7,6 +7,9 @@
               [elements.plain-field.state        :as plain-field.state]
               [re-frame.api                      :as r]
               [reagent.api                       :as reagent]
+
+
+              [hiccup.api                          :as hiccup]
               [time.api                          :as time]))
 
 ;; ----------------------------------------------------------------------------
@@ -53,8 +56,21 @@
   ; @param (map) field-props
   [field-id _]
   ; HACK#9910 (source-code/cljs/elements/plain_field/views.cljs)
-  (plain-field.side-effects/set-field-content! field-id nil)
-  (plain-field.side-effects/set-field-output!  field-id nil))
+  ;
+  ; After the field unmounted its content and output have to removed from the state
+  ; otherwise next time when the field remounts its previous content and output could
+  ; affect it.
+  ; + It has to be checked whether the field is still in the DOM-tree because it might be
+  ;   in case of the field (with the same ID) is duplicated on the page.
+  ;   Its pretty common to use duplicated fields by displaying a field on a page of a
+  ;   content swapper and the same field on another page of that very content swapper.
+  ;   And during the content swapper changing pages animatedly there is short overlap
+  ;   in the lifetimes of the duplicated fields.
+  (letfn [(f [] (let [input-id      (hiccup/value field-id "input")
+                      input-element (dom/get-element-by-id input-id)]
+                    (when-not input-element (plain-field.side-effects/set-field-content! field-id nil)
+                                            (plain-field.side-effects/set-field-output!  field-id nil))))]
+         (time/set-timeout! f 50)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

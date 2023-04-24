@@ -10,8 +10,6 @@
 ; @atom (map)
 ; {:my-swapper {:animation-direction (keyword)
 ;                :bwd, :fwd
-;               :current-page (keyword)
-;                :a, :b
-;               :page-a (metamorphic-content)
-;               :page-b (metamorphic-content)}}
+;               :page-cursor (integer)
+;               :page-history (metamorphic-contents in vector)}}
 (defonce SWAPPERS (ratom {}))

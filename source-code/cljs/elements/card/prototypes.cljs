@@ -26,7 +26,7 @@
   ;  :marker-color (keyword)
   ;  :width (keyword)}
   [{:keys [badge-content border-color disabled? marker-color] :as card-props}]
-  (merge {:height :content
+  (merge {:height :auto
           :width  :content}
          (if badge-content {:badge-color :primary :badge-position :tr})
          (if border-color  {:border-position :all

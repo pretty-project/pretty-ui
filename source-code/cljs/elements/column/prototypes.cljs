@@ -19,7 +19,7 @@
   ;  :vertical-align (keyword)
   ;  :width (keyword)}
   [{:keys [border-color] :as column-props}]
-  (merge {:height           :content
+  (merge {:height           :auto
           :horizontal-align :center
           :vertical-align   :top
           :width            :content}

@@ -46,6 +46,7 @@
   ; {:disabled? (boolean)(opt)
   ;  :gap (keyword)(opt)
   ;  :horizontal-align (keyword)
+  ;  :hover-effect (keyword)(opt)
   ;  :href (string)(opt)
   ;  :on-click (Re-Frame metamorphic-event)(opt)
   ;  :on-mouse-over (Re-Frame metamorphic-event)(opt)
@@ -62,7 +63,7 @@
   ;  :on-mouse-over (function)
   ;  :on-mouse-up (function)
   ;  :style (map)}
-  [button-id {:keys [disabled? gap horizontal-align href on-click on-mouse-over style] :as button-props}]
+  [button-id {:keys [disabled? gap horizontal-align hover-effect href on-click on-mouse-over style] :as button-props}]
   ; XXX#4460
   ; By setting the :id attribute the body component becomes targetable for
   ; DOM actions. (setting focus/blur, etc.)
@@ -79,6 +80,7 @@
                      :on-mouse-over             #(r/dispatch  on-mouse-over)
                      :on-mouse-up               #(dom/blur-active-element!)
                      :data-click-effect         :opacity
+                     :data-hover-effect         hover-effect
                      :data-letter-spacing       :auto
                      :data-column-gap           gap
                      :data-horizontal-row-align horizontal-align

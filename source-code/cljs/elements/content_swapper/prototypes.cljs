@@ -1,6 +1,5 @@
 
-(ns elements.content-swapper.prototypes
-    (:require [noop.api :refer [param]]))
+(ns elements.content-swapper.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -11,8 +10,4 @@
   ; @param (map) swapper-props
   ;
   ; @return (map)
-  ; {}
-  [swapper-props]
-  (merge {:height :content
-          :width  :content}
-         (param swapper-props)))
+  [_])

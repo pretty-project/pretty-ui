@@ -400,6 +400,12 @@
   width:  100%;
 }
 
+.e-content-swapper--body[data-animation-direction] {
+  /* Because the appering or disappearing pages animated to move in LTR or RTL
+   * directions, the body has to hide the overflowing pages during animations. */
+  overflow-x: hidden;
+}
+
 /*** Body ***/
 
 /*** Animations ***/
@@ -1381,15 +1387,6 @@
 
 
 /***** Text *****/
-/*** Element ***/
-
-.e-text {
-  /* XXX#6668 */
-  width: fit-content;
-}
-
-/*** Element ***/
-
 /*** Body ***/
 
 .e-text--body {

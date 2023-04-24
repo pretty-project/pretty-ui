@@ -26,8 +26,10 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; @ignore
+; @usage
+; [:website.sidebar/show-sidebar! :my-sidebar]
 (r/reg-fx :website.sidebar/show-sidebar! show-sidebar!)
 
-; @ignore
+; @usage
+; [:website.sidebar/hide-sidebar! :my-sidebar]
 (r/reg-fx :website.sidebar/hide-sidebar! hide-sidebar!)

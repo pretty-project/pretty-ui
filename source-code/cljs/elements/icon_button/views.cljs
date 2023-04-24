@@ -68,6 +68,8 @@
   ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;  :hover-color (keyword or string)(opt)
   ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+  ;  :hover-effect (keyword)(opt)
+  ;   :opacity
   ;  :href (string)(opt)
   ;  :icon (keyword)
   ;  :icon-color (keyword or string)(opt)
@@ -88,7 +90,8 @@
   ;    :vertical (keyword)(opt)
   ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
   ;  :keypress (map)(constant)(opt)
-  ;   {:key-code (integer)
+  ;   {:exclusive? (boolean)(opt)
+  ;    :key-code (integer)
   ;    :required? (boolean)(opt)
   ;     Default: false}
   ;  :label (metamorphic-content)(opt)

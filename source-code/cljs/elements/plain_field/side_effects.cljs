@@ -20,7 +20,7 @@
   ; BUG#3401
   ; The 'field-content' has to be converted to string type!
   ; It may occur, that a non-seqable type (e.g. integer) being written into
-  ; the field and the empty? function may throws an error in case of taking
+  ; the field and the empty? function throws an error in case of taking
   ; a non-seqable value as its argument.
   (swap! plain-field.state/FIELD-CONTENTS assoc field-id (str field-content)))
 

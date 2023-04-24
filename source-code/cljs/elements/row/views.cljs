@@ -43,7 +43,7 @@
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :auto
   ;  :height (keyword)(opt)
   ;   :auto, :content, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  ;   Default: :content
+  ;   Default: :auto
   ;  :horizontal-align (keyword)(opt)
   ;   :center, :left, :right, :space-around, :space-between, :space-evenly
   ;   Default: :left

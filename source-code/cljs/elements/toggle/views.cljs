@@ -43,10 +43,11 @@
   ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;  :height (keyword)(opt)
   ;   :auto, :content, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  ;   Default: :content
+  ;   Default: :auto
   ;  :hover-color (keyword or string)(opt)
-  ;   :default, :highlight, :invert, :muted, :none, :primary, :secondary, :success, :warning
-  ;   Default: :none
+  ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+  ;  :hover-effect (keyword)(opt)
+  ;   :opacity
   ;  :href (string)(opt)
   ;  :indent (map)(opt)
   ;   {:bottom (keyword)(opt)
