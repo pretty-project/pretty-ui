@@ -1,6 +1,7 @@
 
 (ns elements.text-field.attributes
     (:require [dom.api                         :as dom]
+              [elements.input.env              :as input.env]
               [elements.plain-field.attributes :as plain-field.attributes]
               [elements.text-field.env         :as text-field.env]
               [metamorphic-content.api         :as metamorphic-content]
@@ -24,16 +25,23 @@
   ; @return (map)
   ; {}
   [field-id field-props {:keys [disabled? on-click tab-indexed? tooltip-content] :as adornment-props}]
-  ; BUG#2105 (source-code/cljs/elements/plain_field/attributes.cljs)
-  (-> (plain-field.attributes/field-accessory-attributes field-id field-props)
-      (merge {:class                 :e-text-field--adornment
-              :data-selectable       false
-              :data-tooltip-content  (metamorphic-content/compose tooltip-content)
-              :data-tooltip-position :left}
-             (if disabled?        {:disabled   "1" :data-disabled true})
+  ; BUG#2105
+  ; An on-mouse-down event fired anywhere out of the input could trigger the
+  ; on-blur event of the field, therefore the surface would dissapears unless
+  ; if the on-mouse-down event prevented.
+  ;
+  ; If the user clicks on a field accessory (adornment, surface, placeholder, etc.)
+  ; the field has been focused!
+  (-> {:class                 :e-text-field--adornment
+       :data-selectable       false
+       :data-tooltip-content  (metamorphic-content/compose tooltip-content)
+       :data-tooltip-position :left
+       :on-mouse-down (fn [e] (when (input.env/input-focused? field-id)
+                                    (.preventDefault e)
+                                    (r/dispatch-fx [:elements.plain-field/focus-field! field-id])))}
+      (merge (if disabled?        {:disabled   "1" :data-disabled true})
              (if-not tab-indexed? {:tab-index "-1"})
-             (if-not disabled?    {:on-mouse-up #(do (r/dispatch on-click)
-                                                     (dom/blur-active-element!))}))
+             (if-not disabled?    {:on-mouse-up #(do (r/dispatch on-click))}))
       (pretty-css/color-attributes  adornment-props)
       (pretty-css/effect-attributes adornment-props)
       (pretty-css/font-attributes   adornment-props)
@@ -107,8 +115,9 @@
   ; @return (map)
   ; {}
   [field-id field-props]
-  (merge (plain-field.attributes/field-accessory-attributes field-id field-props)
-         {:class :e-text-field--adornments-placeholder}))
+  ; BUG#2105
+  {:class :e-text-field--adornments-placeholder
+   :on-mouse-down #(r/dispatch-fx [:elements.plain-field/focus-field! field-id])})
 
 (defn field-surface-attributes
   ; @ignore

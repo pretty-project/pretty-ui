@@ -76,35 +76,13 @@
   ;  :on-mouse-down (function)}
   [field-id {:keys [surface]}]
   ; XXX#4460 (source-code/cljs/elements/button/views.cljs)
-  ; BUG#2105
+  ; BUG#2105 (source-code/cljs/elements/text_field/attributes.cljs)
   (-> {:class                 :e-plain-field--surface
        :data-box-shadow-color :default
        :id                    (hiccup/value field-id "surface")
        :on-mouse-down         #(.preventDefault %)}
       (pretty-css/border-attributes surface)
       (pretty-css/indent-attributes surface)))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn field-accessory-attributes
-  ; @ignore
-  ;
-  ; @param (keyword) field-id
-  ; @param (map) field-props
-  ;
-  ; @return (map)
-  ; {:on-mouse-down (function)}
-  [field-id _]
-  ; BUG#2105
-  ; An on-mouse-down event fired on anywhere out of the input triggers the
-  ; on-blur event of the field, therefore the surface would dissapears unless
-  ; if the on-mouse-down event prevented.
-  ;
-  ; If the user clicks on a field accessory (adornment, surface, placeholder, etc.)
-  ; the field has been focused!
-  {:on-mouse-down (fn [e] (.preventDefault e)
-                          (r/dispatch-fx [:elements.plain-field/focus-field! field-id]))})
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -13,7 +13,7 @@
   ; {:class (keyword or keywords in vector)(opt)
   ;  :fill-color (keyword or string)(opt)
   ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
-  ;   Default: :highlight
+  ;   Default: :default
   ;  :outdent (map)(opt)
   ;   Same as the :indent property
   ;  :style (map)(opt)

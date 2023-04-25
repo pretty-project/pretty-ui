@@ -13,7 +13,7 @@
   ; {:class (keyword or keywords in vector)(opt)
   ;  :fill-color (keyword or string)(opt)
   ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
-  ;   Default: :highlight
+  ;   Default: :default
   ;  :height (keyword)(opt)
   ;   :auto, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;   Default: :parent

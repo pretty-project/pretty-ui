@@ -773,6 +773,40 @@
 
 
 
+/***** Horizontal separator *****/
+/*** Body ***/
+
+.e-horizontal-separator--body {
+  align-items: center;
+  display:     flex;
+}
+
+/*** Body ***/
+
+
+/*** Line ***/
+
+.e-horizontal-separator--line {
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  height:              0px;
+  flex-grow:           1;
+}
+
+/*** Line ***/
+
+/*** Label ***/
+
+.e-horizontal-separator--label {
+  font-weight: 500;
+  padding:     0 6px;
+}
+
+/*** Label ***/
+/***** Horizontal separator *****/
+
+
+
 /***** Icon *****/
 /*** Element ***/
 
@@ -1237,21 +1271,6 @@
 
 
 
-/***** Separator *****/
-
-.e-horizontal-separator,
-.e-vertical-separator {
-  flex-shrink: 0;
-}
-
-.e-horizontal-separator {
-  width: 100%;
-}
-
-/***** Separator *****/
-
-
-
 /***** Slider *****/
 /*** Body ***/
 
@@ -1311,6 +1330,21 @@
 
 /*** Thumb ***/
 /***** Slider *****/
+
+
+
+/***** Spacer *****/
+
+.e-horizontal-spacer,
+.e-vertical-spacer {
+  flex-shrink: 0;
+}
+
+.e-horizontal-spacer {
+  width: 100%;
+}
+
+/***** Spacer *****/
 
 
 

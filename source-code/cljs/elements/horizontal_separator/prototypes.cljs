@@ -11,7 +11,9 @@
   ; @param (map) separator-props
   ;
   ; @return (map)
-  ; {:height (keyword)}
+  ; {:color (keyword)
+  ;  :width (keyword)}
   [separator-props]
-  (merge {:height :s}
+  (merge {:color :default
+          :width :auto}
          (param separator-props)))

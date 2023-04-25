@@ -1,17 +1,17 @@
 
-(ns elements.vertical-separator.prototypes
+(ns elements.horizontal-spacer.prototypes
     (:require [noop.api :refer [param]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn separator-props-prototype
+(defn spacer-props-prototype
   ; @ignore
   ;
-  ; @param (map) separator-props
+  ; @param (map) spacer-props
   ;
   ; @return (map)
-  ; {:width (keyword)}
-  [separator-props]
-  (merge {:width :s}
-         (param separator-props)))
+  ; {:height (keyword)}
+  [spacer-props]
+  (merge {:height :s}
+         (param spacer-props)))

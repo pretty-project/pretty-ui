@@ -15,7 +15,7 @@
   ;  :strength (px)
   ;  :width (keyword)}
   [line-props]
-  (merge {:fill-color :highlight
+  (merge {:fill-color :default
           :strength   1
           :width      :auto}
          (param line-props)))

@@ -17,7 +17,7 @@
   ; @return (map)
   ; {}
   [box-id box-props option-dex option]
-  ; BUG#2105 (source-code/cljs/elements/plain_field/attributes.cljs)
+  ; BUG#2105 (source-code/cljs/elements/text_field/attributes.cljs)
   {:class         :e-combo-box--option
    :on-mouse-down #(.preventDefault %)
    :on-mouse-up   #(r/dispatch [:elements.combo-box/select-option! box-id box-props option])
