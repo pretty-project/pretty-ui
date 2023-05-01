@@ -1,5 +1,5 @@
 
-(ns layouts.struct-popup.env
+(ns layouts.struct-popup.utils
     (:require [hiccup.api                 :as hiccup]
               [intersection-observer.api  :as intersection-observer]
               [layouts.struct-popup.state :as struct-popup.state]))

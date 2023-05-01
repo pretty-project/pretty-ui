@@ -10,7 +10,7 @@
 ; @atom (map)
 (defonce HEADER-SHADOW-VISIBLE? (ratom {}))
 
-  ; @ignore
-  ;
+; @ignore
+;
 ; @atom (map)
 (defonce FOOTER-SHADOW-VISIBLE? (ratom {}))

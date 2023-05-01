@@ -3,8 +3,7 @@
     (:require [components.copyright-label.prototypes :as copyright-label.prototypes]
               [elements.api                          :as elements]
               [random.api                            :as random]
-              [re-frame.api                          :as r]
-              [x.app-details                         :as x.app-details]))
+              [re-frame.api                          :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -14,8 +13,8 @@
   ; @param (map) label-props
   ; {:font-size (keyword)}
   [_ {:keys [font-size]}]
-  (let [server-year    @(r/subscribe [:x.core/get-server-year])
-        copyright-label (x.app-details/copyright-label server-year)]
+  (let [server-year    @(r/subscribe [:x.core/get-server-year])]
+        ;copyright-label (x.app-details/copyright-label server-year)]
        [:div.c-copyright-label {:data-color :muted
                                 :data-selectable false}
         [:a.c-copyright-label--anchor {:data-font-weight :medium
@@ -28,8 +27,8 @@
                                        :data-orientation :horizontal}
                                       [:i.c-copyright-label--icon {:data-icon-family :material-symbols-outlined
                                                                    :data-icon-size   :xs}
-                                                                  :copyright]
-                                      copyright-label]]))
+                                                                  :copyright]]]))
+        ;                              copyright-label]]))
        ;[elements/label ::copyright-label
         ;               {:color            :muted
         ;                :content          copyright-label

@@ -1,9 +1,9 @@
 
 (ns components.section-title.views
-    (:require [components.section-title.prototypes :as section-title.prototypes]
+    (:require [auto-title.api                      :as auto-title]
+              [components.section-title.prototypes :as section-title.prototypes]
               [elements.api                        :as elements]
-              [random.api                          :as random]
-              [x.ui.api                            :as x.ui]))
+              [random.api                          :as random]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -16,7 +16,7 @@
   [title-id {:keys [content placeholder] :as title-props}]
   ; The sensor and title has to be placed in a common element, otherwise in some
   ; cases the sensor might be in a wrong position!
-  [:div.c-section-title [x.ui/app-title-sensor {:placeholder placeholder :title content :offset -12}]
+  [:div.c-section-title [auto-title/sensor {:placeholder placeholder :title content :offset -12}]
                         [elements/label title-id title-props]])
 
 (defn component

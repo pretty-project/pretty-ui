@@ -5,11 +5,9 @@
               [elements.plain-field.env          :as plain-field.env]
               [elements.plain-field.side-effects :as plain-field.side-effects]
               [elements.plain-field.state        :as plain-field.state]
+              [hiccup.api                        :as hiccup]
               [re-frame.api                      :as r]
               [reagent.api                       :as reagent]
-
-
-              [hiccup.api                          :as hiccup]
               [time.api                          :as time]))
 
 ;; ----------------------------------------------------------------------------
