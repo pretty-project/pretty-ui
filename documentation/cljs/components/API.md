@@ -5,11 +5,15 @@
 
 ### Index
 
-- [action-bar](#action-bar)
+- [action-bar_](#action-bar_)
 
 - [color-picker](#color-picker)
 
 - [compact-list-header](#compact-list-header)
+
+- [content-swapper-button](#content-swapper-button)
+
+- [content-swapper-header](#content-swapper-header)
 
 - [copyright-label](#copyright-label)
 
@@ -91,7 +95,7 @@
 
 - [vector-items-header](#vector-items-header)
 
-### action-bar
+### action-bar_
 
 ```
 @param (keyword)(opt) bar-id
@@ -117,6 +121,32 @@
 [action-bar :my-action-bar {...}]
 ```
 
+<details>
+<summary>Source code</summary>
+
+```
+(defn component
+  ([bar-props]
+   [component (random/generate-keyword) bar-props])
+
+  ([bar-id bar-props]
+   (let []        [action-bar bar-id bar-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [components.api :refer [action-bar_]]))
+
+(components.api/action-bar_ ...)
+(action-bar_                ...)
+```
+
+</details>
+
 ---
 
 ### color-picker
@@ -124,8 +154,7 @@
 ```
 @param (keyword) picker-id
 @param (map) picker-props
-{:class (keyword or keywords in vector)(opt)
- :click-effect (keyword)(opt)
+{:click-effect (keyword)(opt)
   :opacity
   Default: :opacity
  :color-stamp (map)(opt)
@@ -138,17 +167,10 @@
    :width (keyword)(opt)
     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
     Default: :l}
- :disabled? (boolean)(opt)
  :hover-effect (keyword)(opt)
   :opacity
- :indent (map)(opt)
- :label (metamorphic-content)(opt)
- :on-select (metamorphic-event)(opt)
- :outdent (map)(opt)
  :placeholder (metamorphic-content)(opt)
-  Default: :choose-color!
- :style (map)(opt)
- :value-path (vector)}
+  Default: "Choose color!"}
 ```
 
 ```
@@ -160,6 +182,33 @@
 @usage
 [color-picker :my-color-picker {...}]
 ```
+
+<details>
+<summary>Source code</summary>
+
+```
+(defn component
+  ([picker-props]
+   [component (random/generate-keyword) picker-props])
+
+  ([picker-id picker-props]
+   (let [picker-props (color-picker.prototypes/picker-props-prototype picker-id picker-props)]
+        [color-picker picker-id picker-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [components.api :refer [color-picker]]))
+
+(components.api/color-picker ...)
+(color-picker                ...)
+```
+
+</details>
 
 ---
 
@@ -188,6 +237,165 @@
 [compact-list-header :my-compact-list-header {...}]
 ```
 
+<details>
+<summary>Source code</summary>
+
+```
+(defn component
+  ([header-props]
+   [component (random/generate-keyword) header-props])
+
+  ([header-id header-props]
+   (let [header-props (compact-list-header.prototypes/header-props-prototype header-props)]
+        [compact-list-header header-id header-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [components.api :refer [compact-list-header]]))
+
+(components.api/compact-list-header ...)
+(compact-list-header                ...)
+```
+
+</details>
+
+---
+
+### content-swapper-button
+
+```
+@param (keyword)(opt) button-id
+@param (map) button-props
+{:font-size (keyword)(opt)
+  Default: :xs
+ :gap (keyword)(opt)
+  Default: :auto
+ :horizontal-align (keyword)(opt)
+  Default: :left
+ :hover-color (keyword or string)(opt)
+  Default: :highlight
+ :icon (keyword)(opt)
+  Default: :chevron_right
+ :icon-position (keyword)(opt)
+  Default: :right
+ :icon-size (keyword)(opt)
+  Default: :m
+ :indent (map)(opt)
+  Default: {:all :xs}
+ :width (keyword)(opt)
+  Default: :auto}
+```
+
+```
+@usage
+[content-swapper-button {...}]
+```
+
+```
+@usage
+[content-swapper-button :my-content-swapper-button {...}]
+```
+
+<details>
+<summary>Source code</summary>
+
+```
+(defn component
+  ([button-props]
+   [component (random/generate-keyword) button-props])
+
+  ([button-id button-props]
+   (let [button-props (content-swapper-button.prototypes/button-props-prototype button-props)]
+        [elements/button button-id button-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [components.api :refer [content-swapper-button]]))
+
+(components.api/content-swapper-button ...)
+(content-swapper-button                ...)
+```
+
+</details>
+
+---
+
+### content-swapper-header
+
+```
+@param (keyword)(opt) header-id
+@param (map) header-props
+{:border-color (keyword or string)(opt)
+  Default: :highlight
+ :border-position (keyword)(opt)
+  Default: :bottom
+ :font-size (keyword)(opt)
+  Default: :xs
+ :gap (keyword)(opt)
+  Default: :auto
+ :horizontal-align (keyword)(opt)
+  Default: :left
+ :hover-color (keyword or string)(opt)
+  Default: :highlight
+ :icon (keyword)(opt)
+  Default: :chevron_left
+ :icon-position (keyword)(opt)
+  Default: :left
+ :icon-size (keyword)(opt)
+  Default: :xl
+ :indent (map)(opt)
+  Default: {:horizontal :xs}
+ :width (keyword)(opt)
+  Default: :auto}
+```
+
+```
+@usage
+[content-swapper-header {...}]
+```
+
+```
+@usage
+[content-swapper-header :my-content-swapper-header {...}]
+```
+
+<details>
+<summary>Source code</summary>
+
+```
+(defn component
+  ([header-props]
+   [component (random/generate-keyword) header-props])
+
+  ([header-id header-props]
+   (let [header-props (content-swapper-header.prototypes/header-props-prototype header-props)]
+        [elements/button header-id header-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [components.api :refer [content-swapper-header]]))
+
+(components.api/content-swapper-header ...)
+(content-swapper-header                ...)
+```
+
+</details>
+
 ---
 
 ### copyright-label
@@ -213,6 +421,33 @@
 @usage
 [copyright-label {...}]
 ```
+
+<details>
+<summary>Source code</summary>
+
+```
+(defn component
+  ([label-props]
+   [component (random/generate-keyword) label-props])
+
+  ([label-id label-props]
+   (let [label-props (copyright-label.prototypes/label-props-prototype label-props)]
+        [copyright-label label-id label-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [components.api :refer [copyright-label]]))
+
+(components.api/copyright-label ...)
+(copyright-label                ...)
+```
+
+</details>
 
 ---
 
@@ -247,6 +482,33 @@
 [data-element :my-data-element {...}]
 ```
 
+<details>
+<summary>Source code</summary>
+
+```
+(defn component
+  ([element-props]
+   [component (random/generate-keyword) element-props])
+
+  ([element-id element-props]
+   (let [element-props (data-element.prototypes/element-props-prototype element-props)]
+        [data-element element-id element-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [components.api :refer [data-element]]))
+
+(components.api/data-element ...)
+(data-element                ...)
+```
+
+</details>
+
 ---
 
 ### data-table
@@ -280,11 +542,38 @@
 
 ```
 @usage
-[data-table {:rows [[{:content "Row #1"   :font-weight :bold}
+[data-table {:rows [[{:content "Row #1"   :font-weight :semi-bold}
                      {:content "Value #1" :color :muted}
                      {:content "Value #2" :color :muted}]
                     [{...} {...}]]}]
 ```
+
+<details>
+<summary>Source code</summary>
+
+```
+(defn component
+  ([table-props]
+   [component (random/generate-keyword) table-props])
+
+  ([table-id table-props]
+   (let [table-props (data-table.prototypes/table-props-prototype table-props)]
+        [data-table table-id table-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [components.api :refer [data-table]]))
+
+(components.api/data-table ...)
+(data-table                ...)
+```
+
+</details>
 
 ---
 
@@ -305,6 +594,32 @@
 @usage
 [error-content :my-error-content {...}]
 ```
+
+<details>
+<summary>Source code</summary>
+
+```
+(defn component
+  ([content-props]
+   [component (random/generate-keyword) content-props])
+
+  ([content-id content-props]
+   (let []        [error-content content-id content-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [components.api :refer [error-content]]))
+
+(components.api/error-content ...)
+(error-content                ...)
+```
+
+</details>
 
 ---
 
@@ -328,6 +643,33 @@
 @usage
 [error-label :my-error-label {...}]
 ```
+
+<details>
+<summary>Source code</summary>
+
+```
+(defn component
+  ([label-props]
+   [component (random/generate-keyword) label-props])
+
+  ([label-id label-props]
+   (let [label-props (error-label.prototypes/label-props-prototype label-props)]
+        [elements/label label-id label-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [components.api :refer [error-label]]))
+
+(components.api/error-label ...)
+(error-label                ...)
+```
+
+</details>
 
 ---
 
@@ -359,6 +701,32 @@
 [ghost-view :my-ghost-view {...}]
 ```
 
+<details>
+<summary>Source code</summary>
+
+```
+(defn component
+  ([view-props]
+   [component (random/generate-keyword) view-props])
+
+  ([view-id view-props]
+   (let []        [ghost-view view-id view-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [components.api :refer [ghost-view]]))
+
+(components.api/ghost-view ...)
+(ghost-view                ...)
+```
+
+</details>
+
 ---
 
 ### illustration
@@ -370,7 +738,7 @@
  :height (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   Default: :xxl
- :illustration (keyword)
+ :uri (string)
  :style (map)(opt)
  :width (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
@@ -386,6 +754,33 @@
 @usage
 [illustration :my-illustration {...}]
 ```
+
+<details>
+<summary>Source code</summary>
+
+```
+(defn component
+  ([illustration-props]
+   [component (random/generate-keyword) illustration-props])
+
+  ([illustration-id illustration-props]
+   (let [illustration-props (illustration.prototypes/illustration-props-prototype illustration-props)]
+        [illustration illustration-id illustration-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [components.api :refer [illustration]]))
+
+(components.api/illustration ...)
+(illustration                ...)
+```
+
+</details>
 
 ---
 
@@ -413,6 +808,32 @@ same ID for both the field and the block, the label of the block can targets the
 @usage
 [input-block :my-input-block {...}]
 ```
+
+<details>
+<summary>Source code</summary>
+
+```
+(defn component
+  ([block-props]
+   [component (random/generate-keyword) block-props])
+
+  ([block-id block-props]
+   (let []        [input-block block-id block-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [components.api :refer [input-block]]))
+
+(components.api/input-block ...)
+(input-block                ...)
+```
+
+</details>
 
 ---
 
@@ -469,6 +890,33 @@ same ID for both the field and the block, the label of the block can targets the
               :rows [["160px 1fr" [:name ::my-name-field #'my-name-field]]]}]
 ```
 
+<details>
+<summary>Source code</summary>
+
+```
+(defn component
+  ([table-props]
+   [component (random/generate-keyword) table-props])
+
+  ([table-id table-props]
+   (let [table-props (input-table.prototypes/table-props-prototype table-props)]
+        [input-table table-id table-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [components.api :refer [input-table]]))
+
+(components.api/input-table ...)
+(input-table                ...)
+```
+
+</details>
+
 ---
 
 ### item-list-header
@@ -480,7 +928,7 @@ same ID for both the field and the block, the label of the block can targets the
   :bottom, :top}
  :cells (maps in vector)
   [{:label (metamorphic-content)(opt)
-    :on-click (metamorphic-event)(opt)
+    :on-click (Re-Frame metamorphic-event)(opt)
     :width (px)(opt)}]
  :template (string)}
 ```
@@ -499,6 +947,33 @@ same ID for both the field and the block, the label of the block can targets the
 @usage
 [item-list-header :my-item-list-header {:cells [[:div ]]}]
 ```
+
+<details>
+<summary>Source code</summary>
+
+```
+(defn component
+  ([header-props]
+   [component (random/generate-keyword) header-props])
+
+  ([header-id header-props]
+   (let [header-props (item-list-header.prototypes/header-props-prototype header-props)]
+        [item-list-header header-id header-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [components.api :refer [item-list-header]]))
+
+(components.api/item-list-header ...)
+(item-list-header                ...)
+```
+
+</details>
 
 ---
 
@@ -540,6 +1015,33 @@ same ID for both the field and the block, the label of the block can targets the
 [item-list-row :my-item-list-row {:cells [[:div ]]}]
 ```
 
+<details>
+<summary>Source code</summary>
+
+```
+(defn component
+  ([row-props]
+   [component (random/generate-keyword) row-props])
+
+  ([row-id row-props]
+   (let [row-props (item-list-row.prototypes/row-props-prototype row-props)]
+        [item-list-row row-id row-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [components.api :refer [item-list-row]]))
+
+(components.api/item-list-row ...)
+(item-list-row                ...)
+```
+
+</details>
+
 ---
 
 ### list-item-avatar
@@ -558,6 +1060,32 @@ same ID for both the field and the block, the label of the block can targets the
 @usage
 [list-item-avatar :my-list-item-avatar {...}]
 ```
+
+<details>
+<summary>Source code</summary>
+
+```
+(defn component
+  ([avatar-props]
+   [component (random/generate-keyword) avatar-props])
+
+  ([avatar-id avatar-props]
+   [list-item-avatar avatar-id avatar-props]))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [components.api :refer [list-item-avatar]]))
+
+(components.api/list-item-avatar ...)
+(list-item-avatar                ...)
+```
+
+</details>
 
 ---
 
@@ -584,6 +1112,33 @@ same ID for both the field and the block, the label of the block can targets the
 [list-item-button :my-button {...}]
 ```
 
+<details>
+<summary>Source code</summary>
+
+```
+(defn component
+  ([button-props]
+   [component (random/generate-keyword) button-props])
+
+  ([button-id button-props]
+   (let [button-props (list-item-button.prototypes/button-props-prototype button-props)]
+        [list-item-button button-id button-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [components.api :refer [list-item-button]]))
+
+(components.api/list-item-button ...)
+(list-item-button                ...)
+```
+
+</details>
+
 ---
 
 ### list-item-cell
@@ -591,7 +1146,7 @@ same ID for both the field and the block, the label of the block can targets the
 ```
 @param (keyword)(opt) cell-id
 @param (map) cell-props
-{:on-click (metamorphic-event)(opt)
+{:on-click (Re-Frame metamorphic-event)(opt)
  :rows (maps in vector)
   [{:color (keyword or string)(opt)
      Default: :default
@@ -617,6 +1172,32 @@ same ID for both the field and the block, the label of the block can targets the
 [list-item-cell :my-cell {:rows [{:content "Row #1"}]}]
 ```
 
+<details>
+<summary>Source code</summary>
+
+```
+(defn component
+  ([cell-props]
+   [component (random/generate-keyword) cell-props])
+
+  ([cell-id cell-props]
+   (let []        [list-item-cell cell-id cell-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [components.api :refer [list-item-cell]]))
+
+(components.api/list-item-cell ...)
+(list-item-cell                ...)
+```
+
+</details>
+
 ---
 
 ### list-item-drag-handle
@@ -636,6 +1217,32 @@ same ID for both the field and the block, the label of the block can targets the
 @usage
 [list-item-drag-handle :my-handle {...}]
 ```
+
+<details>
+<summary>Source code</summary>
+
+```
+(defn component
+  ([handle-props]
+   [component (random/generate-keyword) handle-props])
+
+  ([handle-id handle-props]
+   (let []        [list-item-drag-handle handle-id handle-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [components.api :refer [list-item-drag-handle]]))
+
+(components.api/list-item-drag-handle ...)
+(list-item-drag-handle                ...)
+```
+
+</details>
 
 ---
 
@@ -657,6 +1264,32 @@ same ID for both the field and the block, the label of the block can targets the
 [list-item-gap :my-gap {...}]
 ```
 
+<details>
+<summary>Source code</summary>
+
+```
+(defn component
+  ([gap-props]
+   [component (random/generate-keyword) gap-props])
+
+  ([gap-id gap-props]
+   (let []        [list-item-gap gap-id gap-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [components.api :refer [list-item-gap]]))
+
+(components.api/list-item-gap ...)
+(list-item-gap                ...)
+```
+
+</details>
+
 ---
 
 ### list-item-icon
@@ -675,6 +1308,32 @@ same ID for both the field and the block, the label of the block can targets the
 @usage
 [list-item-icon :my-list-item-icon {...}]
 ```
+
+<details>
+<summary>Source code</summary>
+
+```
+(defn component
+  ([icon-props]
+   [component (random/generate-keyword) icon-props])
+
+  ([icon-id icon-props]
+   [list-item-icon icon-id icon-props]))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [components.api :refer [list-item-icon]]))
+
+(components.api/list-item-icon ...)
+(list-item-icon                ...)
+```
+
+</details>
 
 ---
 
@@ -708,6 +1367,32 @@ same ID for both the field and the block, the label of the block can targets the
 [list-item-thumbnail {:icon :people}]
 ```
 
+<details>
+<summary>Source code</summary>
+
+```
+(defn component
+  ([thumbnail-props]
+   [component (random/generate-keyword) thumbnail-props])
+
+  ([thumbnail-id thumbnail-props]
+   (let []        [list-item-thumbnail thumbnail-id thumbnail-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [components.api :refer [list-item-thumbnail]]))
+
+(components.api/list-item-thumbnail ...)
+(list-item-thumbnail                ...)
+```
+
+</details>
+
 ---
 
 ### menu-table
@@ -726,7 +1411,7 @@ same ID for both the field and the block, the label of the block can targets the
  :label (metamorphic-content)(opt)
  :outdent (map)(opt)
  :placeholder (metamorphic-content)(opt)
-  Default: :no-items-to-show
+  Default: "No items to show"
  :style (map)(opt)}
 ```
 
@@ -742,11 +1427,38 @@ same ID for both the field and the block, the label of the block can targets the
 
 ```
 @usage
-[menu-table {:rows [[{:content "Row #1"   :font-weight :bold}
+[menu-table {:rows [[{:content "Row #1"   :font-weight :semi-bold}
                      {:content "Value #1" :color :muted}
                      {:content "Value #2" :color :muted}]
                     [{...} {...}]]}]
 ```
+
+<details>
+<summary>Source code</summary>
+
+```
+(defn component
+  ([table-props]
+   [component (random/generate-keyword) table-props])
+
+  ([table-id table-props]
+   (let [table-props (menu-table.prototypes/table-props-prototype table-props)]
+        [menu-table table-id table-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [components.api :refer [menu-table]]))
+
+(components.api/menu-table ...)
+(menu-table                ...)
+```
+
+</details>
 
 ---
 
@@ -787,6 +1499,33 @@ same ID for both the field and the block, the label of the block can targets the
 [notification-bubble :my-notification-bubble {...}]
 ```
 
+<details>
+<summary>Source code</summary>
+
+```
+(defn component
+  ([bubble-props]
+   [component (random/generate-keyword) bubble-props])
+
+  ([bubble-id bubble-props]
+   (let [bubble-props (notification-bubble.prototypes/bubble-props-prototype bubble-id bubble-props)]
+        [elements/notification-bubble bubble-id bubble-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [components.api :refer [notification-bubble]]))
+
+(components.api/notification-bubble ...)
+(notification-bubble                ...)
+```
+
+</details>
+
 ---
 
 ### pdf-preview
@@ -809,6 +1548,32 @@ same ID for both the field and the block, the label of the block can targets the
 [pdf-preview :my-pdf-preview {...}]
 ```
 
+<details>
+<summary>Source code</summary>
+
+```
+(defn component
+  ([preview-props]
+   [component (random/generate-keyword) preview-props])
+
+  ([preview-id preview-props]
+   (let []        [pdf-preview preview-id preview-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [components.api :refer [pdf-preview]]))
+
+(components.api/pdf-preview ...)
+(pdf-preview                ...)
+```
+
+</details>
+
 ---
 
 ### popup-label-bar
@@ -816,13 +1581,14 @@ same ID for both the field and the block, the label of the block can targets the
 ```
 @param (keyword)(opt) bar-id
 @param (map) bar-props
-{:label (metamorphic-content)(opt)
+{:label (map)(opt)
+  {:content (metamorphic-content)}
  :primary-button (map)(opt)
   {:label (metamorphic-content)
-   :on-click (metamorphic-even)}
+   :on-click (metamorphic-event)}
  :secondary-button (map)(opt)
   {:label (metamorphic-content)
-   :on-click (metamorphic-even)}}
+   :on-click (metamorphic-event)}}
 ```
 
 ```
@@ -834,6 +1600,33 @@ same ID for both the field and the block, the label of the block can targets the
 @usage
 [popup-label-bar :my-popup-label-bar {...}]
 ```
+
+<details>
+<summary>Source code</summary>
+
+```
+(defn component
+  ([bar-props]
+   [component (random/generate-keyword) bar-props])
+
+  ([bar-id bar-props]
+   (let [bar-props (popup-label-bar.prototypes/bar-props-prototype bar-props)]
+        [popup-label-bar bar-id bar-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [components.api :refer [popup-label-bar]]))
+
+(components.api/popup-label-bar ...)
+(popup-label-bar                ...)
+```
+
+</details>
 
 ---
 
@@ -859,7 +1652,9 @@ same ID for both the field and the block, the label of the block can targets the
  :outdent (map)(opt)
   Default: {:vertical :xs}
  :preset (keyword)(opt)
-  :highlight}
+  :highlight
+ :width (keyword)(opt)
+  Default: :auto}
 ```
 
 ```
@@ -871,6 +1666,34 @@ same ID for both the field and the block, the label of the block can targets the
 @usage
 [popup-menu-button :my-popup-menu-button {...}]
 ```
+
+<details>
+<summary>Source code</summary>
+
+```
+(defn component
+  ([button-props]
+   [component (random/generate-keyword) button-props])
+
+  ([button-id button-props]
+   (let [button-props (pretty-css/apply-preset popup-menu-button.presets/BUTTON-PROPS-PRESETS button-props)
+         button-props (popup-menu-button.prototypes/button-props-prototype button-props)]
+        [elements/button button-id button-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [components.api :refer [popup-menu-button]]))
+
+(components.api/popup-menu-button ...)
+(popup-menu-button                ...)
+```
+
+</details>
 
 ---
 
@@ -899,6 +1722,33 @@ same ID for both the field and the block, the label of the block can targets the
 @usage
 [popup-menu-header :my-popup-menu-header {...}]
 ```
+
+<details>
+<summary>Source code</summary>
+
+```
+(defn component
+  ([header-props]
+   [component (random/generate-keyword) header-props])
+
+  ([header-id header-props]
+   (let [header-props (popup-menu-header.prototypes/header-props-prototype header-props)]
+        [popup-menu-header header-id header-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [components.api :refer [popup-menu-header]]))
+
+(components.api/popup-menu-header ...)
+(popup-menu-header                ...)
+```
+
+</details>
 
 ---
 
@@ -929,6 +1779,33 @@ same ID for both the field and the block, the label of the block can targets the
 [popup-menu-label :my-popup-menu-label {...}]
 ```
 
+<details>
+<summary>Source code</summary>
+
+```
+(defn component
+  ([label-props]
+   [component (random/generate-keyword) label-props])
+
+  ([label-id label-props]
+   (let [label-props (popup-menu-label.prototypes/label-props-prototype label-props)]
+        [elements/label label-id label-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [components.api :refer [popup-menu-label]]))
+
+(components.api/popup-menu-label ...)
+(popup-menu-label                ...)
+```
+
+</details>
+
 ---
 
 ### popup-menu-title
@@ -943,7 +1820,7 @@ same ID for both the field and the block, the label of the block can targets the
  :border-width (keyword)
   Default: :xs
  :font-weight (keyword)
-  Default: :bold
+  Default: :semi-bold
  :gap (keyword)
   Default: :auto
  :icon-position (keyword)
@@ -955,7 +1832,9 @@ same ID for both the field and the block, the label of the block can targets the
  :outdent (map)
   Default: {:bottom :s}
  :text-transform (keyword)(opt)
-  Default: :uppercase}
+  Default: :uppercase
+ :width (keyword)(opt)
+  Default: :auto}
 ```
 
 ```
@@ -967,6 +1846,33 @@ same ID for both the field and the block, the label of the block can targets the
 @usage
 [popup-menu-title :my-popup-menu-title {...}]
 ```
+
+<details>
+<summary>Source code</summary>
+
+```
+(defn component
+  ([title-props]
+   [component (random/generate-keyword) title-props])
+
+  ([title-id title-props]
+   (let [title-props (popup-menu-title.prototypes/title-props-prototype title-props)]
+        [elements/label title-id title-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [components.api :refer [popup-menu-title]]))
+
+(components.api/popup-menu-title ...)
+(popup-menu-title                ...)
+```
+
+</details>
 
 ---
 
@@ -1004,6 +1910,32 @@ same ID for both the field and the block, the label of the block can targets the
 [popup-progress-indicator :my-popup-progress-indicator {...}]
 ```
 
+<details>
+<summary>Source code</summary>
+
+```
+(defn component
+  ([indicator-props]
+   [component (random/generate-keyword) indicator-props])
+
+  ([indicator-id indicator-props]
+   (let []        [popup-progress-indicator indicator-id indicator-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [components.api :refer [popup-progress-indicator]]))
+
+(components.api/popup-progress-indicator ...)
+(popup-progress-indicator                ...)
+```
+
+</details>
+
 ---
 
 ### section-description
@@ -1031,6 +1963,33 @@ same ID for both the field and the block, the label of the block can targets the
 [section-description :my-section-description {...}]
 ```
 
+<details>
+<summary>Source code</summary>
+
+```
+(defn component
+  ([description-props]
+   [component (random/generate-keyword) description-props])
+
+  ([description-id description-props]
+   (let [description-props (section-description.prototypes/description-props-prototype description-props)]
+        [elements/label description-id description-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [components.api :refer [section-description]]))
+
+(components.api/section-description ...)
+(section-description                ...)
+```
+
+</details>
+
 ---
 
 ### section-title
@@ -1041,7 +2000,7 @@ same ID for both the field and the block, the label of the block can targets the
 {:font-size (keyword)(opt)
   Default: :5xl
  :font-weight (keyword)(opt)
-  Default: :bold}
+  Default: :semi-bold}
 ```
 
 ```
@@ -1053,6 +2012,33 @@ same ID for both the field and the block, the label of the block can targets the
 @usage
 [section-title :my-section-title {...}]
 ```
+
+<details>
+<summary>Source code</summary>
+
+```
+(defn component
+  ([title-props]
+   [component (random/generate-keyword) title-props])
+
+  ([title-id title-props]
+   (let [title-props (section-title.prototypes/title-props-prototype title-props)]
+        [section-title title-id title-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [components.api :refer [section-title]]))
+
+(components.api/section-title ...)
+(section-title                ...)
+```
+
+</details>
 
 ---
 
@@ -1093,6 +2079,35 @@ same ID for both the field and the block, the label of the block can targets the
 [side-menu :my-side-menu {...}]
 ```
 
+<details>
+<summary>Source code</summary>
+
+```
+(defn component
+  ([menu-props]
+   [component (random/generate-keyword) menu-props])
+
+  ([menu-id {:keys [threshold] :as menu-props}]
+   (let [menu-props (side-menu.prototypes/menu-props-prototype menu-props)]
+        (if (or (not                                 threshold)
+                (window-observer/viewport-width-min? threshold))
+            [side-menu menu-id menu-props]))))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [components.api :refer [side-menu]]))
+
+(components.api/side-menu ...)
+(side-menu                ...)
+```
+
+</details>
+
 ---
 
 ### side-menu-button
@@ -1126,6 +2141,34 @@ same ID for both the field and the block, the label of the block can targets the
 [side-menu-button :my-side-menu-button {...}]
 ```
 
+<details>
+<summary>Source code</summary>
+
+```
+(defn component
+  ([button-props]
+   [component (random/generate-keyword) button-props])
+
+  ([button-id button-props]
+   (let [button-props (pretty-css/apply-preset side-menu-button.presets/BUTTON-PROPS-PRESETS button-props)
+         button-props (side-menu-button.prototypes/button-props-prototype button-props)]
+        [elements/button button-id button-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [components.api :refer [side-menu-button]]))
+
+(components.api/side-menu-button ...)
+(side-menu-button                ...)
+```
+
+</details>
+
 ---
 
 ### side-menu-footer
@@ -1146,6 +2189,32 @@ same ID for both the field and the block, the label of the block can targets the
 [side-menu-footer :my-side-menu-footer {...}]
 ```
 
+<details>
+<summary>Source code</summary>
+
+```
+(defn component
+  ([footer-props]
+   [component (random/generate-keyword) footer-props])
+
+  ([footer-id footer-props]
+   (let []        [side-menu-footer footer-id footer-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [components.api :refer [side-menu-footer]]))
+
+(components.api/side-menu-footer ...)
+(side-menu-footer                ...)
+```
+
+</details>
+
 ---
 
 ### side-menu-header
@@ -1165,6 +2234,32 @@ same ID for both the field and the block, the label of the block can targets the
 @usage
 [side-menu-header :my-side-menu-header {...}]
 ```
+
+<details>
+<summary>Source code</summary>
+
+```
+(defn component
+  ([header-props]
+   [component (random/generate-keyword) header-props])
+
+  ([header-id header-props]
+   (let []        [side-menu-header header-id header-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [components.api :refer [side-menu-header]]))
+
+(components.api/side-menu-header ...)
+(side-menu-header                ...)
+```
+
+</details>
 
 ---
 
@@ -1196,6 +2291,33 @@ same ID for both the field and the block, the label of the block can targets the
 @usage
 [side-menu-label :my-side-menu-label {...}]
 ```
+
+<details>
+<summary>Source code</summary>
+
+```
+(defn component
+  ([label-props]
+   [component (random/generate-keyword) label-props])
+
+  ([label-id label-props]
+   (let [label-props (side-menu-label.prototypes/label-props-prototype label-props)]
+        [elements/label label-id label-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [components.api :refer [side-menu-label]]))
+
+(components.api/side-menu-label ...)
+(side-menu-label                ...)
+```
+
+</details>
 
 ---
 
@@ -1231,6 +2353,33 @@ same ID for both the field and the block, the label of the block can targets the
 @usage
 [sidebar-button :my-sidebar-button {...}]
 ```
+
+<details>
+<summary>Source code</summary>
+
+```
+(defn component
+  ([button-props]
+   [component (random/generate-keyword) button-props])
+
+  ([button-id button-props]
+   (let [button-props (sidebar-button.prototypes/button-props-prototype button-props)]
+        [elements/button button-id button-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [components.api :refer [sidebar-button]]))
+
+(components.api/sidebar-button ...)
+(sidebar-button                ...)
+```
+
+</details>
 
 ---
 
@@ -1268,6 +2417,33 @@ same ID for both the field and the block, the label of the block can targets the
 [surface-box :my-surface-box {...}]
 ```
 
+<details>
+<summary>Source code</summary>
+
+```
+(defn component
+  ([box-props]
+   [component (random/generate-keyword) box-props])
+
+  ([box-id box-props]
+   (let [box-props (surface-box.prototypes/box-props-prototype box-props)]
+        [surface-box box-id box-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [components.api :refer [surface-box]]))
+
+(components.api/surface-box ...)
+(surface-box                ...)
+```
+
+</details>
+
 ---
 
 ### user-avatar
@@ -1303,6 +2479,33 @@ same ID for both the field and the block, the label of the block can targets the
 [user-avatar :my-user-avatar {...}]
 ```
 
+<details>
+<summary>Source code</summary>
+
+```
+(defn component
+  ([avatar-props]
+   [component (random/generate-keyword) avatar-props])
+
+  ([avatar-id avatar-props]
+   (let [avatar-props (user-avatar.prototypes/avatar-props-prototype avatar-props)]
+        [user-avatar avatar-id avatar-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [components.api :refer [user-avatar]]))
+
+(components.api/user-avatar ...)
+(user-avatar                ...)
+```
+
+</details>
+
 ---
 
 ### vector-item-controls
@@ -1312,11 +2515,11 @@ same ID for both the field and the block, the label of the block can targets the
 @param (map) controls-props
 {:disabled? (boolean)(opt)
  :item-dex (integer)
- :on-change (metamorphic-event)(opt)
+ :on-change (Re-Frame metamorphic-event)(opt)
  :tooltip-position (keyword)(opt)
   :left, :right
   Default: :right
- :value-path (vector)}
+ :value-path (Re-Frame path vector)}
 ```
 
 ```
@@ -1328,6 +2531,33 @@ same ID for both the field and the block, the label of the block can targets the
 @usage
 [vector-item-controls :my-vector-item-controls {...}]
 ```
+
+<details>
+<summary>Source code</summary>
+
+```
+(defn component
+  ([controls-props]
+   [component (random/generate-keyword) controls-props])
+
+  ([controls-id controls-props]
+   (let [controls-props (vector-item-controls.prototypes/controls-props-prototype controls-props)]
+        [vector-item-controls controls-id controls-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [components.api :refer [vector-item-controls]]))
+
+(components.api/vector-item-controls ...)
+(vector-item-controls                ...)
+```
+
+</details>
 
 ---
 
@@ -1345,7 +2575,7 @@ same ID for both the field and the block, the label of the block can targets the
   {:illustration (string)(opt)
    :label (metamorphic-content)(opt)}
  :style (map)(opt)
- :value-path (vector)}
+ :value-path (Re-Frame path vector)}
 ```
 
 ```
@@ -1365,6 +2595,32 @@ same ID for both the field and the block, the label of the block can targets the
                                         :value-path   [:my-items]}]
 ```
 
+<details>
+<summary>Source code</summary>
+
+```
+(defn component
+  ([list-props]
+   [component (random/generate-keyword) list-props])
+
+  ([list-id list-props]
+   (let []        [vector-item-list list-id list-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [components.api :refer [vector-item-list]]))
+
+(components.api/vector-item-list ...)
+(vector-item-list                ...)
+```
+
+</details>
+
 ---
 
 ### vector-items-header
@@ -1381,10 +2637,10 @@ same ID for both the field and the block, the label of the block can targets the
  :initial-item (*)(opt)
   Default: {}
  :label (metamorphic-content)
- :on-change (metamorphic-event)(opt)
+ :on-change (Re-Frame metamorphic-event)(opt)
  :outdent (map)(opt)
  :style (map)(opt)
- :value-path (vector)}
+ :value-path (Re-Frame path vector)}
 ```
 
 ```
@@ -1396,3 +2652,35 @@ same ID for both the field and the block, the label of the block can targets the
 @usage
 [vector-items-header :my-vector-items-header {...}]
 ```
+
+<details>
+<summary>Source code</summary>
+
+```
+(defn component
+  ([header-props]
+   [component (random/generate-keyword) header-props])
+
+  ([header-id header-props]
+   (let [header-props (vector-items-header.prototypes/header-props-prototype header-props)]
+        [vector-items-header header-id header-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [components.api :refer [vector-items-header]]))
+
+(components.api/vector-items-header ...)
+(vector-items-header                ...)
+```
+
+</details>
+
+---
+
+This documentation is generated with the [clj-docs-generator](https://github.com/bithandshake/clj-docs-generator) engine.
+

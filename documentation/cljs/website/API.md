@@ -7,38 +7,41 @@
 
 - [contacts](#contacts)
 
-- [copyright-label](#copyright-label)
-
-- [created-by-link](#created-by-link)
-
-- [credits](#credits)
-
 - [follow-us](#follow-us)
 
 - [language-selector](#language-selector)
 
-- [menu](#menu)
-
-- [mt-logo](#mt-logo)
-
 - [multi-menu](#multi-menu)
-
-- [navbar](#navbar)
 
 - [scroll-icon](#scroll-icon)
 
 - [scroll-sensor](#scroll-sensor)
-
-- [scroll-to-top](#scroll-to-top)
 
 - [sidebar](#sidebar)
 
 ### contacts
 
 ```
-@param (keyword)(opt) component-id
-@param (map) component-props
-{}
+@param (keyword)(opt) contacts-id
+@param (map) contacts-props
+{:contact-groups (maps in vector)(opt)
+  [{:addresses (strings in vector)(opt)
+    :email-addresses (strings in vector)(opt)
+    :info (metamorphic-content)(opt)
+    :label (metamorphic-content)(opt)
+    :phone-numbers (numbers or strings in vector)(opt)}]
+ :class (keyword or keywords in vector)(opt)
+ :indent (map)(opt)
+  {:bottom (keyword)(opt)
+   :left (keyword)(opt)
+   :right (keyword)(opt)
+   :top (keyword)(opt)
+   :horizontal (keyword)(opt)
+   :vertical (keyword)(opt)
+    :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
+ :outdent (map)(opt)
+  Same as the :indent property
+ :style (map)(opt)}
 ```
 
 ```
@@ -51,87 +54,66 @@
 [contacts :my-contacts {...}]
 ```
 
----
-
-### copyright-label
-
-```
-@param (keyword)(opt) component-id
-@param (map) component-props
-{:color (keyword or string)(opt)
-  Default: :inherit}
-```
+<details>
+<summary>Source code</summary>
 
 ```
-@usage
-[copyright-label {...}]
+(defn component
+  ([contacts-props]
+   [component (random/generate-keyword) contacts-props])
+
+  ([contacts-id contacts-props]
+   (let []        [contacts contacts-id contacts-props])))
 ```
 
-```
-@usage
-[copyright-label :my-copyright-label {...}]
-```
+</details>
 
----
-
-### created-by-link
+<details>
+<summary>Require</summary>
 
 ```
-@param (keyword)(opt) component-id
-@param (map) component-props
-{:color (keyword or string)(opt)
-  Default: :inherit
- :style (map)(opt)}
+(ns my-namespace (:require [website.api :refer [contacts]]))
+
+(website.api/contacts ...)
+(contacts             ...)
 ```
 
-```
-@usage
-[created-by-link {...}]
-```
-
-```
-@usage
-[created-by-link :my-created-by-link {...}]
-```
-
----
-
-### credits
-
-```
-@param (keyword)(opt) component-id
-@param (map) component-props
-{:color (keyword or string)(opt)
-  Default: :inherit
- :style (map)(opt)
- :theme (keyword)(opt)
-  :light, :dark
-  Default: :light}
-```
-
-```
-@usage
-[credits {...}]
-```
-
-```
-@usage
-[credits :my-credits {...}]
-```
+</details>
 
 ---
 
 ### follow-us
 
 ```
+@warning
+To use this component you have to add the Font Awesome icon set to your project!
+```
+
+```
+@description
+This component uses Font Awesome brand icons for social media provider links.
+It converts the given provider name to an icon class:
+:instagram => .fab.fa-instagram
+```
+
+```
 @param (keyword)(opt) component-id
 @param (map) component-props
-{:color (string)(opt)
-  Default: "white"
- :links (map)
-  {:facebook (string)
-   :instagram (string)
-   :linkedin (string)}
+{:class (keyword or keywords in vector)(opt)
+ :indent (map)(opt)
+  {:bottom (keyword)(opt)
+   :left (keyword)(opt)
+   :right (keyword)(opt)
+   :top (keyword)(opt)
+   :horizontal (keyword)(opt)
+   :vertical (keyword)(opt)
+    :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
+ :links (vectors in vector)
+  [[(keyword) provider
+    (string) link]
+   [...]]
+ :outdent (map)(opt)
+  Same as the :indent property
  :style (map)(opt)}
 ```
 
@@ -145,14 +127,63 @@
 [follow-us :my-follow-us {...}]
 ```
 
+```
+@usage
+[follow-us {:links [[:facebook "facebook.com/my-profile"]
+                    [:instagram "instagram.com/my-profile"]]}]
+```
+
+<details>
+<summary>Source code</summary>
+
+```
+(defn component
+  ([component-props]
+   [component (random/generate-keyword) component-props])
+
+  ([component-id component-props]
+   (let []        [follow-us component-id component-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [website.api :refer [follow-us]]))
+
+(website.api/follow-us ...)
+(follow-us             ...)
+```
+
+</details>
+
 ---
 
 ### language-selector
 
 ```
-@param (keyword)(opt) component-id
-@param (map) component-props
-{:languages (keywords in vector)
+@param (keyword)(opt) selector-id
+@param (map) selector-props
+{:class (keyword or keywords in vector)(opt)
+ :font-size (keyword)(opt)
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
+  Default: :s
+ :gap (keyword)(opt)
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  Default: :xxs
+ :indent (map)(opt)
+  {:bottom (keyword)(opt)
+   :left (keyword)(opt)
+   :right (keyword)(opt)
+   :top (keyword)(opt)
+   :horizontal (keyword)(opt)
+   :vertical (keyword)(opt)
+    :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
+ :languages (keywords in vector)
+ :outdent (map)(opt)
+  Same as the :indent property
  :style (map)(opt)}
 ```
 
@@ -168,54 +199,35 @@
 
 ```
 @usage
-[language-selector :my-language-selector
-                   {:languages [:en :hu]}]
+[language-selector {:languages [:en :hu]}]
 ```
 
----
-
-### menu
-
-```
-@param (keyword)(opt) component-id
-@param (map) component-props
-{:class (keyword or keywords in vector)(opt)
- :menu-link (namespaced map)
-  {:menu/id (string)}
- :style (map)(opt)}
-```
+<details>
+<summary>Source code</summary>
 
 ```
-@usage
-[menu {...}]
+(defn component
+  ([selector-props]
+   [component (random/generate-keyword) selector-props])
+
+  ([selector-id selector-props]
+   (let [selector-props (language-selector.prototypes/selector-props-prototype selector-props)]
+        [language-selector selector-id selector-props])))
 ```
 
-```
-@usage
-[menu :my-menu {...}]
-```
+</details>
 
----
-
-### mt-logo
+<details>
+<summary>Require</summary>
 
 ```
-@param (keyword)(opt) component-id
-@param (map) component-props
-{:theme (keyword)(opt)
-  :light, :dark
-  Default: :light}
+(ns my-namespace (:require [website.api :refer [language-selector]]))
+
+(website.api/language-selector ...)
+(language-selector             ...)
 ```
 
-```
-@usage
-[mt-logo {...}]
-```
-
-```
-@usage
-[mt-logo :my-mt-logo {...}]
-```
+</details>
 
 ---
 
@@ -231,8 +243,20 @@ on a sidebar menu and replaces the menu bar with a single menu button.
 ```
 @param (keyword)(opt) menu-id
 @param (map) menu-props
-{
- :threshold (px)(opt)}
+{:class (keyword or keywords in vector)(opt)
+ :indent (map)(opt)
+  {:bottom (keyword)(opt)
+   :left (keyword)(opt)
+   :right (keyword)(opt)
+   :top (keyword)(opt)
+   :horizontal (keyword)(opt)
+   :vertical (keyword)(opt)
+    :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
+ :outdent (map)(opt)
+  Same as the :indent property
+ :style (map)(opt)
+ :threshold (px)(opt)
+  Default: 0}
 ```
 
 ```
@@ -245,43 +269,45 @@ on a sidebar menu and replaces the menu bar with a single menu button.
 [multi-menu :my-multi-menu {...}]
 ```
 
----
-
-### navbar
-
-```
-@param (keyword)(opt) component-id
-@param (map) component-props
-{:class (keyword or keywords in vector)(opt)
- :logo (metamorphic-content)(opt)
- :menu-link (namespaced map)
-  {:menu/id (string)}
- :on-menu (metamorphic-event)(opt)
-  Click event on the hamburger menu button
- :style (map)(opt)
- :threshold (px)(opt)
-  Threshold of the desktop view}
-```
+<details>
+<summary>Source code</summary>
 
 ```
-@usage
-[navbar {...}]
+(defn component
+  ([menu-props]
+   [component (random/generate-keyword) menu-props])
+
+  ([menu-id menu-props]
+   (let [menu-props (multi-menu.prototypes/menu-props-prototype menu-props)]
+        [multi-menu menu-id menu-props])))
 ```
 
+</details>
+
+<details>
+<summary>Require</summary>
+
 ```
-@usage
-[navbar :my-navbar {...}]
+(ns my-namespace (:require [website.api :refer [multi-menu]]))
+
+(website.api/multi-menu ...)
+(multi-menu             ...)
 ```
+
+</details>
 
 ---
 
 ### scroll-icon
 
 ```
-@param (keyword)(opt) component-id
-@param (map) component-props
-{:color (string)(opt)
-  Default: "white"
+@param (keyword)(opt) icon-id
+@param (map) icon-props
+{:class (keyword or keywords in vector)(opt)
+ :color (string)(opt)
+  Default: "#FFFFFF"
+ :outdent (map)(opt)
+  Same as the :indent property
  :style (map)(opt)}
 ```
 
@@ -294,6 +320,33 @@ on a sidebar menu and replaces the menu bar with a single menu button.
 @usage
 [scroll-icon :my-scroll-icon {...}]
 ```
+
+<details>
+<summary>Source code</summary>
+
+```
+(defn component
+  ([icon-props]
+   [component (random/generate-keyword) icon-props])
+
+  ([icon-id icon-props]
+   (let [icon-props (scroll-icon.prototypes/icon-props-prototype icon-props)]
+        [scroll-icon icon-id icon-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [website.api :refer [scroll-icon]]))
+
+(website.api/scroll-icon ...)
+(scroll-icon             ...)
+```
+
+</details>
 
 ---
 
@@ -322,27 +375,32 @@ on a sidebar menu and replaces the menu bar with a single menu button.
 [scroll-sensor {:callback-f my-scroll-f}]
 ```
 
----
-
-### scroll-to-top
-
-```
-@param (keyword)(opt) component-id
-@param (map) component-props
-{:color (string)(opt)
-  Default: "white"
- :style (map)(opt)}
-```
+<details>
+<summary>Source code</summary>
 
 ```
-@usage
-[scroll-to-top {...}]
+(defn component
+  ([sensor-props]
+   [component (random/generate-keyword) sensor-props])
+
+  ([sensor-id {:keys [callback-f style]}]
+   (reagent/lifecycles {:component-did-mount (fn [] (scroll-sensor.side-effects/sensor-did-mount-f sensor-id callback-f))
+                        :reagent-render      (fn [] [:div {:class :w-scroll-sensor :id (hiccup/value sensor-id) :style style}])})))
 ```
 
+</details>
+
+<details>
+<summary>Require</summary>
+
 ```
-@usage
-[scroll-to-top :my-scroll-to-top {...}]
+(ns my-namespace (:require [website.api :refer [scroll-sensor]]))
+
+(website.api/scroll-sensor ...)
+(scroll-sensor             ...)
 ```
+
+</details>
 
 ---
 
@@ -364,7 +422,15 @@ on a sidebar menu and replaces the menu bar with a single menu button.
  :fill-color (keyword or string)(opt)
   Default: :white
  :indent (map)(opt)
+  {:bottom (keyword)(opt)
+   :left (keyword)(opt)
+   :right (keyword)(opt)
+   :top (keyword)(opt)
+   :horizontal (keyword)(opt)
+   :vertical (keyword)(opt)
+    :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
  :outdent (map)(opt)
+  Same as the :indent property
  :position (keyword)(opt)
   :left, :right
   Default: :left
@@ -380,3 +446,35 @@ on a sidebar menu and replaces the menu bar with a single menu button.
 @usage
 [sidebar :my-sidebar {...}]
 ```
+
+<details>
+<summary>Source code</summary>
+
+```
+(defn component
+  ([sidebar-props]
+   [component (random/generate-keyword) sidebar-props])
+
+  ([sidebar-id sidebar-props]
+   (let [sidebar-props (sidebar.prototypes/sidebar-props-prototype sidebar-props)]
+        [sidebar sidebar-id sidebar-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [website.api :refer [sidebar]]))
+
+(website.api/sidebar ...)
+(sidebar             ...)
+```
+
+</details>
+
+---
+
+This documentation is generated with the [clj-docs-generator](https://github.com/bithandshake/clj-docs-generator) engine.
+

@@ -43,9 +43,15 @@
 
 - [ghost](#ghost)
 
+- [horizontal-group](#horizontal-group)
+
+- [horizontal-line](#horizontal-line)
+
 - [horizontal-polarity](#horizontal-polarity)
 
 - [horizontal-separator](#horizontal-separator)
+
+- [horizontal-spacer](#horizontal-spacer)
 
 - [icon](#icon)
 
@@ -95,18 +101,42 @@
 
 - [toggle](#toggle)
 
+- [vertical-group](#vertical-group)
+
+- [vertical-line](#vertical-line)
+
 - [vertical-polarity](#vertical-polarity)
 
-- [vertical-separator](#vertical-separator)
+- [vertical-spacer](#vertical-spacer)
 
 ### blank
 
 ```
 @param (keyword)(opt) blank-id
 @param (map) blank-props
-{:class (keyword or keywords in vector)(opt)
+{:background-pattern (keyword)(opt)
+  :stripes
+ :border-color (keyword or string)(opt)
+  :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+ :border-position (keyword)(opt)
+  :all, :bottom, :top, :left, :right, :horizontal, :vertical
+ :border-radius (map)(opt)
+  {:tl (keyword)(opt)
+   :tr (keyword)(opt)
+   :br (keyword)(opt)
+   :bl (keyword)(opt)
+   :all (keyword)(opt)
+    :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
+ :border-width (keyword)(opt)
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+ :class (keyword or keywords in vector)(opt)
  :content (metamorphic-content)
  :disabled? (boolean)(opt)
+ :fill-color (keyword or string)(opt)
+  :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+ :height (keyword)(opt)
+  :auto, :content, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  Default: :content
  :indent (map)(opt)
   {:bottom (keyword)(opt)
    :left (keyword)(opt)
@@ -115,10 +145,12 @@
    :horizontal (keyword)(opt)
    :vertical (keyword)(opt)
     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
- :style (map)(opt)
  :outdent (map)(opt)
   Same as the :indent property
- :style (map)(opt)}
+ :style (map)(opt)
+ :width (keyword)(opt)
+  :auto, :content, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  Default: :content}
 ```
 
 ```
@@ -131,6 +163,33 @@
 [blank :my-blank {...}]
 ```
 
+<details>
+<summary>Source code</summary>
+
+```
+(defn element
+  ([blank-props]
+   [element (random/generate-keyword) blank-props])
+
+  ([blank-id blank-props]
+   (let [blank-props (blank.prototypes/blank-props-prototype blank-props)]
+        [blank blank-id blank-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [elements.api :refer [blank]]))
+
+(elements.api/blank ...)
+(blank              ...)
+```
+
+</details>
+
 ---
 
 ### breadcrumbs
@@ -142,7 +201,7 @@
  :crumbs (maps in vector)
   [{:href (string)(opt)
     :label (metamorphic-content)(opt)
-    :on-click (metamorphic-event)(opt)
+    :on-click (Re-Frame metamorphic-event)(opt)
     :placeholder (metamorphic-content)(opt)}]
  :disabled? (boolean)(opt)
  :font-size (keyword)(opt)
@@ -171,9 +230,49 @@
 [breadcrumbs :my-breadcrumbs {...}]
 ```
 
+<details>
+<summary>Source code</summary>
+
+```
+(defn element
+  ([breadcrumbs-props]
+   [element (random/generate-keyword) breadcrumbs-props])
+
+  ([breadcrumbs-id breadcrumbs-props]
+   (let [breadcrumbs-props (breadcrumbs.prototypes/breadcrumbs-props-prototype breadcrumbs-props)]
+        [breadcrumbs breadcrumbs-id breadcrumbs-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [elements.api :refer [breadcrumbs]]))
+
+(elements.api/breadcrumbs ...)
+(breadcrumbs              ...)
+```
+
+</details>
+
 ---
 
 ### button
+
+```
+@warning
+BUG#9912
+If the keypress key-code is 13 (ENTER) the on-click event will fire repeatedly
+during the key is pressed!
+1. The keydown event focuses the button via the 'button.side-effects/key-pressed' function.
+2. One of the default actions of the 13 (ENTER) key is to fire the on-click
+   function on a focused button element, therefore the on-click function
+   fires repeatedly during the 13 (ENTER) key is pressed.
+By default (using any other key than the 13) the on-click function fired
+by the 'button.side-effects/key-released' function.
+```
 
 ```
 @param (keyword)(opt) button-id
@@ -209,16 +308,18 @@
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
   Default: :s
  :font-weight (keyword)(opt)
-  :inherit, :extra-light, :light, :normal, :medium, :bold, :extra-bold
+  :inherit, :thin, :extra-light, :light, :normal, :medium, :semi-bold, :bold, :extra-bold, :black
   Default: :medium
  :gap (keyword)(opt)
-  Distance between the icon and label
+  Distance between the icon and the label
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :auto
  :horizontal-align (keyword)(opt)
   :center, :left, :right
   Default: :center
  :hover-color (keyword or string)(opt)
   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+ :hover-effect (keyword)(opt)
+  :opacity
  :href (string)(opt)
  :icon (keyword)(opt)
  :icon-color (keyword or string)(opt)
@@ -242,19 +343,20 @@
    :vertical (keyword)(opt)
     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
  :keypress (map)(opt)
-  {:key-code (integer)
+  {:exclusive? (boolean)(opt)
+   :key-code (integer)
    :required? (boolean)(opt)
     Default: false}
  :label (metamorphic-content)(opt)
  :line-height (keyword)(opt)
-  :inherit, :native, :text-block, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  :auto, :inherit, :text-block, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   Default: :text-block
  :marker-color (keyword)(opt)
   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
  :marker-position (keyword)(opt)
   :tl, :tr, :br, :bl
- :on-click (metamorphic-handler)(opt)
- :on-mouse-over (metamorphic-handler)(opt)
+ :on-click (Re-Frame metamorphic-event)(opt)
+ :on-mouse-over (Re-Frame metamorphic-event)(opt)
  :outdent (map)(opt)
   Same as the :indent property
  :progress (percent)(opt)
@@ -274,7 +376,10 @@
   :capitalize, :lowercase, :uppercase
  :tooltip-content (metamorphic-content)(opt)
  :tooltip-position (keyword)(opt)
-  :left, :right}
+  :left, :right
+ :width (keyword)(opt)
+  :auto, :content, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  Default: :content}
 ```
 
 ```
@@ -291,6 +396,33 @@
 @usage
 [button {:keypress {:key-code 13} :on-click [:my-event]}]
 ```
+
+<details>
+<summary>Source code</summary>
+
+```
+(defn element
+  ([button-props]
+   [element (random/generate-keyword) button-props])
+
+  ([button-id button-props]
+   (let [button-props (button.prototypes/button-props-prototype button-props)]
+        [button button-id button-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [elements.api :refer [button]]))
+
+(elements.api/button ...)
+(button              ...)
+```
+
+</details>
 
 ---
 
@@ -318,11 +450,16 @@
  :disabled? (boolean)(opt)
  :fill-color (keyword or string)(opt)
   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+ :height (keyword)(opt)
+  :auto, :content, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  Default: :auto
  :horizontal-align (keyword)(opt)
   :center, :left, :right
   Default: :left
  :hover-color (keyword or string)(opt)
   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+ :hover-effect (keyword)(opt)
+  :opacity
  :href (string)(opt)
  :indent (map)(opt)
   {:bottom (keyword)(opt)
@@ -344,14 +481,15 @@
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
  :min-width (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
- :on-click (metamorphic-event)(opt)
+ :on-click (Re-Frame metamorphic-event)(opt)
  :outdent (map)(opt)
   Same as the :indent property
- :stretch-orientation (keyword)(opt)
-  :horizontal, :vertical, :both
  :style (map)(opt)
  :target (keyword)(opt)
-  :blank, :self}
+  :blank, :self
+ :width (keyword)(opt)
+  :auto, :content, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  Default: :content}
 ```
 
 ```
@@ -363,6 +501,33 @@
 @usage
 [card :my-card {...}]
 ```
+
+<details>
+<summary>Source code</summary>
+
+```
+(defn element
+  ([card-props]
+   [element (random/generate-keyword) card-props])
+
+  ([card-id card-props]
+   (let [card-props (card.prototypes/card-props-prototype card-props)]
+        [card card-id card-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [elements.api :refer [card]]))
+
+(elements.api/card ...)
+(card              ...)
+```
+
+</details>
 
 ---
 
@@ -404,8 +569,8 @@
  :initial-value (boolean)(opt)
  :marker-color (keyword)(opt)
   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
- :on-check (metamorphic-event)(opt)
- :on-uncheck (metamorphic-event)(opt)
+ :on-check (Re-Frame metamorphic-event)(opt)
+ :on-uncheck (Re-Frame metamorphic-event)(opt)
  :option-helper-f (function)(opt)
  :option-label-f (function)(opt)
   Default: return
@@ -415,12 +580,12 @@
  :options-orientation (keyword)(opt)
   :horizontal, :vertical
   Default: :vertical
- :options-path (vector)(opt)
+ :options-path (Re-Frame path vector)(opt)
  :label (metamorphic-content)(opt)
  :outdent (map)(opt)
   Same as the :indent property
  :style (map)(opt)
- :value-path (vector)(opt)}
+ :value-path (Re-Frame path vector)(opt)}
 ```
 
 ```
@@ -432,6 +597,33 @@
 @usage
 [checkbox :my-checkbox {...}]
 ```
+
+<details>
+<summary>Source code</summary>
+
+```
+(defn element
+  ([checkbox-props]
+   [element (random/generate-keyword) checkbox-props])
+
+  ([checkbox-id checkbox-props]
+   (let [checkbox-props (checkbox.prototypes/checkbox-props-prototype checkbox-id checkbox-props)]
+        [checkbox checkbox-id checkbox-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [elements.api :refer [checkbox]]))
+
+(elements.api/checkbox ...)
+(checkbox              ...)
+```
+
+</details>
 
 ---
 
@@ -463,7 +655,9 @@
    :vertical (keyword)(opt)
     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
  :label (metamorphic-content)
- :on-click (metamorphic-event)(opt)
+ :min-width (keyword)(opt)
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+ :on-click (Re-Frame metamorphic-event)(opt)
   TODO Makes the chip clickable
  :outdent (map)(opt)
   Same as the :indent property
@@ -472,11 +666,15 @@
    :icon-family (keyword)(opt)
     :material-symbols-filled, :material-symbols-outlined
     Default: :material-symbols-outlined
-   :on-click (metamorphic-event)}
+   :on-click (Re-Frame metamorphic-event)}
  :style (map)(opt)
  :target (keyword)(opt)
+  Makes the chip clickable
   :blank, :self
-  TODO Makes the chip clickable}
+  TODO
+ :width (keyword)(opt)
+  :auto, :content, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  Default: :content}
 ```
 
 ```
@@ -489,9 +687,42 @@
 [chip :my-chip {...}]
 ```
 
+<details>
+<summary>Source code</summary>
+
+```
+(defn element
+  ([chip-props]
+   [element (random/generate-keyword) chip-props])
+
+  ([chip-id chip-props]
+   (let [chip-props (chip.prototypes/chip-props-prototype chip-props)]
+        [chip chip-id chip-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [elements.api :refer [chip]]))
+
+(elements.api/chip ...)
+(chip              ...)
+```
+
+</details>
+
 ---
 
 ### chip-group
+
+```
+@warning
+Chips only deletable if they are read from the application state by using
+the :chips-path property!
+```
 
 ```
 @param (keyword)(opt) group-id
@@ -499,6 +730,8 @@
 {:class (keyword or keywords in vector)(opt)
  :chip-label-f (function)(opt)
   Default: return
+ :chips (maps in vector)(opt)
+ :chips-path (Re-Frame path vector)(opt)
  :deletable? (boolean)(opt)
   Default: false
  :helper (metamorphic-content)(opt)
@@ -515,8 +748,7 @@
  :outdent (map)(opt)
   Same as the :indent property
  :placeholder (metamorphic-content)(opt)
- :style (map)(opt)
- :value-path (vector)(opt)}
+ :style (map)(opt)}
 ```
 
 ```
@@ -528,6 +760,33 @@
 @usage
 [chip-group :my-chip-group {...}]
 ```
+
+<details>
+<summary>Source code</summary>
+
+```
+(defn element
+  ([group-props]
+   [element (random/generate-keyword) group-props])
+
+  ([group-id group-props]
+   (let [group-props (chip-group.prototypes/group-props-prototype group-id group-props)]
+        [chip-group group-id group-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [elements.api :refer [chip-group]]))
+
+(elements.api/chip-group ...)
+(chip-group              ...)
+```
+
+</details>
 
 ---
 
@@ -575,15 +834,36 @@
 [circle-diagram :my-circle-diagram {...}]
 ```
 
+<details>
+<summary>Source code</summary>
+
+```
+(defn element
+  ([diagram-props]
+   [element (random/generate-keyword) diagram-props])
+
+  ([diagram-id diagram-props]
+   (let [diagram-props (circle-diagram.prototypes/diagram-props-prototype diagram-props)]
+        [circle-diagram diagram-id diagram-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [elements.api :refer [circle-diagram]]))
+
+(elements.api/circle-diagram ...)
+(circle-diagram              ...)
+```
+
+</details>
+
 ---
 
 ### color-selector
-
-```
-@description
-To render the color-selector popup without using its button element:
-[:elements.color-selector/render-selector! :my-color-selector {...}]
-```
 
 ```
 @param (keyword)(opt) selector-id
@@ -597,14 +877,27 @@ To render the color-selector popup without using its button element:
    :horizontal (keyword)(opt)
    :vertical (keyword)(opt)
     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
- :on-select (metamorphic-event)(opt)
+ :on-select (Re-Frame metamorphic-event)(opt)
  :options (strings in vector)(opt)
  :options-label (metamorphic-content)(opt)
- :options-path (vector)(opt)
+ :options-path (Re-Frame path vector)(opt)
  :outdent (map)(opt)
   Same as the :indent property
+ :popup (map)(opt)
+  {:border-color (keyword or string)(opt)
+   :border-position (keyword)(opt)
+   :border-radius (map)(opt)
+   :border-width (keyword)(opt)
+   :cover-color (keyword or string)(opt)
+    Default: :black
+   :fill-color (keyword or string)(opt)
+    Default: :default
+   :indent (map)(opt)
+   :label (metamorphic-content)(opt)
+   :min-width (keyword)(opt)
+   :outdent (map)(opt)}
  :style (map)(opt)
- :value-path (vector)(opt)}
+ :value-path (Re-Frame path vector)(opt)}
 ```
 
 ```
@@ -616,6 +909,33 @@ To render the color-selector popup without using its button element:
 @usage
 [color-selector :my-color-selector {...}]
 ```
+
+<details>
+<summary>Source code</summary>
+
+```
+(defn element
+  ([selector-props]
+   [element (random/generate-keyword) selector-props])
+
+  ([selector-id selector-props]
+   (let [selector-props (color-selector.prototypes/selector-props-prototype selector-id selector-props)]
+        [color-selector selector-id selector-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [elements.api :refer [color-selector]]))
+
+(elements.api/color-selector ...)
+(color-selector              ...)
+```
+
+</details>
 
 ---
 
@@ -643,6 +963,9 @@ To render the color-selector popup without using its button element:
   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
  :gap (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :auto
+ :height (keyword)(opt)
+  :auto, :content, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  Default: :auto
  :horizontal-align (keyword)(opt)
   :center, :left, :right
   Default: :center
@@ -654,17 +977,25 @@ To render the color-selector popup without using its button element:
    :horizontal (keyword)(opt)
    :vertical (keyword)(opt)
     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
+ :max-height (keyword)(opt)
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+ :max-width (keyword)(opt)
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+ :min-height (keyword)(opt)
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+ :min-width (keyword)(opt)
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
  :outdent (map)(opt)
   Same as the :indent property
  :style (map)(opt)
- :stretch-orientation (keyword)(opt)
-  :horizontal, :vertical, :both, :none
-  Default: :vertical
  :vertical-align (keyword)(opt)
   :top, :center, :bottom, :space-around, :space-between, :space-evenly
   Default: :top
  :wrap-items? (boolean)(opt)
-  Default: false}
+  Default: false
+ :width (keyword)(opt)
+  :auto, :content, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  Default: :content}
 ```
 
 ```
@@ -676,6 +1007,33 @@ To render the color-selector popup without using its button element:
 @usage
 [elements/column :my-column {...}]
 ```
+
+<details>
+<summary>Source code</summary>
+
+```
+(defn element
+  ([column-props]
+   [element (random/generate-keyword) column-props])
+
+  ([column-id column-props]
+   (let [column-props (column.prototypes/column-props-prototype column-props)]
+        [column column-id column-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [elements.api :refer [column]]))
+
+(elements.api/column ...)
+(column              ...)
+```
+
+</details>
 
 ---
 
@@ -689,7 +1047,7 @@ To render the color-selector popup without using its button element:
  :field-value-f (function)(opt)
   Default: return
  :initial-options (vector)(opt)
- :on-select (metamorphic-event)(opt)
+ :on-select (Re-Frame metamorphic-event)(opt)
  :option-component (component)(opt)
   Default: elements.combo-box.views/default-option-component
  :option-label-f (function)(opt)
@@ -697,7 +1055,7 @@ To render the color-selector popup without using its button element:
  :option-value-f (function)(opt)
   Default: return
  :options (vector)(opt)
- :options-path (vector)(opt)}
+ :options-path (Re-Frame path vector)(opt)}
 ```
 
 ```
@@ -710,39 +1068,61 @@ To render the color-selector popup without using its button element:
 [combo-box :my-combo-box {...}]
 ```
 
+<details>
+<summary>Source code</summary>
+
+```
+(defn element
+  ([box-props]
+   [element (random/generate-keyword) box-props])
+
+  ([box-id box-props]
+   (let [box-props (combo-box.prototypes/box-props-prototype box-id box-props)]
+        [combo-box box-id box-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [elements.api :refer [combo-box]]))
+
+(elements.api/combo-box ...)
+(combo-box              ...)
+```
+
+</details>
+
 ---
 
 ### content-swapper
 
 ```
-@description
-The :max-height, :max-width, :min-height and :min-width properties
-are applied on each page.
+@warning
+XXX#0517
+The content-swapper element pages have absolute positioning, therefore
+the content-swapper element and its body stretch to their parents in order to
+make space for the pages.
 ```
 
 ```
 @param (keyword)(opt) swapper-id
 @param (map) swapper-props
 {:class (keyword or keywords in vector)(opt)
- :gap (keyword)(opt)
-  Distance between unfolded pages
-  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :auto
  :indent (map)(opt)
- :label (metamorphic-content)(opt)
- :max-height (keyword)(opt)
-  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
- :max-width (keyword)(opt)
-  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
- :min-height (keyword)(opt)
-  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
- :min-width (keyword)(opt)
-  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  {:bottom (keyword)(opt)
+   :left (keyword)(opt)
+   :right (keyword)(opt)
+   :top (keyword)(opt)
+   :horizontal (keyword)(opt)
+   :vertical (keyword)(opt)
+    :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
+ :initial-page (metamorphic-content)
  :outdent (map)(opt)
- :pages (maps in vector)
-  [{:content (metamorphic-content)
-    :label (metamorphic-content)}]
- :style (map)(opt)
- :threshold (px)(opt)}
+  Same as the :indent property
+ :style (map)(opt)}
 ```
 
 ```
@@ -754,6 +1134,32 @@ are applied on each page.
 @usage
 [content-swapper :my-content-swapper {...}]
 ```
+
+<details>
+<summary>Source code</summary>
+
+```
+(defn element
+  ([swapper-props]
+   [element (random/generate-keyword) swapper-props])
+
+  ([swapper-id swapper-props]
+   (let []        [content-swapper swapper-id swapper-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [elements.api :refer [content-swapper]]))
+
+(elements.api/content-swapper ...)
+(content-swapper              ...)
+```
+
+</details>
 
 ---
 
@@ -800,7 +1206,7 @@ are applied on each page.
  :resetable? (boolean)(opt)
   Default: false
  :style (map)(opt)
- :value-path (vector)(opt)}
+ :value-path (Re-Frame path vector)(opt)}
 ```
 
 ```
@@ -812,6 +1218,33 @@ are applied on each page.
 @usage
 [counter :my-counter {...}]
 ```
+
+<details>
+<summary>Source code</summary>
+
+```
+(defn element
+  ([counter-props]
+   [element (random/generate-keyword) counter-props])
+
+  ([counter-id counter-props]
+   (let [counter-props (counter.prototypes/counter-props-prototype counter-id counter-props)]
+        [counter counter-id counter-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [elements.api :refer [counter]]))
+
+(elements.api/counter ...)
+(counter              ...)
+```
+
+</details>
 
 ---
 
@@ -834,6 +1267,33 @@ are applied on each page.
 [date-field :my-date-field {...}]
 ```
 
+<details>
+<summary>Source code</summary>
+
+```
+(defn element
+  ([field-props]
+   [element (random/generate-keyword) field-props])
+
+  ([field-id field-props]
+   (let [field-props (date-field.prototypes/field-props-prototype field-id field-props)]
+        [text-field.views/element field-id field-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [elements.api :refer [date-field]]))
+
+(elements.api/date-field ...)
+(date-field              ...)
+```
+
+</details>
+
 ---
 
 ### digit-field
@@ -852,7 +1312,7 @@ are applied on each page.
     :xxs, :xs, :s, :m, :l, :xl, :xxl
    :top (keyword)(opt)
     :xxs, :xs, :s, :m, :l, :xl, :xxl}
- :value-path (vector)}
+ :value-path (Re-Frame path vector)}
 ```
 
 ```
@@ -864,6 +1324,32 @@ are applied on each page.
 @usage
 [digit-field :my-digit-field {...}]
 ```
+
+<details>
+<summary>Source code</summary>
+
+```
+(defn element
+  ([field-props]
+   [element (random/generate-keyword) field-props])
+
+  ([field-id field-props]
+   (let []        [digit-field field-id field-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [elements.api :refer [digit-field]]))
+
+(elements.api/digit-field ...)
+(digit-field              ...)
+```
+
+</details>
 
 ---
 
@@ -894,6 +1380,33 @@ are applied on each page.
 [dropdown-menu :my-dropdown-menu {...}]
 ```
 
+<details>
+<summary>Source code</summary>
+
+```
+(defn element
+  ([menu-props]
+   [element (random/generate-keyword) menu-props])
+
+  ([menu-id menu-props]
+   (let [menu-props (dropdown-menu.prototypes/menu-props-prototype menu-id menu-props)]
+        [dropdown-menu menu-id menu-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [elements.api :refer [dropdown-menu]]))
+
+(elements.api/dropdown-menu ...)
+(dropdown-menu              ...)
+```
+
+</details>
+
 ---
 
 ### element-label
@@ -906,6 +1419,33 @@ are applied on each page.
  :label (metamorphic-content)(opt)
  :marker-color (keyword)(opt)}
 ```
+
+<details>
+<summary>Source code</summary>
+
+```
+(defn element-label
+  [element-id {:keys [helper info-text label marker-color]}]
+  (if label [label.views/element {:content      label
+                                  :helper       helper
+                                  :info-text    info-text
+                                  :marker-color marker-color
+                                  :target-id    element-id}]))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [elements.api :refer [element-label]]))
+
+(elements.api/element-label ...)
+(element-label              ...)
+```
+
+</details>
 
 ---
 
@@ -950,6 +1490,33 @@ are applied on each page.
 [expandable :my-expandable {...}]
 ```
 
+<details>
+<summary>Source code</summary>
+
+```
+(defn element
+  ([expandable-props]
+   [element (random/generate-keyword) expandable-props])
+
+  ([expandable-id expandable-props]
+   (let [expandable-props (expandable.prototypes/expandable-props-prototype expandable-props)]
+        [expandable expandable-id expandable-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [elements.api :refer [expandable]]))
+
+(elements.api/expandable ...)
+(expandable              ...)
+```
+
+</details>
+
 ---
 
 ### ghost
@@ -978,7 +1545,10 @@ are applied on each page.
   Default: :s
  :outdent (map)(opt)
   Same as the :indent property
- :style (map)(opt)}
+ :style (map)(opt)
+ :width (keyword)(opt)
+  :auto, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  Default: :auto}
 ```
 
 ```
@@ -990,6 +1560,164 @@ are applied on each page.
 @usage
 [ghost :my-ghost {...}]
 ```
+
+<details>
+<summary>Source code</summary>
+
+```
+(defn element
+  ([ghost-props]
+   [element (random/generate-keyword) ghost-props])
+
+  ([ghost-id ghost-props]
+   (let [ghost-props (ghost.prototypes/ghost-props-prototype ghost-props)]
+        [ghost ghost-id ghost-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [elements.api :refer [ghost]]))
+
+(elements.api/ghost ...)
+(ghost              ...)
+```
+
+</details>
+
+---
+
+### horizontal-group
+
+```
+@param (keyword)(opt) group-id
+@param (map) group-props
+{:class (keyword or keywords in vector)(opt)
+ :default-props (map)(opt)
+ :element (symbol)
+ :group-items (maps in vector)
+ :indent (map)(opt)
+  {:bottom (keyword)(opt)
+   :left (keyword)(opt)
+   :right (keyword)(opt)
+   :top (keyword)(opt)
+   :horizontal (keyword)(opt)
+   :vertical (keyword)(opt)
+    :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
+ :outdent (map)(opt)
+  Same as the :indent property
+ :style (map)(opt)
+ :width (keyword)(opt)
+  :auto, :content, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  Default: :content}
+```
+
+```
+@usage
+[horizontal-group {...}]
+```
+
+```
+@usage
+[horizontal-group :my-horizontal-group {...}]
+```
+
+```
+@usage
+[horizontal-group {:default-props {:hover-color :highlight}
+                   :element #'elements.api/button
+                   :group-items [{:label "First button"  :href "/first"}
+                                 {:label "Second button" :href "/second"}]}]
+```
+
+<details>
+<summary>Source code</summary>
+
+```
+(defn element
+  ([group-props]
+   [element (random/generate-keyword) group-props])
+
+  ([group-id group-props]
+   (let [group-props (horizontal-group.prototypes/group-props-prototype group-props)]
+        [horizontal-group group-id group-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [elements.api :refer [horizontal-group]]))
+
+(elements.api/horizontal-group ...)
+(horizontal-group              ...)
+```
+
+</details>
+
+---
+
+### horizontal-line
+
+```
+@param (keyword)(opt) line-id
+@param (map) line-props
+{:class (keyword or keywords in vector)(opt)
+ :fill-color (keyword or string)(opt)
+  :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+  Default: :default
+ :outdent (map)(opt)
+  Same as the :indent property
+ :style (map)(opt)
+ :strength (px)(opt)
+  Default: 1
+ :width (keyword)(opt)
+  :auto, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  Default: :auto}
+```
+
+```
+@usage
+[horizontal-line {...}]
+```
+
+```
+@usage
+[horizontal-line :my-horizontal-line {...}]
+```
+
+<details>
+<summary>Source code</summary>
+
+```
+(defn element
+  ([line-props]
+   [element (random/generate-keyword) line-props])
+
+  ([line-id line-props]
+   (let [line-props (horizontal-line.prototypes/line-props-prototype line-props)]
+        [:div (horizontal-line.attributes/line-attributes line-id line-props)
+              [:div (horizontal-line.attributes/line-body-attributes line-id line-props)]])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [elements.api :refer [horizontal-line]]))
+
+(elements.api/horizontal-line ...)
+(horizontal-line              ...)
+```
+
+</details>
 
 ---
 
@@ -1015,7 +1743,10 @@ are applied on each page.
  :start-content (metamorphic-content)(opt)
  :vertical-align (keyword)(opt)
   :bottom, :center, :top
-  Default: :center}
+  Default: :center
+ :width (keyword)(opt)
+  :auto, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  Default: :auto}
 ```
 
 ```
@@ -1034,6 +1765,33 @@ are applied on each page.
                                           [label {:content "My label"}]]}]
 ```
 
+<details>
+<summary>Source code</summary>
+
+```
+(defn element
+  ([polarity-props]
+   [element (random/generate-keyword) polarity-props])
+
+  ([polarity-id polarity-props]
+   (let [polarity-props (horizontal-polarity.prototypes/polarity-props-prototype polarity-props)]
+        [horizontal-polarity polarity-id polarity-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [elements.api :refer [horizontal-polarity]]))
+
+(elements.api/horizontal-polarity ...)
+(horizontal-polarity              ...)
+```
+
+</details>
+
 ---
 
 ### horizontal-separator
@@ -1041,9 +1799,25 @@ are applied on each page.
 ```
 @param (keyword)(opt) separator-id
 @param (map) separator-props
-{:height (keyword)(opt)
-  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  Default: :s}
+{:class (keyword or keywords in vector)(opt)
+ :color (keyword or string)(opt)
+  :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+  Default: :default
+ :indent (map)(opt)
+  {:bottom (keyword)(opt)
+   :left (keyword)(opt)
+   :right (keyword)(opt)
+   :top (keyword)(opt)
+   :horizontal (keyword)(opt)
+   :vertical (keyword)(opt)
+    :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
+ :label (metamorphic-content)(opt)
+ :outdent (map)(opt)
+  Same as the :indent property
+ :style (map)(opt)
+ :width (keyword)(opt)
+  :auto, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  Default: :auto}
 ```
 
 ```
@@ -1055,6 +1829,84 @@ are applied on each page.
 @usage
 [horizontal-separator :my-horizontal-separator {...}]
 ```
+
+<details>
+<summary>Source code</summary>
+
+```
+(defn element
+  ([separator-props]
+   [element (random/generate-keyword) separator-props])
+
+  ([separator-id separator-props]
+   (let [separator-props (horizontal-separator.prototypes/separator-props-prototype separator-props)]
+        [horizontal-separator separator-id separator-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [elements.api :refer [horizontal-separator]]))
+
+(elements.api/horizontal-separator ...)
+(horizontal-separator              ...)
+```
+
+</details>
+
+---
+
+### horizontal-spacer
+
+```
+@param (keyword)(opt) spacer-id
+@param (map) spacer-props
+{:class (keyword or keywords in vector)(opt)
+ :height (keyword)(opt)
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  Default: :s
+ :style (map)(opt)}
+```
+
+```
+@usage
+[horizontal-spacer {...}]
+```
+
+```
+@usage
+[horizontal-spacer :my-horizontal-spacer {...}]
+```
+
+<details>
+<summary>Source code</summary>
+
+```
+(defn element
+  ([spacer-props]
+   [element (random/generate-keyword) spacer-props])
+
+  ([spacer-id spacer-props]
+   (let [spacer-props (horizontal-spacer.prototypes/spacer-props-prototype spacer-props)]
+        [:div (horizontal-spacer.attributes/spacer-attributes spacer-id spacer-props)])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [elements.api :refer [horizontal-spacer]]))
+
+(elements.api/horizontal-spacer ...)
+(horizontal-spacer              ...)
+```
+
+</details>
 
 ---
 
@@ -1097,9 +1949,41 @@ are applied on each page.
 [icon :my-icon {...}]
 ```
 
+<details>
+<summary>Source code</summary>
+
+```
+(defn element
+  ([icon-props]
+   [element (random/generate-keyword) icon-props])
+
+  ([icon-id icon-props]
+   (let [icon-props (icon.prototypes/icon-props-prototype icon-props)]
+        [icon icon-id icon-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [elements.api :refer [icon]]))
+
+(elements.api/icon ...)
+(icon              ...)
+```
+
+</details>
+
 ---
 
 ### icon-button
+
+```
+@warning
+BUG#9912 (source-code/cljs/elements/button.views)
+```
 
 ```
 @param (keyword)(opt) button-id
@@ -1130,6 +2014,8 @@ are applied on each page.
   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
  :hover-color (keyword or string)(opt)
   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+ :hover-effect (keyword)(opt)
+  :opacity
  :href (string)(opt)
  :icon (keyword)
  :icon-color (keyword or string)(opt)
@@ -1150,7 +2036,8 @@ are applied on each page.
    :vertical (keyword)(opt)
     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
  :keypress (map)(constant)(opt)
-  {:key-code (integer)
+  {:exclusive? (boolean)(opt)
+   :key-code (integer)
    :required? (boolean)(opt)
     Default: false}
  :label (metamorphic-content)(opt)
@@ -1158,8 +2045,8 @@ are applied on each page.
   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
  :marker-position (keyword)(opt)
   :tl, :tr, :br, :bl
- :on-click (metamorphic-handler)(opt)
- :on-mouse-over (metamorphic-handler)(opt)
+ :on-click (Re-Frame metamorphic-event)(opt)
+ :on-mouse-over (Re-Frame metamorphic-event)(opt)
  :outdent (map)(opt)
   Same as the :indent property
  :progress (percent)(opt)
@@ -1194,6 +2081,33 @@ are applied on each page.
 [icon-button {:keypress {:key-code 13} :on-click [:my-event]}]
 ```
 
+<details>
+<summary>Source code</summary>
+
+```
+(defn element
+  ([button-props]
+   [element (random/generate-keyword) button-props])
+
+  ([button-id button-props]
+   (let [button-props (icon-button.prototypes/button-props-prototype button-props)]
+        [icon-button button-id button-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [elements.api :refer [icon-button]]))
+
+(elements.api/icon-button ...)
+(icon-button              ...)
+```
+
+</details>
+
 ---
 
 ### image
@@ -1205,7 +2119,9 @@ are applied on each page.
  :class (keyword or keywords in vector)(opt)
  :error-src (string)(opt)
   TODO
- :height (string)(opt)
+ :height (keyword)(opt)
+  :content, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  Default: :content
  :indent (map)(opt)
   {:bottom (keyword)(opt)
    :left (keyword)(opt)
@@ -1221,7 +2137,9 @@ are applied on each page.
   Same as the :indent property
  :src (string)(opt)
  :style (map)(opt)
- :width (string)(opt)}
+ :width (keyword)(opt)
+  :content, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  Default: :content}
 ```
 
 ```
@@ -1233,6 +2151,33 @@ are applied on each page.
 @usage
 [image :my-image {...}]
 ```
+
+<details>
+<summary>Source code</summary>
+
+```
+(defn element
+  ([image-props]
+   [element (random/generate-keyword) image-props])
+
+  ([image-id image-props]
+   (let [image-props (image.prototypes/image-props-prototype image-props)]
+        [image image-id image-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [elements.api :refer [image]]))
+
+(elements.api/image ...)
+(image              ...)
+```
+
+</details>
 
 ---
 
@@ -1259,17 +2204,15 @@ are applied on each page.
   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
   Default: :inherit
  :content (metamorphic-content)
- :copyable? (boolean)(opt)
-  Default: false
  :disabled? (boolean)(opt)
  :font-size (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
   Default: :s
  :font-weight (keyword)(opt)
-  :inherit, :extra-light, :light, :normal, :medium, :bold, :extra-bold
+  :inherit, :thin, :extra-light, :light, :normal, :medium, :semi-bold, :bold, :extra-bold, :black
   Default :medium
  :gap (keyword)(opt)
-  Distance between the icon, info-text button and label
+  Distance between the icon, the info-text button and the label
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :auto
  :horizontal-align (keyword)(opt)
   :center, :left, :right
@@ -1299,7 +2242,7 @@ are applied on each page.
     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
  :info-text (metamorphic-content)(opt)
  :line-height (keyword)(opt)
-  :inherit, :native, :text-block, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  :auto, :inherit, :text-block, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   Default: :text-block
  :marker-color (keyword)(opt)
   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
@@ -1307,6 +2250,8 @@ are applied on each page.
   :tl, :tr, :br, :bl
  :min-width (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+ :on-copy (Re-Frame metamorphic-event)(opt)
+  This event takes the label content as its last parameter
  :outdent (map)(opt)
   Same as the :indent property
  :placeholder (metamorphic-content)(opt)
@@ -1322,9 +2267,14 @@ are applied on each page.
   Default :normal
  :text-overflow (keyword)(opt)
   :ellipsis, :no-wrap, :wrap
-  Default: :ellipsis
  :text-transform (keyword)(opt)
-  :capitalize, :lowercase, :uppercase}
+  :capitalize, :lowercase, :uppercase
+ :tooltip-content (metamorphic-content)(opt)
+ :tooltip-position (keyword)(opt)
+  :left, :right
+ :width (keyword)(opt)
+  :auto, :content, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  Default: :content}
 ```
 
 ```
@@ -1336,6 +2286,33 @@ are applied on each page.
 @usage
 [label :my-label {...}]
 ```
+
+<details>
+<summary>Source code</summary>
+
+```
+(defn element
+  ([label-props]
+   [element (random/generate-keyword) label-props])
+
+  ([label-id label-props]
+   (let [label-props (label.prototypes/label-props-prototype label-props)]
+        [label label-id label-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [elements.api :refer [label]]))
+
+(elements.api/label ...)
+(label              ...)
+```
+
+</details>
 
 ---
 
@@ -1366,7 +2343,10 @@ are applied on each page.
    Min: 1
    Max: 6
  :total-value (integer)(opt)
-  Default: A szakaszok aktuális értékének összege}
+  Default: Sum of the section values
+ :width (keyword)(opt)
+  auto, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  Default: :auto}
 ```
 
 ```
@@ -1379,6 +2359,33 @@ are applied on each page.
 [line-diagram :my-line-diagram {...}]
 ```
 
+<details>
+<summary>Source code</summary>
+
+```
+(defn element
+  ([diagram-props]
+   [element (random/generate-keyword) diagram-props])
+
+  ([diagram-id diagram-props]
+   (let [diagram-props (line-diagram.prototypes/diagram-props-prototype diagram-props)]
+        [line-diagram diagram-id diagram-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [elements.api :refer [line-diagram]]))
+
+(elements.api/line-diagram ...)
+(line-diagram              ...)
+```
+
+</details>
+
 ---
 
 ### menu-bar
@@ -1386,7 +2393,7 @@ are applied on each page.
 ```
 @description
 You can set the default item styles and settings by using the :item-default
-property or you can specify these values on each item separatelly.
+property or you can specify these values on each item.
 ```
 
 ```
@@ -1423,10 +2430,12 @@ property or you can specify these values on each item separatelly.
     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
     Default: :s
    :font-weight (keyword)(opt)
-    :inherit, :extra-light, :light, :normal, :medium, :bold, :extra-bold
+    :inherit, :thin, :extra-light, :light, :normal, :medium, :semi-bold, :bold, :extra-bold, :black
     Default :medium
    :hover-color (keyword or string)(opt)
     :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+   :hover-effect (keyword)(opt)
+    :opacity
    :icon-color (keyword or string)(opt)
     :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
     Default: :inherit
@@ -1438,7 +2447,7 @@ property or you can specify these values on each item separatelly.
     Default: :s
    :indent (map)(opt)
    :line-height (keyword)(opt)
-    :inherit, :native, :text-block, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+    :auto, :inherit, :text-block, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
     Default: :text-block
    :marker-color (keyword)(opt)
     :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
@@ -1455,8 +2464,8 @@ property or you can specify these values on each item separatelly.
     :href (string)(opt)
     :icon (keyword)(opt)
     :label (metamorphic-content)(opt)
-    :on-click (metamorphic-event)(opt)
-    :on-mouse-over (metamorphic-event)(opt)
+    :on-click (Re-Frame metamorphic-event)(opt)
+    :on-mouse-over (Re-Frame metamorphic-event)(opt)
     :target (keyword)(opt)
      :blank, :self}]
  :orientation (keyword)(opt)
@@ -1477,6 +2486,33 @@ property or you can specify these values on each item separatelly.
 [menu-bar :my-menu-bar {...}]
 ```
 
+<details>
+<summary>Source code</summary>
+
+```
+(defn element
+  ([bar-props]
+   [element (random/generate-keyword) bar-props])
+
+  ([bar-id bar-props]
+   (let [bar-props (menu-bar.prototypes/bar-props-prototype bar-props)]
+        [menu-bar bar-id bar-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [elements.api :refer [menu-bar]]))
+
+(elements.api/menu-bar ...)
+(menu-bar              ...)
+```
+
+</details>
+
 ---
 
 ### multi-combo-box
@@ -1491,7 +2527,7 @@ property or you can specify these values on each item separatelly.
  :field-value-f (function)(opt)
   Default: return
  :initial-options (vector)(opt)
- :on-select (metamorphic-event)(opt)
+ :on-select (Re-Frame metamorphic-event)(opt)
  :option-label-f (function)(opt)
   Default: return
  :option-value-f (function)(opt)
@@ -1499,7 +2535,7 @@ property or you can specify these values on each item separatelly.
  :option-component (component)(opt)
   Default: elements.combo-box/default-option-component
  :options (vector)(opt)
- :options-path (vector)(opt)
+ :options-path (Re-Frame path vector)(opt)
  :placeholder (metamorphic-content)(opt)}
 ```
 
@@ -1512,6 +2548,34 @@ property or you can specify these values on each item separatelly.
 @usage
 [multi-combo-box :my-multi-combo-box {...}]
 ```
+
+<details>
+<summary>Source code</summary>
+
+```
+(defn element
+  ([box-props]
+   [element (random/generate-keyword) box-props])
+
+  ([box-id box-props]
+   (let [box-props (multi-combo-box.prototypes/box-props-prototype box-id box-props)
+         box-props (assoc-in box-props [:surface :content] [combo-box.views/combo-box-surface-content box-id box-props])]
+        [multi-combo-box box-id box-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [elements.api :refer [multi-combo-box]]))
+
+(elements.api/multi-combo-box ...)
+(multi-combo-box              ...)
+```
+
+</details>
 
 ---
 
@@ -1533,6 +2597,33 @@ property or you can specify these values on each item separatelly.
 @usage
 [multi-field :my-multi-field {...}]
 ```
+
+<details>
+<summary>Source code</summary>
+
+```
+(defn element
+  ([group-props]
+   [element (random/generate-keyword) group-props])
+
+  ([group-id group-props]
+   (let [group-props (multi-field.prototypes/group-props-prototype group-id group-props)]
+        [multi-field group-id group-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [elements.api :refer [multi-field]]))
+
+(elements.api/multi-field ...)
+(multi-field              ...)
+```
+
+</details>
 
 ---
 
@@ -1560,6 +2651,33 @@ property or you can specify these values on each item separatelly.
 @usage
 [multiline-field :my-multiline-field {...}]
 ```
+
+<details>
+<summary>Source code</summary>
+
+```
+(defn element
+  ([field-props]
+   [element (random/generate-keyword) field-props])
+
+  ([field-id field-props]
+   (let [field-props (multiline-field.prototypes/field-props-prototype field-id field-props)]
+        [text-field.views/element field-id field-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [elements.api :refer [multiline-field]]))
+
+(elements.api/multiline-field ...)
+(multiline-field              ...)
+```
+
+</details>
 
 ---
 
@@ -1591,10 +2709,13 @@ property or you can specify these values on each item separatelly.
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
   Default: :s
  :font-weight (keyword)(opt)
-  :inherit, :extra-light, :light, :normal, :medium, :bold, :extra-bold
+  :inherit, :thin, :extra-light, :light, :normal, :medium, :semi-bold, :bold, :extra-bold, :black
   Default :medium
  :fill-color (keyword or string)(opt)
   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+ :height (keyword)(opt)
+  :auto, :content, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  Default: :auto
  :indent (map)(opt)
   {:bottom (keyword)(opt)
    :left (keyword)(opt)
@@ -1623,7 +2744,10 @@ property or you can specify these values on each item separatelly.
     Default: :icon-button}
  :selectable? (boolean)(opt)
   Default: false
- :style (map)(opt)}
+ :style (map)(opt)
+ :width (keyword)(opt)
+  :auto, :content, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  Default: :content}
 ```
 
 ```
@@ -1636,6 +2760,33 @@ property or you can specify these values on each item separatelly.
 [notification-bubble :my-notification-bubble {...}]
 ```
 
+<details>
+<summary>Source code</summary>
+
+```
+(defn element
+  ([bubble-props]
+   [element (random/generate-keyword) bubble-props])
+
+  ([bubble-id bubble-props]
+   (let [bubble-props (notification-bubble.prototypes/bubble-props-prototype bubble-props)]
+        [notification-bubble bubble-id bubble-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [elements.api :refer [notification-bubble]]))
+
+(elements.api/notification-bubble ...)
+(notification-bubble              ...)
+```
+
+</details>
+
 ---
 
 ### password-field
@@ -1643,8 +2794,6 @@ property or you can specify these values on each item separatelly.
 ```
 @param (keyword)(opt) field-id
 @param (map) field-props
-{:validate? (boolean)(opt)
-  Default: false}
 ```
 
 ```
@@ -1656,6 +2805,33 @@ property or you can specify these values on each item separatelly.
 @usage
 [password-field :my-password-field {...}]
 ```
+
+<details>
+<summary>Source code</summary>
+
+```
+(defn element
+  ([field-props]
+   [element (random/generate-keyword) field-props])
+
+  ([field-id field-props]
+   (let [field-props (password-field.prototypes/field-props-prototype field-id field-props)]
+        [text-field.views/element field-id field-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [elements.api :refer [password-field]]))
+
+(elements.api/password-field ...)
+(password-field              ...)
+```
+
+</details>
 
 ---
 
@@ -1683,24 +2859,27 @@ property or you can specify these values on each item separatelly.
  :initial-value (string)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
  :modifier (function)(opt)
- :on-blur (metamorphic-event)(opt)
- :on-changed (metamorphic-event)(opt)
+ :on-blur (Re-Frame metamorphic-event)(opt)
+ :on-changed (Re-Frame metamorphic-event)(opt)
   It happens BEFORE the application state gets updated with the actual value!
   If you have to get the ACTUAL value from the application state, use the
   :on-type-ended event instead!
   This event takes the field content as its last parameter
- :on-focus (metamorphic-event)(opt)
- :on-mount (metamorphic-event)(opt)
+ :on-focus (Re-Frame metamorphic-event)(opt)
+ :on-mount (Re-Frame metamorphic-event)(opt)
   This event takes the field content as its last parameter
- :on-type-ended (metamorphic-event)(opt)
+ :on-type-ended (Re-Frame metamorphic-event)(opt)
   This event takes the field content as its last parameter
- :on-unmount (metamorphic-event)(opt)
+ :on-unmount (Re-Frame metamorphic-event)(opt)
   This event takes the field content as its last parameter
  :outdent (map)(opt)
   Same as the :indent property
  :style (map)(opt)
- :surface (metamorphic-content)(opt)
- :value-path (vector)(opt)}
+ :surface (map)(opt)
+  {:border-radius (map)(opt)
+   :content (metamorphic-content)(opt)
+   :indent (map)(opt)}
+ :value-path (Re-Frame path vector)(opt)}
 ```
 
 ```
@@ -1713,9 +2892,41 @@ property or you can specify these values on each item separatelly.
 [plain-field :my-plain-field {...}]
 ```
 
+<details>
+<summary>Source code</summary>
+
+```
+(defn element
+  ([field-props]
+   [element (random/generate-keyword) field-props])
+
+  ([field-id field-props]
+   (let [field-props (plain-field.prototypes/field-props-prototype field-id field-props)]
+        [plain-field field-id field-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [elements.api :refer [plain-field]]))
+
+(elements.api/plain-field ...)
+(plain-field              ...)
+```
+
+</details>
+
 ---
 
 ### point-diagram
+
+```
+@warning
+UNFINISHED! DO NOT USE!
+```
 
 ```
 @param (keyword)(opt) diagram-id
@@ -1743,13 +2954,39 @@ property or you can specify these values on each item separatelly.
 
 ```
 @usage
-[line-diagram {...}]
+[point-diagram {...}]
 ```
 
 ```
 @usage
 [point-diagram :my-point-diagram {...}]
 ```
+
+<details>
+<summary>Source code</summary>
+
+```
+(defn element
+  ([diagram-props]
+   [element (random/generate-keyword) diagram-props])
+
+  ([diagram-id diagram-props]
+   (let []        [point-diagram diagram-id diagram-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [elements.api :refer [point-diagram]]))
+
+(elements.api/point-diagram ...)
+(point-diagram              ...)
+```
+
+</details>
 
 ---
 
@@ -1794,7 +3031,7 @@ property or you can specify these values on each item separatelly.
  :label (metamorphic-content)
  :marker-color (keyword)(opt)
   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
- :on-select (metamorphic-event)(opt)
+ :on-select (Re-Frame metamorphic-event)(opt)
  :option-helper-f (function)(opt)
  :option-label-f (function)(opt)
   Default: return
@@ -1804,11 +3041,11 @@ property or you can specify these values on each item separatelly.
  :options-orientation (keyword)(opt)
   :horizontal, :vertical
   Default: :vertical
- :options-path (vector)(opt)
+ :options-path (Re-Frame path vector)(opt)
  :outdent (map)(opt)
   Same as the :indent property
  :style (map)(opt)
- :value-path (vector)(opt)}
+ :value-path (Re-Frame path vector)(opt)}
 ```
 
 ```
@@ -1825,6 +3062,33 @@ property or you can specify these values on each item separatelly.
 @usage
 [radio-button :my-radio-button {:options [{:value :foo :label "Foo"} {:value :bar :label "Bar"}]}]
 ```
+
+<details>
+<summary>Source code</summary>
+
+```
+(defn element
+  ([button-props]
+   [element (random/generate-keyword) button-props])
+
+  ([button-id button-props]
+   (let [button-props (radio-button.prototypes/button-props-prototype button-id button-props)]
+        [radio-button button-id button-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [elements.api :refer [radio-button]]))
+
+(elements.api/radio-button ...)
+(radio-button              ...)
+```
+
+</details>
 
 ---
 
@@ -1852,6 +3116,9 @@ property or you can specify these values on each item separatelly.
   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
  :gap (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :auto
+ :height (keyword)(opt)
+  :auto, :content, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  Default: :auto
  :horizontal-align (keyword)(opt)
   :center, :left, :right, :space-around, :space-between, :space-evenly
   Default: :left
@@ -1863,17 +3130,24 @@ property or you can specify these values on each item separatelly.
    :horizontal (keyword)(opt)
    :vertical (keyword)(opt)
     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
+ :max-height (keyword)(opt)
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+ :max-width (keyword)(opt)
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+ :min-height (keyword)(opt)
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+ :min-width (keyword)(opt)
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
  :outdent (map)(opt)
   Same as the :indent property
  :style (map)(opt)
- :stretch-orientation (keyword)(opt)
-  :horizontal, :vertical, :both, :none
-  Default: :horizontal
  :vertical-align (keyword)(opt)
   :top, :center, :bottom
   Default: :center
- :wrap-items? (boolean)(opt)
-  Default: true}
+ :width (keyword)(opt)
+  :auto, :content, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  Default: :content
+ :wrap-items? (boolean)(opt)}
 ```
 
 ```
@@ -1885,6 +3159,33 @@ property or you can specify these values on each item separatelly.
 @usage
 [row :my-row {...}]
 ```
+
+<details>
+<summary>Source code</summary>
+
+```
+(defn element
+  ([row-props]
+   [element (random/generate-keyword) row-props])
+
+  ([row-id row-props]
+   (let [row-props (row.prototypes/row-props-prototype row-props)]
+        [row row-id row-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [elements.api :refer [row]]))
+
+(elements.api/row ...)
+(row              ...)
+```
+
+</details>
 
 ---
 
@@ -1905,15 +3206,36 @@ property or you can specify these values on each item separatelly.
 [search-field :my-search-field {...}]
 ```
 
+<details>
+<summary>Source code</summary>
+
+```
+(defn element
+  ([field-props]
+   [element (random/generate-keyword) field-props])
+
+  ([field-id field-props]
+   (let [field-props (search-field.prototypes/field-props-prototype field-id field-props)]
+        [text-field.views/element field-id field-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [elements.api :refer [search-field]]))
+
+(elements.api/search-field ...)
+(search-field              ...)
+```
+
+</details>
+
 ---
 
 ### select
-
-```
-@description
-To render the select popup without using its button element:
-[:elements.select/render-options! :my-select {...}]
-```
 
 ```
 @param (keyword)(opt) select-id
@@ -1951,11 +3273,11 @@ To render the select popup without using its button element:
  :initial-value (*)(opt)
  :label (metamorphic-content)(opt)
  :layout (keyword)(opt)
-  :button, :icon-button, :select
-  Default: :select
+  :button, :icon-button, :select-button
+  Default: :select-button
  :marker-color (keyword)(opt)
   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
- :on-select (metamorphic-event)(opt)
+ :on-select (Re-Frame metamorphic-event)(opt)
  :option-field-placeholder (metamorphic-content)(opt)
   Default: :add!
  :option-label-f (function)(opt)
@@ -1964,15 +3286,28 @@ To render the select popup without using its button element:
   Default: return
  :options (vector)(opt)
  :options-label (metamorphic-content)(opt)
- :options-path (vector)(opt)
+ :options-path (Re-Frame path vector)(opt)
  :options-placeholder (metamorphic-content)(opt)
   Default: :no-options
  :outdent (map)(opt)
   Same as the :indent property
+ :popup (map)(opt)
+  {:border-color (keyword or string)(opt)
+   :border-position (keyword)(opt)
+   :border-radius (map)(opt)
+   :border-width (keyword)(opt)
+   :cover-color (keyword or string)(opt)
+    Default: :black
+   :fill-color (keyword or string)(opt)
+    Default: :default
+   :indent (map)(opt)
+   :label (metamorphic-content)(opt)
+   :min-width (keyword)(opt)
+   :outdent (map)(opt)}
  :reveal-effect (keyword)(opt)
   :delayed, :opacity
  :style (map)(opt)
- :value-path (vector)(opt)}
+ :value-path (Re-Frame path vector)(opt)}
 ```
 
 ```
@@ -1993,9 +3328,41 @@ To render the select popup without using its button element:
          :value-path   [:my-selected-option]}]
 ```
 
+<details>
+<summary>Source code</summary>
+
+```
+(defn element
+  ([select-props]
+   [element (random/generate-keyword) select-props])
+
+  ([select-id select-props]
+   (let [select-props (select.prototypes/select-props-prototype select-id select-props)]
+        [select select-id select-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [elements.api :refer [select]]))
+
+(elements.api/select ...)
+(select              ...)
+```
+
+</details>
+
 ---
 
 ### slider
+
+```
+@warning
+UNFINISHED! DO NOT USE!
+```
 
 ```
 @param (keyword)(opt) slider-id
@@ -2023,7 +3390,10 @@ To render the select popup without using its button element:
   Same as the :indent property
  :resetable? (boolean)(opt)
  :style (map)(opt)
- :value-path (vector)(opt)}
+ :value-path (Re-Frame path vector)(opt)
+ :width (keyword)(opt)
+  :auto, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  Default: :auto}
 ```
 
 ```
@@ -2036,9 +3406,41 @@ To render the select popup without using its button element:
 [slider :my-slider {...}]
 ```
 
+<details>
+<summary>Source code</summary>
+
+```
+(defn element
+  ([slider-props]
+   [element (random/generate-keyword) slider-props])
+
+  ([slider-id slider-props]
+   (let [slider-props (slider.prototypes/slider-props-prototype slider-id slider-props)]
+        [slider slider-id slider-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [elements.api :refer [slider]]))
+
+(elements.api/slider ...)
+(slider              ...)
+```
+
+</details>
+
 ---
 
 ### stepper
+
+```
+@warning
+UNFINISHED! DO NOT USE!
+```
 
 ```
 @param (keyword)(opt) stepper-id
@@ -2055,6 +3457,32 @@ To render the select popup without using its button element:
 @usage
 [stepper :my-stepper {...}]
 ```
+
+<details>
+<summary>Source code</summary>
+
+```
+(defn element
+  ([stepper-props]
+   [element (random/generate-keyword) stepper-props])
+
+  ([stepper-id stepper-props]
+   (let []        [stepper stepper-id stepper-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [elements.api :refer [stepper]]))
+
+(elements.api/stepper ...)
+(stepper              ...)
+```
+
+</details>
 
 ---
 
@@ -2098,8 +3526,8 @@ To render the select popup without using its button element:
  :label (metamorphic-content)(opt)
  :marker-color (keyword)(opt)
   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
- :on-check (metamorphic-event)(opt)
- :on-uncheck (metamorphic-event)(opt)
+ :on-check (Re-Frame metamorphic-event)(opt)
+ :on-uncheck (Re-Frame metamorphic-event)(opt)
  :option-helper-f (function)(opt)
  :option-label-f (function)(opt)
   Default: return
@@ -2109,11 +3537,11 @@ To render the select popup without using its button element:
  :options-orientation (keyword)(opt)
   :horizontal, :vertical
   Default: :vertical
- :options-path (vector)(opt)
+ :options-path (Re-Frame path vector)(opt)
  :outdent (map)(opt)
   Same as the :indent property
  :style (map)(opt)
- :value-path (vector)(opt)}
+ :value-path (Re-Frame path vector)(opt)}
 ```
 
 ```
@@ -2125,6 +3553,33 @@ To render the select popup without using its button element:
 @usage
 [switch :my-switch {...}]
 ```
+
+<details>
+<summary>Source code</summary>
+
+```
+(defn element
+  ([switch-props]
+   [element (random/generate-keyword) switch-props])
+
+  ([switch-id switch-props]
+   (let [switch-props (switch.prototypes/switch-props-prototype switch-id switch-props)]
+        [switch switch-id switch-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [elements.api :refer [switch]]))
+
+(elements.api/switch ...)
+(switch              ...)
+```
+
+</details>
 
 ---
 
@@ -2142,11 +3597,13 @@ To render the select popup without using its button element:
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
   Default: :s
  :font-weight (keyword)(opt)
-  :inherit, :extra-light, :light, :normal, :medium, :bold, :extra-bold
+  :inherit, :thin, :extra-light, :light, :normal, :medium, :semi-bold, :bold, :extra-bold, :black
   Default: :normal
  :horizontal-align (keyword)(opt)
   :center, :left, :right
   Default: :left
+ :horizontal-position (keyword)(opt)
+  :center, :left, :right
  :indent (map)(opt)
   {:bottom (keyword)(opt)
    :left (keyword)(opt)
@@ -2158,9 +3615,13 @@ To render the select popup without using its button element:
  :info-text (metamorphic-content)(opt)
  :label (metamorphic-content)(opt)
  :line-height (keyword)(opt)
-  :inherit, :native, :text-block, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  :auto, :inherit, :text-block, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   Default: :text-block
  :max-lines (integer)(opt)
+ :min-width (keyword)(opt)
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+ :on-copy (Re-Frame metamorphic-event)(opt)
+  This event takes the text content as its last parameter
  :outdent (map)(opt)
   Same as the :indent property
  :placeholder (metamorphic-content)(opt)
@@ -2172,7 +3633,10 @@ To render the select popup without using its button element:
   Default :normal
  :text-overflow (keyword)(opt)
   :ellipsis, :wrap
-  Default: :wrap}
+  Default: :wrap
+ :width (keyword)(opt)
+  :auto, :content, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  Default: :content}
 ```
 
 ```
@@ -2184,6 +3648,33 @@ To render the select popup without using its button element:
 @usage
 [text :my-text {...}]
 ```
+
+<details>
+<summary>Source code</summary>
+
+```
+(defn element
+  ([text-props]
+   [element (random/generate-keyword) text-props])
+
+  ([text-id text-props]
+   (let [text-props (text.prototypes/text-props-prototype text-props)]
+        [text text-id text-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [elements.api :refer [text]]))
+
+(elements.api/text ...)
+(text              ...)
+```
+
+</details>
 
 ---
 
@@ -2226,7 +3717,7 @@ To render the select popup without using its button element:
      :material-symbols-filled, :material-symbols-outlined
      Default: :material-symbols-outlined
     :label (string)(opt)
-    :on-click (metamorphic-event)(opt)
+    :on-click (Re-Frame metamorphic-event)(opt)
     :tab-indexed? (boolean)(opt)
      Default: true
     :tooltip-content (metamorphic-content)(opt)}]
@@ -2238,7 +3729,7 @@ To render the select popup without using its button element:
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
   Default: :s
  :font-weight (keyword)(opt)
-  :inherit, :extra-light, :light, :normal, :medium, :bold, :extra-bold
+  :inherit, :thin, :extra-light, :light, :normal, :medium, :semi-bold, :bold, :extra-bold, :black
   Default: :normal
  :helper (metamorphic-content)(opt)
  :indent (map)(opt)
@@ -2253,33 +3744,31 @@ To render the select popup without using its button element:
  :initial-value (string)(opt)
  :label (metamorphic-content)(opt)
  :line-height (keyword or px)(opt)
-  :inherit, :native, :text-block, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  :auto, :inherit, :text-block, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   Default: :text-block
  :marker-color (keyword)(opt)
   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
  :marker-position (keyword)(opt)
   :tl, :tr, :br, :bl
  :max-length (integer)(opt)
- :min-width (keyword)(opt)
-  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
  :modifier (function)(opt)
- :on-blur (metamorphic-event)(opt)
- :on-changed (metamorphic-event)(opt)
+ :on-blur (Re-Frame metamorphic-event)(opt)
+ :on-changed (Re-Frame metamorphic-event)(opt)
   It happens BEFORE the application state gets updated with the actual value!
   If you have to get the ACTUAL value from the application state, use the
   :on-type-ended event instead!
   It happens BEFORE the application state gets updated with the actual value!
   This event takes the field content as its last parameter
- :on-empty (metamorphic-event)(opt)
+ :on-empty (Re-Frame metamorphic-event)(opt)
   This event takes the field content as its last parameter
- :on-enter (metamorphic-event)(opt)
+ :on-enter (Re-Frame metamorphic-event)(opt)
   This event takes the field content as its last parameter
- :on-focus (metamorphic-event)(opt)
- :on-mount (metamorphic-event)(opt)
+ :on-focus (Re-Frame metamorphic-event)(opt)
+ :on-mount (Re-Frame metamorphic-event)(opt)
   This event takes the field content as its last parameter
- :on-type-ended (metamorphic-event)(opt)
+ :on-type-ended (Re-Frame metamorphic-event)(opt)
   This event takes the field content as its last parameter
- :on-unmount (metamorphic-event)(opt)
+ :on-unmount (Re-Frame metamorphic-event)(opt)
   This event takes the field content as its last parameter
  :outdent (map)(opt)
   Same as the :indent property
@@ -2288,30 +3777,20 @@ To render the select popup without using its button element:
   :delayed, :opacity
  :start-adornments (maps in vector)(opt)
   Same as the :end-adornments property.
- :stretch-orientation (keyword)(opt)
-  :horizontal, :none
-  Default: :none
  :style (map)(opt)
-
-
- :surface (metamorphic-content)(opt)
  :surface (map)(opt)
-  {:border-color (keyword or string)(opt)
-   :border-position (keyword)(opt)
-   :border-radius (map)(opt)
-   :border-width (keyword)(opt)
+  {:border-radius (map)(opt)
    :content (metamorphic-content)(opt)
-   :fill-color (keyword or string)
-   :indent (map)(opt)
-   :outdent (map)(opt)}}
-
-
+   :indent (map)(opt)}
  :validator (map)(opt)
   {:f (function)
    :invalid-message (metamorphic-content)(opt)
    :invalid-message-f (function)(opt)
    :prevalidate? (boolean)(opt)}
- :value-path (vector)(opt)}
+ :value-path (Re-Frame path vector)(opt)
+ :width (keyword)(opt)
+  :auto, :content, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  Default: :content}
 ```
 
 ```
@@ -2353,6 +3832,33 @@ To render the select popup without using its button element:
 @usage
 [text-field {:modifier #(string/starts-with! % "/")}]
 ```
+
+<details>
+<summary>Source code</summary>
+
+```
+(defn element
+  ([field-props]
+   [element (random/generate-keyword) field-props])
+
+  ([field-id field-props]
+   (let [field-props (text-field.prototypes/field-props-prototype field-id field-props)]
+        [text-field field-id field-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [elements.api :refer [text-field]]))
+
+(elements.api/text-field ...)
+(text-field              ...)
+```
+
+</details>
 
 ---
 
@@ -2401,7 +3907,7 @@ To render the select popup without using its button element:
     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
  :info-text (metamorphic-content)(opt)
  :label (metamorphic-content)(opt)
- :on-click (metamorphic-event)(opt)
+ :on-click (Re-Frame metamorphic-event)(opt)
  :outdent (map)(opt)
   Same as the :indent property
  :style (map)(opt)
@@ -2422,6 +3928,33 @@ To render the select popup without using its button element:
 @usage
 [thumbnail :my-thumbnail {...}]
 ```
+
+<details>
+<summary>Source code</summary>
+
+```
+(defn element
+  ([thumbnail-props]
+   [element (random/generate-keyword) thumbnail-props])
+
+  ([thumbnail-id thumbnail-props]
+   (let [thumbnail-props (thumbnail.prototypes/thumbnail-props-prototype thumbnail-props)]
+        [thumbnail thumbnail-id thumbnail-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [elements.api :refer [thumbnail]]))
+
+(elements.api/thumbnail ...)
+(thumbnail              ...)
+```
+
+</details>
 
 ---
 
@@ -2448,9 +3981,13 @@ To render the select popup without using its button element:
  :disabled? (boolean)(opt)
  :fill-color (keyword or string)(opt)
   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+ :height (keyword)(opt)
+  :auto, :content, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  Default: :auto
  :hover-color (keyword or string)(opt)
-  :default, :highlight, :invert, :muted, :none, :primary, :secondary, :success, :warning
-  Default: :none
+  :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+ :hover-effect (keyword)(opt)
+  :opacity
  :href (string)(opt)
  :indent (map)(opt)
   {:bottom (keyword)(opt)
@@ -2464,13 +4001,16 @@ To render the select popup without using its button element:
   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
  :marker-position (keyword)(opt)
   :tl, :tr, :br, :bl
- :on-click (metamorphic-event)(opt)
- :on-right-click (metamorphic-event)(opt)
+ :on-click (Re-Frame metamorphic-event)(opt)
+ :on-right-click (Re-Frame metamorphic-event)(opt)
  :outdent (map)(opt)
   Same as the :indent property
  :style (map)(opt)
  :target (keyword)(opt)
-  :blank, :self}
+  :blank, :self
+ :width (keyword)(opt)
+  :auto, :content, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  Default: :content}
 ```
 
 ```
@@ -2483,6 +4023,164 @@ To render the select popup without using its button element:
 [toggle :my-toggle {...}]
 ```
 
+<details>
+<summary>Source code</summary>
+
+```
+(defn element
+  ([toggle-props]
+   [element (random/generate-keyword) toggle-props])
+
+  ([toggle-id toggle-props]
+   (let [toggle-props (toggle.prototypes/toggle-props-prototype toggle-props)]
+        [toggle toggle-id toggle-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [elements.api :refer [toggle]]))
+
+(elements.api/toggle ...)
+(toggle              ...)
+```
+
+</details>
+
+---
+
+### vertical-group
+
+```
+@param (keyword)(opt) group-id
+@param (map) group-props
+{:class (keyword or keywords in vector)(opt)
+ :default-props (map)(opt)
+ :element (symbol)
+ :group-items (maps in vector)
+ :indent (map)(opt)
+  {:bottom (keyword)(opt)
+   :left (keyword)(opt)
+   :right (keyword)(opt)
+   :top (keyword)(opt)
+   :horizontal (keyword)(opt)
+   :vertical (keyword)(opt)
+    :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
+ :outdent (map)(opt)
+  Same as the :indent property
+ :style (map)(opt)
+ :width (keyword)(opt)
+  :auto, :content, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  Default: :content}
+```
+
+```
+@usage
+[vertical-group {...}]
+```
+
+```
+@usage
+[vertical-group :my-vertical-group {...}]
+```
+
+```
+@usage
+[vertical-group {:default-props {:hover-color :highlight}
+                 :element #'elements.api/button
+                 :group-items [{:label "First button"  :href "/first"}
+                               {:label "Second button" :href "/second"}]}]
+```
+
+<details>
+<summary>Source code</summary>
+
+```
+(defn element
+  ([group-props]
+   [element (random/generate-keyword) group-props])
+
+  ([group-id group-props]
+   (let [group-props (vertical-group.prototypes/group-props-prototype group-props)]
+        [vertical-group group-id group-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [elements.api :refer [vertical-group]]))
+
+(elements.api/vertical-group ...)
+(vertical-group              ...)
+```
+
+</details>
+
+---
+
+### vertical-line
+
+```
+@param (keyword)(opt) line-id
+@param (map) line-props
+{:class (keyword or keywords in vector)(opt)
+ :fill-color (keyword or string)(opt)
+  :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+  Default: :default
+ :height (keyword)(opt)
+  :auto, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  Default: :parent
+ :outdent (map)(opt)
+  Same as the :indent property
+ :style (map)(opt)
+ :strength (px)(opt)
+  Default: 1}
+```
+
+```
+@usage
+[vertical-line {...}]
+```
+
+```
+@usage
+[vertical-line :my-vertical-line {...}]
+```
+
+<details>
+<summary>Source code</summary>
+
+```
+(defn element
+  ([line-props]
+   [element (random/generate-keyword) line-props])
+
+  ([line-id line-props]
+   (let [line-props (vertical-line.prototypes/line-props-prototype line-props)]
+        [:div (vertical-line.attributes/line-attributes line-id line-props)
+              [:div (vertical-line.attributes/line-body-attributes line-id line-props)]])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [elements.api :refer [vertical-line]]))
+
+(elements.api/vertical-line ...)
+(vertical-line              ...)
+```
+
+</details>
+
 ---
 
 ### vertical-polarity
@@ -2492,6 +4190,9 @@ To render the select popup without using its button element:
 @param (map) polarity-props
 {:class (keyword or keywords in vector)(opt)
  :end-content (metamorphic-content)
+ :height (keyword)(opt)
+  :auto, :content, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  Default: :parent
  :horizontal-align (keyword)(opt)
   :center, :left, :right
   Default: :center
@@ -2526,24 +4227,85 @@ To render the select popup without using its button element:
                                         [label {:content "My label"}]]}]
 ```
 
----
-
-### vertical-separator
+<details>
+<summary>Source code</summary>
 
 ```
-@param (keyword)(opt) separator-id
-@param (map) separator-props
-{:width (keyword)(opt)
+(defn element
+  ([polarity-props]
+   [element (random/generate-keyword) polarity-props])
+
+  ([polarity-id polarity-props]
+   (let [polarity-props (vertical-polarity.prototypes/polarity-props-prototype polarity-props)]
+        [vertical-polarity polarity-id polarity-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [elements.api :refer [vertical-polarity]]))
+
+(elements.api/vertical-polarity ...)
+(vertical-polarity              ...)
+```
+
+</details>
+
+---
+
+### vertical-spacer
+
+```
+@param (keyword)(opt) spacer-id
+@param (map) spacer-props
+{:class (keyword or keywords in vector)(opt)
+ :style (map)(opt)
+ :width (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   Default: :s}
 ```
 
 ```
 @usage
-[vertical-separator {...}]
+[vertical-spacer {...}]
 ```
 
 ```
 @usage
-[vertical-separator :my-vertical-separator {...}]
+[vertical-spacer :my-vertical-spacer {...}]
 ```
+
+<details>
+<summary>Source code</summary>
+
+```
+(defn element
+  ([spacer-props]
+   [element (random/generate-keyword) spacer-props])
+
+  ([spacer-id spacer-props]
+   (let [spacer-props (vertical-spacer.prototypes/spacer-props-prototype spacer-props)]
+        [:div (vertical-spacer.attributes/spacer-attributes spacer-id spacer-props)])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [elements.api :refer [vertical-spacer]]))
+
+(elements.api/vertical-spacer ...)
+(vertical-spacer              ...)
+```
+
+</details>
+
+---
+
+This documentation is generated with the [clj-docs-generator](https://github.com/bithandshake/clj-docs-generator) engine.
+

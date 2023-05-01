@@ -38,6 +38,13 @@
   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   Default: :default
  :indent (map)(opt)
+  {:bottom (keyword)(opt)
+   :left (keyword)(opt)
+   :right (keyword)(opt)
+   :top (keyword)(opt)
+   :horizontal (keyword)(opt)
+   :vertical (keyword)(opt)
+    :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
  :lock-scroll? (boolean)(opt)
  :max-height (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
@@ -47,10 +54,11 @@
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
  :min-width (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
- :on-cover (metamorphic-event)(opt)
- :on-mount (metamorphic-event)(opt)
- :on-unmount (metamorphic-event)(opt)
+ :on-cover (Re-Frame metamorphic-event)(opt)
+ :on-mount (Re-Frame metamorphic-event)(opt)
+ :on-unmount (Re-Frame metamorphic-event)(opt)
  :outdent (map)(opt)
+  Same as the :indent property
  :stretch-orientation (keyword)(opt)
   :both, :horizontal, :vertical
  :style (map)(opt)}
@@ -66,6 +74,33 @@
 [box-popup :my-box-popup {...}]
 ```
 
+<details>
+<summary>Source code</summary>
+
+```
+(defn layout
+  ([popup-props]
+   [layout (random/generate-keyword) popup-props])
+
+  ([popup-id popup-props]
+   (let [popup-props (box-popup.prototypes/popup-props-prototype popup-props)]
+        [box-popup popup-id popup-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [layouts.api :refer [box-popup]]))
+
+(layouts.api/box-popup ...)
+(box-popup             ...)
+```
+
+</details>
+
 ---
 
 ### plain-popup
@@ -76,9 +111,9 @@
 {:content (metamorphic-content)(opt)
  :cover-color (keyword or string)(opt)
  :lock-scroll? (boolean)(opt)
- :on-cover (metamorphic-event)(opt)
- :on-mount (metamorphic-event)(opt)
- :on-unmount (metamorphic-event)(opt)
+ :on-cover (Re-Frame metamorphic-event)(opt)
+ :on-mount (Re-Frame metamorphic-event)(opt)
+ :on-unmount (Re-Frame metamorphic-event)(opt)
  :style (map)(opt)}
 ```
 
@@ -91,6 +126,33 @@
 @usage
 [plain-popup :my-plain-popup {...}]
 ```
+
+<details>
+<summary>Source code</summary>
+
+```
+(defn layout
+  ([popup-props]
+   [layout (random/generate-keyword) popup-props])
+
+  ([popup-id popup-props]
+   (let [popup-props (plain-popup.prototypes/popup-props-prototype popup-props)]
+        [plain-popup popup-id popup-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [layouts.api :refer [plain-popup]]))
+
+(layouts.api/plain-popup ...)
+(plain-popup             ...)
+```
+
+</details>
 
 ---
 
@@ -105,8 +167,8 @@
   Default: :vertical
  :fill-color (keyword or string)(opt)
   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
- :on-mount (metamorphic-event)(opt)
- :on-unmount (metamorphic-event)(opt)
+ :on-mount (Re-Frame metamorphic-event)(opt)
+ :on-unmount (Re-Frame metamorphic-event)(opt)
  :style (map)(opt)}
 ```
 
@@ -119,6 +181,33 @@
 @usage
 [plain-surface :my-plain-surface {...}]
 ```
+
+<details>
+<summary>Source code</summary>
+
+```
+(defn layout
+  ([surface-props]
+   [layout (random/generate-keyword) surface-props])
+
+  ([surface-id surface-props]
+   (let [layout-props (plain-surface.prototypes/surface-props-prototype surface-props)]
+        [plain-surface surface-id surface-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [layouts.api :refer [plain-surface]]))
+
+(layouts.api/plain-surface ...)
+(plain-surface             ...)
+```
+
+</details>
 
 ---
 
@@ -143,10 +232,17 @@
  :fill-color (keyword or string)(opt)
   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
  :indent (map)(opt)
+  {:bottom (keyword)(opt)
+   :left (keyword)(opt)
+   :right (keyword)(opt)
+   :top (keyword)(opt)
+   :horizontal (keyword)(opt)
+   :vertical (keyword)(opt)
+    :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
  :min-width (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
- :on-mount (metamorphic-event)(opt)
- :on-unmount (metamorphic-event)(opt)
+ :on-mount (Re-Frame metamorphic-event)(opt)
+ :on-unmount (Re-Frame metamorphic-event)(opt)
  :position (keyword)(opt)
   :left, :right
   Default: :left
@@ -164,6 +260,33 @@
 @usage
 [sidebar :my-sidebar {...}]
 ```
+
+<details>
+<summary>Source code</summary>
+
+```
+(defn layout
+  ([sidebar-props]
+   [layout (random/generate-keyword) sidebar-props])
+
+  ([sidebar-id sidebar-props]
+   (let [sidebar-props (sidebar.prototypes/sidebar-props-prototype sidebar-props)]
+        [sidebar sidebar-id sidebar-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [layouts.api :refer [sidebar]]))
+
+(layouts.api/sidebar ...)
+(sidebar             ...)
+```
+
+</details>
 
 ---
 
@@ -192,6 +315,13 @@
  :footer (metamorphic-content)(opt)
  :header (metamorphic-content)(opt)
  :indent (map)(opt)
+  {:bottom (keyword)(opt)
+   :left (keyword)(opt)
+   :right (keyword)(opt)
+   :top (keyword)(opt)
+   :horizontal (keyword)(opt)
+   :vertical (keyword)(opt)
+    :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
  :lock-scroll? (boolean)(opt)
  :max-height (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
@@ -201,10 +331,11 @@
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
  :min-width (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
- :on-cover (metamorphic-event)(opt)
- :on-mount (metamorphic-event)(opt)
- :on-unmount (metamorphic-event)(opt)
+ :on-cover (Re-Frame metamorphic-event)(opt)
+ :on-mount (Re-Frame metamorphic-event)(opt)
+ :on-unmount (Re-Frame metamorphic-event)(opt)
  :outdent (map)(opt)
+  Same as the :indent property
  :stretch-orientation (keyword)(opt)
   :both, :horizontal, :vertical
  :style (map)(opt)}
@@ -219,3 +350,35 @@
 @usage
 [struct-popup :my-struct-popup {...}]
 ```
+
+<details>
+<summary>Source code</summary>
+
+```
+(defn layout
+  ([popup-props]
+   [layout (random/generate-keyword) popup-props])
+
+  ([popup-id popup-props]
+   (let [popup-props (struct-popup.prototypes/popup-props-prototype popup-props)]
+        [struct-popup popup-id popup-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [layouts.api :refer [struct-popup]]))
+
+(layouts.api/struct-popup ...)
+(struct-popup             ...)
+```
+
+</details>
+
+---
+
+This documentation is generated with the [clj-docs-generator](https://github.com/bithandshake/clj-docs-generator) engine.
+
