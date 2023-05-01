@@ -36,8 +36,8 @@
        :data-selectable       false
        :data-tooltip-content  (metamorphic-content/compose tooltip-content)
        :data-tooltip-position :left
-       :on-mouse-down (fn [e] (when (input.env/input-focused? field-id)
-                                    (.preventDefault e)
+       :on-mouse-down (fn [e] (.preventDefault e)
+                              (when (input.env/input-focused? field-id)
                                     (r/dispatch-fx [:elements.plain-field/focus-field! field-id])))}
       (merge (if disabled?        {:disabled   "1" :data-disabled true})
              (if-not tab-indexed? {:tab-index "-1"})
