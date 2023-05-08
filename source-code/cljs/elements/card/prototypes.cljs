@@ -13,7 +13,9 @@
   ; {:badge-content (metamorphic-content)(opt)
   ;  :border-color (keyword)(opt)
   ;  :disabled? (boolean)(opt)
-  ;  :marker-color (keyword)(opt)}
+  ;  :href (string)(opt)
+  ;  :marker-color (keyword)(opt)
+  ;  :on-click (Re-Frame metamorphic-event)(opt)}
   ;
   ; @return (map)
   ; {:badge-color (keyword)
@@ -21,17 +23,21 @@
   ;  :badge-position (keyword)
   ;  :border-position (keyword)
   ;  :border-width (keyword)
+  ;  :cursor (keyword)
   ;  :height (keyword)
   ;  :hover-color (keyword)
   ;  :marker-color (keyword)
   ;  :width (keyword)}
-  [{:keys [badge-content border-color disabled? marker-color] :as card-props}]
+  [{:keys [badge-content border-color disabled? href marker-color on-click] :as card-props}]
   (merge {:height :auto
           :width  :content}
-         (if badge-content {:badge-color :primary :badge-position :tr})
+         (if badge-content {:badge-color     :primary
+                            :badge-position  :tr})
          (if border-color  {:border-position :all
                             :border-width    :xxs})
          (if marker-color  {:marker-position :tr})
+         (if href          {:cursor          :pointer})
+         (if on-click      {:cursor          :pointer})
          (param card-props)
          (if badge-content {:badge-content (metamorphic-content/compose badge-content)})
          (if disabled?     {:hover-color :none})))

@@ -63,6 +63,9 @@
   ;  :border-width (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;  :class (keyword or keywords in vector)(opt)
+  ;  :cursor (keyword)(opt)
+  ;   :default, :disabled, :grab, :grabbing, :move, :pointer, :progress
+  ;   Default: :pointer
   ;  :disabled? (boolean)(opt)
   ;  :fill-color (keyword or string)(opt)
   ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
@@ -104,7 +107,7 @@
   ;  :outdent (map)(opt)
   ;   Same as the :indent property
   ;  :progress (percent)(opt)
-  ;  :progress-color (keyword)
+  ;  :progress-color (keyword or string)
   ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;   Default: :muted
   ;  :progress-direction (keyword)(opt)

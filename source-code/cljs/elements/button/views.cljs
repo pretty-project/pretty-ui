@@ -81,6 +81,9 @@
   ;  :color (keyword or string)(opt)
   ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
   ;   Default: :inherit
+  ;  :cursor (keyword)(opt)
+  ;   :default, :disabled, :grab, :grabbing, :move, :pointer, :progress}
+  ;   Default: :pointer
   ;  :disabled? (boolean)(opt)
   ;  :fill-color (keyword or string)(opt)
   ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
@@ -140,7 +143,7 @@
   ;  :outdent (map)(opt)
   ;   Same as the :indent property
   ;  :progress (percent)(opt)
-  ;  :progress-color (keyword)(opt)
+  ;  :progress-color (keyword or string)(opt)
   ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;   Default: :muted
   ;  :progress-direction (keyword)(opt)

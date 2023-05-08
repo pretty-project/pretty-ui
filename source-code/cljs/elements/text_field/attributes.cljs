@@ -180,11 +180,13 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
+  ; {:disabled? (boolean)(opt)}
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)}
-  [_ field-props]
-  (-> {:class :e-text-field}
+  [_ {:keys [disabled?] :as field-props}]
+  (-> {:class        :e-text-field
+       :data-covered disabled?}
       (pretty-css/default-attributes      field-props)
       (pretty-css/outdent-attributes      field-props)
       (pretty-css/element-size-attributes field-props)))

@@ -19,6 +19,7 @@
   ; @return (map)
   ; {:badge-color (keyword)
   ;  :badge-position (keyword)
+  ;  :cursor (pointer)
   ;  :hover-color (keyword)
   ;  :icon-family (keyword)
   ;  :icon-size (keyword)
@@ -29,7 +30,8 @@
   ;  :tooltip-content (string)
   ;  :tooltip-position (keyword)}
   [{:keys [badge-content border-color disabled? marker-color progress tooltip-content] :as button-props}]
-  (merge {:icon-family :material-symbols-outlined
+  (merge {:cursor      :pointer
+          :icon-family :material-symbols-outlined
           :icon-size   :m}
          (if badge-content   {:badge-color        :primary
                               :badge-position     :tr})

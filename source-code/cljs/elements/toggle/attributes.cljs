@@ -43,6 +43,7 @@
                      :on-mouse-up        #(dom/blur-active-element!)})
       (pretty-css/border-attributes toggle-props)
       (pretty-css/color-attributes  toggle-props)
+      (pretty-css/cursor-attributes toggle-props)
       (pretty-css/indent-attributes toggle-props)
       (pretty-css/link-attributes   toggle-props)))
 

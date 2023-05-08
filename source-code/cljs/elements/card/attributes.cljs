@@ -37,6 +37,7 @@
       (pretty-css/badge-attributes  card-props)
       (pretty-css/border-attributes card-props)
       (pretty-css/color-attributes  card-props)
+      (pretty-css/cursor-attributes card-props)
       (pretty-css/indent-attributes card-props)
       (pretty-css/link-attributes   card-props)))
 

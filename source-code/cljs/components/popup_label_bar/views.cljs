@@ -35,10 +35,10 @@
   ;   {:content (metamorphic-content)}
   ;  :primary-button (map)(opt)
   ;   {:label (metamorphic-content)
-  ;    :on-click (metamorphic-event)}
+  ;    :on-click (Re-Frame metamorphic-event)}
   ;  :secondary-button (map)(opt)
   ;   {:label (metamorphic-content)
-  ;    :on-click (metamorphic-event)}}
+  ;    :on-click (Re-Frame metamorphic-event)}}
   ;
   ; @usage
   ; [popup-label-bar {...}]

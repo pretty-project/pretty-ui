@@ -43,6 +43,9 @@
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;  :content (metamorphic-content)(opt)
   ;  :class (keyword or keywords in vector)(opt)
+  ;  :cursor (keyword)(opt)
+  ;   :default, :disabled, :grab, :grabbing, :move, :pointer, :progress
+  ;   Default: :default or :pointer
   ;  :disabled? (boolean)(opt)
   ;  :fill-color (keyword or string)(opt)
   ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning

@@ -26,6 +26,7 @@
   ;  :badge-position (keyword)
   ;  :border-position (keyword)
   ;  :border-width (keyword)
+  ;  :cursor (keyword)
   ;  :font-size (keyword)
   ;  :font-weight (keyword)
   ;  :horizontal-align (keyword)
@@ -43,7 +44,8 @@
   ;  :tooltip-position (keyword)
   ;  :width (keyword)}
   [{:keys [badge-content border-color disabled? font-size icon label marker-color progress tooltip-content] :as button-props}]
-  (merge {:font-size        :s
+  (merge {:cursor           :pointer
+          :font-size        :s
           :font-weight      :medium
           :horizontal-align :center
           :line-height      :text-block

@@ -63,7 +63,6 @@
 
 .e-button--body {
   align-items: center;
-  cursor:      pointer;
   display:     flex;
 
   /* XXX#6669
@@ -693,31 +692,6 @@
 
 
 
-/***** File drop area *****/
-/*** Body ***/
-
-.e-file-drop-area--body {
-  align-items: center;
-  background-color: var( --fill-color-highlight );
-  border-radius: var( --border-radius-xxl );
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  height: 180px;
-  justify-content: center;
-  padding: 0 24px;
-  width: 280px;
-}
-
-.e-file-drop-area--label {
-  color: var( --color-muted );
-}
-
-/*** Body ***/
-/***** File drop area *****/
-
-
-
 /***** Ghost *****/
 /*** Body ***/
 
@@ -833,14 +807,6 @@
 }
 
 /*** Element ***/
-
-/*** Body ***/
-
-.e-icon-button--body {
-  cursor: pointer;
-}
-
-/*** Body ***/
 
 /*** Icon-button label ***/
 
@@ -1632,7 +1598,6 @@ textarea.e-text-field--input {
 /*** Body ***/
 
 .e-toggle--body {
-  cursor:      pointer;
   display:     block;
   font-weight: 500;
   width:       100%;

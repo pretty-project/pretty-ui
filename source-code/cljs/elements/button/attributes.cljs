@@ -89,6 +89,7 @@
       (pretty-css/badge-attributes    button-props)
       (pretty-css/border-attributes   button-props)
       (pretty-css/color-attributes    button-props)
+      (pretty-css/cursor-attributes   button-props)
       (pretty-css/font-attributes     button-props)
       (pretty-css/indent-attributes   button-props)
       (pretty-css/link-attributes     button-props)
