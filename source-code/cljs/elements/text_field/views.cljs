@@ -178,7 +178,7 @@
   ;  :marker-color (keyword)(opt)
   ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
   ;  :marker-position (keyword)(opt)
-  ;   :tl, :tr, :br, :bl
+  ;   :tl, :tr, :br, :bl, left, :right, bottom, :top
   ;  :max-length (integer)(opt)
   ;  :modifier (function)(opt)
   ;  :on-blur (Re-Frame metamorphic-event)(opt)

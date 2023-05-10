@@ -38,6 +38,7 @@
          (if marker-color  {:marker-position :tr})
          (if href          {:cursor          :pointer})
          (if on-click      {:cursor          :pointer})
+         (if disabled?     {:cursor          :default})
          (param card-props)
          (if badge-content {:badge-content (metamorphic-content/compose badge-content)})
          (if disabled?     {:hover-color :none})))

@@ -30,13 +30,14 @@
   ;  :tooltip-content (string)
   ;  :tooltip-position (keyword)}
   [{:keys [badge-content border-color disabled? marker-color progress tooltip-content] :as button-props}]
-  (merge {:cursor      :pointer
-          :icon-family :material-symbols-outlined
+  (merge {:icon-family :material-symbols-outlined
           :icon-size   :m}
          (if badge-content   {:badge-color        :primary
                               :badge-position     :tr})
          (if border-color    {:border-position    :all
                               :border-width       :xxs})
+         (if disabled?       {:cursor             :default}
+                             {:cursor             :pointer})
          (if marker-color    {:marker-position    :tr})
          (if progress        {:progress-color     :muted
                               :progress-direction :ltr

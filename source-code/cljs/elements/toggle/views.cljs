@@ -63,7 +63,7 @@
   ;  :marker-color (keyword)(opt)
   ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
   ;  :marker-position (keyword)(opt)
-  ;   :tl, :tr, :br, :bl
+  ;   :tl, :tr, :br, :bl, left, :right, bottom, :top
   ;  :on-click (Re-Frame metamorphic-event)(opt)
   ;  :on-right-click (Re-Frame metamorphic-event)(opt)
   ;  :outdent (map)(opt)

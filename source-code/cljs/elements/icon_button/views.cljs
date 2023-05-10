@@ -47,7 +47,7 @@
   ;   Default: :primary
   ;  :badge-content (metamorphic-content)(opt)
   ;  :badge-position (keyword)(opt)
-  ;   :tl, :tr, :br, :bl
+  ;   :tl, :tr, :br, :bl, :left, :right, :bottom, :top
   ;   Default: :tr
   ;  :border-color (keyword or string)(opt)
   ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
@@ -101,7 +101,7 @@
   ;  :marker-color (keyword)(opt)
   ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
   ;  :marker-position (keyword)(opt)
-  ;   :tl, :tr, :br, :bl
+  ;   :tl, :tr, :br, :bl, left, :right, bottom, :top
   ;  :on-click (Re-Frame metamorphic-event)(opt)
   ;  :on-mouse-over (Re-Frame metamorphic-event)(opt)
   ;  :outdent (map)(opt)

@@ -209,7 +209,7 @@
   ;  :marker-color (keyword)(opt)
   ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
   ;  :marker-position (keyword)(opt)
-  ;   :tl, :tr, :br, :bl
+  ;   :tl, :tr, :br, :bl, left, :right, bottom, :top
   ;  :min-width (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;  :on-copy (Re-Frame metamorphic-event)(opt)

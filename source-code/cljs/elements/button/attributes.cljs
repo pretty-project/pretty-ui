@@ -91,6 +91,7 @@
       (pretty-css/color-attributes    button-props)
       (pretty-css/cursor-attributes   button-props)
       (pretty-css/font-attributes     button-props)
+      (pretty-css/marker-attributes   button-props)
       (pretty-css/indent-attributes   button-props)
       (pretty-css/link-attributes     button-props)
       (pretty-css/progress-attributes button-props)

@@ -282,7 +282,7 @@ by the 'button.side-effects/key-released' function.
   Default: :primary
  :badge-content (metamorphic-content)(opt)
  :badge-position (keyword)(opt)
-  :tl, :tr, :br, :bl
+  :tl, :tr, :br, :bl, :left, :right, :bottom, :top
   Default: :tr
  :border-color (keyword or string)(opt)
   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
@@ -301,6 +301,9 @@ by the 'button.side-effects/key-released' function.
  :color (keyword or string)(opt)
   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
   Default: :inherit
+ :cursor (keyword)(opt)
+  :default, :disabled, :grab, :grabbing, :move, :pointer, :progress}
+  Default: :pointer
  :disabled? (boolean)(opt)
  :fill-color (keyword or string)(opt)
   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
@@ -354,13 +357,13 @@ by the 'button.side-effects/key-released' function.
  :marker-color (keyword)(opt)
   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
  :marker-position (keyword)(opt)
-  :tl, :tr, :br, :bl
+  :tl, :tr, :br, :bl, left, :right, bottom, :top
  :on-click (Re-Frame metamorphic-event)(opt)
  :on-mouse-over (Re-Frame metamorphic-event)(opt)
  :outdent (map)(opt)
   Same as the :indent property
  :progress (percent)(opt)
- :progress-color (keyword)(opt)
+ :progress-color (keyword or string)(opt)
   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   Default: :muted
  :progress-direction (keyword)(opt)
@@ -436,7 +439,7 @@ by the 'button.side-effects/key-released' function.
   Default: :primary
  :badge-content (metamorphic-content)(opt)
  :badge-position (keyword)(opt)
-  :tl, :tr, :br, :bl
+  :tl, :tr, :br, :bl, :left, :right, :bottom, :top
   Default: :tr
  :border-color (keyword or string)(opt)
   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
@@ -447,6 +450,9 @@ by the 'button.side-effects/key-released' function.
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
  :content (metamorphic-content)(opt)
  :class (keyword or keywords in vector)(opt)
+ :cursor (keyword)(opt)
+  :default, :disabled, :grab, :grabbing, :move, :pointer, :progress
+  Default: :default or :pointer
  :disabled? (boolean)(opt)
  :fill-color (keyword or string)(opt)
   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
@@ -472,7 +478,7 @@ by the 'button.side-effects/key-released' function.
  :marker-color (keyword)(opt)
   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
  :marker-position (keyword)(opt)
-  :tl, :tr, :br, :bl
+  :tl, :tr, :br, :bl, left, :right, bottom, :top
  :max-height (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
  :max-width (keyword)(opt)
@@ -1993,7 +1999,7 @@ BUG#9912 (source-code/cljs/elements/button.views)
   Default: :primary
  :badge-content (metamorphic-content)(opt)
  :badge-position (keyword)(opt)
-  :tl, :tr, :br, :bl
+  :tl, :tr, :br, :bl, :left, :right, :bottom, :top
   Default: :tr
  :border-color (keyword or string)(opt)
   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
@@ -2009,6 +2015,9 @@ BUG#9912 (source-code/cljs/elements/button.views)
  :border-width (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
  :class (keyword or keywords in vector)(opt)
+ :cursor (keyword)(opt)
+  :default, :disabled, :grab, :grabbing, :move, :pointer, :progress
+  Default: :pointer
  :disabled? (boolean)(opt)
  :fill-color (keyword or string)(opt)
   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
@@ -2044,13 +2053,13 @@ BUG#9912 (source-code/cljs/elements/button.views)
  :marker-color (keyword)(opt)
   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
  :marker-position (keyword)(opt)
-  :tl, :tr, :br, :bl
+  :tl, :tr, :br, :bl, left, :right, bottom, :top
  :on-click (Re-Frame metamorphic-event)(opt)
  :on-mouse-over (Re-Frame metamorphic-event)(opt)
  :outdent (map)(opt)
   Same as the :indent property
  :progress (percent)(opt)
- :progress-color (keyword)
+ :progress-color (keyword or string)
   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   Default: :muted
  :progress-direction (keyword)(opt)
@@ -2247,7 +2256,7 @@ BUG#9912 (source-code/cljs/elements/button.views)
  :marker-color (keyword)(opt)
   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
  :marker-position (keyword)(opt)
-  :tl, :tr, :br, :bl
+  :tl, :tr, :br, :bl, left, :right, bottom, :top
  :min-width (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
  :on-copy (Re-Frame metamorphic-event)(opt)
@@ -2414,7 +2423,7 @@ property or you can specify these values on each item.
     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
  :item-default (map)(opt)
   {:badge-position (keyword)(opt)
-    :tl, :tr, :br, :bl
+    :tl, :tr, :br, :bl, :left, :right, :bottom, :top
     Default: :tr
    :border-color (keyword or string)(opt)
     :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
@@ -2452,7 +2461,7 @@ property or you can specify these values on each item.
    :marker-color (keyword)(opt)
     :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
    :marker-position (keyword)(opt)
-    :tl, :tr, :br, :bl
+    :tl, :tr, :br, :bl, left, :right, bottom, :top
     Default: :tr
    :outdent (map)(opt)}
  :menu-items (maps in vector)
@@ -3749,7 +3758,7 @@ UNFINISHED! DO NOT USE!
  :marker-color (keyword)(opt)
   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
  :marker-position (keyword)(opt)
-  :tl, :tr, :br, :bl
+  :tl, :tr, :br, :bl, left, :right, bottom, :top
  :max-length (integer)(opt)
  :modifier (function)(opt)
  :on-blur (Re-Frame metamorphic-event)(opt)
@@ -3978,6 +3987,9 @@ UNFINISHED! DO NOT USE!
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
  :class (keyword or keywords in vector)(opt)
  :content (metamorphic-content)
+ :cursor (keyword)(opt)
+  :default, :disabled, :grab, :grabbing, :move, :pointer, :progress
+  Default: :pointer
  :disabled? (boolean)(opt)
  :fill-color (keyword or string)(opt)
   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
@@ -4000,7 +4012,7 @@ UNFINISHED! DO NOT USE!
  :marker-color (keyword)(opt)
   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
  :marker-position (keyword)(opt)
-  :tl, :tr, :br, :bl
+  :tl, :tr, :br, :bl, left, :right, bottom, :top
  :on-click (Re-Frame metamorphic-event)(opt)
  :on-right-click (Re-Frame metamorphic-event)(opt)
  :outdent (map)(opt)

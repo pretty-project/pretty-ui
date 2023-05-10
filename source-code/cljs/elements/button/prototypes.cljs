@@ -44,13 +44,14 @@
   ;  :tooltip-position (keyword)
   ;  :width (keyword)}
   [{:keys [badge-content border-color disabled? font-size icon label marker-color progress tooltip-content] :as button-props}]
-  (merge {:cursor           :pointer
-          :font-size        :s
+  (merge {:font-size        :s
           :font-weight      :medium
           :horizontal-align :center
           :line-height      :text-block
           :text-overflow    :no-wrap
           :width            :content}
+         (if disabled?       {:cursor :default}
+                             {:cursor :pointer})
          (if badge-content   {:badge-color        :primary
                               :badge-position     :tr})
          (if border-color    {:border-position    :all

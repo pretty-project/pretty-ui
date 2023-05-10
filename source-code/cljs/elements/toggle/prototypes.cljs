@@ -22,11 +22,12 @@
   ;  :marker-position (keyword)
   ;  :width (keyword)}
   [{:keys [border-color disabled? marker-color] :as toggle-props}]
-  (merge {:cursor :pointer
-          :height :auto
+  (merge {:height :auto
           :width  :content}
          (if marker-color {:marker-position :tr})
          (if border-color {:border-position :all
                            :border-width    :xxs})
+         (if disabled?    {:cursor          :default}
+                          {:cursor          :pointer})
          (param toggle-props)
          (if disabled? {:hover-color :none})))

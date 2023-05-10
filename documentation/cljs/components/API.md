@@ -1585,10 +1585,10 @@ same ID for both the field and the block, the label of the block can targets the
   {:content (metamorphic-content)}
  :primary-button (map)(opt)
   {:label (metamorphic-content)
-   :on-click (metamorphic-event)}
+   :on-click (Re-Frame metamorphic-event)}
  :secondary-button (map)(opt)
   {:label (metamorphic-content)
-   :on-click (metamorphic-event)}}
+   :on-click (Re-Frame metamorphic-event)}}
 ```
 
 ```
