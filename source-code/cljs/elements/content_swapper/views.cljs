@@ -35,9 +35,10 @@
   ; @param (map) swapper-props
   ; {:initial-page (metamorphic-content)}
   [swapper-id {:keys [initial-page] :as swapper-props}]
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (swap! content-swapper.state/SWAPPERS update swapper-id merge {:page-history [initial-page] :page-cursor 0}))
-                       :component-will-unmount (fn [_ _] (swap! content-swapper.state/SWAPPERS dissoc swapper-id))
-                       :reagent-render         (fn [_ _] [content-swapper-structure swapper-id swapper-props])}))
+  (let [initial-state {:page-history [initial-page] :page-cursor 0 :initial-page initial-page}]
+       (reagent/lifecycles {:component-did-mount    (fn [_ _] (swap! content-swapper.state/SWAPPERS update swapper-id merge initial-state))
+                            :component-will-unmount (fn [_ _] (swap! content-swapper.state/SWAPPERS dissoc swapper-id))
+                            :reagent-render         (fn [_ _] [content-swapper-structure swapper-id swapper-props])})))
 
 (defn element
   ; @warning

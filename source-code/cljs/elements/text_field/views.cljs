@@ -6,6 +6,7 @@
               [elements.text-field.attributes :as text-field.attributes]
               [elements.text-field.env        :as text-field.env]
               [elements.text-field.prototypes :as text-field.prototypes]
+              [elements.text-field.state      :as text-field.state]
               [hiccup.api                     :as hiccup]
               [metamorphic-content.api        :as metamorphic-content]
               [random.api                     :as random]
@@ -65,7 +66,7 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   ; {}
-  [field-id {:keys [multiline? placeholder surface] :as field-props}]
+  [field-id {:keys [multiline? placeholder surface validator] :as field-props}]
   ; The placeholder element has an absolute position, therefore ...
   ; ... it has to be placed in the same ancestor element as the input element!
   ; ... but it cannot be in the very same parent element as the input element!
@@ -89,6 +90,10 @@
                            (text-field.attributes/field-input-attributes field-id field-props)]]]
               ; ...
               [field-end-adornments field-id field-props]
+              (if (field-id @text-field.state/FIELD-CONTENT-INVALID?)
+                  [:div {:class :e-text-field--invalid-content-label :data-selectable false}
+                        (if-let [invalid-message (:invalid-message validator)]
+                                (metamorphic-content/compose invalid-message))])
               ; ...
               (if surface (if (plain-field.env/surface-visible? field-id)
                               [:div (text-field.attributes/field-surface-attributes field-id field-props)
@@ -212,10 +217,17 @@
   ;    :content (metamorphic-content)(opt)
   ;    :indent (map)(opt)}
   ;  :validator (map)(opt)
-  ;   {:f (function)
+  ;   {:autovalidate? (boolean)(opt)
+  ;     Autovalidated field use the validator when the user leaves the field.
+  ;    :f (function)
   ;    :invalid-message (metamorphic-content)(opt)
   ;    :invalid-message-f (function)(opt)
-  ;    :prevalidate? (boolean)(opt)}
+  ;    :on-invalid (Re-Frame metamorphic-event)(opt)
+  ;     This event takes the field content as its last parameter
+  ;    :on-valid (Re-Frame metamorphic-event)(opt)
+  ;     This event takes the field content as its last parameter
+  ;    :prevalidate? (boolean)(opt)
+  ;     Prevalidated fields use the validator when the field changes}
   ;  :value-path (Re-Frame path vector)(opt)
   ;  :width (keyword)(opt)
   ;   :auto, :content, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl

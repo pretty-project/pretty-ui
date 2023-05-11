@@ -4,6 +4,7 @@
               [elements.input.env              :as input.env]
               [elements.plain-field.attributes :as plain-field.attributes]
               [elements.text-field.env         :as text-field.env]
+              [elements.text-field.utils       :as text-field.utils]
               [metamorphic-content.api         :as metamorphic-content]
               [pretty-css.api                  :as pretty-css]
               [re-frame.api                    :as r]))
@@ -154,6 +155,7 @@
   ;  :min (string)
   ;  :name (keyword)
   ;  :on-blur (function)
+  ;  :on-change (function)
   ;  :on-focus (function)
   ;  :type (keyword)}
   [field-id {:keys [autofill-name date-from date-to disabled? max-length type] :as field-props}]
@@ -168,8 +170,9 @@
                                 :min           date-from
                                 :max           date-to
                                 :name          autofill-name
-                                :on-blur       #(r/dispatch [:elements.text-field/field-blurred field-id field-props])
-                                :on-focus      #(r/dispatch [:elements.text-field/field-focused field-id field-props])}))
+                                :on-change     (fn [%] (text-field.utils/on-change-f field-id field-props %))
+                                :on-blur       (fn [_] (r/dispatch [:elements.text-field/field-blurred field-id field-props]))
+                                :on-focus      (fn [_] (r/dispatch [:elements.text-field/field-focused field-id field-props]))}))
       (pretty-css/effect-attributes field-props)))
 
 ;; ----------------------------------------------------------------------------

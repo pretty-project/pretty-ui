@@ -7,13 +7,25 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(r/reg-event-fx :elements.text-field/validate-field!
+  ; @param (keyword) field-id
+  ;
+  ; @usage
+  ; [:elements.text-field/validate-field! :my-field]
+  (fn [_ [_ field-id]]
+      {:fx [:elements.text-field/validate-field! field-id]}))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (r/reg-event-fx :elements.text-field/field-did-mount
   ; @ignore
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
   (fn [_ [_ field-id field-props]]
-      [:elements.plain-field/field-did-mount field-id field-props]))
+      {:fx       [:elements.text-field/init-validator!  field-id field-props]
+       :dispatch [:elements.plain-field/field-did-mount field-id field-props]}))
 
 (r/reg-event-fx :elements.text-field/field-will-unmount
   ; @ignore
@@ -67,9 +79,13 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  (fn [_ [_ field-id field-props]]
-      {:dispatch [:elements.plain-field/field-blurred          field-id field-props]
-       :fx       [:elements.text-field/remove-keypress-events! field-id field-props]}))
+  ; {:validator (map)(opt)
+  ;   {:autovalidate? (boolean)(opt)}}
+  (fn [_ [_ field-id {:keys [validator] :as field-props}]]
+      {:dispatch-n [[:elements.plain-field/field-blurred          field-id field-props]]
+       :fx-n       [[:elements.text-field/remove-keypress-events! field-id field-props]
+                    (if (:autovalidate? validator)
+                        [:elements.text-field/validate-field! field-id])]}))
 
 (r/reg-event-fx :elements.text-field/field-focused
   ; @ignore

@@ -1512,10 +1512,26 @@ textarea.e-text-field--input {
 
 /*** Adornments ***/
 
+/*** Invalid content label ***/
+
+.e-text-field--invalid-content-label {
+  bottom:         -24px;
+  color:          var( --color-warning );
+  font-size:      var( --font-size-xxs );
+  font-weight:    var( --font-weight-medium );
+  height:         24px;
+  letter-spacing: var( --letter-spacing-xxs );
+  line-height:    24px;
+  position:       absolute;
+  right:          0;
+}
+
+/*** Invalid content label ***/
+
 /*** Placeholder ***/
 
 .e-text-field--placeholder {
-  color:       var( --color-muted);
+  color:       var( --color-highlight );
   font-weight: 400;
   left:        0;
   max-width:   100%;

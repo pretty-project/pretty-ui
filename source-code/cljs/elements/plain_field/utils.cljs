@@ -73,6 +73,19 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn on-change-event->field-content
+  ; @ignore
+  ;
+  ; @param (keyword) field-id
+  ; @param (map) field-props
+  ; {:modifier (function)(opt)}
+  ; @param (DOM-event) event
+  ;
+  ; @return (string)
+  [_ {:keys [modifier]} event]
+  (if modifier (-> event dom/event->value modifier)
+               (-> event dom/event->value)))
+
 (defn field-changed-f
   ; @ignore
   ;
@@ -108,14 +121,10 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ; {:modifier (function)(opt)
-  ;  :on-changed (Re-Frame metamorphic-event)(opt)}
+  ; {:on-changed (Re-Frame metamorphic-event)(opt)}
   ; @param (DOM-event) event
-  ;
-  ; @return (function)
-  [field-id {:keys [modifier on-changed] :as field-props} event]
-  (let [field-content (if modifier (-> event dom/event->value modifier)
-                                   (-> event dom/event->value))]
+  [field-id {:keys [on-changed] :as field-props} event]
+  (let [field-content (on-change-event->field-content field-id field-props event)]
        (field-changed-f field-id field-props)
        (plain-field.side-effects/set-field-content! field-id field-content)
        (letfn [(f [] (resolve-field-change-f field-id field-props))]

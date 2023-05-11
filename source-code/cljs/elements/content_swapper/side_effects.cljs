@@ -41,6 +41,14 @@
   (swap! content-swapper.state/SWAPPERS update-in [swapper-id :page-cursor] dec)
   (swap! content-swapper.state/SWAPPERS assoc-in  [swapper-id :animation-direction] :bwd))
 
+(defn go-home!
+  ; @ignore
+  ;
+  ; @param (keyword) swapper-id
+  [swapper-id]
+  (if-let [initial-page (get-in @content-swapper.state/SWAPPERS [swapper-id :initial-page])]
+          (go-to! swapper-id initial-page)))
+
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -51,3 +59,7 @@
 ; @usage
 ; [:elements.content-swapper/go-back! :my-content-swapper [:div "My page"]]
 (r/reg-fx :elements.content-swapper/go-back! go-back!)
+
+; @usage
+; [:elements.content-swapper/go-home! :my-content-swapper]
+(r/reg-fx :elements.content-swapper/go-home! go-home!)

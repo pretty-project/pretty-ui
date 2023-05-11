@@ -21,3 +21,11 @@
   ; [:elements.content-swapper/go-back! :my-content-swapper]
   (fn [_ [_ swapper-id]]
       {:fx [:elements.content-swapper/go-back! swapper-id]}))
+
+(r/reg-event-fx :elements.content-swapper/go-home!
+  ; @param (keyword) swapper-id
+  ;
+  ; @usage
+  ; [:elements.content-swapper/go-home! :my-content-swapper]
+  (fn [_ [_ swapper-id]]
+      {:fx [:elements.content-swapper/go-home! swapper-id]}))

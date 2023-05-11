@@ -54,10 +54,10 @@
           :value         (plain-field.env/get-field-content field-id)}
          (if disabled? {:data-caret-color :hidden
                         :tab-index        -1
-                        :on-change        (fn [])}
-                       {:on-blur   #(r/dispatch [:elements.plain-field/field-blurred field-id field-props])
-                        :on-focus  #(r/dispatch [:elements.plain-field/field-focused field-id field-props])
-                        :on-change #(plain-field.utils/on-change-f field-id field-props %)})))
+                        :on-change        (fn [%])}
+                       {:on-blur          (fn [_] (r/dispatch [:elements.plain-field/field-blurred field-id field-props]))
+                        :on-focus         (fn [_] (r/dispatch [:elements.plain-field/field-focused field-id field-props]))
+                        :on-change        (fn [%] (plain-field.utils/on-change-f field-id field-props %))})))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
