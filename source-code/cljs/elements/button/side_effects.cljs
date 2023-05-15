@@ -78,7 +78,11 @@
 ;; ----------------------------------------------------------------------------
 
 ; @ignore
+;
+; @param (keyword) button-id
 (r/reg-fx :elements.button/reg-keypress-event! reg-keypress-event!)
 
 ; @ignore
+;
+; @param (keyword) button-id
 (r/reg-fx :elements.button/remove-keypress-event! remove-keypress-event!)

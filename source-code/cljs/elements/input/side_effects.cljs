@@ -66,22 +66,39 @@
 ;; ----------------------------------------------------------------------------
 
 ; @ignore
+;
+; @param (keyword) input-id
 (r/reg-fx :elements.input/mark-input-as-focused! mark-input-as-focused!)
 
 ; @ignore
+;
+; @param (keyword) input-id
 (r/reg-fx :elements.input/unmark-input-as-focused! unmark-input-as-focused!)
 
 ; @ignore
+;
+; @param (keyword) input-id
 (r/reg-fx :elements.input/mark-input-as-visited! mark-input-as-visited!)
 
 ; @ignore
+;
+; @param (keyword) input-id
 (r/reg-fx :elements.input/unmark-input-as-visited! unmark-input-as-visited!)
 
 ; @ignore
+;
+; @param (keyword) input-id
+; @param (map) input-props
 (r/reg-fx :elements.input/render-popup! render-popup!)
 
 ; @ignore
+;
+; @param (keyword) input-id
+; @param (map) input-props
 (r/reg-fx :elements.input/update-popup! update-popup!)
 
 ; @ignore
+;
+; @param (keyword) input-id
+; @param (map) input-props
 (r/reg-fx :elements.input/close-popup! close-popup!)

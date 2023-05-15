@@ -17,4 +17,6 @@
 ;; ----------------------------------------------------------------------------
 
 ; @ignore
+;
+; @param (keyword) field-id
 (r/reg-fx :elements.password-field/toggle-password-visibility! toggle-password-visibility!)

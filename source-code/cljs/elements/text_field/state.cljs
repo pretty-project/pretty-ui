@@ -14,3 +14,8 @@
 ;
 ; @atom (map)
 (def FIELD-CONTENT-INVALID? (ratom {}))
+
+; @ignore
+;
+; @atom (map)
+(def FIELD-CONTENT-INVALID-MESSAGE (ratom {}))

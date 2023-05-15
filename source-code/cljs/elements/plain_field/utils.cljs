@@ -86,15 +86,6 @@
   (if modifier (-> event dom/event->value modifier)
                (-> event dom/event->value)))
 
-(defn field-changed-f
-  ; @ignore
-  ;
-  ; @param (keyword) field-id
-  ; @param (map) field-props
-  [field-id _]
-  (let [timestamp (time/elapsed)]
-       (swap! plain-field.state/FIELD-STATES assoc field-id {:changed-at timestamp})))
-
 (defn resolve-field-change-f
   ; @ignore
   ;
@@ -116,18 +107,28 @@
        (when (> timestamp (+ changed-at plain-field.config/TYPE-ENDED-AFTER))
              (r/dispatch-sync [:elements.plain-field/type-ended field-id field-props]))))
 
-(defn on-change-f
+(defn field-changed-f
   ; @ignore
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
   ; {:on-changed (Re-Frame metamorphic-event)(opt)}
-  ; @param (DOM-event) event
-  [field-id {:keys [on-changed] :as field-props} event]
-  (let [field-content (on-change-event->field-content field-id field-props event)]
-       (field-changed-f field-id field-props)
+  ; @param (string) field-content
+  [field-id {:keys [on-changed] :as field-props} field-content]
+  (let [timestamp (time/elapsed)]
+       (swap! plain-field.state/FIELD-STATES assoc field-id {:changed-at timestamp})
        (plain-field.side-effects/set-field-content! field-id field-content)
        (letfn [(f [] (resolve-field-change-f field-id field-props))]
               (time/set-timeout! f plain-field.config/TYPE-ENDED-AFTER))
        (if on-changed (let [on-changed (r/metamorphic-event<-params on-changed field-content)]
                            (r/dispatch-sync on-changed)))))
+
+(defn on-change-f
+  ; @ignore
+  ;
+  ; @param (keyword) field-id
+  ; @param (map) field-props
+  ; @param (DOM-event) event
+  [field-id field-props event]
+  (let [field-content (on-change-event->field-content field-id field-props event)]
+       (field-changed-f field-id field-props field-content)))

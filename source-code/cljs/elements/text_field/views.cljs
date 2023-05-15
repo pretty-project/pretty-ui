@@ -90,10 +90,9 @@
                            (text-field.attributes/field-input-attributes field-id field-props)]]]
               ; ...
               [field-end-adornments field-id field-props]
-              (if (field-id @text-field.state/FIELD-CONTENT-INVALID?)
-                  [:div {:class :e-text-field--invalid-content-label :data-selectable false}
-                        (if-let [invalid-message (:invalid-message validator)]
-                                (metamorphic-content/compose invalid-message))])
+              (if-let [invalid-message (field-id @text-field.state/FIELD-CONTENT-INVALID-MESSAGE)]
+                      [:div {:class :e-text-field--invalid-content-message :data-selectable false}
+                            (metamorphic-content/compose invalid-message)])
               ; ...
               (if surface (if (plain-field.env/surface-visible? field-id)
                               [:div (text-field.attributes/field-surface-attributes field-id field-props)
@@ -120,6 +119,8 @@
   ; {:autoclear? (boolean)(opt)
   ;  :autofill-name (keyword)(opt)
   ;  :autofocus? (boolean)(opt)
+  ;  :autovalidate? (boolean)(opt)
+  ;   Autovalidated fields applying the validators when the user leaves the field.
   ;  :border-color (keyword or string)(opt)
   ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;  :border-position (keyword)(opt)
@@ -192,21 +193,27 @@
   ;   If you have to get the ACTUAL value from the application state, use the
   ;   :on-type-ended event instead!
   ;   It happens BEFORE the application state gets updated with the actual value!
-  ;   This event takes the field content as its last parameter
+  ;   This event takes the field content as its last parameter.
   ;  :on-empty (Re-Frame metamorphic-event)(opt)
-  ;   This event takes the field content as its last parameter
+  ;   This event takes the field content as its last parameter.
   ;  :on-enter (Re-Frame metamorphic-event)(opt)
-  ;   This event takes the field content as its last parameter
+  ;   This event takes the field content as its last parameter.
   ;  :on-focus (Re-Frame metamorphic-event)(opt)
+  ;  :on-invalid (Re-Frame metamorphic-event)(opt)
+  ;   This event takes the field content and the invalid message as its last parameter.
   ;  :on-mount (Re-Frame metamorphic-event)(opt)
-  ;   This event takes the field content as its last parameter
+  ;   This event takes the field content as its last parameter.
   ;  :on-type-ended (Re-Frame metamorphic-event)(opt)
-  ;   This event takes the field content as its last parameter
+  ;   This event takes the field content as its last parameter.
   ;  :on-unmount (Re-Frame metamorphic-event)(opt)
-  ;   This event takes the field content as its last parameter
+  ;   This event takes the field content as its last parameter.
+  ;  :on-valid (Re-Frame metamorphic-event)(opt)
+  ;   This event takes the field content as its last parameter.
   ;  :outdent (map)(opt)
   ;   Same as the :indent property
   ;  :placeholder (metamorphic-content)(opt)
+  ;  :prevalidate? (boolean)(opt)
+  ;   Prevalidated fields applying the validators when the field content changes.
   ;  :reveal-effect (keyword)(opt)
   ;   :delayed, :opacity
   ;  :start-adornments (maps in vector)(opt)
@@ -216,18 +223,9 @@
   ;   {:border-radius (map)(opt)
   ;    :content (metamorphic-content)(opt)
   ;    :indent (map)(opt)}
-  ;  :validator (map)(opt)
-  ;   {:autovalidate? (boolean)(opt)
-  ;     Autovalidated field use the validator when the user leaves the field.
-  ;    :f (function)
-  ;    :invalid-message (metamorphic-content)(opt)
-  ;    :invalid-message-f (function)(opt)
-  ;    :on-invalid (Re-Frame metamorphic-event)(opt)
-  ;     This event takes the field content as its last parameter
-  ;    :on-valid (Re-Frame metamorphic-event)(opt)
-  ;     This event takes the field content as its last parameter
-  ;    :prevalidate? (boolean)(opt)
-  ;     Prevalidated fields use the validator when the field changes}
+  ;  :validators (maps in vector)(opt)
+  ;  [{:f (function)
+  ;    :invalid-message (metamorphic-content)(opt)}]
   ;  :value-path (Re-Frame path vector)(opt)
   ;  :width (keyword)(opt)
   ;   :auto, :content, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl

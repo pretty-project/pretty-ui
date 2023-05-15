@@ -41,7 +41,13 @@
 ;; ----------------------------------------------------------------------------
 
 ; @ignore
+;
+; @param (keyword) box-id
+; @param (map) box-props
 (r/reg-fx :elements.multi-combo-box/reg-keypress-events! reg-keypress-events!)
 
 ; @ignore
+;
+; @param (keyword) box-id
+; @param (map) box-props
 (r/reg-fx :elements.multi-combo-box/remove-keypress-events! remove-keypress-events!)

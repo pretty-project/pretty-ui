@@ -9,11 +9,19 @@
 
 (r/reg-event-fx :elements.text-field/validate-field!
   ; @param (keyword) field-id
+  ; @param (map) validation-props
+  ; {:on-invalid (Re-Frame metamorphic-event)(opt)
+  ;   This event takes the field content and the invalid message as its last parameter.
+  ;  :on-valid (Re-Frame metamorphic-event)(opt)
+  ;   This event takes the field content as its last parameter.
+  ;  :validators (maps in vector)
+  ;   [{:f (function)
+  ;     :invalid-message (metamorphic-content)}]}
   ;
   ; @usage
-  ; [:elements.text-field/validate-field! :my-field]
-  (fn [_ [_ field-id]]
-      {:fx [:elements.text-field/validate-field! field-id]}))
+  ; [:elements.text-field/validate-field! :my-field {...}]
+  (fn [_ [_ field-id validation-props]]
+      {:fx [:elements.text-field/validate-field! field-id validation-props]}))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

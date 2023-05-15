@@ -94,19 +94,37 @@
 ;; ----------------------------------------------------------------------------
 
 ; @ignore
+;
+; @param (keyword) box-id
+; @param (map) box-props
 (r/reg-fx :elements.combo-box/highlight-next-option! highlight-next-option!)
 
 ; @ignore
+;
+; @param (keyword) box-id
+; @param (map) box-props
 (r/reg-fx :elements.combo-box/highlight-prev-option! highlight-prev-option!)
 
 ; @ignore
+;
+; @param (keyword) box-id
+; @param (map) box-props
 (r/reg-fx :elements.combo-box/discard-option-highlighter! discard-option-highlighter!)
 
 ; @ignore
+;
+; @param (keyword) box-id
+; @param (map) box-props
 (r/reg-fx :elements.combo-box/use-selected-option! use-selected-option!)
 
 ; @ignore
+;
+; @param (keyword) box-id
+; @param (map) box-props
 (r/reg-fx :elements.combo-box/reg-keypress-events! reg-keypress-events!)
 
 ; @ignore
+;
+; @param (keyword) box-id
+; @param (map) box-props
 (r/reg-fx :elements.combo-box/remove-keypress-events! remove-keypress-events!)

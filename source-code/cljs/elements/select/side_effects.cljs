@@ -30,7 +30,13 @@
 ;; ----------------------------------------------------------------------------
 
 ; @ignore
+;
+; @param (keyword) select-id
+; @param (map) select-props
 (r/reg-fx :elements.select/reg-keypress-events! reg-keypress-events!)
 
 ; @ignore
+;
+; @param (keyword) select-id
+; @param (map) select-props
 (r/reg-fx :elements.select/remove-keypress-events! remove-keypress-events!)

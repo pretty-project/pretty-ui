@@ -104,19 +104,31 @@
 ;; ----------------------------------------------------------------------------
 
 ; @ignore
+;
+; @param (keyword) field-id
 (r/reg-fx :elements.plain-field/empty-field! empty-field!)
 
 ; @ignore
+;
+; @param (keyword) field-id
 (r/reg-fx :elements.plain-field/focus-field! focus-field!)
 
 ; @ignore
+;
+; @param (keyword) field-id
 (r/reg-fx :elements.plain-field/show-surface! show-surface!)
 
 ; @ignore
+;
+; @param (keyword) field-id
 (r/reg-fx :elements.plain-field/hide-surface! hide-surface!)
 
 ; @ignore
+;
+; @param (keyword) field-id
 (r/reg-fx :elements.plain-field/set-type-mode! set-type-mode!)
 
 ; @ignore
+;
+; @param (keyword) field-id
 (r/reg-fx :elements.plain-field/quit-type-mode! quit-type-mode!)

@@ -52,14 +52,21 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+; @param (keyword) swapper-id
+; @param (metamorphic-content) page
+;
 ; @usage
 ; [:elements.content-swapper/go-to! :my-content-swapper [:div "My page"]]
 (r/reg-fx :elements.content-swapper/go-to! go-to!)
 
+; @param (keyword) swapper-id
+;
 ; @usage
-; [:elements.content-swapper/go-back! :my-content-swapper [:div "My page"]]
+; [:elements.content-swapper/go-back! :my-content-swapper]
 (r/reg-fx :elements.content-swapper/go-back! go-back!)
 
+; @param (keyword) swapper-id
+;
 ; @usage
 ; [:elements.content-swapper/go-home! :my-content-swapper]
 (r/reg-fx :elements.content-swapper/go-home! go-home!)

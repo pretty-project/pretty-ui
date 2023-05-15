@@ -26,10 +26,14 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+; @param (keyword) sidebar-id
+;
 ; @usage
 ; [:website.sidebar/show-sidebar! :my-sidebar]
 (r/reg-fx :website.sidebar/show-sidebar! show-sidebar!)
 
+; @param (keyword) sidebar-id
+;
 ; @usage
 ; [:website.sidebar/hide-sidebar! :my-sidebar]
 (r/reg-fx :website.sidebar/hide-sidebar! hide-sidebar!)
