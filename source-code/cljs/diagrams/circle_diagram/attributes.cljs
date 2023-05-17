@@ -1,8 +1,8 @@
 
-(ns elements.circle-diagram.attributes
+(ns diagrams.circle-diagram.attributes
     (:require [css.api                        :as css]
+              [diagrams.circle-diagram.config :as circle-diagram.config]
               [math.api                       :as math]
-              [elements.circle-diagram.config :as circle-diagram.config]
               [pretty-css.api                 :as pretty-css]))
 
 ;; ----------------------------------------------------------------------------
@@ -35,7 +35,7 @@
         rotation-angle   (math/percent->angle rotation-percent)
         rotation         (+ rotation-angle circle-diagram.config/ANGLE-CORRECTION)]
        {:cx x :cy y :r r
-        :class :e-circle-diagram--section
+        :class :d-circle-diagram--section
         :data-stroke-color color
         :style {:stroke-dasharray (str dash-filled " " dash-empty)
                 :stroke-width     (css/px     strength)
@@ -58,7 +58,7 @@
   ;   {:height (string)
   ;    :width (string)}}
   [_ {:keys [diameter style] :as diagram-props}]
-  (-> {:class :e-circle-diagram--body
+  (-> {:class :d-circle-diagram--body
        :style (merge style {:height (css/px diameter)
                             :width  (css/px diameter)})}
       (pretty-css/indent-attributes diagram-props)))
@@ -75,6 +75,6 @@
   ; @return (map)
   ; {}
   [_ diagram-props]
-  (-> {:class :e-circle-diagram}
+  (-> {:class :d-circle-diagram}
       (pretty-css/default-attributes diagram-props)
       (pretty-css/outdent-attributes diagram-props)))

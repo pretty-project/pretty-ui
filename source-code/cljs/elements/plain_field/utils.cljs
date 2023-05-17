@@ -58,16 +58,15 @@
   ; After the field unmounted its content and output have to removed from the state
   ; otherwise next time when the field remounts its previous content and output could
   ; affect it.
-  ; + It has to be checked whether the field is still in the DOM-tree because it might be
-  ;   in case of the field (with the same ID) is duplicated on the page.
-  ;   Its pretty common to use duplicated fields by displaying a field on a page of a
+  ; + It has to be checked whether the field is still mounted to the DOM-tree because
+  ;   it might be mounted if the field is duplicated on the page (with the same ID).
+  ;   It's pretty common to use duplicated fields by displaying a field on a page of a
   ;   content swapper and the same field on another page of that very content swapper.
-  ;   And during the content swapper changing pages animatedly there is short overlap
-  ;   in the lifetimes of the duplicated fields.
+  ;   And during the content swapper changing pages animatedly there is short overlap.
   (letfn [(f [] (let [input-id      (hiccup/value field-id "input")
                       input-element (dom/get-element-by-id input-id)]
-                    (when-not input-element (plain-field.side-effects/set-field-content! field-id nil)
-                                            (plain-field.side-effects/set-field-output!  field-id nil))))]
+                     (when-not input-element (plain-field.side-effects/set-field-content! field-id nil)
+                                             (plain-field.side-effects/set-field-output!  field-id nil))))]
          (time/set-timeout! f 50)))
 
 ;; ----------------------------------------------------------------------------
@@ -78,13 +77,13 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ; {:modifier (function)(opt)}
+  ; {:modifier-f (function)(opt)}
   ; @param (DOM-event) event
   ;
   ; @return (string)
-  [_ {:keys [modifier]} event]
-  (if modifier (-> event dom/event->value modifier)
-               (-> event dom/event->value)))
+  [_ {:keys [modifier-f]} event]
+  (if modifier-f (-> event dom/event->value modifier-f)
+                 (-> event dom/event->value)))
 
 (defn resolve-field-change-f
   ; @ignore
@@ -94,14 +93,13 @@
   [field-id field-props]
   ; The 'resolve-field-change!' function is called by the 'on-change-f' function
   ; with a timeout after the field's content has been changed.
-  ; If the field's content hasn't changed again during the timeout, ...
-  ; ... the type considered as ended.
+  ; If the field's content hasn't changed during the timeout, ...
+  ; ... the typing is considered as ended.
   ; ... the application state gets updated with the field's content.
-  ; ... the :on-type-ended event being dispatched.
+  ; ... the :on-type-ended event is being dispatched.
   ;
-  ; This function doesn't takes the field's content as its argument, because
-  ; it's called with a timeout and the field's content can changes again during
-  ; the timeout.
+  ; This function doesn't take the field's content as its argument, because
+  ; it's called with a timeout and the field's content can change during the timeout.
   (let [timestamp  (time/elapsed)
         changed-at (get-in @plain-field.state/FIELD-STATES [field-id :changed-at])]
        (when (> timestamp (+ changed-at plain-field.config/TYPE-ENDED-AFTER))

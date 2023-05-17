@@ -67,18 +67,18 @@
   (fn [{:keys [db]} [_ box-id {:keys [on-type-ended option-value-f] :as box-props}]]
       ; XXX#4146 (source-code/cljs/elements/multi_combo_box/effects.cljs)
       ; If the surface of the combo-box is visible ...
-      ; ... and an option is highlighted, pressing the ENTER button:
-      ;     - hides the surface.
-      ;     - discards the highlight on the highlighted option.
-      ;     - stores the highlighted option into the application state.
-      ;     - uses the highlighted option as the field content.
-      ;     - dispatches the :on-type-ended event.
-      ; ... and no option is highlight, pressing the ENTER button:
-      ;     - hides the surface.
+      ; ... and any option is highlighted, pressing the ENTER button ...
+      ;     ... hides the surface,
+      ;     ... discards the highlight on the highlighted option,
+      ;     ... stores the highlighted option into the application state,
+      ;     ... uses the highlighted option as the field content,
+      ;     ... dispatches the :on-type-ended event.
+      ; ... and no option is highlighted, pressing the ENTER button ...
+      ;     ... hides the surface.
       ;
       ; If the surface of the combo-box isn't visible ...
-      ; ... pressing the ENTER button:
-      ;     - fires the original ENTER event of the text-field.
+      ; ... pressing the ENTER button ...
+      ;     ... fires the original ENTER event of the text-field.
       (if (plain-field.env/surface-visible? box-id)
           (if-let [highlighted-option (combo-box.env/get-highlighted-option box-id box-props)]
                   {:dispatch [:elements.combo-box/select-option!  box-id box-props highlighted-option]}
@@ -100,12 +100,12 @@
       ; The :on-type-ended event has to be dispatched even if the user didn't
       ; typed and the option is selected by the pointer or a button event!
       ;
-      ; Selecting an option:
-      ; - hides the surface
-      ; - discards the highlight on the highlighted option
-      ; - stores the highlighted option into the application state
-      ; - uses the highlighted option as the field content
-      ; - dispatches the :on-type-ended event
+      ; Selecting an option ...
+      ; ... hides the surface,
+      ; ... discards the highlight on the highlighted option,
+      ; ... stores the highlighted option into the application state,
+      ; ... uses the highlighted option as field content,
+      ; ... dispatches the :on-type-ended event.
       {:db   (r combo-box.events/select-option! db box-id box-props option)
        :fx-n [[:elements.plain-field/hide-surface!             box-id]
               [:elements.combo-box/discard-option-highlighter! box-id]

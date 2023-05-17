@@ -1,5 +1,5 @@
 
-(ns elements.point-diagram.attributes
+(ns diagrams.point-diagram.attributes
     (:require [pretty-css.api :as pretty-css]))
 
 ;; ----------------------------------------------------------------------------
@@ -16,7 +16,7 @@
   ; {:class (keyword or keywords in vector)
   ;  :style (map)}
   [_ {:keys [style] :as diagram-props}]
-  (-> {:class :e-point-diagram--body
+  (-> {:class :d-point-diagram--body
        :style (merge style {:width "500px" :height "300px"})} ; TEMP
       (pretty-css/indent-attributes diagram-props)))
 
@@ -32,6 +32,6 @@
   ; @return (map)
   ; {}
   [_ diagram-props]
-  (-> {:class :e-point-diagram}
+  (-> {:class :d-point-diagram}
       (pretty-css/default-attributes diagram-props)
       (pretty-css/outdent-attributes diagram-props)))

@@ -1,5 +1,5 @@
 
-(ns elements.line-diagram.utils
+(ns diagrams.line-diagram.utils
     (:require [math.api :as math]))
 
 ;; ----------------------------------------------------------------------------

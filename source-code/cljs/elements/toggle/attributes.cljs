@@ -28,7 +28,7 @@
   ;  :on-mouse-over (function)
   ;  :on-mouse-up (function)}
   [toggle-id {:keys [disabled? on-click on-mouse-over] :as toggle-props}]
-  ; XXX#4460 (source-code/cljs/elements/button/helpers.cljs)
+  ; XXX#4460 (source-code/cljs/elements/button/utils.cljs)
   (-> (if disabled? {:class              :e-toggle--body
                      :disabled           true
                      :data-selectable    false

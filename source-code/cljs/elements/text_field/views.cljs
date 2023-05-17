@@ -1,12 +1,11 @@
 
 (ns elements.text-field.views
     (:require [elements.element.views         :as element.views]
+              [elements.form.state            :as form.state]
               [elements.plain-field.env       :as plain-field.env]
               [elements.plain-field.views     :as plain-field.views]
               [elements.text-field.attributes :as text-field.attributes]
-              [elements.text-field.env        :as text-field.env]
               [elements.text-field.prototypes :as text-field.prototypes]
-              [elements.text-field.state      :as text-field.state]
               [hiccup.api                     :as hiccup]
               [metamorphic-content.api        :as metamorphic-content]
               [random.api                     :as random]
@@ -66,7 +65,7 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   ; {}
-  [field-id {:keys [multiline? placeholder surface validator] :as field-props}]
+  [field-id {:keys [multiline? placeholder surface] :as field-props}]
   ; The placeholder element has an absolute position, therefore ...
   ; ... it has to be placed in the same ancestor element as the input element!
   ; ... but it cannot be in the very same parent element as the input element!
@@ -90,7 +89,7 @@
                            (text-field.attributes/field-input-attributes field-id field-props)]]]
               ; ...
               [field-end-adornments field-id field-props]
-              (if-let [invalid-message (field-id @text-field.state/FIELD-CONTENT-INVALID-MESSAGE)]
+              (if-let [invalid-message (field-id @form.state/FORM-ERRORS)]
                       [:div {:class :e-text-field--invalid-content-message :data-selectable false}
                             (metamorphic-content/compose invalid-message)])
               ; ...
@@ -117,10 +116,12 @@
   ; @param (keyword)(opt) field-id
   ; @param (map) field-props
   ; {:autoclear? (boolean)(opt)
+  ;   Removes the value stored in the application state (on the value-path)
+  ;   when the element unmounts.
   ;  :autofill-name (keyword)(opt)
+  ;   Helps the browser on what values to be suggested.
+  ;   Leave empty if you don't want autosuggestions.
   ;  :autofocus? (boolean)(opt)
-  ;  :autovalidate? (boolean)(opt)
-  ;   Autovalidated fields applying the validators when the user leaves the field.
   ;  :border-color (keyword or string)(opt)
   ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;  :border-position (keyword)(opt)
@@ -157,8 +158,10 @@
   ;      Default: true
   ;     :tooltip-content (metamorphic-content)(opt)}]
   ;  :field-content-f (function)(opt)
+  ;   From application state to field content modifier function.
   ;   Default: return
   ;  :field-value-f (function)(opt)
+  ;   From field content to application state modifier function.
   ;   Default: return
   ;  :font-size (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
@@ -166,6 +169,8 @@
   ;  :font-weight (keyword)(opt)
   ;   :inherit, :thin, :extra-light, :light, :normal, :medium, :semi-bold, :bold, :extra-bold, :black
   ;   Default: :normal
+  ;  :form-id (keyword)(opt)
+  ;   Different inputs with the same form ID could be validated at the same time.
   ;  :helper (metamorphic-content)(opt)
   ;  :indent (map)(opt)
   ;   {:bottom (keyword)(opt)
@@ -186,19 +191,19 @@
   ;  :marker-position (keyword)(opt)
   ;   :tl, :tr, :br, :bl, left, :right, bottom, :top
   ;  :max-length (integer)(opt)
-  ;  :modifier (function)(opt)
+  ;  :modifier-f (function)(opt)
   ;  :on-blur (Re-Frame metamorphic-event)(opt)
+  ;   This event takes the field content as its last parameter
   ;  :on-changed (Re-Frame metamorphic-event)(opt)
   ;   It happens BEFORE the application state gets updated with the actual value!
-  ;   If you have to get the ACTUAL value from the application state, use the
+  ;   If you want to get the ACTUAL value read from the application state, use the
   ;   :on-type-ended event instead!
-  ;   It happens BEFORE the application state gets updated with the actual value!
-  ;   This event takes the field content as its last parameter.
   ;  :on-empty (Re-Frame metamorphic-event)(opt)
   ;   This event takes the field content as its last parameter.
   ;  :on-enter (Re-Frame metamorphic-event)(opt)
   ;   This event takes the field content as its last parameter.
   ;  :on-focus (Re-Frame metamorphic-event)(opt)
+  ;   This event takes the field content as its last parameter
   ;  :on-invalid (Re-Frame metamorphic-event)(opt)
   ;   This event takes the field content and the invalid message as its last parameter.
   ;  :on-mount (Re-Frame metamorphic-event)(opt)
@@ -212,8 +217,6 @@
   ;  :outdent (map)(opt)
   ;   Same as the :indent property
   ;  :placeholder (metamorphic-content)(opt)
-  ;  :prevalidate? (boolean)(opt)
-  ;   Prevalidated fields applying the validators when the field content changes.
   ;  :reveal-effect (keyword)(opt)
   ;   :delayed, :opacity
   ;  :start-adornments (maps in vector)(opt)
@@ -223,6 +226,10 @@
   ;   {:border-radius (map)(opt)
   ;    :content (metamorphic-content)(opt)
   ;    :indent (map)(opt)}
+  ;  :validate-when-change? (boolean)(opt)
+  ;   Validates the value when it changes.
+  ;  :validate-when-leave? (boolean)(opt)
+  ;   Validates the value and turns on the validation when the user leaves the field.
   ;  :validators (maps in vector)(opt)
   ;  [{:f (function)
   ;    :invalid-message (metamorphic-content)(opt)}]
@@ -238,15 +245,6 @@
   ; [text-field :my-text-field {...}]
   ;
   ; @usage
-  ; [text-field {:validator {:f #(not (empty? %))
-  ;                          :invalid-message "Invalid value"}}]
-  ;
-  ; @usage
-  ; (defn get-invalid-message [value] "Invalid value")
-  ; [text-field {:validator {:f #(not (empty? %))
-  ;                          :invalid-message-f get-invalid-message}}]
-  ;
-  ; @usage
   ; (defn my-surface [field-id])
   ; [text-field {:surface #'my-surface}]
   ;
@@ -255,7 +253,10 @@
   ; [text-field {:surface {:content #'my-surface}}]
   ;
   ; @usage
-  ; [text-field {:modifier #(string/starts-with! % "/")}]
+  ; [text-field {:modifier-f clojure.string/lower-case}]
+  ;
+  ; @usage
+  ; [text-field {:validators []}]
   ([field-props]
    [element (random/generate-keyword) field-props])
 

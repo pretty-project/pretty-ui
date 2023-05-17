@@ -33,7 +33,7 @@
   ;
   ; @return (vector)
   [db [_ _ {:keys [options options-path]}]]
-  ; XXX#2781 (source-code/cljs/elements/input/helpers.cljs)
+  ; XXX#2781 (source-code/cljs/elements/input/utils.cljs)
   (or options (get-in db options-path)))
 
 (defn validate-input-value?

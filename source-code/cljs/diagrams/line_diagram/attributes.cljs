@@ -1,9 +1,8 @@
 
-(ns elements.line-diagram.attributes
+(ns diagrams.line-diagram.attributes
     (:require [css.api                     :as css]
-              [elements.line-diagram.utils :as line-diagram.utils]
+              [diagrams.line-diagram.utils :as line-diagram.utils]
               [pretty-css.api              :as pretty-css]))
-
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -55,7 +54,7 @@
   ; {:class (keyword or keywords in vector)
   ;  :style (map)}
   [_ {:keys [style] :as diagram-props}]
-  (-> {:class :e-line-diagram--body
+  (-> {:class :d-line-diagram--body
        :style style}
       (pretty-css/indent-attributes diagram-props)))
 
@@ -71,7 +70,7 @@
   ; @return (map)
   ; {:class (keyword or keywords in vector)}
   [_ diagram-props]
-  (-> {:class :e-line-diagram}
+  (-> {:class :d-line-diagram}
       (pretty-css/default-attributes      diagram-props)
       (pretty-css/outdent-attributes      diagram-props)
       (pretty-css/element-size-attributes diagram-props)))

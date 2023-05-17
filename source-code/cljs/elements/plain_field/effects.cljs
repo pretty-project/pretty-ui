@@ -34,9 +34,8 @@
   ;  :value-path (Re-Frame path vector)}
   (fn [{:keys [db]} [_ field-id {:keys [autoclear? on-unmount value-path] :as field-props}]]
       (let [stored-value (get-in db value-path)]
-           (if autoclear? {:db         (r plain-field.events/clear-value! db field-id field-props)
-                           :dispatch-n [(if on-unmount (r/metamorphic-event<-params on-unmount stored-value))]}
-                          {:dispatch-n [(if on-unmount (r/metamorphic-event<-params on-unmount stored-value))]}))))
+           {:db          (if autoclear? (r plain-field.events/clear-value! db field-id field-props) db)
+            :dispatch-n [(if on-unmount (r/metamorphic-event<-params on-unmount stored-value))]})))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -61,10 +60,10 @@
   (fn [{:keys [db]} [_ field-id {:keys [on-type-ended] :as field-props}]]
       ; BUG#6071 (source-code/cljs/elements/plain_field/side_effects.cljs)
       (let [field-content  (plain-field.env/get-field-content field-id)
-            field-focused? (input.env/input-focused? field-id)]
-           {:dispatch (if on-type-ended  (r/metamorphic-event<-params on-type-ended field-content))
-            :fx       (if field-focused? [:elements.plain-field/show-surface! field-id])
-            :db       (r plain-field.events/store-value! db field-id field-props field-content)})))
+            field-focused? (input.env/input-focused?          field-id)]
+           {:dispatch-n [(if on-type-ended  (r/metamorphic-event<-params on-type-ended field-content))]
+            :fx-n       [(if field-focused? [:elements.plain-field/show-surface! field-id])]
+            :db         (r plain-field.events/store-value! db field-id field-props field-content)})))
 
 (r/reg-event-fx :elements.plain-field/field-blurred
   ; @ignore
@@ -72,11 +71,12 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   ; {:on-blur (Re-Frame metamorphic-event)(opt)}
-  (fn [_ [_ field-id {:keys [on-blur]}]]
-      {:dispatch on-blur
-       :fx-n [[:elements.plain-field/hide-surface!      field-id]
-              [:elements.input/unmark-input-as-focused! field-id]
-              [:elements.plain-field/quit-type-mode!    field-id]]}))
+  (fn [_ [_ field-id {:keys [on-blur] :as field-props}]]
+      (let [field-content (plain-field.env/get-field-content field-id)]
+           {:dispatch-n [(if on-blur (r/metamorphic-event<-params on-blur field-content))]
+            :fx-n       [[:elements.plain-field/hide-surface!      field-id]
+                         [:elements.input/unmark-input-as-focused! field-id]
+                         [:elements.plain-field/quit-type-mode!    field-id]]})))
 
 (r/reg-event-fx :elements.plain-field/field-focused
   ; @ignore
@@ -85,7 +85,8 @@
   ; @param (map) field-props
   ; {:on-focus (Re-Frame metamorphic-event)(opt)}
   (fn [_ [_ field-id {:keys [on-focus]}]]
-      {:dispatch on-focus
-       :fx-n [[:elements.plain-field/show-surface!    field-id]
-              [:elements.input/mark-input-as-focused! field-id]
-              [:elements.plain-field/set-type-mode!   field-id]]}))
+      (let [field-content (plain-field.env/get-field-content field-id)]
+           {:dispatch-n [(if on-focus (r/metamorphic-event<-params on-focus field-content))]
+            :fx-n       [[:elements.plain-field/show-surface!    field-id]
+                         [:elements.input/mark-input-as-focused! field-id]
+                         [:elements.plain-field/set-type-mode!   field-id]]})))

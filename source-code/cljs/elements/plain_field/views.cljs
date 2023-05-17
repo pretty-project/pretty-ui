@@ -87,6 +87,8 @@
   ; @param (keyword)(opt) field-id
   ; @param (map) field-props
   ; {:autoclear? (boolean)(opt)
+  ;   Removes the value stored in the application state (on the value-path)
+  ;   when the element unmounts.
   ;  :autofocus? (boolean)(opt)
   ;  :class (keyword or keywords in vector)(opt)
   ;  :disabled? (boolean)(opt)
@@ -103,15 +105,16 @@
   ;    :vertical (keyword)(opt)
   ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
   ;  :initial-value (string)(opt)
-  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  ;  :modifier (function)(opt)
+  ;  :modifier-f (function)(opt)
   ;  :on-blur (Re-Frame metamorphic-event)(opt)
+  ;   This event takes the field content as its last parameter
   ;  :on-changed (Re-Frame metamorphic-event)(opt)
   ;   It happens BEFORE the application state gets updated with the actual value!
-  ;   If you have to get the ACTUAL value from the application state, use the
+  ;   If you want to get the ACTUAL value from the application state, use the
   ;   :on-type-ended event instead!
   ;   This event takes the field content as its last parameter
   ;  :on-focus (Re-Frame metamorphic-event)(opt)
+  ;   This event takes the field content as its last parameter
   ;  :on-mount (Re-Frame metamorphic-event)(opt)
   ;   This event takes the field content as its last parameter
   ;  :on-type-ended (Re-Frame metamorphic-event)(opt)

@@ -1,8 +1,8 @@
 
-(ns elements.circle-diagram.utils
+(ns diagrams.circle-diagram.utils
     (:require [css.api                        :as css]
               [math.api                       :as math]
-              [elements.circle-diagram.config :as circle-diagram.config]
+              [diagrams.circle-diagram.config :as circle-diagram.config]
               [pretty-css.api                 :as pretty-css]))
 
 ;; ----------------------------------------------------------------------------
@@ -29,7 +29,7 @@
   ; ... and calculates the total value of all sections.
   ; ... and calculates the previous sections summary value of each section.
   ;
-  ; The element needs ...
+  ; The diagram needs ...
   ; ... the total value to calculates how the sections related to the total.
   ; ... the previous sections summary of each section to calculates how
   ;     a section has to be rotated.

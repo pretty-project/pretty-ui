@@ -172,6 +172,8 @@
   ; {:add-option-f (function)(opt)
   ;   Default: return
   ;  :autoclear? (boolean)(opt)
+  ;   Removes the value stored in the application state (on the value-path)
+  ;   when the element unmounts.
   ;  :border-color (keyword)(opt)
   ;   :default, :highlight, :invert, :primary, :secondary, :success, :transparent, :warning
   ;  :border-position (keyword)(opt)

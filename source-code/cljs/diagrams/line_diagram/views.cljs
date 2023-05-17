@@ -1,7 +1,7 @@
 
-(ns elements.line-diagram.views
-    (:require [elements.line-diagram.attributes :as line-diagram.attributes]
-              [elements.line-diagram.prototypes :as line-diagram.prototypes]
+(ns diagrams.line-diagram.views
+    (:require [diagrams.line-diagram.attributes :as line-diagram.attributes]
+              [diagrams.line-diagram.prototypes :as line-diagram.prototypes]
               [hiccup.api                       :as hiccup]
               [random.api                       :as random]))
 
@@ -21,7 +21,7 @@
                [:div (line-diagram.attributes/diagram-sections-attributes diagram-id diagram-props)
                      (hiccup/put-with [:<>] sections f)])])
 
-(defn element
+(defn diagram
   ; @param (keyword)(opt) diagram-id
   ; @param (map) diagram-props
   ; {:indent (map)(opt)
@@ -57,7 +57,7 @@
   ; @usage
   ; [line-diagram :my-line-diagram {...}]
   ([diagram-props]
-   [element (random/generate-keyword) diagram-props])
+   [diagram (random/generate-keyword) diagram-props])
 
   ([diagram-id diagram-props]
    (let [diagram-props (line-diagram.prototypes/diagram-props-prototype diagram-props)]

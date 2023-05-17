@@ -1,7 +1,7 @@
 
-(ns elements.point-diagram.views
-    (:require [elements.point-diagram.attributes :as point-diagram.attributes]
-              [elements.point-diagram.prototypes :as point-diagram.prototypes]
+(ns diagrams.point-diagram.views
+    (:require [diagrams.point-diagram.attributes :as point-diagram.attributes]
+              [diagrams.point-diagram.prototypes :as point-diagram.prototypes]
               [random.api                        :as random]))
 
 ;; ----------------------------------------------------------------------------
@@ -21,7 +21,7 @@
                     [:polyline {:points "0,100 100,1"
                                 :style  {:fill "none" :stroke "red" :stroke-width "2px"}}]]]])
 
-(defn element
+(defn diagram
   ; @warning
   ; UNFINISHED! DO NOT USE!
   ;
@@ -53,7 +53,7 @@
   ; @usage
   ; [point-diagram :my-point-diagram {...}]
   ([diagram-props]
-   [element (random/generate-keyword) diagram-props])
+   [diagram (random/generate-keyword) diagram-props])
 
   ([diagram-id diagram-props]
    (let [] ; diagram-props (point-diagram.prototypes/diagram-props-prototype diagram-props)

@@ -19,6 +19,7 @@
   ;  :on-click (Re-Frame metamorphic-event)
   ;  :tooltip (metamorphic-content)}
   [field-id field-props]
+  ; XXX#5100 (source-code/cljs/elements/text_field/prototypes.cljs)
   {:disabled?       (plain-field.env/field-empty? field-id)
    :icon            :close
    :on-click        [:elements.text-field/empty-field! field-id field-props]

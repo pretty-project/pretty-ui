@@ -1,8 +1,8 @@
 
-(ns elements.circle-diagram.views
-    (:require [elements.circle-diagram.attributes :as circle-diagram.attributes]
-              [elements.circle-diagram.prototypes :as circle-diagram.prototypes]
-              [elements.element.views             :as element.views]
+(ns diagrams.circle-diagram.views
+    (:require [diagrams.circle-diagram.attributes :as circle-diagram.attributes]
+              [diagrams.circle-diagram.prototypes :as circle-diagram.prototypes]
+              [diagrams.diagram.views             :as diagram.views]
               [hiccup.api                         :as hiccup]
               [random.api                         :as random]
               [svg.api                            :as svg]))
@@ -28,12 +28,12 @@
   ; {:diameter (px)}
   [diagram-id {:keys [diameter] :as diagram-props}]
   [:div (circle-diagram.attributes/diagram-attributes diagram-id diagram-props)
-        [element.views/element-label                  diagram-id diagram-props]
+        [diagram.views/diagram-label                  diagram-id diagram-props]
         [:div (circle-diagram.attributes/diagram-body-attributes diagram-id diagram-props)
               [:svg (svg/wrapper-attributes  {:height diameter :width diameter})
                     [circle-diagram-sections diagram-id diagram-props]]]])
 
-(defn element
+(defn diagram
   ; @param (keyword)(opt) diagram-id
   ; @param (map) diagram-props
   ; {:class (keyword or keywords in vector)(opt)
@@ -70,7 +70,7 @@
   ; @usage
   ; [circle-diagram :my-circle-diagram {...}]
   ([diagram-props]
-   [element (random/generate-keyword) diagram-props])
+   [diagram (random/generate-keyword) diagram-props])
 
   ([diagram-id diagram-props]
    (let [diagram-props (circle-diagram.prototypes/diagram-props-prototype diagram-props)]

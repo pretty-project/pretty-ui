@@ -17,6 +17,8 @@
               [elements.counter.effects]
               [elements.counter.events]
               [elements.counter.subs]
+              [elements.form.effects]
+              [elements.form.side-effects]
               [elements.input.events]
               [elements.input.side-effects]
               [elements.input.subs]
@@ -44,7 +46,6 @@
               [elements.switch.subs]
               [elements.text-field.effects]
               [elements.text-field.side-effects]
-              [elements.text-field.subs]
               [elements.breadcrumbs.views          :as breadcrumbs.views]
               [elements.blank.views                :as blank.views]
               [elements.button.views               :as button.views]
@@ -52,7 +53,6 @@
               [elements.checkbox.views             :as checkbox.views]
               [elements.chip-group.views           :as chip-group.views]
               [elements.chip.views                 :as chip.views]
-              [elements.circle-diagram.views       :as circle-diagram.views]
               [elements.color-selector.views       :as color-selector.views]
               [elements.column.views               :as column.views]
               [elements.combo-box.views            :as combo-box.views]
@@ -73,7 +73,6 @@
               [elements.icon-button.views          :as icon-button.views]
               [elements.image.views                :as image.views]
               [elements.label.views                :as label.views]
-              [elements.line-diagram.views         :as line-diagram.views]
               [elements.menu-bar.views             :as menu-bar.views]
               [elements.multiline-field.views      :as multiline-field.views]
               [elements.multi-combo-box.views      :as multi-combo-box.views]
@@ -81,7 +80,6 @@
               [elements.notification-bubble.views  :as notification-bubble.views]
               [elements.password-field.views       :as password-field.views]
               [elements.plain-field.views          :as plain-field.views]
-              [elements.point-diagram.views        :as point-diagram.views]
               [elements.radio-button.views         :as radio-button.views]
               [elements.row.views                  :as row.views]
               [elements.search-field.views         :as search-field.views]
@@ -116,7 +114,6 @@
 (def checkbox             checkbox.views/element)
 (def chip-group           chip-group.views/element)
 (def chip                 chip.views/element)
-(def circle-diagram       circle-diagram.views/element)
 (def color-selector       color-selector.views/element)
 (def column               column.views/element)
 (def combo-box            combo-box.views/element)
@@ -137,7 +134,6 @@
 (def icon-button          icon-button.views/element)
 (def image                image.views/element)
 (def label                label.views/element)
-(def line-diagram         line-diagram.views/element)
 (def menu-bar             menu-bar.views/element)
 (def multi-combo-box      multi-combo-box.views/element)
 (def multi-field          multi-field.views/element)
@@ -145,7 +141,6 @@
 (def notification-bubble  notification-bubble.views/element)
 (def password-field       password-field.views/element)
 (def plain-field          plain-field.views/element)
-(def point-diagram        point-diagram.views/element)
 (def radio-button         radio-button.views/element)
 (def row                  row.views/element)
 (def search-field         search-field.views/element)

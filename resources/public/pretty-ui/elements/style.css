@@ -233,36 +233,6 @@
 
 
 
-/***** Circle diagram *****/
-/*** Element ***/
-
-.e-circle-diagram {
-  align-items:     center;
-  display:         flex;
-  flex-direction:  column;
-  justify-content: center;
-
-  /* XXX#6668 */
-  width: fit-content;
-}
-
-/*** Element ***/
-
-/*** Section ***/
-
-.e-circle-diagram--section {
-  /* By using the transition property the animations lagged :(
- -transition: stroke-dasharray .5s ease-out; */
-
-  fill: transparent;
-  transform-origin: center;
-}
-
-/*** Section ***/
-/***** Circle diagram *****/
-
-
-
 /***** Color-selector *****/
 /*** Color-selector options ***/
 
@@ -895,37 +865,6 @@
 
 /*** Info-text button ***/
 /***** Label *****/
-
-
-
-/***** Line diagram *****/
-/*** Element ***/
-
-.e-line-diagram {
-  display:         flex;
-  flex-direction:  column;
-  justify-content: center;
-}
-
-/*** Element ***/
-
-/*** Sections ***/
-
-.e-line-diagram--sections {
-  display: flex;
-}
-
-/*** Sections ***/
-
-/*** Section ***/
-
-.e-line-diagram--section {
-  transition: width .5s ease-out;
-  height: 100%;
-}
-
-/*** Section ***/
-/***** Line diagram *****/
 
 
 

@@ -1,6 +1,6 @@
 
-(ns elements.line-diagram.prototypes
-    (:require [elements.line-diagram.utils :as line-diagram.utils]
+(ns diagrams.line-diagram.prototypes
+    (:require [diagrams.line-diagram.utils :as line-diagram.utils]
               [noop.api                    :refer [param]]
               [math.api                    :as math]))
 
