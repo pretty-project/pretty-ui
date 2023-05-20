@@ -226,6 +226,9 @@
   ;   {:border-radius (map)(opt)
   ;    :content (metamorphic-content)(opt)
   ;    :indent (map)(opt)}
+  ;  :type (keyword)(opt)
+  ;   :number, :password, :text
+  ;   Default: :text
   ;  :validate-when-change? (boolean)(opt)
   ;   Validates the value when it changes.
   ;  :validate-when-leave? (boolean)(opt)

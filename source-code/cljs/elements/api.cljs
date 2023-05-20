@@ -28,6 +28,7 @@
               [elements.multi-field.effects]
               [elements.multi-field.events]
               [elements.multi-field.subs]
+              [elements.password-field.effects]
               [elements.password-field.side-effects]
               [elements.plain-field.effects]
               [elements.plain-field.events]
@@ -74,10 +75,11 @@
               [elements.image.views                :as image.views]
               [elements.label.views                :as label.views]
               [elements.menu-bar.views             :as menu-bar.views]
-              [elements.multiline-field.views      :as multiline-field.views]
               [elements.multi-combo-box.views      :as multi-combo-box.views]
               [elements.multi-field.views          :as multi-field.views]
+              [elements.multiline-field.views      :as multiline-field.views]
               [elements.notification-bubble.views  :as notification-bubble.views]
+              [elements.number-field.views         :as number-field.views]
               [elements.password-field.views       :as password-field.views]
               [elements.plain-field.views          :as plain-field.views]
               [elements.radio-button.views         :as radio-button.views]
@@ -139,6 +141,7 @@
 (def multi-field          multi-field.views/element)
 (def multiline-field      multiline-field.views/element)
 (def notification-bubble  notification-bubble.views/element)
+(def number-field         number-field.views/element)
 (def password-field       password-field.views/element)
 (def plain-field          plain-field.views/element)
 (def radio-button         radio-button.views/element)

@@ -145,7 +145,7 @@
   ;  :disabled? (boolean)(opt)
   ;  :max-length (integer)(opt)
   ;  :type (keyword)(opt)
-  ;   :password, :text}
+  ;   :number, :password, :text}
   ;
   ; @return (map)
   ; {:auto-complete (keyword)

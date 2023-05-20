@@ -28,19 +28,20 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ; {:end-adornments (maps in vector)(opt)
-  ;  :validate? (boolean)}
+  ; {:end-adornments (maps in vector)(opt)}
   ;
   ; @return (map)
-  ; {:helper (metamorphic-content)
+  ; {:end-adornments (maps in vector)
   ;  :label (metamorphic-content)
+  ;  :placeholder (metamorphic-content)
   ;  :type (keyword)}
   [field-id {:keys [end-adornments] :as field-props}]
   (let [field-empty?      (plain-field.env/field-empty?         field-id)
         password-visible? (password-field.env/password-visible? field-id)]
-       (merge {:label :password
-               :type  (if password-visible? :text :password)}
+       (merge {:label       :password
+               :placeholder "••••••••"}
               (param field-props)
+              {:type (if password-visible? :text :password)}
 
               ; ...
               (let [visibility-adornment (visibility-adornment-prototype field-id field-props)]
