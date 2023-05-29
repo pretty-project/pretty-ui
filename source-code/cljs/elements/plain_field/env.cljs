@@ -1,6 +1,8 @@
 
 (ns elements.plain-field.env
-    (:require [elements.plain-field.state :as plain-field.state]))
+    (:require [elements.plain-field.config :as plain-field.config]
+              [elements.plain-field.state  :as plain-field.state]
+              [time.api                    :as time]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -56,3 +58,17 @@
   ; @return (boolean)
   [field-id]
   (= field-id @plain-field.state/VISIBLE-SURFACE))
+
+(defn type-ended?
+  ; @ignore
+  ;
+  ; @description
+  ; Typing only considered as ended if at least X ms elapsed after the last key pressed.
+  ;
+  ; @param (keyword) field-id
+  ;
+  ; @return (boolean)
+  [field-id]
+  (let [timestamp  (time/elapsed)
+        changed-at (get-in @plain-field.state/FIELD-STATES [field-id :changed-at])]
+       (> timestamp (+ changed-at plain-field.config/TYPE-ENDED-AFTER))))

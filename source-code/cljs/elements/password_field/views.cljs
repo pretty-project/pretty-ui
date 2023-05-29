@@ -23,6 +23,11 @@
   ; The password-field element is based on the text-field element.
   ; For more information check out the documentation of the text-field element.
   ;
+  ; @description
+  ; The password-field element writes its actual value into the Re-Frame state
+  ; delayed after the user stopped typing or without a delay when the user 
+  ; leaves the field!
+  ;
   ; @param (keyword)(opt) field-id
   ; @param (map) field-props
   ;

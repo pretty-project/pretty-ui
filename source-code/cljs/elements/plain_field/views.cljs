@@ -84,6 +84,11 @@
                        :reagent-render         (fn [_ field-props] [plain-field-structure field-id field-props])}))
 
 (defn element
+  ; @description
+  ; The plain-field element writes its actual value into the Re-Frame state
+  ; delayed after the user stopped typing or without a delay when the user
+  ; leaves the field!
+  ;
   ; @param (keyword)(opt) field-id
   ; @param (map) field-props
   ; {:autoclear? (boolean)(opt)

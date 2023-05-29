@@ -59,6 +59,11 @@
   ; The multi-combo-box element is based on the text-field element.
   ; For more information check out the documentation of the text-field element.
   ;
+  ; @description
+  ; The multi-combo-box element writes its actual value into the Re-Frame state
+  ; delayed after the user stopped typing or without a delay when the user 
+  ; leaves the field!
+  ;
   ; @param (keyword)(opt) box-id
   ; @param (map) box-props
   ; {:chip-group (map)(opt)

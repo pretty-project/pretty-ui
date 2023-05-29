@@ -59,11 +59,19 @@
   ; {:on-type-ended (Re-Frame metamorphic-event)(opt)}
   (fn [{:keys [db]} [_ field-id {:keys [on-type-ended] :as field-props}]]
       ; BUG#6071 (source-code/cljs/elements/plain_field/side_effects.cljs)
-      (let [field-content  (plain-field.env/get-field-content field-id)
-            field-focused? (input.env/input-focused?          field-id)]
-           {:dispatch-n [(if on-type-ended  (r/metamorphic-event<-params on-type-ended field-content))]
-            :fx-n       [(if field-focused? [:elements.plain-field/show-surface! field-id])]
-            :db         (r plain-field.events/store-value! db field-id field-props field-content)})))
+      ;
+      ; If the field is not being focused anymore when this effect is being dispatched
+      ; (it's being dispatched with a delay) ...
+      ; ... no need to display the field surface anymore.
+      ; ... no need to write the actual field value into the Re-Frame state,
+      ;     because the :elements.plain-field/field-blurred effect already did it
+      ;     (and the field could be unmounted already when this effect happens).
+      (let [field-content (plain-field.env/get-field-content field-id)]
+           (if-let [field-focused? (input.env/input-focused? field-id)]
+                   {:db       (r plain-field.events/store-value! db field-id field-props field-content)
+                    :fx       [:elements.plain-field/show-surface! field-id]
+                    :dispatch (if on-type-ended (r/metamorphic-event<-params on-type-ended field-content))}
+                   {:dispatch (if on-type-ended (r/metamorphic-event<-params on-type-ended field-content))}))))
 
 (r/reg-event-fx :elements.plain-field/field-blurred
   ; @ignore
@@ -71,9 +79,25 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   ; {:on-blur (Re-Frame metamorphic-event)(opt)}
-  (fn [_ [_ field-id {:keys [on-blur] :as field-props}]]
+  (fn [{:keys [db]} [_ field-id {:keys [on-blur] :as field-props}]]
+      ; When the user leaves a field it writes its actual field content into
+      ; the Re-Frame state immediately.
+      ; Normally this state-writing happens delayed after last key pressed (when
+      ; the :elements.plain-field/type-ended effect is being dispatched), but there
+      ; could be a case when it has to happen immediately.
+      ; E.g. The user ends typing into a field and quickly clicks on a button
+      ;      that validates the field or validates a form that contains the field.
+      ;      When the validator functions being applied on the stored value of
+      ;      the field (stored in the Re-Frame state) it's important to the state
+      ;      contains the actual field content!
+      ;      The solution is that the on-mouse-down event of the button fires the
+      ;      on-blur event of the field that event writes the field content into
+      ;      the state immediately and when the on-mouse-up event of the button
+      ;      starts the validating, the actual field content is already being stored
+      ;      in the state.
       (let [field-content (plain-field.env/get-field-content field-id)]
-           {:dispatch-n [(if on-blur (r/metamorphic-event<-params on-blur field-content))]
+           {:db         (r plain-field.events/store-value! db field-id field-props field-content)
+            :dispatch-n [(if on-blur (r/metamorphic-event<-params on-blur field-content))]
             :fx-n       [[:elements.plain-field/hide-surface!      field-id]
                          [:elements.input/unmark-input-as-focused! field-id]
                          [:elements.plain-field/quit-type-mode!    field-id]]})))

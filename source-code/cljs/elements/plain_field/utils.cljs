@@ -92,18 +92,16 @@
   ; @param (map) field-props
   [field-id field-props]
   ; The 'resolve-field-change!' function is called by the 'on-change-f' function
-  ; with a timeout after the field's content has been changed.
-  ; If the field's content hasn't changed during the timeout, ...
+  ; with a delay after the field's content has been changed.
+  ; If the field's content hasn't changed during the delay, ...
   ; ... the typing is considered as ended.
   ; ... the application state gets updated with the field's content.
   ; ... the :on-type-ended event is being dispatched.
   ;
   ; This function doesn't take the field's content as its argument, because
-  ; it's called with a timeout and the field's content can change during the timeout.
-  (let [timestamp  (time/elapsed)
-        changed-at (get-in @plain-field.state/FIELD-STATES [field-id :changed-at])]
-       (when (> timestamp (+ changed-at plain-field.config/TYPE-ENDED-AFTER))
-             (r/dispatch-sync [:elements.plain-field/type-ended field-id field-props]))))
+  ; it's called with a delay and the field's content can change during that time.
+  (when (plain-field.env/type-ended? field-id)
+        (r/dispatch-sync [:elements.plain-field/type-ended field-id field-props])))
 
 (defn field-changed-f
   ; @ignore
