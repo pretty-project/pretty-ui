@@ -39,7 +39,7 @@
        :on-mouse-down (fn [e] (.preventDefault e)
                               (when (input.env/input-focused? field-id)
                                     (r/dispatch-fx [:elements.plain-field/focus-field! field-id])))}
-      (merge (if disabled?        {:disabled   "1" :data-disabled true})
+      (merge (if disabled?        {:disabled   "1" :data-disabled true :data-cursor :default})
              (if-not tab-indexed? {:tab-index "-1"})
              (if-not disabled?    {:on-mouse-up #(do (r/dispatch on-click))}))
       (pretty-css/color-attributes  adornment-props)
@@ -145,7 +145,7 @@
   ;  :disabled? (boolean)(opt)
   ;  :max-length (integer)(opt)
   ;  :type (keyword)(opt)
-  ;   :number, :password, :text}
+  ;   :email, :number, :password, :tel, :text}
   ;
   ; @return (map)
   ; {:auto-complete (keyword)
@@ -159,7 +159,7 @@
   [field-id {:keys [autofill-name date-from date-to disabled? max-length type] :as field-props}]
   ; HACK#9760 (source-code/cljs/elements/plain_field/utils.cljs)
   ;
-  ; The {:type :date} fields range could being set by the :min and :max properties.
+  ; The {:type :date} fields range could be set by the :min and :max properties.
   (-> (plain-field.attributes/field-input-attributes field-id field-props)
       (merge {:class      :e-text-field--input
               :max-length max-length

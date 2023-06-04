@@ -198,8 +198,9 @@
   ;  :max-length (integer)(opt)
   ;  :modifier-f (function)(opt)
   ;  :on-blur (Re-Frame metamorphic-event)(opt)
-  ;   This event takes the field content as its last parameter
+  ;   This event takes the field content as its last parameter.
   ;  :on-changed (Re-Frame metamorphic-event)(opt)
+  ;   This event takes the field content as its last parameter.
   ;   It happens BEFORE the application state gets updated with the actual value!
   ;   If you want to get the ACTUAL value read from the application state, use the
   ;   :on-type-ended event instead!
@@ -208,7 +209,7 @@
   ;  :on-enter (Re-Frame metamorphic-event)(opt)
   ;   This event takes the field content as its last parameter.
   ;  :on-focus (Re-Frame metamorphic-event)(opt)
-  ;   This event takes the field content as its last parameter
+  ;   This event takes the field content as its last parameter.
   ;  :on-invalid (Re-Frame metamorphic-event)(opt)
   ;   This event takes the field content and the invalid message as its last parameter.
   ;  :on-mount (Re-Frame metamorphic-event)(opt)
@@ -232,7 +233,7 @@
   ;    :content (metamorphic-content)(opt)
   ;    :indent (map)(opt)}
   ;  :type (keyword)(opt)
-  ;   :number, :password, :text
+  ;   :email, :number, :password, :tel, :text
   ;   Default: :text
   ;  :validate-when-change? (boolean)(opt)
   ;   Validates the value when it changes.

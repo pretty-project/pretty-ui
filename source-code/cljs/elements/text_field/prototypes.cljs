@@ -112,7 +112,7 @@
            :width           :content}
           (fn [%] (merge % (if border-color {:border-position :all
                                              :border-width    :xxs})
-                          (if marker-color {:marker-position :tr})))
+                           (if marker-color {:marker-position :tr})))
           (fn [%] (merge % field-props))
           (fn [%] (merge % {:on-blur       {:dispatch-n [on-blur       [:elements.text-field/field-blurred field-id %]]}
                             :on-focus      {:dispatch-n [on-focus      [:elements.text-field/field-focused field-id %]]}

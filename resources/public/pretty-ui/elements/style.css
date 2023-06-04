@@ -1498,6 +1498,22 @@ textarea.e-text-field--input {
 }
 
 /*** Surface ***/
+
+/*** Number field ***/
+
+.e-text-field--input::-webkit-outer-spin-button,
+.e-text-field--input::-webkit-inner-spin-button {
+  /* Chrome, Safari, Edge, Opera */
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.e-text-field--input[type="number"][type=number] {
+  /* Firefox */
+  -moz-appearance: textfield;
+}
+
+/*** Number field ***/
 /***** Text field *****/
 
 

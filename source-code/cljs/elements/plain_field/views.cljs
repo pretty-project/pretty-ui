@@ -113,6 +113,8 @@
   ;  :modifier-f (function)(opt)
   ;  :on-blur (Re-Frame metamorphic-event)(opt)
   ;   This event takes the field content as its last parameter
+  ;  :on-change-f (function)(opt)
+  ;   This function takes the field-id, the field-props and the change event as its parameters.
   ;  :on-changed (Re-Frame metamorphic-event)(opt)
   ;   It happens BEFORE the application state gets updated with the actual value!
   ;   If you want to get the ACTUAL value from the application state, use the

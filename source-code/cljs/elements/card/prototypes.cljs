@@ -12,6 +12,7 @@
   ; @param (map) card-props
   ; {:badge-content (metamorphic-content)(opt)
   ;  :border-color (keyword)(opt)
+  ;  :cursor (keyword)(opt)
   ;  :disabled? (boolean)(opt)
   ;  :href (string)(opt)
   ;  :marker-color (keyword)(opt)
@@ -28,7 +29,8 @@
   ;  :hover-color (keyword)
   ;  :marker-color (keyword)
   ;  :width (keyword)}
-  [{:keys [badge-content border-color disabled? href marker-color on-click] :as card-props}]
+  [{:keys [badge-content border-color cursor disabled? href marker-color on-click] :as card-props}]
+  ; XXX#5603 (source-code/cljs/elements/button/prototypes.cljs)
   (merge {:height :auto
           :width  :content}
          (if badge-content {:badge-color     :primary
@@ -38,7 +40,7 @@
          (if marker-color  {:marker-position :tr})
          (if href          {:cursor          :pointer})
          (if on-click      {:cursor          :pointer})
-         (if disabled?     {:cursor          :default})
          (param card-props)
          (if badge-content {:badge-content (metamorphic-content/compose badge-content)})
-         (if disabled?     {:hover-color :none})))
+         (if disabled?     {:cursor      (or cursor :default)
+                            :hover-color :none})))

@@ -27,7 +27,7 @@
   ;  :tab-index (integer)
   ;  :type (keyword)
   ;  :value (string)}
-  [field-id {:keys [disabled?] :as field-props}]
+  [field-id {:keys [disabled? on-change-f] :as field-props}]
   ; XXX#4460 (source-code/cljs/elements/button/views.cljs)
   ;
   ; BUG#8806

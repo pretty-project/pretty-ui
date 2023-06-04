@@ -10,6 +10,7 @@
   ;
   ; @param (map) toggle-props
   ; {:border-color (keyword or string)(opt)}
+  ;  :cursor (keyword)(opt)
   ;  :disabled? (boolean)(opt)
   ;  :marker-color (keyword)(opt)}
   ;
@@ -21,13 +22,14 @@
   ;  :hover-color (keyword)
   ;  :marker-position (keyword)
   ;  :width (keyword)}
-  [{:keys [border-color disabled? marker-color] :as toggle-props}]
+  [{:keys [border-color cursor disabled? marker-color] :as toggle-props}]
+  ; XXX#5603 (source-code/cljs/elements/button/prototypes.cljs)
   (merge {:height :auto
           :width  :content}
          (if marker-color {:marker-position :tr})
          (if border-color {:border-position :all
                            :border-width    :xxs})
-         (if disabled?    {:cursor          :default}
-                          {:cursor          :pointer})
          (param toggle-props)
-         (if disabled? {:hover-color :none})))
+         (if disabled? {:cursor      (or cursor :default)
+                        :hover-color :none}
+                       {:cursor      :pointer})))

@@ -12,6 +12,7 @@
   ; @param (map) button-props
   ; {:badge-content (metamorphic-content)(opt)
   ;  :border-color (keyword)(opt)
+  ;  :cursor (keyword)(opt)
   ;  :disabled? (boolean)(opt)
   ;  :font-size (keyword)(opt)
   ;  :icon (keyword)(opt)
@@ -43,15 +44,15 @@
   ;  :tooltip-content (string)
   ;  :tooltip-position (keyword)
   ;  :width (keyword)}
-  [{:keys [badge-content border-color disabled? font-size icon label marker-color progress tooltip-content] :as button-props}]
+  [{:keys [badge-content border-color cursor disabled? font-size icon label marker-color progress tooltip-content] :as button-props}]
+  ; XXX#5603
+  ; Uses the default cursor instead of the pointer cursor when disabled if no custom cursor has been set.
   (merge {:font-size        :s
           :font-weight      :medium
           :horizontal-align :center
           :line-height      :text-block
           :text-overflow    :no-wrap
           :width            :content}
-         (if disabled?       {:cursor :default}
-                             {:cursor :pointer})
          (if badge-content   {:badge-color        :primary
                               :badge-position     :tr})
          (if border-color    {:border-position    :all
@@ -68,4 +69,6 @@
          (if badge-content   {:badge-content   (metamorphic-content/compose badge-content)})
          (if label           {:label           (metamorphic-content/compose label)})
          (if tooltip-content {:tooltip-content (metamorphic-content/compose tooltip-content)})
-         (if disabled?       {:hover-color :none})))
+         (if disabled?       {:cursor      (or cursor :default)
+                              :hover-color :none}
+                             {:cursor      :pointer})))
