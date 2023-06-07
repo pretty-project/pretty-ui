@@ -24,7 +24,7 @@
   ; @param (map) group-props
   ; {:class (keyword or keywords in vector)(opt)
   ;  :default-props (map)(opt)
-  ;  :element (symbol)
+  ;  :element (Reagent component symbol)
   ;  :group-items (maps in vector)
   ;  :indent (map)(opt)
   ;   {:bottom (keyword)(opt)

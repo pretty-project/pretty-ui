@@ -46,7 +46,7 @@
 
 (defn element
   ; XXX#0731
-  ; Some other items based on the notification-bubble element and their documentations link here.
+  ; Some other items based on the 'notification-bubble' element and their documentations link here.
   ;
   ; @param (keyword) bubble-id
   ; @param (map) bubble-props

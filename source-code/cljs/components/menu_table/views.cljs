@@ -1,6 +1,6 @@
 
 (ns components.menu-table.views
-    (:require [components.data-table.views      :as data-table.views]
+    (:require ;[components.data-table.views      :as data-table.views]
               [components.menu-table.helpers    :as menu-table.helpers]
               [components.menu-table.prototypes :as menu-table.prototypes]
               [elements.api                     :as elements]
@@ -64,9 +64,9 @@
   (letfn [(f [rows row-dex item-props]
              (conj rows [(menu-item-label-props  row-dex item-props)
                          (menu-item-link-props   row-dex item-props)
-                         (menu-item-target-props row-dex item-props)]))]
-         [data-table.views/component {:rows (vector/concat-items (table-header)
-                                                                 (reduce-kv f [] items))}]))
+                         (menu-item-target-props row-dex item-props)]))]))
+         ;[data-table.views/component {:rows (vector/concat-items (table-header)
+          ;                                                       (reduce-kv f [] items))]))]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

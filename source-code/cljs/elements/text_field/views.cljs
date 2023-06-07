@@ -111,10 +111,10 @@
 
 (defn element
   ; XXX#0711
-  ; Some other items based on the text-field element and their documentations link here.
+  ; Some other items based on the 'text-field' element and their documentations link here.
   ;
   ; @description
-  ; The text-field element writes its actual value into the Re-Frame state
+  ; The 'text-field' element writes its actual value into the Re-Frame state
   ; delayed after the user stopped typing or without a delay when the user
   ; leaves the field!
   ;

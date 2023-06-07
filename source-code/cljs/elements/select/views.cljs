@@ -1,6 +1,7 @@
 
 (ns elements.select.views
     (:require [elements.button.views      :as button.views]
+              [elements.element.views     :as element.views]
               [elements.icon-button.views :as icon-button.views]
               [elements.input.env         :as input.env]
               [elements.select.attributes :as select.attributes]
@@ -10,7 +11,6 @@
               [hiccup.api                 :as hiccup]
               [layouts.api                :as layouts]
               [metamorphic-content.api    :as metamorphic-content]
-              [pretty-css.api             :as pretty-css]
               [random.api                 :as random]
               [re-frame.api               :as r]
               [reagent.api                :as reagent]
@@ -109,14 +109,17 @@
   ; @param (keyword) select-id
   ; @param (map) select-props
   [select-id select-props]
-  (let [on-click {:fx [:elements.input/render-popup! select-id select-props]}
-        label    (select.env/select-button-label select-id select-props)]
-       [:div (pretty-css/effect-attributes {:class :e-select-button} select-props)
-             [button.views/element select-id (assoc select-props :class         :e-select-button
+  (let [on-click     {:fx [:elements.input/render-popup! select-id select-props]}
+        button-label (select.env/select-button-label select-id select-props)]
+       [:div (select.attributes/select-button-attributes select-id select-props)
+             [element.views/element-label select-id select-props]
+             [button.views/element select-id (assoc select-props :class         nil
+                                                                 :gap           :auto
                                                                  :icon          :unfold_more
                                                                  :icon-position :right
-                                                                 :label         label
-                                                                 :on-click      on-click)]]))
+                                                                 :label         button-label
+                                                                 :on-click      on-click
+                                                                 :outdent       nil)]]))
 
 (defn- select-button-layout
   ; @ignore
@@ -167,6 +170,10 @@
        [select-options select-id select-props]])
 
 (defn element
+  ; XXX#0714 (source-code/cljs/elements/button/views.cljs)
+  ; The 'select' element is based on the 'button' element.
+  ; For more information check out the documentation of the 'button' element.
+  ;
   ; @param (keyword)(opt) select-id
   ; @param (map) select-props
   ; {:add-option-f (function)(opt)
@@ -174,40 +181,17 @@
   ;  :autoclear? (boolean)(opt)
   ;   Removes the value stored in the application state (on the value-path)
   ;   when the element unmounts.
-  ;  :border-color (keyword)(opt)
-  ;   :default, :highlight, :invert, :primary, :secondary, :success, :transparent, :warning
-  ;  :border-position (keyword)(opt)
-  ;   :all, :bottom, :top, :left, :right, :horizontal, :vertical
-  ;  :border-radius (map)(opt)
-  ;   {:tl (keyword)(opt)
-  ;    :tr (keyword)(opt)
-  ;    :br (keyword)(opt)
-  ;    :bl (keyword)(opt)
-  ;    :all (keyword)(opt)
-  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
-  ;  :border-width (keyword)(opt)
-  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  ;  :class (keyword or keywords in vector)(opt)
-  ;  :disabled? (boolean)(opt)
   ;  :extendable? (boolean)(opt)
   ;  :helper (metamorphic-content)(opt)
-  ;  :indent (map)(opt)
-  ;   {:bottom (keyword)(opt)
-  ;    :left (keyword)(opt)
-  ;    :right (keyword)(opt)
-  ;    :top (keyword)(opt)
-  ;    :horizontal (keyword)(opt)
-  ;    :vertical (keyword)(opt)
-  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
   ;  :info-text (metamorphic-content)(opt)
   ;  :initial-options (vector)(opt)
   ;  :initial-value (*)(opt)
   ;  :label (metamorphic-content)(opt)
+  ;   Label of the button if the :layout property is :button or :icon-button,
+  ;   otherwise it is displayed as the element label above the select button.
   ;  :layout (keyword)(opt)
   ;   :button, :icon-button, :select-button
   ;   Default: :select-button
-  ;  :marker-color (keyword)(opt)
-  ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
   ;  :on-select (Re-Frame metamorphic-event)(opt)
   ;  :option-field-placeholder (metamorphic-content)(opt)
   ;   Default: :add!
@@ -220,8 +204,6 @@
   ;  :options-path (Re-Frame path vector)(opt)
   ;  :options-placeholder (metamorphic-content)(opt)
   ;   Default: :no-options
-  ;  :outdent (map)(opt)
-  ;   Same as the :indent property.
   ;  :popup (map)(opt)
   ;   {:border-color (keyword or string)(opt)
   ;    :border-position (keyword)(opt)
@@ -237,7 +219,6 @@
   ;    :outdent (map)(opt)}
   ;  :reveal-effect (keyword)(opt)
   ;   :delayed, :opacity
-  ;  :style (map)(opt)
   ;  :value-path (Re-Frame path vector)(opt)}
   ;
   ; @usage

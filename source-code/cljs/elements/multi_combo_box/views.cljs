@@ -56,11 +56,11 @@
 
 (defn element
   ; XXX#0711 (source-code/cljs/elements/text_field/views.cljs)
-  ; The multi-combo-box element is based on the text-field element.
-  ; For more information check out the documentation of the text-field element.
+  ; The 'multi-combo-box' element is based on the 'text-field' element.
+  ; For more information check out the documentation of the 'text-field' element.
   ;
   ; @description
-  ; The multi-combo-box element writes its actual value into the Re-Frame state
+  ; The 'multi-combo-box' element writes its actual value into the Re-Frame state
   ; delayed after the user stopped typing or without a delay when the user
   ; leaves the field!
   ;
@@ -78,7 +78,7 @@
   ;   Default: return
   ;  :option-value-f (function)(opt)
   ;   Default: return
-  ;  :option-component (component)(opt)
+  ;  :option-component (Reagent component symbol)(opt)
   ;   Default: elements.combo-box/default-option-component
   ;  :options (vector)(opt)
   ;  :options-path (Re-Frame path vector)(opt)}

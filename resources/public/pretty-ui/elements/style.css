@@ -1111,7 +1111,7 @@
 
 .e-select-button {
   /* XXX#6668 */
-  width: fit-content;
+  -width: fit-content;
 }
 
 /*** Select button element ***/
@@ -1119,15 +1119,15 @@
 /*** Select button body ***/
 
 .e-select-button .e-button--body {
-  justify-content: space-between;
+  -justify-content: space-between;
 }
 
 .e-select-button .e-button--label {
-  margin-left: 12px;
+  -margin-left: 12px;
 }
 
 .e-select-button .e-button--icon {
-  margin-right: 12px;
+  -margin-right: 12px;
 }
 
 /*** Select button body ***/

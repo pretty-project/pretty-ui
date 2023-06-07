@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn mount-animation
-  ; @param (component) component
+  ; @param (Reagent component) component
   ; @param (map) options
   ; {:animation-timeout (ms)(opt)
   ;   Default: 350

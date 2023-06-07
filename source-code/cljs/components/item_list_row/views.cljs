@@ -23,7 +23,7 @@
   ; @param (keyword) row-id
   ; @param (map) row-props
   ; {:border (keyword)(opt)
-  ;  :cells (components and/or symbols in vector)}
+  ;  :cells (Reagent components and/or Reagent component symbols in vector)}
   [row-id {:keys [border cells] :as row-props}]
   [:div.c-item-list-row (item-list-row.helpers/row-attributes row-id row-props)
                         [row-cells row-id row-props]])

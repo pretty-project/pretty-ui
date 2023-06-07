@@ -9,8 +9,8 @@
 
 (defn component
   ; XXX#0439 (source-code/cljs/elements/label/views.cljs)
-  ; The popup-menu-title component is based on the label element.
-  ; For more information check out the documentation of the label element.
+  ; The 'popup-menu-title' component is based on the 'label' element.
+  ; For more information check out the documentation of the 'label' element.
   ;
   ; @param (keyword)(opt) title-id
   ; @param (map) title-props

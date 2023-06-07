@@ -50,7 +50,7 @@
 
 (defn element
   ; XXX#0713
-  ; Some other items based on the menu-bar element and their documentations link here.
+  ; Some other items based on the 'menu-bar' element and their documentations link here.
   ;
   ; @description
   ; You can set the default item styles and settings by using the :item-default

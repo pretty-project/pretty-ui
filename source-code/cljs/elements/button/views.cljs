@@ -42,7 +42,7 @@
 
 (defn element
   ; XXX#0714
-  ; Some other items based on the button element and their documentations link here.
+  ; Some other items based on the 'button' element and their documentations link here.
   ;
   ; @warning
   ; BUG#9912

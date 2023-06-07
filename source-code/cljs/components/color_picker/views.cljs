@@ -46,8 +46,8 @@
 
 (defn component
   ; XXX#0709 (source-code/cljs/elements/color_selector/views.cljs)
-  ; The color-picker component is based on the color-selector element.
-  ; For more information check out the documentation of the color-selector element.
+  ; The 'color-picker' component is based on the 'color-selector' element.
+  ; For more information check out the documentation of the 'color-selector' element.
   ;
   ; @param (keyword) picker-id
   ; @param (map) picker-props

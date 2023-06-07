@@ -9,8 +9,8 @@
 
 (defn component
   ; XXX#0731 (source-code/cljs/elements/notification_bubble/views.cljs)
-  ; The notification-bubble component is based on the notification-bubble element.
-  ; For more information check out the documentation of the notification-bubble element.
+  ; The 'notification-bubble' component is based on the 'notification-bubble' element.
+  ; For more information check out the documentation of the 'notification-bubble' element.
   ;
   ; @param (keyword) bubble-id
   ; @param (map) bubble-props

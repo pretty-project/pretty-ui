@@ -27,7 +27,7 @@
   ;
   ; @param (keyword) list-id
   ; @param (map) list-props
-  ; {:item-element (symbol)
+  ; {:item-element (Reagent component symbol)
   ;  :value-path (Re-Frame path vector)}
   [list-id {:keys [item-element value-path] :as list-props}]
   (letfn [(f [items item-dex _] (conj items [item-element item-dex]))]
@@ -52,7 +52,7 @@
   ; {:class (keyword or keywords in vector)(opt)
   ;  :disabled? (boolean)(opt)
   ;  :indent (map)(opt)
-  ;  :item-element (symbol)
+  ;  :item-element (Reagent component symbol)
   ;  :outdent (map)(opt)
   ;  :placeholder (map)(opt)
   ;   {:illustration (string)(opt)

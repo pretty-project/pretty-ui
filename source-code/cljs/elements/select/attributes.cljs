@@ -1,7 +1,8 @@
 
 (ns elements.select.attributes
-    (:require [dom.api      :as dom]
-              [re-frame.api :as r]))
+    (:require [dom.api        :as dom]
+              [pretty-css.api :as pretty-css]
+              [re-frame.api   :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -67,3 +68,20 @@
    :data-font-weight    :medium
    :data-letter-spacing :auto
    :data-line-height    :text-block})
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn select-button-attributes
+  ; @ignore
+  ;
+  ; @param (keyword) select-id
+  ; @param (map) select-props
+  ;
+  ; @return (map)
+  ; {}
+  [_ select-props]
+  (-> {:class :e-select-button}
+      (pretty-css/default-attributes select-props)
+      (pretty-css/outdent-attributes select-props)
+      (pretty-css/effect-attributes  select-props)))

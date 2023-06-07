@@ -9,11 +9,11 @@
 
 (defn element
   ; XXX#0711 (source-code/cljs/elements/text_field/views.cljs)
-  ; The search-field element is based on the text-field element.
-  ; For more information check out the documentation of the text-field element.
+  ; The 'search-field' element is based on the 'text-field' element.
+  ; For more information check out the documentation of the 'text-field' element.
   ;
   ; @description
-  ; The search-field element writes its actual value into the Re-Frame state
+  ; The 'search-field' element writes its actual value into the Re-Frame state
   ; delayed after the user stopped typing or without a delay when the user
   ; leaves the field!
   ;

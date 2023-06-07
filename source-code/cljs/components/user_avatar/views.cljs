@@ -44,7 +44,7 @@
 
 (defn component
   ; XXX#0720
-  ; Some other items based on the user-avatar component and their documentations link here.
+  ; Some other items based on the 'user-avatar' component and their documentations link here.
   ;
   ; @param (keyword)(opt) avatar-id
   ; @param (map) avatar-props

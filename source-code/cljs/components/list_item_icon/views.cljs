@@ -15,8 +15,8 @@
 
 (defn component
   ; XXX#0709 (source-code/cljs/elements/icon/views.cljs)
-  ; The list-item-icon component is based on the icon element.
-  ; For more information check out the documentation of the icon element.
+  ; The 'list-item-icon' component is based on the 'icon' element.
+  ; For more information check out the documentation of the 'icon' element.
   ;
   ; @param (keyword)(opt) icon-id
   ; @param (map) icon-props

@@ -9,8 +9,8 @@
 
 (defn component
   ; XXX#0714 (source-code/cljs/elements/button/views.cljs)
-  ; The content-swapper-header component is based on the button element.
-  ; For more information check out the documentation of the button element.
+  ; The 'content-swapper-header' component is based on the 'button' element.
+  ; For more information check out the documentation of the 'button' element.
   ;
   ; @param (keyword)(opt) header-id
   ; @param (map) header-props

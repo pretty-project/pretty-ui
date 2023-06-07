@@ -32,11 +32,11 @@
 
 (defn component
   ; XXX#0715 (source-code/cljs/elements/dropdown_menu/views.cljs)
-  ; The multi-menu component is based on the dropdown-menu element.
-  ; For more information check out the documentation of the dropdown-menu element.
+  ; The 'multi-menu' component is based on the 'dropdown-menu' element.
+  ; For more information check out the documentation of the 'dropdown-menu' element.
   ;
   ; @description
-  ; This component implements the dropdown-menu element and in case of the viewport
+  ; This component implements the 'dropdown-menu' element and in case of the viewport
   ; width is smaller than the given threshold, it displays the menu items
   ; on a sidebar menu and replaces the menu bar with a single menu button.
   ;

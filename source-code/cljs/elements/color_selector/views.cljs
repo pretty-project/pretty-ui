@@ -86,11 +86,11 @@
 
 (defn element
   ; XXX#0714 (source-code/cljs/elements/button/views.cljs)
-  ; The color-selector element is based on the button element.
-  ; For more information check out the documentation of the button element.
+  ; The 'color-selector' element is based on the 'button' element.
+  ; For more information check out the documentation of the 'button' element.
   ;
   ; XXX#0709
-  ; Some other items based on the color-selector element and their documentations link here.
+  ; Some other items based on the 'color-selector' element and their documentations link here.
   ;
   ; @param (keyword)(opt) selector-id
   ; @param (map) selector-props

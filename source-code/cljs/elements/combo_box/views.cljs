@@ -19,7 +19,7 @@
   ;
   ; @param (keyword) box-id
   ; @param (map) box-props
-  ; {:option-component (component)(opt)
+  ; {:option-component (Reagent component symbol)(opt)
   ;  :option-label-f (function)}
   ; @param (integer) option-dex
   ; @param (map) option
@@ -70,12 +70,12 @@
 
 (defn element
   ; XXX#0711 (source-code/cljs/elements/text_field/views.cljs)
-  ; The combo-box element is based on the text-field element.
-  ; For more information check out the documentation of the text-field element.
+  ; The 'combo-box' element is based on the 'text-field' element.
+  ; For more information check out the documentation of the 'text-field' element.
   ;
   ; @description
-  ; The combo-box element writes its actual value into the Re-Frame state
-  ; delayed after the user stopped typing or without a delay when the user 
+  ; The 'combo-box' element writes its actual value into the Re-Frame state
+  ; delayed after the user stopped typing or without a delay when the user
   ; leaves the field!
   ;
   ; @param (keyword)(opt) box-id
@@ -86,7 +86,7 @@
   ;   Default: return
   ;  :initial-options (vector)(opt)
   ;  :on-select (Re-Frame metamorphic-event)(opt)
-  ;  :option-component (component)(opt)
+  ;  :option-component (Reagent component symbol)(opt)
   ;   Default: elements.combo-box.views/default-option-component
   ;  :option-label-f (function)(opt)
   ;   Default: return
