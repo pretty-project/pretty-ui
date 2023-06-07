@@ -59,7 +59,7 @@
   ;  :min-value (integer)(opt)
   ;   Default: 0
   ;  :outdent (map)(opt)
-  ;   Same as the :indent property
+  ;   Same as the :indent property.
   ;  :resetable? (boolean)(opt)
   ;  :style (map)(opt)
   ;  :value-path (Re-Frame path vector)(opt)

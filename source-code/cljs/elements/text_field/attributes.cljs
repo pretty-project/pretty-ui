@@ -31,7 +31,7 @@
   ; if the on-mouse-down event prevented.
   ;
   ; If the user clicks on a field accessory (adornment, surface, placeholder, etc.)
-  ; the field has been focused!
+  ; the field has get the focus!
   (-> {:class                 :e-text-field--adornment
        :data-selectable       false
        :data-tooltip-content  (metamorphic-content/compose tooltip-content)

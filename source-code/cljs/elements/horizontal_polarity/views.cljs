@@ -44,7 +44,7 @@
   ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
   ;  :middle-content (metamorphic-content)
   ;  :outdent (map)(opt)
-  ;   Same as the :indent property
+  ;   Same as the :indent property.
   ;  :style (map)(opt)
   ;  :start-content (metamorphic-content)(opt)
   ;  :vertical-align (keyword)(opt)

@@ -10,48 +10,23 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- text-placeholder
-  ; @ignore
-  ;
-  ; @param (keyword) text-id
-  ; @param (map) text-props
-  ; {:placeholder (metamorphic-content)(opt)}
-  [_ {:keys [placeholder]}]
-  ; BUG#9811 (source-code/cljs/elements/label/views.cljs)
-  [:div {:class           :e-text--placeholder
-         :data-selectable false}
-        (if placeholder (metamorphic-content/compose placeholder)
-                        "\u00A0")])
-
-(defn- text-content
-  ; @ignore
-  ;
-  ; @param (keyword) text-id
-  ; @param (map) text-props
-  ; {:content (metamorphic-content)
-  ;  :on-copy (Re-Frame metamorphic-event)(opt)}
-  [text-id {:keys [content on-copy] :as text-props}]
-  ; XXX#7009 (source-code/cljs/elements/label/prototypes.cljs)
-  (if on-copy [:div (text.attributes/copyable-attributes text-id text-props)
-                    [:div (text.attributes/content-attributes text-id text-props)
-                          (hiccup/parse-newlines [:<> content])]]
-              [:<>  [:div (text.attributes/content-attributes text-id text-props)
-                          (hiccup/parse-newlines [:<> content])]]))
-
 (defn- text
   ; @ignore
   ;
   ; @param (keyword) text-id
   ; @param (map) text-props
-  ; {:content (string)}
-  [text-id {:keys [content] :as text-props}]
-  ; XXX#7009 (source-code/cljs/elements/label/prototypes.cljs)
+  ; {:content (metamorphic-content)(opt)
+  ;  :on-copy (Re-Frame metamorphic-event)(opt)
+  ;  :placeholder (metamorphic-content)(opt)}
+  [text-id {:keys [content on-copy placeholder] :as text-props}]
   [:div (text.attributes/text-attributes text-id text-props)
         [element.views/element-label  text-id text-props]
         [:div (text.attributes/text-body-attributes text-id text-props)
-              (if (empty? content)
-                  [text-placeholder text-id text-props]
-                  [text-content     text-id text-props])]])
+              (if on-copy [:div (text.attributes/copyable-attributes text-id text-props)
+                                [:div (text.attributes/content-attributes text-id text-props)
+                                      (hiccup/parse-newlines [:<> (metamorphic-content/compose content placeholder)])]]
+                          [:<>  [:div (text.attributes/content-attributes text-id text-props)
+                                      (hiccup/parse-newlines [:<> (metamorphic-content/compose content placeholder)])]])]])
 
 (defn element
   ; @param (keyword)(opt) text-id
@@ -89,10 +64,11 @@
   ;  :min-width (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;  :on-copy (Re-Frame metamorphic-event)(opt)
-  ;   This event takes the text content as its last parameter
+  ;   This event takes the text content as its last parameter.
   ;  :outdent (map)(opt)
-  ;   Same as the :indent property
+  ;   Same as the :indent property.
   ;  :placeholder (metamorphic-content)(opt)
+  ;   Default: "\u00A0"
   ;  :selectable? (boolean)(opt)
   ;   Default: true
   ;  :style (map)(opt)

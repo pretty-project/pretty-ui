@@ -106,7 +106,7 @@
   ;   Default: :vertical
   ;  :options-path (Re-Frame path vector)(opt)
   ;  :outdent (map)(opt)
-  ;   Same as the :indent property
+  ;   Same as the :indent property.
   ;  :style (map)(opt)
   ;  :value-path (Re-Frame path vector)(opt)}
   ;

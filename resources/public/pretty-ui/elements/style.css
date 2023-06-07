@@ -543,6 +543,33 @@
 
 
 
+/***** Data table *****/
+/*** Column ***/
+
+.e-data-table--column {
+  display: grid
+}
+
+/*** Column ***/
+
+/*** Row ***/
+
+.e-data-table--row {
+  display: grid
+}
+
+/*** Row ***/
+
+/*** Cell ***/
+
+.e-data-table--cell {
+}
+
+/*** Cell ***/
+/***** Data table *****/
+
+
+
 /***** Digit field *****/
 /***** Element *****/
 
@@ -1362,14 +1389,6 @@
 }
 
 /*** Copyable ***/
-
-/*** Placeholder ***/
-
-.e-text--placeholder {
-  color: var( --color-highlight );
-}
-
-/*** Placeholder ***/
 /***** Text *****/
 
 

@@ -51,7 +51,7 @@
           :font-weight      :medium
           :horizontal-align :center
           :line-height      :text-block
-          :text-overflow    :no-wrap
+          :text-overflow    :hidden
           :width            :content}
          (if badge-content   {:badge-color        :primary
                               :badge-position     :tr})

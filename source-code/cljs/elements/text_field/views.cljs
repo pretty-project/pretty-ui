@@ -221,7 +221,7 @@
   ;  :on-valid (Re-Frame metamorphic-event)(opt)
   ;   This event takes the field content as its last parameter.
   ;  :outdent (map)(opt)
-  ;   Same as the :indent property
+  ;   Same as the :indent property.
   ;  :placeholder (metamorphic-content)(opt)
   ;  :reveal-effect (keyword)(opt)
   ;   :delayed, :opacity

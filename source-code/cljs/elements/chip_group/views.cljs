@@ -36,10 +36,7 @@
                   (reduce-kv f [:div {:class :e-chip-group--chips}] chips))
 
            ; Displaying the placeholder if the chips is NOT a nonempty vector
-           (if placeholder [:div {:class               :e-chip-group--chips-placeholder
-                                  :data-font-size      :s
-                                  :data-letter-spacing :auto
-                                  :data-line-height    :text-block}
+           (if placeholder [:div (chip-group.attributes/chip-group-placeholder-attributes group-id group-props)
                                  (metamorphic-content/compose placeholder)]))))
 
 (defn- chip-group
@@ -79,7 +76,7 @@
   ;  :info-text (metamorphic-content)(opt)
   ;  :label (metamorphic-content)(opt)
   ;  :outdent (map)(opt)
-  ;   Same as the :indent property
+  ;   Same as the :indent property.
   ;  :placeholder (metamorphic-content)(opt)
   ;  :style (map)(opt)}
   ;

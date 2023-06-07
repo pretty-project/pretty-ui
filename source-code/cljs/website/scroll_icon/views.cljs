@@ -25,7 +25,7 @@
   ;  :color (string)(opt)
   ;   Default: "#FFFFFF"
   ;  :outdent (map)(opt)
-  ;   Same as the :indent property
+  ;   Same as the :indent property.
   ;  :style (map)(opt)}
   ;
   ; @usage

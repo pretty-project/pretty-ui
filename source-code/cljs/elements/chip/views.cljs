@@ -22,12 +22,7 @@
                                [:i {:class :e-chip--primary-button-icon :data-icon-family icon-family} icon]]
                       [:div    {:class :e-chip--primary-button--placeholder}])
               (if icon  [:i {:class :e-chip--icon :data-icon-family icon-family :data-icon-size :xs} icon])
-              (if label [:div {:class               :e-chip--label
-                               :data-font-size      :xs
-                               :data-font-weight    :medium
-                               :data-letter-spacing :auto
-                               :data-line-height    :text-block
-                               :data-text-overflow  :no-wrap}
+              (if label [:div (chip.attributes/chip-label-attributes chip-id chip-props)
                               (metamorphic-content/compose label)])]])
 
 (defn element
@@ -61,7 +56,7 @@
   ;  :on-click (Re-Frame metamorphic-event)(opt)
   ;   TODO Makes the chip clickable
   ;  :outdent (map)(opt)
-  ;   Same as the :indent property
+  ;   Same as the :indent property.
   ;  :primary-button (map)(opt)
   ;   {:icon (keyword)
   ;    :icon-family (keyword)(opt)

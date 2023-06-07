@@ -42,7 +42,7 @@
   ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
   ;  :languages (keywords in vector)
   ;  :outdent (map)(opt)
-  ;   Same as the :indent property
+  ;   Same as the :indent property.
   ;  :style (map)(opt)}
   ;
   ; @usage

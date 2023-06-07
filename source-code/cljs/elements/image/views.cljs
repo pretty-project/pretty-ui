@@ -46,7 +46,7 @@
   ;   Default: false
   ;   TODO
   ;  :outdent (map)(opt)
-  ;   Same as the :indent property
+  ;   Same as the :indent property.
   ;  :src (string)(opt)
   ;  :style (map)(opt)
   ;  :width (keyword)(opt)

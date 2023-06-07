@@ -10,25 +10,24 @@
   ; @ignore
   ;
   ; @param (map) text-props
-  ; {:content (metamorphic-content)(opt)}
   ;
   ; @return (map)
-  ; {:content (string)
-  ;  :font-size (keyword)
+  ; {:font-size (keyword)
   ;  :font-weight (keyword)
   ;  :horizontal-align (keyword)
   ;  :line-height (keyword)
+  ;  :placeholder (metamorphic-content)
   ;  :selectable? (boolean)
   ;  :text-overflow (keyword)
   ;  :width (keyword)}
-  [{:keys [content] :as text-props}]
+  [text-props]
+  ; BUG#9811 (source-code/cljs/elements/label/views.cljs)
   (merge {:font-size        :s
           :font-weight      :normal
           :horizontal-align :left
           :line-height      :text-block
+          :placeholder      "\u00A0"
           :selectable?      true
           :text-overflow    :wrap
           :width            :content}
-         (param text-props)
-         ; XXX#7009 (source-code/cljs/elements/label/prototypes.cljs)
-         {:content (metamorphic-content/compose content)}))
+         (param text-props)))

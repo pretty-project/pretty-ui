@@ -22,12 +22,12 @@
   [_ {:keys [colors size]} dex color]
   ; W:  60px
   ; H:  120px
-  ; Do: W                 = 60px
-  ; Di: W - 2stroke-width = 56px
-  ; Ro: Do / 2            = 30px
-  ; Ri: Di / 2            = 28px
-  ; Rc: (Do + Di) / 2     = 29px
-  ; CIRCUM: 2Rc * Pi      = 185.35
+  ; Do: W                    = 60px
+  ; Di: W - 2 * stroke-width = 56px
+  ; Ro: Do / 2               = 30px
+  ; Ri: Di / 2               = 28px
+  ; Rc: (Do + Di) / 2        = 29px
+  ; CIRCUM: 2Rc * Pi         = 185.35
   (let [radius-center    (dec (/ size 2))
         circum           (math/circum radius-center)
         percent          (/ 100 (count colors))

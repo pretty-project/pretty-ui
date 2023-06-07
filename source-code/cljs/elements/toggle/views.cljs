@@ -67,7 +67,7 @@
   ;  :on-click (Re-Frame metamorphic-event)(opt)
   ;  :on-right-click (Re-Frame metamorphic-event)(opt)
   ;  :outdent (map)(opt)
-  ;   Same as the :indent property
+  ;   Same as the :indent property.
   ;  :style (map)(opt)
   ;  :target (keyword)(opt)
   ;   :blank, :self

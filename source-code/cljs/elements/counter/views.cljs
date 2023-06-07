@@ -73,7 +73,7 @@
   ;  :max-value (integer)(opt)
   ;  :min-value (integer)(opt)
   ;  :outdent (map)(opt)
-  ;   Same as the :indent property
+  ;   Same as the :indent property.
   ;  :resetable? (boolean)(opt)
   ;   Default: false
   ;  :style (map)(opt)

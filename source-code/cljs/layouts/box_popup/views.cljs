@@ -79,7 +79,7 @@
   ;  :on-mount (Re-Frame metamorphic-event)(opt)
   ;  :on-unmount (Re-Frame metamorphic-event)(opt)
   ;  :outdent (map)(opt)
-  ;   Same as the :indent property
+  ;   Same as the :indent property.
   ;  :stretch-orientation (keyword)(opt)
   ;   :both, :horizontal, :vertical
   ;  :style (map)(opt)}

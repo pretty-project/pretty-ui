@@ -32,11 +32,11 @@
   (-> (if disabled? {:class              :e-toggle--body
                      :disabled           true
                      :data-selectable    false
-                     :data-text-overflow :no-wrap}
+                     :data-text-overflow :hidden}
                     {:class              :e-toggle--body
                      :data-click-effect  :opacity
                      :data-selectable    false
-                     :data-text-overflow :no-wrap
+                     :data-text-overflow :hidden
                      :id                 (hiccup/value toggle-id "body")
                      :on-click           #(r/dispatch on-click)
                      :on-mouse-over      #(r/dispatch on-mouse-over)

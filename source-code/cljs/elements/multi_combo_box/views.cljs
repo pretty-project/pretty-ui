@@ -61,7 +61,7 @@
   ;
   ; @description
   ; The multi-combo-box element writes its actual value into the Re-Frame state
-  ; delayed after the user stopped typing or without a delay when the user 
+  ; delayed after the user stopped typing or without a delay when the user
   ; leaves the field!
   ;
   ; @param (keyword)(opt) box-id
@@ -81,8 +81,7 @@
   ;  :option-component (component)(opt)
   ;   Default: elements.combo-box/default-option-component
   ;  :options (vector)(opt)
-  ;  :options-path (Re-Frame path vector)(opt)
-  ;  :placeholder (metamorphic-content)(opt)}
+  ;  :options-path (Re-Frame path vector)(opt)}
   ;
   ; @usage
   ; [multi-combo-box {...}]

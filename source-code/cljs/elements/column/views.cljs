@@ -64,7 +64,7 @@
   ;  :min-width (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;  :outdent (map)(opt)
-  ;   Same as the :indent property
+  ;   Same as the :indent property.
   ;  :style (map)(opt)
   ;  :vertical-align (keyword)(opt)
   ;   :top, :center, :bottom, :space-around, :space-between, :space-evenly

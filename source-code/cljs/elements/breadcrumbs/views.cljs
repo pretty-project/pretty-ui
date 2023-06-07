@@ -14,17 +14,15 @@
   ;
   ; @param (keyword) breadcrumbs-id
   ; @param (map) breadcrumbs-props
-  ; @param (map) crumb
+  ; @param (map) crumb-props
   ; {:href (string)(opt)
   ;  :label (metamorphic-content)(opt)
   ;  :on-click (Re-Frame metamorphic-event)(opt)
   ;  :placeholder (metamorphic-content)(opt)}
-  [breadcrumbs-id breadcrumbs-props {:keys [href label on-click placeholder] :as crumb}]
+  [breadcrumbs-id breadcrumbs-props {:keys [href label on-click placeholder] :as crumb-props}]
   [(cond href :a on-click :button :else :div)
-   (breadcrumbs.attributes/crumb-attributes breadcrumbs-id breadcrumbs-props crumb)
-   (if (-> label       metamorphic-content/compose empty?)
-       (-> placeholder metamorphic-content/compose)
-       (-> label       metamorphic-content/compose))])
+   (breadcrumbs.attributes/crumb-attributes breadcrumbs-id breadcrumbs-props crumb-props)
+   (metamorphic-content/compose label placeholder)])
 
 (defn- breadcrumbs-crumb-list
   ; @ignore
@@ -76,7 +74,7 @@
   ;    :vertical (keyword)(opt)
   ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
   ;  :outdent (map)(opt)
-  ;   Same as the :indent property
+  ;   Same as the :indent property.
   ;  :style (map)(opt)}
   ;
   ; @usage

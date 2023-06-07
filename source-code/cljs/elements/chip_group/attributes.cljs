@@ -5,6 +5,23 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn chip-group-placeholder-attributes
+  ; @ignore
+  ;
+  ; @param (keyword) group-id
+  ; @param (map) group-props
+  ;
+  ; @return (map)
+  ; {}
+  [_ _]
+  {:class               :e-chip-group--chips-placeholder
+   :data-font-size      :s
+   :data-letter-spacing :auto
+   :data-line-height    :text-block})
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn chip-group-body-attributes
   ; @ignore
   ;

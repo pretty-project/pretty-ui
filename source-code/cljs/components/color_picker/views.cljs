@@ -37,11 +37,11 @@
               (let [picked-colors @(r/subscribe [:get-item value-path])]
 
                    (if (empty? picked-colors)
-                       ; If no color picked, displays a placeholder
+                       ; If no color picked, it displays the placeholder.
                        [:div (color-picker.attributes/placeholder-attributes picker-id picker-props)
                              (metamorphic-content/compose placeholder)
                              [:i {:data-icon-family :material-symbols-outlined :data-icon-size :m} :palette]]
-                       ; If any color picked, displays the picked colors
+                       ; If any color picked, it displays the picked colors.
                        [color-picker-value picker-id picker-props]))]])
 
 (defn component
@@ -67,7 +67,7 @@
   ;  :hover-effect (keyword)(opt)
   ;   :opacity
   ;  :placeholder (metamorphic-content)(opt)
-  ;   Default: "Choose color!"}
+  ;   Default: :choose-color!}
   ;
   ; @usage
   ; [color-picker {...}]

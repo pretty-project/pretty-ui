@@ -2,14 +2,12 @@
 (ns components.api
     (:require [components.consent-dialog.effects]
               [components.context-menu.effects]
-              [components.action-bar.views               :as action-bar.views]
               [components.color-picker.views             :as color-picker.views]
               [components.compact-list-header.views      :as compact-list-header.views]
               [components.content-swapper-button.views   :as content-swapper-button.views]
               [components.content-swapper-header.views   :as content-swapper-header.views]
               [components.copyright-label.views          :as copyright-label.views]
               [components.data-element.views             :as data-element.views]
-              [components.data-table.views               :as data-table.views]
               [components.error-content.views            :as error-content.views]
               [components.error-label.views              :as error-label.views]
               [components.ghost-view.views               :as ghost-view.views]
@@ -42,7 +40,6 @@
               [components.sidebar-button.views           :as sidebar-button.views]
               [components.section-description.views      :as section-description.views]
               [components.section-title.views            :as section-title.views]
-              [components.surface-box.views              :as surface-box.views]
               [components.user-avatar.views              :as user-avatar.views]
               [components.vector-item-controls.views     :as vector-item-controls.views]
               [components.vector-item-list.views         :as vector-item-list.views]
@@ -59,14 +56,12 @@
 ;; ----------------------------------------------------------------------------
 
 ; components.*.views
-(def action-bar_              action-bar.views/component)
 (def color-picker             color-picker.views/component)
 (def compact-list-header      compact-list-header.views/component)
 (def content-swapper-button   content-swapper-button.views/component)
 (def content-swapper-header   content-swapper-header.views/component)
 (def copyright-label          copyright-label.views/component)
 (def data-element             data-element.views/component)
-(def data-table               data-table.views/component)
 (def error-content            error-content.views/component)
 (def error-label              error-label.views/component)
 (def ghost-view               ghost-view.views/component)
@@ -99,7 +94,6 @@
 (def sidebar-button           sidebar-button.views/component)
 (def section-description      section-description.views/component)
 (def section-title            section-title.views/component)
-(def surface-box              surface-box.views/component)
 (def user-avatar              user-avatar.views/component)
 (def vector-item-controls     vector-item-controls.views/component)
 (def vector-item-list         vector-item-list.views/component)

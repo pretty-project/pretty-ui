@@ -122,7 +122,7 @@
   ;  :label (metamorphic-content)(opt)
   ;  :outdent (map)(opt)
   ;  :placeholder (metamorphic-content)(opt)
-  ;   Default: "No items to show"
+  ;   Default: :no-items-to-show
   ;  :style (map)(opt)}
   ;
   ; @usage

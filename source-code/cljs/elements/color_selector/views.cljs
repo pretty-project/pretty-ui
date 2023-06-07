@@ -108,7 +108,7 @@
   ;  :options-label (metamorphic-content)(opt)
   ;  :options-path (Re-Frame path vector)(opt)
   ;  :outdent (map)(opt)
-  ;   Same as the :indent property
+  ;   Same as the :indent property.
   ;  :popup (map)(opt)
   ;   {:border-color (keyword or string)(opt)
   ;    :border-position (keyword)(opt)

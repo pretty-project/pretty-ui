@@ -34,7 +34,7 @@
   ; {}
   [_ _ item-props]
   (-> {:class              :e-menu-bar--menu-item--label
-       :data-text-overflow :no-wrap}
+       :data-text-overflow :hidden}
       (pretty-css/font-attributes item-props)))
 
 ;; ----------------------------------------------------------------------------

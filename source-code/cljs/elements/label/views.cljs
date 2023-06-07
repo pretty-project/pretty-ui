@@ -55,45 +55,18 @@
   [_ {:keys [icon] :as label-props}]
   (if icon [:i (pretty-css/icon-attributes {:class :e-label--icon} label-props) icon]))
 
-(defn- label-placeholder
-  ; @ignore
-  ;
-  ; @param (keyword) label-id
-  ; @param (map) label-props
-  ; {:placeholder (metamorphic-content)(opt)}
-  [_ {:keys [placeholder]}]
-  ; BUG#9811
-  ; In some cases the content is an empty string for a short while before it
-  ; gets its value (e.g. from a subscription or a HTTP request, etc.),
-  ; therefore the placeholder has to be the same height even if it's empty!
-  ;
-  ; Otherwise an empty placeholder and a delayed content would cause a short
-  ; flickering by the inconsistent element height!
-  ;
-  ; Solution:
-  ; In the case of the placeholder is an empty string too, the "\u00A0" white
-  ; character provides the consistent height for the element until the content
-  ; gets its value.
-  [:div {:class              :e-label--placeholder
-         :data-color         :highlight
-         :data-selectable    false
-         :data-text-overflow :ellipsis}
-        (if placeholder (metamorphic-content/compose placeholder)
-                        "\u00A0")])
-
 (defn- label-content
   ; @ignore
   ;
   ; @param (keyword) label-id
   ; @param (map) label-props
-  ; {:content (string)
+  ; {:content (metamorphic-content)(opt)
   ;  :on-copy (boolean)(opt)
+  ;  :placeholder (metamorphic-content)(opt)
   ;  :target-id (keyword)(opt)}
-  [label-id {:keys [content on-copy target-id] :as label-props}]
+  [label-id {:keys [content on-copy placeholder target-id] :as label-props}]
   ; https://css-tricks.com/html-inputs-and-labels-a-love-story/
   ; ... it is always the best idea to use an explicit label instead of an implicit label.
-  ;
-  ; XXX#7009 (source-code/cljs/elements/label/prototypes.cljs)
   ;
   ; XXX#7030 Why the {:on-copy ...} setting needs the .e-label--copyable element?
   ; 1. By using the 'label' element with {:on-copy ...} setting, ...
@@ -108,8 +81,8 @@
   ; 3. The .e-label--body element always fits with its environment in width, therefore
   ;    it's often too wide to be the sensor element.
   (if on-copy [:div (label.attributes/copyable-attributes label-id label-props)
-                    [:label (label.attributes/content-attributes label-id label-props) content]]
-              [:<>  [:label (label.attributes/content-attributes label-id label-props) content]]))
+                    [:label (label.attributes/content-attributes label-id label-props) (metamorphic-content/compose content placeholder)]]
+              [:<>  [:label (label.attributes/content-attributes label-id label-props) (metamorphic-content/compose content placeholder)]]))
 
 (defn- label-body
   ; @ignore
@@ -120,16 +93,14 @@
   ;  :icon-position (keyword)(opt)}
   [label-id {:keys [content icon-position] :as label-props}]
   [:div (label.attributes/label-body-attributes label-id label-props)
-        (if (empty? content)
-            [label-placeholder label-id label-props]
-            (case icon-position :left  [:<> [label-icon             label-id label-props]
-                                            [label-content          label-id label-props]
-                                            [label-info-text-button label-id label-props]]
-                                :right [:<> [label-info-text-button label-id label-props]
-                                            [label-content          label-id label-props]
-                                            [label-icon             label-id label-props]]
-                                       [:<> [label-content          label-id label-props]
-                                            [label-info-text-button label-id label-props]]))])
+        (case icon-position :left  [:<> [label-icon             label-id label-props]
+                                        [label-content          label-id label-props]
+                                        [label-info-text-button label-id label-props]]
+                            :right [:<> [label-info-text-button label-id label-props]
+                                        [label-content          label-id label-props]
+                                        [label-icon             label-id label-props]]
+                                   [:<> [label-content          label-id label-props]
+                                        [label-info-text-button label-id label-props]])])
 
 (defn- label
   ; @ignore
@@ -215,8 +186,9 @@
   ;  :on-copy (Re-Frame metamorphic-event)(opt)
   ;   This event takes the label content as its last parameter
   ;  :outdent (map)(opt)
-  ;   Same as the :indent property
+  ;   Same as the :indent property.
   ;  :placeholder (metamorphic-content)(opt)
+  ;   Default: "\u00A0"
   ;  :selectable? (boolean)(opt)
   ;   Default: false
   ;  :style (map)(opt)
@@ -228,7 +200,7 @@
   ;   :normal, :reversed
   ;   Default :normal
   ;  :text-overflow (keyword)(opt)
-  ;   :ellipsis, :no-wrap, :wrap
+  ;   :ellipsis, :hidden, :wrap
   ;  :text-transform (keyword)(opt)
   ;   :capitalize, :lowercase, :uppercase
   ;  :tooltip-content (metamorphic-content)(opt)

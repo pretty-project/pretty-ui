@@ -105,7 +105,7 @@
   ;  :on-click (Re-Frame metamorphic-event)(opt)
   ;  :on-mouse-over (Re-Frame metamorphic-event)(opt)
   ;  :outdent (map)(opt)
-  ;   Same as the :indent property
+  ;   Same as the :indent property.
   ;  :progress (percent)(opt)
   ;  :progress-color (keyword or string)
   ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning

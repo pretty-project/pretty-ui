@@ -4,6 +4,7 @@
               [elements.checkbox.prototypes :as checkbox.prototypes]
               [elements.element.views       :as element.views]
               [elements.input.env           :as input.env]
+              [hiccup.api                   :as hiccup]
               [metamorphic-content.api      :as metamorphic-content]
               [random.api                   :as random]
               [re-frame.api                 :as r]
@@ -35,9 +36,9 @@
   ; @param (keyword) checkbox-id
   ; @param (map) checkbox-props
   [checkbox-id checkbox-props]
-  (letfn [(f [option-list option] (conj option-list [checkbox-option checkbox-id checkbox-props option]))]
+  (letfn [(f [option] [checkbox-option checkbox-id checkbox-props option])]
          (let [options (input.env/get-input-options checkbox-id checkbox-props)]
-              (reduce f [:<>] options))))
+              (hiccup/put-with [:<>] options f))))
 
 (defn- checkbox-structure
   ; @ignore
@@ -109,7 +110,7 @@
   ;  :options-path (Re-Frame path vector)(opt)
   ;  :label (metamorphic-content)(opt)
   ;  :outdent (map)(opt)
-  ;   Same as the :indent property
+  ;   Same as the :indent property.
   ;  :style (map)(opt)
   ;  :value-path (Re-Frame path vector)(opt)}
   ;

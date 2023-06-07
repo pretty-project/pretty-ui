@@ -45,7 +45,7 @@
   ;     (string) link]
   ;    [...]]
   ;  :outdent (map)(opt)
-  ;   Same as the :indent property
+  ;   Same as the :indent property.
   ;  :style (map)(opt)}
   ;
   ; @usage

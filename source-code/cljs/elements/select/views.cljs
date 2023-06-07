@@ -221,7 +221,7 @@
   ;  :options-placeholder (metamorphic-content)(opt)
   ;   Default: :no-options
   ;  :outdent (map)(opt)
-  ;   Same as the :indent property
+  ;   Same as the :indent property.
   ;  :popup (map)(opt)
   ;   {:border-color (keyword or string)(opt)
   ;    :border-position (keyword)(opt)

@@ -7,6 +7,25 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn chip-label-attributes
+  ; @ignore
+  ;
+  ; @param (keyword) chip-id
+  ; @param (map) chip-props
+  ;
+  ; @return (map)
+  ; {}
+  [_ _]
+  {:class               :e-chip--label
+   :data-font-size      :xs
+   :data-font-weight    :medium
+   :data-letter-spacing :auto
+   :data-line-height    :text-block
+   :data-text-overflow  :hidden})
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn primary-button-attributes
   ; @ignore
   ;

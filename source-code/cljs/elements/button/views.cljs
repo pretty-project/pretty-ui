@@ -141,7 +141,7 @@
   ;  :on-click (Re-Frame metamorphic-event)(opt)
   ;  :on-mouse-over (Re-Frame metamorphic-event)(opt)
   ;  :outdent (map)(opt)
-  ;   Same as the :indent property
+  ;   Same as the :indent property.
   ;  :progress (percent)(opt)
   ;  :progress-color (keyword or string)(opt)
   ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
@@ -153,7 +153,7 @@
   ;   Default: 250
   ;  :style (map)(opt)
   ;  :text-overflow (keyword)(opt)
-  ;   :ellipsis, :no-wrap, :wrap
+  ;   :ellipsis, :hidden, :wrap
   ;   Default: :no-wrap
   ;  :text-transform (keyword)(opt)
   ;   :capitalize, :lowercase, :uppercase

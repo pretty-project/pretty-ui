@@ -16,7 +16,7 @@
   ; {}
   [picker-id {:keys [color-stamp] :as picker-props}]
   (merge {:click-effect :opacity
-          :placeholder  "Choose color!"
+          :placeholder  :choose-color!
           :options      color-picker.config/DEFAULT-OPTIONS
           :options-path (input.utils/default-options-path picker-id)
           :value-path   (input.utils/default-value-path   picker-id)}
