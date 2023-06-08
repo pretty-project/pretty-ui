@@ -21,11 +21,11 @@
   ; @param (map) field-props
   ; {:max-height (integer)(opt)
   ;   TODO
-  ;   Max lines count
+  ;   Max line count
   ;   Default: 32
   ;  :min-height (integer)(opt)
   ;   TODO
-  ;   Min lines count
+  ;   Min line count
   ;   Default: 1}
   ;
   ; @usage
