@@ -40,7 +40,7 @@
    :vertical (keyword)(opt)
     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
  :outdent (map)(opt)
-  Same as the :indent property
+  Same as the :indent property.
  :style (map)(opt)}
 ```
 
@@ -113,7 +113,7 @@ It converts the given provider name to an icon class:
     (string) link]
    [...]]
  :outdent (map)(opt)
-  Same as the :indent property
+  Same as the :indent property.
  :style (map)(opt)}
 ```
 
@@ -183,7 +183,7 @@ It converts the given provider name to an icon class:
     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
  :languages (keywords in vector)
  :outdent (map)(opt)
-  Same as the :indent property
+  Same as the :indent property.
  :style (map)(opt)}
 ```
 
@@ -235,7 +235,7 @@ It converts the given provider name to an icon class:
 
 ```
 @description
-This component implements the dropdown-menu element and in case of the viewport
+This component implements the 'dropdown-menu' element and in case of the viewport
 width is smaller than the given threshold, it displays the menu items
 on a sidebar menu and replaces the menu bar with a single menu button.
 ```
@@ -253,7 +253,7 @@ on a sidebar menu and replaces the menu bar with a single menu button.
    :vertical (keyword)(opt)
     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
  :outdent (map)(opt)
-  Same as the :indent property
+  Same as the :indent property.
  :style (map)(opt)
  :threshold (px)(opt)
   Default: 0}
@@ -307,7 +307,7 @@ on a sidebar menu and replaces the menu bar with a single menu button.
  :color (string)(opt)
   Default: "#FFFFFF"
  :outdent (map)(opt)
-  Same as the :indent property
+  Same as the :indent property.
  :style (map)(opt)}
 ```
 
@@ -430,7 +430,7 @@ on a sidebar menu and replaces the menu bar with a single menu button.
    :vertical (keyword)(opt)
     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
  :outdent (map)(opt)
-  Same as the :indent property
+  Same as the :indent property.
  :position (keyword)(opt)
   :left, :right
   Default: :left

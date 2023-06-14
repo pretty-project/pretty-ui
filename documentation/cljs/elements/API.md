@@ -19,8 +19,6 @@
 
 - [chip-group](#chip-group)
 
-- [circle-diagram](#circle-diagram)
-
 - [color-selector](#color-selector)
 
 - [column](#column)
@@ -30,6 +28,8 @@
 - [content-swapper](#content-swapper)
 
 - [counter](#counter)
+
+- [data-table](#data-table)
 
 - [date-field](#date-field)
 
@@ -61,8 +61,6 @@
 
 - [label](#label)
 
-- [line-diagram](#line-diagram)
-
 - [menu-bar](#menu-bar)
 
 - [multi-combo-box](#multi-combo-box)
@@ -73,11 +71,11 @@
 
 - [notification-bubble](#notification-bubble)
 
+- [number-field](#number-field)
+
 - [password-field](#password-field)
 
 - [plain-field](#plain-field)
-
-- [point-diagram](#point-diagram)
 
 - [radio-button](#radio-button)
 
@@ -146,7 +144,7 @@
    :vertical (keyword)(opt)
     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
  :outdent (map)(opt)
-  Same as the :indent property
+  Same as the :indent property.
  :style (map)(opt)
  :width (keyword)(opt)
   :auto, :content, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
@@ -216,7 +214,7 @@
    :vertical (keyword)(opt)
     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
  :outdent (map)(opt)
-  Same as the :indent property
+  Same as the :indent property.
  :style (map)(opt)}
 ```
 
@@ -361,7 +359,7 @@ by the 'button.side-effects/key-released' function.
  :on-click (Re-Frame metamorphic-event)(opt)
  :on-mouse-over (Re-Frame metamorphic-event)(opt)
  :outdent (map)(opt)
-  Same as the :indent property
+  Same as the :indent property.
  :progress (percent)(opt)
  :progress-color (keyword or string)(opt)
   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
@@ -373,7 +371,7 @@ by the 'button.side-effects/key-released' function.
   Default: 250
  :style (map)(opt)
  :text-overflow (keyword)(opt)
-  :ellipsis, :no-wrap, :wrap
+  :ellipsis, :hidden, :wrap
   Default: :no-wrap
  :text-transform (keyword)(opt)
   :capitalize, :lowercase, :uppercase
@@ -489,7 +487,7 @@ by the 'button.side-effects/key-released' function.
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
  :on-click (Re-Frame metamorphic-event)(opt)
  :outdent (map)(opt)
-  Same as the :indent property
+  Same as the :indent property.
  :style (map)(opt)
  :target (keyword)(opt)
   :blank, :self
@@ -589,7 +587,7 @@ by the 'button.side-effects/key-released' function.
  :options-path (Re-Frame path vector)(opt)
  :label (metamorphic-content)(opt)
  :outdent (map)(opt)
-  Same as the :indent property
+  Same as the :indent property.
  :style (map)(opt)
  :value-path (Re-Frame path vector)(opt)}
 ```
@@ -666,7 +664,7 @@ by the 'button.side-effects/key-released' function.
  :on-click (Re-Frame metamorphic-event)(opt)
   TODO Makes the chip clickable
  :outdent (map)(opt)
-  Same as the :indent property
+  Same as the :indent property.
  :primary-button (map)(opt)
   {:icon (keyword)
    :icon-family (keyword)(opt)
@@ -752,7 +750,7 @@ the :chips-path property!
  :info-text (metamorphic-content)(opt)
  :label (metamorphic-content)(opt)
  :outdent (map)(opt)
-  Same as the :indent property
+  Same as the :indent property.
  :placeholder (metamorphic-content)(opt)
  :style (map)(opt)}
 ```
@@ -796,79 +794,6 @@ the :chips-path property!
 
 ---
 
-### circle-diagram
-
-```
-@param (keyword)(opt) diagram-id
-@param (map) diagram-props
-{:class (keyword or keywords in vector)(opt)
- :diameter (px)(opt)
-  Default: 48
- :helper (metamorphic-content)(opt)
- :indent (map)(opt)
-  {:bottom (keyword)(opt)
-   :left (keyword)(opt)
-   :right (keyword)(opt)
-   :top (keyword)(opt)
-   :horizontal (keyword)(opt)
-   :vertical (keyword)(opt)
-    :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
- :info-text (metamorphic-content)(opt)
- :label (metamorphic-content)(opt)
- :outdent (map)(opt)
-  Same as the :indent property
- :sections (maps in vector)}
-  [{:color (keyword or string)
-     :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
-    :label (metamorphic-content)(opt)
-     TODO
-    :value (integer)}]
- :strength (px)(opt)
-   Default: 2
-   Min: 1
-   Max: 6
- :style (map)(opt)}
-```
-
-```
-@usage
-[circle-diagram {...}]
-```
-
-```
-@usage
-[circle-diagram :my-circle-diagram {...}]
-```
-
-<details>
-<summary>Source code</summary>
-
-```
-(defn element
-  ([diagram-props]
-   [element (random/generate-keyword) diagram-props])
-
-  ([diagram-id diagram-props]
-   (let [diagram-props (circle-diagram.prototypes/diagram-props-prototype diagram-props)]
-        [circle-diagram diagram-id diagram-props])))
-```
-
-</details>
-
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [elements.api :refer [circle-diagram]]))
-
-(elements.api/circle-diagram ...)
-(circle-diagram              ...)
-```
-
-</details>
-
----
-
 ### color-selector
 
 ```
@@ -888,7 +813,7 @@ the :chips-path property!
  :options-label (metamorphic-content)(opt)
  :options-path (Re-Frame path vector)(opt)
  :outdent (map)(opt)
-  Same as the :indent property
+  Same as the :indent property.
  :popup (map)(opt)
   {:border-color (keyword or string)(opt)
    :border-position (keyword)(opt)
@@ -992,7 +917,7 @@ the :chips-path property!
  :min-width (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
  :outdent (map)(opt)
-  Same as the :indent property
+  Same as the :indent property.
  :style (map)(opt)
  :vertical-align (keyword)(opt)
   :top, :center, :bottom, :space-around, :space-between, :space-evenly
@@ -1046,6 +971,13 @@ the :chips-path property!
 ### combo-box
 
 ```
+@description
+The 'combo-box' element writes its actual value into the Re-Frame state
+delayed after the user stopped typing or without a delay when the user
+leaves the field!
+```
+
+```
 @param (keyword)(opt) box-id
 @param (map) box-props
 {:field-content-f (function)(opt)
@@ -1054,7 +986,7 @@ the :chips-path property!
   Default: return
  :initial-options (vector)(opt)
  :on-select (Re-Frame metamorphic-event)(opt)
- :option-component (component)(opt)
+ :option-component (Reagent component symbol)(opt)
   Default: elements.combo-box.views/default-option-component
  :option-label-f (function)(opt)
   Default: return
@@ -1127,7 +1059,7 @@ make space for the pages.
     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
  :initial-page (metamorphic-content)
  :outdent (map)(opt)
-  Same as the :indent property
+  Same as the :indent property.
  :style (map)(opt)}
 ```
 
@@ -1208,7 +1140,7 @@ make space for the pages.
  :max-value (integer)(opt)
  :min-value (integer)(opt)
  :outdent (map)(opt)
-  Same as the :indent property
+  Same as the :indent property.
  :resetable? (boolean)(opt)
   Default: false
  :style (map)(opt)
@@ -1254,7 +1186,130 @@ make space for the pages.
 
 ---
 
+### data-table
+
+```
+@param (keyword)(opt) table-id
+@param (map) table-props
+{:class (keyword or keywords in vector)(opt)
+ :columns (maps in vector)(opt)
+  [{:cells (maps in vector)
+     [{:color (keyword or string)(opt)
+        :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
+        Default: :inherit
+       :content (metamorphic-content)(opt)
+       :font-size (keyword)(opt)
+        :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
+        Default: :s
+       :font-weight (keyword)(opt)
+        :inherit, :thin, :extra-light, :light, :normal, :medium, :semi-bold, :bold, :extra-bold, :black
+        Default :normal
+       :horizontal-align (keyword)(opt)
+        :center, :left, :right
+        Default: :left
+       :indent (map)(opt)
+       :line-height (keyword)(opt)
+        :auto, :inherit, :text-block, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+        Default: :text-block
+       :placeholder (metamorphic-content)(opt)
+       :preset (keyword)(opt)
+       :selectable? (boolean)(opt)
+        Default: true
+       :text-overflow (keyword)(opt)
+        :ellipsis, :hidden, :wrap
+        Default: :ellipsis
+       :text-transform (keyword)(opt)
+        :capitalize, :lowercase, :uppercase
+       :tooltip-content (metamorphic-content)(opt)
+       :tooltip-position (keyword)(opt)
+        :left, :right}]
+    :preset (keyword)(opt)
+    :template (string)(opt)
+     Default: "repeat(*cell-count*, 1fr)"
+    :width (keyword)(opt)
+     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+     Default: :s}]
+ :disabled? (boolean)(opt)
+ :indent (map)(opt)
+  {:bottom (keyword)(opt)
+   :left (keyword)(opt)
+   :right (keyword)(opt)
+   :top (keyword)(opt)
+   :horizontal (keyword)(opt)
+   :vertical (keyword)(opt)
+    :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
+ :label (metamorphic-content)(opt)
+ :outdent (map)(opt)
+  Same as the :indent property.
+ :presets (map)(opt)
+  Cell, column and row presets.
+ :rows (maps in vector)(opt)
+  [{:cells (maps in vector)
+    :height (keyword)(opt)
+     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+     Default: :s
+    :preset (keyword)(opt)
+    :template (string)(opt)
+     Default: "repeat(*cell-count*, 1fr)"}]
+ :style (map)(opt)}
+```
+
+```
+@usage
+[data-table {...}]
+```
+
+```
+@usage
+[data-table :my-data-table {...}]
+```
+
+```
+@usage
+[data-table {:columns [{:cells [{:content "Cell #1"}
+                                {:content "Cell #2" :horizontal-align :right}]
+                        :line-height :m
+                        :template "1fr 40px"}]}]
+             :horizontal-gap :xs
+             :vertical-gap :xs
+```
+
+<details>
+<summary>Source code</summary>
+
+```
+(defn element
+  ([table-props]
+   [element (random/generate-keyword) table-props])
+
+  ([table-id table-props]
+   (let []        [data-table table-id table-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [elements.api :refer [data-table]]))
+
+(elements.api/data-table ...)
+(data-table              ...)
+```
+
+</details>
+
+---
+
 ### date-field
+
+```
+@description
+The 'date-field' element writes its actual value into the Re-Frame state
+delayed after the user stopped typing or without a delay when the user
+leaves the field!
+```
 
 ```
 @param (keyword)(opt) field-id
@@ -1303,6 +1358,13 @@ make space for the pages.
 ---
 
 ### digit-field
+
+```
+@description
+The 'digit-field' element writes its actual value into the Re-Frame state
+delayed after the user stopped typing or without a delay when the user
+leaves the field!
+```
 
 ```
 @param (keyword)(opt) field-id
@@ -1482,7 +1544,7 @@ make space for the pages.
     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
  :label (metamorphic-content)(opt)
  :outdent (map)(opt)
-  Same as the :indent property
+  Same as the :indent property.
  :style (map)(opt)}
 ```
 
@@ -1550,7 +1612,7 @@ make space for the pages.
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   Default: :s
  :outdent (map)(opt)
-  Same as the :indent property
+  Same as the :indent property.
  :style (map)(opt)
  :width (keyword)(opt)
   :auto, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
@@ -1603,7 +1665,7 @@ make space for the pages.
 @param (map) group-props
 {:class (keyword or keywords in vector)(opt)
  :default-props (map)(opt)
- :element (symbol)
+ :element (Reagent component symbol)
  :group-items (maps in vector)
  :indent (map)(opt)
   {:bottom (keyword)(opt)
@@ -1614,7 +1676,7 @@ make space for the pages.
    :vertical (keyword)(opt)
     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
  :outdent (map)(opt)
-  Same as the :indent property
+  Same as the :indent property.
  :style (map)(opt)
  :width (keyword)(opt)
   :auto, :content, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
@@ -1678,7 +1740,7 @@ make space for the pages.
   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   Default: :default
  :outdent (map)(opt)
-  Same as the :indent property
+  Same as the :indent property.
  :style (map)(opt)
  :strength (px)(opt)
   Default: 1
@@ -1744,7 +1806,7 @@ make space for the pages.
     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
  :middle-content (metamorphic-content)
  :outdent (map)(opt)
-  Same as the :indent property
+  Same as the :indent property.
  :style (map)(opt)
  :start-content (metamorphic-content)(opt)
  :vertical-align (keyword)(opt)
@@ -1819,7 +1881,7 @@ make space for the pages.
     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
  :label (metamorphic-content)(opt)
  :outdent (map)(opt)
-  Same as the :indent property
+  Same as the :indent property.
  :style (map)(opt)
  :width (keyword)(opt)
   :auto, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
@@ -1941,7 +2003,7 @@ make space for the pages.
    :vertical (keyword)(opt)
     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
  :outdent (map)(opt)
-  Same as the :indent property
+  Same as the :indent property.
  :style (map)(opt)}
 ```
 
@@ -2057,7 +2119,7 @@ BUG#9912 (source-code/cljs/elements/button.views)
  :on-click (Re-Frame metamorphic-event)(opt)
  :on-mouse-over (Re-Frame metamorphic-event)(opt)
  :outdent (map)(opt)
-  Same as the :indent property
+  Same as the :indent property.
  :progress (percent)(opt)
  :progress-color (keyword or string)
   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
@@ -2143,7 +2205,7 @@ BUG#9912 (source-code/cljs/elements/button.views)
   Default: false
   TODO
  :outdent (map)(opt)
-  Same as the :indent property
+  Same as the :indent property.
  :src (string)(opt)
  :style (map)(opt)
  :width (keyword)(opt)
@@ -2262,8 +2324,9 @@ BUG#9912 (source-code/cljs/elements/button.views)
  :on-copy (Re-Frame metamorphic-event)(opt)
   This event takes the label content as its last parameter
  :outdent (map)(opt)
-  Same as the :indent property
+  Same as the :indent property.
  :placeholder (metamorphic-content)(opt)
+  Default: "\u00A0"
  :selectable? (boolean)(opt)
   Default: false
  :style (map)(opt)
@@ -2275,7 +2338,7 @@ BUG#9912 (source-code/cljs/elements/button.views)
   :normal, :reversed
   Default :normal
  :text-overflow (keyword)(opt)
-  :ellipsis, :no-wrap, :wrap
+  :ellipsis, :hidden, :wrap
  :text-transform (keyword)(opt)
   :capitalize, :lowercase, :uppercase
  :tooltip-content (metamorphic-content)(opt)
@@ -2319,78 +2382,6 @@ BUG#9912 (source-code/cljs/elements/button.views)
 
 (elements.api/label ...)
 (label              ...)
-```
-
-</details>
-
----
-
-### line-diagram
-
-```
-@param (keyword)(opt) diagram-id
-@param (map) diagram-props
-{:indent (map)(opt)
-  {:bottom (keyword)(opt)
-   :left (keyword)(opt)
-   :right (keyword)(opt)
-   :top (keyword)(opt)
-   :horizontal (keyword)(opt)
-   :vertical (keyword)(opt)
-    :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
- :outdent (map)(opt)
-  Same as the :indent property
- :sections (maps in vector)}
-  [{:color (keyword or string)(opt)
-     :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
-     Default: primary
-    :label (metamorphic-content)(opt)
-     TODO
-    :value (integer)}]
- :strength (px)(opt)
-   Default: 2
-   Min: 1
-   Max: 6
- :total-value (integer)(opt)
-  Default: Sum of the section values
- :width (keyword)(opt)
-  auto, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  Default: :auto}
-```
-
-```
-@usage
-[line-diagram {...}]
-```
-
-```
-@usage
-[line-diagram :my-line-diagram {...}]
-```
-
-<details>
-<summary>Source code</summary>
-
-```
-(defn element
-  ([diagram-props]
-   [element (random/generate-keyword) diagram-props])
-
-  ([diagram-id diagram-props]
-   (let [diagram-props (line-diagram.prototypes/diagram-props-prototype diagram-props)]
-        [line-diagram diagram-id diagram-props])))
-```
-
-</details>
-
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [elements.api :refer [line-diagram]]))
-
-(elements.api/line-diagram ...)
-(line-diagram              ...)
 ```
 
 </details>
@@ -2481,7 +2472,7 @@ property or you can specify these values on each item.
   :horizontal, :vertical
   Default: :horizontal
  :outdent (map)(opt)
-  Same as the :indent property
+  Same as the :indent property.
  :style (map)(opt)}
 ```
 
@@ -2527,6 +2518,13 @@ property or you can specify these values on each item.
 ### multi-combo-box
 
 ```
+@description
+The 'multi-combo-box' element writes its actual value into the Re-Frame state
+delayed after the user stopped typing or without a delay when the user
+leaves the field!
+```
+
+```
 @param (keyword)(opt) box-id
 @param (map) box-props
 {:chip-group (map)(opt)
@@ -2541,11 +2539,10 @@ property or you can specify these values on each item.
   Default: return
  :option-value-f (function)(opt)
   Default: return
- :option-component (component)(opt)
+ :option-component (Reagent component symbol)(opt)
   Default: elements.combo-box/default-option-component
  :options (vector)(opt)
- :options-path (Re-Frame path vector)(opt)
- :placeholder (metamorphic-content)(opt)}
+ :options-path (Re-Frame path vector)(opt)}
 ```
 
 ```
@@ -2589,6 +2586,16 @@ property or you can specify these values on each item.
 ---
 
 ### multi-field
+
+```
+@description
+The 'multi-field' element writes its actual value into the Re-Frame state
+delayed after the user stopped typing or without a delay when the user
+leaves the field!
+In case of using the :initial-options, :options or the :options-path properties,
+the 'multi-field' element implements the 'combo-box' element, otherwise it implements
+the 'text-field' element.
+```
 
 ```
 @param (keyword)(opt) group-id
@@ -2639,15 +2646,22 @@ property or you can specify these values on each item.
 ### multiline-field
 
 ```
+@description
+The 'multiline-field' element writes its actual value into the Re-Frame state
+delayed after the user stopped typing or without a delay when the user
+leaves the field!
+```
+
+```
 @param (keyword)(opt) field-id
 @param (map) field-props
 {:max-height (integer)(opt)
   TODO
-  Max lines count
+  Max line count
   Default: 32
  :min-height (integer)(opt)
   TODO
-  Min lines count
+  Min line count
   Default: 1}
 ```
 
@@ -2742,7 +2756,7 @@ property or you can specify these values on each item.
  :min-width (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
  :outdent (map)(opt)
-  Same as the :indent property
+  Same as the :indent property.
  :primary-button (map)(opt)
   {:layout (keyword)
     :button, :icon-button
@@ -2798,7 +2812,67 @@ property or you can specify these values on each item.
 
 ---
 
+### number-field
+
+```
+@description
+The 'number-field' element writes its actual value into the Re-Frame state
+delayed after the user stopped typing or without a delay when the user
+leaves the field!
+```
+
+```
+@param (keyword)(opt) field-id
+@param (map) field-props
+```
+
+```
+@usage
+[number-field {...}]
+```
+
+```
+@usage
+[number-field :my-number-field {...}]
+```
+
+<details>
+<summary>Source code</summary>
+
+```
+(defn element
+  ([field-props]
+   [element (random/generate-keyword) field-props])
+
+  ([field-id field-props]
+   (let [field-props (number-field.prototypes/field-props-prototype field-id field-props)]
+        [text-field.views/element field-id field-props])))
+```
+
+</details>
+
+<details>
+<summary>Require</summary>
+
+```
+(ns my-namespace (:require [elements.api :refer [number-field]]))
+
+(elements.api/number-field ...)
+(number-field              ...)
+```
+
+</details>
+
+---
+
 ### password-field
+
+```
+@description
+The 'password-field' element writes its actual value into the Re-Frame state
+delayed after the user stopped typing or without a delay when the user
+leaves the field!
+```
 
 ```
 @param (keyword)(opt) field-id
@@ -2825,7 +2899,7 @@ property or you can specify these values on each item.
 
   ([field-id field-props]
    (let [field-props (password-field.prototypes/field-props-prototype field-id field-props)]
-        [text-field.views/element field-id field-props])))
+        [password-field field-id field-props])))
 ```
 
 </details>
@@ -2847,9 +2921,18 @@ property or you can specify these values on each item.
 ### plain-field
 
 ```
+@description
+The 'plain-field' element writes its actual value into the Re-Frame state
+delayed after the user stopped typing or without a delay when the user
+leaves the field!
+```
+
+```
 @param (keyword)(opt) field-id
 @param (map) field-props
 {:autoclear? (boolean)(opt)
+  Removes the value stored in the application state (on the value-path)
+  when the element unmounts.
  :autofocus? (boolean)(opt)
  :class (keyword or keywords in vector)(opt)
  :disabled? (boolean)(opt)
@@ -2866,23 +2949,26 @@ property or you can specify these values on each item.
    :vertical (keyword)(opt)
     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
  :initial-value (string)(opt)
-  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
- :modifier (function)(opt)
+ :modifier-f (function)(opt)
  :on-blur (Re-Frame metamorphic-event)(opt)
+  This event takes the field content as its last parameter.
+ :on-change-f (function)(opt)
+  This function takes the field-id, the field-props and the change event as its parameters.
  :on-changed (Re-Frame metamorphic-event)(opt)
   It happens BEFORE the application state gets updated with the actual value!
-  If you have to get the ACTUAL value from the application state, use the
+  If you want to get the ACTUAL value from the application state, use the
   :on-type-ended event instead!
-  This event takes the field content as its last parameter
+  This event takes the field content as its last parameter.
  :on-focus (Re-Frame metamorphic-event)(opt)
+  This event takes the field content as its last parameter.
  :on-mount (Re-Frame metamorphic-event)(opt)
-  This event takes the field content as its last parameter
+  This event takes the field content as its last parameter.
  :on-type-ended (Re-Frame metamorphic-event)(opt)
-  This event takes the field content as its last parameter
+  This event takes the field content as its last parameter.
  :on-unmount (Re-Frame metamorphic-event)(opt)
-  This event takes the field content as its last parameter
+  This event takes the field content as its last parameter.
  :outdent (map)(opt)
-  Same as the :indent property
+  Same as the :indent property.
  :style (map)(opt)
  :surface (map)(opt)
   {:border-radius (map)(opt)
@@ -2924,75 +3010,6 @@ property or you can specify these values on each item.
 
 (elements.api/plain-field ...)
 (plain-field              ...)
-```
-
-</details>
-
----
-
-### point-diagram
-
-```
-@warning
-UNFINISHED! DO NOT USE!
-```
-
-```
-@param (keyword)(opt) diagram-id
-@param (map) diagram-props
-{:color (keyword or string)(opt)
-  :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
-  Default: :default
-  W/ {:label ...}
- :indent (map)(opt)
-  {:bottom (keyword)(opt)
-   :left (keyword)(opt)
-   :right (keyword)(opt)
-   :top (keyword)(opt)
-   :horizontal (keyword)(opt)
-   :vertical (keyword)(opt)
-    :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
- :outdent (map)(opt)
-  Same as the :indent property
- :points (integers in vector)
- :strength (px)(opt)
-   Default: 2
-   Min: 1
-   Max: 6}
-```
-
-```
-@usage
-[point-diagram {...}]
-```
-
-```
-@usage
-[point-diagram :my-point-diagram {...}]
-```
-
-<details>
-<summary>Source code</summary>
-
-```
-(defn element
-  ([diagram-props]
-   [element (random/generate-keyword) diagram-props])
-
-  ([diagram-id diagram-props]
-   (let []        [point-diagram diagram-id diagram-props])))
-```
-
-</details>
-
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [elements.api :refer [point-diagram]]))
-
-(elements.api/point-diagram ...)
-(point-diagram              ...)
 ```
 
 </details>
@@ -3052,7 +3069,7 @@ UNFINISHED! DO NOT USE!
   Default: :vertical
  :options-path (Re-Frame path vector)(opt)
  :outdent (map)(opt)
-  Same as the :indent property
+  Same as the :indent property.
  :style (map)(opt)
  :value-path (Re-Frame path vector)(opt)}
 ```
@@ -3148,7 +3165,7 @@ UNFINISHED! DO NOT USE!
  :min-width (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
  :outdent (map)(opt)
-  Same as the :indent property
+  Same as the :indent property.
  :style (map)(opt)
  :vertical-align (keyword)(opt)
   :top, :center, :bottom
@@ -3199,6 +3216,13 @@ UNFINISHED! DO NOT USE!
 ---
 
 ### search-field
+
+```
+@description
+The 'search-field' element writes its actual value into the Re-Frame state
+delayed after the user stopped typing or without a delay when the user
+leaves the field!
+```
 
 ```
 @param (keyword)(opt) field-id
@@ -3252,40 +3276,19 @@ UNFINISHED! DO NOT USE!
 {:add-option-f (function)(opt)
   Default: return
  :autoclear? (boolean)(opt)
- :border-color (keyword)(opt)
-  :default, :highlight, :invert, :primary, :secondary, :success, :transparent, :warning
- :border-position (keyword)(opt)
-  :all, :bottom, :top, :left, :right, :horizontal, :vertical
- :border-radius (map)(opt)
-  {:tl (keyword)(opt)
-   :tr (keyword)(opt)
-   :br (keyword)(opt)
-   :bl (keyword)(opt)
-   :all (keyword)(opt)
-    :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
- :border-width (keyword)(opt)
-  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
- :class (keyword or keywords in vector)(opt)
- :disabled? (boolean)(opt)
+  Removes the value stored in the application state (on the value-path)
+  when the element unmounts.
  :extendable? (boolean)(opt)
  :helper (metamorphic-content)(opt)
- :indent (map)(opt)
-  {:bottom (keyword)(opt)
-   :left (keyword)(opt)
-   :right (keyword)(opt)
-   :top (keyword)(opt)
-   :horizontal (keyword)(opt)
-   :vertical (keyword)(opt)
-    :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
  :info-text (metamorphic-content)(opt)
  :initial-options (vector)(opt)
  :initial-value (*)(opt)
  :label (metamorphic-content)(opt)
+  Label of the button if the :layout property is :button or :icon-button,
+  otherwise it is displayed as the element label above the select button.
  :layout (keyword)(opt)
   :button, :icon-button, :select-button
   Default: :select-button
- :marker-color (keyword)(opt)
-  :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
  :on-select (Re-Frame metamorphic-event)(opt)
  :option-field-placeholder (metamorphic-content)(opt)
   Default: :add!
@@ -3298,8 +3301,6 @@ UNFINISHED! DO NOT USE!
  :options-path (Re-Frame path vector)(opt)
  :options-placeholder (metamorphic-content)(opt)
   Default: :no-options
- :outdent (map)(opt)
-  Same as the :indent property
  :popup (map)(opt)
   {:border-color (keyword or string)(opt)
    :border-position (keyword)(opt)
@@ -3315,7 +3316,6 @@ UNFINISHED! DO NOT USE!
    :outdent (map)(opt)}
  :reveal-effect (keyword)(opt)
   :delayed, :opacity
- :style (map)(opt)
  :value-path (Re-Frame path vector)(opt)}
 ```
 
@@ -3396,7 +3396,7 @@ UNFINISHED! DO NOT USE!
  :min-value (integer)(opt)
   Default: 0
  :outdent (map)(opt)
-  Same as the :indent property
+  Same as the :indent property.
  :resetable? (boolean)(opt)
  :style (map)(opt)
  :value-path (Re-Frame path vector)(opt)
@@ -3548,7 +3548,7 @@ UNFINISHED! DO NOT USE!
   Default: :vertical
  :options-path (Re-Frame path vector)(opt)
  :outdent (map)(opt)
-  Same as the :indent property
+  Same as the :indent property.
  :style (map)(opt)
  :value-path (Re-Frame path vector)(opt)}
 ```
@@ -3630,10 +3630,11 @@ UNFINISHED! DO NOT USE!
  :min-width (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
  :on-copy (Re-Frame metamorphic-event)(opt)
-  This event takes the text content as its last parameter
+  This event takes the text content as its last parameter.
  :outdent (map)(opt)
-  Same as the :indent property
+  Same as the :indent property.
  :placeholder (metamorphic-content)(opt)
+  Default: "\u00A0"
  :selectable? (boolean)(opt)
   Default: true
  :style (map)(opt)
@@ -3690,10 +3691,21 @@ UNFINISHED! DO NOT USE!
 ### text-field
 
 ```
+@description
+The 'text-field' element writes its actual value into the Re-Frame state
+delayed after the user stopped typing or without a delay when the user
+leaves the field!
+```
+
+```
 @param (keyword)(opt) field-id
 @param (map) field-props
 {:autoclear? (boolean)(opt)
+  Removes the value stored in the application state (on the value-path)
+  when the element unmounts.
  :autofill-name (keyword)(opt)
+  Helps the browser on what values to be suggested.
+  Leave empty if you don't want autosuggestions.
  :autofocus? (boolean)(opt)
  :border-color (keyword or string)(opt)
   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
@@ -3731,8 +3743,10 @@ UNFINISHED! DO NOT USE!
      Default: true
     :tooltip-content (metamorphic-content)(opt)}]
  :field-content-f (function)(opt)
+  From application state to field content modifier function.
   Default: return
  :field-value-f (function)(opt)
+  From field content to application state modifier function.
   Default: return
  :font-size (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
@@ -3740,6 +3754,8 @@ UNFINISHED! DO NOT USE!
  :font-weight (keyword)(opt)
   :inherit, :thin, :extra-light, :light, :normal, :medium, :semi-bold, :bold, :extra-bold, :black
   Default: :normal
+ :form-id (keyword)(opt)
+  Different inputs with the same form ID could be validated at the same time.
  :helper (metamorphic-content)(opt)
  :indent (map)(opt)
   {:bottom (keyword)(opt)
@@ -3760,27 +3776,32 @@ UNFINISHED! DO NOT USE!
  :marker-position (keyword)(opt)
   :tl, :tr, :br, :bl, left, :right, bottom, :top
  :max-length (integer)(opt)
- :modifier (function)(opt)
+ :modifier-f (function)(opt)
  :on-blur (Re-Frame metamorphic-event)(opt)
+  This event takes the field content as its last parameter.
  :on-changed (Re-Frame metamorphic-event)(opt)
+  This event takes the field content as its last parameter.
   It happens BEFORE the application state gets updated with the actual value!
-  If you have to get the ACTUAL value from the application state, use the
+  If you want to get the ACTUAL value read from the application state, use the
   :on-type-ended event instead!
-  It happens BEFORE the application state gets updated with the actual value!
-  This event takes the field content as its last parameter
  :on-empty (Re-Frame metamorphic-event)(opt)
-  This event takes the field content as its last parameter
+  This event takes the field content as its last parameter.
  :on-enter (Re-Frame metamorphic-event)(opt)
-  This event takes the field content as its last parameter
+  This event takes the field content as its last parameter.
  :on-focus (Re-Frame metamorphic-event)(opt)
+  This event takes the field content as its last parameter.
+ :on-invalid (Re-Frame metamorphic-event)(opt)
+  This event takes the field content and the invalid message as its last parameter.
  :on-mount (Re-Frame metamorphic-event)(opt)
-  This event takes the field content as its last parameter
+  This event takes the field content as its last parameter.
  :on-type-ended (Re-Frame metamorphic-event)(opt)
-  This event takes the field content as its last parameter
+  This event takes the field content as its last parameter.
  :on-unmount (Re-Frame metamorphic-event)(opt)
-  This event takes the field content as its last parameter
+  This event takes the field content as its last parameter.
+ :on-valid (Re-Frame metamorphic-event)(opt)
+  This event takes the field content as its last parameter.
  :outdent (map)(opt)
-  Same as the :indent property
+  Same as the :indent property.
  :placeholder (metamorphic-content)(opt)
  :reveal-effect (keyword)(opt)
   :delayed, :opacity
@@ -3791,11 +3812,16 @@ UNFINISHED! DO NOT USE!
   {:border-radius (map)(opt)
    :content (metamorphic-content)(opt)
    :indent (map)(opt)}
- :validator (map)(opt)
-  {:f (function)
-   :invalid-message (metamorphic-content)(opt)
-   :invalid-message-f (function)(opt)
-   :prevalidate? (boolean)(opt)}
+ :type (keyword)(opt)
+  :email, :number, :password, :tel, :text
+  Default: :text
+ :validate-when-change? (boolean)(opt)
+  Validates the value when it changes.
+ :validate-when-leave? (boolean)(opt)
+  Validates the value and turns on the validation when the user leaves the field.
+ :validators (maps in vector)(opt)
+ [{:f (function)
+   :invalid-message (metamorphic-content)(opt)}]
  :value-path (Re-Frame path vector)(opt)
  :width (keyword)(opt)
   :auto, :content, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
@@ -3814,19 +3840,6 @@ UNFINISHED! DO NOT USE!
 
 ```
 @usage
-[text-field {:validator {:f #(not (empty? %))
-                         :invalid-message "Invalid value"}}]
-```
-
-```
-@usage
-(defn get-invalid-message [value] "Invalid value")
-[text-field {:validator {:f #(not (empty? %))
-                         :invalid-message-f get-invalid-message}}]
-```
-
-```
-@usage
 (defn my-surface [field-id])
 [text-field {:surface #'my-surface}]
 ```
@@ -3839,7 +3852,12 @@ UNFINISHED! DO NOT USE!
 
 ```
 @usage
-[text-field {:modifier #(string/starts-with! % "/")}]
+[text-field {:modifier-f clojure.string/lower-case}]
+```
+
+```
+@usage
+[text-field {:validators []}]
 ```
 
 <details>
@@ -3918,7 +3936,7 @@ UNFINISHED! DO NOT USE!
  :label (metamorphic-content)(opt)
  :on-click (Re-Frame metamorphic-event)(opt)
  :outdent (map)(opt)
-  Same as the :indent property
+  Same as the :indent property.
  :style (map)(opt)
  :target (keyword)(opt)
   :blank, :self
@@ -4016,7 +4034,7 @@ UNFINISHED! DO NOT USE!
  :on-click (Re-Frame metamorphic-event)(opt)
  :on-right-click (Re-Frame metamorphic-event)(opt)
  :outdent (map)(opt)
-  Same as the :indent property
+  Same as the :indent property.
  :style (map)(opt)
  :target (keyword)(opt)
   :blank, :self
@@ -4071,7 +4089,7 @@ UNFINISHED! DO NOT USE!
 @param (map) group-props
 {:class (keyword or keywords in vector)(opt)
  :default-props (map)(opt)
- :element (symbol)
+ :element (Reagent component symbol)
  :group-items (maps in vector)
  :indent (map)(opt)
   {:bottom (keyword)(opt)
@@ -4082,7 +4100,7 @@ UNFINISHED! DO NOT USE!
    :vertical (keyword)(opt)
     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
  :outdent (map)(opt)
-  Same as the :indent property
+  Same as the :indent property.
  :style (map)(opt)
  :width (keyword)(opt)
   :auto, :content, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
@@ -4149,7 +4167,7 @@ UNFINISHED! DO NOT USE!
   :auto, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   Default: :parent
  :outdent (map)(opt)
-  Same as the :indent property
+  Same as the :indent property.
  :style (map)(opt)
  :strength (px)(opt)
   Default: 1}
@@ -4218,7 +4236,7 @@ UNFINISHED! DO NOT USE!
     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
  :middle-content (metamorphic-content)
  :outdent (map)(opt)
-  Same as the :indent property
+  Same as the :indent property.
  :style (map)(opt)
  :start-content (metamorphic-content)(opt)
 ```

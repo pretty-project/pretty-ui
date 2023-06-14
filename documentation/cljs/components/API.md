@@ -5,8 +5,6 @@
 
 ### Index
 
-- [action-bar_](#action-bar_)
-
 - [color-picker](#color-picker)
 
 - [compact-list-header](#compact-list-header)
@@ -18,8 +16,6 @@
 - [copyright-label](#copyright-label)
 
 - [data-element](#data-element)
-
-- [data-table](#data-table)
 
 - [error-content](#error-content)
 
@@ -85,8 +81,6 @@
 
 - [sidebar-button](#sidebar-button)
 
-- [surface-box](#surface-box)
-
 - [user-avatar](#user-avatar)
 
 - [vector-item-controls](#vector-item-controls)
@@ -94,60 +88,6 @@
 - [vector-item-list](#vector-item-list)
 
 - [vector-items-header](#vector-items-header)
-
-### action-bar_
-
-```
-@param (keyword)(opt) bar-id
-@param (map) bar-props
-{:disabled? (boolean)(opt)}
- :font-size (keyword)(opt)
-  :xxs, :xs, :s, :m, :l, :xl, :xxl
-  Default: :s
- :indent (map)(opt)
- :label (metamorphic-content)
- :outdent (map)(opt)
- :placeholder (metamorphic-content)(opt)
- :value (metamorphic-content)(opt)}
-```
-
-```
-@usage
-[action-bar {...}]
-```
-
-```
-@usage
-[action-bar :my-action-bar {...}]
-```
-
-<details>
-<summary>Source code</summary>
-
-```
-(defn component
-  ([bar-props]
-   [component (random/generate-keyword) bar-props])
-
-  ([bar-id bar-props]
-   (let []        [action-bar bar-id bar-props])))
-```
-
-</details>
-
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [components.api :refer [action-bar_]]))
-
-(components.api/action-bar_ ...)
-(action-bar_                ...)
-```
-
-</details>
-
----
 
 ### color-picker
 
@@ -170,7 +110,7 @@
  :hover-effect (keyword)(opt)
   :opacity
  :placeholder (metamorphic-content)(opt)
-  Default: "Choose color!"}
+  Default: :choose-color!}
 ```
 
 ```
@@ -505,72 +445,6 @@
 
 (components.api/data-element ...)
 (data-element                ...)
-```
-
-</details>
-
----
-
-### data-table
-
-```
-@param (keyword)(opt) table-id
-@param (map) table-props
-{:class (keyword or keywords in vector)(opt)
- :columns (label-props maps in vectors in vector)(opt)
- :disabled? (boolean)(opt)}
- :font-size (keyword)(opt)
-  :xxs, :xs, :s, :m, :l, :xl, :xxl
-  Default: :s
- :indent (map)(opt)
- :label (metamorphic-content)
- :outdent (map)(opt)
- :placeholder (metamorphic-content)(opt)
- :rows (label-props maps in vectors in vector)(opt)
- :style (map)(opt)}
-```
-
-```
-@usage
-[data-table {...}]
-```
-
-```
-@usage
-[data-table :my-data-table {...}]
-```
-
-```
-@usage
-[data-table {:rows [[{:content "Row #1"   :font-weight :semi-bold}
-                     {:content "Value #1" :color :muted}
-                     {:content "Value #2" :color :muted}]
-                    [{...} {...}]]}]
-```
-
-<details>
-<summary>Source code</summary>
-
-```
-(defn component
-  ([table-props]
-   [component (random/generate-keyword) table-props])
-
-  ([table-id table-props]
-   (let [table-props (data-table.prototypes/table-props-prototype table-props)]
-        [data-table table-id table-props])))
-```
-
-</details>
-
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [components.api :refer [data-table]]))
-
-(components.api/data-table ...)
-(data-table                ...)
 ```
 
 </details>
@@ -1411,7 +1285,7 @@ same ID for both the field and the block, the label of the block can targets the
  :label (metamorphic-content)(opt)
  :outdent (map)(opt)
  :placeholder (metamorphic-content)(opt)
-  Default: "No items to show"
+  Default: :no-items-to-show
  :style (map)(opt)}
 ```
 
@@ -2383,69 +2257,6 @@ same ID for both the field and the block, the label of the block can targets the
 
 ---
 
-### surface-box
-
-```
-@param (keyword)(opt) box-id
-@param (map) box-props
-{:fill-color (string)(opt)
-  Default: "var( --fill-color-default )"
- :class (keyword or keywords in vector)(opt)
- :content (metamorphic-content)
- :disabled? (boolean)(opt)
- :helper (metamorphic-content)(opt)
- :indent (map)(opt)
- :info-text (metamorphic-content)(opt)
- :label (metamorphic-content)(opt)
- :outdent (map)(opt)
- :overflow (keyword)(opt)
-  :hidden, :visible
-  Default: :visible
- :query (vector)(opt)
- :refresh-interval (ms)(opt)
-  W/ {:query ...}
- :style (map)(opt)}
-```
-
-```
-@usage
-[surface-box {...}]
-```
-
-```
-@usage
-[surface-box :my-surface-box {...}]
-```
-
-<details>
-<summary>Source code</summary>
-
-```
-(defn component
-  ([box-props]
-   [component (random/generate-keyword) box-props])
-
-  ([box-id box-props]
-   (let [box-props (surface-box.prototypes/box-props-prototype box-props)]
-        [surface-box box-id box-props])))
-```
-
-</details>
-
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [components.api :refer [surface-box]]))
-
-(components.api/surface-box ...)
-(surface-box                ...)
-```
-
-</details>
-
----
-
 ### user-avatar
 
 ```
@@ -2569,7 +2380,7 @@ same ID for both the field and the block, the label of the block can targets the
 {:class (keyword or keywords in vector)(opt)
  :disabled? (boolean)(opt)
  :indent (map)(opt)
- :item-element (symbol)
+ :item-element (Reagent component symbol)
  :outdent (map)(opt)
  :placeholder (map)(opt)
   {:illustration (string)(opt)
