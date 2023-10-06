@@ -1,7 +1,7 @@
 
 (ns elements.content-swapper.views
     (:require [elements.content-swapper.attributes :as content-swapper.attributes]
-              [elements.content-swapper.prototypes :as content-swapper.prototypes]
+             ;[elements.content-swapper.prototypes :as content-swapper.prototypes]
               [elements.content-swapper.state      :as content-swapper.state]
               [hiccup.api                          :as hiccup]
               [metamorphic-content.api             :as metamorphic-content]
@@ -21,12 +21,12 @@
   [swapper-id swapper-props]
   [:div (content-swapper.attributes/swapper-attributes swapper-id swapper-props)
         [:div (content-swapper.attributes/swapper-body-attributes swapper-id swapper-props)
-              (let [page-cursor  (-> @content-swapper.state/SWAPPERS swapper-id :page-cursor)
-                    page-history (-> @content-swapper.state/SWAPPERS swapper-id :page-history)]
-                   (letfn [(f [dex page] [react/mount-animation {:mounted? (= dex page-cursor)}
-                                                                [:div {:class :e-content-swapper--page}
-                                                                      [metamorphic-content/compose page]]])]
-                          (hiccup/put-with-indexed [:<>] page-history f)))]])
+              (let [page-pool   (-> @content-swapper.state/SWAPPERS swapper-id :page-pool)
+                    active-page (-> @content-swapper.state/SWAPPERS swapper-id :active-page)]
+                   (letfn [(f [dex {:keys [id page]}] [react/mount-animation {:mounted? (= id active-page)}
+                                                                             [:div {:class :e-content-swapper--page}
+                                                                                   [metamorphic-content/compose page]]])]
+                          (hiccup/put-with-indexed [:<>] page-pool f)))]])
 
 (defn- content-swapper
   ; @ignore
@@ -35,7 +35,7 @@
   ; @param (map) swapper-props
   ; {:initial-page (metamorphic-content)}
   [swapper-id {:keys [initial-page] :as swapper-props}]
-  (let [initial-state {:page-history [initial-page] :page-cursor 0 :initial-page initial-page}]
+  (let [initial-state {:page-pool [{:id :initial-page :page initial-page}] :active-page :initial-page}]
        (reagent/lifecycles {:component-did-mount    (fn [_ _] (swap! content-swapper.state/SWAPPERS update swapper-id merge initial-state))
                             :component-will-unmount (fn [_ _] (swap! content-swapper.state/SWAPPERS dissoc swapper-id))
                             :reagent-render         (fn [_ _] [content-swapper-structure swapper-id swapper-props])})))

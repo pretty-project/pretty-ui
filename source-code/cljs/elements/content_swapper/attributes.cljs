@@ -11,10 +11,12 @@
   ;
   ; @param (keyword) swapper-id
   ; @param (map) swapper-props
-  ; {}
+  ; {:style (map)(opt)}
   ;
   ; @return (map)
-  ; {}
+  ; {:class (keyword or keywords in vector)
+  ;  :data-animation-direction (keyword)
+  ;  :style (map)}
   [swapper-id {:keys [style] :as swapper-props}]
   (-> {:class                    :e-content-swapper--body
        :data-animation-direction (-> @content-swapper.state/SWAPPERS swapper-id :animation-direction)
@@ -28,7 +30,7 @@
   ; @param (map) swapper-props
   ;
   ; @return (map)
-  ; {}
+  ; {:class (keyword or keywords in vector)}
   [_ swapper-props]
   (-> {:class :e-content-swapper}
       (pretty-css/default-attributes swapper-props)
