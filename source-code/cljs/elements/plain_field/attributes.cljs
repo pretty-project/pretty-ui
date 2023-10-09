@@ -42,11 +42,11 @@
   ; Therefore, the input DOM element doesn't get the disabled="true" attribute!
   ;
   ; BUG#8809
-  ; If the {:disabled? true} state of the plain-field element removes the
+  ; If the {:disabled? true} state of the plain-field element removed the
   ; :on-change property of the input DOM element ...
-  ; ... the React warns that the input stepped into uncontrolled state.
+  ; ... the React would warn that the input stepped into uncontrolled state.
   ; Therefore, the input DOM element must keeps its :on-change property
-  ; in {:disabled? true} state!
+  ; in {:disabled? true} state as well!
   (merge {:class         :e-plain-field--input
           :data-autofill :remove-style
           :type          :text
