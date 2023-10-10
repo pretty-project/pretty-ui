@@ -20,7 +20,7 @@
   ;  :placeholder (metamorphic-content)(opt)}
   [text-id {:keys [content on-copy placeholder] :as text-props}]
   [:div (text.attributes/text-attributes text-id text-props)
-        [element.views/element-label  text-id text-props]
+        [element.views/element-label     text-id text-props]
         [:div (text.attributes/text-body-attributes text-id text-props)
               (if on-copy [:div (text.attributes/copyable-attributes text-id text-props)
                                 [:div (text.attributes/content-attributes text-id text-props)

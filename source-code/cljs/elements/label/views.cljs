@@ -193,7 +193,7 @@
   ;   Default: false
   ;  :style (map)(opt)
   ;  :target-id (keyword)(opt)
-  ;   The input element's id, that you want to connect with the label.
+  ;   The input element's ID, that you want to connect to the label.
   ;  :vertical-position (keyword)(opt)
   ;   :bottom, :center, :top
   ;  :text-direction (keyword)(opt)
