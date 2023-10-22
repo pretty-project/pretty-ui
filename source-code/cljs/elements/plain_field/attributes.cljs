@@ -45,7 +45,7 @@
   ; If the {:disabled? true} state of the plain-field element removed the
   ; :on-change property of the input DOM element ...
   ; ... the React would warn that the input stepped into uncontrolled state.
-  ; Therefore, the input DOM element must keeps its :on-change property
+  ; Therefore, the input DOM element must keep its :on-change property
   ; in {:disabled? true} state as well!
   (merge {:class         :e-plain-field--input
           :data-autofill :remove-style

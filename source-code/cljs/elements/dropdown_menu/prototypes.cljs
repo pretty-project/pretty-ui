@@ -23,7 +23,7 @@
           (f0 [dex %] (swap! dropdown-menu.state/MENUS assoc-in [menu-id :active-dex] dex)
                       (return nil))
 
-          ; If an item's index matches with the active index, sets the hover color
+          ; If an item's index matches the active index, sets the hover color
           ; of the item as its fill color to makes the item looks like an active one.
           ; If the item has no hover color it tries to set the default hover color
           ; read from the item-default map (which contains the default settings of items).
