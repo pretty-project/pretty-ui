@@ -67,9 +67,9 @@
   ; {}
   [field-id {:keys [multiline? placeholder surface] :as field-props}]
   ; The placeholder element has an absolute position, therefore ...
-  ; ... it has to be placed in the same ancestor element as the input element!
+  ; ... it has to be placed within the same ancestor element as the input element!
   ; ... but it cannot be in the very same parent element as the input element!
-  ;     (otherwise it covers the input no matter what's their order)
+  ;     (otherwise somehow it covers the input regardless their order)
   [:div (text-field.attributes/field-attributes field-id field-props)
         ; ...
         [element.views/element-label field-id field-props]
@@ -89,13 +89,14 @@
                            (text-field.attributes/field-input-attributes field-id field-props)]]]
               ; ...
               [field-end-adornments field-id field-props]
-              (if-let [invalid-message (field-id @form.state/FORM-ERRORS)]
-                      [:div {:class :e-text-field--invalid-content-message :data-selectable false}
-                            (metamorphic-content/compose invalid-message)])
               ; ...
               (if surface (if (plain-field.env/surface-visible? field-id)
                               [:div (text-field.attributes/field-surface-attributes field-id field-props)
                                     [metamorphic-content/compose surface]]))]
+        ; ...
+        (if-let [invalid-message (field-id @form.state/FORM-ERRORS)]
+                [:div {:class :e-text-field--invalid-content-message :data-selectable false}
+                      (metamorphic-content/compose invalid-message)])
         ; ...
         [plain-field.views/plain-field-synchronizer field-id field-props]])
 

@@ -138,6 +138,8 @@
   ;   Default: :inherit
   ;  :content (metamorphic-content)
   ;  :disabled? (boolean)(opt)
+  ;  :fill-color (keyword or string)(opt)
+  ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;  :font-size (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
   ;   Default: :s

@@ -31,11 +31,26 @@
 (defn element
   ; @param (keyword)(opt) text-id
   ; @param (map) text-props
-  ; {:class (keyword or keywords in vector)(opt)
+  ; {:border-color (keyword or string)(opt)
+  ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+  ;  :border-position (keyword)(opt)
+  ;   :all, :bottom, :top, :left, :right, :horizontal, :vertical
+  ;  :border-radius (map)(opt)
+  ;   {:tl (keyword)(opt)
+  ;    :tr (keyword)(opt)
+  ;    :br (keyword)(opt)
+  ;    :bl (keyword)(opt)
+  ;    :all (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
+  ;  :border-width (keyword)(opt)
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;  :class (keyword or keywords in vector)(opt)
   ;  :color (keyword or string)(opt)
   ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
   ;   Default: :default
   ;  :content (metamorphic-content)(opt)
+  ;  :fill-color (keyword or string)(opt)
+  ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;  :font-size (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
   ;   Default: :s

@@ -9,6 +9,7 @@
 ;
 ; @atom (map)
 ; {:my-input {:form-id (keyword)
+;             :get-value-f (function)
 ;             :validators (maps in vector)
 ;             :validate-when-change? (boolean)(opt)
 ;             :validate-when-leave? (boolean)(opt)

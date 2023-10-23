@@ -66,6 +66,7 @@
                           :data-horizontal-text-align   horizontal-align
                           :style                        style
                           :data-letter-spacing          :auto}))
+      (pretty-css/border-attributes text-props)
       (pretty-css/color-attributes  text-props)
       (pretty-css/font-attributes   text-props)
       (pretty-css/indent-attributes text-props)

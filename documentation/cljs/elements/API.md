@@ -1042,7 +1042,7 @@ leaves the field!
 XXX#0517
 The content-swapper element pages have absolute positioning, therefore
 the content-swapper element and its body stretch to their parents in order to
-make space for the pages.
+clear space for the pages.
 ```
 
 ```
@@ -2281,6 +2281,8 @@ BUG#9912 (source-code/cljs/elements/button.views)
   Default: :inherit
  :content (metamorphic-content)
  :disabled? (boolean)(opt)
+ :fill-color (keyword or string)(opt)
+  :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
  :font-size (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
   Default: :s
@@ -3602,11 +3604,26 @@ UNFINISHED! DO NOT USE!
 ```
 @param (keyword)(opt) text-id
 @param (map) text-props
-{:class (keyword or keywords in vector)(opt)
+{:border-color (keyword or string)(opt)
+  :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+ :border-position (keyword)(opt)
+  :all, :bottom, :top, :left, :right, :horizontal, :vertical
+ :border-radius (map)(opt)
+  {:tl (keyword)(opt)
+   :tr (keyword)(opt)
+   :br (keyword)(opt)
+   :bl (keyword)(opt)
+   :all (keyword)(opt)
+    :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
+ :border-width (keyword)(opt)
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+ :class (keyword or keywords in vector)(opt)
  :color (keyword or string)(opt)
   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
   Default: :default
  :content (metamorphic-content)(opt)
+ :fill-color (keyword or string)(opt)
+  :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
  :font-size (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
   Default: :s

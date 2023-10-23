@@ -12,7 +12,7 @@
   ; @ignore
   ;
   ; @description
-  ; Iterates over the validators of the registered form input with the given
+  ; Iterates over the validators of the form input registered with the given
   ; input ID ...
   ; ... and in case of ANY validator fails, it ...
   ;     ... stores the invalid-message in the form errors atom,
@@ -55,8 +55,8 @@
   ; @ignore
   ;
   ; @description
-  ; Iterates over the registered form inputs with the same form ID and validates
-  ; the inputs until one fails on one of its validators.
+  ; Iterates over the form inputs registered with the same form ID and validates
+  ; the inputs until one fails by one of its validators.
   ; If any input fails it dispatches the on-invalid event if any,
   ; otherwise it dispatches the on-valid event if any.
   ;
@@ -89,8 +89,18 @@
   ;  :validate-when-leave? (boolean)(opt)
   ;  :validators (maps in vector)
   ;  :value-path (Re-Frame path vector)}
-  [input-id input-props]
-  (let [validation-props (select-keys input-props [:form-id :validators :value-path :validate-when-change? :validate-when-leave?])]
+  ; @param (function) get-value-f
+  [input-id input-props get-value-f]
+  ; - Different input elements have to provide the 'get-value-f' function to the
+  ;   form handler in order to make their values IMMEDIATELY available for the
+  ;   form handler when a validation happens.
+  ; - Some input elements stores their values in the application state with a short
+  ;   latency, and if a validation fires during this delay the actual value could
+  ;   be different from the value stored in the application state.
+  ;   E.g.: plain-field, text-field, etc. elements stores their values with latency.
+  ;         HACK#9910 (source-code/cljs/elements/plain_field/views.cljs)
+  (let [validation-props (-> input-props (select-keys [:form-id :validators :value-path :validate-when-change? :validate-when-leave?])
+                                         (assoc :get-value-f get-value-f))]
        (swap! form.state/FORM-INPUTS assoc input-id validation-props)))
 
 (defn remove-form-input!

@@ -10,20 +10,22 @@
   ; @ignore
   ;
   ; @description
-  ; Returns the stored value of the registered form input with the given input ID.
+  ; Returns the stored value of the form input registered with the given input ID.
   ;
   ; @param (keyword) input-id
   ;
   ; @return (*)
   [input-id]
-  (let [value-path (get-in @form.state/FORM-INPUTS [input-id :value-path])]
-       (-> [:get-item value-path] r/subscribe deref)))
+  (let [value-path (get-in @form.state/FORM-INPUTS [input-id :value-path])
+        get-value-f (get-in @form.state/FORM-INPUTS [input-id :get-value-f])]
+       (-> [:get-item value-path] r/subscribe deref)
+       (get-value-f)))
 
 (defn get-input-validators
   ; @ignore
   ;
   ; @description
-  ; Returns the validators of the registered form input with the given input ID.
+  ; Returns the validators of the form input registered with the given input ID.
   ;
   ; @param (keyword) input-id
   ;

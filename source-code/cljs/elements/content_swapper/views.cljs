@@ -45,7 +45,7 @@
   ; XXX#0517
   ; The content-swapper element pages have absolute positioning, therefore
   ; the content-swapper element and its body stretch to their parents in order to
-  ; make space for the pages.
+  ; clear space for the pages.
   ;
   ; @param (keyword)(opt) swapper-id
   ; @param (map) swapper-props

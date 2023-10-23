@@ -13,8 +13,9 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   (fn [_ [_ field-id field-props]]
-      {:fx       [:elements.form/reg-form-input!        field-id field-props]
-       :dispatch [:elements.plain-field/field-did-mount field-id field-props]}))
+      (let [get-value-f #(plain-field.env/get-field-content field-id)]
+           {:fx       [:elements.form/reg-form-input!        field-id field-props get-value-f]
+            :dispatch [:elements.plain-field/field-did-mount field-id field-props]})))
 
 (r/reg-event-fx :elements.text-field/field-will-unmount
   ; @ignore
