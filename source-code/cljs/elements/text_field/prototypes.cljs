@@ -3,7 +3,7 @@
     (:require [elements.input.utils    :as input.utils]
               [elements.text-field.env :as text-field.env]
               [loop.api                :refer [<-walk]]
-              [noop.api                :refer [param return]]
+              [noop.api                :refer [return]]
               [random.api              :as random]
               [vector.api              :as vector]))
 
@@ -24,16 +24,16 @@
   ;  :color (keyword)
   ;  :icon-family (keyword)
   ;  :tab-indexed? (boolean)}
-  [field-props {:keys [icon label on-click] :as adornment-props}]
+  [field-props {:keys [icon label on-click timeout] :as adornment-props}]
   (merge (if icon     {:icon-family    :material-symbols-outlined
                        :icon-size      :s})
          (if label    {:font-size      :xxs
                        :letter-spacing :auto
                        :line-height    :text-block})
-         (if on-click {:click-effect :opacity})
+         (if on-click {:click-effect   :opacity})
          {:color        :default
           :tab-indexed? true}
-         (param adornment-props)
+         (-> adornment-props)
          ; Inherits the reveal effect from the field-props into the adornment-props
          (select-keys field-props [:reveal-effect])))
 
@@ -56,7 +56,7 @@
   ; rerenders when the field value changes between empty and nonempty strings.
   (if emptiable? (let [empty-field-adornment-props (text-field.env/empty-field-adornment-props field-id field-props)]
                       (vector/conj-item end-adornments empty-field-adornment-props))
-                 (return end-adornments)))
+                 (-> end-adornments)))
 
 (defn field-props-prototype
   ; @ignore

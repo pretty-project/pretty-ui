@@ -11,6 +11,7 @@
               [random.api                     :as random]
               [re-frame.api                   :as r]
               [reagent.api                    :as reagent]
+              [time.api                       :as time]
               [vector.api                     :as vector]))
 
 ;; -- Field adornments components ---------------------------------------------
@@ -24,12 +25,33 @@
   ; @param (map) adornment-props
   ; {:icon (keyword)(opt)
   ;  :label (string)(opt)
-  ;  :on-click (Re-Frame metamorphic-event)(opt)}
-  [field-id field-props {:keys [icon label on-click] :as adornment-props}]
-  (let [adornment-props (text-field.prototypes/adornment-props-prototype field-props adornment-props)]
-       [(if on-click :button :div)
-        (text-field.attributes/adornment-attributes field-id field-props adornment-props)
-        (or icon (metamorphic-content/compose label))]))
+  ;  :on-click (Re-Frame metamorphic-event)(opt)
+  ;  :timeout (ms)(opt)}
+  [field-id field-props {:keys [icon label on-click timeout] :as adornment-props}]
+  ; Local state for the countdown timer
+  (let [time-left (reagent/ratom nil)]
+
+       ; This function controls the countdown timer loop
+       (letfn [(f [] (if   (not= @time-left 0)    (time.api/set-timeout! f 1000))
+                     (cond (=    @time-left 0)    (reset! time-left nil)
+                           (->   @time-left nil?) (reset! time-left timeout)
+                           :decrease-time-left    (swap!  time-left - 1000))
+                     (-> on-click))]
+
+              ; ...
+              (fn [] (if @time-left ; ...
+                                    (let [adornment-props (text-field.prototypes/adornment-props-prototype field-props adornment-props)
+                                          adornment-props (dissoc adornment-props :click-effect :hover-effect :icon-family :icon-size)
+                                          adornment-props (assoc  adornment-props :color :highlight)]
+                                         [:div (text-field.attributes/adornment-attributes field-id field-props adornment-props)
+                                               (-> @time-left time/ms->s (str "s"))])
+
+                                    ; ...
+                                    (let [adornment-props (assoc adornment-props :on-click (if timeout f on-click))
+                                          adornment-props (text-field.prototypes/adornment-props-prototype field-props adornment-props)]
+                                         [(if on-click :button :div)
+                                          (text-field.attributes/adornment-attributes field-id field-props adornment-props)
+                                          (or icon (metamorphic-content/compose label))]))))))
 
 (defn field-end-adornments
   ; @ignore
@@ -162,6 +184,8 @@
   ;     :on-click (Re-Frame metamorphic-event)(opt)
   ;     :tab-indexed? (boolean)(opt)
   ;      Default: true
+  ;     :timeout (ms)(opt)
+  ;      Disables the adornment for a specific time after the on-click event fired.
   ;     :tooltip-content (metamorphic-content)(opt)}]
   ;  :field-content-f (function)(opt)
   ;   From application state to field content modifier function.

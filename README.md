@@ -33,6 +33,8 @@ You can track the changes of the <strong>pretty-ui</strong> library [here](CHANG
 
 ### Index
 
+- [First steps](#first-steps)
+
 - [Event handlers](#event-handlers)
 
 - [Content types](#content-types)
@@ -40,6 +42,13 @@ You can track the changes of the <strong>pretty-ui</strong> library [here](CHANG
 - [Value paths of inputs](#value-paths-of-inputs)
 
 - [Options paths of optionable inputs](#options-paths-of-optionable-inputs)
+
+### First steps
+
+- Implement the `bithandshake/pretty-css` library in your project and follow
+  the instructions of its `REAMDE.md` file.
+
+> [github.com/bithandshake/pretty-css](https://github.com/bithandshake/pretty-css)
 
 ### Event handlers
 
@@ -55,8 +64,8 @@ The components, elements and layouts take Re-Frame events as event handlers.
 [elements/button {:on-click [:my-event]}]
 ```
 
-You could use metamorphic-events as well. You can find more information about them at:
-[github.com/bithandshake/re-frame-api](github.com/bithandshake/re-frame-api)
+You can use Re-Frame metamorphic-events. Find more information about them at:
+[github.com/bithandshake/re-frame-api](https://github.com/bithandshake/re-frame-api)
 
 ```
 (ns my-namespace

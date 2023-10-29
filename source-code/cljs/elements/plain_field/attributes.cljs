@@ -18,7 +18,7 @@
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
-  ;  :data-autofill (keyword)
+  ;  :data-autofill-style (keyword)
   ;  :data-caret-color (keyword)
   ;  :id (string)
   ;  :on-blur (function)
@@ -42,22 +42,30 @@
   ; Therefore, the input DOM element doesn't get the disabled="true" attribute!
   ;
   ; BUG#8809
-  ; If the {:disabled? true} state of the plain-field element removed the
-  ; :on-change property of the input DOM element ...
-  ; ... the React would warn that the input stepped into uncontrolled state.
-  ; Therefore, the input DOM element must keep its :on-change property
-  ; in {:disabled? true} state as well!
-  (merge {:class         :e-plain-field--input
-          :data-autofill :remove-style
-          :type          :text
-          :id            (hiccup/value field-id "input")
-          :value         (plain-field.env/get-field-content field-id)}
+  ; The React would warn that the input stepped into uncontrolled state
+  ; if it has no :on-change property, therefore, the input DOM element must keep
+  ; its :on-change property in {:disabled? true} state!
+  ;
+  ; BUG#8811
+  ; In some cases the input element didn't fire the on-change function therefore
+  ; it had been replaced by the on-input function.
+  ; E.g.: When a text-field appeared on the UI with a content that was in the application
+  ;       state before the field did mount and the first interaction with the field
+  ;       was a full selection (cmd + A) and a clear action (backspace), the on-change
+  ;       function somehow didn't fire.
+  (merge {:class               :e-plain-field--input
+          :data-autofill-style :none
+          :type                :text
+          :id                  (hiccup/value field-id "input")
+          :value               (plain-field.env/get-field-content field-id)}
          (if disabled? {:data-caret-color :hidden
                         :tab-index        -1
-                        :on-change        (fn [%])}
+                        :on-change        (fn [_])}
                        {:on-blur          (fn [_] (r/dispatch [:elements.plain-field/field-blurred field-id field-props]))
                         :on-focus         (fn [_] (r/dispatch [:elements.plain-field/field-focused field-id field-props]))
-                        :on-change        (fn [%] (plain-field.utils/on-change-f field-id field-props %))})))
+                       ;:on-change        (fn [%] (plain-field.utils/on-change-f field-id field-props %))
+                        :on-change        (fn [_])
+                        :on-input         (fn [%] (plain-field.utils/on-change-f field-id field-props %))})))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

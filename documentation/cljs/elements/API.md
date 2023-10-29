@@ -3763,6 +3763,8 @@ leaves the field!
     :on-click (Re-Frame metamorphic-event)(opt)
     :tab-indexed? (boolean)(opt)
      Default: true
+    :timeout (ms)(opt)
+     Disables the adornment for a specific time after the on-click event fired.
     :tooltip-content (metamorphic-content)(opt)}]
  :field-content-f (function)(opt)
   From application state to field content modifier function.
