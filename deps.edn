@@ -21,7 +21,7 @@
          bithandshake/cljs-window-observer       {:git/url "git@github.com:bithandshake/cljs-window-observer"
                                                   :sha     "a60edaac60af5d2f773ceb8e73c608101579eee6"}
          bithandshake/pretty-css                 {:git/url "git@github.com:bithandshake/pretty-css"
-                                                  :sha     "f095dbfedbd7421f12b19c0e866176afb6d75942"}
+                                                  :sha     "82852dbb16b778d25ba1facb353c775159f41cec"}
          bithandshake/re-frame-api               {:git/url "git@github.com:bithandshake/re-frame-api"
                                                   :sha     "a60edaac60af5d2f773ceb8e73c608101579eee6"}
          bithandshake/reagent-api                {:git/url "git@github.com:bithandshake/reagent-api"
