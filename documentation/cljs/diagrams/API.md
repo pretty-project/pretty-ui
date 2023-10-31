@@ -64,8 +64,8 @@
    [diagram (random/generate-keyword) diagram-props])
 
   ([diagram-id diagram-props]
-   (let [diagram-props (circle-diagram.prototypes/diagram-props-prototype diagram-props)]
-        [circle-diagram diagram-id diagram-props])))
+   (fn [_ diagram-props]       (let [diagram-props (circle-diagram.prototypes/diagram-props-prototype diagram-props)]
+            [circle-diagram diagram-id diagram-props]))))
 ```
 
 </details>
@@ -136,8 +136,8 @@
    [diagram (random/generate-keyword) diagram-props])
 
   ([diagram-id diagram-props]
-   (let [diagram-props (line-diagram.prototypes/diagram-props-prototype diagram-props)]
-        [line-diagram diagram-id diagram-props])))
+   (fn [_ diagram-props]       (let [diagram-props (line-diagram.prototypes/diagram-props-prototype diagram-props)]
+            [line-diagram diagram-id diagram-props]))))
 ```
 
 </details>
@@ -206,7 +206,7 @@ UNFINISHED! DO NOT USE!
    [diagram (random/generate-keyword) diagram-props])
 
   ([diagram-id diagram-props]
-   (let []        [point-diagram diagram-id diagram-props])))
+   (fn [_ diagram-props]       (let []            [point-diagram diagram-id diagram-props]))))
 ```
 
 </details>

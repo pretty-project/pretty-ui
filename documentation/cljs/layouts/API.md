@@ -83,8 +83,8 @@
    [layout (random/generate-keyword) popup-props])
 
   ([popup-id popup-props]
-   (let [popup-props (box-popup.prototypes/popup-props-prototype popup-props)]
-        [box-popup popup-id popup-props])))
+   (fn [_ popup-props]       (let [popup-props (box-popup.prototypes/popup-props-prototype popup-props)]
+            [box-popup popup-id popup-props]))))
 ```
 
 </details>
@@ -136,8 +136,8 @@
    [layout (random/generate-keyword) popup-props])
 
   ([popup-id popup-props]
-   (let [popup-props (plain-popup.prototypes/popup-props-prototype popup-props)]
-        [plain-popup popup-id popup-props])))
+   (fn [_ popup-props]       (let [popup-props (plain-popup.prototypes/popup-props-prototype popup-props)]
+            [plain-popup popup-id popup-props]))))
 ```
 
 </details>
@@ -191,8 +191,8 @@
    [layout (random/generate-keyword) surface-props])
 
   ([surface-id surface-props]
-   (let [layout-props (plain-surface.prototypes/surface-props-prototype surface-props)]
-        [plain-surface surface-id surface-props])))
+   (fn [_ surface-props]       (let [layout-props (plain-surface.prototypes/surface-props-prototype surface-props)]
+            [plain-surface surface-id surface-props]))))
 ```
 
 </details>
@@ -270,8 +270,8 @@
    [layout (random/generate-keyword) sidebar-props])
 
   ([sidebar-id sidebar-props]
-   (let [sidebar-props (sidebar.prototypes/sidebar-props-prototype sidebar-props)]
-        [sidebar sidebar-id sidebar-props])))
+   (fn [_ sidebar-props]       (let [sidebar-props (sidebar.prototypes/sidebar-props-prototype sidebar-props)]
+            [sidebar sidebar-id sidebar-props]))))
 ```
 
 </details>
@@ -360,8 +360,8 @@
    [layout (random/generate-keyword) popup-props])
 
   ([popup-id popup-props]
-   (let [popup-props (struct-popup.prototypes/popup-props-prototype popup-props)]
-        [struct-popup popup-id popup-props])))
+   (fn [_ popup-props]       (let [popup-props (struct-popup.prototypes/popup-props-prototype popup-props)]
+            [struct-popup popup-id popup-props]))))
 ```
 
 </details>

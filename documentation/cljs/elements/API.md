@@ -170,8 +170,8 @@
    [element (random/generate-keyword) blank-props])
 
   ([blank-id blank-props]
-   (let [blank-props (blank.prototypes/blank-props-prototype blank-props)]
-        [blank blank-id blank-props])))
+   (fn [_ blank-props]       (let [blank-props (blank.prototypes/blank-props-prototype blank-props)]
+            [blank blank-id blank-props]))))
 ```
 
 </details>
@@ -237,8 +237,8 @@
    [element (random/generate-keyword) breadcrumbs-props])
 
   ([breadcrumbs-id breadcrumbs-props]
-   (let [breadcrumbs-props (breadcrumbs.prototypes/breadcrumbs-props-prototype breadcrumbs-props)]
-        [breadcrumbs breadcrumbs-id breadcrumbs-props])))
+   (fn [_ breadcrumbs-props]       (let [breadcrumbs-props (breadcrumbs.prototypes/breadcrumbs-props-prototype breadcrumbs-props)]
+            [breadcrumbs breadcrumbs-id breadcrumbs-props]))))
 ```
 
 </details>
@@ -262,14 +262,14 @@
 ```
 @warning
 BUG#9912
-If the keypress key-code is 13 (ENTER) the on-click event will fire repeatedly
-during the key is pressed!
+If the keypress key-code is 13 (ENTER) the on-click event will fire multiple times during the key is pressed!
+This phenomenon caused by:
 1. The keydown event focuses the button via the 'button.side-effects/key-pressed' function.
 2. One of the default actions of the 13 (ENTER) key is to fire the on-click
    function on a focused button element, therefore the on-click function
    fires repeatedly during the 13 (ENTER) key is pressed.
-By default (using any other key than the 13) the on-click function fired
-by the 'button.side-effects/key-released' function.
+In case of using any other key than the 13 (ENTER) the on-click function fires only by
+the 'button.side-effects/key-released' function.
 ```
 
 ```
@@ -407,8 +407,8 @@ by the 'button.side-effects/key-released' function.
    [element (random/generate-keyword) button-props])
 
   ([button-id button-props]
-   (let [button-props (button.prototypes/button-props-prototype button-props)]
-        [button button-id button-props])))
+   (fn [_ button-props]       (let [button-props (button.prototypes/button-props-prototype button-props)]
+            [button button-id button-props]))))
 ```
 
 </details>
@@ -515,8 +515,8 @@ by the 'button.side-effects/key-released' function.
    [element (random/generate-keyword) card-props])
 
   ([card-id card-props]
-   (let [card-props (card.prototypes/card-props-prototype card-props)]
-        [card card-id card-props])))
+   (fn [_ card-props]       (let [card-props (card.prototypes/card-props-prototype card-props)]
+            [card card-id card-props]))))
 ```
 
 </details>
@@ -611,8 +611,8 @@ by the 'button.side-effects/key-released' function.
    [element (random/generate-keyword) checkbox-props])
 
   ([checkbox-id checkbox-props]
-   (let [checkbox-props (checkbox.prototypes/checkbox-props-prototype checkbox-id checkbox-props)]
-        [checkbox checkbox-id checkbox-props])))
+   (fn [_ checkbox-props]       (let [checkbox-props (checkbox.prototypes/checkbox-props-prototype checkbox-id checkbox-props)]
+            [checkbox checkbox-id checkbox-props]))))
 ```
 
 </details>
@@ -700,8 +700,8 @@ by the 'button.side-effects/key-released' function.
    [element (random/generate-keyword) chip-props])
 
   ([chip-id chip-props]
-   (let [chip-props (chip.prototypes/chip-props-prototype chip-props)]
-        [chip chip-id chip-props])))
+   (fn [_ chip-props]       (let [chip-props (chip.prototypes/chip-props-prototype chip-props)]
+            [chip chip-id chip-props]))))
 ```
 
 </details>
@@ -724,8 +724,8 @@ by the 'button.side-effects/key-released' function.
 
 ```
 @warning
-Chips only deletable if they are read from the application state by using
-the :chips-path property!
+The {:deletable? true} setting only works when the chip values are not statically provided
+with the {:chips [...]} property but dinamically provided by using the {:chips-path [...]} property!
 ```
 
 ```
@@ -774,8 +774,8 @@ the :chips-path property!
    [element (random/generate-keyword) group-props])
 
   ([group-id group-props]
-   (let [group-props (chip-group.prototypes/group-props-prototype group-id group-props)]
-        [chip-group group-id group-props])))
+   (fn [_ group-props]       (let [group-props (chip-group.prototypes/group-props-prototype group-id group-props)]
+            [chip-group group-id group-props]))))
 ```
 
 </details>
@@ -850,8 +850,8 @@ the :chips-path property!
    [element (random/generate-keyword) selector-props])
 
   ([selector-id selector-props]
-   (let [selector-props (color-selector.prototypes/selector-props-prototype selector-id selector-props)]
-        [color-selector selector-id selector-props])))
+   (fn [_ selector-props]       (let [selector-props (color-selector.prototypes/selector-props-prototype selector-id selector-props)]
+            [color-selector selector-id selector-props]))))
 ```
 
 </details>
@@ -948,8 +948,8 @@ the :chips-path property!
    [element (random/generate-keyword) column-props])
 
   ([column-id column-props]
-   (let [column-props (column.prototypes/column-props-prototype column-props)]
-        [column column-id column-props])))
+   (fn [_ column-props]       (let [column-props (column.prototypes/column-props-prototype column-props)]
+            [column column-id column-props]))))
 ```
 
 </details>
@@ -1015,8 +1015,8 @@ leaves the field!
    [element (random/generate-keyword) box-props])
 
   ([box-id box-props]
-   (let [box-props (combo-box.prototypes/box-props-prototype box-id box-props)]
-        [combo-box box-id box-props])))
+   (fn [_ box-props]       (let [box-props (combo-box.prototypes/box-props-prototype box-id box-props)]
+            [combo-box box-id box-props]))))
 ```
 
 </details>
@@ -1040,9 +1040,10 @@ leaves the field!
 ```
 @warning
 XXX#0517
-The content-swapper element pages have absolute positioning, therefore
-the content-swapper element and its body stretch to their parents in order to
-clear space for the pages.
+The 'content-swapper' element's pages have absolute positioning, therefore
+the 'content-swapper' element and its body are stretched to their parents in order
+to clear space for the pages because they are not doing it for themeself because
+their absolute positioning.
 ```
 
 ```
@@ -1082,7 +1083,7 @@ clear space for the pages.
    [element (random/generate-keyword) swapper-props])
 
   ([swapper-id swapper-props]
-   (let []        [content-swapper swapper-id swapper-props])))
+   (fn [_ swapper-props]       (let []            [content-swapper swapper-id swapper-props]))))
 ```
 
 </details>
@@ -1166,8 +1167,8 @@ clear space for the pages.
    [element (random/generate-keyword) counter-props])
 
   ([counter-id counter-props]
-   (let [counter-props (counter.prototypes/counter-props-prototype counter-id counter-props)]
-        [counter counter-id counter-props])))
+   (fn [_ counter-props]       (let [counter-props (counter.prototypes/counter-props-prototype counter-id counter-props)]
+            [counter counter-id counter-props]))))
 ```
 
 </details>
@@ -1283,7 +1284,7 @@ clear space for the pages.
    [element (random/generate-keyword) table-props])
 
   ([table-id table-props]
-   (let []        [data-table table-id table-props])))
+   (fn [_ table-props]       (let []            [data-table table-id table-props]))))
 ```
 
 </details>
@@ -1337,8 +1338,8 @@ leaves the field!
    [element (random/generate-keyword) field-props])
 
   ([field-id field-props]
-   (let [field-props (date-field.prototypes/field-props-prototype field-id field-props)]
-        [text-field.views/element field-id field-props])))
+   (fn [_ field-props]       (let [field-props (date-field.prototypes/field-props-prototype field-id field-props)]
+            [text-field.views/element field-id field-props]))))
 ```
 
 </details>
@@ -1402,7 +1403,7 @@ leaves the field!
    [element (random/generate-keyword) field-props])
 
   ([field-id field-props]
-   (let []        [digit-field field-id field-props])))
+   (fn [_ field-props]       (let []            [digit-field field-id field-props]))))
 ```
 
 </details>
@@ -1457,8 +1458,8 @@ leaves the field!
    [element (random/generate-keyword) menu-props])
 
   ([menu-id menu-props]
-   (let [menu-props (dropdown-menu.prototypes/menu-props-prototype menu-id menu-props)]
-        [dropdown-menu menu-id menu-props])))
+   (fn [_ menu-props]       (let [menu-props (dropdown-menu.prototypes/menu-props-prototype menu-id menu-props)]
+            [dropdown-menu menu-id menu-props]))))
 ```
 
 </details>
@@ -1572,8 +1573,8 @@ This component is the default label component of the elements.
    [element (random/generate-keyword) expandable-props])
 
   ([expandable-id expandable-props]
-   (let [expandable-props (expandable.prototypes/expandable-props-prototype expandable-props)]
-        [expandable expandable-id expandable-props])))
+   (fn [_ expandable-props]       (let [expandable-props (expandable.prototypes/expandable-props-prototype expandable-props)]
+            [expandable expandable-id expandable-props]))))
 ```
 
 </details>
@@ -1643,8 +1644,8 @@ This component is the default label component of the elements.
    [element (random/generate-keyword) ghost-props])
 
   ([ghost-id ghost-props]
-   (let [ghost-props (ghost.prototypes/ghost-props-prototype ghost-props)]
-        [ghost ghost-id ghost-props])))
+   (fn [_ ghost-props]       (let [ghost-props (ghost.prototypes/ghost-props-prototype ghost-props)]
+            [ghost ghost-id ghost-props]))))
 ```
 
 </details>
@@ -1715,8 +1716,8 @@ This component is the default label component of the elements.
    [element (random/generate-keyword) group-props])
 
   ([group-id group-props]
-   (let [group-props (horizontal-group.prototypes/group-props-prototype group-props)]
-        [horizontal-group group-id group-props])))
+   (fn [_ group-props]       (let [group-props (horizontal-group.prototypes/group-props-prototype group-props)]
+            [horizontal-group group-id group-props]))))
 ```
 
 </details>
@@ -1773,9 +1774,9 @@ This component is the default label component of the elements.
    [element (random/generate-keyword) line-props])
 
   ([line-id line-props]
-   (let [line-props (horizontal-line.prototypes/line-props-prototype line-props)]
-        [:div (horizontal-line.attributes/line-attributes line-id line-props)
-              [:div (horizontal-line.attributes/line-body-attributes line-id line-props)]])))
+   (fn [_ line-props]       (let [line-props (horizontal-line.prototypes/line-props-prototype line-props)]
+            [:div (horizontal-line.attributes/line-attributes line-id line-props)
+                  [:div (horizontal-line.attributes/line-body-attributes line-id line-props)]]))))
 ```
 
 </details>
@@ -1847,8 +1848,8 @@ This component is the default label component of the elements.
    [element (random/generate-keyword) polarity-props])
 
   ([polarity-id polarity-props]
-   (let [polarity-props (horizontal-polarity.prototypes/polarity-props-prototype polarity-props)]
-        [horizontal-polarity polarity-id polarity-props])))
+   (fn [_ polarity-props]       (let [polarity-props (horizontal-polarity.prototypes/polarity-props-prototype polarity-props)]
+            [horizontal-polarity polarity-id polarity-props]))))
 ```
 
 </details>
@@ -1912,8 +1913,8 @@ This component is the default label component of the elements.
    [element (random/generate-keyword) separator-props])
 
   ([separator-id separator-props]
-   (let [separator-props (horizontal-separator.prototypes/separator-props-prototype separator-props)]
-        [horizontal-separator separator-id separator-props])))
+   (fn [_ separator-props]       (let [separator-props (horizontal-separator.prototypes/separator-props-prototype separator-props)]
+            [horizontal-separator separator-id separator-props]))))
 ```
 
 </details>
@@ -1963,8 +1964,8 @@ This component is the default label component of the elements.
    [element (random/generate-keyword) spacer-props])
 
   ([spacer-id spacer-props]
-   (let [spacer-props (horizontal-spacer.prototypes/spacer-props-prototype spacer-props)]
-        [:div (horizontal-spacer.attributes/spacer-attributes spacer-id spacer-props)])))
+   (fn [_ spacer-props]       (let [spacer-props (horizontal-spacer.prototypes/spacer-props-prototype spacer-props)]
+            [:div (horizontal-spacer.attributes/spacer-attributes spacer-id spacer-props)]))))
 ```
 
 </details>
@@ -2031,8 +2032,8 @@ This component is the default label component of the elements.
    [element (random/generate-keyword) icon-props])
 
   ([icon-id icon-props]
-   (let [icon-props (icon.prototypes/icon-props-prototype icon-props)]
-        [icon icon-id icon-props])))
+   (fn [_ icon-props]       (let [icon-props (icon.prototypes/icon-props-prototype icon-props)]
+            [icon icon-id icon-props]))))
 ```
 
 </details>
@@ -2166,8 +2167,8 @@ BUG#9912 (source-code/cljs/elements/button.views)
    [element (random/generate-keyword) button-props])
 
   ([button-id button-props]
-   (let [button-props (icon-button.prototypes/button-props-prototype button-props)]
-        [icon-button button-id button-props])))
+   (fn [_ button-props]       (let [button-props (icon-button.prototypes/button-props-prototype button-props)]
+            [icon-button button-id button-props]))))
 ```
 
 </details>
@@ -2237,8 +2238,8 @@ BUG#9912 (source-code/cljs/elements/button.views)
    [element (random/generate-keyword) image-props])
 
   ([image-id image-props]
-   (let [image-props (image.prototypes/image-props-prototype image-props)]
-        [image image-id image-props])))
+   (fn [_ image-props]       (let [image-props (image.prototypes/image-props-prototype image-props)]
+            [image image-id image-props]))))
 ```
 
 </details>
@@ -2338,9 +2339,7 @@ BUG#9912 (source-code/cljs/elements/button.views)
   Default: false
  :style (map)(opt)
  :target-id (keyword)(opt)
-  The input element's ID, that you want to connect to the label.
- :vertical-position (keyword)(opt)
-  :bottom, :center, :top
+  The input element's ID, that you want to connect to the label with using the 'for' HTML attribute.
  :text-direction (keyword)(opt)
   :normal, :reversed
   Default :normal
@@ -2351,6 +2350,8 @@ BUG#9912 (source-code/cljs/elements/button.views)
  :tooltip-content (metamorphic-content)(opt)
  :tooltip-position (keyword)(opt)
   :left, :right
+ :vertical-position (keyword)(opt)
+  :bottom, :center, :top
  :width (keyword)(opt)
   :auto, :content, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   Default: :content}
@@ -2375,8 +2376,8 @@ BUG#9912 (source-code/cljs/elements/button.views)
    [element (random/generate-keyword) label-props])
 
   ([label-id label-props]
-   (let [label-props (label.prototypes/label-props-prototype label-props)]
-        [label label-id label-props])))
+   (fn [_ label-props]       (let [label-props (label.prototypes/label-props-prototype label-props)]
+            [label label-id label-props]))))
 ```
 
 </details>
@@ -2399,8 +2400,8 @@ BUG#9912 (source-code/cljs/elements/button.views)
 
 ```
 @description
-You can set the default item styles and settings by using the :item-default
-property or you can specify these values on each item.
+You can set the default item styles and settings by using the ':item-default'
+property or you can specify these values on each item separately.
 ```
 
 ```
@@ -2502,8 +2503,8 @@ property or you can specify these values on each item.
    [element (random/generate-keyword) bar-props])
 
   ([bar-id bar-props]
-   (let [bar-props (menu-bar.prototypes/bar-props-prototype bar-props)]
-        [menu-bar bar-id bar-props])))
+   (fn [_ bar-props]       (let [bar-props (menu-bar.prototypes/bar-props-prototype bar-props)]
+            [menu-bar bar-id bar-props]))))
 ```
 
 </details>
@@ -2571,9 +2572,9 @@ leaves the field!
    [element (random/generate-keyword) box-props])
 
   ([box-id box-props]
-   (let [box-props (multi-combo-box.prototypes/box-props-prototype box-id box-props)
-         box-props (assoc-in box-props [:surface :content] [combo-box.views/combo-box-surface-content box-id box-props])]
-        [multi-combo-box box-id box-props])))
+   (fn [_ box-props]       (let [box-props (multi-combo-box.prototypes/box-props-prototype box-id box-props)
+             box-props (assoc-in box-props [:surface :content] [combo-box.views/combo-box-surface-content box-id box-props])]
+            [multi-combo-box box-id box-props]))))
 ```
 
 </details>
@@ -2596,12 +2597,10 @@ leaves the field!
 
 ```
 @description
-The 'multi-field' element writes its actual value into the Re-Frame state
-delayed after the user stopped typing or without a delay when the user
-leaves the field!
-In case of using the :initial-options, :options or the :options-path properties,
-the 'multi-field' element implements the 'combo-box' element, otherwise it implements
-the 'text-field' element.
+- The 'multi-field' element writes its actual value into the Re-Frame state delayed, after
+  the user stopped typing or without a delay when the user leaves the field!
+- In case of using the ':initial-options', ':options' or the ':options-path' properties, the 'multi-field'
+  element implements the 'combo-box' element, otherwise it implements the 'text-field' element.
 ```
 
 ```
@@ -2630,8 +2629,8 @@ the 'text-field' element.
    [element (random/generate-keyword) group-props])
 
   ([group-id group-props]
-   (let [group-props (multi-field.prototypes/group-props-prototype group-id group-props)]
-        [multi-field group-id group-props])))
+   (fn [_ group-props]       (let [group-props (multi-field.prototypes/group-props-prototype group-id group-props)]
+            [multi-field group-id group-props]))))
 ```
 
 </details>
@@ -2655,8 +2654,7 @@ the 'text-field' element.
 ```
 @description
 The 'multiline-field' element writes its actual value into the Re-Frame state
-delayed after the user stopped typing or without a delay when the user
-leaves the field!
+delayed, after the user stopped typing or without a delay when the user leaves the field!
 ```
 
 ```
@@ -2691,8 +2689,8 @@ leaves the field!
    [element (random/generate-keyword) field-props])
 
   ([field-id field-props]
-   (let [field-props (multiline-field.prototypes/field-props-prototype field-id field-props)]
-        [text-field.views/element field-id field-props])))
+   (fn [_ field-props]       (let [field-props (multiline-field.prototypes/field-props-prototype field-id field-props)]
+            [text-field.views/element field-id field-props]))))
 ```
 
 </details>
@@ -2799,8 +2797,8 @@ leaves the field!
    [element (random/generate-keyword) bubble-props])
 
   ([bubble-id bubble-props]
-   (let [bubble-props (notification-bubble.prototypes/bubble-props-prototype bubble-props)]
-        [notification-bubble bubble-id bubble-props])))
+   (fn [_ bubble-props]       (let [bubble-props (notification-bubble.prototypes/bubble-props-prototype bubble-props)]
+            [notification-bubble bubble-id bubble-props]))))
 ```
 
 </details>
@@ -2852,8 +2850,8 @@ leaves the field!
    [element (random/generate-keyword) field-props])
 
   ([field-id field-props]
-   (let [field-props (number-field.prototypes/field-props-prototype field-id field-props)]
-        [text-field.views/element field-id field-props])))
+   (fn [_ field-props]       (let [field-props (number-field.prototypes/field-props-prototype field-id field-props)]
+            [text-field.views/element field-id field-props]))))
 ```
 
 </details>
@@ -2905,8 +2903,8 @@ leaves the field!
    [element (random/generate-keyword) field-props])
 
   ([field-id field-props]
-   (let [field-props (password-field.prototypes/field-props-prototype field-id field-props)]
-        [password-field field-id field-props])))
+   (fn [_ field-props]       (let [field-props (password-field.prototypes/field-props-prototype field-id field-props)]
+            [password-field field-id field-props]))))
 ```
 
 </details>
@@ -3003,8 +3001,8 @@ leaves the field!
    [element (random/generate-keyword) field-props])
 
   ([field-id field-props]
-   (let [field-props (plain-field.prototypes/field-props-prototype field-id field-props)]
-        [plain-field field-id field-props])))
+   (fn [_ field-props]       (let [field-props (plain-field.prototypes/field-props-prototype field-id field-props)]
+            [plain-field field-id field-props]))))
 ```
 
 </details>
@@ -3105,8 +3103,8 @@ leaves the field!
    [element (random/generate-keyword) button-props])
 
   ([button-id button-props]
-   (let [button-props (radio-button.prototypes/button-props-prototype button-id button-props)]
-        [radio-button button-id button-props])))
+   (fn [_ button-props]       (let [button-props (radio-button.prototypes/button-props-prototype button-id button-props)]
+            [radio-button button-id button-props]))))
 ```
 
 </details>
@@ -3202,8 +3200,8 @@ leaves the field!
    [element (random/generate-keyword) row-props])
 
   ([row-id row-props]
-   (let [row-props (row.prototypes/row-props-prototype row-props)]
-        [row row-id row-props])))
+   (fn [_ row-props]       (let [row-props (row.prototypes/row-props-prototype row-props)]
+            [row row-id row-props]))))
 ```
 
 </details>
@@ -3255,8 +3253,8 @@ leaves the field!
    [element (random/generate-keyword) field-props])
 
   ([field-id field-props]
-   (let [field-props (search-field.prototypes/field-props-prototype field-id field-props)]
-        [text-field.views/element field-id field-props])))
+   (fn [_ field-props]       (let [field-props (search-field.prototypes/field-props-prototype field-id field-props)]
+            [text-field.views/element field-id field-props]))))
 ```
 
 </details>
@@ -3353,8 +3351,8 @@ leaves the field!
    [element (random/generate-keyword) select-props])
 
   ([select-id select-props]
-   (let [select-props (select.prototypes/select-props-prototype select-id select-props)]
-        [select select-id select-props])))
+   (fn [_ select-props]       (let [select-props (select.prototypes/select-props-prototype select-id select-props)]
+            [select select-id select-props]))))
 ```
 
 </details>
@@ -3431,8 +3429,8 @@ UNFINISHED! DO NOT USE!
    [element (random/generate-keyword) slider-props])
 
   ([slider-id slider-props]
-   (let [slider-props (slider.prototypes/slider-props-prototype slider-id slider-props)]
-        [slider slider-id slider-props])))
+   (fn [_ slider-props]       (let [slider-props (slider.prototypes/slider-props-prototype slider-id slider-props)]
+            [slider slider-id slider-props]))))
 ```
 
 </details>
@@ -3483,7 +3481,7 @@ UNFINISHED! DO NOT USE!
    [element (random/generate-keyword) stepper-props])
 
   ([stepper-id stepper-props]
-   (let []        [stepper stepper-id stepper-props])))
+   (fn [_ stepper-props]       (let []            [stepper stepper-id stepper-props]))))
 ```
 
 </details>
@@ -3579,8 +3577,8 @@ UNFINISHED! DO NOT USE!
    [element (random/generate-keyword) switch-props])
 
   ([switch-id switch-props]
-   (let [switch-props (switch.prototypes/switch-props-prototype switch-id switch-props)]
-        [switch switch-id switch-props])))
+   (fn [_ switch-props]       (let [switch-props (switch.prototypes/switch-props-prototype switch-id switch-props)]
+            [switch switch-id switch-props]))))
 ```
 
 </details>
@@ -3690,8 +3688,8 @@ UNFINISHED! DO NOT USE!
    [element (random/generate-keyword) text-props])
 
   ([text-id text-props]
-   (let [text-props (text.prototypes/text-props-prototype text-props)]
-        [text text-id text-props])))
+   (fn [_ text-props]       (let [text-props (text.prototypes/text-props-prototype text-props)]
+            [text text-id text-props]))))
 ```
 
 </details>
@@ -3714,9 +3712,8 @@ UNFINISHED! DO NOT USE!
 
 ```
 @description
-The 'text-field' element writes its actual value into the Re-Frame state
-delayed after the user stopped typing or without a delay when the user
-leaves the field!
+The 'text-field' element writes its actual value into the Re-Frame state delayed, after
+the user stopped typing or without a delay when the user leaves the field!
 ```
 
 ```
@@ -3893,8 +3890,8 @@ leaves the field!
    [element (random/generate-keyword) field-props])
 
   ([field-id field-props]
-   (let [field-props (text-field.prototypes/field-props-prototype field-id field-props)]
-        [text-field field-id field-props])))
+   (fn [_ field-props]       (let [field-props (text-field.prototypes/field-props-prototype field-id field-props)]
+            [text-field field-id field-props]))))
 ```
 
 </details>
@@ -3989,8 +3986,8 @@ leaves the field!
    [element (random/generate-keyword) thumbnail-props])
 
   ([thumbnail-id thumbnail-props]
-   (let [thumbnail-props (thumbnail.prototypes/thumbnail-props-prototype thumbnail-props)]
-        [thumbnail thumbnail-id thumbnail-props])))
+   (fn [_ thumbnail-props]       (let [thumbnail-props (thumbnail.prototypes/thumbnail-props-prototype thumbnail-props)]
+            [thumbnail thumbnail-id thumbnail-props]))))
 ```
 
 </details>
@@ -4086,8 +4083,8 @@ leaves the field!
    [element (random/generate-keyword) toggle-props])
 
   ([toggle-id toggle-props]
-   (let [toggle-props (toggle.prototypes/toggle-props-prototype toggle-props)]
-        [toggle toggle-id toggle-props])))
+   (fn [_ toggle-props]       (let [toggle-props (toggle.prototypes/toggle-props-prototype toggle-props)]
+            [toggle toggle-id toggle-props]))))
 ```
 
 </details>
@@ -4158,8 +4155,8 @@ leaves the field!
    [element (random/generate-keyword) group-props])
 
   ([group-id group-props]
-   (let [group-props (vertical-group.prototypes/group-props-prototype group-props)]
-        [vertical-group group-id group-props])))
+   (fn [_ group-props]       (let [group-props (vertical-group.prototypes/group-props-prototype group-props)]
+            [vertical-group group-id group-props]))))
 ```
 
 </details>
@@ -4216,9 +4213,9 @@ leaves the field!
    [element (random/generate-keyword) line-props])
 
   ([line-id line-props]
-   (let [line-props (vertical-line.prototypes/line-props-prototype line-props)]
-        [:div (vertical-line.attributes/line-attributes line-id line-props)
-              [:div (vertical-line.attributes/line-body-attributes line-id line-props)]])))
+   (fn [_ line-props]       (let [line-props (vertical-line.prototypes/line-props-prototype line-props)]
+            [:div (vertical-line.attributes/line-attributes line-id line-props)
+                  [:div (vertical-line.attributes/line-body-attributes line-id line-props)]]))))
 ```
 
 </details>
@@ -4290,8 +4287,8 @@ leaves the field!
    [element (random/generate-keyword) polarity-props])
 
   ([polarity-id polarity-props]
-   (let [polarity-props (vertical-polarity.prototypes/polarity-props-prototype polarity-props)]
-        [vertical-polarity polarity-id polarity-props])))
+   (fn [_ polarity-props]       (let [polarity-props (vertical-polarity.prototypes/polarity-props-prototype polarity-props)]
+            [vertical-polarity polarity-id polarity-props]))))
 ```
 
 </details>
@@ -4341,8 +4338,8 @@ leaves the field!
    [element (random/generate-keyword) spacer-props])
 
   ([spacer-id spacer-props]
-   (let [spacer-props (vertical-spacer.prototypes/spacer-props-prototype spacer-props)]
-        [:div (vertical-spacer.attributes/spacer-attributes spacer-id spacer-props)])))
+   (fn [_ spacer-props]       (let [spacer-props (vertical-spacer.prototypes/spacer-props-prototype spacer-props)]
+            [:div (vertical-spacer.attributes/spacer-attributes spacer-id spacer-props)]))))
 ```
 
 </details>

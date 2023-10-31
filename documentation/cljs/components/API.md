@@ -132,8 +132,8 @@
    [component (random/generate-keyword) picker-props])
 
   ([picker-id picker-props]
-   (let [picker-props (color-picker.prototypes/picker-props-prototype picker-id picker-props)]
-        [color-picker picker-id picker-props])))
+   (fn [_ picker-props]       (let [picker-props (color-picker.prototypes/picker-props-prototype picker-id picker-props)]
+            [color-picker picker-id picker-props]))))
 ```
 
 </details>
@@ -186,8 +186,8 @@
    [component (random/generate-keyword) header-props])
 
   ([header-id header-props]
-   (let [header-props (compact-list-header.prototypes/header-props-prototype header-props)]
-        [compact-list-header header-id header-props])))
+   (fn [_ header-props]       (let [header-props (compact-list-header.prototypes/header-props-prototype header-props)]
+            [compact-list-header header-id header-props]))))
 ```
 
 </details>
@@ -250,8 +250,8 @@
    [component (random/generate-keyword) button-props])
 
   ([button-id button-props]
-   (let [button-props (content-swapper-button.prototypes/button-props-prototype button-props)]
-        [elements/button button-id button-props])))
+   (fn [_ button-props]       (let [button-props (content-swapper-button.prototypes/button-props-prototype button-props)]
+            [elements/button button-id button-props]))))
 ```
 
 </details>
@@ -318,8 +318,8 @@
    [component (random/generate-keyword) header-props])
 
   ([header-id header-props]
-   (let [header-props (content-swapper-header.prototypes/header-props-prototype header-props)]
-        [elements/button header-id header-props])))
+   (fn [_ header-props]       (let [header-props (content-swapper-header.prototypes/header-props-prototype header-props)]
+            [elements/button header-id header-props]))))
 ```
 
 </details>
@@ -371,8 +371,8 @@
    [component (random/generate-keyword) label-props])
 
   ([label-id label-props]
-   (let [label-props (copyright-label.prototypes/label-props-prototype label-props)]
-        [copyright-label label-id label-props])))
+   (fn [_ label-props]       (let [label-props (copyright-label.prototypes/label-props-prototype label-props)]
+            [copyright-label label-id label-props]))))
 ```
 
 </details>
@@ -431,8 +431,8 @@
    [component (random/generate-keyword) element-props])
 
   ([element-id element-props]
-   (let [element-props (data-element.prototypes/element-props-prototype element-props)]
-        [data-element element-id element-props])))
+   (fn [_ element-props]       (let [element-props (data-element.prototypes/element-props-prototype element-props)]
+            [data-element element-id element-props]))))
 ```
 
 </details>
@@ -478,7 +478,7 @@
    [component (random/generate-keyword) content-props])
 
   ([content-id content-props]
-   (let []        [error-content content-id content-props])))
+   (fn [_ content-props]       (let []            [error-content content-id content-props]))))
 ```
 
 </details>
@@ -527,8 +527,8 @@
    [component (random/generate-keyword) label-props])
 
   ([label-id label-props]
-   (let [label-props (error-label.prototypes/label-props-prototype label-props)]
-        [elements/label label-id label-props])))
+   (fn [_ label-props]       (let [label-props (error-label.prototypes/label-props-prototype label-props)]
+            [elements/label label-id label-props]))))
 ```
 
 </details>
@@ -584,7 +584,7 @@
    [component (random/generate-keyword) view-props])
 
   ([view-id view-props]
-   (let []        [ghost-view view-id view-props])))
+   (fn [_ view-props]       (let []            [ghost-view view-id view-props]))))
 ```
 
 </details>
@@ -638,8 +638,8 @@
    [component (random/generate-keyword) illustration-props])
 
   ([illustration-id illustration-props]
-   (let [illustration-props (illustration.prototypes/illustration-props-prototype illustration-props)]
-        [illustration illustration-id illustration-props])))
+   (fn [_ illustration-props]       (let [illustration-props (illustration.prototypes/illustration-props-prototype illustration-props)]
+            [illustration illustration-id illustration-props]))))
 ```
 
 </details>
@@ -692,7 +692,7 @@ same ID for both the field and the block, the label of the block can targets the
    [component (random/generate-keyword) block-props])
 
   ([block-id block-props]
-   (let []        [input-block block-id block-props])))
+   (fn [_ block-props]       (let []            [input-block block-id block-props]))))
 ```
 
 </details>
@@ -773,8 +773,8 @@ same ID for both the field and the block, the label of the block can targets the
    [component (random/generate-keyword) table-props])
 
   ([table-id table-props]
-   (let [table-props (input-table.prototypes/table-props-prototype table-props)]
-        [input-table table-id table-props])))
+   (fn [_ table-props]       (let [table-props (input-table.prototypes/table-props-prototype table-props)]
+            [input-table table-id table-props]))))
 ```
 
 </details>
@@ -831,8 +831,8 @@ same ID for both the field and the block, the label of the block can targets the
    [component (random/generate-keyword) header-props])
 
   ([header-id header-props]
-   (let [header-props (item-list-header.prototypes/header-props-prototype header-props)]
-        [item-list-header header-id header-props])))
+   (fn [_ header-props]       (let [header-props (item-list-header.prototypes/header-props-prototype header-props)]
+            [item-list-header header-id header-props]))))
 ```
 
 </details>
@@ -898,8 +898,8 @@ same ID for both the field and the block, the label of the block can targets the
    [component (random/generate-keyword) row-props])
 
   ([row-id row-props]
-   (let [row-props (item-list-row.prototypes/row-props-prototype row-props)]
-        [item-list-row row-id row-props])))
+   (fn [_ row-props]       (let [row-props (item-list-row.prototypes/row-props-prototype row-props)]
+            [item-list-row row-id row-props]))))
 ```
 
 </details>
@@ -944,7 +944,7 @@ same ID for both the field and the block, the label of the block can targets the
    [component (random/generate-keyword) avatar-props])
 
   ([avatar-id avatar-props]
-   [list-item-avatar avatar-id avatar-props]))
+   (fn [_ avatar-props]       (let []            [list-item-avatar avatar-id avatar-props]))))
 ```
 
 </details>
@@ -995,8 +995,8 @@ same ID for both the field and the block, the label of the block can targets the
    [component (random/generate-keyword) button-props])
 
   ([button-id button-props]
-   (let [button-props (list-item-button.prototypes/button-props-prototype button-props)]
-        [list-item-button button-id button-props])))
+   (fn [_ button-props]       (let [button-props (list-item-button.prototypes/button-props-prototype button-props)]
+            [list-item-button button-id button-props]))))
 ```
 
 </details>
@@ -1055,7 +1055,7 @@ same ID for both the field and the block, the label of the block can targets the
    [component (random/generate-keyword) cell-props])
 
   ([cell-id cell-props]
-   (let []        [list-item-cell cell-id cell-props])))
+   (fn [_ cell-props]       (let []            [list-item-cell cell-id cell-props]))))
 ```
 
 </details>
@@ -1101,7 +1101,7 @@ same ID for both the field and the block, the label of the block can targets the
    [component (random/generate-keyword) handle-props])
 
   ([handle-id handle-props]
-   (let []        [list-item-drag-handle handle-id handle-props])))
+   (fn [_ handle-props]       (let []            [list-item-drag-handle handle-id handle-props]))))
 ```
 
 </details>
@@ -1147,7 +1147,7 @@ same ID for both the field and the block, the label of the block can targets the
    [component (random/generate-keyword) gap-props])
 
   ([gap-id gap-props]
-   (let []        [list-item-gap gap-id gap-props])))
+   (fn [_ gap-props]       (let []            [list-item-gap gap-id gap-props]))))
 ```
 
 </details>
@@ -1192,7 +1192,7 @@ same ID for both the field and the block, the label of the block can targets the
    [component (random/generate-keyword) icon-props])
 
   ([icon-id icon-props]
-   [list-item-icon icon-id icon-props]))
+   (fn [_ icon-props]       [list-item-icon icon-id icon-props])))
 ```
 
 </details>
@@ -1250,7 +1250,7 @@ same ID for both the field and the block, the label of the block can targets the
    [component (random/generate-keyword) thumbnail-props])
 
   ([thumbnail-id thumbnail-props]
-   (let []        [list-item-thumbnail thumbnail-id thumbnail-props])))
+   (fn [_ thumbnail-props]       (let []            [list-item-thumbnail thumbnail-id thumbnail-props]))))
 ```
 
 </details>
@@ -1316,8 +1316,8 @@ same ID for both the field and the block, the label of the block can targets the
    [component (random/generate-keyword) table-props])
 
   ([table-id table-props]
-   (let [table-props (menu-table.prototypes/table-props-prototype table-props)]
-        [menu-table table-id table-props])))
+   (fn [_ table-props]       (let [table-props (menu-table.prototypes/table-props-prototype table-props)]
+            [menu-table table-id table-props]))))
 ```
 
 </details>
@@ -1382,8 +1382,8 @@ same ID for both the field and the block, the label of the block can targets the
    [component (random/generate-keyword) bubble-props])
 
   ([bubble-id bubble-props]
-   (let [bubble-props (notification-bubble.prototypes/bubble-props-prototype bubble-id bubble-props)]
-        [elements/notification-bubble bubble-id bubble-props])))
+   (fn [_ bubble-props]       (let [bubble-props (notification-bubble.prototypes/bubble-props-prototype bubble-id bubble-props)]
+            [elements/notification-bubble bubble-id bubble-props]))))
 ```
 
 </details>
@@ -1431,7 +1431,7 @@ same ID for both the field and the block, the label of the block can targets the
    [component (random/generate-keyword) preview-props])
 
   ([preview-id preview-props]
-   (let []        [pdf-preview preview-id preview-props])))
+   (fn [_ preview-props]       (let []            [pdf-preview preview-id preview-props]))))
 ```
 
 </details>
@@ -1484,8 +1484,8 @@ same ID for both the field and the block, the label of the block can targets the
    [component (random/generate-keyword) bar-props])
 
   ([bar-id bar-props]
-   (let [bar-props (popup-label-bar.prototypes/bar-props-prototype bar-props)]
-        [popup-label-bar bar-id bar-props])))
+   (fn [_ bar-props]       (let [bar-props (popup-label-bar.prototypes/bar-props-prototype bar-props)]
+            [popup-label-bar bar-id bar-props]))))
 ```
 
 </details>
@@ -1550,9 +1550,9 @@ same ID for both the field and the block, the label of the block can targets the
    [component (random/generate-keyword) button-props])
 
   ([button-id button-props]
-   (let [button-props (pretty-css/apply-preset popup-menu-button.presets/BUTTON-PROPS-PRESETS button-props)
-         button-props (popup-menu-button.prototypes/button-props-prototype button-props)]
-        [elements/button button-id button-props])))
+   (fn [_ button-props]       (let [button-props (pretty-css/apply-preset popup-menu-button.presets/BUTTON-PROPS-PRESETS button-props)
+             button-props (popup-menu-button.prototypes/button-props-prototype button-props)]
+            [elements/button button-id button-props]))))
 ```
 
 </details>
@@ -1606,8 +1606,8 @@ same ID for both the field and the block, the label of the block can targets the
    [component (random/generate-keyword) header-props])
 
   ([header-id header-props]
-   (let [header-props (popup-menu-header.prototypes/header-props-prototype header-props)]
-        [popup-menu-header header-id header-props])))
+   (fn [_ header-props]       (let [header-props (popup-menu-header.prototypes/header-props-prototype header-props)]
+            [popup-menu-header header-id header-props]))))
 ```
 
 </details>
@@ -1662,8 +1662,8 @@ same ID for both the field and the block, the label of the block can targets the
    [component (random/generate-keyword) label-props])
 
   ([label-id label-props]
-   (let [label-props (popup-menu-label.prototypes/label-props-prototype label-props)]
-        [elements/label label-id label-props])))
+   (fn [_ label-props]       (let [label-props (popup-menu-label.prototypes/label-props-prototype label-props)]
+            [elements/label label-id label-props]))))
 ```
 
 </details>
@@ -1730,8 +1730,8 @@ same ID for both the field and the block, the label of the block can targets the
    [component (random/generate-keyword) title-props])
 
   ([title-id title-props]
-   (let [title-props (popup-menu-title.prototypes/title-props-prototype title-props)]
-        [elements/label title-id title-props])))
+   (fn [_ title-props]       (let [title-props (popup-menu-title.prototypes/title-props-prototype title-props)]
+            [elements/label title-id title-props]))))
 ```
 
 </details>
@@ -1793,7 +1793,7 @@ same ID for both the field and the block, the label of the block can targets the
    [component (random/generate-keyword) indicator-props])
 
   ([indicator-id indicator-props]
-   (let []        [popup-progress-indicator indicator-id indicator-props])))
+   (fn [_ indicator-props]       (let []            [popup-progress-indicator indicator-id indicator-props]))))
 ```
 
 </details>
@@ -1846,8 +1846,8 @@ same ID for both the field and the block, the label of the block can targets the
    [component (random/generate-keyword) description-props])
 
   ([description-id description-props]
-   (let [description-props (section-description.prototypes/description-props-prototype description-props)]
-        [elements/label description-id description-props])))
+   (fn [_ description-props]       (let [description-props (section-description.prototypes/description-props-prototype description-props)]
+            [elements/label description-id description-props]))))
 ```
 
 </details>
@@ -1896,8 +1896,8 @@ same ID for both the field and the block, the label of the block can targets the
    [component (random/generate-keyword) title-props])
 
   ([title-id title-props]
-   (let [title-props (section-title.prototypes/title-props-prototype title-props)]
-        [section-title title-id title-props])))
+   (fn [_ title-props]       (let [title-props (section-title.prototypes/title-props-prototype title-props)]
+            [section-title title-id title-props]))))
 ```
 
 </details>
@@ -1962,10 +1962,10 @@ same ID for both the field and the block, the label of the block can targets the
    [component (random/generate-keyword) menu-props])
 
   ([menu-id {:keys [threshold] :as menu-props}]
-   (let [menu-props (side-menu.prototypes/menu-props-prototype menu-props)]
-        (if (or (not                                 threshold)
-                (window-observer/viewport-width-min? threshold))
-            [side-menu menu-id menu-props]))))
+   (fn [_ menu-props]       (let [menu-props (side-menu.prototypes/menu-props-prototype menu-props)]
+            (if (or (not                                 threshold)
+                    (window-observer/viewport-width-min? threshold))
+                [side-menu menu-id menu-props])))))
 ```
 
 </details>
@@ -2024,9 +2024,9 @@ same ID for both the field and the block, the label of the block can targets the
    [component (random/generate-keyword) button-props])
 
   ([button-id button-props]
-   (let [button-props (pretty-css/apply-preset side-menu-button.presets/BUTTON-PROPS-PRESETS button-props)
-         button-props (side-menu-button.prototypes/button-props-prototype button-props)]
-        [elements/button button-id button-props])))
+   (fn [_ button-props]       (let [button-props (pretty-css/apply-preset side-menu-button.presets/BUTTON-PROPS-PRESETS button-props)
+             button-props (side-menu-button.prototypes/button-props-prototype button-props)]
+            [elements/button button-id button-props]))))
 ```
 
 </details>
@@ -2072,7 +2072,7 @@ same ID for both the field and the block, the label of the block can targets the
    [component (random/generate-keyword) footer-props])
 
   ([footer-id footer-props]
-   (let []        [side-menu-footer footer-id footer-props])))
+   (fn [_ footer-props]       (let []            [side-menu-footer footer-id footer-props]))))
 ```
 
 </details>
@@ -2118,7 +2118,7 @@ same ID for both the field and the block, the label of the block can targets the
    [component (random/generate-keyword) header-props])
 
   ([header-id header-props]
-   (let []        [side-menu-header header-id header-props])))
+   (fn [_ header-props]       (let []            [side-menu-header header-id header-props]))))
 ```
 
 </details>
@@ -2175,8 +2175,8 @@ same ID for both the field and the block, the label of the block can targets the
    [component (random/generate-keyword) label-props])
 
   ([label-id label-props]
-   (let [label-props (side-menu-label.prototypes/label-props-prototype label-props)]
-        [elements/label label-id label-props])))
+   (fn [_ label-props]       (let [label-props (side-menu-label.prototypes/label-props-prototype label-props)]
+            [elements/label label-id label-props]))))
 ```
 
 </details>
@@ -2237,8 +2237,8 @@ same ID for both the field and the block, the label of the block can targets the
    [component (random/generate-keyword) button-props])
 
   ([button-id button-props]
-   (let [button-props (sidebar-button.prototypes/button-props-prototype button-props)]
-        [elements/button button-id button-props])))
+   (fn [_ button-props]       (let [button-props (sidebar-button.prototypes/button-props-prototype button-props)]
+            [elements/button button-id button-props]))))
 ```
 
 </details>
@@ -2299,8 +2299,8 @@ same ID for both the field and the block, the label of the block can targets the
    [component (random/generate-keyword) avatar-props])
 
   ([avatar-id avatar-props]
-   (let [avatar-props (user-avatar.prototypes/avatar-props-prototype avatar-props)]
-        [user-avatar avatar-id avatar-props])))
+   (fn [_ avatar-props]       (let [avatar-props (user-avatar.prototypes/avatar-props-prototype avatar-props)]
+            [user-avatar avatar-id avatar-props]))))
 ```
 
 </details>
@@ -2352,8 +2352,8 @@ same ID for both the field and the block, the label of the block can targets the
    [component (random/generate-keyword) controls-props])
 
   ([controls-id controls-props]
-   (let [controls-props (vector-item-controls.prototypes/controls-props-prototype controls-props)]
-        [vector-item-controls controls-id controls-props])))
+   (fn [_ controls-props]       (let [controls-props (vector-item-controls.prototypes/controls-props-prototype controls-props)]
+            [vector-item-controls controls-id controls-props]))))
 ```
 
 </details>
@@ -2415,7 +2415,7 @@ same ID for both the field and the block, the label of the block can targets the
    [component (random/generate-keyword) list-props])
 
   ([list-id list-props]
-   (let []        [vector-item-list list-id list-props])))
+   (fn [_ list-props]       (let []            [vector-item-list list-id list-props]))))
 ```
 
 </details>
@@ -2473,8 +2473,8 @@ same ID for both the field and the block, the label of the block can targets the
    [component (random/generate-keyword) header-props])
 
   ([header-id header-props]
-   (let [header-props (vector-items-header.prototypes/header-props-prototype header-props)]
-        [vector-items-header header-id header-props])))
+   (fn [_ header-props]       (let [header-props (vector-items-header.prototypes/header-props-prototype header-props)]
+            [vector-items-header header-id header-props]))))
 ```
 
 </details>

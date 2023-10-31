@@ -63,7 +63,7 @@
    [component (random/generate-keyword) contacts-props])
 
   ([contacts-id contacts-props]
-   (let []        [contacts contacts-id contacts-props])))
+   (fn [_ contacts-props]       (let []            [contacts contacts-id contacts-props]))))
 ```
 
 </details>
@@ -142,7 +142,7 @@ It converts the given provider name to an icon class:
    [component (random/generate-keyword) component-props])
 
   ([component-id component-props]
-   (let []        [follow-us component-id component-props])))
+   (fn [_ component-props]       (let []            [follow-us component-id component-props]))))
 ```
 
 </details>
@@ -211,8 +211,8 @@ It converts the given provider name to an icon class:
    [component (random/generate-keyword) selector-props])
 
   ([selector-id selector-props]
-   (let [selector-props (language-selector.prototypes/selector-props-prototype selector-props)]
-        [language-selector selector-id selector-props])))
+   (fn [_ selector-props]       (let [selector-props (language-selector.prototypes/selector-props-prototype selector-props)]
+            [language-selector selector-id selector-props]))))
 ```
 
 </details>
@@ -278,8 +278,8 @@ on a sidebar menu and replaces the menu bar with a single menu button.
    [component (random/generate-keyword) menu-props])
 
   ([menu-id menu-props]
-   (let [menu-props (multi-menu.prototypes/menu-props-prototype menu-props)]
-        [multi-menu menu-id menu-props])))
+   (fn [_ menu-props]       (let [menu-props (multi-menu.prototypes/menu-props-prototype menu-props)]
+            [multi-menu menu-id menu-props]))))
 ```
 
 </details>
@@ -330,8 +330,8 @@ on a sidebar menu and replaces the menu bar with a single menu button.
    [component (random/generate-keyword) icon-props])
 
   ([icon-id icon-props]
-   (let [icon-props (scroll-icon.prototypes/icon-props-prototype icon-props)]
-        [scroll-icon icon-id icon-props])))
+   (fn [_ icon-props]       (let [icon-props (scroll-icon.prototypes/icon-props-prototype icon-props)]
+            [scroll-icon icon-id icon-props]))))
 ```
 
 </details>
@@ -383,9 +383,8 @@ on a sidebar menu and replaces the menu bar with a single menu button.
   ([sensor-props]
    [component (random/generate-keyword) sensor-props])
 
-  ([sensor-id {:keys [callback-f style]}]
-   (reagent/lifecycles {:component-did-mount (fn [] (scroll-sensor.side-effects/sensor-did-mount-f sensor-id callback-f))
-                        :reagent-render      (fn [] [:div {:class :w-scroll-sensor :id (hiccup/value sensor-id) :style style}])})))
+  ([sensor-id sensor-props]
+   (fn [_ sensor-props]       [scroll-sensor sensor-id sensor-props])))
 ```
 
 </details>
@@ -456,8 +455,8 @@ on a sidebar menu and replaces the menu bar with a single menu button.
    [component (random/generate-keyword) sidebar-props])
 
   ([sidebar-id sidebar-props]
-   (let [sidebar-props (sidebar.prototypes/sidebar-props-prototype sidebar-props)]
-        [sidebar sidebar-id sidebar-props])))
+   (fn [_ sidebar-props]       (let [sidebar-props (sidebar.prototypes/sidebar-props-prototype sidebar-props)]
+            [sidebar sidebar-id sidebar-props]))))
 ```
 
 </details>
