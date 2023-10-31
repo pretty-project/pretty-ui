@@ -89,5 +89,6 @@
    [element (random/generate-keyword) thumbnail-props])
 
   ([thumbnail-id thumbnail-props]
-   (let [thumbnail-props (thumbnail.prototypes/thumbnail-props-prototype thumbnail-props)]
-        [thumbnail thumbnail-id thumbnail-props])))
+   (fn [_ thumbnail-props] ; XXX#0106 (README.md#parametering)
+       (let [thumbnail-props (thumbnail.prototypes/thumbnail-props-prototype thumbnail-props)]
+            [thumbnail thumbnail-id thumbnail-props]))))

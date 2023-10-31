@@ -80,9 +80,19 @@
   ;    not capable to be applied with the {:data-tooltip-content ...} preset.
   ; 3. The .e-label--body element always fits with its environment in width, therefore
   ;    it's often too wide to be the sensor element.
+  ;
+  ; XXX#7039 Why the label element without a 'target-id' property shown in a DIV tag?
+  ; - A label element without a 'target-id' value doesn't use 'for' HTML attribute and
+  ;   it would violate the HTML rules:
+  ;   "A <label> isn't associated with a form field."
+  ;   "To fix this issue, nest the <input> in the <label> or provide a for attribute on the <label> that matches a form field id."
+  ; - Therefore if no 'target-id' value provided (=> no 'for' attribute on the HTML element)
+  ;   it's better to use a DIV tag instead of using a LABEL tag.
   (if on-copy [:div (label.attributes/copyable-attributes label-id label-props)
-                    [:label (label.attributes/content-attributes label-id label-props) (metamorphic-content/compose content placeholder)]]
-              [:<>  [:label (label.attributes/content-attributes label-id label-props) (metamorphic-content/compose content placeholder)]]))
+                    [(if target-id :label :div)
+                     (label.attributes/content-attributes label-id label-props) (metamorphic-content/compose content placeholder)]]
+              [:<>  [(if target-id :label :div)
+                     (label.attributes/content-attributes label-id label-props) (metamorphic-content/compose content placeholder)]]))
 
 (defn- label-body
   ; @ignore
@@ -114,6 +124,7 @@
         [label-helper                      label-id label-props]])
 
 (defn element
+  ; @info
   ; XXX#0721
   ; Some other items based on the 'label' element and their documentations link here.
   ;
@@ -195,9 +206,7 @@
   ;   Default: false
   ;  :style (map)(opt)
   ;  :target-id (keyword)(opt)
-  ;   The input element's ID, that you want to connect to the label.
-  ;  :vertical-position (keyword)(opt)
-  ;   :bottom, :center, :top
+  ;   The input element's ID, that you want to connect to the label with using the 'for' HTML attribute.
   ;  :text-direction (keyword)(opt)
   ;   :normal, :reversed
   ;   Default :normal
@@ -208,6 +217,8 @@
   ;  :tooltip-content (metamorphic-content)(opt)
   ;  :tooltip-position (keyword)(opt)
   ;   :left, :right
+  ;  :vertical-position (keyword)(opt)
+  ;   :bottom, :center, :top
   ;  :width (keyword)(opt)
   ;   :auto, :content, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;   Default: :content}
@@ -221,5 +232,6 @@
    [element (random/generate-keyword) label-props])
 
   ([label-id label-props]
-   (let [label-props (label.prototypes/label-props-prototype label-props)]
-        [label label-id label-props])))
+   (fn [_ label-props] ; XXX#0106 (README.md#parametering)
+       (let [label-props (label.prototypes/label-props-prototype label-props)]
+            [label label-id label-props]))))

@@ -69,5 +69,6 @@
    [element (random/generate-keyword) blank-props])
 
   ([blank-id blank-props]
-   (let [blank-props (blank.prototypes/blank-props-prototype blank-props)]
-        [blank blank-id blank-props])))
+   (fn [_ blank-props] ; XXX#0106 (README.md#parametering)
+       (let [blank-props (blank.prototypes/blank-props-prototype blank-props)]
+            [blank blank-id blank-props]))))

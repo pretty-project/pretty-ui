@@ -8,6 +8,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn component
+  ; @info
   ; XXX#0439 (source-code/cljs/elements/label/views.cljs)
   ; The 'section-description' component is based on the 'label' element.
   ; For more information check out the documentation of the 'label' element.
@@ -32,5 +33,6 @@
    [component (random/generate-keyword) description-props])
 
   ([description-id description-props]
-   (let [description-props (section-description.prototypes/description-props-prototype description-props)]
-        [elements/label description-id description-props])))
+   (fn [_ description-props] ; XXX#0106 (README.md#parametering)
+       (let [description-props (section-description.prototypes/description-props-prototype description-props)]
+            [elements/label description-id description-props]))))

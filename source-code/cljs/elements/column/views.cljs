@@ -84,5 +84,6 @@
    [element (random/generate-keyword) column-props])
 
   ([column-id column-props]
-   (let [column-props (column.prototypes/column-props-prototype column-props)]
-        [column column-id column-props])))
+   (fn [_ column-props] ; XXX#0106 (README.md#parametering)
+       (let [column-props (column.prototypes/column-props-prototype column-props)]
+            [column column-id column-props]))))

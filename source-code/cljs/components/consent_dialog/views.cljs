@@ -74,5 +74,6 @@
    [component (random/generate-keyword) dialog-props])
 
   ([dialog-id dialog-props]
-   (let [] ; dialog-props (consent-dialog.prototypes/dialog-props-prototype dialog-props)
-        [consent-dialog dialog-id dialog-props])))
+   (fn [_ dialog-props] ; XXX#0106 (README.md#parametering)
+       (let [] ; dialog-props (consent-dialog.prototypes/dialog-props-prototype dialog-props)
+            [consent-dialog dialog-id dialog-props]))))

@@ -22,6 +22,7 @@
          [metamorphic-content/compose content]]])
 
 (defn element
+  ; @info
   ; XXX#3240
   ; Some other items based on the 'card' element and their documentations link here.
   ;
@@ -99,5 +100,6 @@
    [element (random/generate-keyword) card-props])
 
   ([card-id card-props]
-   (let [card-props (card.prototypes/card-props-prototype card-props)]
-        [card card-id card-props])))
+   (fn [_ card-props] ; XXX#0106 (README.md#parametering)
+       (let [card-props (card.prototypes/card-props-prototype card-props)]
+            [card card-id card-props]))))

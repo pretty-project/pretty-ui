@@ -36,16 +36,18 @@
   ; {:initial-page (metamorphic-content)}
   [swapper-id {:keys [initial-page] :as swapper-props}]
   (let [initial-state {:page-pool [{:id :initial-page :page initial-page}] :active-page :initial-page}]
+       ; XXX#0106 (README.md#parametering)
        (reagent/lifecycles {:component-did-mount    (fn [_ _] (swap! content-swapper.state/SWAPPERS update swapper-id merge initial-state))
                             :component-will-unmount (fn [_ _] (swap! content-swapper.state/SWAPPERS dissoc swapper-id))
-                            :reagent-render         (fn [_ _] [content-swapper-structure swapper-id swapper-props])})))
+                            :reagent-render         (fn [_ swapper-props] [content-swapper-structure swapper-id swapper-props])})))
 
 (defn element
   ; @warning
   ; XXX#0517
-  ; The content-swapper element pages have absolute positioning, therefore
-  ; the content-swapper element and its body stretch to their parents in order to
-  ; clear space for the pages.
+  ; The 'content-swapper' element's pages have absolute positioning, therefore
+  ; the 'content-swapper' element and its body are stretched to their parents in order
+  ; to clear space for the pages because they are not doing it for themeself because
+  ; their absolute positioning.
   ;
   ; @param (keyword)(opt) swapper-id
   ; @param (map) swapper-props
@@ -72,5 +74,6 @@
    [element (random/generate-keyword) swapper-props])
 
   ([swapper-id swapper-props]
-   (let [] ; swapper-props (content-swapper.prototypes/swapper-props-prototype swapper-props)
-        [content-swapper swapper-id swapper-props])))
+   (fn [_ swapper-props] ; XXX#0106 (README.md#parametering)
+       (let [] ; swapper-props (content-swapper.prototypes/swapper-props-prototype swapper-props)
+            [content-swapper swapper-id swapper-props]))))

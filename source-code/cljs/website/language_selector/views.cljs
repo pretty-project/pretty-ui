@@ -57,5 +57,6 @@
    [component (random/generate-keyword) selector-props])
 
   ([selector-id selector-props]
-   (let [selector-props (language-selector.prototypes/selector-props-prototype selector-props)]
-        [language-selector selector-id selector-props])))
+   (fn [_ selector-props] ; XXX#0106 (README.md#parametering)
+       (let [selector-props (language-selector.prototypes/selector-props-prototype selector-props)]
+            [language-selector selector-id selector-props]))))

@@ -43,6 +43,7 @@
               (if (vector/nonempty? colors)   [user-avatar-colors avatar-id avatar-props])]])
 
 (defn component
+  ; @info
   ; XXX#0720
   ; Some other items based on the 'user-avatar' component and their documentations link here.
   ;
@@ -74,5 +75,6 @@
    [component (random/generate-keyword) avatar-props])
 
   ([avatar-id avatar-props]
-   (let [avatar-props (user-avatar.prototypes/avatar-props-prototype avatar-props)]
-        [user-avatar avatar-id avatar-props])))
+   (fn [_ avatar-props] ; XXX#0106 (README.md#parametering)
+       (let [avatar-props (user-avatar.prototypes/avatar-props-prototype avatar-props)]
+            [user-avatar avatar-id avatar-props]))))

@@ -65,5 +65,6 @@
    [component (random/generate-keyword) sidebar-props])
 
   ([sidebar-id sidebar-props]
-   (let [sidebar-props (sidebar.prototypes/sidebar-props-prototype sidebar-props)]
-        [sidebar sidebar-id sidebar-props])))
+   (fn [_ sidebar-props] ; XXX#0106 (README.md#parametering)
+       (let [sidebar-props (sidebar.prototypes/sidebar-props-prototype sidebar-props)]
+            [sidebar sidebar-id sidebar-props]))))

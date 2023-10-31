@@ -14,6 +14,7 @@
         [elements/icon icon-id icon-props]])
 
 (defn component
+  ; @info
   ; XXX#0709 (source-code/cljs/elements/icon/views.cljs)
   ; The 'list-item-icon' component is based on the 'icon' element.
   ; For more information check out the documentation of the 'icon' element.
@@ -30,4 +31,5 @@
    [component (random/generate-keyword) icon-props])
 
   ([icon-id icon-props]
-   [list-item-icon icon-id icon-props]))
+   (fn [_ icon-props] ; XXX#0106 (README.md#parametering)
+       [list-item-icon icon-id icon-props])))

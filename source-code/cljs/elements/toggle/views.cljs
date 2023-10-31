@@ -84,5 +84,6 @@
    [element (random/generate-keyword) toggle-props])
 
   ([toggle-id toggle-props]
-   (let [toggle-props (toggle.prototypes/toggle-props-prototype toggle-props)]
-        [toggle toggle-id toggle-props])))
+   (fn [_ toggle-props] ; XXX#0106 (README.md#parametering)
+       (let [toggle-props (toggle.prototypes/toggle-props-prototype toggle-props)]
+            [toggle toggle-id toggle-props]))))

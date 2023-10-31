@@ -58,6 +58,7 @@
   ; @param (keyword) switch-id
   ; @param (map) switch-props
   [switch-id switch-props]
+  ; XXX#0106 (README.md#parametering)
   (reagent/lifecycles {:component-did-mount (fn [_ _] (r/dispatch [:elements.switch/switch-did-mount switch-id switch-props]))
                        :reagent-render      (fn [_ switch-props] [switch-structure switch-id switch-props])}))
 
@@ -125,5 +126,6 @@
    [element (random/generate-keyword) switch-props])
 
   ([switch-id switch-props]
-   (let [switch-props (switch.prototypes/switch-props-prototype switch-id switch-props)]
-        [switch switch-id switch-props])))
+   (fn [_ switch-props] ; XXX#0106 (README.md#parametering)
+       (let [switch-props (switch.prototypes/switch-props-prototype switch-id switch-props)]
+            [switch switch-id switch-props]))))

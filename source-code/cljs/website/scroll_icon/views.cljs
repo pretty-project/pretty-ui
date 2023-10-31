@@ -37,5 +37,6 @@
    [component (random/generate-keyword) icon-props])
 
   ([icon-id icon-props]
-   (let [icon-props (scroll-icon.prototypes/icon-props-prototype icon-props)]
-        [scroll-icon icon-id icon-props])))
+   (fn [_ icon-props] ; XXX#0106 (README.md#parametering)
+       (let [icon-props (scroll-icon.prototypes/icon-props-prototype icon-props)]
+            [scroll-icon icon-id icon-props]))))

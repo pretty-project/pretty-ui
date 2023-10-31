@@ -8,6 +8,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn component
+  ; @info
   ; XXX#0714 (source-code/cljs/elements/button/views.cljs)
   ; The 'content-swapper-header' component is based on the 'button' element.
   ; For more information check out the documentation of the 'button' element.
@@ -46,5 +47,6 @@
    [component (random/generate-keyword) header-props])
 
   ([header-id header-props]
-   (let [header-props (content-swapper-header.prototypes/header-props-prototype header-props)]
-        [elements/button header-id header-props])))
+   (fn [_ header-props] ; XXX#0106 (README.md#parametering)
+       (let [header-props (content-swapper-header.prototypes/header-props-prototype header-props)]
+            [elements/button header-id header-props]))))

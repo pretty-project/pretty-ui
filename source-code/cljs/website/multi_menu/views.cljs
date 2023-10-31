@@ -31,6 +31,7 @@
       [sidebar.views/component menu-id {:content [sidebar-menu menu-id menu-props]}]))
 
 (defn component
+  ; @info
   ; XXX#0715 (source-code/cljs/elements/dropdown_menu/views.cljs)
   ; The 'multi-menu' component is based on the 'dropdown-menu' element.
   ; For more information check out the documentation of the 'dropdown-menu' element.
@@ -66,5 +67,6 @@
    [component (random/generate-keyword) menu-props])
 
   ([menu-id menu-props]
-   (let [menu-props (multi-menu.prototypes/menu-props-prototype menu-props)]
-        [multi-menu menu-id menu-props])))
+   (fn [_ menu-props] ; XXX#0106 (README.md#parametering)
+       (let [menu-props (multi-menu.prototypes/menu-props-prototype menu-props)]
+            [multi-menu menu-id menu-props]))))

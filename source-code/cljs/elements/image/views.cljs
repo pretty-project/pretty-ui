@@ -62,5 +62,6 @@
    [element (random/generate-keyword) image-props])
 
   ([image-id image-props]
-   (let [image-props (image.prototypes/image-props-prototype image-props)]
-        [image image-id image-props])))
+   (fn [_ image-props] ; XXX#0106 (README.md#parametering)
+       (let [image-props (image.prototypes/image-props-prototype image-props)]
+            [image image-id image-props]))))

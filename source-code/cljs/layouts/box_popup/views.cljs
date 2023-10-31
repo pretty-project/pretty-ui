@@ -32,11 +32,12 @@
   ; @param (map) popup-props
   ; {}
   [popup-id {:keys [lock-scroll? on-mount on-unmount] :as popup-props}]
+  ; XXX#0106 (README.md#parametering)
   (reagent/lifecycles {:component-did-mount    (fn [_ _] (if lock-scroll? (scroll-lock/add-scroll-prohibition! popup-id))
                                                          (if on-mount     (r/dispatch on-mount)))
                        :component-will-unmount (fn [_ _] (if lock-scroll? (scroll-lock/remove-scroll-prohibition! popup-id))
                                                          (if on-unmount   (r/dispatch on-unmount)))
-                       :reagent-render         (fn [_ _] [box-popup-structure popup-id popup-props])}))
+                       :reagent-render         (fn [_ popup-props] [box-popup-structure popup-id popup-props])}))
 
 (defn layout
   ; @param (keyword)(opt) popup-id
@@ -93,5 +94,6 @@
    [layout (random/generate-keyword) popup-props])
 
   ([popup-id popup-props]
-   (let [popup-props (box-popup.prototypes/popup-props-prototype popup-props)]
-        [box-popup popup-id popup-props])))
+   (fn [_ popup-props] ; XXX#0106 (README.md#parametering)
+       (let [popup-props (box-popup.prototypes/popup-props-prototype popup-props)]
+            [box-popup popup-id popup-props]))))

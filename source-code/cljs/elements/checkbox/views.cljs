@@ -57,6 +57,7 @@
   ; @param (keyword) checkbox-id
   ; @param (map) checkbox-props
   [checkbox-id checkbox-props]
+  ; XXX#0106 (README.md#parametering)
   (reagent/lifecycles {:component-did-mount (fn [_ _] (r/dispatch [:elements.checkbox/checkbox-did-mount checkbox-id checkbox-props]))
                        :reagent-render      (fn [_ checkbox-props] [checkbox-structure checkbox-id checkbox-props])}))
 
@@ -123,5 +124,6 @@
    [element (random/generate-keyword) checkbox-props])
 
   ([checkbox-id checkbox-props]
-   (let [checkbox-props (checkbox.prototypes/checkbox-props-prototype checkbox-id checkbox-props)]
-        [checkbox checkbox-id checkbox-props])))
+   (fn [_ checkbox-props] ; XXX#0106 (README.md#parametering)
+       (let [checkbox-props (checkbox.prototypes/checkbox-props-prototype checkbox-id checkbox-props)]
+            [checkbox checkbox-id checkbox-props]))))

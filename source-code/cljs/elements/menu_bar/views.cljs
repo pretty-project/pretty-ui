@@ -49,12 +49,13 @@
                            (hiccup/put-with [:<>] menu-items f)])]])
 
 (defn element
+  ; @info
   ; XXX#0713
   ; Some other items based on the 'menu-bar' element and their documentations link here.
   ;
   ; @description
-  ; You can set the default item styles and settings by using the :item-default
-  ; property or you can specify these values on each item.
+  ; You can set the default item styles and settings by using the ':item-default'
+  ; property or you can specify these values on each item separately.
   ;
   ; @param (keyword)(opt) bar-id
   ; @param (map) bar-props
@@ -143,5 +144,6 @@
    [element (random/generate-keyword) bar-props])
 
   ([bar-id bar-props]
-   (let [bar-props (menu-bar.prototypes/bar-props-prototype bar-props)]
-        [menu-bar bar-id bar-props])))
+   (fn [_ bar-props] ; XXX#0106 (README.md#parametering)
+       (let [bar-props (menu-bar.prototypes/bar-props-prototype bar-props)]
+            [menu-bar bar-id bar-props]))))

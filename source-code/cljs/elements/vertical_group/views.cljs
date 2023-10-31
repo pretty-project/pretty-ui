@@ -56,5 +56,6 @@
    [element (random/generate-keyword) group-props])
 
   ([group-id group-props]
-   (let [group-props (vertical-group.prototypes/group-props-prototype group-props)]
-        [vertical-group group-id group-props])))
+   (fn [_ group-props] ; XXX#0106 (README.md#parametering)
+       (let [group-props (vertical-group.prototypes/group-props-prototype group-props)]
+            [vertical-group group-id group-props]))))

@@ -101,5 +101,6 @@
    [component (random/generate-keyword) menu-props])
 
   ([menu-id menu-props]
-   (let []; menu-props (context-menu.prototypes/menu-props-prototype menu-props)
-        [context-menu menu-id menu-props])))
+   (fn [_ menu-props] ; XXX#0106 (README.md#parametering)
+       (let []; menu-props (context-menu.prototypes/menu-props-prototype menu-props)
+            [context-menu menu-id menu-props]))))

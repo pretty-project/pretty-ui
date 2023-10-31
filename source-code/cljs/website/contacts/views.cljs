@@ -85,5 +85,6 @@
    [component (random/generate-keyword) contacts-props])
 
   ([contacts-id contacts-props]
-   (let [] ; contacts-props (contacts.prototypes/contacts-props-prototype contacts-props)
-        [contacts contacts-id contacts-props])))
+   (fn [_ contacts-props] ; XXX#0106 (README.md#parametering)
+       (let [] ; contacts-props (contacts.prototypes/contacts-props-prototype contacts-props)
+            [contacts contacts-id contacts-props]))))

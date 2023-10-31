@@ -52,8 +52,8 @@
 
 (defn element
   ; @warning
-  ; Chips only deletable if they are read from the application state by using
-  ; the :chips-path property!
+  ; The {:deletable? true} setting only works when the chip values are not statically provided
+  ; with the {:chips [...]} property but dinamically provided by using the {:chips-path [...]} property!
   ;
   ; @param (keyword)(opt) group-id
   ; @param (map) group-props
@@ -89,5 +89,6 @@
    [element (random/generate-keyword) group-props])
 
   ([group-id group-props]
-   (let [group-props (chip-group.prototypes/group-props-prototype group-id group-props)]
-        [chip-group group-id group-props])))
+   (fn [_ group-props] ; XXX#0106 (README.md#parametering)
+       (let [group-props (chip-group.prototypes/group-props-prototype group-id group-props)]
+            [chip-group group-id group-props]))))

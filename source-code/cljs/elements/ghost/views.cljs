@@ -54,5 +54,6 @@
    [element (random/generate-keyword) ghost-props])
 
   ([ghost-id ghost-props]
-   (let [ghost-props (ghost.prototypes/ghost-props-prototype ghost-props)]
-        [ghost ghost-id ghost-props])))
+   (fn [_ ghost-props] ; XXX#0106 (README.md#parametering)
+       (let [ghost-props (ghost.prototypes/ghost-props-prototype ghost-props)]
+            [ghost ghost-id ghost-props]))))

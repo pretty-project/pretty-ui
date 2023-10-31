@@ -8,6 +8,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn component
+  ; @info
   ; XXX#0721 (source-code/cljs/elements/label/views.cljs)
   ; The 'error-label' component is based on the 'label' element.
   ; For more information check out the documentation of the 'label' element.
@@ -28,5 +29,6 @@
    [component (random/generate-keyword) label-props])
 
   ([label-id label-props]
-   (let [label-props (error-label.prototypes/label-props-prototype label-props)]
-        [elements/label label-id label-props])))
+   (fn [_ label-props] ; XXX#0106 (README.md#parametering)
+       (let [label-props (error-label.prototypes/label-props-prototype label-props)]
+            [elements/label label-id label-props]))))

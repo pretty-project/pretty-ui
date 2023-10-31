@@ -18,6 +18,7 @@
         [:i (icon.attributes/icon-body-attributes icon-id icon-props) icon]])
 
 (defn element
+  ; @info
   ; XXX#0709
   ; Some other items based on the 'icon' element and their documentations link here.
   ;
@@ -55,5 +56,6 @@
    [element (random/generate-keyword) icon-props])
 
   ([icon-id icon-props]
-   (let [icon-props (icon.prototypes/icon-props-prototype icon-props)]
-        [icon icon-id icon-props])))
+   (fn [_ icon-props] ; XXX#0106 (README.md#parametering)
+       (let [icon-props (icon.prototypes/icon-props-prototype icon-props)]
+            [icon icon-id icon-props]))))

@@ -62,5 +62,6 @@
    [component (random/generate-keyword) header-props])
 
   ([header-id header-props]
-   (let [header-props (vector-items-header.prototypes/header-props-prototype header-props)]
-        [vector-items-header header-id header-props])))
+   (fn [_ header-props] ; XXX#0106 (README.md#parametering)
+       (let [header-props (vector-items-header.prototypes/header-props-prototype header-props)]
+            [vector-items-header header-id header-props]))))

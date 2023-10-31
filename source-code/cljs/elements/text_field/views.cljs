@@ -27,31 +27,34 @@
   ;  :label (string)(opt)
   ;  :on-click (Re-Frame metamorphic-event)(opt)
   ;  :timeout (ms)(opt)}
-  [field-id field-props {:keys [icon label on-click timeout] :as adornment-props}]
+  [field-id field-props adornment-props]
   ; Local state for the countdown timer
   (let [time-left (reagent/ratom nil)]
 
-       ; This function controls the countdown timer loop
-       (letfn [(f [] (if   (not= @time-left 0)    (time.api/set-timeout! f 1000))
-                     (cond (=    @time-left 0)    (reset! time-left nil)
-                           (->   @time-left nil?) (reset! time-left timeout)
-                           :decrease-time-left    (swap!  time-left - 1000))
-                     (-> on-click))]
+       ; ...
+       (fn [_ _ {:keys [icon label on-click timeout] :as adornment-props}]
 
-              ; ...
-              (fn [] (if @time-left ; ...
-                                    (let [adornment-props (text-field.prototypes/adornment-props-prototype field-props adornment-props)
-                                          adornment-props (dissoc adornment-props :click-effect :hover-effect :icon-family :icon-size)
-                                          adornment-props (assoc  adornment-props :color :highlight)]
-                                         [:div (text-field.attributes/adornment-attributes field-id field-props adornment-props)
-                                               (-> @time-left time/ms->s (str "s"))])
+           ; This function controls the countdown timer loop
+           (letfn [(f [] (if   (not= @time-left 0)    (time.api/set-timeout! f 1000))
+                         (cond (=    @time-left 0)    (reset! time-left nil)
+                               (->   @time-left nil?) (reset! time-left timeout)
+                               :decrease-time-left    (swap!  time-left - 1000))
+                         (-> on-click))]
 
-                                    ; ...
-                                    (let [adornment-props (assoc adornment-props :on-click (if timeout f on-click))
-                                          adornment-props (text-field.prototypes/adornment-props-prototype field-props adornment-props)]
-                                         [(if on-click :button :div)
-                                          (text-field.attributes/adornment-attributes field-id field-props adornment-props)
-                                          (or icon (metamorphic-content/compose label))]))))))
+                  ; ...
+                  (if @time-left ; ...
+                                      (let [adornment-props (text-field.prototypes/adornment-props-prototype field-props adornment-props)
+                                            adornment-props (dissoc adornment-props :click-effect :hover-effect :icon-family :icon-size)
+                                            adornment-props (assoc  adornment-props :color :highlight)]
+                                           [:div (text-field.attributes/adornment-attributes field-id field-props adornment-props)
+                                                 (-> @time-left time/ms->s (str "s"))])
+
+                                      ; ...
+                                      (let [adornment-props (assoc adornment-props :on-click (if timeout f on-click))
+                                            adornment-props (text-field.prototypes/adornment-props-prototype field-props adornment-props)]
+                                           [(if on-click :button :div)
+                                            (text-field.attributes/adornment-attributes field-id field-props adornment-props)
+                                            (or icon (metamorphic-content/compose label))]))))))
 
 (defn field-end-adornments
   ; @ignore
@@ -128,18 +131,19 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   [field-id field-props]
+  ; XXX#0106 (README.md#parametering)
   (reagent/lifecycles {:component-did-mount    (fn [_ _] (r/dispatch [:elements.text-field/field-did-mount    field-id field-props]))
                        :component-will-unmount (fn [_ _] (r/dispatch [:elements.text-field/field-will-unmount field-id field-props]))
                        :reagent-render         (fn [_ field-props] [text-field-structure field-id field-props])}))
 
 (defn element
+  ; @info
   ; XXX#0711
   ; Some other items based on the 'text-field' element and their documentations link here.
   ;
   ; @description
-  ; The 'text-field' element writes its actual value into the Re-Frame state
-  ; delayed after the user stopped typing or without a delay when the user
-  ; leaves the field!
+  ; The 'text-field' element writes its actual value into the Re-Frame state delayed, after
+  ; the user stopped typing or without a delay when the user leaves the field!
   ;
   ; @param (keyword)(opt) field-id
   ; @param (map) field-props
@@ -295,5 +299,6 @@
    [element (random/generate-keyword) field-props])
 
   ([field-id field-props]
-   (let [field-props (text-field.prototypes/field-props-prototype field-id field-props)]
-        [text-field field-id field-props])))
+   (fn [_ field-props] ; XXX#0106 (README.md#parametering)
+       (let [field-props (text-field.prototypes/field-props-prototype field-id field-props)]
+            [text-field field-id field-props]))))

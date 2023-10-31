@@ -8,6 +8,19 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn scroll-sensor
+  ; @ignore
+  ;
+  ; @param (keyword) sensor-id
+  ; @param (map) sensor-props
+  ; {:callback-f (function)
+  ;  :style (map)(opt)}
+  [sensor-id {:keys [callback-f style]}]
+  ; XXX#0106 (README.md#parametering)
+  (reagent/lifecycles {:component-did-mount (fn [_ _] (scroll-sensor.side-effects/sensor-did-mount-f sensor-id callback-f))
+                       :reagent-render      (fn [_ _]
+                                                [:div {:class :w-scroll-sensor :id (hiccup/value sensor-id) :style style}])}))
+
 (defn component
   ; @param (keyword)(opt) sensor-id
   ; @param (map) sensor-props
@@ -26,6 +39,6 @@
   ([sensor-props]
    [component (random/generate-keyword) sensor-props])
 
-  ([sensor-id {:keys [callback-f style]}]
-   (reagent/lifecycles {:component-did-mount (fn [] (scroll-sensor.side-effects/sensor-did-mount-f sensor-id callback-f))
-                        :reagent-render      (fn [] [:div {:class :w-scroll-sensor :id (hiccup/value sensor-id) :style style}])})))
+  ([sensor-id sensor-props]
+   (fn [_ sensor-props] ; XXX#0106 (README.md#parametering)
+       [scroll-sensor sensor-id sensor-props])))

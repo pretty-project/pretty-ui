@@ -35,25 +35,27 @@
   ; @param (keyword) button-id
   ; @param (map) button-props
   [button-id button-props]
+  ; XXX#0106 (README.md#parametering)
   (reagent/lifecycles {:component-did-mount    (fn [_ _] (r/dispatch [:elements.button/button-did-mount    button-id button-props]))
                        :component-will-unmount (fn [_ _] (r/dispatch [:elements.button/button-will-unmount button-id button-props]))
                        :component-did-update   (fn [%]   (r/dispatch [:elements.button/button-did-update   button-id %]))
                        :reagent-render         (fn [_ button-props] [button-structure button-id button-props])}))
 
 (defn element
+  ; @info
   ; XXX#0714
   ; Some other items based on the 'button' element and their documentations link here.
   ;
   ; @warning
   ; BUG#9912
-  ; If the keypress key-code is 13 (ENTER) the on-click event will fire repeatedly
-  ; during the key is pressed!
+  ; If the keypress key-code is 13 (ENTER) the on-click event will fire multiple times during the key is pressed!
+  ; This phenomenon caused by:
   ; 1. The keydown event focuses the button via the 'button.side-effects/key-pressed' function.
   ; 2. One of the default actions of the 13 (ENTER) key is to fire the on-click
   ;    function on a focused button element, therefore the on-click function
   ;    fires repeatedly during the 13 (ENTER) key is pressed.
-  ; By default (using any other key than the 13) the on-click function fired
-  ; by the 'button.side-effects/key-released' function.
+  ; In case of using any other key than the 13 (ENTER) the on-click function fires only by
+  ; the 'button.side-effects/key-released' function.
   ;
   ; @param (keyword)(opt) button-id
   ; @param (map) button-props
@@ -176,5 +178,6 @@
    [element (random/generate-keyword) button-props])
 
   ([button-id button-props]
-   (let [button-props (button.prototypes/button-props-prototype button-props)]
-        [button button-id button-props])))
+   (fn [_ button-props] ; XXX#0106 (README.md#parametering)
+       (let [button-props (button.prototypes/button-props-prototype button-props)]
+            [button button-id button-props]))))

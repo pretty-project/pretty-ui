@@ -69,7 +69,8 @@
   ; @param (keyword) select-id
   ; @param (map) select-props
   [select-id select-props]
-  (reagent/lifecycles {:reagent-render         (fn [_ _] [select-option-list select-id select-props])
+  ; XXX#0106 (README.md#parametering)
+  (reagent/lifecycles {:reagent-render         (fn [_ select-props] [select-option-list select-id select-props])
                        :component-did-mount    (fn [_ _] (r/dispatch [:elements.select/select-options-did-mount    select-id select-props]))
                        :component-will-unmount (fn [_ _] (r/dispatch [:elements.select/select-options-will-unmount select-id select-props]))}))
 
@@ -127,6 +128,7 @@
   ; @param (keyword) select-id
   ; @param (map) select-props
   [select-id select-props]
+  ; XXX#0106 (README.md#parametering)
   (reagent/lifecycles {:component-did-mount (fn [_ _] (r/dispatch [:elements.select/select-button-did-mount select-id select-props]))
                        :reagent-render      (fn [_ select-props] [select-button select-id select-props])}))
 
@@ -170,6 +172,7 @@
        [select-options select-id select-props]])
 
 (defn element
+  ; @info
   ; XXX#0714 (source-code/cljs/elements/button/views.cljs)
   ; The 'select' element is based on the 'button' element.
   ; For more information check out the documentation of the 'button' element.
@@ -236,5 +239,6 @@
    [element (random/generate-keyword) select-props])
 
   ([select-id select-props]
-   (let [select-props (select.prototypes/select-props-prototype select-id select-props)]
-        [select select-id select-props])))
+   (fn [_ select-props] ; XXX#0106 (README.md#parametering)
+       (let [select-props (select.prototypes/select-props-prototype select-id select-props)]
+            [select select-id select-props]))))

@@ -59,5 +59,6 @@
    [component (random/generate-keyword) header-props])
 
   ([header-id header-props]
-   (let [header-props (item-list-header.prototypes/header-props-prototype header-props)]
-        [item-list-header header-id header-props])))
+   (fn [_ header-props] ; XXX#0106 (README.md#parametering)
+       (let [header-props (item-list-header.prototypes/header-props-prototype header-props)]
+            [item-list-header header-id header-props]))))

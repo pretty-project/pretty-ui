@@ -8,6 +8,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn element
+  ; @info
   ; XXX#0711 (source-code/cljs/elements/text_field/views.cljs)
   ; The 'number-field' element is based on the 'text-field' element.
   ; For more information check out the documentation of the 'text-field' element.
@@ -29,5 +30,6 @@
    [element (random/generate-keyword) field-props])
 
   ([field-id field-props]
-   (let [field-props (number-field.prototypes/field-props-prototype field-id field-props)]
-        [text-field.views/element field-id field-props])))
+   (fn [_ field-props] ; XXX#0106 (README.md#parametering)
+       (let [field-props (number-field.prototypes/field-props-prototype field-id field-props)]
+            [text-field.views/element field-id field-props]))))

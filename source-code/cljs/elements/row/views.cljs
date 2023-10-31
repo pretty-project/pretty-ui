@@ -83,5 +83,6 @@
    [element (random/generate-keyword) row-props])
 
   ([row-id row-props]
-   (let [row-props (row.prototypes/row-props-prototype row-props)]
-        [row row-id row-props])))
+   (fn [_ row-props] ; XXX#0106 (README.md#parametering)
+       (let [row-props (row.prototypes/row-props-prototype row-props)]
+            [row row-id row-props]))))

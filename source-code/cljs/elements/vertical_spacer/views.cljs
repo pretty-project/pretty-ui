@@ -25,5 +25,6 @@
    [element (random/generate-keyword) spacer-props])
 
   ([spacer-id spacer-props]
-   (let [spacer-props (vertical-spacer.prototypes/spacer-props-prototype spacer-props)]
-        [:div (vertical-spacer.attributes/spacer-attributes spacer-id spacer-props)])))
+   (fn [_ spacer-props] ; XXX#0106 (README.md#parametering)
+       (let [spacer-props (vertical-spacer.prototypes/spacer-props-prototype spacer-props)]
+            [:div (vertical-spacer.attributes/spacer-attributes spacer-id spacer-props)]))))

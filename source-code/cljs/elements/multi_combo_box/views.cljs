@@ -55,6 +55,7 @@
               [multi-combo-box-field                          box-id box-props]]])
 
 (defn element
+  ; @info
   ; XXX#0711 (source-code/cljs/elements/text_field/views.cljs)
   ; The 'multi-combo-box' element is based on the 'text-field' element.
   ; For more information check out the documentation of the 'text-field' element.
@@ -92,6 +93,7 @@
    [element (random/generate-keyword) box-props])
 
   ([box-id box-props]
-   (let [box-props (multi-combo-box.prototypes/box-props-prototype box-id box-props)
-         box-props (assoc-in box-props [:surface :content] [combo-box.views/combo-box-surface-content box-id box-props])]
-        [multi-combo-box box-id box-props])))
+   (fn [_ box-props] ; XXX#0106 (README.md#parametering)
+       (let [box-props (multi-combo-box.prototypes/box-props-prototype box-id box-props)
+             box-props (assoc-in box-props [:surface :content] [combo-box.views/combo-box-surface-content box-id box-props])]
+            [multi-combo-box box-id box-props]))))

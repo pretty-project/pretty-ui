@@ -124,5 +124,6 @@
    [component (random/generate-keyword) controls-props])
 
   ([controls-id controls-props]
-   (let [controls-props (vector-item-controls.prototypes/controls-props-prototype controls-props)]
-        [vector-item-controls controls-id controls-props])))
+   (fn [_ controls-props] ; XXX#0106 (README.md#parametering)
+       (let [controls-props (vector-item-controls.prototypes/controls-props-prototype controls-props)]
+            [vector-item-controls controls-id controls-props]))))

@@ -81,5 +81,6 @@
    [element (random/generate-keyword) field-props])
 
   ([field-id field-props]
-   (let [] ; field-props (digit-field.prototypes/field-props-prototype field-props)
-        [digit-field field-id field-props])))
+   (fn [_ field-props] ; XXX#0106 (README.md#parametering)
+       (let [] ; field-props (digit-field.prototypes/field-props-prototype field-props)
+            [digit-field field-id field-props]))))

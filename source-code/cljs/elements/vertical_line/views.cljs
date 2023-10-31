@@ -32,6 +32,7 @@
    [element (random/generate-keyword) line-props])
 
   ([line-id line-props]
-   (let [line-props (vertical-line.prototypes/line-props-prototype line-props)]
-        [:div (vertical-line.attributes/line-attributes line-id line-props)
-              [:div (vertical-line.attributes/line-body-attributes line-id line-props)]])))
+   (fn [_ line-props] ; XXX#0106 (README.md#parametering)
+       (let [line-props (vertical-line.prototypes/line-props-prototype line-props)]
+            [:div (vertical-line.attributes/line-attributes line-id line-props)
+                  [:div (vertical-line.attributes/line-body-attributes line-id line-props)]]))))

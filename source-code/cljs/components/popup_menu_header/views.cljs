@@ -40,5 +40,6 @@
    [component (random/generate-keyword) header-props])
 
   ([header-id header-props]
-   (let [header-props (popup-menu-header.prototypes/header-props-prototype header-props)]
-        [popup-menu-header header-id header-props])))
+   (fn [_ header-props] ; XXX#0106 (README.md#parametering)
+       (let [header-props (popup-menu-header.prototypes/header-props-prototype header-props)]
+            [popup-menu-header header-id header-props]))))

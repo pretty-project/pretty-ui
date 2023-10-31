@@ -53,5 +53,6 @@
    [component (random/generate-keyword) cell-props])
 
   ([cell-id cell-props]
-   (let [] ; cell-props (list-item-cell.prototypes/cell-props-prototype cell-props)
-        [list-item-cell cell-id cell-props])))
+   (fn [_ cell-props] ; XXX#0106 (README.md#parametering)
+       (let [] ; cell-props (list-item-cell.prototypes/cell-props-prototype cell-props)
+            [list-item-cell cell-id cell-props]))))

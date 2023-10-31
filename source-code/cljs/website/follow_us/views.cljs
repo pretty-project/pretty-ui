@@ -61,5 +61,6 @@
    [component (random/generate-keyword) component-props])
 
   ([component-id component-props]
-   (let [] ; component-props (follow-us.prototypes/component-props-prototype component-props)
-        [follow-us component-id component-props])))
+   (fn [_ component-props] ; XXX#0106 (README.md#parametering)
+       (let [] ; component-props (follow-us.prototypes/component-props-prototype component-props)
+            [follow-us component-id component-props]))))

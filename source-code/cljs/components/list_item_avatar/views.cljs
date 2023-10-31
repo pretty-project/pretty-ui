@@ -1,6 +1,7 @@
 
 (ns components.list-item-avatar.views
-    (:require [components.user-avatar.views :as user-avatar.views]
+    (:require ; [components.user-avatar.prototypes :as user-avatar.prototypes]
+              [components.user-avatar.views :as user-avatar.views]
               [random.api                   :as random]))
 
 ;; ----------------------------------------------------------------------------
@@ -14,6 +15,7 @@
         [user-avatar.views/component avatar-id avatar-props]])
 
 (defn component
+  ; @info
   ; XXX#0720 (source-code/cljs/components/user_avatar/views.cljs)
   ; The 'list-item-avatar' component is based on the 'user-avatar' component.
   ; For more information check out the documentation of the 'user-avatar' component.
@@ -30,4 +32,6 @@
    [component (random/generate-keyword) avatar-props])
 
   ([avatar-id avatar-props]
-   [list-item-avatar avatar-id avatar-props]))
+   (fn [_ avatar-props] ; XXX#0106 (README.md#parametering)
+       (let [] ; avatar-props (list-item-avatar.prototypes/avatar-props-prototype avatar-props)
+            [list-item-avatar avatar-id avatar-props]))))

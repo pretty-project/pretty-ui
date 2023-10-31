@@ -20,6 +20,7 @@
                         [elements/label title-id title-props]])
 
 (defn component
+  ; @info
   ; XXX#0439 (source-code/cljs/elements/label/views.cljs)
   ; The 'section-title' component is based on the 'label' element.
   ; For more information check out the documentation of the 'label' element.
@@ -40,5 +41,6 @@
    [component (random/generate-keyword) title-props])
 
   ([title-id title-props]
-   (let [title-props (section-title.prototypes/title-props-prototype title-props)]
-        [section-title title-id title-props])))
+   (fn [_ title-props] ; XXX#0106 (README.md#parametering)
+       (let [title-props (section-title.prototypes/title-props-prototype title-props)]
+            [section-title title-id title-props]))))

@@ -55,5 +55,6 @@
    [element (random/generate-keyword) separator-props])
 
   ([separator-id separator-props]
-   (let [separator-props (horizontal-separator.prototypes/separator-props-prototype separator-props)]
-        [horizontal-separator separator-id separator-props])))
+   (fn [_ separator-props] ; XXX#0106 (README.md#parametering)
+       (let [separator-props (horizontal-separator.prototypes/separator-props-prototype separator-props)]
+            [horizontal-separator separator-id separator-props]))))

@@ -45,6 +45,7 @@
                        [color-picker-value picker-id picker-props]))]])
 
 (defn component
+  ; @info
   ; XXX#0709 (source-code/cljs/elements/color_selector/views.cljs)
   ; The 'color-picker' component is based on the 'color-selector' element.
   ; For more information check out the documentation of the 'color-selector' element.
@@ -78,5 +79,6 @@
    [component (random/generate-keyword) picker-props])
 
   ([picker-id picker-props]
-   (let [picker-props (color-picker.prototypes/picker-props-prototype picker-id picker-props)]
-        [color-picker picker-id picker-props])))
+   (fn [_ picker-props] ; XXX#0106 (README.md#parametering)
+       (let [picker-props (color-picker.prototypes/picker-props-prototype picker-id picker-props)]
+            [color-picker picker-id picker-props]))))

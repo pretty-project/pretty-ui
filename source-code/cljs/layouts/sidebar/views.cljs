@@ -33,9 +33,10 @@
   ; @param (map) sidebar-props
   ; {}
   [sidebar-id {:keys [on-mount on-unmount] :as sidebar-props}]
+  ; XXX#0106 (README.md#parametering)
   (reagent/lifecycles {:component-did-mount    (fn [_ _] (r/dispatch on-mount))
                        :component-will-unmount (fn [_ _] (r/dispatch on-unmount))
-                       :reagent-render         (fn [_ _] [sidebar-structure sidebar-id sidebar-props])}))
+                       :reagent-render         (fn [_ sidebar-props] [sidebar-structure sidebar-id sidebar-props])}))
 
 (defn layout
   ; @param (keyword)(opt) sidebar-id
@@ -83,5 +84,6 @@
    [layout (random/generate-keyword) sidebar-props])
 
   ([sidebar-id sidebar-props]
-   (let [sidebar-props (sidebar.prototypes/sidebar-props-prototype sidebar-props)]
-        [sidebar sidebar-id sidebar-props])))
+   (fn [_ sidebar-props] ; XXX#0106 (README.md#parametering)
+       (let [sidebar-props (sidebar.prototypes/sidebar-props-prototype sidebar-props)]
+            [sidebar sidebar-id sidebar-props]))))

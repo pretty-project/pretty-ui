@@ -65,6 +65,7 @@
   ; @param (keyword) box-id
   ; @param (map) box-props
   [box-id box-props]
+  ; XXX#0106 (README.md#parametering)
   (reagent/lifecycles {:component-did-mount (fn [_ _] (r/dispatch [:elements.combo-box/box-did-mount box-id box-props]))
                        :reagent-render      (fn [_ box-props] [combo-box-structure box-id box-props])}))
 
@@ -104,5 +105,6 @@
    [element (random/generate-keyword) box-props])
 
   ([box-id box-props]
-   (let [box-props (combo-box.prototypes/box-props-prototype box-id box-props)]
-        [combo-box box-id box-props])))
+   (fn [_ box-props] ; XXX#0106 (README.md#parametering)
+       (let [box-props (combo-box.prototypes/box-props-prototype box-id box-props)]
+            [combo-box box-id box-props]))))

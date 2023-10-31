@@ -67,5 +67,6 @@
    [element (random/generate-keyword) polarity-props])
 
   ([polarity-id polarity-props]
-   (let [polarity-props (horizontal-polarity.prototypes/polarity-props-prototype polarity-props)]
-        [horizontal-polarity polarity-id polarity-props])))
+   (fn [_ polarity-props] ; XXX#0106 (README.md#parametering)
+       (let [polarity-props (horizontal-polarity.prototypes/polarity-props-prototype polarity-props)]
+            [horizontal-polarity polarity-id polarity-props]))))

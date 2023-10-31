@@ -52,6 +52,7 @@
   ; @param (keyword) button-id
   ; @param (map) button-props
   [button-id button-props]
+  ; XXX#0106 (README.md#parametering)
   (reagent/lifecycles {:component-did-mount (fn [_ _] (r/dispatch [:elements.radio-button/button-did-mount button-id button-props]))
                        :reagent-render      (fn [_ button-props] [radio-button-structure button-id button-props])}))
 
@@ -122,5 +123,6 @@
    [element (random/generate-keyword) button-props])
 
   ([button-id button-props]
-   (let [button-props (radio-button.prototypes/button-props-prototype button-id button-props)]
-        [radio-button button-id button-props])))
+   (fn [_ button-props] ; XXX#0106 (README.md#parametering)
+       (let [button-props (radio-button.prototypes/button-props-prototype button-id button-props)]
+            [radio-button button-id button-props]))))

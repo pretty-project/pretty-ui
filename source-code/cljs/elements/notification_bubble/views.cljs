@@ -45,6 +45,7 @@
               [notification-bubble-primary-button   bubble-id bubble-props]]])
 
 (defn element
+  ; @info
   ; XXX#0731
   ; Some other items based on the 'notification-bubble' element and their documentations link here.
   ;
@@ -122,5 +123,6 @@
    [element (random/generate-keyword) bubble-props])
 
   ([bubble-id bubble-props]
-   (let [bubble-props (notification-bubble.prototypes/bubble-props-prototype bubble-props)]
-        [notification-bubble bubble-id bubble-props])))
+   (fn [_ bubble-props] ; XXX#0106 (README.md#parametering)
+       (let [bubble-props (notification-bubble.prototypes/bubble-props-prototype bubble-props)]
+            [notification-bubble bubble-id bubble-props]))))

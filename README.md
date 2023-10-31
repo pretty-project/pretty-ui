@@ -3,8 +3,8 @@
 
 ### Overview
 
-The <strong>pretty-ui</strong> is a ClojureScript/Reagent web application UI
-component set made for websites and web applications using Re-Frame as state handler.
+The <strong>pretty-ui</strong> is a ClojureScript UI component set made for websites
+and web applications using Reagent and Re-Frame.
 
 ### Documentation
 
@@ -35,6 +35,10 @@ You can track the changes of the <strong>pretty-ui</strong> library [here](CHANG
 
 - [First steps](#first-steps)
 
+- [Introduction](#introduction)
+
+- [Parametering](#parametering)
+
 - [Event handlers](#event-handlers)
 
 - [Content types](#content-types)
@@ -49,6 +53,51 @@ You can track the changes of the <strong>pretty-ui</strong> library [here](CHANG
   the instructions of its `REAMDE.md` file.
 
 > [github.com/bithandshake/pretty-css](https://github.com/bithandshake/pretty-css)
+
+- Implement the `bithandshake/pretty-icons` library in your project and follow
+  the instructions of its `REAMDE.md` file.
+
+> [github.com/bithandshake/pretty-icons](https://github.com/bithandshake/pretty-icons)
+
+- Implement the `bithandshake/pretty-normalizer` library in your project and follow
+  the instructions of its `REAMDE.md` file.
+
+> [github.com/bithandshake/pretty-normalizer](https://github.com/bithandshake/pretty-normalizer)
+
+### Introduction
+
+This library contains:
+
+- Elements such as buttons, inputs, and static UI elements.
+
+- Components that are composed and preset versions of elements (mostly for applications).
+
+- UI layouts such as popups (modals), surfaces and sidebars.
+
+- Website components.
+
+### Parametering
+
+All items (components / elements / layouts / website components) take two arguments.
+
+1. A unique ID that are optional and must be keyword type. If not provided the item
+   generates one for itself.
+
+2. A property map that describes the item's look and behaviour.   
+
+```
+(ns my-namespace
+    (:require [elements.api :as elements]))
+
+(defn my-text-field
+  []
+  [:<> [elements/text-field           {:border-radius {:all :xs} :fill-color :muted}]
+       [elements/text-field :my-field {:border-radius {:all :xs} :fill-color :muted}]])
+```
+
+> If the provided ID changes the item doesn't take the new ID, it keeps the first one that was provided.
+
+> If no ID is provided and the item rerenders it doesn't generate a new ID for itself, it keeps the first one that was generated.
 
 ### Event handlers
 

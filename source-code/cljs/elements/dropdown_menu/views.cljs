@@ -27,9 +27,11 @@
                                   [metamorphic-content/compose surface-content]]])]])
 
 (defn element
+  ; @info
   ; XXX#0715
   ; Some other items based on the 'dropdown-menu' component and their documentations link here.
   ;
+  ; @info
   ; XXX#0713 (source-code/cljs/elements/menu_bar/views.cljs)
   ; The 'dropdown-menu' element is based on the 'menu-bar' element.
   ; For more information check out the documentation of the 'menu-bar' element.
@@ -56,5 +58,6 @@
    [element (random/generate-keyword) menu-props])
 
   ([menu-id menu-props]
-   (let [menu-props (dropdown-menu.prototypes/menu-props-prototype menu-id menu-props)]
-        [dropdown-menu menu-id menu-props])))
+   (fn [_ menu-props] ; XXX#0106 (README.md#parametering)
+       (let [menu-props (dropdown-menu.prototypes/menu-props-prototype menu-id menu-props)]
+            [dropdown-menu menu-id menu-props]))))

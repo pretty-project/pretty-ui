@@ -79,6 +79,7 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   [field-id field-props]
+  ; XXX#0106 (README.md#parametering)
   (reagent/lifecycles {:component-did-mount    (fn [_ _] (r/dispatch [:elements.plain-field/field-did-mount    field-id field-props]))
                        :component-will-unmount (fn [_ _] (r/dispatch [:elements.plain-field/field-will-unmount field-id field-props]))
                        :reagent-render         (fn [_ field-props] [plain-field-structure field-id field-props])}))
@@ -146,5 +147,6 @@
    [element (random/generate-keyword) field-props])
 
   ([field-id field-props]
-   (let [field-props (plain-field.prototypes/field-props-prototype field-id field-props)]
-        [plain-field field-id field-props])))
+   (fn [_ field-props] ; XXX#0106 (README.md#parametering)
+       (let [field-props (plain-field.prototypes/field-props-prototype field-id field-props)]
+            [plain-field field-id field-props]))))

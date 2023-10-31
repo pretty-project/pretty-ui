@@ -42,8 +42,9 @@
   ; @param (keyword) selector-id
   ; @param (map) selector-props
   [selector-id selector-props]
+  ; XXX#0106 (README.md#parametering)
   (reagent/lifecycles {:component-did-mount (fn [_ _] (r/dispatch [:elements.color-selector/options-did-mount selector-id selector-props]))
-                       :reagent-render      (fn [_ _] [color-selector-option-list selector-id selector-props])}))
+                       :reagent-render      (fn [_ selector-props] [color-selector-option-list selector-id selector-props])}))
 
 (defn- color-selector-options-header
   ; @ignore
@@ -85,10 +86,12 @@
        [color-selector-options selector-id selector-props]])
 
 (defn element
+  ; @info
   ; XXX#0714 (source-code/cljs/elements/button/views.cljs)
   ; The 'color-selector' element is based on the 'button' element.
   ; For more information check out the documentation of the 'button' element.
   ;
+  ; @info
   ; XXX#0709
   ; Some other items based on the 'color-selector' element and their documentations link here.
   ;
@@ -134,5 +137,6 @@
    [element (random/generate-keyword) selector-props])
 
   ([selector-id selector-props]
-   (let [selector-props (color-selector.prototypes/selector-props-prototype selector-id selector-props)]
-        [color-selector selector-id selector-props])))
+   (fn [_ selector-props] ; XXX#0106 (README.md#parametering)
+       (let [selector-props (color-selector.prototypes/selector-props-prototype selector-id selector-props)]
+            [color-selector selector-id selector-props]))))
