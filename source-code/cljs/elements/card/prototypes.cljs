@@ -1,7 +1,6 @@
 
 (ns elements.card.prototypes
-    (:require [metamorphic-content.api :as metamorphic-content]
-              [noop.api                :refer [param]]))
+    (:require [metamorphic-content.api :as metamorphic-content]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -40,7 +39,7 @@
          (if marker-color  {:marker-position :tr})
          (if href          {:cursor          :pointer})
          (if on-click      {:cursor          :pointer})
-         (param card-props)
+         (-> card-props)
          (if badge-content {:badge-content (metamorphic-content/compose badge-content)})
          (if disabled?     {:cursor      (or cursor :default)
                             :hover-color :none})))

@@ -1,7 +1,7 @@
 
 (ns elements.radio-button.prototypes
     (:require [elements.input.utils :as input.utils]
-              [noop.api             :refer [param return]]))
+              [noop.api             :refer [return]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -34,4 +34,4 @@
           :value-path          (input.utils/default-value-path   button-id)
           :option-label-f      return
           :option-value-f      return}
-         (param button-props)))
+         (-> button-props)))

@@ -1,6 +1,5 @@
 
-(ns components.sidebar-button.prototypes
-    (:require [noop.api :refer [param]]))
+(ns components.sidebar-button.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -22,4 +21,4 @@
           :hover-color      :invert
           :indent {:left :s :right :xl :horizontal :xs}}
          (if icon {:icon-size :m})
-         (param button-props)))
+         (-> button-props)))

@@ -1,7 +1,6 @@
 
 (ns elements.dropdown-menu.prototypes
     (:require [elements.dropdown-menu.state :as dropdown-menu.state]
-              [noop.api                     :refer [param return]]
               [vector.api                   :as vector]))
 
 ;; ----------------------------------------------------------------------------
@@ -21,7 +20,7 @@
           ; the on-mouse-over handler would try to dispatch it as a metamorphic-event.
           ; Therefore the f0 function returns a nil to avoid that.
           (f0 [dex %] (swap! dropdown-menu.state/MENUS assoc-in [menu-id :active-dex] dex)
-                      (return nil))
+                      (-> nil))
 
           ; If an item's index matches the active index, sets the hover color
           ; of the item as its fill color to makes the item looks like an active one.
@@ -53,7 +52,7 @@
   [_ {{:keys [border-color]} :surface :keys [surface] :as menu-props}]
   (merge (if border-color {:border-position :all
                            :border-width    :xxs})
-         (param surface)))
+         (-> surface)))
 
 (defn menu-props-prototype
   ; @ignore

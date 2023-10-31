@@ -1,7 +1,6 @@
 
 (ns elements.select.subs
     (:require [elements.input.subs :as input.subs]
-              [noop.api            :refer [return]]
               [re-frame.api        :as r :refer [r]]))
 
 ;; ----------------------------------------------------------------------------
@@ -20,8 +19,8 @@
   (let [selected-value (get-in db value-path)
         options        (r input.subs/get-input-options db select-id select-props)]
        (letfn [(f [option] (let [option-value (option-value-f option)]
-                                (if (= selected-value option-value)
-                                    (return option))))]
+                                (if (=  selected-value option-value)
+                                    (-> option))))]
               (some f options))))
 
 (defn get-selected-option-label

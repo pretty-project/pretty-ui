@@ -1,7 +1,6 @@
 
 (ns components.item-list-row.prototypes
-    (:require [noop.api   :refer [param]]
-              [vector.api :as vector]))
+    (:require [vector.api :as vector]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -24,5 +23,5 @@
   (merge (if border-color {:border-position :all
                            :border-width    :xxs})
          (if marker-color {:marker-position :tr})
-         (param row-props)
+         (-> row-props)
          {:cells (vector/remove-items-by cells nil?)}))

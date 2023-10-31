@@ -1,6 +1,5 @@
 
-(ns components.spinner.prototypes
-    (:require [noop.api :refer [param]]))
+(ns components.spinner.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -14,4 +13,4 @@
   [spinner-props]
   (merge {:color :primary
           :size  :m}
-         (param spinner-props)))
+         (-> spinner-props)))

@@ -1,6 +1,5 @@
 
-(ns elements.horizontal-separator.prototypes
-    (:require [noop.api :refer [param]]))
+(ns elements.horizontal-separator.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -16,4 +15,4 @@
   [separator-props]
   (merge {:color :default
           :width :auto}
-         (param separator-props)))
+         (-> separator-props)))

@@ -1,6 +1,5 @@
 
-(ns elements.expandable.prototypes
-    (:require [noop.api :refer [param]]))
+(ns elements.expandable.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -17,4 +16,4 @@
   [{:keys [icon] :as expandable-props}]
   (merge {:expanded? false}
          (if icon {:icon-family :material-symbols-outlined})
-         (param expandable-props)))
+         (-> expandable-props)))

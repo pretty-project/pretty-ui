@@ -1,6 +1,5 @@
 
-(ns components.popup-menu-title.prototypes
-    (:require [noop.api :refer [param]]))
+(ns components.popup-menu-title.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -32,4 +31,4 @@
           :outdent          {:bottom :s}
           :text-transform   :uppercase
           :width            :auto}
-         (param title-props)))
+         (-> title-props)))

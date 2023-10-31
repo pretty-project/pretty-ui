@@ -1,6 +1,5 @@
 
-(ns components.content-swapper-header.prototypes
-    (:require [noop.api :refer [param]]))
+(ns components.content-swapper-header.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -24,4 +23,4 @@
           :icon-size        :xl
           :indent           {:horizontal :xs}
           :width            :auto}
-         (param header-props)))
+         (-> header-props)))

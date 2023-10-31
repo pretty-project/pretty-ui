@@ -1,6 +1,5 @@
 
-(ns elements.ghost.prototypes
-    (:require [noop.api :refer [param]]))
+(ns elements.ghost.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -16,4 +15,4 @@
   [ghost-props]
   (merge {:height :s
           :width  :auto}
-         (param ghost-props)))
+         (-> ghost-props)))

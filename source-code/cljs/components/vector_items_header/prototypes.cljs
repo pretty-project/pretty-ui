@@ -1,6 +1,5 @@
 
-(ns components.vector-items-header.prototypes
-    (:require [noop.api :refer [param]]))
+(ns components.vector-items-header.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -16,4 +15,4 @@
   [header-props]
   (merge {:horizontal-align :center
           :initial-item     {}}
-         (param header-props)))
+         (-> header-props)))

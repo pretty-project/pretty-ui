@@ -3,7 +3,7 @@
     (:require [elements.input.utils           :as input.utils]
               [elements.multi-combo-box.utils :as multi-combo-box.utils]
               [loop.api                       :refer [<-walk]]
-              [noop.api                       :refer [param return]]))
+              [noop.api                       :refer [return]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -22,7 +22,7 @@
   (let [field-id    (multi-combo-box.utils/box-id->field-id box-id)
         field-props (dissoc box-props :class :helper :indent :label :outdent :style :value-path)]
        (merge {:value-path (input.utils/default-value-path field-id)}
-              (param field-props))))
+              (-> field-props))))
 
 (defn group-props-prototype
   ; @ignore
@@ -37,7 +37,7 @@
   [_ {:keys [chip-group value-path]}]
   (merge {:chips-path value-path
           :deletable? true}
-         (param chip-group)))
+         (-> chip-group)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

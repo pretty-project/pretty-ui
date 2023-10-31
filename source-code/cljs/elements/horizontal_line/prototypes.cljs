@@ -1,6 +1,5 @@
 
-(ns elements.horizontal-line.prototypes
-    (:require [noop.api :refer [param]]))
+(ns elements.horizontal-line.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -18,4 +17,4 @@
   (merge {:fill-color :default
           :strength   1
           :width      :auto}
-         (param line-props)))
+         (-> line-props)))

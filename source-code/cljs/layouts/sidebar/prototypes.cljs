@@ -1,6 +1,5 @@
 
-(ns layouts.sidebar.prototypes
-    (:require [noop.api :refer [param]]))
+(ns layouts.sidebar.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -19,4 +18,4 @@
   (merge {:position  :left
           :threshold 720}
          (if border-color {:border-width :xxs})
-         (param sidebar-props)))
+         (-> sidebar-props)))

@@ -2,7 +2,6 @@
 (ns elements.input.events
     (:require [elements.input.subs :as input.subs]
               [map.api             :refer [dissoc-in]]
-              [noop.api            :refer [return]]
               [re-frame.api        :refer [r]]))
 
 ;; ----------------------------------------------------------------------------

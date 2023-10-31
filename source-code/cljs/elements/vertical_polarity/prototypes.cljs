@@ -1,6 +1,5 @@
 
-(ns elements.vertical-polarity.prototypes
-    (:require [noop.api :refer [param]]))
+(ns elements.vertical-polarity.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -16,4 +15,4 @@
   [polarity-props]
   (merge {:height           :parent
           :horizontal-align :center}
-         (param polarity-props)))
+         (-> polarity-props)))

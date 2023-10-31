@@ -1,6 +1,5 @@
 
-(ns elements.chip.prototypes
-    (:require [noop.api :refer [param]]))
+(ns elements.chip.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -24,6 +23,6 @@
           :fill-color :primary
           :width      :content}
          (if icon {:icon-family :material-symbols-outlined})
-         (param chip-props)
+         (-> chip-props)
          (if primary-button {:primary-button (merge {:icon-family :material-symbols-outlined}
-                                                    (param primary-button))})))
+                                                    (-> primary-button))})))

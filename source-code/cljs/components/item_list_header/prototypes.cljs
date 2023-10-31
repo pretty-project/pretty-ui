@@ -1,7 +1,6 @@
 
 (ns components.item-list-header.prototypes
-    (:require [noop.api   :refer [param]]
-              [vector.api :as vector]))
+    (:require [vector.api :as vector]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -15,7 +14,7 @@
   [{:keys [cells] :as header-props}]
   ; XXX#0561 (source-code/app/components/frontend/item_list_row/prototypes.cljs)
   (merge {}
-         (param header-props)
+         (-> header-props)
          {:cells (vector/remove-items-by cells nil?)}))
 
 (defn cell-props-prototype
@@ -31,5 +30,5 @@
                :indent        (if order-by? {:horizontal :xs} {:all :xs})
                :horizontal-align :left
                :font-size        :xs}
-              (param cell-props)
+              (-> cell-props)
               {:content label})))

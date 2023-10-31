@@ -1,6 +1,5 @@
 
-(ns layouts.plain-surface.prototypes
-    (:require [noop.api :refer [param]]))
+(ns layouts.plain-surface.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -12,4 +11,4 @@
   ; {:content-orientation (keyword)}
   [surface-props]
   (merge {:content-orientation :vertical}
-         (param surface-props)))
+         (-> surface-props)))

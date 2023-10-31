@@ -1,6 +1,5 @@
 
-(ns elements.breadcrumbs.prototypes
-    (:require [noop.api :refer [param]]))
+(ns elements.breadcrumbs.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -27,4 +26,4 @@
   ; {}
   [breadcrumbs-props]
   (merge {:click-effect :opacity}
-         (param breadcrumbs-props)))
+         (-> breadcrumbs-props)))

@@ -1,6 +1,5 @@
 
-(ns layouts.box-popup.prototypes
-    (:require [noop.api :refer [param]]))
+(ns layouts.box-popup.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -18,4 +17,4 @@
          (if border-color {:border-position :all
                            :border-width    :xxs})
          (if on-cover     {:cover-color     :black})
-         (param popup-props)))
+         (-> popup-props)))

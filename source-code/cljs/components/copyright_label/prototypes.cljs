@@ -1,6 +1,5 @@
 
-(ns components.copyright-label.prototypes
-    (:require [noop.api :refer [param]]))
+(ns components.copyright-label.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -12,4 +11,4 @@
   ; {:font-size (keyword)}
   [label-props]
   (merge {:font-size :xxs}
-         (param label-props)))
+         (-> label-props)))

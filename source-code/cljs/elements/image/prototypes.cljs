@@ -1,6 +1,5 @@
 
-(ns elements.image.prototypes
-    (:require [noop.api :refer [param]]))
+(ns elements.image.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -15,4 +14,4 @@
   [image-props]
   (merge {:height :content
           :width  :content}
-         (param image-props)))
+         (-> image-props)))

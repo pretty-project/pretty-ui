@@ -1,7 +1,6 @@
 
 (ns elements.search-field.prototypes
-    (:require [elements.plain-field.env :as plain-field.env]
-              [noop.api                 :refer [param]]))
+    (:require [elements.plain-field.env :as plain-field.env]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -19,4 +18,4 @@
   (let [field-empty? (plain-field.env/field-empty? field-id)]
        (merge (if on-enter {:start-adornments [{:icon :search :on-click on-enter :tab-indexed? false :disabled? field-empty?}]}
                            {:start-adornments [{:icon :search}]})
-              (param field-props))))
+              (-> field-props))))

@@ -1,6 +1,5 @@
 
-(ns components.illustration.prototypes
-    (:require [noop.api :refer [param]]))
+(ns components.illustration.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -16,4 +15,4 @@
   [illustration-props]
   (merge {:height :xxl
           :width  :xxl}
-         (param illustration-props)))
+         (-> illustration-props)))

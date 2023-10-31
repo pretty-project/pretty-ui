@@ -1,6 +1,5 @@
 
-(ns elements.thumbnail.prototypes
-    (:require [noop.api :refer [param]]))
+(ns elements.thumbnail.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -29,4 +28,4 @@
          (if border-color {:border-color    :default
                            :border-position :all
                            :border-width    :xxs})
-         (param thumbnail-props)))
+         (-> thumbnail-props)))

@@ -1,7 +1,6 @@
 
 (ns elements.multi-field.env
     (:require [metamorphic-content.api :as metamorphic-content]
-              [noop.api                :refer [return]]
               [re-frame.api            :as r]
               [vector.api              :as vector]))
 
@@ -68,8 +67,8 @@
   ; @return (metamorphic-content)
   [group-id {:keys [label] :as group-props} field-dex]
         ; Single-field label
-  (cond (and    label (group-props->single-field? group-id group-props field-dex))
-        (return label)
+  (cond (and label (group-props->single-field? group-id group-props field-dex))
+        (->  label)
         ; Multi-field label
         (and label (group-props->multi-field? group-id group-props field-dex))
         (metamorphic-content/compose {:content label :suffix (str " #" (inc field-dex))})))

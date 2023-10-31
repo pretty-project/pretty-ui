@@ -1,8 +1,7 @@
 
 (ns elements.label.prototypes
     (:require [hiccup.api              :as hiccup]
-              [metamorphic-content.api :as metamorphic-content]
-              [noop.api                :refer [param]]))
+              [metamorphic-content.api :as metamorphic-content]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -66,6 +65,6 @@
                               :icon-color color :icon-size (or font-size :s)
                               :icon-position :left})
          (if tooltip-content {:tooltip-position :right})
-         (param label-props)
+         (-> label-props)
          (if target-id        {:target-id       (hiccup/value target-id "input")})
          (if tooltip-content  {:tooltip-content (metamorphic-content/compose tooltip-content)})))

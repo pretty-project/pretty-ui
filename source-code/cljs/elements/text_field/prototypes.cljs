@@ -4,7 +4,6 @@
               [elements.text-field.env :as text-field.env]
               [loop.api                :refer [<-walk]]
               [noop.api                :refer [return]]
-              [random.api              :as random]
               [vector.api              :as vector]))
 
 ;; ----------------------------------------------------------------------------
@@ -70,8 +69,7 @@
   ;  :on-type-ended (Re-Frame metamorphic-event)(opt)}
   ;
   ; @return (map)
-  ; {:autofill-name (keyword)
-  ;  :border-position (keyword)
+  ; {:border-position (keyword)
   ;  :border-width (keyword)
   ;  :field-content-f (function)
   ;  :field-value-f (function)
@@ -84,24 +82,10 @@
   ;  :value-path (Re-Frame path vector)
   ;  :width (keyword)}
   [field-id {:keys [border-color marker-color on-blur on-focus on-type-ended] :as field-props}]
-  ; BUG#6782
-  ; https://stackoverflow.com/questions/12374442/chrome-ignores-autocomplete-off
-  ;
-  ; The Chrome browser ...
-  ; ... ignores the {:autocomplete "off"} setting,
-  ; ... ignores the {:autocomplete "new-*"} setting,
-  ; ... acknowledges the {:name ...} value.
-  ;
-  ; By using random generated :autofill-name value, the browser cannot suggest
-  ; values to the field.
-  ; If you want the browser to suggest values, pass an understandable value!
-  ; (E.g. :phone-number)
-  ;
   ; XXX#5068
-  ; By using the '<-walk' function the :on-blur, :on-type-ended and :on-focus
-  ; events take the 'field-props' map AFTER it being merged with the default values!
-  (<-walk {:autofill-name   (random/generate-keyword)
-           :field-content-f return
+  ; By using the '<-walk' function the ':on-blur', ':on-type-ended' and ':on-focus'
+  ; events take the 'field-props' map AFTER it is being merged with the default values!
+  (<-walk {:field-content-f return
            :field-value-f   return
            :font-size       :s
            :form-id         field-id

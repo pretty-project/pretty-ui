@@ -1,6 +1,5 @@
 
-(ns elements.number-field.prototypes
-    (:require [noop.api :refer [param]]))
+(ns elements.number-field.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -15,5 +14,5 @@
   ; {:type (keyword)}
   [_ field-props]
   (merge {}
-         (param field-props)
+         (-> field-props)
          {:type :number}))

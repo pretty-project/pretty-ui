@@ -1,7 +1,6 @@
 
 (ns elements.slider.prototypes
-    (:require [elements.input.utils :as input.utils]
-              [noop.api             :refer [param]]))
+    (:require [elements.input.utils :as input.utils]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -23,4 +22,4 @@
           :initial-value [0 100]
           :value-path    (input.utils/default-value-path slider-id)
           :width         :auto}
-         (param slider-props)))
+         (-> slider-props)))

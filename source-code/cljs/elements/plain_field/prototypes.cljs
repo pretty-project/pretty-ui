@@ -1,7 +1,7 @@
 
 (ns elements.plain-field.prototypes
     (:require [elements.input.utils :as input.utils]
-              [noop.api             :refer [param return]]))
+              [noop.api             :refer [return]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -20,4 +20,4 @@
   (merge {:field-content-f return
           :field-value-f   return
           :value-path      (input.utils/default-value-path field-id)}
-         (param field-props)))
+         (-> field-props)))

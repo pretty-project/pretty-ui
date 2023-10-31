@@ -1,6 +1,5 @@
 
-(ns elements.vertical-line.prototypes
-    (:require [noop.api :refer [param]]))
+(ns elements.vertical-line.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -18,4 +17,4 @@
   (merge {:fill-color :default
           :height     :parent
           :strength   1}
-         (param line-props)))
+         (-> line-props)))

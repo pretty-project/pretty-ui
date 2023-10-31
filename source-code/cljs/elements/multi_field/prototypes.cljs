@@ -2,8 +2,7 @@
 (ns elements.multi-field.prototypes
     (:require [elements.input.utils       :as input.utils]
               [elements.multi-field.env   :as multi-field.env]
-              [elements.multi-field.utils :as multi-field.utils]
-              [noop.api                   :refer [param]]))
+              [elements.multi-field.utils :as multi-field.utils]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -20,7 +19,7 @@
   [group-id group-props]
   (merge {:max-input-count 8
           :value-path (input.utils/default-value-path group-id)}
-         (param group-props)))
+         (-> group-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

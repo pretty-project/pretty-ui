@@ -1,6 +1,5 @@
 
-(ns website.language-selector.prototypes
-    (:require [noop.api :refer [param]]))
+(ns website.language-selector.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -16,4 +15,4 @@
   [selector-props]
   (merge {:font-size :s
           :gap       :xxs}
-         (param selector-props)))
+         (-> selector-props)))

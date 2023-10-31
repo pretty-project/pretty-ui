@@ -1,6 +1,5 @@
 
-(ns components.input-table.prototypes
-    (:require [noop.api :refer [param]]))
+(ns components.input-table.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -14,4 +13,4 @@
   [{:keys [border-color] :as table-props}]
   (merge (if border-color {:border-position :all
                            :border-width    :xxs})
-         (param table-props)))
+         (-> table-props)))

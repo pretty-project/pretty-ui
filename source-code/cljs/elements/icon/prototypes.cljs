@@ -1,6 +1,5 @@
 
-(ns elements.icon.prototypes
-    (:require [noop.api :refer [param]]))
+(ns elements.icon.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -18,4 +17,4 @@
   (merge {:icon-color  :default
           :icon-family :material-symbols-outlined
           :icon-size   :m}
-         (param icon-props)))
+         (-> icon-props)))

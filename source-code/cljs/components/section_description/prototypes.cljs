@@ -1,6 +1,5 @@
 
-(ns components.section-description.prototypes
-    (:require [noop.api :refer [param]]))
+(ns components.section-description.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -19,4 +18,4 @@
           :font-size        :xxs
           :horizontal-align :center
           :indent           {:horizontal :xs :vertical :xs}}
-         (param description-props)))
+         (-> description-props)))

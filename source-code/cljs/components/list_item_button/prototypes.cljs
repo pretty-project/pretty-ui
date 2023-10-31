@@ -1,6 +1,5 @@
 
-(ns components.list-item-button.prototypes
-    (:require [noop.api :refer [param]]))
+(ns components.list-item-button.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -14,4 +13,4 @@
   (merge {:fill-color  :highlight
           :font-size   :xs
           :hover-color :highlight}
-         (param button-props)))
+         (-> button-props)))

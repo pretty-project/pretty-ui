@@ -1,6 +1,5 @@
 
-(ns elements.toggle.prototypes
-    (:require [noop.api :refer [param]]))
+(ns elements.toggle.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -29,7 +28,7 @@
          (if marker-color {:marker-position :tr})
          (if border-color {:border-position :all
                            :border-width    :xxs})
-         (param toggle-props)
+         (-> toggle-props)
          (if disabled? {:cursor      (or cursor :default)
                         :hover-color :none}
                        {:cursor      :pointer})))

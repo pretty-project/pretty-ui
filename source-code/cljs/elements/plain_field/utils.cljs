@@ -6,7 +6,6 @@
               [elements.plain-field.side-effects :as plain-field.side-effects]
               [elements.plain-field.state        :as plain-field.state]
               [hiccup.api                        :as hiccup]
-              [noop.api                          :refer [return]]
               [re-frame.api                      :as r]
               [reagent.api                       :as reagent]
               [string.api                        :as string]
@@ -90,7 +89,7 @@
        ; https://stackoverflow.com/questions/9555143/html-maxlength-attribute-not-working-on-chrome-and-safari
        (if (and max-length (= type :number))
            (string/max-length value max-length)
-           (return            value))))
+           (->                value))))
 
 (defn resolve-field-change-f
   ; @ignore

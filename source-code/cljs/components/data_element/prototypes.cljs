@@ -1,7 +1,6 @@
 
 (ns components.data-element.prototypes
     (:require [metamorphic-content.api :as metamorphic-content]
-              [noop.api                :refer [param]]
               [vector.api              :as vector]))
 
 ;; ----------------------------------------------------------------------------
@@ -22,7 +21,7 @@
   ; vágólapra helyezhetőségét jelzi, ezért csak akkor számít {:markable? true}
   ; állapotúnak az adat, ha vágólapra helyezhető a tartalma!
   (merge {:font-size :s}
-         (param element-props)
+         (-> element-props)
          (cond (vector/nonempty? value) {:marked? false :value value}
                (vector?          value) {:marked? false :value [nil]}
                :return {:value [value] :marked? (and marked? (-> value metamorphic-content/compose empty? not))})))

@@ -6,6 +6,7 @@
               [elements.text-field.env         :as text-field.env]
               [metamorphic-content.api         :as metamorphic-content]
               [pretty-css.api                  :as pretty-css]
+              [random.api                      :as random]
               [re-frame.api                    :as r]))
 
 ;; ----------------------------------------------------------------------------
@@ -139,7 +140,7 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ; {:autofill-name (keyword)
+  ; {:autofill-name (keyword)(opt)
   ;  :date-from (string)(opt)
   ;  :date-to (string)(opt)
   ;  :disabled? (boolean)(opt)
@@ -157,17 +158,30 @@
   ;  :on-focus (function)
   ;  :type (keyword)}
   [field-id {:keys [autofill-name date-from date-to disabled? max-length type] :as field-props}]
+  ; The {:type :date} fields range could be set by the :min and :max properties.
+  ;
   ; HACK#9760 (source-code/cljs/elements/plain_field/utils.cljs)
   ;
-  ; The {:type :date} fields range could be set by the :min and :max properties.
+  ; BUG#6782
+  ; - https://stackoverflow.com/questions/12374442/chrome-ignores-autocomplete-off
+  ; - The "ignore autocomplete='off' (Autofill)" flag is set to enabled by default in chrome.
+  ;   chrome://flags/#ignore-autocomplete-off-autofill
+  ; - The Chrome browser ...
+  ;   ... ignores the {:autocomplete "off"} setting,
+  ;   ... ignores the {:autocomplete "new-*"} setting,
+  ;   ... acknowledges the {:name ...} value.
+  ; - By using randomly generated ':auto-complete' and ':name' values, the browser cannot
+  ;   suggest values to the field.
+  ; - If you want the browser to suggest values for the field, pass an understandable value
+  ;   for the ':autofill-name' property (E.g. :phone-number)!
   (-> (plain-field.attributes/field-input-attributes field-id field-props)
       (merge {:class      :e-text-field--input
               :max-length max-length
               :type       type}
-             (if-not disabled? {:auto-complete autofill-name
-                                :min           date-from
+             (if-not disabled? {:min           date-from
                                 :max           date-to
-                                :name          autofill-name
+                                :auto-complete (or autofill-name (random/generate-keyword))
+                                :name          (or autofill-name (random/generate-keyword))
                                 :on-blur       (fn [_] (r/dispatch [:elements.text-field/field-blurred field-id field-props]))
                                 :on-focus      (fn [_] (r/dispatch [:elements.text-field/field-focused field-id field-props]))}))
       (pretty-css/effect-attributes field-props)))

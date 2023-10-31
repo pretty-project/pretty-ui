@@ -1,6 +1,5 @@
 
-(ns renderers.surface-renderer.prototypes
-    (:require [noop.api :refer [param]]))
+(ns renderers.surface-renderer.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -20,4 +19,4 @@
           :max-elements-rendered 1
           :queue-behavior        :push
           :rerender-same?        false}
-         (param renderer-props)))
+         (-> renderer-props)))

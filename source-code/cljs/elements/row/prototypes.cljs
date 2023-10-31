@@ -1,6 +1,5 @@
 
-(ns elements.row.prototypes
-    (:require [noop.api :refer [param]]))
+(ns elements.row.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -25,4 +24,4 @@
           :width            :content}
          (if border-color {:border-position :all
                            :border-width    :xxs})
-         (param row-props)))
+         (-> row-props)))

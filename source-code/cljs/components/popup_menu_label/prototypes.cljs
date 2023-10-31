@@ -1,6 +1,5 @@
 
-(ns components.popup-menu-label.prototypes
-    (:require [noop.api :refer [param]]))
+(ns components.popup-menu-label.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -20,4 +19,4 @@
           :horizontal-align :left
           :icon-size        :m
           :indent           {:horizontal :xxs :vertical :s}}
-         (param label-props)))
+         (-> label-props)))

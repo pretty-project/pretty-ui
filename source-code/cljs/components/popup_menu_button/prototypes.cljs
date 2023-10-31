@@ -1,6 +1,5 @@
 
-(ns components.popup-menu-button.prototypes
-    (:require [noop.api :refer [param]]))
+(ns components.popup-menu-button.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -23,4 +22,4 @@
           ; A VERTICAL outdent már tulságosan megköti/szabályozza a komponens használatát!
           ; Deprecated!
           ;:outdent          {:vertical :xs}}
-         (param button-props)))
+         (-> button-props)))

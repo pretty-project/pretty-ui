@@ -2,7 +2,6 @@
 (ns elements.form.side-effects
     (:require [elements.form.env   :as form.env]
               [elements.form.state :as form.state]
-              [noop.api            :refer [return]]
               [re-frame.api        :as r]))
 
 ;; ----------------------------------------------------------------------------
@@ -45,11 +44,11 @@
                       (do (swap! form.state/FORM-ERRORS assoc input-id invalid-message)
                           (if on-invalid (let [on-invalid (r/metamorphic-event<-params on-invalid stored-value invalid-message)]
                                               (r/dispatch on-invalid)))
-                          (return invalid-message))
+                          (-> invalid-message))
                       (do (swap! form.state/FORM-ERRORS dissoc input-id)
                           (if on-valid (let [on-valid (r/metamorphic-event<-params on-valid stored-value)]
                                             (r/dispatch on-valid)))
-                          (return nil))))))
+                          (-> nil))))))
 
 (defn validate-form!
   ; @ignore
@@ -72,9 +71,9 @@
          (if-let [invalid-message (some validate-input-f @form.state/FORM-INPUTS)]
                  (do (if on-invalid (let [on-invalid (r/metamorphic-event<-params on-invalid invalid-message)]
                                          (r/dispatch on-invalid)))
-                     (return invalid-message))
+                     (-> invalid-message))
                  (do (if on-valid (r/dispatch on-valid))
-                     (return nil)))))
+                     (-> nil)))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

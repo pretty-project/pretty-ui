@@ -1,6 +1,5 @@
 
-(ns components.popup-menu-header.prototypes
-    (:require [noop.api :refer [param]]))
+(ns components.popup-menu-header.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -15,13 +14,13 @@
   ;  :label (map)}
   [{:keys [close-button label] :as header-props}]
   (merge {}
-         (param header-props)
+         (-> header-props)
          (if close-button {:close-button (merge {:border-radius {:all :s}
                                                  :hover-color   :highlight
                                                  :icon          :close
                                                  :keypress      {:key-code 27}}
-                                                (param close-button))})
+                                                (-> close-button))})
          (if label        {:label        (merge {:color     :muted
                                                  :font-size :xs
                                                  :indent    {:horizontal :xs :left :s}}
-                                                (param label))})))
+                                                (-> label))})))

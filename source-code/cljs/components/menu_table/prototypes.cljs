@@ -1,6 +1,5 @@
 
-(ns components.menu-table.prototypes
-    (:require [noop.api :refer [param]]))
+(ns components.menu-table.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -12,4 +11,4 @@
   ; {:placeholder (metamorphic-content)}
   [table-props]
   (merge {:placeholder :no-items-to-show}
-         (param table-props)))
+         (-> table-props)))

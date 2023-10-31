@@ -1,7 +1,6 @@
 
 (ns elements.text.prototypes
-    (:require [metamorphic-content.api :as metamorphic-content]
-              [noop.api                :refer [param]]))
+    (:require [metamorphic-content.api :as metamorphic-content]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -30,4 +29,4 @@
           :selectable?      true
           :text-overflow    :wrap
           :width            :content}
-         (param text-props)))
+         (-> text-props)))

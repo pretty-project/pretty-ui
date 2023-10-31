@@ -1,7 +1,6 @@
 
 (ns elements.text-field.env
     (:require [elements.plain-field.env :as plain-field.env]
-              [noop.api                 :refer [return]]
               [string.api               :as string]))
 
 ;; ----------------------------------------------------------------------------
@@ -47,7 +46,7 @@
                            (inc line-count))
 
                       ; If the field is NOT multiline ...
-                      (return 1))))
+                      (-> 1))))
 
 (defn field-auto-height
   ; @ignore

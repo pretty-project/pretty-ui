@@ -1,7 +1,6 @@
 
 (ns elements.color-selector.prototypes
-    (:require [noop.api                       :refer [param]]
-              [elements.color-selector.config :as color-selector.config]
+    (:require [elements.color-selector.config :as color-selector.config]
               [elements.input.utils           :as input.utils]))
 
 ;; ----------------------------------------------------------------------------
@@ -25,5 +24,5 @@
   (merge {:options color-selector.config/DEFAULT-OPTIONS
           :options-path (input.utils/default-options-path selector-id)
           :value-path   (input.utils/default-value-path   selector-id)}
-         (param selector-props)
+         (-> selector-props)
          {:popup (merge {:cover-color :black :fill-color :default} popup)}))

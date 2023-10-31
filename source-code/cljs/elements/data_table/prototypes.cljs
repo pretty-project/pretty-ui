@@ -1,7 +1,6 @@
 
 (ns elements.data-table.prototypes
-    (:require [css.api  :as css]
-              [noop.api :refer [param]]))
+    (:require [css.api :as css]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -17,7 +16,7 @@
   [{:keys [cells] :as column-props}]
   (merge {:template (css/repeat- (count cells) (css/fr 1))
           :width :s}
-         (param column-props)))
+         (-> column-props)))
 
 (defn row-props-prototype
   ; @ignore
@@ -30,7 +29,7 @@
   [{:keys [cells] :as row-props}]
   (merge {:height :s
           :template (css/repeat- (count cells) (css/fr 1))}
-         (param row-props)))
+         (-> row-props)))
 
 (defn cell-props-prototype
   ; @ignore
@@ -47,7 +46,7 @@
           :font-weight   :normal
           :line-height   :text-block
           :text-overflow :ellipsis}
-         (param cell-props)))
+         (-> cell-props)))
 
 (defn table-props-prototype
   ; @ignore

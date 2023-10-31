@@ -1,7 +1,6 @@
 
 (ns elements.input.subs
-    (:require [noop.api     :refer [return]]
-              [re-frame.api :as r :refer [r]]
+    (:require [re-frame.api :as r :refer [r]]
               [vector.api   :as vector]))
 
 ;; ----------------------------------------------------------------------------
@@ -20,8 +19,8 @@
   (let [stored-value (get-in db value-path)]
        (if (or (= stored-value nil)
                (= stored-value ""))
-           (return default-value)
-           (return stored-value))))
+           (-> default-value)
+           (-> stored-value))))
 
 (defn get-input-options
   ; @ignore
@@ -72,8 +71,8 @@
   ; - The following examples are both seqable and empty values:
   ;   nil, "", [], {}, ()
   (let [input-value (r get-input-value db input-id input-props)]
-       (and (seqable? input-value)
-            (empty?   input-value))))
+       (and (-> input-value seqable?)
+            (-> input-value empty?))))
 
 (defn input-nonempty?
   ; @ignore

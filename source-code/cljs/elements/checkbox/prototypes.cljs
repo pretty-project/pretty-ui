@@ -1,6 +1,6 @@
 
 (ns elements.checkbox.prototypes
-    (:require [noop.api             :refer [param return]]
+    (:require [noop.api             :refer [return]]
               [elements.input.utils :as input.utils]))
 
 ;; ----------------------------------------------------------------------------
@@ -34,4 +34,4 @@
           :options-orientation :vertical
           :options-path        (input.utils/default-options-path checkbox-id)
           :value-path          (input.utils/default-value-path   checkbox-id)}
-         (param checkbox-props)))
+         (-> checkbox-props)))

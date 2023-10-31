@@ -1,6 +1,5 @@
 
-(ns elements.horizontal-spacer.prototypes
-    (:require [noop.api :refer [param]]))
+(ns elements.horizontal-spacer.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -14,4 +13,4 @@
   ; {:height (keyword)}
   [spacer-props]
   (merge {:height :s}
-         (param spacer-props)))
+         (-> spacer-props)))

@@ -1,7 +1,6 @@
 
 (ns elements.multiline-field.prototypes
-    (:require [noop.api   :refer [param]]
-              [random.api :as random]))
+    (:require [random.api :as random]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -20,7 +19,7 @@
   [field-id field-props]
   (merge {:max-height 32
           :min-height 1}
-         (param field-props)
+         (-> field-props)
          {:multiline? true
           ; XXX#6782 (source-code/cljs/elements/text_field/prototypes.cljs)
           :autofill-name (random/generate-keyword)}))

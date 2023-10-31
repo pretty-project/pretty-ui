@@ -5,7 +5,6 @@
               [elements.input.env       :as input.env]
               [elements.plain-field.env :as plain-field.env]
               [hiccup.api               :as hiccup]
-              [noop.api                 :refer [return]]
               [string.api               :as string]
               [vector.api               :as vector]))
 
@@ -57,8 +56,8 @@
   [box-id box-props]
   (let [options (input.env/get-input-options box-id box-props)]
        (letfn [(f [options option] (if (render-option? box-id box-props option)
-                                       (conj   options option)
-                                       (return options)))]
+                                       (conj options option)
+                                       (->   options)))]
               (reduce f [] options))))
 
 (defn get-highlighted-option

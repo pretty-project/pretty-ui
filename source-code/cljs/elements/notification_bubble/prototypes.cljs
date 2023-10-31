@@ -1,6 +1,5 @@
 
-(ns elements.notification-bubble.prototypes
-    (:require [noop.api :refer [param]]))
+(ns elements.notification-bubble.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -22,4 +21,4 @@
           :width       :content}
          (if border-color {:border-position :all
                            :border-width    :xxs})
-         (param bubble-props)))
+         (-> bubble-props)))

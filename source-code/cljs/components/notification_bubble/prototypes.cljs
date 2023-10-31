@@ -1,6 +1,5 @@
 
-(ns components.notification-bubble.prototypes
-    (:require [noop.api :refer [param]]))
+(ns components.notification-bubble.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -18,10 +17,10 @@
                                :font-size     :xs
                                :hover-color   :highlight
                                :indent        {:horizontal :xxs :vertical :xs}}
-                              (param button-props))
+                              (-> button-props))
                        (merge {:border-radius {:all :s}
                                :hover-color   :highlight}
-                              (param button-props))))
+                              (-> button-props))))
 
 (defn bubble-props-prototype
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -44,6 +43,6 @@
                            :icon          :close
                            :hover-color   :highlight
                            :on-click      [:x.ui/remove-bubble! bubble-id]}}
-         (param bubble-props)
+         (-> bubble-props)
          (if primary-button   {:primary-button   (button-props-prototype primary-button)})
          (if secondary-button {:secondary-button (button-props-prototype secondary-button)})))

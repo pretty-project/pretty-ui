@@ -1,6 +1,5 @@
 
-(ns components.list-item-cell.prototypes
-    (:require [noop.api :refer [param]]))
+(ns components.list-item-cell.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -18,4 +17,4 @@
   [cell-props]
   (merge {:indent {:vertical :xs}
           :selectable? true}
-         (param cell-props)))
+         (-> cell-props)))

@@ -1,6 +1,5 @@
 
-(ns elements.vertical-spacer.prototypes
-    (:require [noop.api :refer [param]]))
+(ns elements.vertical-spacer.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -14,4 +13,4 @@
   ; {:width (keyword)}
   [spacer-props]
   (merge {:width :s}
-         (param spacer-props)))
+         (-> spacer-props)))

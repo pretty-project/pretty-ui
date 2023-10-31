@@ -1,6 +1,5 @@
 
-(ns elements.vertical-group.prototypes
-    (:require [noop.api :refer [param]]))
+(ns elements.vertical-group.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -14,4 +13,4 @@
   ; {:width (keyword)}
   [group-props]
   (merge {:width :content}
-         (param group-props)))
+         (-> group-props)))

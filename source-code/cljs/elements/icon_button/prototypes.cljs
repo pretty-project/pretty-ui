@@ -1,7 +1,6 @@
 
 (ns elements.icon-button.prototypes
-    (:require [metamorphic-content.api :as metamorphic-content]
-              [noop.api                :refer [param]]))
+    (:require [metamorphic-content.api :as metamorphic-content]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -43,7 +42,7 @@
                               :progress-direction :ltr
                               :progress-duration  250})
          (if tooltip-content {:tooltip-position   :right})
-         (param button-props)
+         (-> button-props)
          (if disabled?       {:cursor      (or cursor :default)
                               :hover-color :none}
                              {:cursor      :pointer})

@@ -4,7 +4,6 @@
               [components.list-item-cell.prototypes :as list-item-cell.prototypes]
               [css.api                              :as css]
               [elements.api                         :as elements]
-              [noop.api                             :refer [return]]
               [random.api                           :as random]))
 
 ;; ----------------------------------------------------------------------------
@@ -16,8 +15,8 @@
   ; {:rows (maps in vector)}
   [cell-id {:keys [rows] :as cell-props}]
   (letfn [(f [rows row-props]
-             (if row-props (conj   rows [elements/label (list-item-cell.prototypes/row-props-prototype row-props)])
-                           (return rows)))]
+             (if row-props (conj rows [elements/label (list-item-cell.prototypes/row-props-prototype row-props)])
+                           (->   rows)))]
          (reduce f [:<>] rows)))
 
 (defn- list-item-cell

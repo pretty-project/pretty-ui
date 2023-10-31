@@ -1,6 +1,5 @@
 
-(ns elements.column.prototypes
-    (:require [noop.api :refer [param]]))
+(ns elements.column.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -25,4 +24,4 @@
           :width            :content}
          (if border-color {:border-position :all
                            :border-width    :xxs})
-         (param column-props)))
+         (-> column-props)))

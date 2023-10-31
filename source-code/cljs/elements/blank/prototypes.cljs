@@ -1,6 +1,5 @@
 
-(ns elements.blank.prototypes
-    (:require [noop.api :refer [param]]))
+(ns elements.blank.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -14,4 +13,4 @@
   ; {:width (keyword)}
   [blank-props]
   (merge {:width :content}
-         (param blank-props)))
+         (-> blank-props)))

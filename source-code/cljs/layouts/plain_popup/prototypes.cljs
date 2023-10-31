@@ -1,6 +1,5 @@
 
-(ns layouts.plain-popup.prototypes
-    (:require [noop.api :refer [param]]))
+(ns layouts.plain-popup.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -16,4 +15,4 @@
   [{:keys [on-cover] :as popup-props}]
   (merge {}
          (if on-cover {:cover-color :black})
-         (param popup-props)))
+         (-> popup-props)))

@@ -15,8 +15,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.ui.renderer.subs
-    (:require [noop.api              :refer [return]]
-              [re-frame.api          :as r :refer [r]]
+    (:require [re-frame.api          :as r :refer [r]]
               [vector.api            :as vector]
               [x.ui.renderer.config  :as renderer.config]
               [x.ui.renderer.helpers :as renderer.helpers]))
@@ -278,10 +277,10 @@
   ;
   ; @return (ms)
   [db [_ renderer-id element-id]]
-  (if (r hide-element-animated? db renderer-id element-id)
-      (+ renderer.config/HIDE-ANIMATION-TIMEOUT
-         renderer.config/RENDER-DELAY-OFFSET)
-      (return renderer.config/RENDER-DELAY-OFFSET)))
+  (if (r  hide-element-animated? db renderer-id element-id)
+      (+  renderer.config/HIDE-ANIMATION-TIMEOUT
+          renderer.config/RENDER-DELAY-OFFSET)
+      (-> renderer.config/RENDER-DELAY-OFFSET)))
 
 (defn get-destroying-delay
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -291,10 +290,10 @@
   ;
   ; @return (ms)
   [db [_ renderer-id element-id]]
-  (if (r hide-element-animated? db renderer-id element-id)
-      (+ renderer.config/HIDE-ANIMATION-TIMEOUT
-         renderer.config/DESTROY-DELAY-OFFSET)
-      (return renderer.config/DESTROY-DELAY-OFFSET)))
+  (if (r  hide-element-animated? db renderer-id element-id)
+      (+  renderer.config/HIDE-ANIMATION-TIMEOUT
+          renderer.config/DESTROY-DELAY-OFFSET)
+      (-> renderer.config/DESTROY-DELAY-OFFSET)))
 
 (defn render-element-now?
   ; WARNING! NON-PUBLIC! DO NOT USE!

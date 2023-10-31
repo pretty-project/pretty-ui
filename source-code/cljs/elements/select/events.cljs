@@ -1,7 +1,6 @@
 
 (ns elements.select.events
     (:require [elements.input.events :as input.events]
-              [noop.api              :refer [return]]
               [re-frame.api          :refer [r]]
               [vector.api            :as vector]))
 

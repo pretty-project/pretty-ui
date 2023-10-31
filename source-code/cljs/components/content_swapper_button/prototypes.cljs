@@ -1,6 +1,5 @@
 
-(ns components.content-swapper-button.prototypes
-    (:require [noop.api :refer [param]]))
+(ns components.content-swapper-button.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -22,4 +21,4 @@
           :icon-size        :m
           :indent           {:all :xs}
           :width            :auto}
-         (param button-props)))
+         (-> button-props)))

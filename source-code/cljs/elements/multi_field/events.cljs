@@ -1,7 +1,6 @@
 
 (ns elements.multi-field.events
     (:require [elements.multi-field.subs :as multi-field.subs]
-              [noop.api                  :refer [return]]
               [re-frame.api              :refer [r]]
               [vector.api                :as vector]))
 
@@ -47,5 +46,5 @@
   ; @return (map)
   [db [_ group-id group-props field-dex]]
   (if (r multi-field.subs/max-input-count-reached? db group-id group-props)
-      (return db)
+      (-> db)
       (r conj-initial-value! db group-id group-props field-dex)))

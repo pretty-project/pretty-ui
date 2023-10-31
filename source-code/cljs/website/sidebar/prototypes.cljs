@@ -1,6 +1,5 @@
 
-(ns website.sidebar.prototypes
-    (:require [noop.api :refer [param]]))
+(ns website.sidebar.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -34,4 +33,4 @@
           :position    :left}
          (if border-color {:border-position (case position :right :left :right)
                            :border-width :xxs})
-         (param sidebar-props)))
+         (-> sidebar-props)))

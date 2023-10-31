@@ -1,6 +1,5 @@
 
-(ns components.popup-label-bar.prototypes
-    (:require [noop.api :refer [param]]))
+(ns components.popup-label-bar.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -17,17 +16,17 @@
   ;  :secondary-button (map)}
   [{:keys [label primary-button secondary-button] :as bar-props}]
   (merge bar-props (if label            {:label            (merge {:indent {:all :xxs}}
-                                                                  (param label))})
+                                                                  (-> label))})
                    (if primary-button   {:primary-button   (merge {:color       :primary
                                                                    :font-size   :xs
                                                                    :hover-color :highlight
                                                                    :indent      {:all :xxs}
                                                                    :outdent     {:all :xxs}
                                                                    :keypress    {:key-code 13}}
-                                                                  (param primary-button))})
+                                                                  (-> primary-button))})
                    (if secondary-button {:secondary-button (merge {:font-size   :xs
                                                                    :hover-color :highlight
                                                                    :indent      {:all :xxs}
                                                                    :outdent     {:all :xxs}
                                                                    :keypress    {:key-code 27}}
-                                                                  (param secondary-button))})))
+                                                                  (-> secondary-button))})))

@@ -1,7 +1,6 @@
 
 (ns elements.slider.events
     (:require [elements.input.events :as input.events]
-              [noop.api              :refer [return]]
               [re-frame.api          :as r :refer [r]]))
 
 ;; ----------------------------------------------------------------------------

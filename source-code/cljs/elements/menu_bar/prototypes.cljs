@@ -1,7 +1,6 @@
 
 (ns elements.menu-bar.prototypes
-    (:require [metamorphic-content.api :as metamorphic-content]
-              [noop.api                :refer [param]]))
+    (:require [metamorphic-content.api :as metamorphic-content]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -29,8 +28,8 @@
          (if badge-content {:badge-color :primary :badge-position :tr})
          (if marker-color  {:marker-position :tr})
          (if icon          {:icon-family :material-symbols-outlined})
-         (param item-default)
-         (param item-props)
+         (-> item-default)
+         (-> item-props)
          (if badge-content {:badge-content (metamorphic-content/compose badge-content)})))
 
 ;; ----------------------------------------------------------------------------
@@ -49,4 +48,4 @@
   (merge {:orientation :horizontal}
          (if-not (= orientation :vertical)
                  {:horizontal-align :left})
-         (param bar-props)))
+         (-> bar-props)))

@@ -1,6 +1,5 @@
 
-(ns components.user-avatar.prototypes
-    (:require [noop.api :refer [param]]))
+(ns components.user-avatar.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -20,4 +19,4 @@
           :icon        :person
           :icon-family :material-symbols-outlined
           :size        60}
-         (param avatar-props)))
+         (-> avatar-props)))

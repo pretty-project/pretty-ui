@@ -2,7 +2,6 @@
 (ns elements.password-field.prototypes
     (:require [elements.password-field.env :as password-field.env]
               [elements.plain-field.env    :as plain-field.env]
-              [noop.api                    :refer [param]]
               [vector.api                  :as vector]))
 
 ;; ----------------------------------------------------------------------------
@@ -40,7 +39,7 @@
         password-visible? (password-field.env/password-visible? field-id)]
        (merge {:label       :password
                :placeholder "••••••••"}
-              (param field-props)
+              (-> field-props)
               {:type (if password-visible? :text :password)}
 
               ; ...

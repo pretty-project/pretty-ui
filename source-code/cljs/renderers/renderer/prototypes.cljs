@@ -15,8 +15,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.ui.renderer.prototypes
-    (:require [noop.api             :refer [param]]
-              [x.ui.renderer.config :as renderer.config]))
+    (:require [x.ui.renderer.config :as renderer.config]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -32,7 +31,7 @@
   [element-props]
   (merge {:hide-animated?   true
           :reveal-animated? true}
-         (param element-props)))
+         (-> element-props)))
 
 (defn renderer-props-prototype
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -49,4 +48,4 @@
           :max-elements-rendered renderer.config/DEFAULT-MAX-ELEMENTS-RENDERED
           :queue-behavior        :wait
           :rerender-same?        false}
-         (param renderer-props)))
+         (-> renderer-props)))

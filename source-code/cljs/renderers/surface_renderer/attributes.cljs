@@ -1,7 +1,6 @@
 
 (ns renderers.surface-renderer.attributes
-    (:require [hiccup.api :as hiccup]
-              [noop.api   :refer [param]]))
+    (:require [hiccup.api :as hiccup]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

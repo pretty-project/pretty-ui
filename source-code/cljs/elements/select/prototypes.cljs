@@ -1,7 +1,7 @@
 
 (ns elements.select.prototypes
     (:require [elements.input.utils :as input.utils]
-              [noop.api             :refer [param return]]))
+              [noop.api             :refer [return]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -38,5 +38,5 @@
           :value-path               (input.utils/default-value-path   select-id)}
          (if border-color {:border-position :all
                            :border-width    :xxs})
-         (param select-props)
+         (-> select-props)
          {:popup (merge {:cover-color :black :fill-color :default} popup)}))

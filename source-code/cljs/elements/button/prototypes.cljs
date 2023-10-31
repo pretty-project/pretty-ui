@@ -1,7 +1,6 @@
 
 (ns elements.button.prototypes
-    (:require [metamorphic-content.api :as metamorphic-content]
-              [noop.api                :refer [param]]))
+    (:require [metamorphic-content.api :as metamorphic-content]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -65,7 +64,7 @@
                               :progress-direction :ltr
                               :progress-duration  250})
          (if tooltip-content {:tooltip-position   :right})
-         (param button-props)
+         (-> button-props)
          (if badge-content   {:badge-content   (metamorphic-content/compose badge-content)})
          (if label           {:label           (metamorphic-content/compose label)})
          (if tooltip-content {:tooltip-content (metamorphic-content/compose tooltip-content)})

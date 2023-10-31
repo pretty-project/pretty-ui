@@ -1,6 +1,5 @@
 
-(ns website.multi-menu.prototypes
-    (:require [noop.api :refer [param]]))
+(ns website.multi-menu.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -16,4 +15,4 @@
   ; By default threshold is set to 0, and the menu items visible independently
   ; from the viewport width.
   (merge {:threshold 0}
-         (param menu-props)))
+         (-> menu-props)))

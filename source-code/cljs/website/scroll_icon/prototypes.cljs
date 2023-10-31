@@ -1,6 +1,5 @@
 
-(ns website.scroll-icon.prototypes
-    (:require [noop.api :refer [param]]))
+(ns website.scroll-icon.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -14,4 +13,4 @@
   ; {:color (keyword)}
   [icon-props]
   (merge {:color "#FFFFFF"}
-         (param icon-props)))
+         (-> icon-props)))

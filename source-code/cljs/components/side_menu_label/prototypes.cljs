@@ -1,6 +1,5 @@
 
-(ns components.side-menu-label.prototypes
-    (:require [noop.api :refer [param]]))
+(ns components.side-menu-label.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -24,4 +23,4 @@
           :icon-size        :m
           :indent           {:horizontal :xs :vertical :s}
           :style {:max-width "var(--element-size-m)"}}
-         (param label-props)))
+         (-> label-props)))

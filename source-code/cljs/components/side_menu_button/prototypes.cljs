@@ -1,6 +1,5 @@
 
-(ns components.side-menu-button.prototypes
-    (:require [noop.api :refer [param]]))
+(ns components.side-menu-button.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -19,4 +18,4 @@
           :hover-color      :highlight
           :icon-size        :m
           :indent           {:horizontal :xs :left :s :right :xl}}
-         (param button-props)))
+         (-> button-props)))

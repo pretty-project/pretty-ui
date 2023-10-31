@@ -1,6 +1,5 @@
 
-(ns components.vector-item-controls.prototypes
-    (:require [noop.api :refer [param]]))
+(ns components.vector-item-controls.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -14,4 +13,4 @@
   ; {}
   [controls-props]
   (merge {:tooltip-position :right}
-         (param controls-props)))
+         (-> controls-props)))
