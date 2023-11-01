@@ -2,6 +2,7 @@
 (ns elements.icon.views
     (:require [elements.icon.attributes :as icon.attributes]
               [elements.icon.prototypes :as icon.prototypes]
+              [pretty-presets.api       :as pretty-presets]
               [random.api               :as random]))
 
 ;; ----------------------------------------------------------------------------
@@ -45,6 +46,7 @@
   ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
+  ;  :preset (keyword)(opt)
   ;  :style (map)(opt)}
   ;
   ; @usage
@@ -57,5 +59,6 @@
 
   ([icon-id icon-props]
    (fn [_ icon-props] ; XXX#0106 (README.md#parametering)
-       (let [icon-props (icon.prototypes/icon-props-prototype icon-props)]
+       (let [icon-props (pretty-presets/apply-preset          icon-props)
+             icon-props (icon.prototypes/icon-props-prototype icon-props)]
             [icon icon-id icon-props]))))

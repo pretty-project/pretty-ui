@@ -6,6 +6,7 @@
               [elements.input.env           :as input.env]
               [hiccup.api                   :as hiccup]
               [metamorphic-content.api      :as metamorphic-content]
+              [pretty-presets.api           :as pretty-presets]
               [random.api                   :as random]
               [re-frame.api                 :as r]
               [reagent.api                  :as reagent]))
@@ -112,6 +113,7 @@
   ;  :label (metamorphic-content)(opt)
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
+  ;  :preset (keyword)(opt)
   ;  :style (map)(opt)
   ;  :value-path (Re-Frame path vector)(opt)}
   ;
@@ -125,5 +127,6 @@
 
   ([checkbox-id checkbox-props]
    (fn [_ checkbox-props] ; XXX#0106 (README.md#parametering)
-       (let [checkbox-props (checkbox.prototypes/checkbox-props-prototype checkbox-id checkbox-props)]
+       (let [checkbox-props (pretty-presets/apply-preset                              checkbox-props)
+             checkbox-props (checkbox.prototypes/checkbox-props-prototype checkbox-id checkbox-props)]
             [checkbox checkbox-id checkbox-props]))))

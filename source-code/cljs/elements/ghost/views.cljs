@@ -1,8 +1,9 @@
 
 (ns elements.ghost.views
-    (:require [random.api                :as random]
-              [elements.ghost.attributes :as ghost.attributes]
-              [elements.ghost.prototypes :as ghost.prototypes]))
+    (:require [elements.ghost.attributes :as ghost.attributes]
+              [elements.ghost.prototypes :as ghost.prototypes]
+              [pretty-presets.api        :as pretty-presets]
+              [random.api                :as random]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -40,6 +41,7 @@
   ;   Default: :s
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
+  ;  :preset (keyword)(opt)
   ;  :style (map)(opt)
   ;  :width (keyword)(opt)
   ;   :auto, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
@@ -55,5 +57,6 @@
 
   ([ghost-id ghost-props]
    (fn [_ ghost-props] ; XXX#0106 (README.md#parametering)
-       (let [ghost-props (ghost.prototypes/ghost-props-prototype ghost-props)]
+       (let [ghost-props (pretty-presets/apply-preset            ghost-props)
+             ghost-props (ghost.prototypes/ghost-props-prototype ghost-props)]
             [ghost ghost-id ghost-props]))))

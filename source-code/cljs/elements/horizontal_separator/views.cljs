@@ -3,6 +3,7 @@
     (:require [elements.horizontal-separator.attributes :as horizontal-separator.attributes]
               [elements.horizontal-separator.prototypes :as horizontal-separator.prototypes]
               [metamorphic-content.api                  :as metamorphic-content]
+              [pretty-presets.api                       :as pretty-presets]
               [random.api                               :as random]))
 
 ;; ----------------------------------------------------------------------------
@@ -41,6 +42,7 @@
   ;  :label (metamorphic-content)(opt)
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
+  ;  :preset (keyword)(opt)
   ;  :style (map)(opt)
   ;  :width (keyword)(opt)
   ;   :auto, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
@@ -56,5 +58,6 @@
 
   ([separator-id separator-props]
    (fn [_ separator-props] ; XXX#0106 (README.md#parametering)
-       (let [separator-props (horizontal-separator.prototypes/separator-props-prototype separator-props)]
+       (let [separator-props (pretty-presets/apply-preset                               separator-props)
+             separator-props (horizontal-separator.prototypes/separator-props-prototype separator-props)]
             [horizontal-separator separator-id separator-props]))))

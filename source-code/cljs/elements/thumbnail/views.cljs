@@ -4,6 +4,7 @@
               [elements.element.views        :as element.views]
               [elements.thumbnail.attributes :as thumbnail.attributes]
               [elements.thumbnail.prototypes :as thumbnail.prototypes]
+              [pretty-presets.api            :as pretty-presets]
               [random.api                    :as random]))
 
 ;; ----------------------------------------------------------------------------
@@ -72,6 +73,7 @@
   ;  :on-click (Re-Frame metamorphic-event)(opt)
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
+  ;  :preset (keyword)(opt)
   ;  :style (map)(opt)
   ;  :target (keyword)(opt)
   ;   :blank, :self
@@ -90,5 +92,6 @@
 
   ([thumbnail-id thumbnail-props]
    (fn [_ thumbnail-props] ; XXX#0106 (README.md#parametering)
-       (let [thumbnail-props (thumbnail.prototypes/thumbnail-props-prototype thumbnail-props)]
+       (let [thumbnail-props (pretty-presets/apply-preset                    thumbnail-props)
+             thumbnail-props (thumbnail.prototypes/thumbnail-props-prototype thumbnail-props)]
             [thumbnail thumbnail-id thumbnail-props]))))

@@ -4,6 +4,7 @@
               [elements.expandable.env        :as expandable.env]
               [elements.expandable.prototypes :as expandable.prototypes]
               [metamorphic-content.api        :as metamorphic-content]
+              [pretty-presets.api             :as pretty-presets]
               [random.api                     :as random]))
 
 ;; ----------------------------------------------------------------------------
@@ -67,6 +68,7 @@
   ;  :label (metamorphic-content)(opt)
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
+  ;  :preset (keyword)(opt)
   ;  :style (map)(opt)}
   ;
   ; @usage
@@ -79,5 +81,6 @@
 
   ([expandable-id expandable-props]
    (fn [_ expandable-props] ; XXX#0106 (README.md#parametering)
-       (let [expandable-props (expandable.prototypes/expandable-props-prototype expandable-props)]
+       (let [expandable-props (pretty-presets/apply-preset                      expandable-props)
+             expandable-props (expandable.prototypes/expandable-props-prototype expandable-props)]
             [expandable expandable-id expandable-props]))))

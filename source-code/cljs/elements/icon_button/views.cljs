@@ -3,6 +3,7 @@
     (:require [elements.icon-button.attributes :as icon-button.attributes]
               [elements.icon-button.prototypes :as icon-button.prototypes]
               [metamorphic-content.api         :as metamorphic-content]
+              [pretty-presets.api              :as pretty-presets]
               [random.api                      :as random]
               [re-frame.api                    :as r]
               [reagent.api                     :as reagent]))
@@ -107,6 +108,7 @@
   ;  :on-mouse-over (Re-Frame metamorphic-event)(opt)
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
+  ;  :preset (keyword)(opt)
   ;  :progress (percent)(opt)
   ;  :progress-color (keyword or string)
   ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
@@ -136,5 +138,6 @@
 
   ([button-id button-props]
    (fn [_ button-props] ; XXX#0106 (README.md#parametering)
-       (let [button-props (icon-button.prototypes/button-props-prototype button-props)]
+       (let [button-props (pretty-presets/apply-preset                   button-props)
+             button-props (icon-button.prototypes/button-props-prototype button-props)]
             [icon-button button-id button-props]))))

@@ -5,8 +5,9 @@
               [elements.color-selector.prototypes :as color-selector.prototypes]
               [elements.icon-button.views         :as icon-button.views]
               [elements.input.env                 :as input.env]
-              [layouts.api                        :as layouts]
               [metamorphic-content.api            :as metamorphic-content]
+              [pretty-layouts.api                 :as pretty-layouts]
+              [pretty-presets.api                 :as pretty-presets]
               [random.api                         :as random]
               [re-frame.api                       :as r]
               [reagent.api                        :as reagent]))
@@ -67,10 +68,10 @@
   [selector-id {:keys [popup] :as selector-props}]
   (if (input.env/popup-rendered? selector-id)
       [:div {:class :e-color-selector--options}
-            [layouts/struct-popup :elements.color-selector/options
-                                  (assoc popup :body     [color-selector-options-body   selector-id selector-props]
-                                               :header   [color-selector-options-header selector-id selector-props]
-                                               :on-cover {:fx [:elements.input/close-popup! selector-id selector-props]})]]))
+            [pretty-layouts/struct-popup :elements.color-selector/options
+                                         (assoc popup :body     [color-selector-options-body   selector-id selector-props]
+                                                      :header   [color-selector-options-header selector-id selector-props]
+                                                      :on-cover {:fx [:elements.input/close-popup! selector-id selector-props]})]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -125,6 +126,7 @@
   ;    :label (metamorphic-content)(opt)
   ;    :min-width (keyword)(opt)
   ;    :outdent (map)(opt)}
+  ;  :preset (keyword)(opt)
   ;  :style (map)(opt)
   ;  :value-path (Re-Frame path vector)(opt)}
   ;
@@ -138,5 +140,6 @@
 
   ([selector-id selector-props]
    (fn [_ selector-props] ; XXX#0106 (README.md#parametering)
-       (let [selector-props (color-selector.prototypes/selector-props-prototype selector-id selector-props)]
+       (let [selector-props (pretty-presets/apply-preset                                    selector-props)
+             selector-props (color-selector.prototypes/selector-props-prototype selector-id selector-props)]
             [color-selector selector-id selector-props]))))

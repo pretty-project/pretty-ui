@@ -3,6 +3,7 @@
     (:require [elements.chip.attributes :as chip.attributes]
               [elements.chip.prototypes :as chip.prototypes]
               [metamorphic-content.api  :as metamorphic-content]
+              [pretty-presets.api       :as pretty-presets]
               [random.api               :as random]))
 
 ;; ----------------------------------------------------------------------------
@@ -57,6 +58,7 @@
   ;   TODO Makes the chip clickable
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
+  ;  :preset (keyword)(opt)
   ;  :primary-button (map)(opt)
   ;   {:icon (keyword)
   ;    :icon-family (keyword)(opt)
@@ -82,5 +84,6 @@
 
   ([chip-id chip-props]
    (fn [_ chip-props] ; XXX#0106 (README.md#parametering)
-       (let [chip-props (chip.prototypes/chip-props-prototype chip-props)]
+       (let [chip-props (pretty-presets/apply-preset          chip-props)
+             chip-props (chip.prototypes/chip-props-prototype chip-props)]
             [chip chip-id chip-props]))))

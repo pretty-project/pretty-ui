@@ -3,6 +3,7 @@
     (:require [elements.counter.attributes :as counter.attributes]
               [elements.counter.prototypes :as counter.prototypes]
               [elements.element.views      :as element.views]
+              [pretty-presets.api          :as pretty-presets]
               [random.api                  :as random]
               [re-frame.api                :as r]
               [reagent.api                 :as reagent]))
@@ -74,6 +75,7 @@
   ;  :min-value (integer)(opt)
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
+  ;  :preset (keyword)(opt)
   ;  :resetable? (boolean)(opt)
   ;   Default: false
   ;  :style (map)(opt)
@@ -89,5 +91,6 @@
 
   ([counter-id counter-props]
    (fn [_ counter-props] ; XXX#0106 (README.md#parametering)
-       (let [counter-props (counter.prototypes/counter-props-prototype counter-id counter-props)]
+       (let [counter-props (pretty-presets/apply-preset                           counter-props)
+             counter-props (counter.prototypes/counter-props-prototype counter-id counter-props)]
             [counter counter-id counter-props]))))

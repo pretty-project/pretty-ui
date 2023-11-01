@@ -1,0 +1,59 @@
+
+/***** Circle diagram *****/
+/*** Element ***/
+
+.pd-circle-diagram {
+  align-items:     center;
+  display:         flex;
+  flex-direction:  column;
+  justify-content: center;
+
+  /* XXX#6668 */
+  width: fit-content;
+}
+
+/*** Element ***/
+
+/*** Section ***/
+
+.pd-circle-diagram--section {
+  /* When using the transition property the animations got lagged :(
+ -transition: stroke-dasharray .5s ease-out; */
+
+  fill: transparent;
+  transform-origin: center;
+}
+
+/*** Section ***/
+/***** Circle diagram *****/
+
+
+
+/***** Line diagram *****/
+/*** Element ***/
+
+.pd-line-diagram {
+  display:         flex;
+  flex-direction:  column;
+  justify-content: center;
+}
+
+/*** Element ***/
+
+/*** Sections ***/
+
+.pd-line-diagram--sections {
+  display: flex;
+}
+
+/*** Sections ***/
+
+/*** Section ***/
+
+.pd-line-diagram--section {
+  transition: width .5s ease-out;
+  height: 100%;
+}
+
+/*** Section ***/
+/***** Line diagram *****/

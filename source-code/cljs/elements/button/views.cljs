@@ -2,6 +2,7 @@
 (ns elements.button.views
     (:require [elements.button.attributes :as button.attributes]
               [elements.button.prototypes :as button.prototypes]
+              [pretty-presets.api         :as pretty-presets]
               [re-frame.api               :as r]
               [reagent.api                :as reagent]
               [random.api                 :as random]))
@@ -144,6 +145,7 @@
   ;  :on-mouse-over (Re-Frame metamorphic-event)(opt)
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
+  ;  :preset (keyword)(opt)
   ;  :progress (percent)(opt)
   ;  :progress-color (keyword or string)(opt)
   ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
@@ -153,7 +155,6 @@
   ;   Default: :ltr
   ;  :progress-duration (ms)(opt)
   ;   Default: 250
-  ;  :style (map)(opt)
   ;  :text-overflow (keyword)(opt)
   ;   :ellipsis, :hidden, :wrap
   ;   Default: :no-wrap
@@ -179,5 +180,6 @@
 
   ([button-id button-props]
    (fn [_ button-props] ; XXX#0106 (README.md#parametering)
-       (let [button-props (button.prototypes/button-props-prototype button-props)]
+       (let [button-props (pretty-presets/apply-preset              button-props)
+             button-props (button.prototypes/button-props-prototype button-props)]
             [button button-id button-props]))))

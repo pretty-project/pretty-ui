@@ -4,6 +4,7 @@
               [elements.menu-bar.prototypes :as menu-bar.prototypes]
               [hiccup.api                   :as hiccup]
               [metamorphic-content.api      :as metamorphic-content]
+              [pretty-presets.api           :as pretty-presets]
               [random.api                   :as random]))
 
 ;; ----------------------------------------------------------------------------
@@ -133,6 +134,7 @@
   ;   Default: :horizontal
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
+  ;  :preset (keyword)(opt)
   ;  :style (map)(opt)}
   ;
   ; @usage
@@ -145,5 +147,6 @@
 
   ([bar-id bar-props]
    (fn [_ bar-props] ; XXX#0106 (README.md#parametering)
-       (let [bar-props (menu-bar.prototypes/bar-props-prototype bar-props)]
+       (let [bar-props (pretty-presets/apply-preset             bar-props)
+             bar-props (menu-bar.prototypes/bar-props-prototype bar-props)]
             [menu-bar bar-id bar-props]))))

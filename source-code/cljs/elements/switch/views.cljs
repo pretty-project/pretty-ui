@@ -7,6 +7,7 @@
               [hiccup.api                 :as hiccup]
               [metamorphic-content.api    :as metamorphic-content]
               [pretty-css.api             :as pretty-css]
+              [pretty-presets.api         :as pretty-presets]
               [random.api                 :as random]
               [re-frame.api               :as r]
               [reagent.api                :as reagent]))
@@ -114,6 +115,7 @@
   ;  :options-path (Re-Frame path vector)(opt)
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
+  ;  :preset (keyword)(opt)
   ;  :style (map)(opt)
   ;  :value-path (Re-Frame path vector)(opt)}
   ;
@@ -127,5 +129,6 @@
 
   ([switch-id switch-props]
    (fn [_ switch-props] ; XXX#0106 (README.md#parametering)
-       (let [switch-props (switch.prototypes/switch-props-prototype switch-id switch-props)]
+       (let [switch-props (pretty-presets/apply-preset                        switch-props)
+             switch-props (switch.prototypes/switch-props-prototype switch-id switch-props)]
             [switch switch-id switch-props]))))

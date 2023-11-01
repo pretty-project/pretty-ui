@@ -5,6 +5,7 @@
               [elements.chip.views            :as chip.views]
               [elements.element.views         :as element.views]
               [metamorphic-content.api        :as metamorphic-content]
+              [pretty-presets.api             :as pretty-presets]
               [random.api                     :as random]
               [re-frame.api                   :as r]
               [vector.api                     :as vector]))
@@ -78,6 +79,7 @@
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
   ;  :placeholder (metamorphic-content)(opt)
+  ;  :preset (keyword)(opt)
   ;  :style (map)(opt)}
   ;
   ; @usage
@@ -90,5 +92,6 @@
 
   ([group-id group-props]
    (fn [_ group-props] ; XXX#0106 (README.md#parametering)
-       (let [group-props (chip-group.prototypes/group-props-prototype group-id group-props)]
+       (let [group-props (pretty-presets/apply-preset                          group-props)
+             group-props (chip-group.prototypes/group-props-prototype group-id group-props)]
             [chip-group group-id group-props]))))

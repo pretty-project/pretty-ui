@@ -5,6 +5,7 @@
               [elements.notification-bubble.attributes :as notification-bubble.attributes]
               [elements.notification-bubble.prototypes :as notification-bubble.prototypes]
               [metamorphic-content.api                 :as metamorphic-content]
+              [pretty-presets.api                      :as pretty-presets]
               [random.api                              :as random]))
 
 ;; ----------------------------------------------------------------------------
@@ -99,6 +100,7 @@
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
+  ;  :preset (keyword)(opt)
   ;  :primary-button (map)(opt)
   ;   {:layout (keyword)
   ;     :button, :icon-button
@@ -124,5 +126,6 @@
 
   ([bubble-id bubble-props]
    (fn [_ bubble-props] ; XXX#0106 (README.md#parametering)
-       (let [bubble-props (notification-bubble.prototypes/bubble-props-prototype bubble-props)]
+       (let [bubble-props (pretty-presets/apply-preset                           bubble-props)
+             bubble-props (notification-bubble.prototypes/bubble-props-prototype bubble-props)]
             [notification-bubble bubble-id bubble-props]))))

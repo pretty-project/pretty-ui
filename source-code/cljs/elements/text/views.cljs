@@ -5,6 +5,7 @@
               [elements.text.prototypes :as text.prototypes]
               [hiccup.api               :as hiccup]
               [metamorphic-content.api  :as metamorphic-content]
+              [pretty-presets.api       :as pretty-presets]
               [random.api               :as random]))
 
 ;; ----------------------------------------------------------------------------
@@ -84,6 +85,7 @@
   ;   Same as the :indent property.
   ;  :placeholder (metamorphic-content)(opt)
   ;   Default: "\u00A0"
+  ;  :preset (keyword)(opt)
   ;  :selectable? (boolean)(opt)
   ;   Default: true
   ;  :style (map)(opt)
@@ -107,5 +109,6 @@
 
   ([text-id text-props]
    (fn [_ text-props] ; XXX#0106 (README.md#parametering)
-       (let [text-props (text.prototypes/text-props-prototype text-props)]
+       (let [text-props (pretty-presets/apply-preset          text-props)
+             text-props (text.prototypes/text-props-prototype text-props)]
             [text text-id text-props]))))

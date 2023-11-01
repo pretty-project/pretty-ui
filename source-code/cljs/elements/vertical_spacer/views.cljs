@@ -2,6 +2,7 @@
 (ns elements.vertical-spacer.views
     (:require [elements.vertical-spacer.attributes :as vertical-spacer.attributes]
               [elements.vertical-spacer.prototypes :as vertical-spacer.prototypes]
+              [pretty-presets.api                  :as pretty-presets]
               [random.api                          :as random]))
 
 ;; ----------------------------------------------------------------------------
@@ -11,6 +12,7 @@
   ; @param (keyword)(opt) spacer-id
   ; @param (map) spacer-props
   ; {:class (keyword or keywords in vector)(opt)
+  ;  :preset (keyword)(opt)
   ;  :style (map)(opt)
   ;  :width (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
@@ -26,5 +28,6 @@
 
   ([spacer-id spacer-props]
    (fn [_ spacer-props] ; XXX#0106 (README.md#parametering)
-       (let [spacer-props (vertical-spacer.prototypes/spacer-props-prototype spacer-props)]
+       (let [spacer-props (pretty-presets/apply-preset                       spacer-props)
+             spacer-props (vertical-spacer.prototypes/spacer-props-prototype spacer-props)]
             [:div (vertical-spacer.attributes/spacer-attributes spacer-id spacer-props)]))))

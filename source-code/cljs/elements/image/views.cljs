@@ -2,6 +2,7 @@
 (ns elements.image.views
     (:require [elements.image.attributes :as image.attributes]
               [elements.image.prototypes :as image.prototypes]
+              [pretty-presets.api        :as pretty-presets]
               [random.api                :as random]))
 
 ;; ----------------------------------------------------------------------------
@@ -47,6 +48,7 @@
   ;   TODO
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
+  ;  :preset (keyword)(opt)
   ;  :src (string)(opt)
   ;  :style (map)(opt)
   ;  :width (keyword)(opt)
@@ -63,5 +65,6 @@
 
   ([image-id image-props]
    (fn [_ image-props] ; XXX#0106 (README.md#parametering)
-       (let [image-props (image.prototypes/image-props-prototype image-props)]
+       (let [image-props (pretty-presets/apply-preset            image-props)
+             image-props (image.prototypes/image-props-prototype image-props)]
             [image image-id image-props]))))

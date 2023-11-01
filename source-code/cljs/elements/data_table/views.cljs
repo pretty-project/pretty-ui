@@ -2,10 +2,10 @@
 (ns elements.data-table.views
     (:require [elements.data-table.attributes :as data-table.attributes]
               [elements.data-table.prototypes :as data-table.prototypes]
-              [elements.data-table.utils      :as data-table.utils]
               [elements.element.views         :as element.views]
               [hiccup.api                     :as hiccup]
               [metamorphic-content.api        :as metamorphic-content]
+              [pretty-presets.api             :as pretty-presets]
               [random.api                     :as random]))
 
 ;; ----------------------------------------------------------------------------
@@ -20,7 +20,7 @@
   ; {:content (metamorphic-content)(opt)
   ;  :placeholder (metamorphic-content)(opt)}
   [table-id table-props {:keys [content placeholder] :as cell-props}]
-  (let [cell-props (data-table.utils/use-preset table-id table-props cell-props)
+  (let [cell-props (pretty-presets/apply-preset                cell-props)
         cell-props (data-table.prototypes/cell-props-prototype cell-props)]
        [:div (data-table.attributes/table-cell-attributes table-id table-props cell-props)
              [metamorphic-content/compose content placeholder]]))
@@ -34,7 +34,7 @@
   ; @param (map) column-props
   ; {}
   [table-id table-props {:keys [cells] :as column-props}]
-  (let [column-props (data-table.utils/use-preset table-id table-props column-props)
+  (let [column-props (pretty-presets/apply-preset                  column-props)
         column-props (data-table.prototypes/column-props-prototype column-props)]
        [:div (data-table.attributes/table-column-attributes table-id table-props column-props)
              (letfn [(f [cell-props] [data-table-cell table-id table-props cell-props])]
@@ -49,7 +49,7 @@
   ; @param (map) row-props
   ; {}
   [table-id table-props {:keys [cells] :as row-props}]
-  (let [row-props (data-table.utils/use-preset table-id table-props row-props)
+  (let [row-props (pretty-presets/apply-preset               row-props)
         row-props (data-table.prototypes/row-props-prototype row-props)]
        [:div (data-table.attributes/table-row-attributes table-id table-props row-props)
              (letfn [(f [cell-props] [data-table-cell table-id table-props cell-props])]
@@ -121,8 +121,7 @@
   ;  :label (metamorphic-content)(opt)
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
-  ;  :presets (map)(opt)
-  ;   Cell, column and row presets.
+  ;  :preset (keyword)(opt)
   ;  :rows (maps in vector)(opt)
   ;   [{:cells (maps in vector)
   ;     :height (keyword)(opt)
@@ -151,5 +150,6 @@
 
   ([table-id table-props]
    (fn [_ table-props] ; XXX#0106 (README.md#parametering)
-       (let [] ; table-props (data-table.prototypes/table-props-prototype table-props)
+       (let [ ; table-props (data-table.prototypes/table-props-prototype table-props)
+             table-props (pretty-presets/apply-preset     table-props)]
             [data-table table-id table-props]))))

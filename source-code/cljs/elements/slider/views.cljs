@@ -3,6 +3,7 @@
     (:require [elements.element.views     :as element.views]
               [elements.slider.attributes :as slider.attributes]
               [elements.slider.prototypes :as slider.prototypes]
+              [pretty-presets.api         :as pretty-presets]
               [random.api                 :as random]
               [re-frame.api               :as r]
               [reagent.api                :as reagent]))
@@ -61,6 +62,7 @@
   ;   Default: 0
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
+  ;  :preset (keyword)(opt)
   ;  :resetable? (boolean)(opt)
   ;  :style (map)(opt)
   ;  :value-path (Re-Frame path vector)(opt)
@@ -78,5 +80,6 @@
 
   ([slider-id slider-props]
    (fn [_ slider-props] ; XXX#0106 (README.md#parametering)
-       (let [slider-props (slider.prototypes/slider-props-prototype slider-id slider-props)]
+       (let [slider-props (pretty-presets/apply-preset                        slider-props)
+             slider-props (slider.prototypes/slider-props-prototype slider-id slider-props)]
             [slider slider-id slider-props]))))

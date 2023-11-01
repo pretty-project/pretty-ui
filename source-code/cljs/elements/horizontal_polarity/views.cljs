@@ -3,6 +3,7 @@
     (:require [elements.horizontal-polarity.attributes :as horizontal-polarity.attributes]
               [elements.horizontal-polarity.prototypes :as horizontal-polarity.prototypes]
               [metamorphic-content.api                 :as metamorphic-content]
+              [pretty-presets.api                      :as pretty-presets]
               [random.api                              :as random]))
 
 ;; ----------------------------------------------------------------------------
@@ -45,6 +46,7 @@
   ;  :middle-content (metamorphic-content)
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
+  ;  :preset (keyword)(opt)
   ;  :style (map)(opt)
   ;  :start-content (metamorphic-content)(opt)
   ;  :vertical-align (keyword)(opt)
@@ -68,5 +70,6 @@
 
   ([polarity-id polarity-props]
    (fn [_ polarity-props] ; XXX#0106 (README.md#parametering)
-       (let [polarity-props (horizontal-polarity.prototypes/polarity-props-prototype polarity-props)]
+       (let [polarity-props (pretty-presets/apply-preset                             polarity-props)
+             polarity-props (horizontal-polarity.prototypes/polarity-props-prototype polarity-props)]
             [horizontal-polarity polarity-id polarity-props]))))

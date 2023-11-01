@@ -9,8 +9,8 @@
               [elements.select.prototypes :as select.prototypes]
               [elements.text-field.views  :as text-field.views]
               [hiccup.api                 :as hiccup]
-              [layouts.api                :as layouts]
               [metamorphic-content.api    :as metamorphic-content]
+              [pretty-layouts.api         :as pretty-layouts]
               [random.api                 :as random]
               [re-frame.api               :as r]
               [reagent.api                :as reagent]
@@ -96,10 +96,10 @@
   [select-id {:keys [popup] :as select-props}]
   (if (input.env/popup-rendered? select-id)
       [:div {:class :e-select--options}
-            [layouts/struct-popup :elements.select/options
-                                  (assoc popup :body     [select-options-body   select-id select-props]
-                                               :header   [select-options-header select-id select-props]
-                                               :on-cover {:fx [:elements.input/close-popup! select-id select-props]})]]))
+            [pretty-layouts/struct-popup :elements.select/options
+                                         (assoc popup :body     [select-options-body   select-id select-props]
+                                                      :header   [select-options-header select-id select-props]
+                                                      :on-cover {:fx [:elements.input/close-popup! select-id select-props]})]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

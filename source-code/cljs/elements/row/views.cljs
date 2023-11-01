@@ -3,6 +3,7 @@
     (:require [elements.row.attributes :as row.attributes]
               [elements.row.prototypes :as row.prototypes]
               [metamorphic-content.api :as metamorphic-content]
+              [pretty-presets.api      :as pretty-presets]
               [random.api              :as random]))
 
 ;; ----------------------------------------------------------------------------
@@ -65,6 +66,7 @@
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
+  ;  :preset (keyword)(opt)
   ;  :style (map)(opt)
   ;  :vertical-align (keyword)(opt)
   ;   :top, :center, :bottom
@@ -84,5 +86,6 @@
 
   ([row-id row-props]
    (fn [_ row-props] ; XXX#0106 (README.md#parametering)
-       (let [row-props (row.prototypes/row-props-prototype row-props)]
+       (let [row-props (pretty-presets/apply-preset        row-props)
+             row-props (row.prototypes/row-props-prototype row-props)]
             [row row-id row-props]))))

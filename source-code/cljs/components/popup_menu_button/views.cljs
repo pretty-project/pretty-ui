@@ -3,7 +3,6 @@
     (:require [components.popup-menu-button.presets    :as popup-menu-button.presets]
               [components.popup-menu-button.prototypes :as popup-menu-button.prototypes]
               [elements.api                            :as elements]
-              [pretty-css.api                          :as pretty-css]
               [random.api                              :as random]))
 
 ;; ----------------------------------------------------------------------------
@@ -33,8 +32,6 @@
   ;   Default: {:horizontal :xxs :vertical :xxs}
   ;  :outdent (map)(opt)
   ;   Default: {:vertical :xs}
-  ;  :preset (keyword)(opt)
-  ;   :highlight
   ;  :width (keyword)(opt)
   ;   Default: :auto}
   ;
@@ -48,6 +45,5 @@
 
   ([button-id button-props]
    (fn [_ button-props] ; XXX#0106 (README.md#parametering)
-       (let [button-props (pretty-css/apply-preset popup-menu-button.presets/BUTTON-PROPS-PRESETS button-props)
-             button-props (popup-menu-button.prototypes/button-props-prototype button-props)]
+       (let [button-props (popup-menu-button.prototypes/button-props-prototype button-props)]
             [elements/button button-id button-props]))))

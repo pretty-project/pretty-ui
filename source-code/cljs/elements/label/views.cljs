@@ -5,6 +5,7 @@
               [elements.label.prototypes :as label.prototypes]
               [metamorphic-content.api   :as metamorphic-content]
               [pretty-css.api            :as pretty-css]
+              [pretty-presets.api        :as pretty-presets]
               [random.api                :as random]))
 
 ;; ----------------------------------------------------------------------------
@@ -202,6 +203,7 @@
   ;   Same as the :indent property.
   ;  :placeholder (metamorphic-content)(opt)
   ;   Default: "\u00A0"
+  ;  :preset (keyword)(opt)
   ;  :selectable? (boolean)(opt)
   ;   Default: false
   ;  :style (map)(opt)
@@ -233,5 +235,6 @@
 
   ([label-id label-props]
    (fn [_ label-props] ; XXX#0106 (README.md#parametering)
-       (let [label-props (label.prototypes/label-props-prototype label-props)]
+       (let [label-props (pretty-presets/apply-preset            label-props)
+             label-props (label.prototypes/label-props-prototype label-props)]
             [label label-id label-props]))))

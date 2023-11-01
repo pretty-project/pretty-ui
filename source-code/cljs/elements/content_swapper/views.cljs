@@ -5,6 +5,7 @@
               [elements.content-swapper.state      :as content-swapper.state]
               [hiccup.api                          :as hiccup]
               [metamorphic-content.api             :as metamorphic-content]
+              [pretty-presets.api                  :as pretty-presets]
               [random.api                          :as random]
               [re-frame.api                        :as r]
               [react.api                           :as react]
@@ -63,6 +64,7 @@
   ;  :initial-page (metamorphic-content)
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
+  ;  :preset (keyword)(opt)
   ;  :style (map)(opt)}
   ;
   ; @usage
@@ -75,5 +77,6 @@
 
   ([swapper-id swapper-props]
    (fn [_ swapper-props] ; XXX#0106 (README.md#parametering)
-       (let [] ; swapper-props (content-swapper.prototypes/swapper-props-prototype swapper-props)
+       (let [ ; swapper-props (content-swapper.prototypes/swapper-props-prototype swapper-props)
+             swapper-props (pretty-presets/apply-preset     swapper-props)]
             [content-swapper swapper-id swapper-props]))))

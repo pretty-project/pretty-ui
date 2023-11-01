@@ -3,6 +3,7 @@
     (:require [elements.card.attributes :as card.attributes]
               [elements.card.prototypes :as card.prototypes]
               [metamorphic-content.api  :as metamorphic-content]
+              [pretty-presets.api       :as pretty-presets]
               [random.api               :as random]))
 
 ;; ----------------------------------------------------------------------------
@@ -84,6 +85,7 @@
   ;  :on-click (Re-Frame metamorphic-event)(opt)
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
+  ;  :preset (keyword)(opt)
   ;  :style (map)(opt)
   ;  :target (keyword)(opt)
   ;   :blank, :self
@@ -101,5 +103,6 @@
 
   ([card-id card-props]
    (fn [_ card-props] ; XXX#0106 (README.md#parametering)
-       (let [card-props (card.prototypes/card-props-prototype card-props)]
+       (let [card-props (pretty-presets/apply-preset          card-props)
+             card-props (card.prototypes/card-props-prototype card-props)]
             [card card-id card-props]))))

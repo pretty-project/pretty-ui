@@ -5,6 +5,7 @@
               [elements.plain-field.prototypes :as plain-field.prototypes]
               [elements.plain-field.utils      :as plain-field.utils]
               [metamorphic-content.api         :as metamorphic-content]
+              [pretty-presets.api              :as pretty-presets]
               [random.api                      :as random]
               [re-frame.api                    :as r]
               [reagent.api                     :as reagent]))
@@ -131,6 +132,7 @@
   ;   This event takes the field content as its last parameter.
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
+  ;  :preset (keyword)(opt)
   ;  :style (map)(opt)
   ;  :surface (map)(opt)
   ;   {:border-radius (map)(opt)
@@ -148,5 +150,6 @@
 
   ([field-id field-props]
    (fn [_ field-props] ; XXX#0106 (README.md#parametering)
-       (let [field-props (plain-field.prototypes/field-props-prototype field-id field-props)]
+       (let [field-props (pretty-presets/apply-preset                           field-props)
+             field-props (plain-field.prototypes/field-props-prototype field-id field-props)]
             [plain-field field-id field-props]))))

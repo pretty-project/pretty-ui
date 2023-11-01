@@ -4,6 +4,7 @@
               [elements.breadcrumbs.prototypes :as breadcrumbs.prototypes]
               [hiccup.api                      :as hiccup]
               [metamorphic-content.api         :as metamorphic-content]
+              [pretty-presets.api              :as pretty-presets]
               [random.api                      :as random]))
 
 ;; ----------------------------------------------------------------------------
@@ -75,6 +76,7 @@
   ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
+  ;  :preset (keyword)(opt)
   ;  :style (map)(opt)}
   ;
   ; @usage
@@ -87,5 +89,6 @@
 
   ([breadcrumbs-id breadcrumbs-props]
    (fn [_ breadcrumbs-props] ; XXX#0106 (README.md#parametering)
-       (let [breadcrumbs-props (breadcrumbs.prototypes/breadcrumbs-props-prototype breadcrumbs-props)]
+       (let [breadcrumbs-props (pretty-presets/apply-preset                        breadcrumbs-props)
+             breadcrumbs-props (breadcrumbs.prototypes/breadcrumbs-props-prototype breadcrumbs-props)]
             [breadcrumbs breadcrumbs-id breadcrumbs-props]))))

@@ -3,6 +3,7 @@
     (:require [elements.blank.attributes :as blank.attributes]
               [elements.blank.prototypes :as blank.prototypes]
               [metamorphic-content.api   :as metamorphic-content]
+              [pretty-presets.api        :as pretty-presets]
               [random.api                :as random]))
 
 ;; ----------------------------------------------------------------------------
@@ -55,6 +56,7 @@
   ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
+  ;  :preset (keyword)(opt)
   ;  :style (map)(opt)
   ;  :width (keyword)(opt)
   ;   :auto, :content, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
@@ -70,5 +72,6 @@
 
   ([blank-id blank-props]
    (fn [_ blank-props] ; XXX#0106 (README.md#parametering)
-       (let [blank-props (blank.prototypes/blank-props-prototype blank-props)]
+       (let [blank-props (pretty-presets/apply-preset            blank-props)
+             blank-props (blank.prototypes/blank-props-prototype blank-props)]
             [blank blank-id blank-props]))))

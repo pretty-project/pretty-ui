@@ -252,6 +252,7 @@
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
   ;  :placeholder (metamorphic-content)(opt)
+  ;  :preset (keyword)(opt)
   ;  :reveal-effect (keyword)(opt)
   ;   :delayed, :opacity
   ;  :start-adornments (maps in vector)(opt)

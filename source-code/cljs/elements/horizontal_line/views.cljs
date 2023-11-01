@@ -2,6 +2,7 @@
 (ns elements.horizontal-line.views
     (:require [elements.horizontal-line.attributes :as horizontal-line.attributes]
               [elements.horizontal-line.prototypes :as horizontal-line.prototypes]
+              [pretty-presets.api                  :as pretty-presets]
               [random.api                          :as random]))
 
 ;; ----------------------------------------------------------------------------
@@ -16,6 +17,7 @@
   ;   Default: :default
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
+  ;  :preset (keyword)(opt)
   ;  :style (map)(opt)
   ;  :strength (px)(opt)
   ;   Default: 1
@@ -33,6 +35,7 @@
 
   ([line-id line-props]
    (fn [_ line-props] ; XXX#0106 (README.md#parametering)
-       (let [line-props (horizontal-line.prototypes/line-props-prototype line-props)]
+       (let [line-props (pretty-presets/apply-preset                     line-props)
+             line-props (horizontal-line.prototypes/line-props-prototype line-props)]
             [:div (horizontal-line.attributes/line-attributes line-id line-props)
                   [:div (horizontal-line.attributes/line-body-attributes line-id line-props)]]))))

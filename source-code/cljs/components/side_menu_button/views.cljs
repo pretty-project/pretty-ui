@@ -3,7 +3,6 @@
     (:require [components.side-menu-button.presets    :as side-menu-button.presets]
               [components.side-menu-button.prototypes :as side-menu-button.prototypes]
               [elements.api                           :as elements]
-              [pretty-css.api                         :as pretty-css]
               [random.api                             :as random]))
 
 ;; ----------------------------------------------------------------------------
@@ -28,9 +27,7 @@
   ;  :icon-size (keyword)(opt)
   ;   Default: :m
   ;  :indent (map)(opt)
-  ;   Default: {:horizontal :xs :left :s :right :xl}
-  ;  :preset (keyword)(opt)
-  ;   :active}
+  ;   Default: {:horizontal :xs :left :s :right :xl}}
   ;
   ; @usage
   ; [side-menu-button {...}]
@@ -42,6 +39,5 @@
 
   ([button-id button-props]
    (fn [_ button-props] ; XXX#0106 (README.md#parametering)
-       (let [button-props (pretty-css/apply-preset side-menu-button.presets/BUTTON-PROPS-PRESETS button-props)
-             button-props (side-menu-button.prototypes/button-props-prototype button-props)]
+       (let [button-props (side-menu-button.prototypes/button-props-prototype button-props)]
             [elements/button button-id button-props]))))

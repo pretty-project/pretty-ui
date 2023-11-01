@@ -3,6 +3,7 @@
     (:require [elements.toggle.attributes :as toggle.attributes]
               [elements.toggle.prototypes :as toggle.prototypes]
               [metamorphic-content.api    :as metamorphic-content]
+              [pretty-presets.api         :as pretty-presets]
               [random.api                 :as random]))
 
 ;; ----------------------------------------------------------------------------
@@ -68,6 +69,7 @@
   ;  :on-right-click (Re-Frame metamorphic-event)(opt)
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
+  ;  :preset (keyword)(opt)
   ;  :style (map)(opt)
   ;  :target (keyword)(opt)
   ;   :blank, :self
@@ -85,5 +87,6 @@
 
   ([toggle-id toggle-props]
    (fn [_ toggle-props] ; XXX#0106 (README.md#parametering)
-       (let [toggle-props (toggle.prototypes/toggle-props-prototype toggle-props)]
+       (let [toggle-props (pretty-presets/apply-preset              toggle-props)
+             toggle-props (toggle.prototypes/toggle-props-prototype toggle-props)]
             [toggle toggle-id toggle-props]))))

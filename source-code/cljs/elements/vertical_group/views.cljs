@@ -3,6 +3,7 @@
     (:require [elements.vertical-group.attributes :as vertical-group.attributes]
               [elements.vertical-group.prototypes :as vertical-group.prototypes]
               [hiccup.api                         :as hiccup]
+              [pretty-presets.api                 :as pretty-presets]
               [random.api                         :as random]))
 
 ;; ----------------------------------------------------------------------------
@@ -36,6 +37,7 @@
   ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
+  ;  :preset (keyword)(opt)
   ;  :style (map)(opt)
   ;  :width (keyword)(opt)
   ;   :auto, :content, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
@@ -57,5 +59,6 @@
 
   ([group-id group-props]
    (fn [_ group-props] ; XXX#0106 (README.md#parametering)
-       (let [group-props (vertical-group.prototypes/group-props-prototype group-props)]
+       (let [group-props (pretty-presets/apply-preset                     group-props)
+             group-props (vertical-group.prototypes/group-props-prototype group-props)]
             [vertical-group group-id group-props]))))

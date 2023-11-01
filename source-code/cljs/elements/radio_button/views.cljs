@@ -6,6 +6,7 @@
               [elements.radio-button.prototypes :as radio-button.prototypes]
               [hiccup.api                       :as hiccup]
               [metamorphic-content.api          :as metamorphic-content]
+              [pretty-presets.api               :as pretty-presets]
               [random.api                       :as random]
               [re-frame.api                     :as r]
               [reagent.api                      :as reagent]))
@@ -108,6 +109,7 @@
   ;  :options-path (Re-Frame path vector)(opt)
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
+  ;  :preset (keyword)(opt)
   ;  :style (map)(opt)
   ;  :value-path (Re-Frame path vector)(opt)}
   ;
@@ -124,5 +126,6 @@
 
   ([button-id button-props]
    (fn [_ button-props] ; XXX#0106 (README.md#parametering)
-       (let [button-props (radio-button.prototypes/button-props-prototype button-id button-props)]
+       (let [button-props (pretty-presets/apply-preset                              button-props)
+             button-props (radio-button.prototypes/button-props-prototype button-id button-props)]
             [radio-button button-id button-props]))))

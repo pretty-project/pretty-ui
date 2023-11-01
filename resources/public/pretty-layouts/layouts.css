@@ -1,0 +1,290 @@
+
+/***** Box popup *****/
+/*** Layout ***/
+
+.pl-box-popup {
+  display:         flex;
+  justify-content: center;
+  left:            0;
+  position:        fixed;
+  top:             50%;
+  width:           100%;
+}
+
+/*** Layout ***/
+
+/*** Cover ***/
+
+.pl-box-popup--cover {
+  height:    100%;
+  left:      0;
+  opacity:  .85;
+  position: fixed;
+  top:      0;
+  width:    100%;
+}
+
+/*** Cover ***/
+
+/*** Wrapper ***/
+
+.pl-box-popup--wrapper {
+  display: flex;
+  max-height: 100vh;
+  transform: translateY( -50% );
+
+  /* XXX#0213
+   * By setting the .pl-box-popup--wrapper element's positioning to absolute
+   * it no more expands the height of the .pl-box-popup element.
+   * It's neccessarry because of the Y axis offsetting with the transform property.
+   * Without absolute positioning, the .pl-box-popup element would has the same
+   * height as the .pl-box-popup--wrapper which is offsetted by the transform
+   * property and no longer there where it would keep its place originally. */
+  position: absolute;
+}
+
+[data-stretch-orientation="both"]       .pl-box-popup--wrapper,
+[data-stretch-orientation="horizontal"] .pl-box-popup--wrapper {
+  width: 100%;
+}
+
+[data-stretch-orientation="both"]     .pl-box-popup--wrapper,
+[data-stretch-orientation="vertical"] .pl-box-popup--wrapper {
+  height: 100vh;
+}
+
+/*** Wrapper ***/
+
+/*** Structure ***/
+
+.pl-box-popup--structure {
+  display:        flex;
+  flex-direction: column;
+
+  /* Makes the popup structure fits into the wrapper, if the wrapper has the
+   * :data-content-min-width attribute. */
+  width: 100%;
+}
+
+[data-stretch-orientation="both"]       .pl-box-popup--structure,
+[data-stretch-orientation="horizontal"] .pl-box-popup--structure {
+  width: 100%;
+}
+
+[data-stretch-orientation="both"]     .pl-box-popup--structure,
+[data-stretch-orientation="vertical"] .pl-box-popup--structure {
+  height: 100%;
+}
+
+/*** Structure ***/
+
+/*** Content ***/
+
+.pl-box-popup--content {
+  height: 100%;
+}
+
+/*** Content ***/
+/***** Box popup *****/
+
+
+
+/***** Plain popup *****/
+/*** Layout ***/
+
+.pl-plain-popup {
+  left:     0;
+  position: fixed;
+  top:      0;
+  width:    100%
+}
+
+/*** Layout ***/
+
+/*** Cover ***/
+
+.pl-plain-popup--cover {
+  height:   100%;
+  left:     0;
+  opacity:  .85;
+  position: fixed;
+  top:      0;
+  width:    100%;
+}
+
+/*** Cover ***/
+/***** Plain popup *****/
+
+
+
+/***** Sidebar *****/
+/*** Layout ***/
+
+.pl-sidebar {
+  height: 100vh;
+  width:  0;
+}
+
+/*** Layout ***/
+
+/*** Wrapper ***/
+
+.pl-sidebar--wrapper {
+  height:     100vh;
+  padding:    12px;
+  position:   fixed;
+  top:        0;
+  transition: transform .1s .3s;
+}
+
+.pl-sidebar[data-position-fixed="tl"] .pl-sidebar--wrapper {
+  left:      0;
+  transform: translateX(-100%);
+}
+
+.pl-sidebar[data-position-fixed="tr"] .pl-sidebar--wrapper {
+  right:     0;
+  transform: translateX(100%);
+}
+
+.pl-sidebar:hover .pl-sidebar--wrapper {
+  transform: translateX(0);
+}
+
+/*** Wrapper ***/
+
+/*** Body ***/
+
+.pl-sidebar--body {
+  height:     100%;
+  overflow-y: hidden;
+}
+
+/*** Body ***/
+
+/*** Sensor ***/
+
+.pl-sidebar--sensor {
+  position:   fixed;
+  height:     calc(100vh - 48px);
+  top:        48px;
+  transition: opacity .05s .5s;
+  opacity:    .6;
+  width:      12px;
+}
+
+.pl-sidebar:hover .pl-sidebar--sensor {
+  opacity:    0;
+  transition: opacity .05s;
+}
+
+.pl-sidebar[data-position-fixed="tl"] .pl-sidebar--sensor {
+  left: 0;
+}
+
+.pl-sidebar[data-position-fixed="tr"] .pl-sidebar--sensor {
+  right: 0;
+}
+
+/*** Sensor ***/
+/***** Sidebar *****/
+
+
+
+/***** Struct popup *****/
+/*** Layout ***/
+
+.pl-struct-popup {
+  display:         flex;
+  justify-content: center;
+  left:            0;
+  position:        fixed;
+  top:             50%;
+  width:           100%;
+}
+
+/*** Layout ***/
+
+/*** Cover ***/
+
+.pl-struct-popup--cover {
+  height:    100%;
+  left:      0;
+  opacity:  .85;
+  position: fixed;
+  top:      0;
+  width:    100%;
+}
+
+/*** Cover ***/
+
+/*** Wrapper ***/
+
+.pl-struct-popup--wrapper {
+  display: flex;
+  max-height: 100vh;
+  transform: translateY( -50% );
+
+  /* XXX#0213 */
+  position: absolute;
+}
+
+[data-stretch-orientation="both"]       .pl-struct-popup--wrapper,
+[data-stretch-orientation="horizontal"] .pl-struct-popup--wrapper {
+  width: 100%;
+}
+
+[data-stretch-orientation="both"]     .pl-struct-popup--wrapper,
+[data-stretch-orientation="vertical"] .pl-struct-popup--wrapper {
+  height: 100vh;
+}
+
+/*** Wrapper ***/
+
+/*** Structure ***/
+
+.pl-struct-popup--structure {
+  display:        flex;
+  flex-direction: column;
+
+  /* Makes the popup structure fits into the wrapper, if the wrapper has the
+   * :data-content-min-width attribute. */
+  width: 100%;
+}
+
+[data-stretch-orientation="both"]       .pl-struct-popup--structure,
+[data-stretch-orientation="horizontal"] .pl-struct-popup--structure {
+  width: 100%;
+}
+
+[data-stretch-orientation="both"]     .pl-struct-popup--structure,
+[data-stretch-orientation="vertical"] .pl-struct-popup--structure {
+  height: 100%;
+}
+
+.pl-struct-popup--hack {
+  /* In struct-popup layouts, the header and footer has to be above the body (Z axis)
+   * to make the possibly visible shadows of header and footer visible.
+   * The footer element is placed after the body element in the DOM tree by default,
+   * but the header had to be moved after the body and the .pl-struct-popup--hack
+   * contains them (header and body) to make their visible order normal again. */
+  display:        flex;
+  flex-direction: column-reverse;
+  flex-grow:      1;
+  overflow:       hidden;
+}
+
+/*** Structure ***/
+
+/*** Body ***/
+
+.pl-struct-popup--body {
+  flex-grow: 1;
+}
+
+.pl-struct-popup--body-content {
+  height: 100%;
+}
+
+/*** Body ***/
+/***** Struct popup *****/

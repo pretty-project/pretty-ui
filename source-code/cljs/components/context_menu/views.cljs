@@ -1,8 +1,8 @@
 
 (ns components.context-menu.views
-    (:require [elements.api :as elements]
-              [layouts.api  :as layouts]
-              [random.api   :as random]))
+    (:require [elements.api       :as elements]
+              [pretty-layouts.api :as pretty-layouts]
+              [random.api         :as random]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -75,10 +75,10 @@
   ; @param (keyword) menu-id
   ; @param (map) menu-props
   [menu-id menu-props]
-  [layouts/struct-popup :components.context-menu/view
-                        {:body   [context-menu-body   menu-id menu-props]
-                         :header [context-menu-header menu-id menu-props]
-                         :min-width :xs}])
+  [pretty-layouts/struct-popup :components.context-menu/view
+                               {:body   [context-menu-body   menu-id menu-props]
+                                :header [context-menu-header menu-id menu-props]
+                                :min-width :xs}])
 
 (defn component
   ; @param (keyword)(opt) menu-id
