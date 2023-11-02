@@ -16,7 +16,7 @@
   ;
   ; @return (map)
   [_ _]
-  {:class               :e-switch--option-helper
+  {:class               :pe-switch--option-helper
    :data-font-size      :xs
    :data-letter-spacing :auto
    :data-line-height    :auto})
@@ -31,7 +31,7 @@
   ; @return (map)
   ; {}
   [_ {:keys [font-size]}]
-  {:class               :e-switch--option-label
+  {:class               :pe-switch--option-label
    :data-font-size      font-size
    :data-font-weight    :medium
    :data-letter-spacing :auto
@@ -48,7 +48,7 @@
   ; @return (map)
   ; {}
   [_ {{:keys [all]} :border-radius :as switch-props}]
-  (-> {:class :e-switch--option-track
+  (-> {:class :pe-switch--option-track
        :style {"--adaptive-border-radius" (pretty-css/adaptive-border-radius all 0.75)}}
       (pretty-css/border-attributes switch-props)))
 
@@ -69,7 +69,7 @@
   ;  :on-mouse-up (function)}
   [switch-id {:keys [border-radius disabled?] :as switch-props} option]
   (let [option-switched? @(r/subscribe [:elements.switch/option-switched? switch-id switch-props option])]
-       (merge {:class             :e-switch--option
+       (merge {:class             :pe-switch--option
                :data-click-effect :targeted
                :data-switched option-switched?}
               (if disabled? {:disabled    true}
@@ -93,7 +93,7 @@
   ;  :data-selectable (boolean)
   ;  :style (map)}
   [switch-id {:keys [options-orientation style] :as switch-props}]
-  (-> {:class                    :e-switch--body
+  (-> {:class                    :pe-switch--body
        :data-options-orientation options-orientation
        :data-selectable          false
        :style                    style}
@@ -108,6 +108,6 @@
   ; @return (map)
   ; {}
   [_ switch-props]
-  (-> {:class :e-switch}
+  (-> {:class :pe-switch}
       (pretty-css/default-attributes switch-props)
       (pretty-css/outdent-attributes switch-props)))

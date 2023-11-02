@@ -14,7 +14,7 @@
   ; @return (map)
   ; {}
   [_ _]
-  {:class               :e-chip-group--chips-placeholder
+  {:class               :pe-chip-group--chips-placeholder
    :data-font-size      :s
    :data-letter-spacing :auto
    :data-line-height    :text-block})
@@ -33,7 +33,7 @@
   ; {:class (keyword or keywords in vector)
   ;  :style (map)}
   [_ {:keys [style] :as group-props}]
-  (-> {:class :e-chip-group--body
+  (-> {:class :pe-chip-group--body
        :style style}
       (pretty-css/indent-attributes group-props)))
 
@@ -49,6 +49,6 @@
   ; @return (map)
   ; {}
   [_ group-props]
-  (-> {:class :e-chip-group}
+  (-> {:class :pe-chip-group}
       (pretty-css/default-attributes group-props)
       (pretty-css/outdent-attributes group-props)))

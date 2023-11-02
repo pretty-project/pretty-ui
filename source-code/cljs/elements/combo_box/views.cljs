@@ -24,10 +24,10 @@
   ; @param (integer) option-dex
   ; @param (map) option
   [box-id {:keys [option-component option-label-f] :as box-props} option-dex option]
-  ; If no option component passed, displaying the option with the default :e-combo-box--option class
+  ; If no 'option-component' is passed, it displays the option in a DIV with the default ':pe-combo-box--option' class.
   [:button (combo-box.attributes/combo-box-option-attributes box-id box-props option-dex option)
            (if option-component [option-component box-id box-props option]
-                                [:div {:class :e-combo-box--option-label}
+                                [:div {:class :pe-combo-box--option-label}
                                       (-> option option-label-f metamorphic-content/compose)])])
 
 (defn- combo-box-options

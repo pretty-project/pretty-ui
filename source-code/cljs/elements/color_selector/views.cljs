@@ -1,6 +1,6 @@
 
 (ns elements.color-selector.views
-    (:require [elements.button.views              :as button.views]
+    (:require [pretty-elements.button.views              :as button.views]
               [elements.color-selector.attributes :as color-selector.attributes]
               [elements.color-selector.prototypes :as color-selector.prototypes]
               [elements.icon-button.views         :as icon-button.views]
@@ -23,7 +23,7 @@
   ; @param (string) option
   [selector-id selector-props option]
   [:button (color-selector.attributes/color-selector-option-attributes selector-id selector-props option)
-           [:div {:class :e-color-selector--option--color
+           [:div {:class :pe-color-selector--option--color
                   :style {:background-color option}}]])
 
 (defn- color-selector-option-list
@@ -55,7 +55,7 @@
   ; {:popup (map)(opt)
   ;   {:label (metamorphic-content)(opt)}}
   [selector-id {{:keys [label]} :popup :as selector-props}]
-  [:div {:class :e-color-selector--options--header :data-selectable false}
+  [:div {:class :pe-color-selector--options--header :data-selectable false}
         (if label [:div (color-selector.attributes/color-selector-options-label-attributes selector-id selector-props)
                         (metamorphic-content/compose label)])])
 
@@ -67,7 +67,7 @@
   ; {:popup (map)(opt)}
   [selector-id {:keys [popup] :as selector-props}]
   (if (input.env/popup-rendered? selector-id)
-      [:div {:class :e-color-selector--options}
+      [:div {:class :pe-color-selector--options}
             [pretty-layouts/struct-popup :elements.color-selector/options
                                          (assoc popup :body     [color-selector-options-body   selector-id selector-props]
                                                       :header   [color-selector-options-header selector-id selector-props]
@@ -125,7 +125,8 @@
   ;    :indent (map)(opt)
   ;    :label (metamorphic-content)(opt)
   ;    :min-width (keyword)(opt)
-  ;    :outdent (map)(opt)}
+  ;    :outdent (map)(opt)
+  ;    :preset (keyword)(opt)}
   ;  :preset (keyword)(opt)
   ;  :style (map)(opt)
   ;  :value-path (Re-Frame path vector)(opt)}

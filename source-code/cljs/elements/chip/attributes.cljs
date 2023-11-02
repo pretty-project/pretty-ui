@@ -16,7 +16,7 @@
   ; @return (map)
   ; {}
   [_ _]
-  {:class               :e-chip--label
+  {:class               :pe-chip--label
    :data-font-size      :xs
    :data-font-weight    :medium
    :data-letter-spacing :auto
@@ -42,9 +42,9 @@
   ;  :on-click (function)
   ;  :on-mouse-up (function)}
   [_ {{:keys [on-click]} :primary-button :keys [disabled?]}]
-  (if disabled? {:class             :e-chip--primary-button
+  (if disabled? {:class             :pe-chip--primary-button
                  :disabled          true}
-                {:class             :e-chip--primary-button
+                {:class             :pe-chip--primary-button
                  :data-click-effect :opacity
                  :on-click          #(r/dispatch on-click)
                  :on-mouse-up       #(dom/blur-active-element!)}))
@@ -66,11 +66,11 @@
   ;  :data-selectable (boolean)
   ;  :style (map)}
   [chip-id {:keys [on-click style] :as chip-props}]
-  (-> (if on-click {:class             :e-chip--body
+  (-> (if on-click {:class             :pe-chip--body
                     :data-click-effect :opacity
                     :data-selectable   false
                     :style             style}
-                   {:class             :e-chip--body
+                   {:class             :pe-chip--body
                     :data-selectable   false
                     :style             style})
       (pretty-css/color-attributes  chip-props)
@@ -88,7 +88,7 @@
   ; @return (map)
   ; {:class (keyword or keywords in vector)}
   [_ chip-props]
-  (-> {:class :e-chip}
+  (-> {:class :pe-chip}
       (pretty-css/default-attributes          chip-props)
       (pretty-css/outdent-attributes          chip-props)
       (pretty-css/element-min-size-attributes chip-props)

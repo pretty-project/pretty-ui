@@ -18,7 +18,7 @@
   ;  :data-animation-direction (keyword)
   ;  :style (map)}
   [swapper-id {:keys [style] :as swapper-props}]
-  (-> {:class                    :e-content-swapper--body
+  (-> {:class                    :pe-content-swapper--body
        :data-animation-direction (-> @content-swapper.state/SWAPPERS swapper-id :animation-direction)
        :style                    style}
       (pretty-css/indent-attributes swapper-props)))
@@ -32,6 +32,6 @@
   ; @return (map)
   ; {:class (keyword or keywords in vector)}
   [_ swapper-props]
-  (-> {:class :e-content-swapper}
+  (-> {:class :pe-content-swapper}
       (pretty-css/default-attributes swapper-props)
       (pretty-css/outdent-attributes swapper-props)))

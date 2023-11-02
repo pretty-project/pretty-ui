@@ -39,7 +39,8 @@
   ; @param (keyword)(opt) menu-id
   ; @param (map) menu-props
   ; {:menu-items (maps in vector)
-  ;   [{:content (metamorphic-content)}]
+  ;   [{:content (metamorphic-content)
+  ;     :preset (keyword)(opt)}]
   ;  :surface (map)(opt)
   ;   {:border-color (keyword or string)(opt)
   ;    :border-position (keyword)(opt)
@@ -47,7 +48,8 @@
   ;    :border-width (keyword)(opt)
   ;    :fill-color (keyword or string)
   ;    :indent (map)(opt)
-  ;    :outdent (map)(opt)}}
+  ;    :outdent (map)(opt)
+  ;    :preset (keyword)(opt)}}
   ;
   ; @usage
   ; [dropdown-menu {...}]

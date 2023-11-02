@@ -53,7 +53,7 @@
   ;       state before the field did mount and the first interaction with the field
   ;       was a full selection (cmd + A) and a clear action (backspace), the on-change
   ;       function somehow didn't fire.
-  (merge {:class               :e-plain-field--input
+  (merge {:class               :pe-plain-field--input
           :data-autofill-style :none
           :type                :text
           :id                  (hiccup/value field-id "input")
@@ -85,7 +85,7 @@
   [field-id {:keys [surface]}]
   ; XXX#4460 (source-code/cljs/elements/button/views.cljs)
   ; BUG#2105 (source-code/cljs/elements/text_field/attributes.cljs)
-  (-> {:class                 :e-plain-field--surface
+  (-> {:class                 :pe-plain-field--surface
        :data-box-shadow-color :default
        :id                    (hiccup/value field-id "surface")
        :on-mouse-down         #(.preventDefault %)}
@@ -106,7 +106,7 @@
   ; {:class (keyword or keywords in vector)
   ;  :style (map)}
   [_ {:keys [style] :as field-props}]
-  (-> {:class :e-plain-field--body
+  (-> {:class :pe-plain-field--body
        :style style}
       (pretty-css/indent-attributes field-props)))
 
@@ -123,7 +123,7 @@
   ; @return (map)
   ; {}
   [_ {:keys [disabled?] :as field-props}]
-  (-> {:class        :e-plain-field
+  (-> {:class        :pe-plain-field
        :data-covered disabled?}
       (pretty-css/default-attributes field-props)
       (pretty-css/outdent-attributes field-props)))

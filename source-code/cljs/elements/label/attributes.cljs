@@ -23,7 +23,7 @@
   ;  :on-click (function)
   ;  :on-mouse-up (function)}
   [label-id _]
-  {:class             :e-label--info-text-button
+  {:class             :pe-label--info-text-button
    :data-click-effect :opacity
    :data-selectable   false
    :data-icon-family  :material-symbols-outlined
@@ -47,7 +47,7 @@
   ;  :data-tooltip-position (keyword)
   ;  :on-click (function)
   [label-id label-props]
-  {:class                 :e-label--copyable
+  {:class                 :pe-label--copyable
    :data-click-effect     :opacity
    :data-tooltip-position :right
    :data-tooltip-content  (metamorphic-content/compose :copy!)
@@ -67,7 +67,7 @@
   ; {:class (keyword or keywords in vector)
   ;  :for (string)}
   [_ {:keys [target-id] :as label-props}]
-  (-> {:class :e-label--content
+  (-> {:class :pe-label--content
        :for   target-id}
       (pretty-css/text-attributes label-props)))
 
@@ -84,7 +84,7 @@
   ; @return (map)
   ; {}
   [_ {:keys [gap horizontal-align horizontal-position style vertical-position] :as label-props}]
-  (-> {:class                      :e-label--body
+  (-> {:class                      :pe-label--body
        :data-column-gap            gap
        :data-horizontal-row-align  horizontal-position
        :data-horizontal-text-align horizontal-align
@@ -111,7 +111,7 @@
   ; @return (map)
   ; {}
   [_ label-props]
-  (-> {:class :e-label}
+  (-> {:class :pe-label}
       (pretty-css/default-attributes          label-props)
       (pretty-css/outdent-attributes          label-props)
       (pretty-css/element-min-size-attributes label-props)

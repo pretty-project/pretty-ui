@@ -2,7 +2,7 @@
 (ns components.list-item-button.views
     (:require [components.list-item-button.prototypes :as list-item-button.prototypes]
               [css.api                                :as css]
-              [elements.api                           :as elements]
+              [pretty-elements.api                           :as pretty-elements]
               [random.api                             :as random]))
 
 ;; ----------------------------------------------------------------------------
@@ -13,7 +13,7 @@
   ; @param (map) button-props
   ; {}
   [button-id {:keys [] :as button-props}]
-  [:div.c-list-item-button [:div.c-list-item-button--body [elements/button button-id button-props]]])
+  [:div.c-list-item-button [:div.c-list-item-button--body [pretty-elements/button button-id button-props]]])
 
 (defn component
   ; @info

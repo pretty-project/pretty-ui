@@ -33,7 +33,7 @@
   ;
   ; If the user clicks on a field accessory (adornment, surface, placeholder, etc.)
   ; the field has get the focus!
-  (-> {:class                 :e-text-field--adornment
+  (-> {:class                 :pe-text-field--adornment
        :data-selectable       false
        :data-tooltip-content  (metamorphic-content/compose tooltip-content)
        :data-tooltip-position :left
@@ -61,7 +61,7 @@
   ; {}
   [_ field-props]
   ; HACK#9760 (source-code/cljs/elements/plain_field/utils.cljs)
-  (-> {:class               :e-text-field--placeholder
+  (-> {:class               :pe-text-field--placeholder
        :data-font-size      :xs
        :data-letter-spacing :auto
        :data-line-height    :text-block
@@ -83,7 +83,7 @@
   ;  :style (map)
   ;   {:height (string)}}
   [field-id field-props]
-  {:class :e-text-field--input-emphasize
+  {:class :pe-text-field--input-emphasize
    :style {:height (text-field.env/field-auto-height field-id field-props)}})
 
 (defn input-container-attributes
@@ -96,7 +96,7 @@
   ; @return (map)
   ; {}
   [_ {:keys [style] :as field-props}]
-  (-> {:class               :e-text-field--input-container
+  (-> {:class               :pe-text-field--input-container
        :data-letter-spacing :auto
        :style               style}
       (pretty-css/border-attributes field-props)
@@ -117,7 +117,7 @@
   ; {}
   [field-id field-props]
   ; BUG#2105
-  {:class :e-text-field--adornments-placeholder
+  {:class :pe-text-field--adornments-placeholder
    :on-mouse-down #(r/dispatch-fx [:elements.plain-field/focus-field! field-id])})
 
 (defn field-surface-attributes
@@ -130,7 +130,7 @@
   ; {}
   [field-id field-props]
   (merge (plain-field.attributes/field-surface-attributes field-id field-props)
-         {:class :e-text-field--surface}))
+         {:class :pe-text-field--surface}))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -175,7 +175,7 @@
   ; - If you want the browser to suggest values for the field, pass an understandable value
   ;   for the ':autofill-name' property (E.g. :phone-number)!
   (-> (plain-field.attributes/field-input-attributes field-id field-props)
-      (merge {:class      :e-text-field--input
+      (merge {:class      :pe-text-field--input
               :max-length max-length
               :type       type}
              (if-not disabled? {:min           date-from
@@ -199,7 +199,7 @@
   ; @return (map)
   ; {:class (keyword or keywords in vector)}
   [_ {:keys [disabled?] :as field-props}]
-  (-> {:class        :e-text-field
+  (-> {:class        :pe-text-field
        :data-covered disabled?}
       (pretty-css/default-attributes      field-props)
       (pretty-css/outdent-attributes      field-props)

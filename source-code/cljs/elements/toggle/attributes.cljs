@@ -29,11 +29,11 @@
   ;  :on-mouse-up (function)}
   [toggle-id {:keys [disabled? on-click on-mouse-over] :as toggle-props}]
   ; XXX#4460 (source-code/cljs/elements/button/utils.cljs)
-  (-> (if disabled? {:class              :e-toggle--body
+  (-> (if disabled? {:class              :pe-toggle--body
                      :disabled           true
                      :data-selectable    false
                      :data-text-overflow :hidden}
-                    {:class              :e-toggle--body
+                    {:class              :pe-toggle--body
                      :data-click-effect  :opacity
                      :data-selectable    false
                      :data-text-overflow :hidden
@@ -59,7 +59,7 @@
   ; @return (map)
   ; {:class (keyword or keywords in vector)}
   [_ toggle-props]
-  (-> {:class :e-toggle}
+  (-> {:class :pe-toggle}
       (pretty-css/default-attributes      toggle-props)
       (pretty-css/outdent-attributes      toggle-props)
       (pretty-css/element-size-attributes toggle-props)))

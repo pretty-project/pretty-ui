@@ -1,6 +1,7 @@
 
 (ns components.context-menu.views
-    (:require [elements.api       :as elements]
+    (:require [pretty-elements.api :as pretty-elements]
+              [elements.api :as elements]
               [pretty-layouts.api :as pretty-layouts]
               [random.api         :as random]))
 
@@ -17,13 +18,13 @@
   ;  :on-click (Re-Frame metamorphic-event)(opt)
   ;  :placeholder (metamorphic-content)(opt)}
   [_ _ {:keys [color label on-click placeholder]}]
-  [elements/button {:color            (or color :default)
-                    :horizontal-align :left
-                    :hover-color      :highlight
-                    :indent           {:vertical :xs}
-                    :label            label
-                    :on-click         {:dispatch-n [[:x.ui/remove-popup! :components.context-menu/view] on-click]}
-                    :placeholder      placeholder}])
+  [pretty-elements/button {:color            (or color :default)
+                           :horizontal-align :left
+                           :hover-color      :highlight
+                           :indent           {:vertical :xs}
+                           :label            label
+                           :on-click         {:dispatch-n [[:x.ui/remove-popup! :components.context-menu/view] on-click]}
+                           :placeholder      placeholder}])
 
 (defn- context-menu-body
   ; @param (keyword) menu-id

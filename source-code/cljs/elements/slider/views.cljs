@@ -20,7 +20,7 @@
   [:div (slider.attributes/slider-attributes slider-id slider-props)
         [element.views/element-label         slider-id slider-props]
         [:div (slider.attributes/slider-body-attributes slider-id slider-props)
-              [:div {:class :e-slider--track}]
+              [:div {:class :pe-slider--track}]
               [:div (slider.attributes/slider-line-attributes            slider-id slider-props)]
               [:div (slider.attributes/slider-primary-thumb-attributes   slider-id slider-props)]
               [:div (slider.attributes/slider-secondary-thumb-attributes slider-id slider-props)]]])

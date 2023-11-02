@@ -17,7 +17,7 @@
   ;  :data-letter-spacing (keyword)
   ;  :style (map)}
   [_ {:keys [style] :as bubble-props}]
-  (-> {:class               :e-notification-bubble--content
+  (-> {:class               :pe-notification-bubble--content
        :style               style
        :data-letter-spacing :auto}
       (pretty-css/font-attributes   bubble-props)
@@ -37,7 +37,7 @@
   ; {:class (keyword or keywords in vector)
   ;  :data-selectable (boolean)}
   [_ {:keys [selectable?] :as bubble-props}]
-  (-> {:class           :e-notification-bubble--body
+  (-> {:class           :pe-notification-bubble--body
        :data-selectable selectable?}
       (pretty-css/border-attributes bubble-props)
       (pretty-css/color-attributes  bubble-props)))
@@ -54,7 +54,7 @@
   ; @return (map)
   ; {:class (keyword or keywords in vector)}
   [_ bubble-props]
-  (-> {:class :e-notification-bubble}
+  (-> {:class :pe-notification-bubble}
       (pretty-css/default-attributes          bubble-props)
       (pretty-css/outdent-attributes          bubble-props)
       (pretty-css/element-max-size-attributes bubble-props)

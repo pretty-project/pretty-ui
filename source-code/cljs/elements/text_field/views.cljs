@@ -8,6 +8,7 @@
               [elements.text-field.prototypes :as text-field.prototypes]
               [hiccup.api                     :as hiccup]
               [metamorphic-content.api        :as metamorphic-content]
+              [pretty-presets.api             :as pretty-presets]
               [random.api                     :as random]
               [re-frame.api                   :as r]
               [reagent.api                    :as reagent]
@@ -65,8 +66,9 @@
   [field-id {:keys [end-adornments] :as field-props}]
   (let [end-adornments (text-field.prototypes/end-adornments-prototype field-id field-props)]
        (if (vector/nonempty? end-adornments)
-           (letfn [(f [adornment-props] [field-adornment field-id field-props adornment-props])]
-                  (hiccup/put-with [:div {:class :e-text-field--adornments}] end-adornments f))
+           (letfn [(f [adornment-props] (let [adornment-props (pretty-presets/apply-preset adornment-props)]
+                                             [field-adornment field-id field-props adornment-props]))]
+                  (hiccup/put-with [:div {:class :pe-text-field--adornments}] end-adornments f))
            [:div (text-field.attributes/field-adornments-placeholder-attributes field-id field-props)])))
 
 (defn field-start-adornments
@@ -78,7 +80,7 @@
   [field-id {:keys [start-adornments] :as field-props}]
   (if (vector/nonempty? start-adornments)
       (letfn [(f [adornment-props] [field-adornment field-id field-props adornment-props])]
-             (hiccup/put-with [:div {:class :e-text-field--adornments}] start-adornments f))
+             (hiccup/put-with [:div {:class :pe-text-field--adornments}] start-adornments f))
       [:div (text-field.attributes/field-adornments-placeholder-attributes field-id field-props)]))
 
 ;; ----------------------------------------------------------------------------
@@ -103,7 +105,7 @@
               ; ...
               [field-start-adornments field-id field-props]
               ; ...
-              [:div {:class :e-text-field--input-structure}
+              [:div {:class :pe-text-field--input-structure}
                     ; ...
                     (if placeholder (if-let [field-empty? (plain-field.env/field-empty? field-id)]
                                             [:div (text-field.attributes/field-placeholder-attributes field-id field-props)
@@ -120,7 +122,7 @@
                                     [metamorphic-content/compose surface]]))]
         ; ...
         (if-let [invalid-message (field-id @form.state/FORM-ERRORS)]
-                [:div {:class :e-text-field--invalid-content-message :data-selectable false}
+                [:div {:class :pe-text-field--invalid-content-message :data-selectable false}
                       (metamorphic-content/compose invalid-message)])
         ; ...
         [plain-field.views/plain-field-synchronizer field-id field-props]])
@@ -186,6 +188,7 @@
   ;      Default: :material-symbols-outlined
   ;     :label (string)(opt)
   ;     :on-click (Re-Frame metamorphic-event)(opt)
+  ;     :preset (keyword)(opt)
   ;     :tab-indexed? (boolean)(opt)
   ;      Default: true
   ;     :timeout (ms)(opt)

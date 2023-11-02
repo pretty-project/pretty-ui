@@ -20,7 +20,7 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   [field-id field-props]
-  [:input {:class :e-digit-field--input
+  [:input {:class :pe-digit-field--input
            :type "text"
            ; XXX#4460 (source-code/cljs/elements/button/attributes.cljs)
            :id (hiccup/value field-id "input")
@@ -33,12 +33,12 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   [field-id field-props]
-  (reduce (fn [%1 %2] (conj %1 [:div {:class :e-digit-field--cover--digit
+  (reduce (fn [%1 %2] (conj %1 [:div {:class :pe-digit-field--cover--digit
                                       :on-mouse-up #(dom/focus-element! (dom/get-element-by-id (hiccup/value field-id "input")))
                                       ; prevent selecting
                                       :on-mouse-down #(.preventDefault %)}
                                      (string.api/get-nth-character (:value field-props) %2)]))
-    [:div {:class :e-digit-field--cover :style {:width (-> field-props digit-field.utils/field-props->digits-width css/px)}}]
+    [:div {:class :pe-digit-field--cover :style {:width (-> field-props digit-field.utils/field-props->digits-width css/px)}}]
     (range 4)))
 
 (defn- digit-field

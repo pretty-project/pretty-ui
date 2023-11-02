@@ -1,5 +1,5 @@
 
-(ns elements.button.attributes
+(ns pretty-elements.button.attributes
     (:require [dom.api        :as dom]
               [hiccup.api     :as hiccup]
               [pretty-css.api :as pretty-css]
@@ -17,7 +17,7 @@
   ; @return (map)
   ; {:class (keyword or keywords in vector)}
   [_ button-props]
-  (-> {:class :e-button--icon}
+  (-> {:class :pe-button--icon}
       (pretty-css/icon-attributes button-props)))
 
 ;; ----------------------------------------------------------------------------
@@ -32,7 +32,7 @@
   ; @return (map)
   ; {:class (keyword or keywords in vector)}
   [_ button-props]
-  (-> {:class :e-button--label}
+  (-> {:class :pe-button--label}
       (pretty-css/text-attributes button-props)))
 
 ;; ----------------------------------------------------------------------------
@@ -67,14 +67,14 @@
   ; XXX#4460
   ; By setting the :id attribute the body component becomes targetable for
   ; DOM actions. (setting focus/blur, etc.)
-  (-> (if disabled? {:class                     :e-button--body
+  (-> (if disabled? {:class                     :pe-button--body
                      :disabled                  true
                      :data-letter-spacing       :auto
                      :data-column-gap           gap
                      :data-horizontal-row-align horizontal-align
                      :data-selectable           false
                      :style                     style}
-                    {:class                     :e-button--body
+                    {:class                     :pe-button--body
                      :id                        (hiccup/value button-id "body")
                      :on-click                  #(r/dispatch  on-click)
                      :on-mouse-over             #(r/dispatch  on-mouse-over)
@@ -109,7 +109,7 @@
   ; @return (map)
   ; {:class (keyword or keywords in vector)}
   [_ button-props]
-  (-> {:class :e-button}
+  (-> {:class :pe-button}
       (pretty-css/default-attributes      button-props)
       (pretty-css/outdent-attributes      button-props)
       (pretty-css/element-size-attributes button-props)))

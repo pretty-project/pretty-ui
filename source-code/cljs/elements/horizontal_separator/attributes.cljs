@@ -17,7 +17,7 @@
   ;  :data-selectable (boolean)
   ;  :style (map)}
   [_ {:keys [style] :as separator-props}]
-  (-> {:class           :e-horizontal-separator--body
+  (-> {:class           :pe-horizontal-separator--body
        :data-selectable false
        :style           style}
       (pretty-css/color-attributes  separator-props)
@@ -35,7 +35,7 @@
   ; @return (map)
   ; {:class (keyword or keywords in vector)}
   [_ separator-props]
-  (-> {:class :e-horizontal-separator}
+  (-> {:class :pe-horizontal-separator}
       (pretty-css/default-attributes      separator-props)
       (pretty-css/outdent-attributes      separator-props)
       (pretty-css/element-size-attributes separator-props)))

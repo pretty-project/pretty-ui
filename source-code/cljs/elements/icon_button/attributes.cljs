@@ -1,7 +1,7 @@
 
 (ns elements.icon-button.attributes
-    (:require [elements.button.attributes :as button.attributes]
-              [pretty-css.api             :as pretty-css]))
+    (:require [pretty-css.api                    :as pretty-css]
+              [pretty-elements.button.attributes :as button.attributes]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -16,7 +16,7 @@
   ; @return (map)
   ; {}
   [_ button-props]
-  (-> {:class :e-icon-button--icon}
+  (-> {:class :pe-icon-button--icon}
       (pretty-css/icon-attributes button-props)))
 
 ;; ----------------------------------------------------------------------------
@@ -32,7 +32,7 @@
   ; {:class (keyword or keywords in vector)}
   [button-id button-props]
   (-> (button.attributes/button-body-attributes button-id button-props)
-      (merge {:class :e-icon-button--body})
+      (merge {:class :pe-icon-button--body})
       (pretty-css/indent-attributes  button-props)
       (pretty-css/tooltip-attributes button-props)))
 
@@ -48,6 +48,6 @@
   ; @return (map)
   ; {:class (keyword or keywords in vector)}
   [_ button-props]
-  (-> {:class :e-icon-button}
+  (-> {:class :pe-icon-button}
       (pretty-css/default-attributes button-props)
       (pretty-css/outdent-attributes button-props)))

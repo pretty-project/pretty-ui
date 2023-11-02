@@ -1,11 +1,11 @@
 
-(ns elements.button.views
-    (:require [elements.button.attributes :as button.attributes]
-              [elements.button.prototypes :as button.prototypes]
-              [pretty-presets.api         :as pretty-presets]
-              [re-frame.api               :as r]
-              [reagent.api                :as reagent]
-              [random.api                 :as random]))
+(ns pretty-elements.button.views
+    (:require [pretty-elements.button.attributes :as button.attributes]
+              [pretty-elements.button.prototypes :as button.prototypes]
+              [pretty-presets.api                :as pretty-presets]
+              [re-frame.api                      :as r]
+              [reagent.api                       :as reagent]
+              [random.api                        :as random]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -37,9 +37,9 @@
   ; @param (map) button-props
   [button-id button-props]
   ; XXX#0106 (README.md#parametering)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (r/dispatch [:elements.button/button-did-mount    button-id button-props]))
-                       :component-will-unmount (fn [_ _] (r/dispatch [:elements.button/button-will-unmount button-id button-props]))
-                       :component-did-update   (fn [%]   (r/dispatch [:elements.button/button-did-update   button-id %]))
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (r/dispatch [:pretty-elements.button/button-did-mount    button-id button-props]))
+                       :component-will-unmount (fn [_ _] (r/dispatch [:pretty-elements.button/button-will-unmount button-id button-props]))
+                       :component-did-update   (fn [%]   (r/dispatch [:pretty-elements.button/button-did-update   button-id %]))
                        :reagent-render         (fn [_ button-props] [button-structure button-id button-props])}))
 
 (defn element

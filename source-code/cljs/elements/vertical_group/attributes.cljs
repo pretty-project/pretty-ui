@@ -16,7 +16,7 @@
   ; {:class (keyword or keywords in vector)
   ;  :style (map)}
   [_ {:keys [style] :as group-props}]
-  (-> {:class :e-vertical-group--body
+  (-> {:class :pe-vertical-group--body
        :style style}
       (pretty-css/indent-attributes group-props)))
 
@@ -29,7 +29,7 @@
   ; @return (map)
   ; {}
   [_ group-props]
-  (-> {:class :e-vertical-group}
+  (-> {:class :pe-vertical-group}
       (pretty-css/default-attributes      group-props)
       (pretty-css/outdent-attributes      group-props)
       (pretty-css/element-size-attributes group-props)))

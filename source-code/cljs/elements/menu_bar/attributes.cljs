@@ -17,7 +17,7 @@
   ; @return (map)
   ; {:class (keyword or keywords in vector)}
   [_ _ item-props]
-  (-> {:class :e-menu-bar--menu-item--icon}
+  (-> {:class :pe-menu-bar--menu-item--icon}
       (pretty-css/icon-attributes item-props)))
 
 ;; ----------------------------------------------------------------------------
@@ -33,7 +33,7 @@
   ; @return (map)
   ; {}
   [_ _ item-props]
-  (-> {:class              :e-menu-bar--menu-item--label
+  (-> {:class              :pe-menu-bar--menu-item--label
        :data-text-overflow :hidden}
       (pretty-css/font-attributes item-props)))
 
@@ -60,10 +60,10 @@
   ;  :on-mouse-over (function)
   ;  :on-mouse-up (function)}
   [_ _ {:keys [active? disabled? hover-effect on-click on-mouse-over] :as item-props}]
-  (-> (if disabled? (cond-> {:class             :e-menu-bar--menu-item-body
+  (-> (if disabled? (cond-> {:class             :pe-menu-bar--menu-item-body
                              :data-disabled     true
                              :on-mouse-up       #(dom/blur-active-element!)})
-                    (cond-> {:class             :e-menu-bar--menu-item-body
+                    (cond-> {:class             :pe-menu-bar--menu-item-body
                              :data-click-effect :opacity
                              :data-hover-effect hover-effect
                              :on-mouse-up       #(dom/blur-active-element!)}
@@ -89,7 +89,7 @@
   ; @return (map)
   ; {}
   [_ _ item-props]
-  (-> {:class :e-menu-bar--menu-item}
+  (-> {:class :pe-menu-bar--menu-item}
       (pretty-css/outdent-attributes item-props)))
 
 (defn menu-bar-items-attributes
@@ -102,7 +102,7 @@
   ; @return (map)
   ; {}
   [_ {:keys [orientation]}]
-  (merge {:class :e-menu-bar--menu-items}
+  (merge {:class :pe-menu-bar--menu-items}
          (case orientation :horizontal {:data-orientation :horizontal
                                         :data-scroll-axis :x}
                                        {:data-orientation :vertical})))
@@ -124,7 +124,7 @@
   ;  :data-selectable (boolean)
   ;  :style (map)}
   [_ {:keys [horizontal-align style] :as bar-props}]
-  (-> {:class                 :e-menu-bar--body
+  (-> {:class                 :pe-menu-bar--body
        :data-horizontal-align horizontal-align
        :data-selectable       false
        :style                 style}
@@ -142,6 +142,6 @@
   ; @return (map)
   ; {}
   [_ bar-props]
-  (-> {:class :e-menu-bar}
+  (-> {:class :pe-menu-bar}
       (pretty-css/default-attributes bar-props)
       (pretty-css/outdent-attributes bar-props)))

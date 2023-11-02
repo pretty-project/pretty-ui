@@ -32,14 +32,15 @@
   ; @param (map) breadcrumbs-props
   ; {:crumbs (maps in vector)}
   [breadcrumbs-id {:keys [crumbs] :as breadcrumbs-props}]
-  ; A separator DIV placed between crumbs instead of applying CSS gap because
-  ; this way, the separator DIVs contain pseudo elements which displays a small
-  ; dot between each crumbs.
-  ; In case of the crumbs contain those pseudo elements they might be part
-  ; of the crumbs and might be clickable. And we don't want clickable dots between crumbs.
+  ; A separator DIV placed between crumbs instead of applying CSS gap.
+  ; The separator DIVs contain pseudo elements which displays a small dot between each crumbs.
+  ; In case of the crumbs contain those pseudo elements they would be part
+  ; of the crumbs and would be clickable.
+  ; ... And we don't want clickable dots between crumbs, do we?
   (letfn [(f [dex crumb-props]
-             (let [crumb-props (breadcrumbs.prototypes/crumb-props-prototype crumb-props)]
-                  [:<> (if (not= 0 dex) [:div {:class :e-breadcrumbs--separator}])
+             (let [crumb-props (pretty-presets/apply-preset                  crumb-props)
+                   crumb-props (breadcrumbs.prototypes/crumb-props-prototype crumb-props)]
+                  [:<> (if (not= 0 dex) [:div {:class :pe-breadcrumbs--separator}])
                        [breadcrumbs-crumb breadcrumbs-id breadcrumbs-props crumb-props]]))]
          (hiccup/put-with-indexed [:<>] crumbs f)))
 
@@ -61,7 +62,8 @@
   ;   [{:href (string)(opt)
   ;     :label (metamorphic-content)(opt)
   ;     :on-click (Re-Frame metamorphic-event)(opt)
-  ;     :placeholder (metamorphic-content)(opt)}]
+  ;     :placeholder (metamorphic-content)(opt)
+  ;     :preset (keyword)(opt)}]
   ;  :disabled? (boolean)(opt)
   ;  :font-size (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :inherit

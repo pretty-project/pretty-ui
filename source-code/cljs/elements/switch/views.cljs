@@ -26,7 +26,7 @@
   [switch-id {:keys [option-helper-f option-label-f] :as switch-props} option]
   [:button (switch.attributes/switch-option-attributes switch-id switch-props option)
            [:div (switch.attributes/switch-option-track-attributes switch-id switch-props)]
-           [:div {:class :e-switch--option-content :data-click-target :opacity}
+           [:div {:class :pe-switch--option-content :data-click-target :opacity}
                  (if option-label-f  [:div (switch.attributes/switch-option-label-attributes switch-id switch-props)
                                            (-> option option-label-f metamorphic-content/compose)])
                  (if option-helper-f [:div (switch.attributes/switch-option-helper-attributes switch-id switch-props)

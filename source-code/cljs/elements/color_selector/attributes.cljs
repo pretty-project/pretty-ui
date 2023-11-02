@@ -15,11 +15,11 @@
   ; @param (map) selector-props
   ; {}
   [_ {{:keys [label]} :popup}]
-  (if label {:class            :e-color-selector--options--label
+  (if label {:class            :pe-color-selector--options--label
              :data-font-size   :s
              :data-font-weight :medium
              :data-line-height :text-block}
-            {:class            :e-color-selector--options--label
+            {:class            :pe-color-selector--options--label
              :data-placeholder true}))
 
 ;; ----------------------------------------------------------------------------
@@ -38,7 +38,7 @@
   [selector-id {:keys [value-path] :as selector-props} option]
   (let [on-click [:elements.color-selector/toggle-option! selector-id selector-props option]
         selected-options @(r/subscribe [:get-item value-path])]
-       {:class             :e-color-selector--option
+       {:class             :pe-color-selector--option
         :data-click-effect :opacity
         :data-hover-effect :opacity
         :data-icon-family  :material-symbols-outlined
@@ -60,7 +60,7 @@
   ; {:class (keyword or keywords in vector)
   ;  :style (map)}
   [_ {:keys [style] :as selector-props}]
-  (-> {:class :e-color-selector--options-body
+  (-> {:class :pe-color-selector--options-body
        :style style}
       (pretty-css/indent-attributes selector-props)))
 
@@ -76,6 +76,6 @@
   ; @return (map)
   ; {:class (keyword or keywords in vector)}
   [_ selector-props]
-  (-> {:class :e-color-selector--options}
+  (-> {:class :pe-color-selector--options}
       (pretty-css/default-attributes selector-props)
       (pretty-css/outdent-attributes selector-props)))

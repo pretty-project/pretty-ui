@@ -17,7 +17,7 @@
   ; @return (map)
   ; {}
   [_ _ _]
-  {:class               :e-checkbox--option-helper
+  {:class               :pe-checkbox--option-helper
    :data-font-size      :xs
    :data-letter-spacing :auto
    :data-line-height    :auto})
@@ -33,7 +33,7 @@
   ; @return (map)
   ; {}
   [_ {:keys [font-size]} _]
-  (-> {:class               :e-checkbox--option-label
+  (-> {:class               :pe-checkbox--option-label
        :data-font-size      font-size
        :data-font-weight    :medium
        :data-letter-spacing :auto
@@ -49,7 +49,7 @@
   ; @return (map)
   ; {}
   [_ checkbox-props _]
-  (-> {:class            :e-checkbox--option-button
+  (-> {:class            :pe-checkbox--option-button
        :data-icon-family :material-symbols-outlined}
       (pretty-css/border-attributes checkbox-props)))
 
@@ -70,7 +70,7 @@
   ;  :on-mouse-up (function)}
   [checkbox-id {:keys [disabled? value-path] :as checkbox-props} option]
   (let [option-checked? @(r/subscribe [:elements.checkbox/option-checked? checkbox-id checkbox-props option])]
-       (merge {:class             :e-checkbox--option
+       (merge {:class             :pe-checkbox--option
                :data-checked      option-checked?
                :data-click-effect :targeted}
               (if disabled? {:disabled    true}
@@ -94,7 +94,7 @@
   ;  :data-selectable (keyword)
   ;  :style (map)}
   [_ {:keys [options-orientation style] :as checkbox-props}]
-  (-> {:class                    :e-checkbox--body
+  (-> {:class                    :pe-checkbox--body
        :data-options-orientation options-orientation
        :data-selectable          false
        :style                    style}
@@ -112,6 +112,6 @@
   ; @return (map)
   ; {:class (keyword or keywords in vector)}
   [_ checkbox-props]
-  (-> {:class :e-checkbox}
+  (-> {:class :pe-checkbox}
       (pretty-css/default-attributes checkbox-props)
       (pretty-css/outdent-attributes checkbox-props)))

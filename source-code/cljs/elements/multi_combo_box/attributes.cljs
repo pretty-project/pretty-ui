@@ -16,7 +16,7 @@
   ; {:class (keyword or keywords in vector)
   ;  :style (map)}
   [_ {:keys [style] :as box-props}]
-  (-> {:class :e-multi-combo-box--body
+  (-> {:class :pe-multi-combo-box--body
        :style style}
       (pretty-css/indent-attributes box-props)))
 
@@ -32,6 +32,6 @@
   ; @return (map)
   ; {}
   [_ box-props]
-  (-> {:class :e-multi-combo-box}
+  (-> {:class :pe-multi-combo-box}
       (pretty-css/default-attributes box-props)
       (pretty-css/outdent-attributes box-props)))

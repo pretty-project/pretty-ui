@@ -16,7 +16,7 @@
   ; {:class (keyword or keywords in vector)
   ;  :style (map)}
   [_ {:keys [style] :as ghost-props}]
-  (-> {:class :e-ghost--body
+  (-> {:class :pe-ghost--body
        :style style}
       (pretty-css/border-attributes ghost-props)
       (pretty-css/indent-attributes ghost-props)))
@@ -33,7 +33,7 @@
   ; @return (map)
   ; {:class (keyword or keywords in vector)}
   [_ ghost-props]
-  (-> {:class :e-ghost}
+  (-> {:class :pe-ghost}
       (pretty-css/default-attributes ghost-props)
       (pretty-css/outdent-attributes ghost-props)
       ; The ghost element uses block height but element width

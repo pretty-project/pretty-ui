@@ -2,7 +2,7 @@
 /***** Blank *****/
 /*** Body ***/
 
-.e-blank--body {
+.pe-blank--body {
   /* XXX#6667
    * The blank element takes height property therefore its body has to fit into it. */
   height: 100%;
@@ -16,7 +16,7 @@
 /***** Breadcrumbs *****/
 /*** Element ***/
 
-.e-breadcrumbs {
+.pe-breadcrumbs {
   /* XXX#6668
    * No need to the breadcrumbs element be wider than its content. */
   width: fit-content;
@@ -26,7 +26,7 @@
 
 /*** Body ***/
 
-.e-breadcrumbs--body {
+.pe-breadcrumbs--body {
   display: flex;
 }
 
@@ -34,17 +34,17 @@
 
 /*** Crumb ***/
 
-.e-breadcrumbs--crumb {
+.pe-breadcrumbs--crumb {
   max-width: 160px;
 }
 
-.e-breadcrumbs--separator {
+.pe-breadcrumbs--separator {
   align-items: center;
   display:     flex;
   height:      24px;
 }
 
-.e-breadcrumbs--separator::after {
+.pe-breadcrumbs--separator::after {
   background-color: var( --border-color-muted );
   border-radius:    3px;
   content:          '';
@@ -61,7 +61,7 @@
 /***** Button *****/
 /*** Body ***/
 
-.e-button--body {
+.pe-button--body {
   align-items: center;
   display:     flex;
 
@@ -79,7 +79,7 @@
 /***** Card *****/
 /*** Body ***/
 
-.e-card--body {
+.pe-card--body {
   display:        flex;
   flex-direction: column;
 
@@ -98,7 +98,7 @@
 /***** Checkbox *****/
 /*** Element ***/
 
-.e-checkbox {
+.pe-checkbox {
   /* XXX#6668 */
   width: fit-content;
 }
@@ -107,7 +107,7 @@
 
 /*** Options ***/
 
-.e-checkbox--body[data-options-orientation="horizontal"] {
+.pe-checkbox--body[data-options-orientation="horizontal"] {
   display:    flex;
   column-gap: 24px;
 }
@@ -116,24 +116,24 @@
 
 /*** Option ***/
 
-.e-checkbox--option {
+.pe-checkbox--option {
   display:        flex;
   padding-bottom: 6px;
   padding-top:    6px;
 }
 
-.e-checkbox--option-button {
+.pe-checkbox--option-button {
   background-color: var( --fill-color-default );
   margin-right:     8px;
   margin-top:       2px;
 }
 
-.e-checkbox--option-label {
+.pe-checkbox--option-label {
   /* XXX#5049 */
   text-align: left;
 }
 
-.e-checkbox--option-helper {
+.pe-checkbox--option-helper {
   color: var( --color-muted );
 
   /* XXX#5049 */
@@ -144,7 +144,7 @@
 
 /*** Marker ***/
 
-.e-checkbox--option-button::after {
+.pe-checkbox--option-button::after {
   content: '';
   font-size:   16px;
   height:      16px;
@@ -152,7 +152,7 @@
   width:       16px;
 }
 
-.e-checkbox--option[data-checked="true"] .e-checkbox--option-button::after {
+.pe-checkbox--option[data-checked="true"] .pe-checkbox--option-button::after {
   content: 'done';
 }
 
@@ -164,7 +164,7 @@
 /***** Chip *****/
 /*** Body ***/
 
-.e-chip--body {
+.pe-chip--body {
   border-radius: 3px;
   display:       flex;
   height:        24px;
@@ -175,7 +175,7 @@
 
 /*** Button ***/
 
-.e-chip--primary-button {
+.pe-chip--primary-button {
   background-color: rgba(255, 255, 255, .65);
   border-radius:    3px;
   color:            var( --color-default );
@@ -184,7 +184,7 @@
   width:            20px;
 }
 
-.e-chip--primary-button-icon {
+.pe-chip--primary-button-icon {
   align-items:     center;
   display:         flex;
   flex-direction:  column;
@@ -193,7 +193,7 @@
   line-height:     20px;
 }
 
-.e-chip--primary-button--placeholder {
+.pe-chip--primary-button--placeholder {
   width: 12px;
 }
 
@@ -205,7 +205,7 @@
 /***** Chip-group *****/
 /*** Element ***/
 
-.e-chip-group {
+.pe-chip-group {
   /* XXX#6668 */
   width: fit-content;
 }
@@ -214,7 +214,7 @@
 
 /*** Chip-group chips ***/
 
-.e-chip-group--chips {
+.pe-chip-group--chips {
   display:   flex;
   flex-wrap: wrap;
   gap:       12px;
@@ -224,7 +224,7 @@
 
 /*** Chip-group no-chips label ***/
 
-.e-chip-group--chips-placeholder {
+.pe-chip-group--chips-placeholder {
   color: var( --color-highlight );
 }
 
@@ -236,13 +236,13 @@
 /***** Color-selector *****/
 /*** Color-selector options ***/
 
-.e-color-selector--options {
+.pe-color-selector--options {
   /* XXX#0610
    * Makes the popup above other contents */
     z-index: 9999;
 }
 
-.e-color-selector--options--label {
+.pe-color-selector--options--label {
   display: flex;
   justify-content: center;
 
@@ -250,7 +250,7 @@
   padding: 6px 12px;
 }
 
-.e-color-selector--options-body {
+.pe-color-selector--options-body {
   column-gap:      12px;
   display:         flex;
   justify-content: center;
@@ -261,7 +261,7 @@
 
 /*** Color-selector option ***/
 
-.e-color-selector--option[data-collected="true"]::after {
+.pe-color-selector--option[data-collected="true"]::after {
   align-items: center;
   background-color: var( --fill-color-default );
   border-radius: 12px;
@@ -279,7 +279,7 @@
   width: 20px;
 }
 
-.e-color-selector--option--color {
+.pe-color-selector--option--color {
   border-radius: var( --border-radius-m );
   height: 48px;
   width: 48px;
@@ -293,7 +293,7 @@
 /***** Column *****/
 /*** Body ***/
 
-.e-column--body {
+.pe-column--body {
   display: flex;
   flex-direction: column;
 
@@ -302,7 +302,7 @@
   height: 100%;
 }
 
-.e-column--body[data-wrap-items="true"] {
+.pe-column--body[data-wrap-items="true"] {
   flex-wrap: wrap;
 }
 
@@ -314,7 +314,7 @@
 /***** Combo-box *****/
 /*** Combo-box options ***/
 
-.e-combo-box--options {
+.pe-combo-box--options {
   display: flex;
   flex-direction: column;
   max-height: 340px;
@@ -324,8 +324,8 @@
 
 /*** Combo-box option ***/
 
-.e-combo-box--field-content-option,
-.e-combo-box--option {
+.pe-combo-box--field-content-option,
+.pe-combo-box--option {
   align-items: center;
   display: flex;
   flex-shrink: 0;
@@ -334,15 +334,15 @@
   width: 100%;
 }
 
-.e-combo-box--option[data-highlighted="true"] {
+.pe-combo-box--option[data-highlighted="true"] {
   background-color: var( --fill-color-highlight );
 }
 
-.e-combo-box--option:hover {
+.pe-combo-box--option:hover {
   background-color: var( --hover-color-highlight );
 }
 
-.e-combo-box--field-content-option {
+.pe-combo-box--field-content-option {
   color: var( --color-muted )}
 
 /*** Combo-box option ***/
@@ -353,7 +353,7 @@
 /***** Content swapper *****/
 /*** Element ***/
 
-.e-content-swapper {
+.pe-content-swapper {
   /* XXX#0517 (source-code/cljs/elements/content_swapper/views.cljs) */
   height: 100%;
   width:  100%;
@@ -363,13 +363,13 @@
 
 /*** Body ***/
 
-.e-content-swapper--body {
+.pe-content-swapper--body {
   /* XXX#0517 (source-code/cljs/elements/content_swapper/views.cljs) */
   height: 100%;
   width:  100%;
 }
 
-.e-content-swapper--body[data-animation-direction] {
+.pe-content-swapper--body[data-animation-direction] {
   /* Because the appering or disappearing pages animated to move in LTR or RTL
    * directions, the body has to hide the overflowing pages during animations. */
   overflow-x: hidden;
@@ -427,7 +427,7 @@
 
 /*** Page ***/
 
-.e-content-swapper--page {
+.pe-content-swapper--page {
   animation-duration:  .3s;
   animation-fill-mode: both;
   position:            absolute;
@@ -439,19 +439,19 @@
   width:  -webkit-fill-available;
 }
 
-.e-content-swapper--body[data-animation-direction="fwd"] .e-content-swapper--page.r-mounting {
+.pe-content-swapper--body[data-animation-direction="fwd"] .pe-content-swapper--page.r-mounting {
   animation-name: e-content-swapper--swap-fwd-in;
 }
 
-.e-content-swapper--body[data-animation-direction="fwd"] .e-content-swapper--page.r-unmounting {
+.pe-content-swapper--body[data-animation-direction="fwd"] .pe-content-swapper--page.r-unmounting {
   animation-name: e-content-swapper--swap-fwd-out;
 }
 
-.e-content-swapper--body[data-animation-direction="bwd"] .e-content-swapper--page.r-mounting {
+.pe-content-swapper--body[data-animation-direction="bwd"] .pe-content-swapper--page.r-mounting {
   animation-name: e-content-swapper--swap-bwd-in;
 }
 
-.e-content-swapper--body[data-animation-direction="bwd"] .e-content-swapper--page.r-unmounting {
+.pe-content-swapper--body[data-animation-direction="bwd"] .pe-content-swapper--page.r-unmounting {
   animation-name: e-content-swapper--swap-bwd-out;
 }
 
@@ -463,7 +463,7 @@
 /***** Counter *****/
 /*** Element ***/
 
-.e-counter {
+.pe-counter {
   /* XXX#6668 */
   width: fit-content;
 }
@@ -472,7 +472,7 @@
 
 /*** Body ***/
 
-.e-counter--body {
+.pe-counter--body {
   align-items: center;
   display: flex;
   padding-bottom: 6px;
@@ -483,7 +483,7 @@
 
 /*** Value ***/
 
-.e-counter--value {
+.pe-counter--value {
   font-weight: 500;
   line-height: 24px;
   min-width: 64px;
@@ -494,47 +494,47 @@
 
 /*** Button ***/
 
-.e-counter--decrease-button,
-.e-counter--increase-button,
-.e-counter--reset-button {
+.pe-counter--decrease-button,
+.pe-counter--increase-button,
+.pe-counter--reset-button {
   background-color: var( --fill-color-default );
   padding:          8px;
 }
 
-.e-counter--decrease-button::before,
-.e-counter--increase-button::before,
-.e-counter--increase-button::after,
-.e-counter--reset-button::before,
-.e-counter--reset-button::after {
+.pe-counter--decrease-button::before,
+.pe-counter--increase-button::before,
+.pe-counter--increase-button::after,
+.pe-counter--reset-button::before,
+.pe-counter--reset-button::after {
   background-color: var( --color-default );
   border-radius: 1px;
   content: '';
   position: absolute;
 }
 
-.e-counter--decrease-button::before,
-.e-counter--increase-button::before,
-.e-counter--reset-button::before {
+.pe-counter--decrease-button::before,
+.pe-counter--increase-button::before,
+.pe-counter--reset-button::before {
   height: 2px;
   left: 4px;
   top: 7px;
   width: 8px;
 }
 
-.e-counter--increase-button::after,
-.e-counter--reset-button::after {
+.pe-counter--increase-button::after,
+.pe-counter--reset-button::after {
   height: 8px;
   left: 7px;
   top: 4px;
   width: 2px;
 }
 
-.e-counter--reset-button {
+.pe-counter--reset-button {
   margin-left: 12px;
 }
 
-.e-counter--reset-button::before,
-.e-counter--reset-button::after {
+.pe-counter--reset-button::before,
+.pe-counter--reset-button::after {
   transform: rotateZ( -45deg );
 }
 
@@ -546,7 +546,7 @@
 /***** Data table *****/
 /*** Column ***/
 
-.e-data-table--column {
+.pe-data-table--column {
   display: grid
 }
 
@@ -554,7 +554,7 @@
 
 /*** Row ***/
 
-.e-data-table--row {
+.pe-data-table--row {
   display: grid
 }
 
@@ -562,7 +562,7 @@
 
 /*** Cell ***/
 
-.e-data-table--cell {
+.pe-data-table--cell {
 }
 
 /*** Cell ***/
@@ -573,7 +573,7 @@
 /***** Digit field *****/
 /***** Element *****/
 
-.e-digit-field {
+.pe-digit-field {
   height: 48px;
 }
 
@@ -581,7 +581,7 @@
 
 /***** Input *****/
 
-.e-digit-field--input {
+.pe-digit-field--input {
   color: var( --fill-color-default );
   height: 100%;
   width: 100%;
@@ -591,7 +591,7 @@
 
 /***** Cover *****/
 
-.e-digit-field--cover {
+.pe-digit-field--cover {
   display: flex;
   column-gap: 12px;
   height: 100%;
@@ -601,7 +601,7 @@
   width: 100%;
 }
 
-.e-digit-field--cover--digit {
+.pe-digit-field--cover--digit {
   align-items: center;
   border-color: var( --color-highlight );
   border-radius: var( --border-radius-s );
@@ -624,7 +624,7 @@
 /***** Dropdown menu *****/
 /*** Element ***/
 
-.e-dropdown-menu {
+.pe-dropdown-menu {
   /* XXX#6668 */
   width: fit-content;
 }
@@ -633,7 +633,7 @@
 
 /*** Surface ***/
 
-.e-dropdown-menu--surface {
+.pe-dropdown-menu--surface {
   left: 0;
   min-width: 100%;
   position: absolute;
@@ -653,7 +653,7 @@
 /***** Expandable *****/
 /*** Element ***/
 
-.e-expandable {
+.pe-expandable {
   /* XXX#6668 */
   width: fit-content;
 }
@@ -662,7 +662,7 @@
 
 /*** Header ***/
 
-.e-expandable--header {
+.pe-expandable--header {
   align-items:     center;
   display:         flex;
   justify-content: left;
@@ -672,7 +672,7 @@
 
 /*** Icon ***/
 
-.e-expandable--icon {
+.pe-expandable--icon {
   margin-right: 6px;
 }
 
@@ -680,7 +680,7 @@
 
 /*** Label ***/
 
-.e-expandable--label {
+.pe-expandable--label {
   padding-right: 6px;
 }
 
@@ -692,7 +692,7 @@
 /***** Ghost *****/
 /*** Body ***/
 
-.e-ghost--body {
+.pe-ghost--body {
   animation-iteration-count: infinite;
   animation-duration:        2s;
   animation-name:            opacity-1-05-1;
@@ -710,7 +710,7 @@
 /***** Horizontal group *****/
 /*** Body ***/
 
-.e-horizontal-group--body {
+.pe-horizontal-group--body {
   display: flex;
   flex-direction: row;
 }
@@ -723,7 +723,7 @@
 /***** Horizontal polarity *****/
 /*** Body ***/
 
-.e-horizontal-polarity--body {
+.pe-horizontal-polarity--body {
   display:         flex;
   justify-content: space-between;
 }
@@ -732,9 +732,9 @@
 
 /*** Content ***/
 
-.e-horizontal-polarity--start-content,
-.e-horizontal-polarity--middle-content,
-.e-horizontal-polarity--end-content {
+.pe-horizontal-polarity--start-content,
+.pe-horizontal-polarity--middle-content,
+.pe-horizontal-polarity--end-content {
   /* DEPRECATED! What was the purpose? */
   -display: flex;
 }
@@ -747,7 +747,7 @@
 /***** Horizontal separator *****/
 /*** Body ***/
 
-.e-horizontal-separator--body {
+.pe-horizontal-separator--body {
   align-items: center;
   display:     flex;
 }
@@ -757,7 +757,7 @@
 
 /*** Line ***/
 
-.e-horizontal-separator--line {
+.pe-horizontal-separator--line {
   border-bottom-style: solid;
   border-bottom-width: 1px;
   height:              0px;
@@ -768,7 +768,7 @@
 
 /*** Label ***/
 
-.e-horizontal-separator--label {
+.pe-horizontal-separator--label {
   font-weight: 500;
   padding:     0 18px;
 }
@@ -781,7 +781,7 @@
 /***** Icon *****/
 /*** Element ***/
 
-.e-icon {
+.pe-icon {
   /* XXX#6668 */
   width: fit-content;
 }
@@ -794,7 +794,7 @@
 /***** Icon-button *****/
 /*** Element ***/
 
-.e-icon-button {
+.pe-icon-button {
   align-items:    center;
   display:        flex;
   flex-direction: column;
@@ -807,7 +807,7 @@
 
 /*** Icon-button label ***/
 
-.e-icon-button--label {
+.pe-icon-button--label {
   font-size:      var( --font-size-micro      );
   font-weight:    var( --font-weight-medium   );
   letter-spacing: var( --letter-spacing-micro );
@@ -822,7 +822,7 @@
 /***** Image *****/
 /*** Body ***/
 
-.e-image--body {
+.pe-image--body {
   height: 100%;
   width:  100%;
 }
@@ -835,7 +835,7 @@
 /***** Label *****/
 /*** Element ***/
 
-.e-label {
+.pe-label {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -851,7 +851,7 @@
 
 /*** Body ***/
 
-.e-label--body {
+.pe-label--body {
   align-items: center;
   display: flex;
 }
@@ -860,7 +860,7 @@
 
 /*** Copyable ***/
 
-.e-label--copyable {
+.pe-label--copyable {
   display: flex;
   max-width: 100%;
 }
@@ -869,7 +869,7 @@
 
 /*** Icon ***/
 
-.e-label--icon {
+.pe-label--icon {
   flex-shrink:  0;
 }
 
@@ -877,8 +877,8 @@
 
 /*** Helper, info-text ***/
 
-.e-label--helper,
-.e-label--info-text {
+.pe-label--helper,
+.pe-label--info-text {
   color: var( --color-muted );
 }
 
@@ -886,7 +886,7 @@
 
 /*** Info-text button ***/
 
-.e-label--info-text-button {
+.pe-label--info-text-button {
   color: var( --color-muted );
 }
 
@@ -898,7 +898,7 @@
 /***** Menu bar *****/
 /*** Element ***/
 
-.e-menu-bar {
+.pe-menu-bar {
   /* XXX#6668 */
   width: fit-content;
 }
@@ -907,14 +907,14 @@
 
 /*** Item ***/
 
-/* Az .e-menu-bar--menu-item elemben alkalmazott esztétikai távolságok (margin, padding),
+/* Az .pe-menu-bar--menu-item elemben alkalmazott esztétikai távolságok (margin, padding),
  * meg kell feleljenek a felsorolt felhasználási módoknak:
  * 1. A menü-elemek kizárólag ikonokat jelenítenek meg
  * 2. A menü-elemek kizárólag feliratokat jelenítenek meg
  * 3. A menü-elemek ikonokat és feliratokat jelenítenek meg */
 /* TODO
  * Az 1.-es és 3.-as (ikon-gomb és ikon-gomb felirattal) legyen egy külön elemtípus! */
-.e-menu-bar--menu-item-body {
+.pe-menu-bar--menu-item-body {
   align-items: center;
   display:     flex;
 
@@ -930,7 +930,7 @@
 
 /***** Multi combo-box *****/
 
-.e-multi-combo-box--body {
+.pe-multi-combo-box--body {
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -943,7 +943,7 @@
 /***** Multi field *****/
 /*** Element ***/
 
-.e-multi-field {
+.pe-multi-field {
   display: flex;
   flex-direction: column;
 
@@ -959,7 +959,7 @@
 /***** Notification bubble *****/
 /*** Body ***/
 
-.e-notification-bubble--body {
+.pe-notification-bubble--body {
   align-items:     center;
   display:         flex;
   justify-content: space-between;
@@ -976,7 +976,7 @@
 /***** Radio button *****/
 /*** Element ***/
 
-.e-radio-button {
+.pe-radio-button {
   /* XXX#6668 */
   width: fit-content;
 }
@@ -985,7 +985,7 @@
 
 /*** Clear button ***/
 
-.e-radio-button--clear-button {
+.pe-radio-button--clear-button {
   background-color: var( --fill-color-default );
   border-color:     var( --color-default );
   margin-bottom:    6px;
@@ -993,8 +993,8 @@
   padding:          8px;
 }
 
-.e-radio-button--clear-button::before,
-.e-radio-button--clear-button::after {
+.pe-radio-button--clear-button::before,
+.pe-radio-button--clear-button::after {
   background-color: var( --color-default );
   border-radius:    1px;
   content:          '';
@@ -1002,14 +1002,14 @@
   transform:        rotateZ( -45deg );
 }
 
-.e-radio-button--clear-button::before {
+.pe-radio-button--clear-button::before {
   height: 2px;
   left:   4px;
   top:    7px;
   width:  8px;
 }
 
-.e-radio-button--clear-button::after {
+.pe-radio-button--clear-button::after {
   height: 8px;
   left:   7px;
   top:    4px;
@@ -1020,7 +1020,7 @@
 
 /*** Options ***/
 
-.e-radio-button--body[data-options-orientation="horizontal"] {
+.pe-radio-button--body[data-options-orientation="horizontal"] {
   display:    flex;
   column-gap: 24px;
 }
@@ -1029,20 +1029,20 @@
 
 /*** Option ***/
 
-.e-radio-button--option {
+.pe-radio-button--option {
   display:        flex;
   padding-bottom: 6px;
   padding-top:    6px;
 }
 
-.e-radio-button--option-label {
+.pe-radio-button--option-label {
   /* XXX#5049
    * By using the {text-align: left} setting, no matter if the label or the helper
    * is longer, both of them are aligned to the left. */
   text-align: left;
 }
 
-.e-radio-button--option-helper {
+.pe-radio-button--option-helper {
   color: var( --color-muted );
 
   /* XXX#5049 */
@@ -1053,7 +1053,7 @@
 
 /*** Option button ***/
 
-.e-radio-button--option-button {
+.pe-radio-button--option-button {
   background-color: var( --fill-color-default );
   margin-bottom:    2px;
   margin-right:     8px;
@@ -1065,8 +1065,8 @@
 
 /*** Option marker ***/
 
-.e-radio-button--option[data-selected="true"]
-.e-radio-button--option-button::before {
+.pe-radio-button--option[data-selected="true"]
+.pe-radio-button--option-button::before {
   animation-name:     opacity-0-1;
   animation-duration: .1s;
   background-color:   var( --color-default          );
@@ -1088,7 +1088,7 @@
 /***** Row *****/
 /*** Body ***/
 
-.e-row--body {
+.pe-row--body {
   display: flex;
   width:   100%;
 
@@ -1097,7 +1097,7 @@
   height: 100%;
 }
 
-.e-row--body[data-wrap-items="true"] {
+.pe-row--body[data-wrap-items="true"] {
   flex-wrap: wrap;
 }
 
@@ -1109,7 +1109,7 @@
 /***** Select *****/
 /*** Select button element ***/
 
-.e-select-button {
+.pe-select-button {
   /* XXX#6668 */
   -width: fit-content;
 }
@@ -1118,15 +1118,15 @@
 
 /*** Select button body ***/
 
-.e-select-button .e-button--body {
+.pe-select-button .pe-button--body {
   -justify-content: space-between;
 }
 
-.e-select-button .e-button--label {
+.pe-select-button .pe-button--label {
   -margin-left: 12px;
 }
 
-.e-select-button .e-button--icon {
+.pe-select-button .pe-button--icon {
   -margin-right: 12px;
 }
 
@@ -1134,12 +1134,12 @@
 
 /*** Options ***/
 
-.e-select--options {
+.pe-select--options {
   /* XXX#0610 */
   z-index: 9999;
 }
 
-.e-select--option-list {
+.pe-select--option-list {
   display: flex;
   flex-direction: column;
 
@@ -1147,7 +1147,7 @@
   padding-bottom: 12px;
 }
 
-.e-select--options-placeholder {
+.pe-select--options-placeholder {
   align-self: center;
   color:      var( --color-highlight );
   padding:    0 36px;
@@ -1157,22 +1157,22 @@
 
 /*** Option ***/
 
-.e-select--option {
+.pe-select--option {
   display: flex;
   padding: 6px 36px;
   width:   100%;
 }
 
-.e-select--option:hover,
-.e-select--option[data-selected="true"]:hover {
+.pe-select--option:hover,
+.pe-select--option[data-selected="true"]:hover {
   background-color: var( --hover-color-highlight );
 }
 
-.e-select--option[data-selected="true"] {
+.pe-select--option[data-selected="true"] {
   background-color: var( --fill-color-highlight );
 }
 
-.e-select--option[data-selected="true"]::before {
+.pe-select--option[data-selected="true"]::before {
   background-color: var( --color-primary );
   border-radius:    50%;
   content:          '';
@@ -1187,7 +1187,7 @@
 
 /*** Header ***/
 
-.e-select--options--label {
+.pe-select--options--label {
   display: flex;
   justify-content: center;
 
@@ -1206,7 +1206,7 @@
 /***** Slider *****/
 /*** Body ***/
 
-.e-slider--body {
+.pe-slider--body {
   height: 20px;
 }
 
@@ -1214,7 +1214,7 @@
 
 /*** Track ***/
 
-.e-slider--track {
+.pe-slider--track {
   background-color: var( --fill-color-highlight );
   border-radius: 2px;
   height: 4px;
@@ -1228,7 +1228,7 @@
 
 /*** Line ***/
 
-.e-slider--line {
+.pe-slider--line {
   cursor: grab;
   height: 10px;
   opacity: .3;
@@ -1236,7 +1236,7 @@
   top: 5px;
 }
 
-.e-slider--line::after {
+.pe-slider--line::after {
   background-color: var( --border-color-primary );
   border-radius: 2px;
   content: '';
@@ -1250,7 +1250,7 @@
 
 /*** Thumb ***/
 
-.e-slider--thumb {
+.pe-slider--thumb {
   background-color: var( --border-color-primary );
   border-radius: 6px;
   cursor: grab;
@@ -1267,12 +1267,12 @@
 
 /***** Spacer *****/
 
-.e-horizontal-spacer,
-.e-vertical-spacer {
+.pe-horizontal-spacer,
+.pe-vertical-spacer {
   flex-shrink: 0;
 }
 
-.e-horizontal-spacer {
+.pe-horizontal-spacer {
   width: 100%;
 }
 
@@ -1283,7 +1283,7 @@
 /***** Switch *****/
 /*** Element ***/
 
-.e-switch {
+.pe-switch {
   /* XXX#6668 */
   width: fit-content;
 }
@@ -1292,7 +1292,7 @@
 
 /*** Options ***/
 
-.e-switch--body[data-options-orientation="horizontal"] {
+.pe-switch--body[data-options-orientation="horizontal"] {
   display:    flex;
   column-gap: 24px;
 }
@@ -1301,25 +1301,25 @@
 
 /*** Option ***/
 
-.e-switch--option {
+.pe-switch--option {
   align-items:    center;
   display:        flex;
   padding-bottom: 6px;
   padding-top:    6px;
 }
 
-.e-switch--option-track {
+.pe-switch--option-track {
   background-color: var( --fill-color-default );
   margin-right:     6px;
   padding:          8px 18px;
 }
 
-.e-switch--option-label {
+.pe-switch--option-label {
   /* XXX#5049 */
   text-align: left;
 }
 
-.e-switch--option-helper {
+.pe-switch--option-helper {
   color: var( --color-muted );
 
   /* XXX#5049 */
@@ -1330,7 +1330,7 @@
 
 /*** Thumb ***/
 
-.e-switch--option-track::before {
+.pe-switch--option-track::before {
   background-color: var( --color-default );
   border-radius:    50%;
   content:          '';
@@ -1343,7 +1343,7 @@
   width:            12px;
 }
 
-.e-switch--option[data-switched="true"] .e-switch--option-track::before {
+.pe-switch--option[data-switched="true"] .pe-switch--option-track::before {
   transform: translateX( 20px );
 }
 
@@ -1355,7 +1355,7 @@
 /***** Text *****/
 /*** Body ***/
 
-.e-text--body {
+.pe-text--body {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -1364,12 +1364,12 @@
   -word-break: break-all;
 }
 
-.e-text--body[data-cropped="true"] {
+.pe-text--body[data-cropped="true"] {
   justify-content: flex-start;
   overflow-y: hidden;
 }
 
-.e-text--body[data-cropped="true"]::after {
+.pe-text--body[data-cropped="true"]::after {
   background-image: linear-gradient(0deg, white, transparent);
   bottom: 0;
  -content: '';
@@ -1383,7 +1383,7 @@
 
 /*** Copyable ***/
 
-.e-text--copyable {
+.pe-text--copyable {
   display: flex;
   max-width: 100%;
 }
@@ -1398,7 +1398,7 @@
 
 /* The input container element contains the input and its accessories
  * (adornments, placeholder, etc.) */
-.e-text-field--input-container {
+.pe-text-field--input-container {
   background-color: var( --fill-color-default );
   display: flex;
   justify-content: space-between;
@@ -1408,16 +1408,16 @@
 
 /*** Input ***/
 
-.e-text-field--input-structure {
+.pe-text-field--input-structure {
   flex-grow: 1;
 }
 
-.e-text-field--input-emphasize {
+.pe-text-field--input-emphasize {
   height: 100%;
   width: 100%;
 }
 
-.e-text-field--input {
+.pe-text-field--input {
   color:   var( --color-default );
   height:  100%;
   padding: 6px 0;
@@ -1427,11 +1427,11 @@
   font-weight: inherit;
 }
 
-.e-text-field--input[type="date"] {
+.pe-text-field--input[type="date"] {
   cursor: text;
 }
 
-textarea.e-text-field--input {
+textarea.pe-text-field--input {
   overflow: hidden;
   resize:   none;
 }
@@ -1440,7 +1440,7 @@ textarea.e-text-field--input {
 
 /*** Adornments ***/
 
-.e-text-field--adornments {
+.pe-text-field--adornments {
   align-items: center;
   display: flex;
 
@@ -1448,15 +1448,15 @@ textarea.e-text-field--input {
   padding: 0 12px;
 }
 
-.e-text-field--adornments-placeholder {
+.pe-text-field--adornments-placeholder {
   cursor: text;
 
   /* XXX#0617 */
   width: 12px;
 }
 
-.e-text-field--adornment:not([data-icon-family]),
-.e-text-field--adornment:not([data-icon-family]) {
+.pe-text-field--adornment:not([data-icon-family]),
+.pe-text-field--adornment:not([data-icon-family]) {
   font-weight: 500;
   min-width: 24px;
   text-align: center;
@@ -1472,7 +1472,7 @@ textarea.e-text-field--input {
 
 /*** Invalid content message ***/
 
-.e-text-field--invalid-content-message {
+.pe-text-field--invalid-content-message {
   color:          var( --color-warning );
   font-size:      var( --font-size-xxs );
   font-weight:    var( --font-weight-medium );
@@ -1485,7 +1485,7 @@ textarea.e-text-field--input {
 
 /*** Placeholder ***/
 
-.e-text-field--placeholder {
+.pe-text-field--placeholder {
   color:       var( --color-highlight );
   font-weight: 400;
   left:        0;
@@ -1499,7 +1499,7 @@ textarea.e-text-field--input {
 
 /*** Surface ***/
 
-.e-text-field--surface {
+.pe-text-field--surface {
   background-color: var( --fill-color-default );
   left: 0;
   overflow: hidden;
@@ -1517,14 +1517,14 @@ textarea.e-text-field--input {
 
 /*** Number field ***/
 
-.e-text-field--input::-webkit-outer-spin-button,
-.e-text-field--input::-webkit-inner-spin-button {
+.pe-text-field--input::-webkit-outer-spin-button,
+.pe-text-field--input::-webkit-inner-spin-button {
   /* Chrome, Safari, Edge, Opera */
   -webkit-appearance: none;
   margin: 0;
 }
 
-.e-text-field--input[type="number"][type=number] {
+.pe-text-field--input[type="number"][type=number] {
   /* Firefox */
   -moz-appearance: textfield;
 }
@@ -1537,7 +1537,7 @@ textarea.e-text-field--input {
 /***** Thumbnail *****/
 /*** Element ***/
 
-.e-thumbnail {
+.pe-thumbnail {
   /* XXX#6668 */
   width: fit-content;
 }
@@ -1546,7 +1546,7 @@ textarea.e-text-field--input {
 
 /*** Body ***/
 
-.e-thumbnail--body {
+.pe-thumbnail--body {
   overflow: hidden;
 }
 
@@ -1554,7 +1554,7 @@ textarea.e-text-field--input {
 
 /*** Image ***/
 
-.e-thumbnail--image {
+.pe-thumbnail--image {
   background-position: center;
   background-repeat:   no-repeat;
   background-size:     cover;
@@ -1566,7 +1566,7 @@ textarea.e-text-field--input {
 
 /*** Icon ***/
 
-.e-thumbnail--icon {
+.pe-thumbnail--icon {
   background-color: var( --fill-color-highlight );
   color:            var( --color-highlight );
   height:           100%;
@@ -1584,7 +1584,7 @@ textarea.e-text-field--input {
 /***** Toggle *****/
 /*** Body ***/
 
-.e-toggle--body {
+.pe-toggle--body {
   display:     block;
   font-weight: 500;
   width:       100%;
@@ -1604,7 +1604,7 @@ textarea.e-text-field--input {
 /***** Vertical line *****/
 /*** Element ***/
 
-.e-vertical-line {
+.pe-vertical-line {
   /* XXX#6668 */
   width: fit-content;
 }
@@ -1613,7 +1613,7 @@ textarea.e-text-field--input {
 
 /*** Body ***/
 
-.e-vertical-line--body {
+.pe-vertical-line--body {
   height: 100%;
 }
 
@@ -1625,12 +1625,12 @@ textarea.e-text-field--input {
 /***** Vertical polarity *****/
 /*** Element ***/
 
-.e-vertical-polarity {
+.pe-vertical-polarity {
   /* XXX#6668 */
   width: fit-content;
 }
 
-.e-vertical-polarity {
+.pe-vertical-polarity {
   /* WARNING! DEPRECATED! DO NOT USE! */
  -width: 100%;
   /* WARNING! DEPRECATED! DO NOT USE! */
@@ -1641,7 +1641,7 @@ textarea.e-text-field--input {
 
 /*** Body ***/
 
-.e-vertical-polarity--body {
+.pe-vertical-polarity--body {
   display:         flex;
   flex-direction:  column;
   justify-content: space-between;
@@ -1651,9 +1651,9 @@ textarea.e-text-field--input {
 
 /*** Content ***/
 
-.e-vertical-polarity--start-content,
-.e-vertical-polarity--middle-content,
-.e-vertical-polarity--end-content {
+.pe-vertical-polarity--start-content,
+.pe-vertical-polarity--middle-content,
+.pe-vertical-polarity--end-content {
   display: flex;
   flex-direction: column;
 }

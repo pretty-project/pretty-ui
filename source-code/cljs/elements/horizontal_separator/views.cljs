@@ -19,10 +19,10 @@
   [separator-id {:keys [color label] :as separator-props}]
   [:div (horizontal-separator.attributes/separator-attributes separator-id separator-props)
         [:div (horizontal-separator.attributes/separator-body-attributes separator-id separator-props)
-              [:hr {:class :e-horizontal-separator--line :data-border-color color}]
-              (if label [:span {:class :e-horizontal-separator--label}
+              [:hr {:class :pe-horizontal-separator--line :data-border-color color}]
+              (if label [:span {:class :pe-horizontal-separator--label}
                                (metamorphic-content/compose label)])
-              [:hr {:class :e-horizontal-separator--line :data-border-color color}]]])
+              [:hr {:class :pe-horizontal-separator--line :data-border-color color}]]])
 
 (defn element
   ; @param (keyword)(opt) separator-id

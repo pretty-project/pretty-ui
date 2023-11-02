@@ -18,7 +18,7 @@
   ;  :data-horizontal-align (keyword)
   ;  :style (map)}
   [_ {:keys [horizontal-align style] :as polarity-props}]
-  (-> {:class                 :e-vertical-polarity--body
+  (-> {:class                 :pe-vertical-polarity--body
        :data-horizontal-align horizontal-align
        :style                 style}
       (pretty-css/indent-attributes polarity-props)))
@@ -32,7 +32,7 @@
   ; @return (map)
   ; {}
   [_ polarity-props]
-  (-> {:class :e-vertical-polarity}
+  (-> {:class :pe-vertical-polarity}
       (pretty-css/default-attributes      polarity-props)
       (pretty-css/outdent-attributes      polarity-props)
       (pretty-css/element-size-attributes polarity-props)))

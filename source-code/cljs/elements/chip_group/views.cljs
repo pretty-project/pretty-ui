@@ -23,20 +23,20 @@
   ;  :placeholder (metamorphic-content)(opt)}
   [group-id {:keys [chips chips-path placeholder] :as group-props}]
   ; XXX#2781 (source-code/cljs/elements/input/env.cljs)
-  ; Just like the optionable inputs the chip-group has multiple chip sources as well:
-  ; A) The :chips property
-  ; B) The application state (:chips-path property)
+  ; Just like the optionable inputs the 'chip-group' element has multiple chip sources:
+  ; A) The ':chips' property
+  ; B) The ':chips-path' property (the application state)
   (let [chips (or chips @(r/subscribe [:get-item chips-path]))]
        (if (vector/nonempty? chips)
 
-           ; Iterating over the chips if it's a nonempty vector
+           ; Iterating over the 'chips' vector if it's nonempty
            ; Every item in the vector displayed on a chip with applying the 'chip-label-f' on the item
            (letfn [(f [chip-list chip-dex chip]
                       (let [chip-props (chip-group.prototypes/chip-props-prototype group-id group-props chip-dex chip)]
                            (conj chip-list [chip.views/element chip-props])))]
-                  (reduce-kv f [:div {:class :e-chip-group--chips}] chips))
+                  (reduce-kv f [:div {:class :pe-chip-group--chips}] chips))
 
-           ; Displaying the placeholder if the chips is NOT a nonempty vector
+           ; Displaying the placeholder if the 'chips' vector is NOT nonempty
            (if placeholder [:div (chip-group.attributes/chip-group-placeholder-attributes group-id group-props)
                                  (metamorphic-content/compose placeholder)]))))
 

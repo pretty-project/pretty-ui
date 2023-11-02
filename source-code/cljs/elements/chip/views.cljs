@@ -20,9 +20,9 @@
         [:div (chip.attributes/chip-body-attributes chip-id chip-props)
               (if-let [{:keys [icon icon-family]} (:primary-button chip-props)]
                       [:button (chip.attributes/primary-button-attributes chip-id chip-props)
-                               [:i {:class :e-chip--primary-button-icon :data-icon-family icon-family} icon]]
-                      [:div    {:class :e-chip--primary-button--placeholder}])
-              (if icon  [:i {:class :e-chip--icon :data-icon-family icon-family :data-icon-size :xs} icon])
+                               [:i {:class :pe-chip--primary-button-icon :data-icon-family icon-family} icon]]
+                      [:div    {:class :pe-chip--primary-button--placeholder}])
+              (if icon  [:i {:class :pe-chip--icon :data-icon-family icon-family :data-icon-size :xs} icon])
               (if label [:div (chip.attributes/chip-label-attributes chip-id chip-props)
                               (metamorphic-content/compose label)])]])
 

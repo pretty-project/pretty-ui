@@ -25,7 +25,7 @@
   [checkbox-id {:keys [option-helper-f option-label-f] :as checkbox-props} option]
   [:button (checkbox.attributes/checkbox-option-attributes checkbox-id checkbox-props option)
            [:div (checkbox.attributes/checkbox-option-button-attributes checkbox-id checkbox-props option)]
-           [:div {:class :e-checkbox--option-content :data-click-target :opacity}
+           [:div {:class :pe-checkbox--option-content :data-click-target :opacity}
                  [:div (checkbox.attributes/checkbox-option-label-attributes checkbox-id checkbox-props option)
                        (-> option option-label-f metamorphic-content/compose)]
                  (if option-helper-f [:div (checkbox.attributes/checkbox-option-helper-attributes checkbox-id checkbox-props option)

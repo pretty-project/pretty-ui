@@ -16,7 +16,7 @@
   ; @return (map)
   ; {:class (keyword or keywords in vector)}
   [_ {:keys [surface]}]
-  (-> {:class :e-dropdown-menu--surface-body}
+  (-> {:class :pe-dropdown-menu--surface-body}
       (pretty-css/border-attributes surface)
       (pretty-css/color-attributes  surface)
       (pretty-css/indent-attributes surface)))
@@ -31,7 +31,7 @@
   ; @return (map)
   ; {:class (keyword or keywords in vector)}
   [_ {:keys [surface]}]
-  (-> {:class :e-dropdown-menu--surface}
+  (-> {:class :pe-dropdown-menu--surface}
       (pretty-css/outdent-attributes surface)))
 
 ;; ----------------------------------------------------------------------------
@@ -48,7 +48,7 @@
   ; {:class (keyword or keywords in vector)
   ;  :style (map)}
   [_ {:keys [style] :as menu-props}]
-  (-> {:class :e-dropdown-menu--body
+  (-> {:class :pe-dropdown-menu--body
        :style style}
       (pretty-css/indent-attributes menu-props)))
 
@@ -73,7 +73,7 @@
   ; - https://www.geeksforgeeks.org/how-to-disable-mouseout-events-triggered-by-child-elements
   ;   According to this article using on-mouse-leave instead of the on-mouse-out event
   ;   solves the problem.
-  (-> {:class :e-dropdown-menu
+  (-> {:class :pe-dropdown-menu
        :on-mouse-leave #(swap! dropdown-menu.state/MENUS assoc-in [menu-id :active-dex] nil)}
       (pretty-css/default-attributes menu-props)
       (pretty-css/outdent-attributes menu-props)))

@@ -16,7 +16,7 @@
   ; {:class (keyword or keywords in vector)
   ;  :style (map)}
   [_ {:keys [style] :as blank-props}]
-  (-> {:class :e-blank--body
+  (-> {:class :pe-blank--body
        :style style}
       (pretty-css/border-attributes blank-props)
       (pretty-css/color-attributes  blank-props)
@@ -34,7 +34,7 @@
   ; @return (map)
   ; {:class (keyword or keywords in vector)}
   [_ blank-props]
-  (-> {:class :e-blank}
+  (-> {:class :pe-blank}
       (pretty-css/default-attributes      blank-props)
       (pretty-css/outdent-attributes      blank-props)
       (pretty-css/element-size-attributes blank-props)))

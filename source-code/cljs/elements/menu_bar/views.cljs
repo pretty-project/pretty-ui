@@ -21,7 +21,8 @@
   ;  :label (metamorphic-content)(opt)
   ;  :on-click (Re-Frame metamorphic-event)(opt)}
   [bar-id bar-props {:keys [href icon label on-click] :as item-props}]
-  (let [item-props (menu-bar.prototypes/item-props-prototype bar-props item-props)]
+  (let [item-props (pretty-presets/apply-preset                        item-props)
+        item-props (menu-bar.prototypes/item-props-prototype bar-props item-props)]
        [:div (menu-bar.attributes/menu-item-attributes bar-id bar-props item-props)
              [(cond href :a on-click :button :else :div)
               (menu-bar.attributes/menu-item-body-attributes bar-id bar-props item-props)
@@ -37,12 +38,12 @@
   ; {:menu-items (maps in vector)}
   [bar-id {:keys [menu-items] :as bar-props}]
   ; XXX#5406
-  ; For menu bars with horizontal orientation, the {overflow-x: scroll}
-  ; and {display: flex} properties can only be used together (without errors)
-  ; if the width of the scroll container element (.e-menu-bar--body) is not greater
-  ; than the total width of the elements inside it.
-  ; Therefore the {:horizontal-align :space-between} setting cannot be implemented,
-  ; while keeping the {overflow-x: scroll} property.
+  ; For menu bars with horizontal orientation, the '{overflow-x: scroll}'
+  ; and '{display: flex}' properties can only used together (without errors)
+  ; if the width of the scroll container element ('.pe-menu-bar--body') is not greater
+  ; than the total width of the elements within.
+  ; Therefore the '{:horizontal-align :space-between}' setting cannot be implemented,
+  ; while keeping the '{overflow-x: scroll}' property.
   [:div (menu-bar.attributes/menu-bar-attributes bar-id bar-props)
         [:div (menu-bar.attributes/menu-bar-body-attributes bar-id bar-props)
               (letfn [(f [item-props] [menu-bar-item bar-id bar-props item-props])]
@@ -55,8 +56,8 @@
   ; Some other items based on the 'menu-bar' element and their documentations link here.
   ;
   ; @description
-  ; You can set the default item styles and settings by using the ':item-default'
-  ; property or you can specify these values on each item separately.
+  ; You can set the default menu item properties by using the ':item-default'
+  ; property or you can specify the properties for each menu item separately.
   ;
   ; @param (keyword)(opt) bar-id
   ; @param (map) bar-props
@@ -127,6 +128,7 @@
   ;     :label (metamorphic-content)(opt)
   ;     :on-click (Re-Frame metamorphic-event)(opt)
   ;     :on-mouse-over (Re-Frame metamorphic-event)(opt)
+  ;     :preset (keyword)(opt)
   ;     :target (keyword)(opt)
   ;      :blank, :self}]
   ;  :orientation (keyword)(opt)

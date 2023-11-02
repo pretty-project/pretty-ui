@@ -20,7 +20,7 @@
   ; {}
   [slider-id {:keys []}]
   (let [translate-x (get-in @slider.state/THUMBS [slider-id :primary :current-translate-x] 0)]
-       {:class             :e-slider--thumb
+       {:class             :pe-slider--thumb
         :data-click-effect :opacity
         :on-mouse-down     #(slider.side-effects/start-sliding! % slider-id :primary)
         :style             {:left      (->           0 css/px)
@@ -37,7 +37,7 @@
   ; {}
   [slider-id slider-props]
   (let [translate-x (get-in @slider.state/THUMBS [slider-id :secondary :current-translate-x] 0)]
-       {:class             :e-slider--thumb
+       {:class             :pe-slider--thumb
         :data-click-effect :opacity
         :on-mouse-down     #(slider.side-effects/start-sliding! % slider-id :secondary)
         :style             {:right     (->           0 css/px)
@@ -57,7 +57,7 @@
   ; {}
   [slider-id slider-props]
   (let []
-       {:class             :e-slider--line
+       {:class             :pe-slider--line
         :data-click-effect :opacity
         :style {:width "200px"}}))
 
@@ -75,7 +75,7 @@
   ; {:class (keyword or keywords in vector)
   ;  :style (map)}
   [_ {:keys [style] :as slider-props}]
-  (-> {:class :e-slider--body
+  (-> {:class :pe-slider--body
        :style style}
       (pretty-css/indent-attributes slider-props)))
 
@@ -91,7 +91,7 @@
   ; @return (map)
   ; {}
   [_ slider-props]
-  (-> {:class :e-slider}
+  (-> {:class :pe-slider}
       (pretty-css/default-attributes      slider-props)
       (pretty-css/outdent-attributes      slider-props)
       (pretty-css/element-size-attributes slider-props)))

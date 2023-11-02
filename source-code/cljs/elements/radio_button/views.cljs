@@ -25,7 +25,7 @@
   [button-id {:keys [option-helper-f option-label-f] :as button-props} option]
   [:button (radio-button.attributes/radio-button-option-attributes button-id button-props option)
            [:div (radio-button.attributes/radio-button-option-button-attributes button-id button-props)]
-           [:div {:class :e-radio-button--option-content :data-click-target :opacity}
+           [:div {:class :pe-radio-button--option-content :data-click-target :opacity}
                  (if option-label-f  [:div (radio-button.attributes/radio-button-option-label-attributes button-id button-props)
                                            (-> option option-label-f metamorphic-content/compose)])
                  (if option-helper-f [:div (radio-button.attributes/radio-button-option-helper-attributes button-id button-props)
@@ -41,7 +41,7 @@
   [:div (radio-button.attributes/radio-button-attributes button-id button-props)
         [element.views/element-label button-id button-props]
         (if deselectable? [:button (radio-button.attributes/clear-button-attributes button-id button-props)])
-                                   ; [:div.e-radio-button--clear-button-label (metamorphic-content/compose :delete!)]
+                                   ; [:div {:class :pe-radio-button--clear-button-label} (metamorphic-content/compose :delete!)]
         [:div (radio-button.attributes/radio-button-body-attributes button-id button-props)
               (let [options (input.env/get-input-options button-id button-props)]
                    (letfn [(f [option] [radio-button-option button-id button-props option])]

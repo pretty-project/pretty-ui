@@ -2,6 +2,7 @@
 (ns components.content-swapper-button.views
     (:require [components.content-swapper-button.prototypes :as content-swapper-button.prototypes]
               [elements.api                                 :as elements]
+              [pretty-elements.api :as pretty-elements]
               [random.api                                   :as random]))
 
 ;; ----------------------------------------------------------------------------
@@ -45,4 +46,4 @@
   ([button-id button-props]
    (fn [_ button-props] ; XXX#0106 (README.md#parametering)
        (let [button-props (content-swapper-button.prototypes/button-props-prototype button-props)]
-            [elements/button button-id button-props]))))
+            [pretty-elements/button button-id button-props]))))

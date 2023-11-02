@@ -23,7 +23,7 @@
   (let [field-key   (multi-field.utils/field-dex->react-key       group-id group-props field-dex)
         field-id    (multi-field.utils/field-dex->field-id        group-id group-props field-dex)
         field-props (multi-field.prototypes/field-props-prototype group-id group-props field-dex)]
-       [:div {:class :e-multi-field--text-field :key field-key}
+       [:div {:class :pe-multi-field--text-field :key field-key}
              (if (or initial-options options options-path)
                  [combo-box.views/element  field-id field-props]
                  [text-field.views/element field-id field-props])]))

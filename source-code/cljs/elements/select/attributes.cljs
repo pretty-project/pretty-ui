@@ -30,7 +30,7 @@
         option-value     (option-value-f option)
         option-selected? (= selected-value option-value)
         on-click         [:elements.select/select-option! select-id select-props option]]
-       {:class               :e-select--option
+       {:class               :pe-select--option
         :data-click-effect   :opacity
         :data-font-size      :s
         :data-font-weight    (if option-selected? :semi-bold :medium)
@@ -47,11 +47,11 @@
   ; @param (map) select-props
   ; {}
   [_ {:keys [options-label]}]
-  (if options-label {:class            :e-select--options--label
+  (if options-label {:class            :pe-select--options--label
                      :data-font-size   :s
                      :data-font-weight :medium
                      :data-line-height :text-block}
-                    {:class            :e-select--options--label
+                    {:class            :pe-select--options--label
                      :data-placeholder true}))
 
 (defn select-options-placeholder-attributes
@@ -63,7 +63,7 @@
   ; @return (map)
   ; {}
   [_ _]
-  {:class               :e-select--options-placeholder
+  {:class               :pe-select--options-placeholder
    :data-font-size      :s
    :data-font-weight    :medium
    :data-letter-spacing :auto
@@ -81,7 +81,7 @@
   ; @return (map)
   ; {}
   [_ select-props]
-  (-> {:class :e-select-button}
+  (-> {:class :pe-select-button}
       (pretty-css/default-attributes select-props)
       (pretty-css/outdent-attributes select-props)
       (pretty-css/effect-attributes  select-props)))

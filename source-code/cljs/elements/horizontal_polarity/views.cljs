@@ -20,15 +20,15 @@
   [polarity-id {:keys [end-content middle-content start-content] :as polarity-props}]
   [:div (horizontal-polarity.attributes/polarity-attributes polarity-id polarity-props)
         [:div (horizontal-polarity.attributes/polarity-body-attributes polarity-id polarity-props)
-              (if start-content  [:div {:class :e-horizontal-polarity--start-content}
+              (if start-content  [:div {:class :pe-horizontal-polarity--start-content}
                                        [metamorphic-content/compose start-content]]
-                                 [:div {:class :e-horizontal-polarity--placeholder}])
-              (if middle-content [:div {:class :e-horizontal-polarity--middle-content}
+                                 [:div {:class :pe-horizontal-polarity--placeholder}])
+              (if middle-content [:div {:class :pe-horizontal-polarity--middle-content}
                                        [metamorphic-content/compose middle-content]]
-                                 [:div {:class :e-horizontal-polarity--placeholder}])
-              (if end-content    [:div {:class :e-horizontal-polarity--end-content}
+                                 [:div {:class :pe-horizontal-polarity--placeholder}])
+              (if end-content    [:div {:class :pe-horizontal-polarity--end-content}
                                        [metamorphic-content/compose end-content]]
-                                 [:div {:class :e-horizontal-polarity--placeholder}])]])
+                                 [:div {:class :pe-horizontal-polarity--placeholder}])]])
 
 (defn element
   ; @param (keyword)(opt) polarity-id

@@ -25,7 +25,7 @@
               (let [page-pool   (-> @content-swapper.state/SWAPPERS swapper-id :page-pool)
                     active-page (-> @content-swapper.state/SWAPPERS swapper-id :active-page)]
                    (letfn [(f [dex {:keys [id page]}] [react/mount-animation {:mounted? (= id active-page)}
-                                                                             [:div {:class :e-content-swapper--page}
+                                                                             [:div {:class :pe-content-swapper--page}
                                                                                    [metamorphic-content/compose page]]])]
                           (hiccup/put-with-indexed [:<>] page-pool f)))]])
 

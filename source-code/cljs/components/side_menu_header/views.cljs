@@ -1,8 +1,8 @@
 
 (ns components.side-menu-header.views
-    (:require [components.side-menu-button.views      :as side-menu-button.views]
-              [components.side-menu-header.prototypes :as side-menu-header.prototypes]
+    (:require [components.side-menu-header.prototypes :as side-menu-header.prototypes]
               [elements.api                           :as elements]
+              [pretty-elements.api                           :as pretty-elements]
               [random.api                             :as random]
               [re-frame.api                           :as r]
               [string.api                             :as string]))
@@ -17,12 +17,13 @@
   ; @param (map) header-props
   [_ _]
   (let [app-title @(r/subscribe [:x.core/get-app-config-item :app-title])]
-       [side-menu-button.views/component ::app-home-button
-                                         {:font-weight :semi-bold
-                                          :icon        :cloud
-                                          :icon-color  "#0aaaa0"
-                                          :label (string/to-uppercase app-title)
-                                          :on-click []}]))
+       [pretty-elements/button ::app-home-button
+                               {:font-weight :semi-bold
+                                :icon        :cloud
+                                :icon-color  "#0aaaa0"
+                                :label (string/to-uppercase app-title)
+                                :on-click []
+                                :preset :default-presets/side-menu-button}]))
 
 (defn- side-menu-header
   ; @ignore

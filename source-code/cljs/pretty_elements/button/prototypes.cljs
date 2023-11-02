@@ -1,5 +1,5 @@
 
-(ns elements.button.prototypes
+(ns pretty-elements.button.prototypes
     (:require [metamorphic-content.api :as metamorphic-content]))
 
 ;; ----------------------------------------------------------------------------

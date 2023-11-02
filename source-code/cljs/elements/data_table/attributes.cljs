@@ -17,7 +17,7 @@
   ; {:class (keyword or keywords in vector)
   ;  :style (map)}
   [_ _ {:keys [template]}]
-  {:class :e-data-table--column
+  {:class :pe-data-table--column
    :style {:grid-template-rows template}})
 
 (defn table-row-attributes
@@ -32,7 +32,7 @@
   ; {:class (keyword or keywords in vector)
   ;  :style (map)}
   [_ _ {:keys [template]}]
-  {:class :e-data-table--row
+  {:class :pe-data-table--row
    :style {:grid-template-columns template}})
 
 (defn table-cell-attributes
@@ -48,7 +48,7 @@
   ;  :data-horizontal-text-align (keyword)
   ;  :data-selectable (boolean)}
   [_ _ {:keys [horizontal-align selectable?] :as cell-props}]
-  (-> {:class                      :e-data-table--cell
+  (-> {:class                      :pe-data-table--cell
        :data-horizontal-text-align horizontal-align
        :data-selectable            selectable?}
       (pretty-css/color-attributes  cell-props)
@@ -70,7 +70,7 @@
   ; {:class (keyword or keywords in vector)
   ;  :style (map)}
   [_ {:keys [style] :as table-props}]
-  (-> {:class :e-data-table--body
+  (-> {:class :pe-data-table--body
        :style style}
       (pretty-css/indent-attributes table-props)))
 
@@ -86,6 +86,6 @@
   ; @return (map)
   ; {:class (keyword or keywords in vector)}
   [_ table-props]
-  (-> {:class :e-data-table}
+  (-> {:class :pe-data-table}
       (pretty-css/default-attributes table-props)
       (pretty-css/outdent-attributes table-props)))

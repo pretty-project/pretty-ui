@@ -24,7 +24,7 @@
   ;  :data-wrap-items (boolean)
   ;  :style (map)}
   [_ {:keys [gap horizontal-align style vertical-align wrap-items?] :as row-props}]
-  (-> {:class                     :e-row--body
+  (-> {:class                     :pe-row--body
        :data-column-gap           gap
        :data-horizontal-row-align horizontal-align
        :data-vertical-row-align   vertical-align
@@ -46,7 +46,7 @@
   ; @return (map)
   ; {}
   [_ row-props]
-  (-> {:class :e-row}
+  (-> {:class :pe-row}
       (pretty-css/default-attributes          row-props)
       (pretty-css/outdent-attributes          row-props)
       (pretty-css/element-max-size-attributes row-props)

@@ -18,7 +18,7 @@
   ; @param (map) label-props
   ; {:helper (metamorphic-content)}
   [_ {:keys [helper]}]
-  (if helper [:div {:class               :e-label--helper
+  (if helper [:div {:class               :pe-label--helper
                     :data-font-size      :xs
                     :data-letter-spacing :auto
                     :data-line-height    :text-block}
@@ -32,7 +32,7 @@
   ; {:info-text (metamorphic-content)(opt)}
   [label-id {:keys [info-text]}]
   (if info-text (if-let [info-text-visible? (label.env/info-text-visible? label-id)]
-                        [:div {:class               :e-label--info-text
+                        [:div {:class               :pe-label--info-text
                                :data-font-size      :xs
                                :data-letter-spacing :auto
                                :data-line-height    :text-block}
@@ -54,7 +54,7 @@
   ; @param (map) label-props
   ; {:icon (keyword)}
   [_ {:keys [icon] :as label-props}]
-  (if icon [:i (pretty-css/icon-attributes {:class :e-label--icon} label-props) icon]))
+  (if icon [:i (pretty-css/icon-attributes {:class :pe-label--icon} label-props) icon]))
 
 (defn- label-content
   ; @ignore
@@ -69,17 +69,17 @@
   ; https://css-tricks.com/html-inputs-and-labels-a-love-story/
   ; ... it is always the best idea to use an explicit label instead of an implicit label.
   ;
-  ; XXX#7030 Why the {:on-copy ...} setting needs the .e-label--copyable element?
-  ; 1. By using the 'label' element with {:on-copy ...} setting, ...
+  ; XXX#7030 Why the '{:on-copy ...}' setting needs the '.pe-label--copyable' element?
+  ; 1. By using the 'label' element with '{:on-copy ...}' setting, ...
   ;    ... the content will be a clickable sensor and by clicking on it, it copies
   ;        the content to the clipboard by using the given event.
   ;    ... when the user moves the pointer over the sensor, a tooltip shown up with
   ;        the label 'Copy' (as a pseudo-element).
-  ;    ... The tooltip is implemented by the {:data-tooltip-content ...} CSS preset,
+  ;    ... The tooltip is implemented by the '{:data-tooltip-content ...}' CSS preset,
   ;        which has to be applied on the sensor element.
-  ; 2. The .e-label--content element has the {overflow: hidden} setting, therefore it's
-  ;    not capable to be applied with the {:data-tooltip-content ...} preset.
-  ; 3. The .e-label--body element always fits with its environment in width, therefore
+  ; 2. The '.pe-label--content' element has the '{overflow: hidden}' setting, therefore it's
+  ;    not capable to be applied with the '{:data-tooltip-content ...}' preset.
+  ; 3. The '.pe-label--body' element always fits with its environment in width, therefore
   ;    it's often too wide to be the sensor element.
   ;
   ; XXX#7039 Why the label element without a 'target-id' property shown in a DIV tag?

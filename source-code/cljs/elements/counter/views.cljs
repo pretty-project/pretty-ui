@@ -23,7 +23,7 @@
         [:div (counter.attributes/counter-body-attributes counter-id counter-props)
               [:button (counter.attributes/decrease-button-attributes counter-id counter-props)]
               (let [value @(r/subscribe [:get-item value-path])]
-                   [:div {:class :e-counter--value} value])
+                   [:div {:class :pe-counter--value} value])
               [:button (counter.attributes/increase-button-attributes counter-id counter-props)]
               (if resetable? [:button (counter.attributes/reset-button-attributes counter-id counter-props)])]])
 

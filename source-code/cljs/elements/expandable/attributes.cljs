@@ -18,7 +18,7 @@
   ; @return (map)
   ; {}
   [_ expandable-props]
-  (-> {:class :e-expandable--icon}
+  (-> {:class :pe-expandable--icon}
       (pretty-css/icon-attributes expandable-props)))
 
 (defn expandable-header-attributes
@@ -31,9 +31,9 @@
   ; @return (map)
   ; {}
   [expandable-id {:keys [disabled?]}]
-  (if disabled? {:class             :e-expandable--header
+  (if disabled? {:class             :pe-expandable--header
                  :disabled          true}
-                {:class             :e-expandable--header
+                {:class             :pe-expandable--header
                  :data-click-effect :opacity
                  :data-selectable   false
                  :on-click    #(expandable.side-effects/toggle! expandable-id)
@@ -53,7 +53,7 @@
   ; {:class (keyword or keywords in vector)
   ;  :style (map)}
   [_ {:keys [style] :as expandable-props}]
-  (-> {:class :e-expandable--body
+  (-> {:class :pe-expandable--body
        :style style}
       (pretty-css/indent-attributes expandable-props)))
 
@@ -69,6 +69,6 @@
   ; @return (map)
   ; {}
   [_ expandable-props]
-  (-> {:class :e-expandable}
+  (-> {:class :pe-expandable}
       (pretty-css/default-attributes expandable-props)
       (pretty-css/outdent-attributes expandable-props)))

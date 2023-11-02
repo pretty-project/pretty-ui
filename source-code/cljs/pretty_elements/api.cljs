@@ -1,6 +1,8 @@
 
-(ns elements.api
-    (:require [elements.checkbox.effects]
+(ns pretty-elements.api
+    (:require [pretty-elements.button.effects]
+              [pretty-elements.button.side-effects]
+              [elements.checkbox.effects]
               [elements.checkbox.events]
               [elements.checkbox.subs]
               [elements.chip-group.effects]
@@ -47,6 +49,7 @@
               [elements.text-field.side-effects]
               [elements.breadcrumbs.views          :as breadcrumbs.views]
               [elements.blank.views                :as blank.views]
+              [pretty-elements.button.views               :as button.views]
               [elements.card.views                 :as card.views]
               [elements.checkbox.views             :as checkbox.views]
               [elements.chip-group.views           :as chip-group.views]
@@ -106,9 +109,10 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; elements.*.views
+; pretty-elements.*.views
 (def breadcrumbs          breadcrumbs.views/element)
 (def blank                blank.views/element)
+(def button               button.views/element)
 (def card                 card.views/element)
 (def checkbox             checkbox.views/element)
 (def chip-group           chip-group.views/element)

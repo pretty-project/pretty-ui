@@ -2,6 +2,7 @@
 (ns components.popup-label-bar.views
     (:require [components.popup-label-bar.prototypes :as popup-label-bar.prototypes]
               [elements.api                          :as elements]
+              [pretty-elements.api                          :as pretty-elements]
               [random.api                            :as random]))
 
 ;; ----------------------------------------------------------------------------
@@ -21,11 +22,11 @@
   ; type mode, then set the on-click event as the on-enter event of the field as well.
   [:div {:class :c-popup-label-bar}
         [:div {:class :c-popup-label-bar--body}
-              (if secondary-button [elements/button secondary-button]
+              (if secondary-button [pretty-elements/button secondary-button]
                                    [:div {:class :c-popup-label-bar--placeholder}])
               (if label            [elements/label label]
                                    [:div {:class :c-popup-label-bar--placeholder}])
-              (if primary-button   [elements/button primary-button]
+              (if primary-button   [pretty-elements/button primary-button]
                                    [:div {:class :c-popup-label-bar--placeholder}])]])
 
 (defn component

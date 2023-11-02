@@ -26,10 +26,10 @@
   [counter-id {:keys [disabled? max-value value-path] :as counter-props}]
   (let [value @(r/subscribe [:get-item value-path])]
        (-> (if (or disabled? (= max-value value))
-               {:class             :e-counter--increase-button
+               {:class             :pe-counter--increase-button
                 :disabled          true
                 :data-disabled     true}
-               {:class             :e-counter--increase-button
+               {:class             :pe-counter--increase-button
                 :data-click-effect :opacity
                 :on-click          #(r/dispatch [:elements.counter/increase-value! counter-id counter-props])
                 :on-mouse-up       #(dom/blur-active-element!)})
@@ -54,10 +54,10 @@
   [counter-id {:keys [disabled? min-value value-path] :as counter-props}]
   (let [value @(r/subscribe [:get-item value-path])]
        (-> (if (or disabled? (= min-value value))
-               {:class             :e-counter--decrease-button
+               {:class             :pe-counter--decrease-button
                 :disabled          true
                 :data-disabled     true}
-               {:class             :e-counter--decrease-button
+               {:class             :pe-counter--decrease-button
                 :data-click-effect :opacity
                 :on-click          #(r/dispatch [:elements.counter/decrease-value! counter-id counter-props])
                 :on-mouse-up       #(dom/blur-active-element!)})
@@ -75,7 +75,7 @@
   [_ counter-props]
   ; The reset button border color is independent from the increase and decrease
   ; buttons border color.
-  (-> {:class :e-counter--reset-button}
+  (-> {:class :pe-counter--reset-button}
       (pretty-css/border-attributes counter-props)
       (merge {:data-border-color :default})))
 
@@ -94,7 +94,7 @@
   ;  :data-selectable (boolean)
   ;  :style (map)}
   [_ {:keys [style] :as counter-props}]
-  (-> {:class           :e-counter--body
+  (-> {:class           :pe-counter--body
        :data-selectable false
        :style           style}
       (pretty-css/indent-attributes counter-props)))
@@ -110,6 +110,6 @@
   ;
   ; @return (map)
   [_ counter-props]
-  (-> {:class :e-counter}
+  (-> {:class :pe-counter}
       (pretty-css/default-attributes counter-props)
       (pretty-css/outdent-attributes counter-props)))

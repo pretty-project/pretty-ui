@@ -17,12 +17,12 @@
   ; @return (map)
   ; {}
   [_ {:keys [background-size disabled? href on-click style] :as thumbnail-props}]
-  (-> (if disabled? {:class                :e-thumbnail--body
+  (-> (if disabled? {:class                :pe-thumbnail--body
                      :disabled             true
                      :data-background-size background-size
                      :data-selectable      false
                      :style                style}
-                    {:class                :e-thumbnail--body
+                    {:class                :pe-thumbnail--body
                      :data-background-size background-size
                      :data-click-effect    (if (or href on-click) :opacity)
                      :data-selectable      false
@@ -46,6 +46,6 @@
   ; @return (map)
   ; {}
   [_ thumbnail-props]
-  (-> {:class :e-thumbnail}
+  (-> {:class :pe-thumbnail}
       (pretty-css/default-attributes thumbnail-props)
       (pretty-css/outdent-attributes thumbnail-props)))

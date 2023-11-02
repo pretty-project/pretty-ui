@@ -1,5 +1,5 @@
 
-(ns elements.button.side-effects
+(ns pretty-elements.button.side-effects
     (:require [dom.api              :as dom]
               [hiccup.api           :as hiccup]
               [keypress-handler.api :as keypress-handler]
@@ -80,9 +80,9 @@
 ; @ignore
 ;
 ; @param (keyword) button-id
-(r/reg-fx :elements.button/reg-keypress-event! reg-keypress-event!)
+(r/reg-fx :pretty-elements.button/reg-keypress-event! reg-keypress-event!)
 
 ; @ignore
 ;
 ; @param (keyword) button-id
-(r/reg-fx :elements.button/remove-keypress-event! remove-keypress-event!)
+(r/reg-fx :pretty-elements.button/remove-keypress-event! remove-keypress-event!)

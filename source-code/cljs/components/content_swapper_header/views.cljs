@@ -2,6 +2,7 @@
 (ns components.content-swapper-header.views
     (:require [components.content-swapper-header.prototypes :as content-swapper-header.prototypes]
               [elements.api                                 :as elements]
+              [pretty-elements.api :as pretty-elements]
               [random.api                                   :as random]))
 
 ;; ----------------------------------------------------------------------------
@@ -49,4 +50,4 @@
   ([header-id header-props]
    (fn [_ header-props] ; XXX#0106 (README.md#parametering)
        (let [header-props (content-swapper-header.prototypes/header-props-prototype header-props)]
-            [elements/button header-id header-props]))))
+            [pretty-elements/button header-id header-props]))))

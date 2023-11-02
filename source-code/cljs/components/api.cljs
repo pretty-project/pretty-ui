@@ -27,17 +27,13 @@
               [components.notification-bubble.views      :as notification-bubble.views]
               [components.pdf-preview.views              :as pdf-preview.views]
               [components.popup-label-bar.views          :as popup-label-bar.views]
-              [components.popup-menu-button.views        :as popup-menu-button.views]
               [components.popup-menu-header.views        :as popup-menu-header.views]
-              [components.popup-menu-label.views         :as popup-menu-label.views]
               [components.popup-menu-title.views         :as popup-menu-title.views]
               [components.popup-progress-indicator.views :as popup-progress-indicator.views]
-              [components.side-menu-button.views         :as side-menu-button.views]
               [components.side-menu-footer.views         :as side-menu-footer.views]
               [components.side-menu-header.views         :as side-menu-header.views]
               [components.side-menu-label.views          :as side-menu-label.views]
               [components.side-menu.views                :as side-menu.views]
-              [components.sidebar-button.views           :as sidebar-button.views]
               [components.section-description.views      :as section-description.views]
               [components.section-title.views            :as section-title.views]
               [components.user-avatar.views              :as user-avatar.views]
@@ -81,17 +77,13 @@
 (def notification-bubble      notification-bubble.views/component)
 (def pdf-preview              pdf-preview.views/component)
 (def popup-label-bar          popup-label-bar.views/component)
-(def popup-menu-button        popup-menu-button.views/component)
 (def popup-menu-header        popup-menu-header.views/component)
-(def popup-menu-label         popup-menu-label.views/component)
 (def popup-menu-title         popup-menu-title.views/component)
 (def popup-progress-indicator popup-progress-indicator.views/component)
 (def side-menu                side-menu.views/component)
-(def side-menu-button         side-menu-button.views/component)
 (def side-menu-footer         side-menu-footer.views/component)
 (def side-menu-header         side-menu-header.views/component)
 (def side-menu-label          side-menu-label.views/component)
-(def sidebar-button           sidebar-button.views/component)
 (def section-description      section-description.views/component)
 (def section-title            section-title.views/component)
 (def user-avatar              user-avatar.views/component)

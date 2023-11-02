@@ -24,7 +24,7 @@
   ;  :on-click (function)
   ;  :on-mouse-up (function)}
   [_ _ {:keys [on-click] :as crumb-props}]
-  (-> {:class               :e-breadcrumbs--crumb
+  (-> {:class               :pe-breadcrumbs--crumb
        :data-font-size      :xs
        :data-font-weight    :semi-bold
        :data-letter-spacing :auto
@@ -53,7 +53,7 @@
   ;  :data-scroll-axis (boolean)
   ;  :style (map)}
   [_ {:keys [style] :as breadcrumbs-props}]
-  (-> {:class            :e-breadcrumbs--body
+  (-> {:class            :pe-breadcrumbs--body
        :data-column-gap  :xs
        :data-scroll-axis :x
        :style            style}
@@ -71,6 +71,6 @@
   ; @return (map)
   ; {:class (keyword or keywords in vector)}
   [_ breadcrumbs-props]
-  (-> {:class :e-breadcrumbs}
+  (-> {:class :pe-breadcrumbs}
       (pretty-css/default-attributes breadcrumbs-props)
       (pretty-css/outdent-attributes breadcrumbs-props)))

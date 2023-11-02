@@ -17,11 +17,11 @@
   ; @return (map)
   ; {}
   [card-id {:keys [disabled? horizontal-align hover-effect href on-click style] :as card-props}]
-  (-> (if disabled? {:class                        :e-card--body
+  (-> (if disabled? {:class                        :pe-card--body
                      :data-horizontal-column-align horizontal-align
                      :disabled                     true
                      :style                        style}
-                    {:class                        :e-card--body
+                    {:class                        :pe-card--body
                      :data-click-effect            (if (or href on-click) :opacity)
                      :data-hover-effect            hover-effect
                      :data-horizontal-column-align horizontal-align
@@ -53,7 +53,7 @@
   ; @return (map)
   ; {:class (keyword or keywords in vector)}
   [_ card-props]
-  (-> {:class :e-card}
+  (-> {:class :pe-card}
       (pretty-css/default-attributes          card-props)
       (pretty-css/outdent-attributes          card-props)
       (pretty-css/element-max-size-attributes card-props)

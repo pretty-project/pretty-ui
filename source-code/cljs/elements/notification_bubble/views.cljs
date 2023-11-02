@@ -1,6 +1,6 @@
 
 (ns elements.notification-bubble.views
-    (:require [elements.button.views                   :as button.views]
+    (:require [pretty-elements.button.views                   :as button.views]
               [elements.icon-button.views              :as icon-button.views]
               [elements.notification-bubble.attributes :as notification-bubble.attributes]
               [elements.notification-bubble.prototypes :as notification-bubble.prototypes]

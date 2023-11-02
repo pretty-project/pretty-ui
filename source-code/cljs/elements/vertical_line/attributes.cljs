@@ -16,7 +16,7 @@
   ; @return (map)
   ; {}
   [line-id {:keys [strength style] :as line-props}]
-  (-> {:class :e-vertical-line--body
+  (-> {:class :pe-vertical-line--body
        :style (merge style {:width (css/px strength)})}
       (pretty-css/color-attributes  line-props)
       (pretty-css/indent-attributes line-props)))
@@ -33,7 +33,7 @@
   ; @return (map)
   ; {:class (keyword or keywords in vector)}
   [_ line-props]
-  (-> {:class :e-vertical-line}
+  (-> {:class :pe-vertical-line}
       (pretty-css/default-attributes      line-props)
       (pretty-css/outdent-attributes      line-props)
       (pretty-css/element-size-attributes line-props)))

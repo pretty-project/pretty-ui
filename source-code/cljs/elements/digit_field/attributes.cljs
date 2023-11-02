@@ -16,7 +16,7 @@
   ; {:class (keyword or keywords in vector)
   ;  :style (map)}
   [_ {:keys [style] :as field-props}]
-  (-> {:class :e-digit-field--body
+  (-> {:class :pe-digit-field--body
        :style style}
       (pretty-css/indent-attributes field-props)))
 
@@ -32,6 +32,6 @@
   ; @return (map)
   ; {}
   [_ field-props]
-  (-> {:class :e-digit-field}
+  (-> {:class :pe-digit-field}
       (pretty-css/default-attributes field-props)
       (pretty-css/outdent-attributes field-props)))

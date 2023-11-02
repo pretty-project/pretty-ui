@@ -16,7 +16,7 @@
   ; {:class (keyword or keywords in vector)
   ;  :style (map)}
   [_ {:keys [style] :as stepper-props}]
-  (-> {:class :e-stepper--body
+  (-> {:class :pe-stepper--body
        :style style}
       (pretty-css/indent-attributes stepper-props)))
 
@@ -32,6 +32,6 @@
   ; @return (map)
   ; {:class (keyword or keywords in vector)}
   [_ stepper-props]
-  (-> {:class :e-stepper}
+  (-> {:class :pe-stepper}
       (pretty-css/default-attributes stepper-props)
       (pretty-css/outdent-attributes stepper-props)))

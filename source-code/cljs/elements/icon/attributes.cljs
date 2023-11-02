@@ -15,7 +15,7 @@
   ; @return (map)
   ; {}
   [icon-id {:keys [style] :as icon-props}]
-  (-> {:class           :e-icon--body
+  (-> {:class           :pe-icon--body
        :data-selectable false
        :style           style}
       (pretty-css/icon-attributes   icon-props)
@@ -32,6 +32,6 @@
   ;
   ; @return (map)
   [_ icon-props]
-  (-> {:class :e-icon}
+  (-> {:class :pe-icon}
       (pretty-css/default-attributes icon-props)
       (pretty-css/outdent-attributes icon-props)))

@@ -1,6 +1,7 @@
 
 (ns pretty-presets.api
-    (:require [pretty-presets.preset-pool.env          :as preset-pool.env]
+    (:require [pretty-presets.default-presets.presets]
+              [pretty-presets.preset-pool.env          :as preset-pool.env]
               [pretty-presets.preset-pool.side-effects :as preset-pool.side-effects]))
 
 ;; ----------------------------------------------------------------------------
