@@ -2,6 +2,7 @@
 (ns pretty-diagrams.point-diagram.views
     (:require [pretty-diagrams.point-diagram.attributes :as point-diagram.attributes]
               [pretty-diagrams.point-diagram.prototypes :as point-diagram.prototypes]
+              [pretty-presets.api                       :as pretty-presets]
               [random.api                               :as random]))
 
 ;; ----------------------------------------------------------------------------
@@ -42,6 +43,7 @@
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
   ;  :points (integers in vector)
+  ;  :preset (keyword)(opt)
   ;  :strength (px)(opt)
   ;    Default: 2
   ;    Min: 1
@@ -57,5 +59,6 @@
 
   ([diagram-id diagram-props]
    (fn [_ diagram-props] ; XXX#0106 (README.md#parametering)
-       (let [] ; diagram-props (point-diagram.prototypes/diagram-props-prototype diagram-props)
+       (let [diagram-props (pretty-presets/apply-preset diagram-props)]
+            ; diagram-props (point-diagram.prototypes/diagram-props-prototype diagram-props)
             [point-diagram diagram-id diagram-props]))))

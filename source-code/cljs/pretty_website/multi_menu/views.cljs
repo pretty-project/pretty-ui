@@ -4,6 +4,7 @@
               [pretty-website.multi-menu.attributes :as multi-menu.attributes]
               [pretty-website.multi-menu.prototypes :as multi-menu.prototypes]
               [pretty-website.sidebar.views         :as sidebar.views]
+              [pretty-presets.api                  :as pretty-presets]
               [random.api                           :as random]
               [window-observer.api                  :as window-observer]))
 
@@ -32,7 +33,7 @@
 
 (defn component
   ; @info
-  ; XXX#0715 (source-code/cljs/elements/dropdown_menu/views.cljs)
+  ; XXX#0715 (source-code/cljs/pretty_elements/dropdown_menu/views.cljs)
   ; The 'multi-menu' component is based on the 'dropdown-menu' element.
   ; For more information check out the documentation of the 'dropdown-menu' element.
   ;
@@ -54,6 +55,7 @@
   ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
+  ;  :preset (keyword)(opt)
   ;  :style (map)(opt)
   ;  :threshold (px)(opt)
   ;   Default: 0}
@@ -68,5 +70,6 @@
 
   ([menu-id menu-props]
    (fn [_ menu-props] ; XXX#0106 (README.md#parametering)
-       (let [menu-props (multi-menu.prototypes/menu-props-prototype menu-props)]
+       (let [menu-props (pretty-presets/apply-preset                menu-props)
+             menu-props (multi-menu.prototypes/menu-props-prototype menu-props)]
             [multi-menu menu-id menu-props]))))

@@ -3,6 +3,7 @@
     (:require [hiccup.api                                  :as hiccup]
               [pretty-website.language-selector.attributes :as language-selector.attributes]
               [pretty-website.language-selector.prototypes :as language-selector.prototypes]
+              [pretty-presets.api                  :as pretty-presets]
               [random.api                                  :as random]))
 
 ;; ----------------------------------------------------------------------------
@@ -43,6 +44,7 @@
   ;  :languages (keywords in vector)
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
+  ;  :preset (keyword)(opt)
   ;  :style (map)(opt)}
   ;
   ; @usage
@@ -58,5 +60,6 @@
 
   ([selector-id selector-props]
    (fn [_ selector-props] ; XXX#0106 (README.md#parametering)
-       (let [selector-props (language-selector.prototypes/selector-props-prototype selector-props)]
+       (let [selector-props (pretty-presets/apply-preset                           selector-props)
+             selector-props (language-selector.prototypes/selector-props-prototype selector-props)]
             [language-selector selector-id selector-props]))))

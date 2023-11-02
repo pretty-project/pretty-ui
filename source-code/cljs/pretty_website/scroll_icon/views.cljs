@@ -3,6 +3,7 @@
     (:require [pretty-website.scroll-icon.attributes :as scroll-icon.attributes]
               [pretty-website.scroll-icon.prototypes :as scroll-icon.prototypes]
               [pretty-website.scroll-sensor.views    :as scroll-sensor.views]
+              [pretty-presets.api                  :as pretty-presets]
               [random.api                            :as random]))
 
 ;; ----------------------------------------------------------------------------
@@ -26,6 +27,7 @@
   ;   Default: "#FFFFFF"
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
+  ;  :preset (keyword)(opt)
   ;  :style (map)(opt)}
   ;
   ; @usage
@@ -38,5 +40,6 @@
 
   ([icon-id icon-props]
    (fn [_ icon-props] ; XXX#0106 (README.md#parametering)
-       (let [icon-props (scroll-icon.prototypes/icon-props-prototype icon-props)]
+       (let [icon-props (pretty-presets/apply-preset                 icon-props)
+             icon-props (scroll-icon.prototypes/icon-props-prototype icon-props)]
             [scroll-icon icon-id icon-props]))))

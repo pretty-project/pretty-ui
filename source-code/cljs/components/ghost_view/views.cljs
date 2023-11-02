@@ -1,7 +1,7 @@
 
 (ns components.ghost-view.views
     (:require [components.ghost-view.prototypes :as ghost-view.prototypes]
-              [elements.api                     :as elements]
+              [pretty-elements.api                     :as pretty-elements]
               [random.api                       :as random]))
 
 ;; ----------------------------------------------------------------------------
@@ -13,7 +13,7 @@
   ; {:breadcrumb-count (integer)(opt)}
   [_ {:keys [breadcrumb-count]}]
   (if breadcrumb-count [:div {:style {:display "flex" :gap "12px" :padding-top "6px"}}
-                             (letfn [(f [%1 %2] (conj %1 [elements/ghost {:height :s :style {:width "80px"}}]))]
+                             (letfn [(f [%1 %2] (conj %1 [pretty-elements/ghost {:height :s :style {:width "80px"}}]))]
                                     (reduce f [:<>] (range breadcrumb-count)))]))
 
 ;; ----------------------------------------------------------------------------
@@ -26,7 +26,7 @@
   [_ {:keys [item-count]}]
   [:div {:style {:width "100%"}}
         [:div {:style {:display "flex" :flex-direction "column" :width "100%" :padding "0 12px"}}
-              (letfn [(f [%1 %2] (conj %1 [:div {:style {:flex-grow 1}} [elements/ghost {:height :xxl :outdent {:horizontal :xs}}]]))]
+              (letfn [(f [%1 %2] (conj %1 [:div {:style {:flex-grow 1}} [pretty-elements/ghost {:height :xxl :outdent {:horizontal :xs}}]]))]
                      (reduce f [:<>] (range item-count)))]])
 
 ;; ----------------------------------------------------------------------------
@@ -37,7 +37,7 @@
   ; @param (map) view-props
   [view-id view-props]
   [:div {:style {:width "100%" :display "flex" :flex-direction "column"}}
-        [elements/ghost {:height :xl :style {:margin-bottom "6px" :width "240px"}}]
+        [pretty-elements/ghost {:height :xl :style {:margin-bottom "6px" :width "240px"}}]
         [breadcrumbs-ghost view-id view-props]])
 
 (defn- box-surface-body-ghost
@@ -45,9 +45,9 @@
   ; @param (map) view-props
   [view-id view-props]
   [:div {:style {:display "flex" :flex-direction "column" :width "100%" :gap "24px"}}
-        [:div {:style {:flex-grow 1}} [elements/ghost {:height :5xl :outdent {}}]]
-        [:div {:style {:flex-grow 1}} [elements/ghost {:height :5xl :outdent {}}]]
-        [:div {:style {:flex-grow 1}} [elements/ghost {:height :5xl :outdent {}}]]])
+        [:div {:style {:flex-grow 1}} [pretty-elements/ghost {:height :5xl :outdent {}}]]
+        [:div {:style {:flex-grow 1}} [pretty-elements/ghost {:height :5xl :outdent {}}]]
+        [:div {:style {:flex-grow 1}} [pretty-elements/ghost {:height :5xl :outdent {}}]]])
 
 (defn- box-surface-ghost
   ; @param (keyword) view-id
@@ -55,7 +55,7 @@
   ; {:breadcrumb-count (integer)(opt)}
   [view-id view-props]
   [:div.c-ghost-view {:data-layout :box-surface}
-                     [elements/ghost {:height :xl :style {:width "240px"}}]
+                     [pretty-elements/ghost {:height :xl :style {:width "240px"}}]
                      [breadcrumbs-ghost view-id view-props]
                      [:div {:style {:width "100%" :height "96px"}}]
                      [box-surface-body-ghost view-id view-props]])
@@ -78,8 +78,8 @@
   ; @param (map) view-props
   ; {:indent (map)(opt)}
   [view-id {:keys [indent] :as view-props}]
-  [elements/blank {:content [ghost-view-body view-id view-props]
-                   :indent  indent}])
+  [pretty-elements/blank {:content [ghost-view-body view-id view-props]
+                          :indent  indent}])
 
 (defn component
   ; @param (keyword)(opt) view-id

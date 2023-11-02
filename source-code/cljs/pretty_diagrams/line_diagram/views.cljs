@@ -3,6 +3,7 @@
     (:require [hiccup.api                              :as hiccup]
               [pretty-diagrams.line-diagram.attributes :as line-diagram.attributes]
               [pretty-diagrams.line-diagram.prototypes :as line-diagram.prototypes]
+              [pretty-presets.api                      :as pretty-presets]
               [random.api                              :as random]))
 
 ;; ----------------------------------------------------------------------------
@@ -34,6 +35,7 @@
   ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
+  ;  :preset (keyword)(opt)
   ;  :sections (maps in vector)}
   ;   [{:color (keyword or string)(opt)
   ;      :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
@@ -61,5 +63,6 @@
 
   ([diagram-id diagram-props]
    (fn [_ diagram-props] ; XXX#0106 (README.md#parametering)
-       (let [diagram-props (line-diagram.prototypes/diagram-props-prototype diagram-props)]
+       (let [diagram-props (pretty-presets/apply-preset                     diagram-props)
+             diagram-props (line-diagram.prototypes/diagram-props-prototype diagram-props)]
             [line-diagram diagram-id diagram-props]))))

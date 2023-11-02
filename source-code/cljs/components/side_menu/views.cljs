@@ -2,7 +2,7 @@
 (ns components.side-menu.views
     (:require [components.side-menu.helpers    :as side-menu.helpers]
               [components.side-menu.prototypes :as side-menu.prototypes]
-              [elements.api                    :as elements]
+              [pretty-elements.api                    :as pretty-elements]
               [metamorphic-content.api         :as metamorphic-content]
               [random.api                      :as random]
               [window-observer.api             :as window-observer]))

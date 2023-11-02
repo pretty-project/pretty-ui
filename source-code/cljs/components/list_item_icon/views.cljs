@@ -1,6 +1,6 @@
 
 (ns components.list-item-icon.views
-    (:require [elements.api :as elements]
+    (:require [pretty-elements.api :as pretty-elements]
               [random.api   :as random]))
 
 ;; ----------------------------------------------------------------------------
@@ -11,11 +11,11 @@
   ; @param (map) icon-props
   [icon-id icon-props]
   [:div {:class :c-list-item-icon}
-        [elements/icon icon-id icon-props]])
+        [pretty-elements/icon icon-id icon-props]])
 
 (defn component
   ; @info
-  ; XXX#0709 (source-code/cljs/elements/icon/views.cljs)
+  ; XXX#0709 (source-code/cljs/pretty_elements/icon/views.cljs)
   ; The 'list-item-icon' component is based on the 'icon' element.
   ; For more information check out the documentation of the 'icon' element.
   ;

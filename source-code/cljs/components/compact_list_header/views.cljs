@@ -2,7 +2,7 @@
 (ns components.compact-list-header.views
     (:require [components.compact-list-header.attributes :as compact-list-header.attributes]
               [components.compact-list-header.prototypes :as compact-list-header.prototypes]
-              [elements.api                              :as elements]
+              [pretty-elements.api                              :as pretty-elements]
               [random.api                                :as random]))
 
 ;; ----------------------------------------------------------------------------
@@ -15,9 +15,9 @@
   [header-id {:keys [hide-button order-button search-field] :as header-props}]
   [:div (compact-list-header.attributes/header-attributes header-id header-props)
         [:div (compact-list-header.attributes/header-body-attributes header-id header-props)
-              [elements/icon-button order-button]
-              [elements/text-field  search-field]
-              [elements/icon-button hide-button]]])
+              [pretty-elements/icon-button order-button]
+              [pretty-elements/text-field  search-field]
+              [pretty-elements/icon-button hide-button]]])
 
 (defn component
   ; @param (keyword)(opt) header-id

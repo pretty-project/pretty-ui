@@ -1,7 +1,7 @@
 
 (ns components.side-menu-header.views
     (:require [components.side-menu-header.prototypes :as side-menu-header.prototypes]
-              [elements.api                           :as elements]
+              [pretty-elements.api                           :as pretty-elements]
               [pretty-elements.api                           :as pretty-elements]
               [random.api                             :as random]
               [re-frame.api                           :as r]
@@ -31,7 +31,7 @@
   ; @param (keyword) header-id
   ; @param (map) header-props
   [header-id header-props]
-  [:<> [elements/horizontal-separator {:height :xs}]
+  [:<> [pretty-elements/horizontal-separator {:height :xs}]
        [app-home-button header-id header-props]])
 
 (defn component

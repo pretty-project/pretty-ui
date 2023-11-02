@@ -3,7 +3,7 @@
     (:require [components.illustration.views          :as illustration.views]
               [components.vector-item-list.attributes :as vector-item-list.attributes]
               [components.vector-item-list.prototypes :as vector-item-list.prototypes]
-              [elements.api                           :as elements]
+              [pretty-elements.api                           :as pretty-elements]
               [random.api                             :as random]
               [re-frame.api                           :as r]))
 
@@ -20,7 +20,7 @@
   [_ {{:keys [illustration label]} :placeholder}]
   [:div {:class :c-vector-item-list--placeholder}
         (if illustration [illustration.views/component {:illustration illustration :height :s :width :s}])
-        (if label        [elements/label {:content label :font-size :l :font-weight :semi-bold}])])
+        (if label        [pretty-elements/label {:content label :font-size :l :font-weight :semi-bold}])])
 
 (defn- vector-item-list-items
   ; @ignore

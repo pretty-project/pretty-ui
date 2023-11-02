@@ -5,6 +5,7 @@
               [pretty-website.sidebar.attributes :as sidebar.attributes]
               [pretty-website.sidebar.prototypes :as sidebar.prototypes]
               [pretty-website.sidebar.state      :as sidebar.state]
+              [pretty-presets.api                  :as pretty-presets]
               [random.api                        :as random]
               [react.api                         :as react]))
 
@@ -54,6 +55,7 @@
   ;  :position (keyword)(opt)
   ;   :left, :right
   ;   Default: :left
+  ;  :preset (keyword)(opt)
   ;  :style (map)(opt)}
   ;
   ; @usage
@@ -66,5 +68,6 @@
 
   ([sidebar-id sidebar-props]
    (fn [_ sidebar-props] ; XXX#0106 (README.md#parametering)
-       (let [sidebar-props (sidebar.prototypes/sidebar-props-prototype sidebar-props)]
+       (let [sidebar-props (pretty-presets/apply-preset                sidebar-props)
+             sidebar-props (sidebar.prototypes/sidebar-props-prototype sidebar-props)]
             [sidebar sidebar-id sidebar-props]))))

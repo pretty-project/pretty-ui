@@ -1,7 +1,7 @@
 
 (ns components.error-content.views
     (:require [components.error-content.prototypes :as error-content.prototypes]
-              [elements.api                        :as elements]
+              [pretty-elements.api                        :as pretty-elements]
               [random.api                          :as random]))
 
 ;; ----------------------------------------------------------------------------
@@ -11,21 +11,21 @@
   ; @param (keyword) content-id
   ; @param (map) content-props
   [_ _]
-  [elements/label {:color            :warning
-                   :content          :an-error-occured
-                   :font-size        :m
-                   :horizontal-align :center
-                   :outdent          {:top :xxl}}])
+  [pretty-elements/label {:color            :warning
+                          :content          :an-error-occured
+                          :font-size        :m
+                          :horizontal-align :center
+                          :outdent          {:top :xxl}}])
 
 (defn- error-message-label
   ; @param (keyword) content-id
   ; @param (map) content-props
   ; {:content (metamorphic-content)}
   [_ {:keys [content]}]
-  [elements/label {:color            :muted
-                   :content          content
-                   :horizontal-align :center
-                   :outdent          {:bottom :xxl}}])
+  [pretty-elements/label {:color            :muted
+                          :content          content
+                          :horizontal-align :center
+                          :outdent          {:bottom :xxl}}])
 
 (defn- error-content
   ; @param (keyword) content-id

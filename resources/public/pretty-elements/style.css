@@ -354,7 +354,7 @@
 /*** Element ***/
 
 .pe-content-swapper {
-  /* XXX#0517 (source-code/cljs/elements/content_swapper/views.cljs) */
+  /* XXX#0517 (source-code/cljs/pretty_elements/content_swapper/views.cljs) */
   height: 100%;
   width:  100%;
 }
@@ -364,7 +364,7 @@
 /*** Body ***/
 
 .pe-content-swapper--body {
-  /* XXX#0517 (source-code/cljs/elements/content_swapper/views.cljs) */
+  /* XXX#0517 (source-code/cljs/pretty_elements/content_swapper/views.cljs) */
   height: 100%;
   width:  100%;
 }

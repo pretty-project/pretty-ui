@@ -2056,7 +2056,7 @@ This component is the default label component of the elements.
 
 ```
 @warning
-BUG#9912 (source-code/cljs/elements/button.views)
+BUG#9912 (source-code/cljs/pretty_elements/button.views)
 ```
 
 ```

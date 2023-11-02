@@ -1,7 +1,7 @@
 
 (ns components.list-item-drag-handle.views
     (:require [components.list-item-drag-handle.prototypes :as list-item-drag-handle.prototypes]
-              [elements.api                                :as elements]
+              [pretty-elements.api                                :as pretty-elements]
               [random.api                                  :as random]))
 
 ;; ----------------------------------------------------------------------------
@@ -12,7 +12,7 @@
   ; @param (map) handle-props
   ; {:drag-attributes (map)}
   [_ {:keys [drag-attributes]}]
-  [:div.c-list-item-drag-handle drag-attributes [elements/icon {:icon :drag_handle}]])
+  [:div.c-list-item-drag-handle drag-attributes [pretty-elements/icon {:icon :drag_handle}]])
 
 (defn component
   ; @param (keyword)(opt) handle-id

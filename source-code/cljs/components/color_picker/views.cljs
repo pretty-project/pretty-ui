@@ -3,7 +3,7 @@
     (:require [components.color-picker.attributes :as color-picker.attributes]
               [components.color-picker.prototypes :as color-picker.prototypes]
               [components.component.views         :as component.views]
-              [elements.api                       :as elements]
+              [pretty-elements.api                       :as pretty-elements]
               [metamorphic-content.api            :as metamorphic-content]
               [random.api                         :as random]
               [re-frame.api                       :as r]))
@@ -46,7 +46,7 @@
 
 (defn component
   ; @info
-  ; XXX#0709 (source-code/cljs/elements/color_selector/views.cljs)
+  ; XXX#0709 (source-code/cljs/pretty_elements/color_selector/views.cljs)
   ; The 'color-picker' component is based on the 'color-selector' element.
   ; For more information check out the documentation of the 'color-selector' element.
   ;

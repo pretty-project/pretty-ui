@@ -3,6 +3,7 @@
     (:require [metamorphic-content.api                 :as metamorphic-content]
               [pretty-layouts.plain-surface.attributes :as plain-surface.attributes]
               [pretty-layouts.plain-surface.prototypes :as plain-surface.prototypes]
+              [pretty-presets.api                        :as pretty-presets]
               [random.api                              :as random]
               [re-frame.api                            :as r]
               [reagent.api                             :as reagent]))
@@ -44,6 +45,7 @@
   ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;  :on-mount (Re-Frame metamorphic-event)(opt)
   ;  :on-unmount (Re-Frame metamorphic-event)(opt)
+  ;  :preset (keyword)(opt)
   ;  :style (map)(opt)}
   ;
   ; @usage
@@ -56,5 +58,6 @@
 
   ([surface-id surface-props]
    (fn [_ surface-props] ; XXX#0106 (README.md#parametering)
-       (let [layout-props (plain-surface.prototypes/surface-props-prototype surface-props)]
+       (let [surface-props (pretty-presets/apply-preset                      surface-props)
+             surface-props (plain-surface.prototypes/surface-props-prototype surface-props)]
             [plain-surface surface-id surface-props]))))

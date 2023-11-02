@@ -2,7 +2,7 @@
 (ns components.item-list-header.views
     (:require [components.item-list-header.helpers    :as item-list-header.helpers]
               [components.item-list-header.prototypes :as item-list-header.prototypes]
-              [elements.api                           :as elements]
+              [pretty-elements.api                           :as pretty-elements]
               [random.api                             :as random]))
 
 ;; ----------------------------------------------------------------------------
@@ -18,7 +18,7 @@
   [header-id header-props cell-dex {:keys [label] :as cell-props}]
   (let [cell-props (item-list-header.prototypes/cell-props-prototype header-id header-props cell-dex cell-props)]
        [:div.c-item-list-header--cell (item-list-header.helpers/cell-attributes cell-props)
-                                      (if label [elements/label cell-props])]))
+                                      (if label [pretty-elements/label cell-props])]))
 
 (defn- header-cells
   ; @param (keyword) header-id

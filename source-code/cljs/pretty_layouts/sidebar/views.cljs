@@ -3,6 +3,7 @@
     (:require [metamorphic-content.api           :as metamorphic-content]
               [pretty-layouts.sidebar.attributes :as sidebar.attributes]
               [pretty-layouts.sidebar.prototypes :as sidebar.prototypes]
+              [pretty-presets.api                        :as pretty-presets]
               [random.api                        :as random]
               [re-frame.api                      :as r]
               [reagent.api                       :as reagent]
@@ -71,6 +72,7 @@
   ;  :position (keyword)(opt)
   ;   :left, :right
   ;   Default: :left
+  ;  :preset (keyword)(opt)
   ;  :style (map)(opt)
   ;  :threshold (px)(opt)
   ;   Default: 720}
@@ -85,5 +87,6 @@
 
   ([sidebar-id sidebar-props]
    (fn [_ sidebar-props] ; XXX#0106 (README.md#parametering)
-       (let [sidebar-props (sidebar.prototypes/sidebar-props-prototype sidebar-props)]
+       (let [sidebar-props (pretty-presets/apply-preset                sidebar-props)
+             sidebar-props (sidebar.prototypes/sidebar-props-prototype sidebar-props)]
             [sidebar sidebar-id sidebar-props]))))

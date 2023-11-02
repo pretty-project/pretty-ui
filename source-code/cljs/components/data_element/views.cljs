@@ -1,7 +1,7 @@
 
 (ns components.data-element.views
     (:require [components.data-element.prototypes :as data-element.prototypes]
-              [elements.api                       :as elements]
+              [pretty-elements.api                       :as pretty-elements]
               [random.api                         :as random]))
 
 ;; ----------------------------------------------------------------------------
@@ -17,15 +17,15 @@
   ;  :label (metamorphic-content)(opt)
   ;  :marked? (boolean)(opt)}
   [_ {:keys [disabled? font-size helper info-text label marked?]}]
-  ; XXX#0510 (source-code/app/components/frontend/data_element/prototypes.cljs)
-  (if label [elements/label {:content             label
-                             :disabled?           disabled?
-                             :font-size           font-size
-                             :helper              helper
-                             :horizontal-position :left
-                             :info-text           info-text
-                             :marked?             marked?
-                             :selectable?         false}]))
+  ; XXX#0510 (source-code/app/pretty_components/frontend/data_element/prototypes.cljs)
+  (if label [pretty-elements/label {:content             label}
+                                   :disabled?           disabled?
+                                   :font-size           font-size
+                                   :helper              helper
+                                   :horizontal-position :left
+                                   :info-text           info-text
+                                   :marked?             marked?
+                                   :selectable?         false]))
 
 (defn- data-element-value
   ; @param (keyword) element-id
@@ -36,15 +36,15 @@
   ;  :placeholder (metamorphic-content)(opt)}
   ; @param (metamorphic-content) value
   [_ {:keys [copyable? disabled? font-size placeholder]} value]
-  [elements/text {:copyable?           copyable?
-                  :color               :muted
-                  :content             value
-                  :disabled?           disabled?
-                  :font-size           font-size
-                  :horizontal-position :left
-                  :line-height         :text-block
-                  :placeholder         placeholder
-                  :selectable?         true}])
+  [pretty-elements/text {:copyable?           copyable?}
+                        :color               :muted
+                        :content             value
+                        :disabled?           disabled?
+                        :font-size           font-size
+                        :horizontal-position :left
+                        :line-height         :text-block
+                        :placeholder         placeholder
+                        :selectable?         true])
 
 (defn- data-element-values
   ; @param (keyword) element-id
@@ -60,9 +60,9 @@
   ; @param (map) element-props
   ; {:indent (map)(opt)}
   [element-id {:keys [indent] :as element-props}]
-  [elements/blank {:indent  indent
-                   :content [:<> [data-element-label  element-id element-props]
-                                 [data-element-values element-id element-props]]}])
+  [pretty-elements/blank {:indent  indent
+                          :content [:<> [data-element-label  element-id element-props]
+                                        [data-element-values element-id element-props]]}])
 
 (defn component
   ; @param (keyword)(opt) element-id

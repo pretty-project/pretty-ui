@@ -1,7 +1,7 @@
 
 (ns components.consent-dialog.views
     (:require [components.consent-dialog.prototypes :as consent-dialog.prototypes]
-              [elements.api                         :as elements]
+              [pretty-elements.api                         :as pretty-elements]
               [metamorphic-content.api              :as metamorphic-content]
               [pretty-layouts.api                   :as pretty-layouts]
               [random.api                           :as random]))
@@ -34,18 +34,18 @@
   ; @param (map) dialog-props
   ; {:label (metamorphic-content)(opt)}
   [_ {:keys [label]}]
-  [elements/label ::header-label
-                  {:content label
-                   :indent  {:horizontal :xs :left :s}}])
+  [pretty-elements/label ::header-label
+                         {:content label
+                          :indent  {:horizontal :xs :left :s}}])
 
 (defn- consent-dialog-header
   ; @param (keyword) dialog-id
   ; @param (map) dialog-props
   [dialog-id dialog-props]
-  [elements/horizontal-polarity ::consent-dialog-header
-                                {:start-content  [secondary-button dialog-id dialog-props]
-                                 :middle-content [header-label     dialog-id dialog-props]
-                                 :end-content    [primary-button   dialog-id dialog-props]}])
+  [pretty-elements/horizontal-polarity ::consent-dialog-header
+                                       {:start-content  [secondary-button dialog-id dialog-props]
+                                        :middle-content [header-label     dialog-id dialog-props]
+                                        :end-content    [primary-button   dialog-id dialog-props]}])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

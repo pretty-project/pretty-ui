@@ -2,7 +2,7 @@
 (ns components.side-menu-footer.views
     (:require [components.copyright-label.views       :as copyright-label.views]
               [components.side-menu-footer.prototypes :as side-menu-footer.prototypes]
-              [elements.api                           :as elements]
+              [pretty-elements.api                           :as pretty-elements]
               [random.api                             :as random]
               [re-frame.api                           :as r]
               [string.api                             :as string]))

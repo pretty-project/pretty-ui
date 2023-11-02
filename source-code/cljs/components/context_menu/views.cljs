@@ -1,7 +1,7 @@
 
 (ns components.context-menu.views
     (:require [pretty-elements.api :as pretty-elements]
-              [elements.api :as elements]
+              [pretty-elements.api :as pretty-elements]
               [pretty-layouts.api :as pretty-layouts]
               [random.api         :as random]))
 
@@ -33,7 +33,7 @@
   [menu-id {:keys [menu-items] :as menu-props}]
   (letfn [(f [menu-items menu-item] (conj menu-items [context-menu-item menu-id menu-props menu-item]))]
          [:<> (reduce f [:<>] menu-items)
-              [elements/horizontal-separator {:height :xs}]]))
+              [pretty-elements/horizontal-separator {:height :xs}]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -42,11 +42,11 @@
   ; @param (keyword) menu-id
   ; @param (map) menu-props
   [_ _]
-  [elements/icon-button ::close-icon-button
-                        {:hover-color :highlight
-                         :keypress    {:key-code 27}
-                         :on-click    [:x.ui/remove-popup! :components.context-menu/view]
-                         :preset      :close}])
+  [pretty-elements/icon-button ::close-icon-button
+                               {:hover-color :highlight
+                                :keypress    {:key-code 27}
+                                :on-click    [:x.ui/remove-popup! :components.context-menu/view]
+                                :preset      :close}])
 
 (defn- header-label
   ; @param (keyword) menu-id
@@ -54,20 +54,20 @@
   ; {:label (metamorphic-content)(opt)
   ;  :placeholder (metamorphic-content)(opt)}
   [_ {:keys [label placeholder]}]
-  [elements/label ::header-label
-                  {:color       :muted
-                   :content     label
-                   :font-size   :xs
-                   :indent      {:horizontal :xs :left :s}
-                   :placeholder placeholder}])
+  [pretty-elements/label ::header-label
+                         {:color       :muted
+                          :content     label
+                          :font-size   :xs
+                          :indent      {:horizontal :xs :left :s}
+                          :placeholder placeholder}])
 
 (defn- context-menu-header
   ; @param (keyword) menu-id
   ; @param (map) menu-props
   [menu-id menu-props]
-  [elements/horizontal-polarity ::context-menu-header
-                                {:start-content [header-label      menu-id menu-props]
-                                 :end-content   [close-icon-button menu-id menu-props]}])
+  [pretty-elements/horizontal-polarity ::context-menu-header
+                                       {:start-content [header-label      menu-id menu-props]
+                                        :end-content   [close-icon-button menu-id menu-props]}])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

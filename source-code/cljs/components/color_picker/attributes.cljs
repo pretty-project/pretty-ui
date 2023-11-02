@@ -58,7 +58,7 @@
   ;  :style (map)}
   [picker-id {{:keys [gap]} :color-stamp :keys [on-select style value-path] :as picker-props}]
   (let [selector-props {:on-select on-select :value-path value-path}
-        on-click       [:elements.color-selector/render-selector! picker-id selector-props]]
+        on-click       [:pretty-elements.color-selector/render-selector! picker-id selector-props]]
        (-> {:class           :c-color-picker--body
             :data-column-gap gap
             :on-click        #(r/dispatch on-click)

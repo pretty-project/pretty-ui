@@ -3,6 +3,7 @@
     (:require [metamorphic-content.api             :as metamorphic-content]
               [pretty-layouts.box-popup.attributes :as box-popup.attributes]
               [pretty-layouts.box-popup.prototypes :as box-popup.prototypes]
+              [pretty-presets.api                  :as pretty-presets]
               [random.api                          :as random]
               [re-frame.api                        :as r]
               [reagent.api                         :as reagent]
@@ -81,6 +82,7 @@
   ;  :on-unmount (Re-Frame metamorphic-event)(opt)
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
+  ;  :preset (keyword)(opt)
   ;  :stretch-orientation (keyword)(opt)
   ;   :both, :horizontal, :vertical
   ;  :style (map)(opt)}
@@ -95,5 +97,6 @@
 
   ([popup-id popup-props]
    (fn [_ popup-props] ; XXX#0106 (README.md#parametering)
-       (let [popup-props (box-popup.prototypes/popup-props-prototype popup-props)]
+       (let [popup-props (pretty-presets/apply-preset                popup-props)
+             popup-props (box-popup.prototypes/popup-props-prototype popup-props)]
             [box-popup popup-id popup-props]))))

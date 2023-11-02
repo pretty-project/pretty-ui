@@ -3,6 +3,7 @@
     (:require [metamorphic-content.api               :as metamorphic-content]
               [pretty-layouts.plain-popup.attributes :as plain-popup.attributes]
               [pretty-layouts.plain-popup.prototypes :as plain-popup.prototypes]
+              [pretty-presets.api                        :as pretty-presets]
               [random.api                            :as random]
               [re-frame.api                          :as r]
               [reagent.api                           :as reagent]
@@ -46,6 +47,7 @@
   ;  :on-cover (Re-Frame metamorphic-event)(opt)
   ;  :on-mount (Re-Frame metamorphic-event)(opt)
   ;  :on-unmount (Re-Frame metamorphic-event)(opt)
+  ;  :preset (keyword)(opt)
   ;  :style (map)(opt)}
   ;
   ; @usage
@@ -58,5 +60,6 @@
 
   ([popup-id popup-props]
    (fn [_ popup-props] ; XXX#0106 (README.md#parametering)
-       (let [popup-props (plain-popup.prototypes/popup-props-prototype popup-props)]
+       (let [popup-props (pretty-presets/apply-preset                  popup-props)
+             popup-props (plain-popup.prototypes/popup-props-prototype popup-props)]
             [plain-popup popup-id popup-props]))))

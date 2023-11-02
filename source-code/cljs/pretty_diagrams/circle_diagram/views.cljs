@@ -4,6 +4,7 @@
               [pretty-diagrams.circle-diagram.attributes :as circle-diagram.attributes]
               [pretty-diagrams.circle-diagram.prototypes :as circle-diagram.prototypes]
               [pretty-diagrams.diagram.views             :as diagram.views]
+              [pretty-presets.api                        :as pretty-presets]
               [random.api                                :as random]
               [svg.api                                   :as svg]))
 
@@ -52,6 +53,7 @@
   ;  :label (metamorphic-content)(opt)
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
+  ;  :preset (keyword)(opt)
   ;  :sections (maps in vector)}
   ;   [{:color (keyword or string)
   ;      :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
@@ -74,5 +76,6 @@
 
   ([diagram-id diagram-props]
    (fn [_ diagram-props] ; XXX#0106 (README.md#parametering)
-       (let [diagram-props (circle-diagram.prototypes/diagram-props-prototype diagram-props)]
+       (let [diagram-props (pretty-presets/apply-preset                       diagram-props)
+             diagram-props (circle-diagram.prototypes/diagram-props-prototype diagram-props)]
             [circle-diagram diagram-id diagram-props]))))

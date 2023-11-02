@@ -7,10 +7,10 @@ Documentation of the [pretty-ui](https://github.com/bithandshake/pretty-ui) Cloj
 
 ### ClojureScript namespaces
 
-* [components.api](cljs/components/API.md)
+* [components.api](cljs/pretty_components/API.md)
 * [diagrams.api](cljs/diagrams/API.md)
-* [elements.api](cljs/elements/API.md)
-* [layouts.api](cljs/layouts/API.md)
+* [elements.api](cljs/pretty_elements/API.md)
+* [layouts.api](cljs/pretty_layouts/API.md)
 * [website.api](cljs/website/API.md)
 
 ---

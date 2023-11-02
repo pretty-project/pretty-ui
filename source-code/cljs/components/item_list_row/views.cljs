@@ -3,7 +3,7 @@
     (:require [components.item-list-row.helpers    :as item-list-row.helpers]
               [components.item-list-row.prototypes :as item-list-row.prototypes]
               [css.api                             :as css]
-              [elements.api                        :as elements]
+              [pretty-elements.api                        :as pretty-elements]
               [metamorphic-content.api             :as metamorphic-content]
               [random.api                          :as random]))
 

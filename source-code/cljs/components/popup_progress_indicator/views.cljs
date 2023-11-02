@@ -1,6 +1,6 @@
 
 (ns components.popup-progress-indicator.views
-    (:require [elements.api :as elements]
+    (:require [pretty-elements.api :as pretty-elements]
               [random.api   :as random]))
 
 ;; ----------------------------------------------------------------------------
@@ -12,9 +12,9 @@
   ; {:color (keyword)(opt)
   ;  :label (metamorphic-content)}
   [_ {:keys [color label]}]
-  [elements/label ::popup-progress-label
-                  {:color   (or color :muted)
-                   :content label}])
+  [pretty-elements/label ::popup-progress-label
+                         {:color   (or color :muted)
+                          :content label}])
 
 (defn- popup-progress-indicator
   ; @param (keyword) indicator-id
@@ -23,11 +23,11 @@
   ;  :indent (map)
   ;  :label (metamorphic-content)}
   [indicator-id {:keys [indent] :as indicator-props}]
-  [elements/column ::popup-progress-indicator
-                   {:content          [popup-progress-label indicator-id indicator-props]
-                    :horizontal-align :center
-                    :indent           indent
-                    :vertical-align   :center}])
+  [pretty-elements/column ::popup-progress-indicator
+                          {:content          [popup-progress-label indicator-id indicator-props]
+                           :horizontal-align :center
+                           :indent           indent
+                           :vertical-align   :center}])
 
 (defn component
   ; @param (keyword)(opt) indicator-id

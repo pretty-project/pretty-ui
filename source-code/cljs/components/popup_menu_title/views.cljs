@@ -1,7 +1,7 @@
 
 (ns components.popup-menu-title.views
     (:require [components.popup-menu-title.prototypes :as popup-menu-title.prototypes]
-              [elements.api                           :as elements]
+              [pretty-elements.api                           :as pretty-elements]
               [random.api                             :as random]))
 
 ;; ----------------------------------------------------------------------------
@@ -9,7 +9,7 @@
 
 (defn component
   ; @info
-  ; XXX#0439 (source-code/cljs/elements/label/views.cljs)
+  ; XXX#0439 (source-code/cljs/pretty_elements/label/views.cljs)
   ; The 'popup-menu-title' component is based on the 'label' element.
   ; For more information check out the documentation of the 'label' element.
   ;
@@ -49,4 +49,4 @@
   ([title-id title-props]
    (fn [_ title-props] ; XXX#0106 (README.md#parametering)
        (let [title-props (popup-menu-title.prototypes/title-props-prototype title-props)]
-            [elements/label title-id title-props]))))
+            [pretty-elements/label title-id title-props]))))

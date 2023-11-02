@@ -1,6 +1,6 @@
 
 (ns components.list-item-thumbnail.views
-    (:require [elements.api :as elements]
+    (:require [pretty-elements.api :as pretty-elements]
               [random.api   :as random]))
 
 ;; ----------------------------------------------------------------------------
@@ -13,10 +13,10 @@
   ;  :icon-family (keyword)(opt)
   ;  :thumbnail (string)(opt)}
   [_ {:keys [icon icon-family thumbnail]}]
-  (cond icon-family      [:div.c-list-item-thumbnail--icon [elements/icon {:icon icon :icon-family icon-family}]]
-        icon             [:div.c-list-item-thumbnail--icon [elements/icon {:icon icon}]]
-        thumbnail        [elements/thumbnail {:border-radius {:all :s} :height :s :indent {:horizontal :xxs} :uri thumbnail :width :l}]
-        :empty-thumbnail [elements/thumbnail {:border-radius {:all :s} :height :s :indent {:horizontal :xxs}                :width :l}]))
+  (cond icon-family      [:div.c-list-item-thumbnail--icon [pretty-elements/icon {:icon icon :icon-family icon-family}]]
+        icon             [:div.c-list-item-thumbnail--icon [pretty-elements/icon {:icon icon}]]
+        thumbnail        [pretty-elements/thumbnail {:border-radius {:all :s} :height :s :indent {:horizontal :xxs} :uri thumbnail :width :l}]
+        :empty-thumbnail [pretty-elements/thumbnail {:border-radius {:all :s} :height :s :indent {:horizontal :xxs}                :width :l}]))
 
 (defn- list-item-thumbnail
   ; @param (keyword) thumbnail-id

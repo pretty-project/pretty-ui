@@ -4,6 +4,7 @@
               [metamorphic-content.api            :as metamorphic-content]
               [pretty-website.contacts.attributes :as contacts.attributes]
               [pretty-website.contacts.prototypes :as contacts.prototypes]
+              [pretty-presets.api                  :as pretty-presets]
               [random.api                         :as random]))
 
 ;; ----------------------------------------------------------------------------
@@ -74,6 +75,7 @@
   ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
+  ;  :preset (keyword)(opt)
   ;  :style (map)(opt)}
   ;
   ; @usage
@@ -86,5 +88,6 @@
 
   ([contacts-id contacts-props]
    (fn [_ contacts-props] ; XXX#0106 (README.md#parametering)
-       (let [] ; contacts-props (contacts.prototypes/contacts-props-prototype contacts-props)
+       (let [contacts-props (pretty-presets/apply-preset contacts-props)]
+            ; contacts-props (contacts.prototypes/contacts-props-prototype contacts-props)
             [contacts contacts-id contacts-props]))))

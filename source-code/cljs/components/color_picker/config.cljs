@@ -1,9 +1,9 @@
 
 (ns components.color-picker.config
-    (:require [elements.color-selector.config]))
+    (:require [pretty-elements.color-selector.config]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; elements.color-selector.config
-(def DEFAULT-OPTIONS elements.color-selector.config/DEFAULT-OPTIONS)
+; pretty-elements.color-selector.config
+(def DEFAULT-OPTIONS pretty-elements.color-selector.config/DEFAULT-OPTIONS)

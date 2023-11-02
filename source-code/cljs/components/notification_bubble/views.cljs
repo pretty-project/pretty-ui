@@ -1,6 +1,6 @@
 
 (ns components.notification-bubble.views
-    (:require [elements.api                              :as elements]
+    (:require [pretty-elements.api                              :as pretty-elements]
               [components.notification-bubble.prototypes :as notification-bubble.prototypes]
               [random.api                                :as random]))
 
@@ -9,7 +9,7 @@
 
 (defn component
   ; @info
-  ; XXX#0731 (source-code/cljs/elements/notification_bubble/views.cljs)
+  ; XXX#0731 (source-code/cljs/pretty_elements/notification_bubble/views.cljs)
   ; The 'notification-bubble' component is based on the 'notification-bubble' element.
   ; For more information check out the documentation of the 'notification-bubble' element.
   ;
@@ -47,4 +47,4 @@
   ([bubble-id bubble-props]
    (fn [_ bubble-props] ; XXX#0106 (README.md#parametering)
        (let [bubble-props (notification-bubble.prototypes/bubble-props-prototype bubble-id bubble-props)]
-            [elements/notification-bubble bubble-id bubble-props]))))
+            [pretty-elements/notification-bubble bubble-id bubble-props]))))

@@ -4,6 +4,7 @@
               [pretty-layouts.struct-popup.attributes :as struct-popup.attributes]
               [pretty-layouts.struct-popup.prototypes :as struct-popup.prototypes]
               [pretty-layouts.struct-popup.utils      :as struct-popup.utils]
+              [pretty-presets.api                        :as pretty-presets]
               [hiccup.api                             :as hiccup]
               [random.api                             :as random]
               [re-frame.api                           :as r]
@@ -163,6 +164,7 @@
   ;  :on-unmount (Re-Frame metamorphic-event)(opt)
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
+  ;  :preset (keyword)(opt)
   ;  :stretch-orientation (keyword)(opt)
   ;   :both, :horizontal, :vertical
   ;  :style (map)(opt)}
@@ -177,5 +179,6 @@
 
   ([popup-id popup-props]
    (fn [_ popup-props] ; XXX#0106 (README.md#parametering)
-       (let [popup-props (struct-popup.prototypes/popup-props-prototype popup-props)]
+       (let [popup-props (pretty-presets/apply-preset                   popup-props)
+             popup-props (struct-popup.prototypes/popup-props-prototype popup-props)]
             [struct-popup popup-id popup-props]))))

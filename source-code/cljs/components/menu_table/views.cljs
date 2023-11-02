@@ -3,7 +3,7 @@
     (:require ;[components.data-table.views      :as data-table.views]
               [components.menu-table.helpers    :as menu-table.helpers]
               [components.menu-table.prototypes :as menu-table.prototypes]
-              [elements.api                     :as elements]
+              [pretty-elements.api                     :as pretty-elements]
               [random.api                       :as random]
               [vector.api                       :as vector]))
 
@@ -75,9 +75,9 @@
   ; @param (keyword) table-id
   ; @param (map) table-props
   [_ _]
-  [:div.c-menu-table--placeholder [elements/label {:color     :highlight
-                                                   :content   :no-items-to-show
-                                                   :font-size :xs}]])
+  [:div.c-menu-table--placeholder [pretty-elements/label {:color     :highlight
+                                                          :content   :no-items-to-show
+                                                          :font-size :xs}]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -87,8 +87,8 @@
   ; @param (map) table-props
   ; {:label (metamorphic-content)}
   [_ {:keys [label]}]
-  (if label [:div.c-menu-table--label [elements/label {:content     label
-                                                       :selectable? false}]]))
+  (if label [:div.c-menu-table--label [pretty-elements/label {:content     label
+                                                              :selectable? false}]]))
 
 (defn- menu-table-body
   ; @param (keyword) table-id

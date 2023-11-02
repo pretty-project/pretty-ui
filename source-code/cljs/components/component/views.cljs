@@ -1,6 +1,6 @@
 
 (ns components.component.views
-    (:require [elements.element.views]))
+    (:require [pretty-elements.element.views]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

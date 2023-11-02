@@ -3,7 +3,7 @@
     (:require [components.list-item-cell.helpers    :as list-item-cell.helpers]
               [components.list-item-cell.prototypes :as list-item-cell.prototypes]
               [css.api                              :as css]
-              [elements.api                         :as elements]
+              [pretty-elements.api                         :as pretty-elements]
               [random.api                           :as random]))
 
 ;; ----------------------------------------------------------------------------
@@ -15,7 +15,7 @@
   ; {:rows (maps in vector)}
   [cell-id {:keys [rows] :as cell-props}]
   (letfn [(f [rows row-props]
-             (if row-props (conj rows [elements/label (list-item-cell.prototypes/row-props-prototype row-props)])
+             (if row-props (conj rows [pretty-elements/label (list-item-cell.prototypes/row-props-prototype row-props)])
                            (->   rows)))]
          (reduce f [:<>] rows)))
 

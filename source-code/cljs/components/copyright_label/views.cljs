@@ -1,7 +1,7 @@
 
 (ns components.copyright-label.views
     (:require [components.copyright-label.prototypes :as copyright-label.prototypes]
-              [elements.api                          :as elements]
+              [pretty-elements.api                          :as pretty-elements]
               [random.api                            :as random]
               [re-frame.api                          :as r]))
 
@@ -29,7 +29,7 @@
                                                                    :data-icon-size   :xs}
                                                                   :copyright]]]))
         ;                              copyright-label]]))
-       ;[elements/label ::copyright-label
+       ;[pretty-elements/label ::copyright-label
         ;               {:color            :muted
         ;                :content          copyright-label
         ;                :font-size        font-size

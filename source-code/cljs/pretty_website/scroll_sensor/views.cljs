@@ -1,7 +1,9 @@
 
 (ns pretty-website.scroll-sensor.views
     (:require [hiccup.api                                :as hiccup]
+             ;[pretty-website.scroll-sensor.prototypes   :as scroll-sensor.prototypes]
               [pretty-website.scroll-sensor.side-effects :as scroll-sensor.side-effects]
+              [pretty-presets.api                  :as pretty-presets]
               [random.api                                :as random]
               [reagent.api                               :as reagent]))
 
@@ -25,6 +27,7 @@
   ; @param (keyword)(opt) sensor-id
   ; @param (map) sensor-props
   ; {:callback-f (function)
+  ;  :preset (keyword)(opt)
   ;  :style (map)(opt)}
   ;
   ; @usage
@@ -41,4 +44,6 @@
 
   ([sensor-id sensor-props]
    (fn [_ sensor-props] ; XXX#0106 (README.md#parametering)
-       [scroll-sensor sensor-id sensor-props])))
+       (let [sensor-props (pretty-presets/apply-preset sensor-props)]
+            ; sensor-props (scroll-sensor.prototypes/sensor-props-prototype sensor-props)
+            [scroll-sensor sensor-id sensor-props]))))

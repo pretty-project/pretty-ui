@@ -20,32 +20,32 @@
 (reg-preset! :default-presets/popup-menu-button.highlight
              {:fill-color   :highlight
               :hover-color  :highlight
-              :preset       :default-presets.popup-menu-button})
+              :preset       :default-presets/popup-menu-button})
 
 (reg-preset! :default-presets/popup-menu-button.muted
              {:fill-color   :muted
               :hover-color  :muted
-              :preset       :default-presets.popup-menu-button})
+              :preset       :default-presets/popup-menu-button})
 
 (reg-preset! :default-presets/popup-menu-button.primary
              {:fill-color   :primary
               :hover-color  :primary
-              :preset       :default-presets.popup-menu-button})
+              :preset       :default-presets/popup-menu-button})
 
 (reg-preset! :default-presets/popup-menu-button.secondary
              {:fill-color   :secondary
               :hover-color  :secondary
-              :preset       :default-presets.popup-menu-button})
+              :preset       :default-presets/popup-menu-button})
 
 (reg-preset! :default-presets/popup-menu-button.success
              {:fill-color   :success
               :hover-color  :success
-              :preset       :default-presets.popup-menu-button})
+              :preset       :default-presets/popup-menu-button})
 
 (reg-preset! :default-presets/popup-menu-button.warning
              {:fill-color   :warning
               :hover-color  :warning
-              :preset       :default-presets.popup-menu-button})
+              :preset       :default-presets/popup-menu-button})
 
 ;; -- Popup menu labels -------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -1,7 +1,7 @@
 
 (ns components.popup-menu-header.views
     (:require [components.popup-menu-header.prototypes :as popup-menu-header.prototypes]
-              [elements.api                            :as elements]
+              [pretty-elements.api                            :as pretty-elements]
               [random.api                              :as random]))
 
 ;; ----------------------------------------------------------------------------
@@ -14,9 +14,9 @@
   ;  :label (map)(opt)}
   [_ {:keys [close-button label]}]
   [:div {:class :c-popup-menu-header :data-orientation :horizontal :data-horizontal-row-align :space-between}
-        (if label        [elements/label ::header-label label]
+        (if label        [pretty-elements/label ::header-label label]
                          [:div {:class :c-popup-menu-header--label-placeholder}])
-        (if close-button [elements/icon-button ::close-button close-button])])
+        (if close-button [pretty-elements/icon-button ::close-button close-button])])
 
 (defn component
   ; @param (keyword) header-id

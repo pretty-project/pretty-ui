@@ -12,7 +12,7 @@
   ; @return (map)
   ; {:cells (vector)}
   [{:keys [cells] :as header-props}]
-  ; XXX#0561 (source-code/app/components/frontend/item_list_row/prototypes.cljs)
+  ; XXX#0561 (source-code/app/pretty_components/frontend/item_list_row/prototypes.cljs)
   (merge {}
          (-> header-props)
          {:cells (vector/remove-items-by cells nil?)}))

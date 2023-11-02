@@ -3,7 +3,7 @@
     (:require [components.user-avatar.attributes :as user-avatar.attributes]
               [components.user-avatar.prototypes :as user-avatar.prototypes]
               [css.api                           :as css]
-              [elements.api                      :as elements]
+              [pretty-elements.api                      :as pretty-elements]
               [random.api                        :as random]
               [string.api                        :as string]
               [svg.api                           :as svg]
