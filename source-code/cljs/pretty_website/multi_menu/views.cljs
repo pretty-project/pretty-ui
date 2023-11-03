@@ -1,6 +1,6 @@
 
 (ns pretty-website.multi-menu.views
-    (:require [elements.api                         :as elements]
+    (:require [pretty-elements.api                         :as pretty-elements]
               [pretty-website.multi-menu.attributes :as multi-menu.attributes]
               [pretty-website.multi-menu.prototypes :as multi-menu.prototypes]
               [pretty-website.sidebar.views         :as sidebar.views]
@@ -18,7 +18,7 @@
   ; @param (map) menu-props
   [menu-id menu-props]
   [:div {:class :pw-multi-menu--sidebar-menu-wrapper}
-        [elements/menu-bar (assoc menu-props :orientation :vertical)]])
+        [pretty-elements/menu-bar (assoc menu-props :orientation :vertical)]])
 
 (defn- multi-menu
   ; @ignore
@@ -28,8 +28,8 @@
   ; {}
   [menu-id {:keys [threshold] :as menu-props}]
   (if (window-observer/viewport-width-min? threshold)
-      [elements/dropdown-menu  menu-id menu-props]
-      [sidebar.views/component menu-id {:content [sidebar-menu menu-id menu-props]}]))
+      [pretty-elements/dropdown-menu menu-id menu-props]
+      [sidebar.views/component       menu-id {:content [sidebar-menu menu-id menu-props]}]))
 
 (defn component
   ; @info

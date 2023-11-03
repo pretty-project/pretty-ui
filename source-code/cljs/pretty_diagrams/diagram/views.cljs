@@ -5,5 +5,5 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; elements.element.views
-(def diagram-label elements.element.views/element-label)
+; pretty-elements.element.views
+(def diagram-label pretty-elements.element.views/element-label)

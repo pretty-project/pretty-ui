@@ -80,7 +80,7 @@
   ;  :option-value-f (function)(opt)
   ;   Default: return
   ;  :option-component (Reagent component symbol)(opt)
-  ;   Default: elements.combo-box/default-option-component
+  ;   Default: pretty-elements.combo-box/default-option-component
   ;  :options (vector)(opt)
   ;  :options-path (Re-Frame path vector)(opt)}
   ;

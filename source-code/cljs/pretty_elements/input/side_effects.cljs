@@ -68,37 +68,37 @@
 ; @ignore
 ;
 ; @param (keyword) input-id
-(r/reg-f :pretty-elements.input/mark-input-as-focused! mark-input-as-focused!)
+(r/reg-fx :pretty-elements.input/mark-input-as-focused! mark-input-as-focused!)
 
 ; @ignore
 ;
 ; @param (keyword) input-id
-(r/reg-f :pretty-elements.input/unmark-input-as-focused! unmark-input-as-focused!)
+(r/reg-fx :pretty-elements.input/unmark-input-as-focused! unmark-input-as-focused!)
 
 ; @ignore
 ;
 ; @param (keyword) input-id
-(r/reg-f :pretty-elements.input/mark-input-as-visited! mark-input-as-visited!)
+(r/reg-fx :pretty-elements.input/mark-input-as-visited! mark-input-as-visited!)
 
 ; @ignore
 ;
 ; @param (keyword) input-id
-(r/reg-f :pretty-elements.input/unmark-input-as-visited! unmark-input-as-visited!)
-
-; @ignore
-;
-; @param (keyword) input-id
-; @param (map) input-props
-(r/reg-f :pretty-elements.input/render-popup! render-popup!)
+(r/reg-fx :pretty-elements.input/unmark-input-as-visited! unmark-input-as-visited!)
 
 ; @ignore
 ;
 ; @param (keyword) input-id
 ; @param (map) input-props
-(r/reg-f :pretty-elements.input/update-popup! update-popup!)
+(r/reg-fx :pretty-elements.input/render-popup! render-popup!)
 
 ; @ignore
 ;
 ; @param (keyword) input-id
 ; @param (map) input-props
-(r/reg-f :pretty-elements.input/close-popup! close-popup!)
+(r/reg-fx :pretty-elements.input/update-popup! update-popup!)
+
+; @ignore
+;
+; @param (keyword) input-id
+; @param (map) input-props
+(r/reg-fx :pretty-elements.input/close-popup! close-popup!)

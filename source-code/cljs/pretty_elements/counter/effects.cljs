@@ -6,7 +6,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-f :pretty-elements.counter/counter-did-mount
+(r/reg-event-fx :pretty-elements.counter/counter-did-mount
   ; @ignore
   ;
   ; @param (keyword) counter-id
@@ -18,7 +18,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-f :pretty-elements.counter/increase-value!
+(r/reg-event-fx :pretty-elements.counter/increase-value!
   ; @ignore
   ;
   ; @param (keyword) counter-id
@@ -27,7 +27,7 @@
       {:db (r counter.events/increase-value! db counter-id counter-props)
        :fx [:pretty-elements.input/mark-input-as-visited! counter-id]}))
 
-(r/reg-event-f :pretty-elements.counter/decrease-value!
+(r/reg-event-fx :pretty-elements.counter/decrease-value!
   ; @ignore
   ;
   ; @param (keyword) counter-id

@@ -6,7 +6,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-f :pretty-elements.slider/slider-did-mount
+(r/reg-event-fx :pretty-elements.slider/slider-did-mount
    ; @ignore
    ;
    ; @param (keyword) slider-id

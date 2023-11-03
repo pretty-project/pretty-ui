@@ -1,7 +1,7 @@
 
-# diagrams.api ClojureScript namespace
+# pretty-diagrams.api ClojureScript namespace
 
-##### [README](../../../README.md) > [DOCUMENTATION](../../COVER.md) > diagrams.api
+##### [README](../../../README.md) > [DOCUMENTATION](../../COVER.md) > pretty-diagrams.api
 
 ### Index
 
@@ -32,6 +32,7 @@
  :label (metamorphic-content)(opt)
  :outdent (map)(opt)
   Same as the :indent property.
+ :preset (keyword)(opt)
  :sections (maps in vector)}
   [{:color (keyword or string)
      :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
@@ -64,7 +65,8 @@
    [diagram (random/generate-keyword) diagram-props])
 
   ([diagram-id diagram-props]
-   (fn [_ diagram-props]       (let [diagram-props (circle-diagram.prototypes/diagram-props-prototype diagram-props)]
+   (fn [_ diagram-props]       (let [diagram-props (pretty-presets/apply-preset                       diagram-props)
+             diagram-props (circle-diagram.prototypes/diagram-props-prototype diagram-props)]
             [circle-diagram diagram-id diagram-props]))))
 ```
 
@@ -74,10 +76,10 @@
 <summary>Require</summary>
 
 ```
-(ns my-namespace (:require [diagrams.api :refer [circle-diagram]]))
+(ns my-namespace (:require [pretty-diagrams.api :refer [circle-diagram]]))
 
-(diagrams.api/circle-diagram ...)
-(circle-diagram              ...)
+(pretty-diagrams.api/circle-diagram ...)
+(circle-diagram                     ...)
 ```
 
 </details>
@@ -99,6 +101,7 @@
     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
  :outdent (map)(opt)
   Same as the :indent property.
+ :preset (keyword)(opt)
  :sections (maps in vector)}
   [{:color (keyword or string)(opt)
      :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
@@ -136,7 +139,8 @@
    [diagram (random/generate-keyword) diagram-props])
 
   ([diagram-id diagram-props]
-   (fn [_ diagram-props]       (let [diagram-props (line-diagram.prototypes/diagram-props-prototype diagram-props)]
+   (fn [_ diagram-props]       (let [diagram-props (pretty-presets/apply-preset                     diagram-props)
+             diagram-props (line-diagram.prototypes/diagram-props-prototype diagram-props)]
             [line-diagram diagram-id diagram-props]))))
 ```
 
@@ -146,10 +150,10 @@
 <summary>Require</summary>
 
 ```
-(ns my-namespace (:require [diagrams.api :refer [line-diagram]]))
+(ns my-namespace (:require [pretty-diagrams.api :refer [line-diagram]]))
 
-(diagrams.api/line-diagram ...)
-(line-diagram              ...)
+(pretty-diagrams.api/line-diagram ...)
+(line-diagram                     ...)
 ```
 
 </details>
@@ -181,6 +185,7 @@ UNFINISHED! DO NOT USE!
  :outdent (map)(opt)
   Same as the :indent property.
  :points (integers in vector)
+ :preset (keyword)(opt)
  :strength (px)(opt)
    Default: 2
    Min: 1
@@ -206,7 +211,8 @@ UNFINISHED! DO NOT USE!
    [diagram (random/generate-keyword) diagram-props])
 
   ([diagram-id diagram-props]
-   (fn [_ diagram-props]       (let []            [point-diagram diagram-id diagram-props]))))
+   (fn [_ diagram-props]       (let [diagram-props (pretty-presets/apply-preset diagram-props)]
+            [point-diagram diagram-id diagram-props]))))
 ```
 
 </details>
@@ -215,10 +221,10 @@ UNFINISHED! DO NOT USE!
 <summary>Require</summary>
 
 ```
-(ns my-namespace (:require [diagrams.api :refer [point-diagram]]))
+(ns my-namespace (:require [pretty-diagrams.api :refer [point-diagram]]))
 
-(diagrams.api/point-diagram ...)
-(point-diagram              ...)
+(pretty-diagrams.api/point-diagram ...)
+(point-diagram                     ...)
 ```
 
 </details>

@@ -37,10 +37,10 @@
 ;
 ; @param (keyword) field-id
 ; @param (map) field-props
-(r/reg-f :pretty-elements.text-field/reg-keypress-events! reg-keypress-events!)
+(r/reg-fx :pretty-elements.text-field/reg-keypress-events! reg-keypress-events!)
 
 ; @ignore
 ;
 ; @param (keyword) field-id
 ; @param (map) field-props
-(r/reg-f :pretty-elements.text-field/remove-keypress-events! remove-keypress-events!)
+(r/reg-fx :pretty-elements.text-field/remove-keypress-events! remove-keypress-events!)

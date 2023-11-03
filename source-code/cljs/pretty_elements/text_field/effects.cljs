@@ -7,7 +7,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-f :pretty-elements.text-field/field-did-mount
+(r/reg-event-fx :pretty-elements.text-field/field-did-mount
   ; @ignore
   ;
   ; @param (keyword) field-id
@@ -17,7 +17,7 @@
            {:fx       [:pretty-elements.form/reg-form-input!        field-id field-props get-value-f]
             :dispatch [:pretty-elements.plain-field/field-did-mount field-id field-props]})))
 
-(r/reg-event-f :pretty-elements.text-field/field-will-unmount
+(r/reg-event-fx :pretty-elements.text-field/field-will-unmount
   ; @ignore
   ;
   ; @param (keyword) field-id
@@ -29,7 +29,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-f :pretty-elements.text-field/ENTER-pressed
+(r/reg-event-fx :pretty-elements.text-field/ENTER-pressed
   ; @ignore
   ;
   ; @param (keyword) field-id
@@ -38,7 +38,7 @@
   (fn [{:keys [db]} [_ field-id {:keys [on-enter]}]]
       {:dispatch on-enter}))
 
-(r/reg-event-f :pretty-elements.text-field/ESC-pressed
+(r/reg-event-fx :pretty-elements.text-field/ESC-pressed
   ; @ignore
   ;
   ; @param (keyword) field-id
@@ -50,7 +50,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-f :pretty-elements.text-field/empty-field!
+(r/reg-event-fx :pretty-elements.text-field/empty-field!
   ; @ignore
   ;
   ; @param (keyword) field-id
@@ -65,7 +65,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-f :pretty-elements.text-field/type-ended
+(r/reg-event-fx :pretty-elements.text-field/type-ended
   ; @ignore
   ;
   ; @param (keyword) field-id
@@ -74,7 +74,7 @@
   (fn [_ [_ field-id {:keys [validate-when-change?] :as field-props}]]
       {:fx-n [(if validate-when-change? [:pretty-elements.form/validate-input! field-id field-props])]}))
 
-(r/reg-event-f :pretty-elements.text-field/field-blurred
+(r/reg-event-fx :pretty-elements.text-field/field-blurred
   ; @ignore
   ;
   ; @param (keyword) field-id
@@ -85,7 +85,7 @@
        :fx-n     [[:pretty-elements.text-field/remove-keypress-events! field-id field-props]
                   (if validate-when-leave? [:pretty-elements.form/validate-input! field-id field-props])]}))
 
-(r/reg-event-f :pretty-elements.text-field/field-focused
+(r/reg-event-fx :pretty-elements.text-field/field-focused
   ; @ignore
   ;
   ; @param (keyword) field-id

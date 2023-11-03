@@ -6,7 +6,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-f :pretty-elements.radio-button/button-did-mount
+(r/reg-event-fx :pretty-elements.radio-button/button-did-mount
   ; @ignore
   ;
   ; @param (keyword) button-id
@@ -20,7 +20,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-f :pretty-elements.radio-button/select-option!
+(r/reg-event-fx :pretty-elements.radio-button/select-option!
   ; @ignore
   ;
   ; @param (keyword) button-id
@@ -32,7 +32,7 @@
        :fx [:pretty-elements.input/mark-input-as-visited! button-id]
        :dispatch on-select}))
 
-(r/reg-event-f :pretty-elements.radio-button/clear-value!
+(r/reg-event-fx :pretty-elements.radio-button/clear-value!
   ; @ignore
   ;
   ; @param (keyword) button-id

@@ -10,7 +10,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-f :pretty-elements.multi-combo-box/ENTER-pressed
+(r/reg-event-fx :pretty-elements.multi-combo-box/ENTER-pressed
   ; @ignore
   ;
   ; @param (keyword) box-id
@@ -30,7 +30,7 @@
                (if (plain-field.env/field-filled? field-id)
                    [:pretty-elements.multi-combo-box/use-field-content! box-id box-props])))))
 
-(r/reg-event-f :pretty-elements.multi-combo-box/COMMA-pressed
+(r/reg-event-fx :pretty-elements.multi-combo-box/COMMA-pressed
   ; @ignore
   ;
   ; @param (keyword) box-id
@@ -43,7 +43,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-f :pretty-elements.multi-combo-box/use-field-content!
+(r/reg-event-fx :pretty-elements.multi-combo-box/use-field-content!
   ; @ignore
   ;
   ; @param (keyword) box-id
@@ -55,7 +55,7 @@
            {:db       (r multi-combo-box.events/use-field-content! db box-id box-props field-content)
             :dispatch [:pretty-elements.text-field/empty-field! field-id field-props]})))
 
-(r/reg-event-f :pretty-elements.multi-combo-box/use-option!
+(r/reg-event-fx :pretty-elements.multi-combo-box/use-option!
   ; @ignore
   ;
   ; @param (keyword) box-id
@@ -71,7 +71,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-f :pretty-elements.multi-combo-box/field-changed
+(r/reg-event-fx :pretty-elements.multi-combo-box/field-changed
   ; @ignore
   ;
   ; @param (keyword) box-id
@@ -80,7 +80,7 @@
       (let [field-id (multi-combo-box.utils/box-id->field-id box-id)]
            {:fx [:pretty-elements.combo-box/discard-option-highlighter! field-id]})))
 
-(r/reg-event-f :pretty-elements.multi-combo-box/field-focused
+(r/reg-event-fx :pretty-elements.multi-combo-box/field-focused
   ; @ignore
   ;
   ; @param (keyword) box-id
@@ -88,7 +88,7 @@
   (fn [_ [_ box-id box-props]]
       {:fx [:pretty-elements.multi-combo-box/reg-keypress-events! box-id box-props]}))
 
-(r/reg-event-f :pretty-elements.multi-combo-box/field-blurred
+(r/reg-event-fx :pretty-elements.multi-combo-box/field-blurred
   ; @ignore
   ;
   ; @param (keyword) box-id

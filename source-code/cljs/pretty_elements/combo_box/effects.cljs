@@ -8,7 +8,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-f :pretty-elements.combo-box/box-did-mount
+(r/reg-event-fx :pretty-elements.combo-box/box-did-mount
   ; @ignore
   ;
   ; @param (keyword) box-id
@@ -20,7 +20,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-f :pretty-elements.combo-box/DOWN-pressed
+(r/reg-event-fx :pretty-elements.combo-box/DOWN-pressed
   ; @ignore
   ;
   ; @param (keyword) box-id
@@ -29,7 +29,7 @@
       {:fx-n [[:pretty-elements.plain-field/show-surface!        box-id]
               [:pretty-elements.combo-box/highlight-next-option! box-id box-props]]}))
 
-(r/reg-event-f :pretty-elements.combo-box/UP-pressed
+(r/reg-event-fx :pretty-elements.combo-box/UP-pressed
   ; @ignore
   ;
   ; @param (keyword) box-id
@@ -38,7 +38,7 @@
       {:fx-n [[:pretty-elements.plain-field/show-surface!        box-id]
               [:pretty-elements.combo-box/highlight-prev-option! box-id box-props]]}))
 
-(r/reg-event-f :pretty-elements.combo-box/ESC-pressed
+(r/reg-event-fx :pretty-elements.combo-box/ESC-pressed
   ; @ignore
   ;
   ; @param (keyword) box-id
@@ -57,7 +57,7 @@
                   [:pretty-elements.combo-box/discard-option-highlighter! box-id]]}
           [:pretty-elements.text-field/ESC-pressed box-id box-props])))
 
-(r/reg-event-f :pretty-elements.combo-box/ENTER-pressed
+(r/reg-event-fx :pretty-elements.combo-box/ENTER-pressed
   ; @ignore
   ;
   ; @param (keyword) box-id
@@ -88,7 +88,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-f :pretty-elements.combo-box/select-option!
+(r/reg-event-fx :pretty-elements.combo-box/select-option!
   ; @ignore
   ;
   ; @param (keyword) box-id
@@ -116,7 +116,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-f :pretty-elements.combo-box/field-changed
+(r/reg-event-fx :pretty-elements.combo-box/field-changed
   ; @ignore
   ;
   ; @param (keyword) box-id
@@ -124,7 +124,7 @@
   (fn [{:keys [db]} [_ box-id box-props]]
       {:fx [:pretty-elements.combo-box/discard-option-highlighter! box-id]}))
 
-(r/reg-event-f :pretty-elements.combo-box/field-focused
+(r/reg-event-fx :pretty-elements.combo-box/field-focused
   ; @ignore
   ;
   ; @param (keyword) box-id
@@ -132,7 +132,7 @@
   (fn [_ [_ box-id box-props]]
       {:fx [:pretty-elements.combo-box/reg-keypress-events! box-id box-props]}))
 
-(r/reg-event-f :pretty-elements.combo-box/field-blurred
+(r/reg-event-fx :pretty-elements.combo-box/field-blurred
   ; @ignore
   ;
   ; @param (keyword) box-id

@@ -5,7 +5,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-f :pretty-elements.password-field/field-will-unmount
+(r/reg-event-fx :pretty-elements.password-field/field-will-unmount
   ; @ignore
   ;
   ; @param (keyword) field-id

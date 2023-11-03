@@ -6,7 +6,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-f :pretty-elements.checkbox/checkbox-did-mount
+(r/reg-event-fx :pretty-elements.checkbox/checkbox-did-mount
   ; @ignore
   ;
   ; @param (keyword) checkbox-id
@@ -17,7 +17,7 @@
       (if (or initial-options initial-value)
           {:db (r checkbox.events/checkbox-did-mount db checkbox-id checkbox-props)})))
 
-(r/reg-event-f :pretty-elements.checkbox/toggle-option!
+(r/reg-event-fx :pretty-elements.checkbox/toggle-option!
   ; @ignore
   ;
   ; @param (keyword) checkbox-id

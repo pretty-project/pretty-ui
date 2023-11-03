@@ -1,13 +1,13 @@
 
-# website.api ClojureScript namespace
+# pretty-website.api ClojureScript namespace
 
-##### [README](../../../README.md) > [DOCUMENTATION](../../COVER.md) > website.api
+##### [README](../../../README.md) > [DOCUMENTATION](../../COVER.md) > pretty-website.api
 
 ### Index
 
 - [contacts](#contacts)
 
-- [follow-us](#follow-us)
+- [follow-us-links](#follow-us-links)
 
 - [language-selector](#language-selector)
 
@@ -41,6 +41,7 @@
     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
  :outdent (map)(opt)
   Same as the :indent property.
+ :preset (keyword)(opt)
  :style (map)(opt)}
 ```
 
@@ -63,7 +64,8 @@
    [component (random/generate-keyword) contacts-props])
 
   ([contacts-id contacts-props]
-   (fn [_ contacts-props]       (let []            [contacts contacts-id contacts-props]))))
+   (fn [_ contacts-props]       (let [contacts-props (pretty-presets/apply-preset contacts-props)]
+            [contacts contacts-id contacts-props]))))
 ```
 
 </details>
@@ -72,17 +74,17 @@
 <summary>Require</summary>
 
 ```
-(ns my-namespace (:require [website.api :refer [contacts]]))
+(ns my-namespace (:require [pretty-website.api :refer [contacts]]))
 
-(website.api/contacts ...)
-(contacts             ...)
+(pretty-website.api/contacts ...)
+(contacts                    ...)
 ```
 
 </details>
 
 ---
 
-### follow-us
+### follow-us-links
 
 ```
 @warning
@@ -97,8 +99,8 @@ It converts the given provider name to an icon class:
 ```
 
 ```
-@param (keyword)(opt) component-id
-@param (map) component-props
+@param (keyword)(opt) links-id
+@param (map) links-props
 {:class (keyword or keywords in vector)(opt)
  :indent (map)(opt)
   {:bottom (keyword)(opt)
@@ -114,23 +116,24 @@ It converts the given provider name to an icon class:
    [...]]
  :outdent (map)(opt)
   Same as the :indent property.
+ :preset (keyword)(opt)
  :style (map)(opt)}
 ```
 
 ```
 @usage
-[follow-us {...}]
+[follow-us-links {...}]
 ```
 
 ```
 @usage
-[follow-us :my-follow-us {...}]
+[follow-us-links :my-follow-us-links {...}]
 ```
 
 ```
 @usage
-[follow-us {:links [[:facebook "facebook.com/my-profile"]
-                    [:instagram "instagram.com/my-profile"]]}]
+[follow-us-links {:links [[:facebook "facebook.com/my-profile"]
+                          [:instagram "instagram.com/my-profile"]]}]
 ```
 
 <details>
@@ -138,11 +141,12 @@ It converts the given provider name to an icon class:
 
 ```
 (defn component
-  ([component-props]
-   [component (random/generate-keyword) component-props])
+  ([links-props]
+   [component (random/generate-keyword) links-props])
 
-  ([component-id component-props]
-   (fn [_ component-props]       (let []            [follow-us component-id component-props]))))
+  ([links-id links-props]
+   (fn [_ links-props]       (let [links-props (pretty-presets/apply-preset links-props)]
+            [follow-us-links links-id links-props]))))
 ```
 
 </details>
@@ -151,10 +155,10 @@ It converts the given provider name to an icon class:
 <summary>Require</summary>
 
 ```
-(ns my-namespace (:require [website.api :refer [follow-us]]))
+(ns my-namespace (:require [pretty-website.api :refer [follow-us-links]]))
 
-(website.api/follow-us ...)
-(follow-us             ...)
+(pretty-website.api/follow-us-links ...)
+(follow-us-links                    ...)
 ```
 
 </details>
@@ -184,6 +188,7 @@ It converts the given provider name to an icon class:
  :languages (keywords in vector)
  :outdent (map)(opt)
   Same as the :indent property.
+ :preset (keyword)(opt)
  :style (map)(opt)}
 ```
 
@@ -211,7 +216,8 @@ It converts the given provider name to an icon class:
    [component (random/generate-keyword) selector-props])
 
   ([selector-id selector-props]
-   (fn [_ selector-props]       (let [selector-props (language-selector.prototypes/selector-props-prototype selector-props)]
+   (fn [_ selector-props]       (let [selector-props (pretty-presets/apply-preset                           selector-props)
+             selector-props (language-selector.prototypes/selector-props-prototype selector-props)]
             [language-selector selector-id selector-props]))))
 ```
 
@@ -221,10 +227,10 @@ It converts the given provider name to an icon class:
 <summary>Require</summary>
 
 ```
-(ns my-namespace (:require [website.api :refer [language-selector]]))
+(ns my-namespace (:require [pretty-website.api :refer [language-selector]]))
 
-(website.api/language-selector ...)
-(language-selector             ...)
+(pretty-website.api/language-selector ...)
+(language-selector                    ...)
 ```
 
 </details>
@@ -254,6 +260,7 @@ on a sidebar menu and replaces the menu bar with a single menu button.
     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
  :outdent (map)(opt)
   Same as the :indent property.
+ :preset (keyword)(opt)
  :style (map)(opt)
  :threshold (px)(opt)
   Default: 0}
@@ -278,7 +285,8 @@ on a sidebar menu and replaces the menu bar with a single menu button.
    [component (random/generate-keyword) menu-props])
 
   ([menu-id menu-props]
-   (fn [_ menu-props]       (let [menu-props (multi-menu.prototypes/menu-props-prototype menu-props)]
+   (fn [_ menu-props]       (let [menu-props (pretty-presets/apply-preset                menu-props)
+             menu-props (multi-menu.prototypes/menu-props-prototype menu-props)]
             [multi-menu menu-id menu-props]))))
 ```
 
@@ -288,10 +296,10 @@ on a sidebar menu and replaces the menu bar with a single menu button.
 <summary>Require</summary>
 
 ```
-(ns my-namespace (:require [website.api :refer [multi-menu]]))
+(ns my-namespace (:require [pretty-website.api :refer [multi-menu]]))
 
-(website.api/multi-menu ...)
-(multi-menu             ...)
+(pretty-website.api/multi-menu ...)
+(multi-menu                    ...)
 ```
 
 </details>
@@ -308,6 +316,7 @@ on a sidebar menu and replaces the menu bar with a single menu button.
   Default: "#FFFFFF"
  :outdent (map)(opt)
   Same as the :indent property.
+ :preset (keyword)(opt)
  :style (map)(opt)}
 ```
 
@@ -330,7 +339,8 @@ on a sidebar menu and replaces the menu bar with a single menu button.
    [component (random/generate-keyword) icon-props])
 
   ([icon-id icon-props]
-   (fn [_ icon-props]       (let [icon-props (scroll-icon.prototypes/icon-props-prototype icon-props)]
+   (fn [_ icon-props]       (let [icon-props (pretty-presets/apply-preset                 icon-props)
+             icon-props (scroll-icon.prototypes/icon-props-prototype icon-props)]
             [scroll-icon icon-id icon-props]))))
 ```
 
@@ -340,10 +350,10 @@ on a sidebar menu and replaces the menu bar with a single menu button.
 <summary>Require</summary>
 
 ```
-(ns my-namespace (:require [website.api :refer [scroll-icon]]))
+(ns my-namespace (:require [pretty-website.api :refer [scroll-icon]]))
 
-(website.api/scroll-icon ...)
-(scroll-icon             ...)
+(pretty-website.api/scroll-icon ...)
+(scroll-icon                    ...)
 ```
 
 </details>
@@ -356,6 +366,7 @@ on a sidebar menu and replaces the menu bar with a single menu button.
 @param (keyword)(opt) sensor-id
 @param (map) sensor-props
 {:callback-f (function)
+ :preset (keyword)(opt)
  :style (map)(opt)}
 ```
 
@@ -384,7 +395,8 @@ on a sidebar menu and replaces the menu bar with a single menu button.
    [component (random/generate-keyword) sensor-props])
 
   ([sensor-id sensor-props]
-   (fn [_ sensor-props]       [scroll-sensor sensor-id sensor-props])))
+   (fn [_ sensor-props]       (let [sensor-props (pretty-presets/apply-preset sensor-props)]
+            [scroll-sensor sensor-id sensor-props]))))
 ```
 
 </details>
@@ -393,10 +405,10 @@ on a sidebar menu and replaces the menu bar with a single menu button.
 <summary>Require</summary>
 
 ```
-(ns my-namespace (:require [website.api :refer [scroll-sensor]]))
+(ns my-namespace (:require [pretty-website.api :refer [scroll-sensor]]))
 
-(website.api/scroll-sensor ...)
-(scroll-sensor             ...)
+(pretty-website.api/scroll-sensor ...)
+(scroll-sensor                    ...)
 ```
 
 </details>
@@ -433,6 +445,7 @@ on a sidebar menu and replaces the menu bar with a single menu button.
  :position (keyword)(opt)
   :left, :right
   Default: :left
+ :preset (keyword)(opt)
  :style (map)(opt)}
 ```
 
@@ -455,7 +468,8 @@ on a sidebar menu and replaces the menu bar with a single menu button.
    [component (random/generate-keyword) sidebar-props])
 
   ([sidebar-id sidebar-props]
-   (fn [_ sidebar-props]       (let [sidebar-props (sidebar.prototypes/sidebar-props-prototype sidebar-props)]
+   (fn [_ sidebar-props]       (let [sidebar-props (pretty-presets/apply-preset                sidebar-props)
+             sidebar-props (sidebar.prototypes/sidebar-props-prototype sidebar-props)]
             [sidebar sidebar-id sidebar-props]))))
 ```
 
@@ -465,10 +479,10 @@ on a sidebar menu and replaces the menu bar with a single menu button.
 <summary>Require</summary>
 
 ```
-(ns my-namespace (:require [website.api :refer [sidebar]]))
+(ns my-namespace (:require [pretty-website.api :refer [sidebar]]))
 
-(website.api/sidebar ...)
-(sidebar             ...)
+(pretty-website.api/sidebar ...)
+(sidebar                    ...)
 ```
 
 </details>

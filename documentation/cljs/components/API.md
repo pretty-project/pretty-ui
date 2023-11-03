@@ -55,11 +55,7 @@
 
 - [popup-label-bar](#popup-label-bar)
 
-- [popup-menu-button](#popup-menu-button)
-
 - [popup-menu-header](#popup-menu-header)
-
-- [popup-menu-label](#popup-menu-label)
 
 - [popup-menu-title](#popup-menu-title)
 
@@ -71,15 +67,11 @@
 
 - [side-menu](#side-menu)
 
-- [side-menu-button](#side-menu-button)
-
 - [side-menu-footer](#side-menu-footer)
 
 - [side-menu-header](#side-menu-header)
 
 - [side-menu-label](#side-menu-label)
-
-- [sidebar-button](#sidebar-button)
 
 - [user-avatar](#user-avatar)
 
@@ -251,7 +243,7 @@
 
   ([button-id button-props]
    (fn [_ button-props]       (let [button-props (content-swapper-button.prototypes/button-props-prototype button-props)]
-            [elements/button button-id button-props]))))
+            [pretty-elements/button button-id button-props]))))
 ```
 
 </details>
@@ -319,7 +311,7 @@
 
   ([header-id header-props]
    (fn [_ header-props]       (let [header-props (content-swapper-header.prototypes/header-props-prototype header-props)]
-            [elements/button header-id header-props]))))
+            [pretty-elements/button header-id header-props]))))
 ```
 
 </details>
@@ -528,7 +520,7 @@
 
   ([label-id label-props]
    (fn [_ label-props]       (let [label-props (error-label.prototypes/label-props-prototype label-props)]
-            [elements/label label-id label-props]))))
+            [pretty-elements/label label-id label-props]))))
 ```
 
 </details>
@@ -1383,7 +1375,7 @@ same ID for both the field and the block, the label of the block can targets the
 
   ([bubble-id bubble-props]
    (fn [_ bubble-props]       (let [bubble-props (notification-bubble.prototypes/bubble-props-prototype bubble-id bubble-props)]
-            [elements/notification-bubble bubble-id bubble-props]))))
+            [pretty-elements/notification-bubble bubble-id bubble-props]))))
 ```
 
 </details>
@@ -1504,73 +1496,6 @@ same ID for both the field and the block, the label of the block can targets the
 
 ---
 
-### popup-menu-button
-
-```
-@param (keyword)(opt) button-id
-@param (map) button-props
-{:border-radius (map)(opt)
-  Default: {:all :s}
- :font-size (keyword)(opt)
-  Default: :xs
- :gap (keyword)(opt)
-  Default: :xs
- :horizontal-align (keyword)(opt)
-  Default: :left
- :hover-color (keyword or string)(opt)
-  Default: :highlight
- :icon-size (keyword)(opt)
-  Default: :m
- :indent (map)(opt)
-  Default: {:horizontal :xxs :vertical :xxs}
- :outdent (map)(opt)
-  Default: {:vertical :xs}
- :preset (keyword)(opt)
-  :highlight
- :width (keyword)(opt)
-  Default: :auto}
-```
-
-```
-@usage
-[popup-menu-button {...}]
-```
-
-```
-@usage
-[popup-menu-button :my-popup-menu-button {...}]
-```
-
-<details>
-<summary>Source code</summary>
-
-```
-(defn component
-  ([button-props]
-   [component (random/generate-keyword) button-props])
-
-  ([button-id button-props]
-   (fn [_ button-props]       (let [button-props (pretty-css/apply-preset popup-menu-button.presets/BUTTON-PROPS-PRESETS button-props)
-             button-props (popup-menu-button.prototypes/button-props-prototype button-props)]
-            [elements/button button-id button-props]))))
-```
-
-</details>
-
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [components.api :refer [popup-menu-button]]))
-
-(components.api/popup-menu-button ...)
-(popup-menu-button                ...)
-```
-
-</details>
-
----
-
 ### popup-menu-header
 
 ```
@@ -1626,62 +1551,6 @@ same ID for both the field and the block, the label of the block can targets the
 
 ---
 
-### popup-menu-label
-
-```
-@param (keyword)(opt) label-id
-@param (map) label-props
-{:color (keyword or string)(opt)
-  Default: :muted
- :gap (keyword)(opt)
-  Default: :xs
- :horizontal-align (keyword)(opt)
-  Default: :left
- :icon-size (keyword)(opt)
-  Default: :m
- :indent (map)(opt)
-  Default: {:horizontal :xxs :vertical :s}}
-```
-
-```
-@usage
-[popup-menu-label {...}]
-```
-
-```
-@usage
-[popup-menu-label :my-popup-menu-label {...}]
-```
-
-<details>
-<summary>Source code</summary>
-
-```
-(defn component
-  ([label-props]
-   [component (random/generate-keyword) label-props])
-
-  ([label-id label-props]
-   (fn [_ label-props]       (let [label-props (popup-menu-label.prototypes/label-props-prototype label-props)]
-            [elements/label label-id label-props]))))
-```
-
-</details>
-
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [components.api :refer [popup-menu-label]]))
-
-(components.api/popup-menu-label ...)
-(popup-menu-label                ...)
-```
-
-</details>
-
----
-
 ### popup-menu-title
 
 ```
@@ -1731,7 +1600,7 @@ same ID for both the field and the block, the label of the block can targets the
 
   ([title-id title-props]
    (fn [_ title-props]       (let [title-props (popup-menu-title.prototypes/title-props-prototype title-props)]
-            [elements/label title-id title-props]))))
+            [pretty-elements/label title-id title-props]))))
 ```
 
 </details>
@@ -1847,7 +1716,7 @@ same ID for both the field and the block, the label of the block can targets the
 
   ([description-id description-props]
    (fn [_ description-props]       (let [description-props (section-description.prototypes/description-props-prototype description-props)]
-            [elements/label description-id description-props]))))
+            [pretty-elements/label description-id description-props]))))
 ```
 
 </details>
@@ -1978,67 +1847,6 @@ same ID for both the field and the block, the label of the block can targets the
 
 (components.api/side-menu ...)
 (side-menu                ...)
-```
-
-</details>
-
----
-
-### side-menu-button
-
-```
-@param (keyword)(opt) button-id
-@param (map) button-props
-{:font-size (keyword)(opt)
-  Default: :xs
- :gap (keyword)(opt)
-  Default: :xs
- :horizontal-align (keyword)(opt)
-  Default: :left
- :hover-color (keyword or string)(opt)
-  Default: :highlight
- :icon-size (keyword)(opt)
-  Default: :m
- :indent (map)(opt)
-  Default: {:horizontal :xs :left :s :right :xl}
- :preset (keyword)(opt)
-  :active}
-```
-
-```
-@usage
-[side-menu-button {...}]
-```
-
-```
-@usage
-[side-menu-button :my-side-menu-button {...}]
-```
-
-<details>
-<summary>Source code</summary>
-
-```
-(defn component
-  ([button-props]
-   [component (random/generate-keyword) button-props])
-
-  ([button-id button-props]
-   (fn [_ button-props]       (let [button-props (pretty-css/apply-preset side-menu-button.presets/BUTTON-PROPS-PRESETS button-props)
-             button-props (side-menu-button.prototypes/button-props-prototype button-props)]
-            [elements/button button-id button-props]))))
-```
-
-</details>
-
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [components.api :refer [side-menu-button]]))
-
-(components.api/side-menu-button ...)
-(side-menu-button                ...)
 ```
 
 </details>
@@ -2176,7 +1984,7 @@ same ID for both the field and the block, the label of the block can targets the
 
   ([label-id label-props]
    (fn [_ label-props]       (let [label-props (side-menu-label.prototypes/label-props-prototype label-props)]
-            [elements/label label-id label-props]))))
+            [pretty-elements/label label-id label-props]))))
 ```
 
 </details>
@@ -2189,68 +1997,6 @@ same ID for both the field and the block, the label of the block can targets the
 
 (components.api/side-menu-label ...)
 (side-menu-label                ...)
-```
-
-</details>
-
----
-
-### sidebar-button
-
-```
-@param (keyword)(opt) button-id
-@param (map) button-props
-{:color (keyword or string)(opt)
-  Default: :invert
- :font-size (keyword)(opt)
-  Default: :xs
- :font-weight (keyword)(opt)
-  Default: :medium
- :gap (keyword)(opt)
-  Default: :xs
- :hover-color (keyword or string)(opt)
-  Default: :invert
- :icon-size (keyword)(opt)
-  Default: :m
- :horizontal-align (keyword)(opt)
-  Default: :left
- :hover-color (keyword)(opt)
-  Default: invert}
-```
-
-```
-@usage
-[sidebar-button {...}]
-```
-
-```
-@usage
-[sidebar-button :my-sidebar-button {...}]
-```
-
-<details>
-<summary>Source code</summary>
-
-```
-(defn component
-  ([button-props]
-   [component (random/generate-keyword) button-props])
-
-  ([button-id button-props]
-   (fn [_ button-props]       (let [button-props (sidebar-button.prototypes/button-props-prototype button-props)]
-            [elements/button button-id button-props]))))
-```
-
-</details>
-
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [components.api :refer [sidebar-button]]))
-
-(components.api/sidebar-button ...)
-(sidebar-button                ...)
 ```
 
 </details>

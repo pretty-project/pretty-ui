@@ -1,6 +1,6 @@
 
 (ns pretty-elements.text-field.sample
-    (:require [pretty-elements.api :as elements]))
+    (:require [pretty-elements.api :as pretty-elements]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

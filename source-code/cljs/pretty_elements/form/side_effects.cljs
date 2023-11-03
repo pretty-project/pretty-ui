@@ -89,13 +89,13 @@
   ;  :value-path (Re-Frame path vector)}
   ; @param (function) get-value-f
   [input-id input-props get-value-f]
-  ; - Different input elements have to provide the 'get-value-f' function to the
+  ; - Different input elements have to provide their 'get-value-f' function to the
   ;   form handler in order to make their values IMMEDIATELY available for the
   ;   form handler when a validation happens.
   ; - Some input elements store their values in the application state with a short
   ;   latency, and if a validation fires during this latency delay the actual value
   ;   could be different from the value stored in the application state.
-  ;   E.g.: plain-field, text-field, etc. elements stores their values with a short latency.
+  ;   E.g.: The 'plain-field', 'text-field', etc. elements store their values with a short latency.
   ;         HACK#9910 (source-code/cljs/pretty_elements/plain_field/views.cljs)
   (let [validation-props (-> input-props (select-keys [:form-id :validators :value-path :validate-when-change? :validate-when-leave?])
                                          (assoc :get-value-f get-value-f))]

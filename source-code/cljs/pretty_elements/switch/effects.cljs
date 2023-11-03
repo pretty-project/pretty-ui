@@ -6,7 +6,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-f :pretty-elements.switch/switch-did-mount
+(r/reg-event-fx :pretty-elements.switch/switch-did-mount
   ; @ignore
   ;
   ; @param (keyword) switch-id
@@ -20,7 +20,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-f :pretty-elements.switch/toggle-option!
+(r/reg-event-fx :pretty-elements.switch/toggle-option!
   ; @ignore
   ;
   ; @param (keyword) switch-id

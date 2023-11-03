@@ -88,7 +88,7 @@
   ;  :initial-options (vector)(opt)
   ;  :on-select (Re-Frame metamorphic-event)(opt)
   ;  :option-component (Reagent component symbol)(opt)
-  ;   Default: elements.combo-box.views/default-option-component
+  ;   Default: pretty-elements.combo-box.views/default-option-component
   ;  :option-label-f (function)(opt)
   ;   Default: return
   ;  :option-value-f (function)(opt)

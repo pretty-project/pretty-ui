@@ -106,29 +106,29 @@
 ; @ignore
 ;
 ; @param (keyword) field-id
-(r/reg-f :pretty-elements.plain-field/empty-field! empty-field!)
+(r/reg-fx :pretty-elements.plain-field/empty-field! empty-field!)
 
 ; @ignore
 ;
 ; @param (keyword) field-id
-(r/reg-f :pretty-elements.plain-field/focus-field! focus-field!)
+(r/reg-fx :pretty-elements.plain-field/focus-field! focus-field!)
 
 ; @ignore
 ;
 ; @param (keyword) field-id
-(r/reg-f :pretty-elements.plain-field/show-surface! show-surface!)
+(r/reg-fx :pretty-elements.plain-field/show-surface! show-surface!)
 
 ; @ignore
 ;
 ; @param (keyword) field-id
-(r/reg-f :pretty-elements.plain-field/hide-surface! hide-surface!)
+(r/reg-fx :pretty-elements.plain-field/hide-surface! hide-surface!)
 
 ; @ignore
 ;
 ; @param (keyword) field-id
-(r/reg-f :pretty-elements.plain-field/set-type-mode! set-type-mode!)
+(r/reg-fx :pretty-elements.plain-field/set-type-mode! set-type-mode!)
 
 ; @ignore
 ;
 ; @param (keyword) field-id
-(r/reg-f :pretty-elements.plain-field/quit-type-mode! quit-type-mode!)
+(r/reg-fx :pretty-elements.plain-field/quit-type-mode! quit-type-mode!)

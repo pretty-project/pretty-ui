@@ -97,34 +97,34 @@
 ;
 ; @param (keyword) box-id
 ; @param (map) box-props
-(r/reg-f :pretty-elements.combo-box/highlight-next-option! highlight-next-option!)
+(r/reg-fx :pretty-elements.combo-box/highlight-next-option! highlight-next-option!)
 
 ; @ignore
 ;
 ; @param (keyword) box-id
 ; @param (map) box-props
-(r/reg-f :pretty-elements.combo-box/highlight-prev-option! highlight-prev-option!)
+(r/reg-fx :pretty-elements.combo-box/highlight-prev-option! highlight-prev-option!)
 
 ; @ignore
 ;
 ; @param (keyword) box-id
 ; @param (map) box-props
-(r/reg-f :pretty-elements.combo-box/discard-option-highlighter! discard-option-highlighter!)
+(r/reg-fx :pretty-elements.combo-box/discard-option-highlighter! discard-option-highlighter!)
 
 ; @ignore
 ;
 ; @param (keyword) box-id
 ; @param (map) box-props
-(r/reg-f :pretty-elements.combo-box/use-selected-option! use-selected-option!)
+(r/reg-fx :pretty-elements.combo-box/use-selected-option! use-selected-option!)
 
 ; @ignore
 ;
 ; @param (keyword) box-id
 ; @param (map) box-props
-(r/reg-f :pretty-elements.combo-box/reg-keypress-events! reg-keypress-events!)
+(r/reg-fx :pretty-elements.combo-box/reg-keypress-events! reg-keypress-events!)
 
 ; @ignore
 ;
 ; @param (keyword) box-id
 ; @param (map) box-props
-(r/reg-f :pretty-elements.combo-box/remove-keypress-events! remove-keypress-events!)
+(r/reg-fx :pretty-elements.combo-box/remove-keypress-events! remove-keypress-events!)

@@ -10,7 +10,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-f :pretty-elements.select/select-button-did-mount
+(r/reg-event-fx :pretty-elements.select/select-button-did-mount
   ; @ignore
   ;
   ; @param (keyword) select-id
@@ -21,7 +21,7 @@
       (if (or initial-options initial-value)
           {:db (r select.events/select-will-mount db select-id select-props)})))
 
-(r/reg-event-f :pretty-elements.select/select-options-did-mount
+(r/reg-event-fx :pretty-elements.select/select-options-did-mount
   ; @ignore
   ;
   ; @param (keyword) select-id
@@ -29,7 +29,7 @@
   (fn [_ [_ select-id select-props]]
       {:fx [:pretty-elements.select/reg-keypress-events! select-id select-props]}))
 
-(r/reg-event-f :pretty-elements.select/select-options-will-unmount
+(r/reg-event-fx :pretty-elements.select/select-options-will-unmount
   ; @ignore
   ;
   ; @param (keyword) select-id
@@ -40,7 +40,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-f :pretty-elements.select/ESC-pressed
+(r/reg-event-fx :pretty-elements.select/ESC-pressed
   ; @ignore
   ;
   ; @param (keyword) select-id
@@ -48,7 +48,7 @@
   (fn [_ [_ select-id select-props]]
       {:fx [:pretty-elements.select/close-options! select-id select-props]}))
 
-(r/reg-event-f :pretty-elements.select/ENTER-pressed
+(r/reg-event-fx :pretty-elements.select/ENTER-pressed
   ; @ignore
   ;
   ; @param (keyword) select-id
@@ -60,7 +60,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-f :pretty-elements.select/select-option!
+(r/reg-event-fx :pretty-elements.select/select-option!
   ; @ignore
   ;
   ; @param (keyword) select-id
@@ -76,7 +76,7 @@
                              (if autoclear? {:ms select.config/AUTOCLEAR-VALUE-DELAY :dispatch [:pretty-elements.select/clear-value! select-id select-props]})
                              (if on-select  {:ms select.config/ON-SELECT-DELAY       :dispatch (r/metamorphic-event<-params on-select option-value)})]})))
 
-(r/reg-event-f :pretty-elements.select/clear-value!
+(r/reg-event-fx :pretty-elements.select/clear-value!
   ; @ignore
   ;
   ; @param (keyword) select-id
@@ -88,7 +88,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-f :pretty-elements.select/add-option!
+(r/reg-event-fx :pretty-elements.select/add-option!
   ; @ignore
   ;
   ; @param (keyword) select-id

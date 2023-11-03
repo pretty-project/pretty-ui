@@ -1,6 +1,6 @@
 
 (ns pretty-website.sidebar.views
-    (:require [elements.api                      :as elements]
+    (:require [pretty-elements.api                      :as pretty-elements]
               [metamorphic-content.api           :as metamorphic-content]
               [pretty-website.sidebar.attributes :as sidebar.attributes]
               [pretty-website.sidebar.prototypes :as sidebar.prototypes]
@@ -19,7 +19,7 @@
   ; @param (map) sidebar-props
   ; {:content (metamorphic-content)}
   [sidebar-id {:keys [content] :as sidebar-props}]
-  [:<> [elements/icon-button (sidebar.prototypes/menu-button-props-prototype sidebar-id sidebar-props)]
+  [:<> [pretty-elements/icon-button (sidebar.prototypes/menu-button-props-prototype sidebar-id sidebar-props)]
        [react/mount-animation {:mounted? (= sidebar-id @sidebar.state/VISIBLE-SIDEBAR)}
                               [:div (sidebar.attributes/sidebar-attributes sidebar-id sidebar-props)
                                     [:div (sidebar.attributes/sidebar-cover-attributes sidebar-id sidebar-props)]

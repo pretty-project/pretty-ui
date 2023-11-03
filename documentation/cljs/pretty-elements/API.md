@@ -1,7 +1,7 @@
 
-# elements.api ClojureScript namespace
+# pretty-elements.api ClojureScript namespace
 
-##### [README](../../../README.md) > [DOCUMENTATION](../../COVER.md) > elements.api
+##### [README](../../../README.md) > [DOCUMENTATION](../../COVER.md) > pretty-elements.api
 
 ### Index
 
@@ -145,6 +145,7 @@
     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
  :outdent (map)(opt)
   Same as the :indent property.
+ :preset (keyword)(opt)
  :style (map)(opt)
  :width (keyword)(opt)
   :auto, :content, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
@@ -170,7 +171,8 @@
    [element (random/generate-keyword) blank-props])
 
   ([blank-id blank-props]
-   (fn [_ blank-props]       (let [blank-props (blank.prototypes/blank-props-prototype blank-props)]
+   (fn [_ blank-props]       (let [blank-props (pretty-presets/apply-preset            blank-props)
+             blank-props (blank.prototypes/blank-props-prototype blank-props)]
             [blank blank-id blank-props]))))
 ```
 
@@ -180,10 +182,10 @@
 <summary>Require</summary>
 
 ```
-(ns my-namespace (:require [elements.api :refer [blank]]))
+(ns my-namespace (:require [pretty-elements.api :refer [blank]]))
 
-(elements.api/blank ...)
-(blank              ...)
+(pretty-elements.api/blank ...)
+(blank                     ...)
 ```
 
 </details>
@@ -200,7 +202,8 @@
   [{:href (string)(opt)
     :label (metamorphic-content)(opt)
     :on-click (Re-Frame metamorphic-event)(opt)
-    :placeholder (metamorphic-content)(opt)}]
+    :placeholder (metamorphic-content)(opt)
+    :preset (keyword)(opt)}]
  :disabled? (boolean)(opt)
  :font-size (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :inherit
@@ -215,6 +218,7 @@
     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
  :outdent (map)(opt)
   Same as the :indent property.
+ :preset (keyword)(opt)
  :style (map)(opt)}
 ```
 
@@ -237,7 +241,8 @@
    [element (random/generate-keyword) breadcrumbs-props])
 
   ([breadcrumbs-id breadcrumbs-props]
-   (fn [_ breadcrumbs-props]       (let [breadcrumbs-props (breadcrumbs.prototypes/breadcrumbs-props-prototype breadcrumbs-props)]
+   (fn [_ breadcrumbs-props]       (let [breadcrumbs-props (pretty-presets/apply-preset                        breadcrumbs-props)
+             breadcrumbs-props (breadcrumbs.prototypes/breadcrumbs-props-prototype breadcrumbs-props)]
             [breadcrumbs breadcrumbs-id breadcrumbs-props]))))
 ```
 
@@ -247,10 +252,10 @@
 <summary>Require</summary>
 
 ```
-(ns my-namespace (:require [elements.api :refer [breadcrumbs]]))
+(ns my-namespace (:require [pretty-elements.api :refer [breadcrumbs]]))
 
-(elements.api/breadcrumbs ...)
-(breadcrumbs              ...)
+(pretty-elements.api/breadcrumbs ...)
+(breadcrumbs                     ...)
 ```
 
 </details>
@@ -360,6 +365,7 @@ the 'button.side-effects/key-released' function.
  :on-mouse-over (Re-Frame metamorphic-event)(opt)
  :outdent (map)(opt)
   Same as the :indent property.
+ :preset (keyword)(opt)
  :progress (percent)(opt)
  :progress-color (keyword or string)(opt)
   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
@@ -369,7 +375,6 @@ the 'button.side-effects/key-released' function.
   Default: :ltr
  :progress-duration (ms)(opt)
   Default: 250
- :style (map)(opt)
  :text-overflow (keyword)(opt)
   :ellipsis, :hidden, :wrap
   Default: :no-wrap
@@ -407,7 +412,8 @@ the 'button.side-effects/key-released' function.
    [element (random/generate-keyword) button-props])
 
   ([button-id button-props]
-   (fn [_ button-props]       (let [button-props (button.prototypes/button-props-prototype button-props)]
+   (fn [_ button-props]       (let [button-props (pretty-presets/apply-preset              button-props)
+             button-props (button.prototypes/button-props-prototype button-props)]
             [button button-id button-props]))))
 ```
 
@@ -417,10 +423,10 @@ the 'button.side-effects/key-released' function.
 <summary>Require</summary>
 
 ```
-(ns my-namespace (:require [elements.api :refer [button]]))
+(ns my-namespace (:require [pretty-elements.api :refer [button]]))
 
-(elements.api/button ...)
-(button              ...)
+(pretty-elements.api/button ...)
+(button                     ...)
 ```
 
 </details>
@@ -488,6 +494,7 @@ the 'button.side-effects/key-released' function.
  :on-click (Re-Frame metamorphic-event)(opt)
  :outdent (map)(opt)
   Same as the :indent property.
+ :preset (keyword)(opt)
  :style (map)(opt)
  :target (keyword)(opt)
   :blank, :self
@@ -515,7 +522,8 @@ the 'button.side-effects/key-released' function.
    [element (random/generate-keyword) card-props])
 
   ([card-id card-props]
-   (fn [_ card-props]       (let [card-props (card.prototypes/card-props-prototype card-props)]
+   (fn [_ card-props]       (let [card-props (pretty-presets/apply-preset          card-props)
+             card-props (card.prototypes/card-props-prototype card-props)]
             [card card-id card-props]))))
 ```
 
@@ -525,10 +533,10 @@ the 'button.side-effects/key-released' function.
 <summary>Require</summary>
 
 ```
-(ns my-namespace (:require [elements.api :refer [card]]))
+(ns my-namespace (:require [pretty-elements.api :refer [card]]))
 
-(elements.api/card ...)
-(card              ...)
+(pretty-elements.api/card ...)
+(card                     ...)
 ```
 
 </details>
@@ -588,6 +596,7 @@ the 'button.side-effects/key-released' function.
  :label (metamorphic-content)(opt)
  :outdent (map)(opt)
   Same as the :indent property.
+ :preset (keyword)(opt)
  :style (map)(opt)
  :value-path (Re-Frame path vector)(opt)}
 ```
@@ -611,7 +620,8 @@ the 'button.side-effects/key-released' function.
    [element (random/generate-keyword) checkbox-props])
 
   ([checkbox-id checkbox-props]
-   (fn [_ checkbox-props]       (let [checkbox-props (checkbox.prototypes/checkbox-props-prototype checkbox-id checkbox-props)]
+   (fn [_ checkbox-props]       (let [checkbox-props (pretty-presets/apply-preset                              checkbox-props)
+             checkbox-props (checkbox.prototypes/checkbox-props-prototype checkbox-id checkbox-props)]
             [checkbox checkbox-id checkbox-props]))))
 ```
 
@@ -621,10 +631,10 @@ the 'button.side-effects/key-released' function.
 <summary>Require</summary>
 
 ```
-(ns my-namespace (:require [elements.api :refer [checkbox]]))
+(ns my-namespace (:require [pretty-elements.api :refer [checkbox]]))
 
-(elements.api/checkbox ...)
-(checkbox              ...)
+(pretty-elements.api/checkbox ...)
+(checkbox                     ...)
 ```
 
 </details>
@@ -665,6 +675,7 @@ the 'button.side-effects/key-released' function.
   TODO Makes the chip clickable
  :outdent (map)(opt)
   Same as the :indent property.
+ :preset (keyword)(opt)
  :primary-button (map)(opt)
   {:icon (keyword)
    :icon-family (keyword)(opt)
@@ -700,7 +711,8 @@ the 'button.side-effects/key-released' function.
    [element (random/generate-keyword) chip-props])
 
   ([chip-id chip-props]
-   (fn [_ chip-props]       (let [chip-props (chip.prototypes/chip-props-prototype chip-props)]
+   (fn [_ chip-props]       (let [chip-props (pretty-presets/apply-preset          chip-props)
+             chip-props (chip.prototypes/chip-props-prototype chip-props)]
             [chip chip-id chip-props]))))
 ```
 
@@ -710,10 +722,10 @@ the 'button.side-effects/key-released' function.
 <summary>Require</summary>
 
 ```
-(ns my-namespace (:require [elements.api :refer [chip]]))
+(ns my-namespace (:require [pretty-elements.api :refer [chip]]))
 
-(elements.api/chip ...)
-(chip              ...)
+(pretty-elements.api/chip ...)
+(chip                     ...)
 ```
 
 </details>
@@ -752,6 +764,7 @@ with the {:chips [...]} property but dinamically provided by using the {:chips-p
  :outdent (map)(opt)
   Same as the :indent property.
  :placeholder (metamorphic-content)(opt)
+ :preset (keyword)(opt)
  :style (map)(opt)}
 ```
 
@@ -774,7 +787,8 @@ with the {:chips [...]} property but dinamically provided by using the {:chips-p
    [element (random/generate-keyword) group-props])
 
   ([group-id group-props]
-   (fn [_ group-props]       (let [group-props (chip-group.prototypes/group-props-prototype group-id group-props)]
+   (fn [_ group-props]       (let [group-props (pretty-presets/apply-preset                          group-props)
+             group-props (chip-group.prototypes/group-props-prototype group-id group-props)]
             [chip-group group-id group-props]))))
 ```
 
@@ -784,10 +798,10 @@ with the {:chips [...]} property but dinamically provided by using the {:chips-p
 <summary>Require</summary>
 
 ```
-(ns my-namespace (:require [elements.api :refer [chip-group]]))
+(ns my-namespace (:require [pretty-elements.api :refer [chip-group]]))
 
-(elements.api/chip-group ...)
-(chip-group              ...)
+(pretty-elements.api/chip-group ...)
+(chip-group                     ...)
 ```
 
 </details>
@@ -826,7 +840,9 @@ with the {:chips [...]} property but dinamically provided by using the {:chips-p
    :indent (map)(opt)
    :label (metamorphic-content)(opt)
    :min-width (keyword)(opt)
-   :outdent (map)(opt)}
+   :outdent (map)(opt)
+   :preset (keyword)(opt)}
+ :preset (keyword)(opt)
  :style (map)(opt)
  :value-path (Re-Frame path vector)(opt)}
 ```
@@ -850,7 +866,8 @@ with the {:chips [...]} property but dinamically provided by using the {:chips-p
    [element (random/generate-keyword) selector-props])
 
   ([selector-id selector-props]
-   (fn [_ selector-props]       (let [selector-props (color-selector.prototypes/selector-props-prototype selector-id selector-props)]
+   (fn [_ selector-props]       (let [selector-props (pretty-presets/apply-preset                                    selector-props)
+             selector-props (color-selector.prototypes/selector-props-prototype selector-id selector-props)]
             [color-selector selector-id selector-props]))))
 ```
 
@@ -860,10 +877,10 @@ with the {:chips [...]} property but dinamically provided by using the {:chips-p
 <summary>Require</summary>
 
 ```
-(ns my-namespace (:require [elements.api :refer [color-selector]]))
+(ns my-namespace (:require [pretty-elements.api :refer [color-selector]]))
 
-(elements.api/color-selector ...)
-(color-selector              ...)
+(pretty-elements.api/color-selector ...)
+(color-selector                     ...)
 ```
 
 </details>
@@ -918,6 +935,7 @@ with the {:chips [...]} property but dinamically provided by using the {:chips-p
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
  :outdent (map)(opt)
   Same as the :indent property.
+ :preset (keyword)(opt)
  :style (map)(opt)
  :vertical-align (keyword)(opt)
   :top, :center, :bottom, :space-around, :space-between, :space-evenly
@@ -948,7 +966,8 @@ with the {:chips [...]} property but dinamically provided by using the {:chips-p
    [element (random/generate-keyword) column-props])
 
   ([column-id column-props]
-   (fn [_ column-props]       (let [column-props (column.prototypes/column-props-prototype column-props)]
+   (fn [_ column-props]       (let [column-props (pretty-presets/apply-preset              column-props)
+             column-props (column.prototypes/column-props-prototype column-props)]
             [column column-id column-props]))))
 ```
 
@@ -958,10 +977,10 @@ with the {:chips [...]} property but dinamically provided by using the {:chips-p
 <summary>Require</summary>
 
 ```
-(ns my-namespace (:require [elements.api :refer [column]]))
+(ns my-namespace (:require [pretty-elements.api :refer [column]]))
 
-(elements.api/column ...)
-(column              ...)
+(pretty-elements.api/column ...)
+(column                     ...)
 ```
 
 </details>
@@ -987,7 +1006,7 @@ leaves the field!
  :initial-options (vector)(opt)
  :on-select (Re-Frame metamorphic-event)(opt)
  :option-component (Reagent component symbol)(opt)
-  Default: elements.combo-box.views/default-option-component
+  Default: pretty-elements.combo-box.views/default-option-component
  :option-label-f (function)(opt)
   Default: return
  :option-value-f (function)(opt)
@@ -1025,10 +1044,10 @@ leaves the field!
 <summary>Require</summary>
 
 ```
-(ns my-namespace (:require [elements.api :refer [combo-box]]))
+(ns my-namespace (:require [pretty-elements.api :refer [combo-box]]))
 
-(elements.api/combo-box ...)
-(combo-box              ...)
+(pretty-elements.api/combo-box ...)
+(combo-box                     ...)
 ```
 
 </details>
@@ -1061,6 +1080,7 @@ their absolute positioning.
  :initial-page (metamorphic-content)
  :outdent (map)(opt)
   Same as the :indent property.
+ :preset (keyword)(opt)
  :style (map)(opt)}
 ```
 
@@ -1083,7 +1103,8 @@ their absolute positioning.
    [element (random/generate-keyword) swapper-props])
 
   ([swapper-id swapper-props]
-   (fn [_ swapper-props]       (let []            [content-swapper swapper-id swapper-props]))))
+   (fn [_ swapper-props]       (let [             swapper-props (pretty-presets/apply-preset     swapper-props)]
+            [content-swapper swapper-id swapper-props]))))
 ```
 
 </details>
@@ -1092,10 +1113,10 @@ their absolute positioning.
 <summary>Require</summary>
 
 ```
-(ns my-namespace (:require [elements.api :refer [content-swapper]]))
+(ns my-namespace (:require [pretty-elements.api :refer [content-swapper]]))
 
-(elements.api/content-swapper ...)
-(content-swapper              ...)
+(pretty-elements.api/content-swapper ...)
+(content-swapper                     ...)
 ```
 
 </details>
@@ -1142,6 +1163,7 @@ their absolute positioning.
  :min-value (integer)(opt)
  :outdent (map)(opt)
   Same as the :indent property.
+ :preset (keyword)(opt)
  :resetable? (boolean)(opt)
   Default: false
  :style (map)(opt)
@@ -1167,7 +1189,8 @@ their absolute positioning.
    [element (random/generate-keyword) counter-props])
 
   ([counter-id counter-props]
-   (fn [_ counter-props]       (let [counter-props (counter.prototypes/counter-props-prototype counter-id counter-props)]
+   (fn [_ counter-props]       (let [counter-props (pretty-presets/apply-preset                           counter-props)
+             counter-props (counter.prototypes/counter-props-prototype counter-id counter-props)]
             [counter counter-id counter-props]))))
 ```
 
@@ -1177,10 +1200,10 @@ their absolute positioning.
 <summary>Require</summary>
 
 ```
-(ns my-namespace (:require [elements.api :refer [counter]]))
+(ns my-namespace (:require [pretty-elements.api :refer [counter]]))
 
-(elements.api/counter ...)
-(counter              ...)
+(pretty-elements.api/counter ...)
+(counter                     ...)
 ```
 
 </details>
@@ -1242,8 +1265,7 @@ their absolute positioning.
  :label (metamorphic-content)(opt)
  :outdent (map)(opt)
   Same as the :indent property.
- :presets (map)(opt)
-  Cell, column and row presets.
+ :preset (keyword)(opt)
  :rows (maps in vector)(opt)
   [{:cells (maps in vector)
     :height (keyword)(opt)
@@ -1284,7 +1306,8 @@ their absolute positioning.
    [element (random/generate-keyword) table-props])
 
   ([table-id table-props]
-   (fn [_ table-props]       (let []            [data-table table-id table-props]))))
+   (fn [_ table-props]       (let [             table-props (pretty-presets/apply-preset     table-props)]
+            [data-table table-id table-props]))))
 ```
 
 </details>
@@ -1293,10 +1316,10 @@ their absolute positioning.
 <summary>Require</summary>
 
 ```
-(ns my-namespace (:require [elements.api :refer [data-table]]))
+(ns my-namespace (:require [pretty-elements.api :refer [data-table]]))
 
-(elements.api/data-table ...)
-(data-table              ...)
+(pretty-elements.api/data-table ...)
+(data-table                     ...)
 ```
 
 </details>
@@ -1348,10 +1371,10 @@ leaves the field!
 <summary>Require</summary>
 
 ```
-(ns my-namespace (:require [elements.api :refer [date-field]]))
+(ns my-namespace (:require [pretty-elements.api :refer [date-field]]))
 
-(elements.api/date-field ...)
-(date-field              ...)
+(pretty-elements.api/date-field ...)
+(date-field                     ...)
 ```
 
 </details>
@@ -1412,10 +1435,10 @@ leaves the field!
 <summary>Require</summary>
 
 ```
-(ns my-namespace (:require [elements.api :refer [digit-field]]))
+(ns my-namespace (:require [pretty-elements.api :refer [digit-field]]))
 
-(elements.api/digit-field ...)
-(digit-field              ...)
+(pretty-elements.api/digit-field ...)
+(digit-field                     ...)
 ```
 
 </details>
@@ -1428,7 +1451,8 @@ leaves the field!
 @param (keyword)(opt) menu-id
 @param (map) menu-props
 {:menu-items (maps in vector)
-  [{:content (metamorphic-content)}]
+  [{:content (metamorphic-content)
+    :preset (keyword)(opt)}]
  :surface (map)(opt)
   {:border-color (keyword or string)(opt)
    :border-position (keyword)(opt)
@@ -1436,7 +1460,8 @@ leaves the field!
    :border-width (keyword)(opt)
    :fill-color (keyword or string)
    :indent (map)(opt)
-   :outdent (map)(opt)}}
+   :outdent (map)(opt)
+   :preset (keyword)(opt)}}
 ```
 
 ```
@@ -1468,10 +1493,10 @@ leaves the field!
 <summary>Require</summary>
 
 ```
-(ns my-namespace (:require [elements.api :refer [dropdown-menu]]))
+(ns my-namespace (:require [pretty-elements.api :refer [dropdown-menu]]))
 
-(elements.api/dropdown-menu ...)
-(dropdown-menu              ...)
+(pretty-elements.api/dropdown-menu ...)
+(dropdown-menu                     ...)
 ```
 
 </details>
@@ -1513,10 +1538,10 @@ This component is the default label component of the elements.
 <summary>Require</summary>
 
 ```
-(ns my-namespace (:require [elements.api :refer [element-label]]))
+(ns my-namespace (:require [pretty-elements.api :refer [element-label]]))
 
-(elements.api/element-label ...)
-(element-label              ...)
+(pretty-elements.api/element-label ...)
+(element-label                     ...)
 ```
 
 </details>
@@ -1551,6 +1576,7 @@ This component is the default label component of the elements.
  :label (metamorphic-content)(opt)
  :outdent (map)(opt)
   Same as the :indent property.
+ :preset (keyword)(opt)
  :style (map)(opt)}
 ```
 
@@ -1573,7 +1599,8 @@ This component is the default label component of the elements.
    [element (random/generate-keyword) expandable-props])
 
   ([expandable-id expandable-props]
-   (fn [_ expandable-props]       (let [expandable-props (expandable.prototypes/expandable-props-prototype expandable-props)]
+   (fn [_ expandable-props]       (let [expandable-props (pretty-presets/apply-preset                      expandable-props)
+             expandable-props (expandable.prototypes/expandable-props-prototype expandable-props)]
             [expandable expandable-id expandable-props]))))
 ```
 
@@ -1583,10 +1610,10 @@ This component is the default label component of the elements.
 <summary>Require</summary>
 
 ```
-(ns my-namespace (:require [elements.api :refer [expandable]]))
+(ns my-namespace (:require [pretty-elements.api :refer [expandable]]))
 
-(elements.api/expandable ...)
-(expandable              ...)
+(pretty-elements.api/expandable ...)
+(expandable                     ...)
 ```
 
 </details>
@@ -1619,6 +1646,7 @@ This component is the default label component of the elements.
   Default: :s
  :outdent (map)(opt)
   Same as the :indent property.
+ :preset (keyword)(opt)
  :style (map)(opt)
  :width (keyword)(opt)
   :auto, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
@@ -1644,7 +1672,8 @@ This component is the default label component of the elements.
    [element (random/generate-keyword) ghost-props])
 
   ([ghost-id ghost-props]
-   (fn [_ ghost-props]       (let [ghost-props (ghost.prototypes/ghost-props-prototype ghost-props)]
+   (fn [_ ghost-props]       (let [ghost-props (pretty-presets/apply-preset            ghost-props)
+             ghost-props (ghost.prototypes/ghost-props-prototype ghost-props)]
             [ghost ghost-id ghost-props]))))
 ```
 
@@ -1654,10 +1683,10 @@ This component is the default label component of the elements.
 <summary>Require</summary>
 
 ```
-(ns my-namespace (:require [elements.api :refer [ghost]]))
+(ns my-namespace (:require [pretty-elements.api :refer [ghost]]))
 
-(elements.api/ghost ...)
-(ghost              ...)
+(pretty-elements.api/ghost ...)
+(ghost                     ...)
 ```
 
 </details>
@@ -1683,6 +1712,7 @@ This component is the default label component of the elements.
     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
  :outdent (map)(opt)
   Same as the :indent property.
+ :preset (keyword)(opt)
  :style (map)(opt)
  :width (keyword)(opt)
   :auto, :content, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
@@ -1716,7 +1746,8 @@ This component is the default label component of the elements.
    [element (random/generate-keyword) group-props])
 
   ([group-id group-props]
-   (fn [_ group-props]       (let [group-props (horizontal-group.prototypes/group-props-prototype group-props)]
+   (fn [_ group-props]       (let [group-props (pretty-presets/apply-preset                       group-props)
+             group-props (horizontal-group.prototypes/group-props-prototype group-props)]
             [horizontal-group group-id group-props]))))
 ```
 
@@ -1726,10 +1757,10 @@ This component is the default label component of the elements.
 <summary>Require</summary>
 
 ```
-(ns my-namespace (:require [elements.api :refer [horizontal-group]]))
+(ns my-namespace (:require [pretty-elements.api :refer [horizontal-group]]))
 
-(elements.api/horizontal-group ...)
-(horizontal-group              ...)
+(pretty-elements.api/horizontal-group ...)
+(horizontal-group                     ...)
 ```
 
 </details>
@@ -1747,6 +1778,7 @@ This component is the default label component of the elements.
   Default: :default
  :outdent (map)(opt)
   Same as the :indent property.
+ :preset (keyword)(opt)
  :style (map)(opt)
  :strength (px)(opt)
   Default: 1
@@ -1774,7 +1806,8 @@ This component is the default label component of the elements.
    [element (random/generate-keyword) line-props])
 
   ([line-id line-props]
-   (fn [_ line-props]       (let [line-props (horizontal-line.prototypes/line-props-prototype line-props)]
+   (fn [_ line-props]       (let [line-props (pretty-presets/apply-preset                     line-props)
+             line-props (horizontal-line.prototypes/line-props-prototype line-props)]
             [:div (horizontal-line.attributes/line-attributes line-id line-props)
                   [:div (horizontal-line.attributes/line-body-attributes line-id line-props)]]))))
 ```
@@ -1785,10 +1818,10 @@ This component is the default label component of the elements.
 <summary>Require</summary>
 
 ```
-(ns my-namespace (:require [elements.api :refer [horizontal-line]]))
+(ns my-namespace (:require [pretty-elements.api :refer [horizontal-line]]))
 
-(elements.api/horizontal-line ...)
-(horizontal-line              ...)
+(pretty-elements.api/horizontal-line ...)
+(horizontal-line                     ...)
 ```
 
 </details>
@@ -1813,6 +1846,7 @@ This component is the default label component of the elements.
  :middle-content (metamorphic-content)
  :outdent (map)(opt)
   Same as the :indent property.
+ :preset (keyword)(opt)
  :style (map)(opt)
  :start-content (metamorphic-content)(opt)
  :vertical-align (keyword)(opt)
@@ -1848,7 +1882,8 @@ This component is the default label component of the elements.
    [element (random/generate-keyword) polarity-props])
 
   ([polarity-id polarity-props]
-   (fn [_ polarity-props]       (let [polarity-props (horizontal-polarity.prototypes/polarity-props-prototype polarity-props)]
+   (fn [_ polarity-props]       (let [polarity-props (pretty-presets/apply-preset                             polarity-props)
+             polarity-props (horizontal-polarity.prototypes/polarity-props-prototype polarity-props)]
             [horizontal-polarity polarity-id polarity-props]))))
 ```
 
@@ -1858,10 +1893,10 @@ This component is the default label component of the elements.
 <summary>Require</summary>
 
 ```
-(ns my-namespace (:require [elements.api :refer [horizontal-polarity]]))
+(ns my-namespace (:require [pretty-elements.api :refer [horizontal-polarity]]))
 
-(elements.api/horizontal-polarity ...)
-(horizontal-polarity              ...)
+(pretty-elements.api/horizontal-polarity ...)
+(horizontal-polarity                     ...)
 ```
 
 </details>
@@ -1888,6 +1923,7 @@ This component is the default label component of the elements.
  :label (metamorphic-content)(opt)
  :outdent (map)(opt)
   Same as the :indent property.
+ :preset (keyword)(opt)
  :style (map)(opt)
  :width (keyword)(opt)
   :auto, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
@@ -1913,7 +1949,8 @@ This component is the default label component of the elements.
    [element (random/generate-keyword) separator-props])
 
   ([separator-id separator-props]
-   (fn [_ separator-props]       (let [separator-props (horizontal-separator.prototypes/separator-props-prototype separator-props)]
+   (fn [_ separator-props]       (let [separator-props (pretty-presets/apply-preset                               separator-props)
+             separator-props (horizontal-separator.prototypes/separator-props-prototype separator-props)]
             [horizontal-separator separator-id separator-props]))))
 ```
 
@@ -1923,10 +1960,10 @@ This component is the default label component of the elements.
 <summary>Require</summary>
 
 ```
-(ns my-namespace (:require [elements.api :refer [horizontal-separator]]))
+(ns my-namespace (:require [pretty-elements.api :refer [horizontal-separator]]))
 
-(elements.api/horizontal-separator ...)
-(horizontal-separator              ...)
+(pretty-elements.api/horizontal-separator ...)
+(horizontal-separator                     ...)
 ```
 
 </details>
@@ -1942,6 +1979,7 @@ This component is the default label component of the elements.
  :height (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   Default: :s
+ :preset (keyword)(opt)
  :style (map)(opt)}
 ```
 
@@ -1964,7 +2002,8 @@ This component is the default label component of the elements.
    [element (random/generate-keyword) spacer-props])
 
   ([spacer-id spacer-props]
-   (fn [_ spacer-props]       (let [spacer-props (horizontal-spacer.prototypes/spacer-props-prototype spacer-props)]
+   (fn [_ spacer-props]       (let [spacer-props (pretty-presets/apply-preset                         spacer-props)
+             spacer-props (horizontal-spacer.prototypes/spacer-props-prototype spacer-props)]
             [:div (horizontal-spacer.attributes/spacer-attributes spacer-id spacer-props)]))))
 ```
 
@@ -1974,10 +2013,10 @@ This component is the default label component of the elements.
 <summary>Require</summary>
 
 ```
-(ns my-namespace (:require [elements.api :refer [horizontal-spacer]]))
+(ns my-namespace (:require [pretty-elements.api :refer [horizontal-spacer]]))
 
-(elements.api/horizontal-spacer ...)
-(horizontal-spacer              ...)
+(pretty-elements.api/horizontal-spacer ...)
+(horizontal-spacer                     ...)
 ```
 
 </details>
@@ -2010,6 +2049,7 @@ This component is the default label component of the elements.
     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
  :outdent (map)(opt)
   Same as the :indent property.
+ :preset (keyword)(opt)
  :style (map)(opt)}
 ```
 
@@ -2032,7 +2072,8 @@ This component is the default label component of the elements.
    [element (random/generate-keyword) icon-props])
 
   ([icon-id icon-props]
-   (fn [_ icon-props]       (let [icon-props (icon.prototypes/icon-props-prototype icon-props)]
+   (fn [_ icon-props]       (let [icon-props (pretty-presets/apply-preset          icon-props)
+             icon-props (icon.prototypes/icon-props-prototype icon-props)]
             [icon icon-id icon-props]))))
 ```
 
@@ -2042,10 +2083,10 @@ This component is the default label component of the elements.
 <summary>Require</summary>
 
 ```
-(ns my-namespace (:require [elements.api :refer [icon]]))
+(ns my-namespace (:require [pretty-elements.api :refer [icon]]))
 
-(elements.api/icon ...)
-(icon              ...)
+(pretty-elements.api/icon ...)
+(icon                     ...)
 ```
 
 </details>
@@ -2126,6 +2167,7 @@ BUG#9912 (source-code/cljs/pretty_elements/button.views)
  :on-mouse-over (Re-Frame metamorphic-event)(opt)
  :outdent (map)(opt)
   Same as the :indent property.
+ :preset (keyword)(opt)
  :progress (percent)(opt)
  :progress-color (keyword or string)
   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
@@ -2167,7 +2209,8 @@ BUG#9912 (source-code/cljs/pretty_elements/button.views)
    [element (random/generate-keyword) button-props])
 
   ([button-id button-props]
-   (fn [_ button-props]       (let [button-props (icon-button.prototypes/button-props-prototype button-props)]
+   (fn [_ button-props]       (let [button-props (pretty-presets/apply-preset                   button-props)
+             button-props (icon-button.prototypes/button-props-prototype button-props)]
             [icon-button button-id button-props]))))
 ```
 
@@ -2177,10 +2220,10 @@ BUG#9912 (source-code/cljs/pretty_elements/button.views)
 <summary>Require</summary>
 
 ```
-(ns my-namespace (:require [elements.api :refer [icon-button]]))
+(ns my-namespace (:require [pretty-elements.api :refer [icon-button]]))
 
-(elements.api/icon-button ...)
-(icon-button              ...)
+(pretty-elements.api/icon-button ...)
+(icon-button                     ...)
 ```
 
 </details>
@@ -2212,6 +2255,7 @@ BUG#9912 (source-code/cljs/pretty_elements/button.views)
   TODO
  :outdent (map)(opt)
   Same as the :indent property.
+ :preset (keyword)(opt)
  :src (string)(opt)
  :style (map)(opt)
  :width (keyword)(opt)
@@ -2238,7 +2282,8 @@ BUG#9912 (source-code/cljs/pretty_elements/button.views)
    [element (random/generate-keyword) image-props])
 
   ([image-id image-props]
-   (fn [_ image-props]       (let [image-props (image.prototypes/image-props-prototype image-props)]
+   (fn [_ image-props]       (let [image-props (pretty-presets/apply-preset            image-props)
+             image-props (image.prototypes/image-props-prototype image-props)]
             [image image-id image-props]))))
 ```
 
@@ -2248,10 +2293,10 @@ BUG#9912 (source-code/cljs/pretty_elements/button.views)
 <summary>Require</summary>
 
 ```
-(ns my-namespace (:require [elements.api :refer [image]]))
+(ns my-namespace (:require [pretty-elements.api :refer [image]]))
 
-(elements.api/image ...)
-(image              ...)
+(pretty-elements.api/image ...)
+(image                     ...)
 ```
 
 </details>
@@ -2335,6 +2380,7 @@ BUG#9912 (source-code/cljs/pretty_elements/button.views)
   Same as the :indent property.
  :placeholder (metamorphic-content)(opt)
   Default: "\u00A0"
+ :preset (keyword)(opt)
  :selectable? (boolean)(opt)
   Default: false
  :style (map)(opt)
@@ -2376,7 +2422,8 @@ BUG#9912 (source-code/cljs/pretty_elements/button.views)
    [element (random/generate-keyword) label-props])
 
   ([label-id label-props]
-   (fn [_ label-props]       (let [label-props (label.prototypes/label-props-prototype label-props)]
+   (fn [_ label-props]       (let [label-props (pretty-presets/apply-preset            label-props)
+             label-props (label.prototypes/label-props-prototype label-props)]
             [label label-id label-props]))))
 ```
 
@@ -2386,10 +2433,10 @@ BUG#9912 (source-code/cljs/pretty_elements/button.views)
 <summary>Require</summary>
 
 ```
-(ns my-namespace (:require [elements.api :refer [label]]))
+(ns my-namespace (:require [pretty-elements.api :refer [label]]))
 
-(elements.api/label ...)
-(label              ...)
+(pretty-elements.api/label ...)
+(label                     ...)
 ```
 
 </details>
@@ -2400,8 +2447,8 @@ BUG#9912 (source-code/cljs/pretty_elements/button.views)
 
 ```
 @description
-You can set the default item styles and settings by using the ':item-default'
-property or you can specify these values on each item separately.
+You can set the default menu item properties by using the ':item-default'
+property or you can specify the properties for each menu item separately.
 ```
 
 ```
@@ -2474,6 +2521,7 @@ property or you can specify these values on each item separately.
     :label (metamorphic-content)(opt)
     :on-click (Re-Frame metamorphic-event)(opt)
     :on-mouse-over (Re-Frame metamorphic-event)(opt)
+    :preset (keyword)(opt)
     :target (keyword)(opt)
      :blank, :self}]
  :orientation (keyword)(opt)
@@ -2481,6 +2529,7 @@ property or you can specify these values on each item separately.
   Default: :horizontal
  :outdent (map)(opt)
   Same as the :indent property.
+ :preset (keyword)(opt)
  :style (map)(opt)}
 ```
 
@@ -2503,7 +2552,8 @@ property or you can specify these values on each item separately.
    [element (random/generate-keyword) bar-props])
 
   ([bar-id bar-props]
-   (fn [_ bar-props]       (let [bar-props (menu-bar.prototypes/bar-props-prototype bar-props)]
+   (fn [_ bar-props]       (let [bar-props (pretty-presets/apply-preset             bar-props)
+             bar-props (menu-bar.prototypes/bar-props-prototype bar-props)]
             [menu-bar bar-id bar-props]))))
 ```
 
@@ -2513,10 +2563,10 @@ property or you can specify these values on each item separately.
 <summary>Require</summary>
 
 ```
-(ns my-namespace (:require [elements.api :refer [menu-bar]]))
+(ns my-namespace (:require [pretty-elements.api :refer [menu-bar]]))
 
-(elements.api/menu-bar ...)
-(menu-bar              ...)
+(pretty-elements.api/menu-bar ...)
+(menu-bar                     ...)
 ```
 
 </details>
@@ -2548,7 +2598,7 @@ leaves the field!
  :option-value-f (function)(opt)
   Default: return
  :option-component (Reagent component symbol)(opt)
-  Default: elements.combo-box/default-option-component
+  Default: pretty-elements.combo-box/default-option-component
  :options (vector)(opt)
  :options-path (Re-Frame path vector)(opt)}
 ```
@@ -2583,10 +2633,10 @@ leaves the field!
 <summary>Require</summary>
 
 ```
-(ns my-namespace (:require [elements.api :refer [multi-combo-box]]))
+(ns my-namespace (:require [pretty-elements.api :refer [multi-combo-box]]))
 
-(elements.api/multi-combo-box ...)
-(multi-combo-box              ...)
+(pretty-elements.api/multi-combo-box ...)
+(multi-combo-box                     ...)
 ```
 
 </details>
@@ -2639,10 +2689,10 @@ leaves the field!
 <summary>Require</summary>
 
 ```
-(ns my-namespace (:require [elements.api :refer [multi-field]]))
+(ns my-namespace (:require [pretty-elements.api :refer [multi-field]]))
 
-(elements.api/multi-field ...)
-(multi-field              ...)
+(pretty-elements.api/multi-field ...)
+(multi-field                     ...)
 ```
 
 </details>
@@ -2699,10 +2749,10 @@ delayed, after the user stopped typing or without a delay when the user leaves t
 <summary>Require</summary>
 
 ```
-(ns my-namespace (:require [elements.api :refer [multiline-field]]))
+(ns my-namespace (:require [pretty-elements.api :refer [multiline-field]]))
 
-(elements.api/multiline-field ...)
-(multiline-field              ...)
+(pretty-elements.api/multiline-field ...)
+(multiline-field                     ...)
 ```
 
 </details>
@@ -2762,6 +2812,7 @@ delayed, after the user stopped typing or without a delay when the user leaves t
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
  :outdent (map)(opt)
   Same as the :indent property.
+ :preset (keyword)(opt)
  :primary-button (map)(opt)
   {:layout (keyword)
     :button, :icon-button
@@ -2797,7 +2848,8 @@ delayed, after the user stopped typing or without a delay when the user leaves t
    [element (random/generate-keyword) bubble-props])
 
   ([bubble-id bubble-props]
-   (fn [_ bubble-props]       (let [bubble-props (notification-bubble.prototypes/bubble-props-prototype bubble-props)]
+   (fn [_ bubble-props]       (let [bubble-props (pretty-presets/apply-preset                           bubble-props)
+             bubble-props (notification-bubble.prototypes/bubble-props-prototype bubble-props)]
             [notification-bubble bubble-id bubble-props]))))
 ```
 
@@ -2807,10 +2859,10 @@ delayed, after the user stopped typing or without a delay when the user leaves t
 <summary>Require</summary>
 
 ```
-(ns my-namespace (:require [elements.api :refer [notification-bubble]]))
+(ns my-namespace (:require [pretty-elements.api :refer [notification-bubble]]))
 
-(elements.api/notification-bubble ...)
-(notification-bubble              ...)
+(pretty-elements.api/notification-bubble ...)
+(notification-bubble                     ...)
 ```
 
 </details>
@@ -2860,10 +2912,10 @@ leaves the field!
 <summary>Require</summary>
 
 ```
-(ns my-namespace (:require [elements.api :refer [number-field]]))
+(ns my-namespace (:require [pretty-elements.api :refer [number-field]]))
 
-(elements.api/number-field ...)
-(number-field              ...)
+(pretty-elements.api/number-field ...)
+(number-field                     ...)
 ```
 
 </details>
@@ -2913,10 +2965,10 @@ leaves the field!
 <summary>Require</summary>
 
 ```
-(ns my-namespace (:require [elements.api :refer [password-field]]))
+(ns my-namespace (:require [pretty-elements.api :refer [password-field]]))
 
-(elements.api/password-field ...)
-(password-field              ...)
+(pretty-elements.api/password-field ...)
+(password-field                     ...)
 ```
 
 </details>
@@ -2974,6 +3026,7 @@ leaves the field!
   This event takes the field content as its last parameter.
  :outdent (map)(opt)
   Same as the :indent property.
+ :preset (keyword)(opt)
  :style (map)(opt)
  :surface (map)(opt)
   {:border-radius (map)(opt)
@@ -3001,7 +3054,8 @@ leaves the field!
    [element (random/generate-keyword) field-props])
 
   ([field-id field-props]
-   (fn [_ field-props]       (let [field-props (plain-field.prototypes/field-props-prototype field-id field-props)]
+   (fn [_ field-props]       (let [field-props (pretty-presets/apply-preset                           field-props)
+             field-props (plain-field.prototypes/field-props-prototype field-id field-props)]
             [plain-field field-id field-props]))))
 ```
 
@@ -3011,10 +3065,10 @@ leaves the field!
 <summary>Require</summary>
 
 ```
-(ns my-namespace (:require [elements.api :refer [plain-field]]))
+(ns my-namespace (:require [pretty-elements.api :refer [plain-field]]))
 
-(elements.api/plain-field ...)
-(plain-field              ...)
+(pretty-elements.api/plain-field ...)
+(plain-field                     ...)
 ```
 
 </details>
@@ -3075,6 +3129,7 @@ leaves the field!
  :options-path (Re-Frame path vector)(opt)
  :outdent (map)(opt)
   Same as the :indent property.
+ :preset (keyword)(opt)
  :style (map)(opt)
  :value-path (Re-Frame path vector)(opt)}
 ```
@@ -3103,7 +3158,8 @@ leaves the field!
    [element (random/generate-keyword) button-props])
 
   ([button-id button-props]
-   (fn [_ button-props]       (let [button-props (radio-button.prototypes/button-props-prototype button-id button-props)]
+   (fn [_ button-props]       (let [button-props (pretty-presets/apply-preset                              button-props)
+             button-props (radio-button.prototypes/button-props-prototype button-id button-props)]
             [radio-button button-id button-props]))))
 ```
 
@@ -3113,10 +3169,10 @@ leaves the field!
 <summary>Require</summary>
 
 ```
-(ns my-namespace (:require [elements.api :refer [radio-button]]))
+(ns my-namespace (:require [pretty-elements.api :refer [radio-button]]))
 
-(elements.api/radio-button ...)
-(radio-button              ...)
+(pretty-elements.api/radio-button ...)
+(radio-button                     ...)
 ```
 
 </details>
@@ -3171,6 +3227,7 @@ leaves the field!
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
  :outdent (map)(opt)
   Same as the :indent property.
+ :preset (keyword)(opt)
  :style (map)(opt)
  :vertical-align (keyword)(opt)
   :top, :center, :bottom
@@ -3200,7 +3257,8 @@ leaves the field!
    [element (random/generate-keyword) row-props])
 
   ([row-id row-props]
-   (fn [_ row-props]       (let [row-props (row.prototypes/row-props-prototype row-props)]
+   (fn [_ row-props]       (let [row-props (pretty-presets/apply-preset        row-props)
+             row-props (row.prototypes/row-props-prototype row-props)]
             [row row-id row-props]))))
 ```
 
@@ -3210,10 +3268,10 @@ leaves the field!
 <summary>Require</summary>
 
 ```
-(ns my-namespace (:require [elements.api :refer [row]]))
+(ns my-namespace (:require [pretty-elements.api :refer [row]]))
 
-(elements.api/row ...)
-(row              ...)
+(pretty-elements.api/row ...)
+(row                     ...)
 ```
 
 </details>
@@ -3263,10 +3321,10 @@ leaves the field!
 <summary>Require</summary>
 
 ```
-(ns my-namespace (:require [elements.api :refer [search-field]]))
+(ns my-namespace (:require [pretty-elements.api :refer [search-field]]))
 
-(elements.api/search-field ...)
-(search-field              ...)
+(pretty-elements.api/search-field ...)
+(search-field                     ...)
 ```
 
 </details>
@@ -3361,10 +3419,10 @@ leaves the field!
 <summary>Require</summary>
 
 ```
-(ns my-namespace (:require [elements.api :refer [select]]))
+(ns my-namespace (:require [pretty-elements.api :refer [select]]))
 
-(elements.api/select ...)
-(select              ...)
+(pretty-elements.api/select ...)
+(select                     ...)
 ```
 
 </details>
@@ -3402,6 +3460,7 @@ UNFINISHED! DO NOT USE!
   Default: 0
  :outdent (map)(opt)
   Same as the :indent property.
+ :preset (keyword)(opt)
  :resetable? (boolean)(opt)
  :style (map)(opt)
  :value-path (Re-Frame path vector)(opt)
@@ -3429,7 +3488,8 @@ UNFINISHED! DO NOT USE!
    [element (random/generate-keyword) slider-props])
 
   ([slider-id slider-props]
-   (fn [_ slider-props]       (let [slider-props (slider.prototypes/slider-props-prototype slider-id slider-props)]
+   (fn [_ slider-props]       (let [slider-props (pretty-presets/apply-preset                        slider-props)
+             slider-props (slider.prototypes/slider-props-prototype slider-id slider-props)]
             [slider slider-id slider-props]))))
 ```
 
@@ -3439,10 +3499,10 @@ UNFINISHED! DO NOT USE!
 <summary>Require</summary>
 
 ```
-(ns my-namespace (:require [elements.api :refer [slider]]))
+(ns my-namespace (:require [pretty-elements.api :refer [slider]]))
 
-(elements.api/slider ...)
-(slider              ...)
+(pretty-elements.api/slider ...)
+(slider                     ...)
 ```
 
 </details>
@@ -3490,10 +3550,10 @@ UNFINISHED! DO NOT USE!
 <summary>Require</summary>
 
 ```
-(ns my-namespace (:require [elements.api :refer [stepper]]))
+(ns my-namespace (:require [pretty-elements.api :refer [stepper]]))
 
-(elements.api/stepper ...)
-(stepper              ...)
+(pretty-elements.api/stepper ...)
+(stepper                     ...)
 ```
 
 </details>
@@ -3554,6 +3614,7 @@ UNFINISHED! DO NOT USE!
  :options-path (Re-Frame path vector)(opt)
  :outdent (map)(opt)
   Same as the :indent property.
+ :preset (keyword)(opt)
  :style (map)(opt)
  :value-path (Re-Frame path vector)(opt)}
 ```
@@ -3577,7 +3638,8 @@ UNFINISHED! DO NOT USE!
    [element (random/generate-keyword) switch-props])
 
   ([switch-id switch-props]
-   (fn [_ switch-props]       (let [switch-props (switch.prototypes/switch-props-prototype switch-id switch-props)]
+   (fn [_ switch-props]       (let [switch-props (pretty-presets/apply-preset                        switch-props)
+             switch-props (switch.prototypes/switch-props-prototype switch-id switch-props)]
             [switch switch-id switch-props]))))
 ```
 
@@ -3587,10 +3649,10 @@ UNFINISHED! DO NOT USE!
 <summary>Require</summary>
 
 ```
-(ns my-namespace (:require [elements.api :refer [switch]]))
+(ns my-namespace (:require [pretty-elements.api :refer [switch]]))
 
-(elements.api/switch ...)
-(switch              ...)
+(pretty-elements.api/switch ...)
+(switch                     ...)
 ```
 
 </details>
@@ -3655,6 +3717,7 @@ UNFINISHED! DO NOT USE!
   Same as the :indent property.
  :placeholder (metamorphic-content)(opt)
   Default: "\u00A0"
+ :preset (keyword)(opt)
  :selectable? (boolean)(opt)
   Default: true
  :style (map)(opt)
@@ -3688,7 +3751,8 @@ UNFINISHED! DO NOT USE!
    [element (random/generate-keyword) text-props])
 
   ([text-id text-props]
-   (fn [_ text-props]       (let [text-props (text.prototypes/text-props-prototype text-props)]
+   (fn [_ text-props]       (let [text-props (pretty-presets/apply-preset          text-props)
+             text-props (text.prototypes/text-props-prototype text-props)]
             [text text-id text-props]))))
 ```
 
@@ -3698,10 +3762,10 @@ UNFINISHED! DO NOT USE!
 <summary>Require</summary>
 
 ```
-(ns my-namespace (:require [elements.api :refer [text]]))
+(ns my-namespace (:require [pretty-elements.api :refer [text]]))
 
-(elements.api/text ...)
-(text              ...)
+(pretty-elements.api/text ...)
+(text                     ...)
 ```
 
 </details>
@@ -3758,6 +3822,7 @@ the user stopped typing or without a delay when the user leaves the field!
      Default: :material-symbols-outlined
     :label (string)(opt)
     :on-click (Re-Frame metamorphic-event)(opt)
+    :preset (keyword)(opt)
     :tab-indexed? (boolean)(opt)
      Default: true
     :timeout (ms)(opt)
@@ -3824,6 +3889,7 @@ the user stopped typing or without a delay when the user leaves the field!
  :outdent (map)(opt)
   Same as the :indent property.
  :placeholder (metamorphic-content)(opt)
+ :preset (keyword)(opt)
  :reveal-effect (keyword)(opt)
   :delayed, :opacity
  :start-adornments (maps in vector)(opt)
@@ -3890,7 +3956,8 @@ the user stopped typing or without a delay when the user leaves the field!
    [element (random/generate-keyword) field-props])
 
   ([field-id field-props]
-   (fn [_ field-props]       (let [field-props (text-field.prototypes/field-props-prototype field-id field-props)]
+   (fn [_ field-props]       (let [field-props (pretty-presets/apply-preset                          field-props)
+             field-props (text-field.prototypes/field-props-prototype field-id field-props)]
             [text-field field-id field-props]))))
 ```
 
@@ -3900,10 +3967,10 @@ the user stopped typing or without a delay when the user leaves the field!
 <summary>Require</summary>
 
 ```
-(ns my-namespace (:require [elements.api :refer [text-field]]))
+(ns my-namespace (:require [pretty-elements.api :refer [text-field]]))
 
-(elements.api/text-field ...)
-(text-field              ...)
+(pretty-elements.api/text-field ...)
+(text-field                     ...)
 ```
 
 </details>
@@ -3958,6 +4025,7 @@ the user stopped typing or without a delay when the user leaves the field!
  :on-click (Re-Frame metamorphic-event)(opt)
  :outdent (map)(opt)
   Same as the :indent property.
+ :preset (keyword)(opt)
  :style (map)(opt)
  :target (keyword)(opt)
   :blank, :self
@@ -3986,7 +4054,8 @@ the user stopped typing or without a delay when the user leaves the field!
    [element (random/generate-keyword) thumbnail-props])
 
   ([thumbnail-id thumbnail-props]
-   (fn [_ thumbnail-props]       (let [thumbnail-props (thumbnail.prototypes/thumbnail-props-prototype thumbnail-props)]
+   (fn [_ thumbnail-props]       (let [thumbnail-props (pretty-presets/apply-preset                    thumbnail-props)
+             thumbnail-props (thumbnail.prototypes/thumbnail-props-prototype thumbnail-props)]
             [thumbnail thumbnail-id thumbnail-props]))))
 ```
 
@@ -3996,10 +4065,10 @@ the user stopped typing or without a delay when the user leaves the field!
 <summary>Require</summary>
 
 ```
-(ns my-namespace (:require [elements.api :refer [thumbnail]]))
+(ns my-namespace (:require [pretty-elements.api :refer [thumbnail]]))
 
-(elements.api/thumbnail ...)
-(thumbnail              ...)
+(pretty-elements.api/thumbnail ...)
+(thumbnail                     ...)
 ```
 
 </details>
@@ -4056,6 +4125,7 @@ the user stopped typing or without a delay when the user leaves the field!
  :on-right-click (Re-Frame metamorphic-event)(opt)
  :outdent (map)(opt)
   Same as the :indent property.
+ :preset (keyword)(opt)
  :style (map)(opt)
  :target (keyword)(opt)
   :blank, :self
@@ -4083,7 +4153,8 @@ the user stopped typing or without a delay when the user leaves the field!
    [element (random/generate-keyword) toggle-props])
 
   ([toggle-id toggle-props]
-   (fn [_ toggle-props]       (let [toggle-props (toggle.prototypes/toggle-props-prototype toggle-props)]
+   (fn [_ toggle-props]       (let [toggle-props (pretty-presets/apply-preset              toggle-props)
+             toggle-props (toggle.prototypes/toggle-props-prototype toggle-props)]
             [toggle toggle-id toggle-props]))))
 ```
 
@@ -4093,10 +4164,10 @@ the user stopped typing or without a delay when the user leaves the field!
 <summary>Require</summary>
 
 ```
-(ns my-namespace (:require [elements.api :refer [toggle]]))
+(ns my-namespace (:require [pretty-elements.api :refer [toggle]]))
 
-(elements.api/toggle ...)
-(toggle              ...)
+(pretty-elements.api/toggle ...)
+(toggle                     ...)
 ```
 
 </details>
@@ -4122,6 +4193,7 @@ the user stopped typing or without a delay when the user leaves the field!
     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
  :outdent (map)(opt)
   Same as the :indent property.
+ :preset (keyword)(opt)
  :style (map)(opt)
  :width (keyword)(opt)
   :auto, :content, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
@@ -4155,7 +4227,8 @@ the user stopped typing or without a delay when the user leaves the field!
    [element (random/generate-keyword) group-props])
 
   ([group-id group-props]
-   (fn [_ group-props]       (let [group-props (vertical-group.prototypes/group-props-prototype group-props)]
+   (fn [_ group-props]       (let [group-props (pretty-presets/apply-preset                     group-props)
+             group-props (vertical-group.prototypes/group-props-prototype group-props)]
             [vertical-group group-id group-props]))))
 ```
 
@@ -4165,10 +4238,10 @@ the user stopped typing or without a delay when the user leaves the field!
 <summary>Require</summary>
 
 ```
-(ns my-namespace (:require [elements.api :refer [vertical-group]]))
+(ns my-namespace (:require [pretty-elements.api :refer [vertical-group]]))
 
-(elements.api/vertical-group ...)
-(vertical-group              ...)
+(pretty-elements.api/vertical-group ...)
+(vertical-group                     ...)
 ```
 
 </details>
@@ -4189,6 +4262,7 @@ the user stopped typing or without a delay when the user leaves the field!
   Default: :parent
  :outdent (map)(opt)
   Same as the :indent property.
+ :preset (keyword)(opt)
  :style (map)(opt)
  :strength (px)(opt)
   Default: 1}
@@ -4213,7 +4287,8 @@ the user stopped typing or without a delay when the user leaves the field!
    [element (random/generate-keyword) line-props])
 
   ([line-id line-props]
-   (fn [_ line-props]       (let [line-props (vertical-line.prototypes/line-props-prototype line-props)]
+   (fn [_ line-props]       (let [line-props (pretty-presets/apply-preset                   line-props)
+             line-props (vertical-line.prototypes/line-props-prototype line-props)]
             [:div (vertical-line.attributes/line-attributes line-id line-props)
                   [:div (vertical-line.attributes/line-body-attributes line-id line-props)]]))))
 ```
@@ -4224,10 +4299,10 @@ the user stopped typing or without a delay when the user leaves the field!
 <summary>Require</summary>
 
 ```
-(ns my-namespace (:require [elements.api :refer [vertical-line]]))
+(ns my-namespace (:require [pretty-elements.api :refer [vertical-line]]))
 
-(elements.api/vertical-line ...)
-(vertical-line              ...)
+(pretty-elements.api/vertical-line ...)
+(vertical-line                     ...)
 ```
 
 </details>
@@ -4258,6 +4333,7 @@ the user stopped typing or without a delay when the user leaves the field!
  :middle-content (metamorphic-content)
  :outdent (map)(opt)
   Same as the :indent property.
+ :preset (keyword)(opt)
  :style (map)(opt)
  :start-content (metamorphic-content)(opt)
 ```
@@ -4287,7 +4363,8 @@ the user stopped typing or without a delay when the user leaves the field!
    [element (random/generate-keyword) polarity-props])
 
   ([polarity-id polarity-props]
-   (fn [_ polarity-props]       (let [polarity-props (vertical-polarity.prototypes/polarity-props-prototype polarity-props)]
+   (fn [_ polarity-props]       (let [polarity-props (pretty-presets/apply-preset                           polarity-props)
+             polarity-props (vertical-polarity.prototypes/polarity-props-prototype polarity-props)]
             [vertical-polarity polarity-id polarity-props]))))
 ```
 
@@ -4297,10 +4374,10 @@ the user stopped typing or without a delay when the user leaves the field!
 <summary>Require</summary>
 
 ```
-(ns my-namespace (:require [elements.api :refer [vertical-polarity]]))
+(ns my-namespace (:require [pretty-elements.api :refer [vertical-polarity]]))
 
-(elements.api/vertical-polarity ...)
-(vertical-polarity              ...)
+(pretty-elements.api/vertical-polarity ...)
+(vertical-polarity                     ...)
 ```
 
 </details>
@@ -4313,6 +4390,7 @@ the user stopped typing or without a delay when the user leaves the field!
 @param (keyword)(opt) spacer-id
 @param (map) spacer-props
 {:class (keyword or keywords in vector)(opt)
+ :preset (keyword)(opt)
  :style (map)(opt)
  :width (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
@@ -4338,7 +4416,8 @@ the user stopped typing or without a delay when the user leaves the field!
    [element (random/generate-keyword) spacer-props])
 
   ([spacer-id spacer-props]
-   (fn [_ spacer-props]       (let [spacer-props (vertical-spacer.prototypes/spacer-props-prototype spacer-props)]
+   (fn [_ spacer-props]       (let [spacer-props (pretty-presets/apply-preset                       spacer-props)
+             spacer-props (vertical-spacer.prototypes/spacer-props-prototype spacer-props)]
             [:div (vertical-spacer.attributes/spacer-attributes spacer-id spacer-props)]))))
 ```
 
@@ -4348,10 +4427,10 @@ the user stopped typing or without a delay when the user leaves the field!
 <summary>Require</summary>
 
 ```
-(ns my-namespace (:require [elements.api :refer [vertical-spacer]]))
+(ns my-namespace (:require [pretty-elements.api :refer [vertical-spacer]]))
 
-(elements.api/vertical-spacer ...)
-(vertical-spacer              ...)
+(pretty-elements.api/vertical-spacer ...)
+(vertical-spacer                     ...)
 ```
 
 </details>

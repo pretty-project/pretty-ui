@@ -16,9 +16,9 @@
   ; @param (map) links-props
   ; {:links (vectors in vector)}
   [links-id {:keys [links] :as links-props}]
-  [:div (follow-us-links-links.attributes/links-attributes links-id links-props)
-        [:div (follow-us-links-links.attributes/links-body-attributes links-id links-props)
-              (letfn [(f [%] [:a (follow-us-links-links.attributes/links-link-attributes links-id links-props %)])]
+  [:div (follow-us-links.attributes/links-attributes links-id links-props)
+        [:div (follow-us-links.attributes/links-body-attributes links-id links-props)
+              (letfn [(f [%] [:a (follow-us-links.attributes/links-link-attributes links-id links-props %)])]
                      (hiccup/put-with [:<>] links f))]])
 
 (defn component

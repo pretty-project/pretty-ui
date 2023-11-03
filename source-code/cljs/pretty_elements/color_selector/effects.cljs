@@ -6,7 +6,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-f :pretty-elements.color-selector/options-did-mount
+(r/reg-event-fx :pretty-elements.color-selector/options-did-mount
   ; @ignore
   ;
   ; @param (keyword) selector-id
@@ -17,7 +17,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-f :pretty-elements.color-selector/toggle-option!
+(r/reg-event-fx :pretty-elements.color-selector/toggle-option!
   ; @ignore
   ;
   ; @param (keyword) selector-id

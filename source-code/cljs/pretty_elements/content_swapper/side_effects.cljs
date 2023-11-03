@@ -83,7 +83,7 @@
 ;
 ; @usage
 ; [:pretty-elements.content-swapper/go-fwd! :my-content-swapper [:div "My page"]]
-(r/reg-f :pretty-elements.content-swapper/go-fwd! go-fwd!)
+(r/reg-fx :pretty-elements.content-swapper/go-fwd! go-fwd!)
 
 ; @param (keyword) swapper-id
 ; @param (metamorphic-content) page
@@ -93,4 +93,4 @@
 ;
 ; @usage
 ; [:pretty-elements.content-swapper/go-bwd! :my-content-swapper [:div "My page"]]
-(r/reg-f :pretty-elements.content-swapper/go-bwd! go-bwd!)
+(r/reg-fx :pretty-elements.content-swapper/go-bwd! go-bwd!)

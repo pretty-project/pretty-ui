@@ -33,10 +33,10 @@
 ;
 ; @param (keyword) select-id
 ; @param (map) select-props
-(r/reg-f :pretty-elements.select/reg-keypress-events! reg-keypress-events!)
+(r/reg-fx :pretty-elements.select/reg-keypress-events! reg-keypress-events!)
 
 ; @ignore
 ;
 ; @param (keyword) select-id
 ; @param (map) select-props
-(r/reg-f :pretty-elements.select/remove-keypress-events! remove-keypress-events!)
+(r/reg-fx :pretty-elements.select/remove-keypress-events! remove-keypress-events!)

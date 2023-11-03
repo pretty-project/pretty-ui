@@ -1,7 +1,7 @@
 
-# layouts.api ClojureScript namespace
+# pretty-layouts.api ClojureScript namespace
 
-##### [README](../../../README.md) > [DOCUMENTATION](../../COVER.md) > layouts.api
+##### [README](../../../README.md) > [DOCUMENTATION](../../COVER.md) > pretty-layouts.api
 
 ### Index
 
@@ -59,6 +59,7 @@
  :on-unmount (Re-Frame metamorphic-event)(opt)
  :outdent (map)(opt)
   Same as the :indent property.
+ :preset (keyword)(opt)
  :stretch-orientation (keyword)(opt)
   :both, :horizontal, :vertical
  :style (map)(opt)}
@@ -83,7 +84,8 @@
    [layout (random/generate-keyword) popup-props])
 
   ([popup-id popup-props]
-   (fn [_ popup-props]       (let [popup-props (box-popup.prototypes/popup-props-prototype popup-props)]
+   (fn [_ popup-props]       (let [popup-props (pretty-presets/apply-preset                popup-props)
+             popup-props (box-popup.prototypes/popup-props-prototype popup-props)]
             [box-popup popup-id popup-props]))))
 ```
 
@@ -93,10 +95,10 @@
 <summary>Require</summary>
 
 ```
-(ns my-namespace (:require [layouts.api :refer [box-popup]]))
+(ns my-namespace (:require [pretty-layouts.api :refer [box-popup]]))
 
-(layouts.api/box-popup ...)
-(box-popup             ...)
+(pretty-layouts.api/box-popup ...)
+(box-popup                    ...)
 ```
 
 </details>
@@ -114,6 +116,7 @@
  :on-cover (Re-Frame metamorphic-event)(opt)
  :on-mount (Re-Frame metamorphic-event)(opt)
  :on-unmount (Re-Frame metamorphic-event)(opt)
+ :preset (keyword)(opt)
  :style (map)(opt)}
 ```
 
@@ -136,7 +139,8 @@
    [layout (random/generate-keyword) popup-props])
 
   ([popup-id popup-props]
-   (fn [_ popup-props]       (let [popup-props (plain-popup.prototypes/popup-props-prototype popup-props)]
+   (fn [_ popup-props]       (let [popup-props (pretty-presets/apply-preset                  popup-props)
+             popup-props (plain-popup.prototypes/popup-props-prototype popup-props)]
             [plain-popup popup-id popup-props]))))
 ```
 
@@ -146,10 +150,10 @@
 <summary>Require</summary>
 
 ```
-(ns my-namespace (:require [layouts.api :refer [plain-popup]]))
+(ns my-namespace (:require [pretty-layouts.api :refer [plain-popup]]))
 
-(layouts.api/plain-popup ...)
-(plain-popup             ...)
+(pretty-layouts.api/plain-popup ...)
+(plain-popup                    ...)
 ```
 
 </details>
@@ -169,6 +173,7 @@
   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
  :on-mount (Re-Frame metamorphic-event)(opt)
  :on-unmount (Re-Frame metamorphic-event)(opt)
+ :preset (keyword)(opt)
  :style (map)(opt)}
 ```
 
@@ -191,7 +196,8 @@
    [layout (random/generate-keyword) surface-props])
 
   ([surface-id surface-props]
-   (fn [_ surface-props]       (let [layout-props (plain-surface.prototypes/surface-props-prototype surface-props)]
+   (fn [_ surface-props]       (let [surface-props (pretty-presets/apply-preset                      surface-props)
+             surface-props (plain-surface.prototypes/surface-props-prototype surface-props)]
             [plain-surface surface-id surface-props]))))
 ```
 
@@ -201,10 +207,10 @@
 <summary>Require</summary>
 
 ```
-(ns my-namespace (:require [layouts.api :refer [plain-surface]]))
+(ns my-namespace (:require [pretty-layouts.api :refer [plain-surface]]))
 
-(layouts.api/plain-surface ...)
-(plain-surface             ...)
+(pretty-layouts.api/plain-surface ...)
+(plain-surface                    ...)
 ```
 
 </details>
@@ -246,6 +252,7 @@
  :position (keyword)(opt)
   :left, :right
   Default: :left
+ :preset (keyword)(opt)
  :style (map)(opt)
  :threshold (px)(opt)
   Default: 720}
@@ -270,7 +277,8 @@
    [layout (random/generate-keyword) sidebar-props])
 
   ([sidebar-id sidebar-props]
-   (fn [_ sidebar-props]       (let [sidebar-props (sidebar.prototypes/sidebar-props-prototype sidebar-props)]
+   (fn [_ sidebar-props]       (let [sidebar-props (pretty-presets/apply-preset                sidebar-props)
+             sidebar-props (sidebar.prototypes/sidebar-props-prototype sidebar-props)]
             [sidebar sidebar-id sidebar-props]))))
 ```
 
@@ -280,10 +288,10 @@
 <summary>Require</summary>
 
 ```
-(ns my-namespace (:require [layouts.api :refer [sidebar]]))
+(ns my-namespace (:require [pretty-layouts.api :refer [sidebar]]))
 
-(layouts.api/sidebar ...)
-(sidebar             ...)
+(pretty-layouts.api/sidebar ...)
+(sidebar                    ...)
 ```
 
 </details>
@@ -336,6 +344,7 @@
  :on-unmount (Re-Frame metamorphic-event)(opt)
  :outdent (map)(opt)
   Same as the :indent property.
+ :preset (keyword)(opt)
  :stretch-orientation (keyword)(opt)
   :both, :horizontal, :vertical
  :style (map)(opt)}
@@ -360,7 +369,8 @@
    [layout (random/generate-keyword) popup-props])
 
   ([popup-id popup-props]
-   (fn [_ popup-props]       (let [popup-props (struct-popup.prototypes/popup-props-prototype popup-props)]
+   (fn [_ popup-props]       (let [popup-props (pretty-presets/apply-preset                   popup-props)
+             popup-props (struct-popup.prototypes/popup-props-prototype popup-props)]
             [struct-popup popup-id popup-props]))))
 ```
 
@@ -370,10 +380,10 @@
 <summary>Require</summary>
 
 ```
-(ns my-namespace (:require [layouts.api :refer [struct-popup]]))
+(ns my-namespace (:require [pretty-layouts.api :refer [struct-popup]]))
 
-(layouts.api/struct-popup ...)
-(struct-popup             ...)
+(pretty-layouts.api/struct-popup ...)
+(struct-popup                    ...)
 ```
 
 </details>

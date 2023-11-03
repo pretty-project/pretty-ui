@@ -8,7 +8,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-f :pretty-elements.plain-field/field-did-mount
+(r/reg-event-fx :pretty-elements.plain-field/field-did-mount
   ; @ignore
   ;
   ; @param (keyword) field-id
@@ -24,7 +24,7 @@
             :dispatch-n     [(if on-mount      (r/metamorphic-event<-params on-mount (or initial-value stored-value)))
                              (if initial-value [:pretty-elements.plain-field/use-initial-value! field-id field-props])]})))
 
-(r/reg-event-f :pretty-elements.plain-field/field-will-unmount
+(r/reg-event-fx :pretty-elements.plain-field/field-will-unmount
   ; @ignore
   ;
   ; @param (keyword) field-id
@@ -40,7 +40,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-f :pretty-elements.plain-field/use-initial-value!
+(r/reg-event-fx :pretty-elements.plain-field/use-initial-value!
   ; @ignore
   ;
   ; @param (keyword) field-id
@@ -51,7 +51,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-f :pretty-elements.plain-field/type-ended
+(r/reg-event-fx :pretty-elements.plain-field/type-ended
   ; @ignore
   ;
   ; @param (keyword) field-id
@@ -73,7 +73,7 @@
                     :dispatch (if on-type-ended (r/metamorphic-event<-params on-type-ended field-content))}
                    {:dispatch (if on-type-ended (r/metamorphic-event<-params on-type-ended field-content))}))))
 
-(r/reg-event-f :pretty-elements.plain-field/field-blurred
+(r/reg-event-fx :pretty-elements.plain-field/field-blurred
   ; @ignore
   ;
   ; @param (keyword) field-id
@@ -100,7 +100,7 @@
                          [:pretty-elements.input/unmark-input-as-focused! field-id]
                          [:pretty-elements.plain-field/quit-type-mode!    field-id]]})))
 
-(r/reg-event-f :pretty-elements.plain-field/field-focused
+(r/reg-event-fx :pretty-elements.plain-field/field-focused
   ; @ignore
   ;
   ; @param (keyword) field-id

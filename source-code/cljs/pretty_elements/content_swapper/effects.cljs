@@ -5,7 +5,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-f :pretty-elements.content-swapper/go-fwd!
+(r/reg-event-fx :pretty-elements.content-swapper/go-fwd!
   ; @param (keyword) swapper-id
   ; @param (metamorphic-content) page
   ; @param (map)(opt) options
@@ -17,7 +17,7 @@
   (fn [_ [_ swapper-id page options]]
       {:fx [:pretty-elements.content-swapper/go-fwd! swapper-id page options]}))
 
-(r/reg-event-f :pretty-elements.content-swapper/go-bwd!
+(r/reg-event-fx :pretty-elements.content-swapper/go-bwd!
   ; @param (keyword) swapper-id
   ; @param (metamorphic-content) page
   ; @param (map)(opt) options

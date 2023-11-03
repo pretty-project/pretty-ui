@@ -6,7 +6,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-f :pretty-elements.chip-group/delete-chip!
+(r/reg-event-fx :pretty-elements.chip-group/delete-chip!
   ; @ignore
   ;
   ; @param (keyword) group-id

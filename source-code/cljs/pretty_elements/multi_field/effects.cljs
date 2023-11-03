@@ -7,7 +7,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-f :pretty-elements.multi-field/decrease-field-count!
+(r/reg-event-fx :pretty-elements.multi-field/decrease-field-count!
   ; @ignore
   ;
   ; @param (keyword) group-id
@@ -16,7 +16,7 @@
   (fn [{:keys [db]} [_ group-id group-props field-dex]]
       {:db (r multi-field.events/decrease-field-count! db group-id group-props field-dex)}))
 
-(r/reg-event-f :pretty-elements.multi-field/increase-field-count!
+(r/reg-event-fx :pretty-elements.multi-field/increase-field-count!
   ; @ignore
   ;
   ; @param (keyword) group-id

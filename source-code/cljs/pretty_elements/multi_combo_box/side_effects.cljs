@@ -44,10 +44,10 @@
 ;
 ; @param (keyword) box-id
 ; @param (map) box-props
-(r/reg-f :pretty-elements.multi-combo-box/reg-keypress-events! reg-keypress-events!)
+(r/reg-fx :pretty-elements.multi-combo-box/reg-keypress-events! reg-keypress-events!)
 
 ; @ignore
 ;
 ; @param (keyword) box-id
 ; @param (map) box-props
-(r/reg-f :pretty-elements.multi-combo-box/remove-keypress-events! remove-keypress-events!)
+(r/reg-fx :pretty-elements.multi-combo-box/remove-keypress-events! remove-keypress-events!)

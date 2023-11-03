@@ -32,9 +32,9 @@
 ; @ignore
 ;
 ; @param (keyword) field-id
-(r/reg-f :pretty-elements.password-field/reset-password-visibility! reset-password-visibility!)
+(r/reg-fx :pretty-elements.password-field/reset-password-visibility! reset-password-visibility!)
 
 ; @ignore
 ;
 ; @param (keyword) field-id
-(r/reg-f :pretty-elements.password-field/toggle-password-visibility! toggle-password-visibility!)
+(r/reg-fx :pretty-elements.password-field/toggle-password-visibility! toggle-password-visibility!)
