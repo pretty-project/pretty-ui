@@ -1,5 +1,9 @@
 
-# pretty-elements.api ClojureScript namespace
+### pretty-elements.api
+
+Functional documentation of the pretty-elements.api ClojureScript namespace
+
+---
 
 ##### [README](../../../README.md) > [DOCUMENTATION](../../COVER.md) > pretty-elements.api
 
@@ -106,6 +110,8 @@
 - [vertical-polarity](#vertical-polarity)
 
 - [vertical-spacer](#vertical-spacer)
+
+---
 
 ### blank
 
@@ -2372,6 +2378,8 @@ BUG#9912 (source-code/cljs/pretty_elements/button.views)
   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
  :marker-position (keyword)(opt)
   :tl, :tr, :br, :bl, left, :right, bottom, :top
+ :min-height (keyword)(opt)
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
  :min-width (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
  :on-copy (Re-Frame metamorphic-event)(opt)
@@ -4437,5 +4445,5 @@ the user stopped typing or without a delay when the user leaves the field!
 
 ---
 
-This documentation is generated with the [clj-docs-generator](https://github.com/bithandshake/clj-docs-generator) engine.
+<sub>This documentation is generated with the [clj-docs-generator](https://github.com/bithandshake/clj-docs-generator) engine.</sub>
 

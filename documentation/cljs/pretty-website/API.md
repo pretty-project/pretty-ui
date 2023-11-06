@@ -1,5 +1,9 @@
 
-# pretty-website.api ClojureScript namespace
+### pretty-website.api
+
+Functional documentation of the pretty-website.api ClojureScript namespace
+
+---
 
 ##### [README](../../../README.md) > [DOCUMENTATION](../../COVER.md) > pretty-website.api
 
@@ -18,6 +22,8 @@
 - [scroll-sensor](#scroll-sensor)
 
 - [sidebar](#sidebar)
+
+---
 
 ### contacts
 
@@ -489,5 +495,5 @@ on a sidebar menu and replaces the menu bar with a single menu button.
 
 ---
 
-This documentation is generated with the [clj-docs-generator](https://github.com/bithandshake/clj-docs-generator) engine.
+<sub>This documentation is generated with the [clj-docs-generator](https://github.com/bithandshake/clj-docs-generator) engine.</sub>
 

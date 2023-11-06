@@ -1,5 +1,9 @@
 
-# pretty-presets.api ClojureScript namespace
+### pretty-presets.api
+
+Functional documentation of the pretty-presets.api ClojureScript namespace
+
+---
 
 ##### [README](../../../README.md) > [DOCUMENTATION](../../COVER.md) > pretty-presets.api
 
@@ -8,6 +12,8 @@
 - [apply-preset](#apply-preset)
 
 - [reg-preset!](#reg-preset)
+
+---
 
 ### apply-preset
 
@@ -111,5 +117,5 @@
 
 ---
 
-This documentation is generated with the [clj-docs-generator](https://github.com/bithandshake/clj-docs-generator) engine.
+<sub>This documentation is generated with the [clj-docs-generator](https://github.com/bithandshake/clj-docs-generator) engine.</sub>
 

@@ -40,7 +40,7 @@
   (letfn [(f [dex crumb-props]
              (let [crumb-props (pretty-presets/apply-preset                  crumb-props)
                    crumb-props (breadcrumbs.prototypes/crumb-props-prototype crumb-props)]
-                  [:<> (if (not= 0 dex) [:div {:class :pe-breadcrumbs--separator}])
+                  [:<> (if (-> dex zero? not) [:div {:class :pe-breadcrumbs--separator}])
                        [breadcrumbs-crumb breadcrumbs-id breadcrumbs-props crumb-props]]))]
          (hiccup/put-with-indexed [:<>] crumbs f)))
 

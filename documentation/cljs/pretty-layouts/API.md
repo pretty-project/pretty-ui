@@ -1,5 +1,9 @@
 
-# pretty-layouts.api ClojureScript namespace
+### pretty-layouts.api
+
+Functional documentation of the pretty-layouts.api ClojureScript namespace
+
+---
 
 ##### [README](../../../README.md) > [DOCUMENTATION](../../COVER.md) > pretty-layouts.api
 
@@ -14,6 +18,8 @@
 - [sidebar](#sidebar)
 
 - [struct-popup](#struct-popup)
+
+---
 
 ### box-popup
 
@@ -390,5 +396,5 @@
 
 ---
 
-This documentation is generated with the [clj-docs-generator](https://github.com/bithandshake/clj-docs-generator) engine.
+<sub>This documentation is generated with the [clj-docs-generator](https://github.com/bithandshake/clj-docs-generator) engine.</sub>
 

@@ -25,7 +25,7 @@
   ; @return (map)
   ; {}
   [row-dex {:keys [label]}]
-  {:outdent (if (= 0 row-dex) {:top :xxs :right :xs} {:top :xs :right :xs})
+  {:outdent (if (zero? row-dex) {:top :xxs :right :xs} {:top :xs :right :xs})
    :content label :color :muted :selectable? true
    :style {:min-width "120px" :background-color "var(--fill-color-highlight)"
            :padding "6px 12px" :border-radius "var(--border-radius-s)"}})
@@ -38,7 +38,7 @@
   ; @return (map)
   ; {}
   [row-dex {:keys [target]}]
-  {:outdent (if (= 0 row-dex) {:top :xxs} {:top :xs})
+  {:outdent (if (zero? row-dex) {:top :xxs} {:top :xs})
    :color :muted :content (case target :self :in-self-page :blank :in-blank-page nil)
    :style {:min-width "200px" :background-color "var(--fill-color-highlight)"
            :padding "6px 12px" :border-radius "var(--border-radius-s)"}})
@@ -51,7 +51,7 @@
   ; @return (map)
   ; {}
   [row-dex {:keys [link]}]
-  {:outdent (if (= 0 row-dex) {:top :xxs :right :xs} {:top :xs :right :xs})
+  {:outdent (if (zero? row-dex) {:top :xxs :right :xs} {:top :xs :right :xs})
    :content link :color :muted :selectable? true :copyable? true :marked? true
    :style {:min-width "200px" :background-color "var(--fill-color-highlight)"
            :padding "6px 12px" :border-radius "var(--border-radius-s)"}})

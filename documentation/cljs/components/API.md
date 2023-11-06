@@ -1,5 +1,9 @@
 
-# components.api ClojureScript namespace
+### components.api
+
+Functional documentation of the components.api ClojureScript namespace
+
+---
 
 ##### [README](../../../README.md) > [DOCUMENTATION](../../COVER.md) > components.api
 
@@ -80,6 +84,8 @@
 - [vector-item-list](#vector-item-list)
 
 - [vector-items-header](#vector-items-header)
+
+---
 
 ### color-picker
 
@@ -2239,5 +2245,5 @@ same ID for both the field and the block, the label of the block can targets the
 
 ---
 
-This documentation is generated with the [clj-docs-generator](https://github.com/bithandshake/clj-docs-generator) engine.
+<sub>This documentation is generated with the [clj-docs-generator](https://github.com/bithandshake/clj-docs-generator) engine.</sub>
 

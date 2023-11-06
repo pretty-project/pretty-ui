@@ -1,5 +1,9 @@
 
-# pretty-diagrams.api ClojureScript namespace
+### pretty-diagrams.api
+
+Functional documentation of the pretty-diagrams.api ClojureScript namespace
+
+---
 
 ##### [README](../../../README.md) > [DOCUMENTATION](../../COVER.md) > pretty-diagrams.api
 
@@ -10,6 +14,8 @@
 - [line-diagram](#line-diagram)
 
 - [point-diagram](#point-diagram)
+
+---
 
 ### circle-diagram
 
@@ -231,5 +237,5 @@ UNFINISHED! DO NOT USE!
 
 ---
 
-This documentation is generated with the [clj-docs-generator](https://github.com/bithandshake/clj-docs-generator) engine.
+<sub>This documentation is generated with the [clj-docs-generator](https://github.com/bithandshake/clj-docs-generator) engine.</sub>
 

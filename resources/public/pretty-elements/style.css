@@ -854,6 +854,11 @@
 .pe-label--body {
   align-items: center;
   display: flex;
+
+  /* */
+  /* Making the label's body as high as its parent to make it fill the available
+   * vertical space if the element has ':max-height' property. */
+  flex-grow: 1;
 }
 
 /*** Body ***/

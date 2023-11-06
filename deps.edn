@@ -3,26 +3,26 @@
  :deps  {bithandshake/clj-css-normalizer         {:git/url "git@github.com:bithandshake/clj-css-normalizer"
                                                   :sha     "b3b57bbc7cc129eca47d5b5ac33d2cae7e894c9a"}
          bithandshake/cljc-dictionary            {:git/url "git@github.com:bithandshake/cljc-dictionary"
-                                                  :sha     "e4053b7f85fd51f32ec1a3c19ff89ca93b323121"}
+                                                  :sha     "ff5132c3a72fe059287fe6edf48bcc564d4f62c7"}
          bithandshake/cljc-material-icons        {:git/url "git@github.com:bithandshake/cljc-material-icons"
                                                   :sha     "b3b57bbc7cc129eca47d5b5ac33d2cae7e894c9a"}
          bithandshake/cljc-metamorphic-content   {:git/url "git@github.com:bithandshake/cljc-metamorphic-content"
-                                                  :sha     "e4053b7f85fd51f32ec1a3c19ff89ca93b323121"}
+                                                  :sha     "ff5132c3a72fe059287fe6edf48bcc564d4f62c7"}
          bithandshake/cljc-time                  {:git/url "git@github.com:bithandshake/cljc-time"
-                                                  :sha     "58ca9ee7a3a23385bac6019bc3edd9df54400b9c"}
+                                                  :sha     "2c6454d6c243cdd91406b043cf18b115ab20f971"}
          bithandshake/cljs-auto-title            {:git/url "git@github.com:bithandshake/cljs-auto-title"
-                                                  :sha     "58ca9ee7a3a23385bac6019bc3edd9df54400b9c"}
+                                                  :sha     "2c6454d6c243cdd91406b043cf18b115ab20f971"}
          bithandshake/cljs-dom                   {:git/url "git@github.com:bithandshake/cljs-dom"
-                                                  :sha     "e4053b7f85fd51f32ec1a3c19ff89ca93b323121"}
+                                                  :sha     "ff5132c3a72fe059287fe6edf48bcc564d4f62c7"}
          bithandshake/cljs-intersection-observer {:git/url "git@github.com:bithandshake/cljs-intersection-observer"
-                                                  :sha     "e4053b7f85fd51f32ec1a3c19ff89ca93b323121"}
+                                                  :sha     "ff5132c3a72fe059287fe6edf48bcc564d4f62c7"}
          bithandshake/cljs-scroll-lock           {:git/url "git@github.com:bithandshake/cljs-scroll-lock"
-                                                  :sha     "e4053b7f85fd51f32ec1a3c19ff89ca93b323121"}
+                                                  :sha     "ff5132c3a72fe059287fe6edf48bcc564d4f62c7"}
          bithandshake/cljs-window-observer       {:git/url "git@github.com:bithandshake/cljs-window-observer"
-                                                  :sha     "e4053b7f85fd51f32ec1a3c19ff89ca93b323121"}
+                                                  :sha     "ff5132c3a72fe059287fe6edf48bcc564d4f62c7"}
          bithandshake/pretty-css                 {:git/url "git@github.com:bithandshake/pretty-css"
-                                                  :sha     "8d031283373d3d212e5b740efde1a8bc1da9d997"}
+                                                  :sha     "3da1b2c2f8fb9cfe09a51f87b13f928ec1548a46"}
          bithandshake/re-frame-api               {:git/url "git@github.com:bithandshake/re-frame-api"
-                                                  :sha     "e4053b7f85fd51f32ec1a3c19ff89ca93b323121"}
+                                                  :sha     "ff5132c3a72fe059287fe6edf48bcc564d4f62c7"}
          bithandshake/reagent-api                {:git/url "git@github.com:bithandshake/reagent-api"
-                                                  :sha     "e4053b7f85fd51f32ec1a3c19ff89ca93b323121"}}}
+                                                  :sha     "ff5132c3a72fe059287fe6edf48bcc564d4f62c7"}}}

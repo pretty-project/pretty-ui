@@ -491,7 +491,7 @@
                   ; Az időzített esemény-lista aktuális elemének eltűntetési eseményének időértéke,
                   ; az utolsó (előző) elem időértéke ({:ms ...}), összeadva az előző elem eltűnéséhez
                   ; szükséges idővel
-                  (if (= dex 0)
+                  (if (zero? dex)
                       ; The first destroying event in the list ...
                       [{:dispatch [:x.ui/destroy-element! renderer-id element-id] :ms 0}]
                       ; The other destroying events in the list ...
