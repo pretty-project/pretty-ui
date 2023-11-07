@@ -19,7 +19,7 @@
   [db [_ group-id {:keys [value-path]} field-dex]]
   (let [group-value (get-in db value-path)]
        (if (vector/nonempty? group-value)
-           (update-in db value-path vector/inject-item (inc field-dex) nil)
+           (update-in db value-path vector/insert-item (inc field-dex) nil)
            (assoc-in  db value-path [nil nil]))))
 
 (defn decrease-field-count!

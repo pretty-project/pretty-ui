@@ -37,7 +37,7 @@
                                       :on-mouse-up #(dom/focus-element! (dom/get-element-by-id (hiccup/value field-id "input")))
                                       ; prevent selecting
                                       :on-mouse-down #(.preventDefault %)}
-                                     (string.api/get-nth-character (:value field-props) %2)]))
+                                     (string.api/nth-character (:value field-props) %2)]))
     [:div {:class :pe-digit-field--cover :style {:width (-> field-props digit-field.utils/field-props->digits-width css/px)}}]
     (range 4)))
 
