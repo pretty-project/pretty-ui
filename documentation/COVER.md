@@ -1,7 +1,7 @@
 
 ### pretty-ui
 
-Functional documentation of the [pretty-ui](https://github.com/bithandshake/pretty-ui) ClojureScript library
+Functional documentation of the [pretty-ui](https://github.com/pretty-project/pretty-ui) ClojureScript library
 
 ---
 
