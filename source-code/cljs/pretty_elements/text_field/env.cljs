@@ -78,7 +78,7 @@
   ;
   ; @return (string)
   [field-id {:keys [font-size line-height] :as field-props}]
-  ; XXX#0886 (bithandshake/pretty-css)
+  ; XXX#0886 (pretty-project/pretty-css)
   (let [line-count (field-line-count field-id field-props)]
        (case line-height :text-block (str "calc(var( --text-block-height-" (name font-size)   " ) * "line-count" + 12px)")
                          :auto       (str "calc(var( --line-height-"       (name font-size)   " ) * "line-count" + 12px)")

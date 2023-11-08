@@ -55,6 +55,8 @@
               [breadcrumbs-crumb-list                             breadcrumbs-id breadcrumbs-props]]])
 
 (defn element
+  ; @preview (resources/public/previews/pretty-elements/breadcrumbs.png)
+  ;
   ; @param (keyword)(opt) breadcrumbs-id
   ; @param (map) breadcrumbs-props
   ; {:class (keyword or keywords in vector)(opt)
@@ -86,6 +88,10 @@
   ;
   ; @usage
   ; [breadcrumbs :my-breadcrumbs {...}]
+  ;
+  ; @usage
+  ; @preview (resources/public/previews/pretty-elements/breadcrumbs-2.png)
+  ; [breadcrumbs {:crumbs [...]}]
   ([breadcrumbs-props]
    [element (random/generate-keyword) breadcrumbs-props])
 
