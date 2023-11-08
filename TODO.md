@@ -12,13 +12,6 @@
 
 - Ha több popup van megnyitva, akkor az ENTER és ESC billentyűk csak a legfelsőre hassanak!
 
-- A css class és data-attribute selector-ok elerési ideje köbö egyforma.
-  Egyes elemeken pl. buttonokon rengeteg data-attribute van, amit ugy lehet gyorsitani, hogy
-  a css fájlba lennének preset-ek! [:div.x-button {:data-preset :my-preset}]
-  Így a border-radius, hover-color, color, stb nem 5-6-7 data-attribute használatával
-  volna meghatározva, hanem volna 20-30 preset azt csá.
-  Ezt majd akkor amikor több fájlra lesz darabolva az elements/style.css
-
 - ha egy button keypress tulajdonságának megadsz egy billentyűt pl 13 / enter és rátenyerelsz az
   adott billentyűre, akkor sokszor egymás utánban megtörténik az button on-click eventje,
   ami full cink, pl fájl letöltésnél hatszor tölti le a fájlt és hasonlok
@@ -89,5 +82,3 @@
 
 - `@media only screen and (max-width: 50vh) {}`
   Igy tudsz képernyő arány-t vizsgálni(?)
-
-- nuclei: mag, atommag, lényeg, középpont

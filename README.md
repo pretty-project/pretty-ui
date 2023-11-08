@@ -16,13 +16,13 @@ The <strong>pretty-ui</strong> functional documentation is [available here](docu
 ### deps.edn
 
 ```
-{:deps {bithandshake/pretty-ui {:git/url "https://github.com/bithandshake/pretty-ui"
-                                :sha     "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"}}
+{:deps {pretty-project/pretty-ui {:git/url "https://github.com/pretty-project/pretty-ui"
+                                  :sha     "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"}}
 ```
 
 ### Current version
 
-Check out the latest commit on the [release branch](https://github.com/bithandshake/pretty-ui/tree/release).
+Check out the latest commit on the [release branch](https://github.com/pretty-project/pretty-ui/tree/release).
 
 ### Documentation
 
@@ -57,20 +57,20 @@ You can track the changes of the <strong>pretty-ui</strong> library [here](CHANG
 
 ### First steps
 
-- Implement the `bithandshake/pretty-css` library in your project and follow
+- Implement the `pretty-project/pretty-css` library in your project and follow
   the instructions of its `REAMDE.md` file.
 
-> [github.com/bithandshake/pretty-css](https://github.com/bithandshake/pretty-css)
+> [github.com/pretty-project/pretty-css](https://github.com/pretty-project/pretty-css)
 
-- Implement the `bithandshake/pretty-icons` library in your project and follow
+- Implement the `pretty-project/pretty-icons` library in your project and follow
   the instructions of its `REAMDE.md` file.
 
-> [github.com/bithandshake/pretty-icons](https://github.com/bithandshake/pretty-icons)
+> [github.com/pretty-project/pretty-icons](https://github.com/pretty-project/pretty-icons)
 
-- Implement the `bithandshake/pretty-normalizer` library in your project and follow
+- Implement the `pretty-project/pretty-normalizer` library in your project and follow
   the instructions of its `REAMDE.md` file.
 
-> [github.com/bithandshake/pretty-normalizer](https://github.com/bithandshake/pretty-normalizer)
+> [github.com/pretty-project/pretty-normalizer](https://github.com/pretty-project/pretty-normalizer)
 
 ### Introduction
 

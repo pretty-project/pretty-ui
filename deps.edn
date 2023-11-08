@@ -1,31 +1,31 @@
 
 {:paths ["plugins/cljs" "resources" "source-code/cljs"]
  :deps  {bithandshake/cljc-dictionary            {:git/url "https://github.com/bithandshake/cljc-dictionary"
-                                                  :sha     "a1e011a8a012ef29c81900cdc68931df2b0d2dd3"}
+                                                  :sha     "7de4eb006194e07882c21edc8c5c1183a207fb55"}
          bithandshake/cljc-fruits                {:git/url "https://github.com/bithandshake/cljc-fruits"
-                                                  :sha     "bef234d79c92dee3422803e59894c904dab4a37f"}
+                                                  :sha     "77103150fe4f329c5d4401a779485d034c014e87"}
          bithandshake/cljc-metamorphic-content   {:git/url "https://github.com/bithandshake/cljc-metamorphic-content"
-                                                  :sha     "a1e011a8a012ef29c81900cdc68931df2b0d2dd3"}
+                                                  :sha     "7de4eb006194e07882c21edc8c5c1183a207fb55"}
          bithandshake/cljc-time                  {:git/url "https://github.com/bithandshake/cljc-time"
-                                                  :sha     "48449a17b7f31e86c9ac44e062d6769a7d3a129c"}
+                                                  :sha     "259dccac404e6e73912b5195bfc05db3b31b6592"}
          bithandshake/cljs-auto-title            {:git/url "https://github.com/bithandshake/cljs-auto-title"
-                                                  :sha     "48449a17b7f31e86c9ac44e062d6769a7d3a129c"}
+                                                  :sha     "259dccac404e6e73912b5195bfc05db3b31b6592"}
          bithandshake/cljs-dom                   {:git/url "https://github.com/bithandshake/cljs-dom"
-                                                  :sha     "a1e011a8a012ef29c81900cdc68931df2b0d2dd3"}
+                                                  :sha     "7de4eb006194e07882c21edc8c5c1183a207fb55"}
          bithandshake/cljs-intersection-observer {:git/url "https://github.com/bithandshake/cljs-intersection-observer"
-                                                  :sha     "a1e011a8a012ef29c81900cdc68931df2b0d2dd3"}
+                                                  :sha     "7de4eb006194e07882c21edc8c5c1183a207fb55"}
          bithandshake/cljs-scroll-lock           {:git/url "https://github.com/bithandshake/cljs-scroll-lock"
-                                                  :sha     "a1e011a8a012ef29c81900cdc68931df2b0d2dd3"}
+                                                  :sha     "7de4eb006194e07882c21edc8c5c1183a207fb55"}
          bithandshake/cljs-window-observer       {:git/url "https://github.com/bithandshake/cljs-window-observer"
-                                                  :sha     "a1e011a8a012ef29c81900cdc68931df2b0d2dd3"}
-         bithandshake/pretty-css                 {:git/url "https://github.com/bithandshake/pretty-css"
-                                                  :sha     "3762b00090eccca81907c0eb51cad08aed605d87"}
-         bithandshake/pretty-icons               {:git/url "https://github.com/bithandshake/pretty-icons"
-                                                  :sha     "b3b57bbc7cc129eca47d5b5ac33d2cae7e894c9a"}
-         bithandshake/pretty-normalizer          {:git/url "https://github.com/bithandshake/clj-css-normalizer"
-                                                  :sha     "b3b57bbc7cc129eca47d5b5ac33d2cae7e894c9a"}
+                                                  :sha     "7de4eb006194e07882c21edc8c5c1183a207fb55"}
          bithandshake/re-frame-api               {:git/url "https://github.com/bithandshake/re-frame-api"
-                                                  :sha     "a1e011a8a012ef29c81900cdc68931df2b0d2dd3"}
+                                                  :sha     "7de4eb006194e07882c21edc8c5c1183a207fb55"}
          bithandshake/reagent-api                {:git/url "https://github.com/bithandshake/reagent-api"
-                                                  :sha     "a1e011a8a012ef29c81900cdc68931df2b0d2dd3"}
-         org.clojure/clojurescript               {:mvn/version "1.10.891"}}}
+                                                  :sha     "7de4eb006194e07882c21edc8c5c1183a207fb55"}
+         org.clojure/clojurescript               {:mvn/version "1.10.891"}
+         pretty-project/pretty-css               {:git/url "https://github.com/pretty-project/pretty-css"
+                                                  :sha     "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"}
+         pretty-project/pretty-icons             {:git/url "https://github.com/pretty-project/pretty-icons"
+                                                  :sha     "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"}
+         pretty-project/pretty-normalizer        {:git/url "https://github.com/pretty-project/pretty-normalizer"
+                                                  :sha     "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"}}}
