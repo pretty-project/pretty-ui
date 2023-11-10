@@ -43,8 +43,8 @@
   ; XXX#0569
   (let [field-content (plain-field.env/get-field-content box-id)
         option-label  (option-label-f option)]
-       (and (string/not-pass-with? option-label field-content {:case-sensitive? false})
-            (string/starts-with?   option-label field-content {:case-sensitive? false}))))
+       (and (string/not-matches-with? option-label field-content {:case-sensitive? false})
+            (string/starts-with?      option-label field-content {:case-sensitive? false}))))
 
 (defn get-rendered-options
   ; @ignore
