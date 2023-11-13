@@ -44,6 +44,6 @@
   ;     {:my-value "Selected option"}
   (let [options      (r input.subs/get-input-options db checkbox-id checkbox-props)
         option-value (option-value-f option)]
-       (if (vector/min? options 2)
+       (if (vector/count-min? options 2)
            (r r.db/apply-item!        db value-path vector/toggle-item option-value)
            (r r.db/toggle-item-value! db value-path                    option-value))))

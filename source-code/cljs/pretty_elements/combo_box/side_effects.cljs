@@ -5,7 +5,7 @@
               [pretty-elements.plain-field.side-effects :as plain-field.side-effects]
               [keypress-handler.api              :as keypress-handler]
               [re-frame.api                      :as r]
-              [vector.api                        :as vector]))
+              [seqable.api                        :as seqable]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -21,7 +21,7 @@
        ; If no option selected, then the first option has to be selected at the first time ...
        (if (nil? highlighted-option-dex)
            (swap! combo-box.state/OPTION-HIGHLIGHTS assoc box-id 0)
-           (let [next-option-dex (vector/next-dex rendered-options highlighted-option-dex)]
+           (let [next-option-dex (seqable/next-dex rendered-options highlighted-option-dex)]
                 (swap! combo-box.state/OPTION-HIGHLIGHTS assoc box-id next-option-dex)))))
 
 (defn highlight-prev-option!
@@ -32,7 +32,7 @@
   [box-id box-props]
   (let [highlighted-option-dex (combo-box.env/get-highlighted-option-dex box-id)
         rendered-options       (combo-box.env/get-rendered-options       box-id box-props)
-        prev-option-dex        (vector/prev-dex rendered-options highlighted-option-dex)]
+        prev-option-dex        (seqable/prev-dex rendered-options highlighted-option-dex)]
        (swap! combo-box.state/OPTION-HIGHLIGHTS assoc box-id prev-option-dex)))
 
 (defn discard-option-highlighter!

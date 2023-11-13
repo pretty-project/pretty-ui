@@ -21,7 +21,7 @@
   (let [options      (r input.subs/get-input-options db checkbox-id checkbox-props)
         stored-value (r input.subs/get-input-value   db checkbox-id checkbox-props)
         option-value (option-value-f option)]
-       (if (vector/min?           options 2)
+       (if (vector/count-min? options 2)
            (vector/contains-item? stored-value option-value)
            (=                     stored-value option-value))))
 

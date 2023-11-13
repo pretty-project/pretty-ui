@@ -34,7 +34,7 @@
   [breadcrumbs-id {:keys [crumbs] :as breadcrumbs-props}]
   ; A separator DIV placed between crumbs instead of applying CSS gap.
   ; The separator DIVs contain pseudo elements which displays a small dot between each crumbs.
-  ; In case of the crumbs contain those pseudo elements they would be part
+  ; In case the crumbs contain those pseudo elements they would be part
   ; of the crumbs and would be clickable.
   ; ... And we don't want clickable dots between crumbs, do we?
   (letfn [(f [dex crumb-props]

@@ -78,5 +78,5 @@
   ([swapper-id swapper-props]
    (fn [_ swapper-props] ; XXX#0106 (README.md#parametering)
        (let [ ; swapper-props (content-swapper.prototypes/swapper-props-prototype swapper-props)
-             swapper-props (pretty-presets/apply-preset     swapper-props)]
+             swapper-props (pretty-presets/apply-preset swapper-props)]
             [content-swapper swapper-id swapper-props]))))
