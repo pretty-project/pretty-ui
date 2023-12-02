@@ -27,7 +27,7 @@
   ;
   ; @description
   ; This component uses Font Awesome brand icons for social media provider links.
-  ; It converts the given provider name to an icon class:
+  ; It converts the given provider name into an icon class:
   ; :instagram => .fab.fa-instagram
   ;
   ; @param (keyword)(opt) links-id

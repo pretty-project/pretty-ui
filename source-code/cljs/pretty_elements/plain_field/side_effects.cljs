@@ -69,7 +69,7 @@
   ; function overwrites the previously set value.
   ;
   ; BUG#6071
-  ; Be sure you only display surfaces for focused fields!
+  ; Ensure that you only display surfaces for focused fields!
   ; E.g.: If an event applies the 'show-surface!' function and that event is fired
   ;       by the :on-type-ended trigger, the user has enough time to leave the field,
   ;       maybe steps into another field before the :on-type-ended trigger displays
