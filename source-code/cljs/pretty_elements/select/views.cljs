@@ -44,10 +44,10 @@
   ; @param (map) select-props
   [select-id {:keys [option-label-f] :as select-props}]
   (let [options (input.env/get-input-options select-id select-props)]
-       (letfn [(f [option] (if (select.env/render-option? select-id select-props option)
-                               [:button (select.attributes/select-option-attributes select-id select-props option)
-                                        (-> option option-label-f metamorphic-content/compose)]))]
-              (hiccup/put-with [:<>] options f))))
+       (letfn [(f0 [option] (if (select.env/render-option? select-id select-props option)
+                                [:button (select.attributes/select-option-attributes select-id select-props option)
+                                         (-> option option-label-f metamorphic-content/compose)]))]
+              (hiccup/put-with [:<>] options f0))))
 
 (defn- select-option-list
   ; @ignore

@@ -61,12 +61,12 @@
   ; @param (map) table-props
   ; {:items (maps in vector)}
   [table-id {:keys [items] :as table-props}]
-  (letfn [(f [rows row-dex item-props]
-             (conj rows [(menu-item-label-props  row-dex item-props)
-                         (menu-item-link-props   row-dex item-props)
-                         (menu-item-target-props row-dex item-props)]))]))
+  (letfn [(f0 [rows row-dex item-props]
+              (conj rows [(menu-item-label-props  row-dex item-props)
+                          (menu-item-link-props   row-dex item-props)
+                          (menu-item-target-props row-dex item-props)]))]))
          ;[data-table.views/component {:rows (vector/concat-items (table-header)
-          ;                                                       (reduce-kv f [] items))]))]))
+          ;                                                       (reduce-kv f0 [] items))]))]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

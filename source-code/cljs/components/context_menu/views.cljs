@@ -31,8 +31,8 @@
   ; @param (map) menu-props
   ; {:menu-items (maps in vector)}
   [menu-id {:keys [menu-items] :as menu-props}]
-  (letfn [(f [menu-items menu-item] (conj menu-items [context-menu-item menu-id menu-props menu-item]))]
-         [:<> (reduce f [:<>] menu-items)
+  (letfn [(f0 [menu-items menu-item] (conj menu-items [context-menu-item menu-id menu-props menu-item]))]
+         [:<> (reduce f0 [:<>] menu-items)
               [pretty-elements/horizontal-separator {:height :xs}]]))
 
 ;; ----------------------------------------------------------------------------

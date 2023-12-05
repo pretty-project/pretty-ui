@@ -29,8 +29,8 @@
 
        ; HACK#9760
        ; This was an experimental solution to avoid flickering of input contents.
-       ; (letfn [(f [] (set-field-content! field-id stored-content))]
-       ;        (time/set-timeout! f 350)]))
+       ; (letfn [(f0 [] (set-field-content! field-id stored-content))]
+       ;        (time/set-timeout! f0 350)]))
 
 (defn synchronizer-did-update-f
   ; @ignore
@@ -65,11 +65,11 @@
   ;   content swapper and the same field on another page of that very content swapper.
   ;   And during the content swapper animated page changing process, there is short overlap
   ;   in the lifetimes of that fields.
-  (letfn [(f [] (let [input-id      (hiccup/value field-id "input")
-                      input-element (dom/get-element-by-id input-id)]
-                     (when-not input-element (plain-field.side-effects/set-field-content! field-id nil)
-                                             (plain-field.side-effects/set-field-output!  field-id nil))))]
-         (time/set-timeout! f 50)))
+  (letfn [(f0 [] (let [input-id      (hiccup/value field-id "input")
+                       input-element (dom/get-element-by-id input-id)]
+                      (when-not input-element (plain-field.side-effects/set-field-content! field-id nil)
+                                              (plain-field.side-effects/set-field-output!  field-id nil))))]
+         (time/set-timeout! f0 50)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -119,8 +119,8 @@
   (let [timestamp (time/elapsed)]
        (swap! plain-field.state/FIELD-STATES assoc field-id {:changed-at timestamp})
        (plain-field.side-effects/set-field-content! field-id field-content)
-       (letfn [(f [] (resolve-field-change-f field-id field-props))]
-              (time/set-timeout! f plain-field.config/TYPE-ENDED-AFTER))
+       (letfn [(f0 [] (resolve-field-change-f field-id field-props))]
+              (time/set-timeout! f0 plain-field.config/TYPE-ENDED-AFTER))
        (if on-changed (let [on-changed (r/metamorphic-event<-params on-changed field-content)]
                            (r/dispatch-sync on-changed)))))
 

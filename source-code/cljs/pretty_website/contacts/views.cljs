@@ -27,17 +27,17 @@
         (if label [:div (contacts.attributes/contact-group-label-attributes contacts-id contacts-props group-props)
                         (metamorphic-content/compose label)])
         ; Contact group phone numbers
-        (letfn [(f [%] [:a (contacts.attributes/contact-group-phone-number-attributes contacts-id contacts-props group-props %)
-                           (str %)])]
-               (hiccup/put-with [:<>] phone-numbers f))
+        (letfn [(f0 [%] [:a (contacts.attributes/contact-group-phone-number-attributes contacts-id contacts-props group-props %)
+                            (str %)])]
+               (hiccup/put-with [:<>] phone-numbers f0))
         ; Contact group email addresses
-        (letfn [(f [%] [:a (contacts.attributes/contact-group-email-address-attributes contacts-id contacts-props group-props %)
-                           (str %)])]
-               (hiccup/put-with [:<>] email-addresses f))
+        (letfn [(f0 [%] [:a (contacts.attributes/contact-group-email-address-attributes contacts-id contacts-props group-props %)
+                            (str %)])]
+               (hiccup/put-with [:<>] email-addresses f0))
         ; Contact group addresses
-        (letfn [(f [%] [:a (contacts.attributes/contact-group-address-attributes contacts-id contacts-props group-props %)
-                           (str %)])]
-               (hiccup/put-with [:<>] addresses f))
+        (letfn [(f0 [%] [:a (contacts.attributes/contact-group-address-attributes contacts-id contacts-props group-props %)
+                            (str %)])]
+               (hiccup/put-with [:<>] addresses f0))
         ; Contact group info
         (if info [:div (contacts.attributes/contact-group-info-attributes contacts-id contacts-props group-props)
                        (hiccup/parse-newlines [:<> (metamorphic-content/compose info)])])])
@@ -52,8 +52,8 @@
   [:div (contacts.attributes/contacts-attributes contacts-id contacts-props)
         [:div (contacts.attributes/contacts-body-attributes contacts-id contacts-props)
               (if-not (empty? contact-groups)
-                      (letfn [(f [group-props] [contact-group contacts-id contacts-props group-props])]
-                             (hiccup/put-with [:<>] contact-groups f)))]])
+                      (letfn [(f0 [group-props] [contact-group contacts-id contacts-props group-props])]
+                             (hiccup/put-with [:<>] contact-groups f0)))]])
 
 (defn component
   ; @param (keyword)(opt) contacts-id

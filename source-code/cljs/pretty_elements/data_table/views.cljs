@@ -37,8 +37,8 @@
   (let [column-props (pretty-presets/apply-preset                  column-props)
         column-props (data-table.prototypes/column-props-prototype column-props)]
        [:div (data-table.attributes/table-column-attributes table-id table-props column-props)
-             (letfn [(f [cell-props] [data-table-cell table-id table-props cell-props])]
-                    (hiccup/put-with [:<>] cells f))]))
+             (letfn [(f0 [cell-props] [data-table-cell table-id table-props cell-props])]
+                    (hiccup/put-with [:<>] cells f0))]))
 
 (defn- data-table-row
   ; @ignore
@@ -52,8 +52,8 @@
   (let [row-props (pretty-presets/apply-preset               row-props)
         row-props (data-table.prototypes/row-props-prototype row-props)]
        [:div (data-table.attributes/table-row-attributes table-id table-props row-props)
-             (letfn [(f [cell-props] [data-table-cell table-id table-props cell-props])]
-                    (hiccup/put-with [:<>] cells f))]))
+             (letfn [(f0 [cell-props] [data-table-cell table-id table-props cell-props])]
+                    (hiccup/put-with [:<>] cells f0))]))
 
 (defn- data-table
   ; @ignore
@@ -65,8 +65,8 @@
   [:div (data-table.attributes/table-attributes table-id table-props)
         [element.views/element-label            table-id table-props]
         [:div (data-table.attributes/table-body-attributes table-id table-props)
-              (cond columns (letfn [(f [column-props] [data-table-column table-id table-props column-props])] (hiccup/put-with [:<>] columns f))
-                    rows    (letfn [(f [row-props]    [data-table-row    table-id table-props row-props])]    (hiccup/put-with [:<>] rows    f)))]])
+              (cond columns (letfn [(f0 [column-props] [data-table-column table-id table-props column-props])] (hiccup/put-with [:<>] columns f0))
+                    rows    (letfn [(f0 [row-props]    [data-table-row    table-id table-props row-props])]    (hiccup/put-with [:<>] rows    f0)))]])
 
 (defn element
   ; @param (keyword)(opt) table-id

@@ -39,8 +39,8 @@
   ; @param (map) switch-props
   [switch-id switch-props]
   (let [options (input.env/get-input-options switch-id switch-props)]
-       (letfn [(f [option] [switch-option switch-id switch-props option])]
-              (hiccup/put-with [:<>] options f))))
+       (letfn [(f0 [option] [switch-option switch-id switch-props option])]
+              (hiccup/put-with [:<>] options f0))))
 
 (defn- switch-structure
   ; @ignore

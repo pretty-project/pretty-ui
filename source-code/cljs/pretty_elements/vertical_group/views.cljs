@@ -17,8 +17,8 @@
   [group-id {:keys [default-props element group-items] :as group-props}]
   [:div (vertical-group.attributes/group-attributes group-id group-props)
         [:div (vertical-group.attributes/group-body-attributes group-id group-props)
-              (letfn [(f [group-item] [element (merge default-props group-item)])]
-                     (hiccup/put-with [:<>] group-items f))]])
+              (letfn [(f0 [group-item] [element (merge default-props group-item)])]
+                     (hiccup/put-with [:<>] group-items f0))]])
 
 (defn element
   ; @param (keyword)(opt) group-id

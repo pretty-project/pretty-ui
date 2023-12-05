@@ -30,11 +30,11 @@
   ; {:item-element (Reagent component symbol)
   ;  :value-path (Re-Frame path vector)}
   [list-id {:keys [item-element value-path] :as list-props}]
-  (letfn [(f [items item-dex _] (conj items [item-element item-dex]))]
+  (letfn [(f0 [items item-dex _] (conj items [item-element item-dex]))]
          (let [items @(r/subscribe [:get-item value-path])]
               (if (empty? items)
                   [vector-item-list-placeholder list-id list-props]
-                  (reduce-kv f [:<>] items)))))
+                  (reduce-kv f0 [:<>] items)))))
 
 (defn- vector-item-list
   ; @ignore

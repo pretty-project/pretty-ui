@@ -13,8 +13,8 @@
   ; {:breadcrumb-count (integer)(opt)}
   [_ {:keys [breadcrumb-count]}]
   (if breadcrumb-count [:div {:style {:display "flex" :gap "12px" :padding-top "6px"}}
-                             (letfn [(f [%1 %2] (conj %1 [pretty-elements/ghost {:height :s :style {:width "80px"}}]))]
-                                    (reduce f [:<>] (range breadcrumb-count)))]))
+                             (letfn [(f0 [%1 %2] (conj %1 [pretty-elements/ghost {:height :s :style {:width "80px"}}]))]
+                                    (reduce f0 [:<>] (range breadcrumb-count)))]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -26,8 +26,8 @@
   [_ {:keys [item-count]}]
   [:div {:style {:width "100%"}}
         [:div {:style {:display "flex" :flex-direction "column" :width "100%" :padding "0 12px"}}
-              (letfn [(f [%1 %2] (conj %1 [:div {:style {:flex-grow 1}} [pretty-elements/ghost {:height :xxl :outdent {:horizontal :xs}}]]))]
-                     (reduce f [:<>] (range item-count)))]])
+              (letfn [(f0 [%1 %2] (conj %1 [:div {:style {:flex-grow 1}} [pretty-elements/ghost {:height :xxl :outdent {:horizontal :xs}}]]))]
+                     (reduce f0 [:<>] (range item-count)))]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

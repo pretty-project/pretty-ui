@@ -18,10 +18,10 @@
   [selector-id {:keys [languages] :as selector-props}]
   [:div (language-selector.attributes/selector-attributes selector-id selector-props)
         [:div (language-selector.attributes/selector-body-attributes selector-id selector-props)
-              (letfn [(f [language]
-                         [:button (language-selector.attributes/language-button-attributes selector-id selector-props language)
-                                  (name language)])]
-                     (hiccup/put-with [:<>] languages f))]])
+              (letfn [(f0 [language]
+                          [:button (language-selector.attributes/language-button-attributes selector-id selector-props language)
+                                   (name language)])]
+                     (hiccup/put-with [:<>] languages f0))]])
 
 (defn component
   ; @param (keyword)(opt) selector-id

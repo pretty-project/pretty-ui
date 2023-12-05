@@ -37,12 +37,12 @@
   ; In case the crumbs contain those pseudo elements they would be part
   ; of the crumbs and would be clickable.
   ; ... And we don't want clickable dots between crumbs, do we?
-  (letfn [(f [dex crumb-props]
-             (let [crumb-props (pretty-presets/apply-preset                  crumb-props)
-                   crumb-props (breadcrumbs.prototypes/crumb-props-prototype crumb-props)]
-                  [:<> (if (-> dex zero? not) [:div {:class :pe-breadcrumbs--separator}])
-                       [breadcrumbs-crumb breadcrumbs-id breadcrumbs-props crumb-props]]))]
-         (hiccup/put-with-indexed [:<>] crumbs f)))
+  (letfn [(f0 [dex crumb-props]
+              (let [crumb-props (pretty-presets/apply-preset                  crumb-props)
+                    crumb-props (breadcrumbs.prototypes/crumb-props-prototype crumb-props)]
+                   [:<> (if (-> dex zero? not) [:div {:class :pe-breadcrumbs--separator}])
+                        [breadcrumbs-crumb breadcrumbs-id breadcrumbs-props crumb-props]]))]
+         (hiccup/put-with-indexed [:<>] crumbs f0)))
 
 (defn- breadcrumbs
   ; @ignore

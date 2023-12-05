@@ -13,8 +13,8 @@
   ;
   ; @return (integer)
   [{:keys [sections]}]
-  (letfn [(f [total-value {:keys [value]}] (+ total-value value))]
-         (reduce f 0 sections)))
+  (letfn [(f0 [total-value {:keys [value]}] (+ total-value value))]
+         (reduce f0 0 sections)))
 
 (defn section-props->value-ratio
   ; @ignore

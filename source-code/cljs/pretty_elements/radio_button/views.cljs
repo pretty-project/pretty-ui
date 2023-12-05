@@ -44,8 +44,8 @@
                                    ; [:div {:class :pe-radio-button--clear-button-label} (metamorphic-content/compose :delete!)]
         [:div (radio-button.attributes/radio-button-body-attributes button-id button-props)
               (let [options (input.env/get-input-options button-id button-props)]
-                   (letfn [(f [option] [radio-button-option button-id button-props option])]
-                          (hiccup/put-with [:<>] options f)))]])
+                   (letfn [(f0 [option] [radio-button-option button-id button-props option])]
+                          (hiccup/put-with [:<>] options f0)))]])
 
 (defn- radio-button
   ; @ignore

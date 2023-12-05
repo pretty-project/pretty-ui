@@ -34,8 +34,8 @@
   ; {:options (vector)}
   [selector-id {:keys [options] :as selector-props}]
   [:div (color-selector.attributes/color-selector-body-attributes selector-id selector-props)
-        (letfn [(f [option-list option] (conj option-list [color-selector-option selector-id selector-props option]))]
-               (reduce f [:<>] options))])
+        (letfn [(f0 [option-list option] (conj option-list [color-selector-option selector-id selector-props option]))]
+               (reduce f0 [:<>] options))])
 
 (defn- color-selector-options-body
   ; @ignore

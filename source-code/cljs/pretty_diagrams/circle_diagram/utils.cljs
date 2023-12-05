@@ -33,7 +33,7 @@
   ; ... the total value to calculates how the sections related to the total.
   ; ... the previous sections summary of each section to calculates how
   ;     a section has to be rotated.
-  (letfn [(f [{:keys [total-value] :as diagram-props} dex {:keys [value]}]
-             (-> diagram-props (update   :total-value + value)
-                               (assoc-in [:sections dex :sum] (or total-value 0))))]
-         (reduce-kv f diagram-props sections)))
+  (letfn [(f0 [{:keys [total-value] :as diagram-props} dex {:keys [value]}]
+              (-> diagram-props (update   :total-value + value)
+                                (assoc-in [:sections dex :sum] (or total-value 0))))]
+         (reduce-kv f0 diagram-props sections)))

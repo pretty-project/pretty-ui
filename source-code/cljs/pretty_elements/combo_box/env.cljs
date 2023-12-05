@@ -55,10 +55,10 @@
   ; @return (vector)
   [box-id box-props]
   (let [options (input.env/get-input-options box-id box-props)]
-       (letfn [(f [options option] (if (render-option? box-id box-props option)
-                                       (conj options option)
-                                       (->   options)))]
-              (reduce f [] options))))
+       (letfn [(f0 [options option] (if (render-option? box-id box-props option)
+                                        (conj options option)
+                                        (->   options)))]
+              (reduce f0 [] options))))
 
 (defn get-highlighted-option
   ; @ignore

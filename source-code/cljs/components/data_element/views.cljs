@@ -52,8 +52,8 @@
   ; {:value (metamorphic-contents in vector)(opt)}
   [element-id {:keys [value] :as element-props}]
   ; XXX#0516
-  (letfn [(f [values value] (conj values [data-element-value element-id element-props value]))]
-         (reduce f [:<>] value)))
+  (letfn [(f0 [values value] (conj values [data-element-value element-id element-props value]))]
+         (reduce f0 [:<>] value)))
 
 (defn- data-element
   ; @param (keyword) element-id

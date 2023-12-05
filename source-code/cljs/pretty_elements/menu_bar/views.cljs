@@ -46,9 +46,9 @@
   ; while keeping the '{overflow-x: scroll}' property.
   [:div (menu-bar.attributes/menu-bar-attributes bar-id bar-props)
         [:div (menu-bar.attributes/menu-bar-body-attributes bar-id bar-props)
-              (letfn [(f [item-props] [menu-bar-item bar-id bar-props item-props])]
+              (letfn [(f0 [item-props] [menu-bar-item bar-id bar-props item-props])]
                      [:div (menu-bar.attributes/menu-bar-items-attributes bar-id bar-props)
-                           (hiccup/put-with [:<>] menu-items f)])]])
+                           (hiccup/put-with [:<>] menu-items f0)])]])
 
 (defn element
   ; @info

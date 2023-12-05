@@ -14,5 +14,5 @@
   [swapper-id]
   (let [active-page-id (get-in @content-swapper.state/SWAPPERS [swapper-id :active-page])
         page-pool      (get-in @content-swapper.state/SWAPPERS [swapper-id :page-pool])]
-       (letfn [(f [{:keys [id page]}] (if (= id active-page-id) page))]
-              (some f page-pool))))
+       (letfn [(f0 [{:keys [id page]}] (if (= id active-page-id) page))]
+              (some f0 page-pool))))

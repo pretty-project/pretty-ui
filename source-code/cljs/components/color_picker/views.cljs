@@ -18,9 +18,9 @@
   ;  :value-path (Re-Frame path vector)}
   [picker-id {:keys [value-path] :as picker-props}]
   (let [picked-colors @(r/subscribe [:get-item value-path])]
-       (letfn [(f [picked-colors color]
-                  (conj picked-colors [:div (color-picker.attributes/picked-color-attributes picker-id picker-props color)]))]
-              (reduce f [:<>] picked-colors))))
+       (letfn [(f0 [picked-colors color]
+                   (conj picked-colors [:div (color-picker.attributes/picked-color-attributes picker-id picker-props color)]))]
+              (reduce f0 [:<>] picked-colors))))
 
 (defn color-picker
   ; @param (keyword) picker-id

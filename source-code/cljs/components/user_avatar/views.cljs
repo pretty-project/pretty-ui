@@ -22,9 +22,9 @@
   [avatar-id {:keys [colors size] :as avatar-props}]
   (let [view-box (svg/view-box size size)]
        [:svg {:class :c-user-avatar--colors :view-box view-box :style {:width (css/px size) :height (css/px size)}}
-             (letfn [(f [colors dex color]
-                        (conj colors [:circle (user-avatar.attributes/avatar-color-attributes avatar-id avatar-props dex color)]))]
-                    (reduce-kv f [:<>] colors))]))
+             (letfn [(f0 [colors dex color]
+                         (conj colors [:circle (user-avatar.attributes/avatar-color-attributes avatar-id avatar-props dex color)]))]
+                    (reduce-kv f0 [:<>] colors))]))
 
 (defn- user-avatar
   ; @ignore

@@ -35,27 +35,27 @@
        ; ...
        (fn [_ _ {:keys [icon label on-click timeout] :as adornment-props}]
 
-           ; This function controls the countdown timer loop
-           (letfn [(f [] (if   (not= @time-left 0)    (time.api/set-timeout! f 1000))
-                         (cond (=    @time-left 0)    (reset! time-left nil)
-                               (->   @time-left nil?) (reset! time-left timeout)
-                               :decrease-time-left    (swap!  time-left - 1000))
-                         (-> on-click))]
+           ; This function ('f0') controls the countdown timer loop
+           (letfn [(f0 [] (if   (not= @time-left 0)    (time.api/set-timeout! f0 1000))
+                          (cond (=    @time-left 0)    (reset! time-left nil)
+                                (->   @time-left nil?) (reset! time-left timeout)
+                                :decrease-time-left    (swap!  time-left - 1000))
+                          (-> on-click))]
 
                   ; ...
                   (if @time-left ; ...
-                                      (let [adornment-props (text-field.prototypes/adornment-props-prototype field-props adornment-props)
-                                            adornment-props (dissoc adornment-props :click-effect :hover-effect :icon-family :icon-size)
-                                            adornment-props (assoc  adornment-props :color :highlight)]
-                                           [:div (text-field.attributes/adornment-attributes field-id field-props adornment-props)
-                                                 (-> @time-left time/ms->s (str "s"))])
+                                 (let [adornment-props (text-field.prototypes/adornment-props-prototype field-props adornment-props)
+                                       adornment-props (dissoc adornment-props :click-effect :hover-effect :icon-family :icon-size)
+                                       adornment-props (assoc  adornment-props :color :highlight)]
+                                      [:div (text-field.attributes/adornment-attributes field-id field-props adornment-props)
+                                            (-> @time-left time/ms->s (str "s"))])
 
-                                      ; ...
-                                      (let [adornment-props (assoc adornment-props :on-click (if timeout f on-click))
-                                            adornment-props (text-field.prototypes/adornment-props-prototype field-props adornment-props)]
-                                           [(if on-click :button :div)
-                                            (text-field.attributes/adornment-attributes field-id field-props adornment-props)
-                                            (or icon (metamorphic-content/compose label))]))))))
+                                 ; ...
+                                 (let [adornment-props (assoc adornment-props :on-click (if timeout f0 on-click))
+                                       adornment-props (text-field.prototypes/adornment-props-prototype field-props adornment-props)]
+                                      [(if on-click :button :div)
+                                       (text-field.attributes/adornment-attributes field-id field-props adornment-props)
+                                       (or icon (metamorphic-content/compose label))]))))))
 
 (defn field-end-adornments
   ; @ignore
@@ -66,9 +66,9 @@
   [field-id {:keys [end-adornments] :as field-props}]
   (let [end-adornments (text-field.prototypes/end-adornments-prototype field-id field-props)]
        (if (vector/nonempty? end-adornments)
-           (letfn [(f [adornment-props] (let [adornment-props (pretty-presets/apply-preset adornment-props)]
-                                             [field-adornment field-id field-props adornment-props]))]
-                  (hiccup/put-with [:div {:class :pe-text-field--adornments}] end-adornments f))
+           (letfn [(f0 [adornment-props] (let [adornment-props (pretty-presets/apply-preset adornment-props)]
+                                              [field-adornment field-id field-props adornment-props]))]
+                  (hiccup/put-with [:div {:class :pe-text-field--adornments}] end-adornments f0))
            [:div (text-field.attributes/field-adornments-placeholder-attributes field-id field-props)])))
 
 (defn field-start-adornments
@@ -79,8 +79,8 @@
   ; {:start-adornments (maps in vector)(opt)}
   [field-id {:keys [start-adornments] :as field-props}]
   (if (vector/nonempty? start-adornments)
-      (letfn [(f [adornment-props] [field-adornment field-id field-props adornment-props])]
-             (hiccup/put-with [:div {:class :pe-text-field--adornments}] start-adornments f))
+      (letfn [(f0 [adornment-props] [field-adornment field-id field-props adornment-props])]
+             (hiccup/put-with [:div {:class :pe-text-field--adornments}] start-adornments f0))
       [:div (text-field.attributes/field-adornments-placeholder-attributes field-id field-props)]))
 
 ;; ----------------------------------------------------------------------------

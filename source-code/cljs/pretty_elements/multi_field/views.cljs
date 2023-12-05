@@ -36,8 +36,8 @@
   [group-id group-props]
   [:div (multi-field.attributes/group-attributes group-id group-props)
         (let [group-value @(r/subscribe [:pretty-elements.multi-field/get-group-value group-id group-props])]
-             (letfn [(f [field-dex _] [multi-field-text-field group-id group-props field-dex])]
-                    (hiccup/put-with-indexed [:<>] group-value f)))])
+             (letfn [(f0 [field-dex _] [multi-field-text-field group-id group-props field-dex])]
+                    (hiccup/put-with-indexed [:<>] group-value f0)))])
 
 (defn element
   ; @info

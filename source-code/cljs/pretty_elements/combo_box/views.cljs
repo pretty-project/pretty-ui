@@ -37,9 +37,9 @@
   ; @param (map) box-props
   [box-id box-props]
   (let [options (combo-box.env/get-rendered-options box-id box-props)]
-       (letfn [(f [option-dex option] [combo-box-option box-id box-props option-dex option])]
+       (letfn [(f0 [option-dex option] [combo-box-option box-id box-props option-dex option])]
               [:div (combo-box.attributes/combo-box-options-attributes box-id box-props)
-                    (hiccup/put-with-indexed [:<>] options f)])))
+                    (hiccup/put-with-indexed [:<>] options f0)])))
 
 (defn- combo-box-surface-content
   ; @ignore

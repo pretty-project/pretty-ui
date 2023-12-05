@@ -25,9 +25,9 @@
   ; @param (map) header-props
   ; {:cells (maps in vector)}
   [header-id {:keys [cells] :as header-props}]
-  (letfn [(f [cells cell-dex cell-props]
+  (letfn [(f0 [cells cell-dex cell-props]
              (conj cells [header-cell header-id header-props cell-dex cell-props]))]
-         (reduce-kv f [:<>] cells)))
+         (reduce-kv f0 [:<>] cells)))
 
 (defn- item-list-header
   ; @param (keyword) header-id

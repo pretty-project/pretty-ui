@@ -15,9 +15,9 @@
   ; @param (map) row-props
   ; {:cells (vector)}
   [row-id {:keys [cells]}]
-  (letfn [(f [cells cell-props]
-             (conj cells [metamorphic-content/compose cell-props]))]
-         (reduce f [:<>] cells)))
+  (letfn [(f0 [cells cell-props]
+              (conj cells [metamorphic-content/compose cell-props]))]
+         (reduce f0 [:<>] cells)))
 
 (defn- item-list-row
   ; @param (keyword) row-id

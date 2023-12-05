@@ -31,10 +31,10 @@
 
            ; Iterating over the 'chips' vector if it's nonempty
            ; Every item in the vector displayed on a chip with applying the 'chip-label-f' on the item
-           (letfn [(f [chip-list chip-dex chip]
-                      (let [chip-props (chip-group.prototypes/chip-props-prototype group-id group-props chip-dex chip)]
-                           (conj chip-list [chip.views/element chip-props])))]
-                  (reduce-kv f [:div {:class :pe-chip-group--chips}] chips))
+           (letfn [(f0 [chip-list chip-dex chip]
+                       (let [chip-props (chip-group.prototypes/chip-props-prototype group-id group-props chip-dex chip)]
+                            (conj chip-list [chip.views/element chip-props])))]
+                  (reduce-kv f0 [:div {:class :pe-chip-group--chips}] chips))
 
            ; Displaying the placeholder if the 'chips' vector is NOT nonempty
            (if placeholder [:div (chip-group.attributes/chip-group-placeholder-attributes group-id group-props)

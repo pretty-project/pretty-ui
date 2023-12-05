@@ -17,10 +17,10 @@
   ; {:sections (maps in vector)}
   [diagram-id {:keys [sections] :as diagram-props}]
   [:div (line-diagram.attributes/diagram-attributes diagram-id diagram-props)
-        (letfn [(f [section-props] (let [section-props (line-diagram.prototypes/section-props-prototype section-props)]
-                                        [:div (line-diagram.attributes/diagram-section-attributes diagram-id diagram-props section-props)]))]
+        (letfn [(f0 [section-props] (let [section-props (line-diagram.prototypes/section-props-prototype section-props)]
+                                         [:div (line-diagram.attributes/diagram-section-attributes diagram-id diagram-props section-props)]))]
                [:div (line-diagram.attributes/diagram-sections-attributes diagram-id diagram-props)
-                     (hiccup/put-with [:<>] sections f)])])
+                     (hiccup/put-with [:<>] sections f0)])])
 
 (defn diagram
   ; @param (keyword)(opt) diagram-id

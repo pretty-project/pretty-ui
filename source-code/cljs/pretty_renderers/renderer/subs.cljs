@@ -487,20 +487,20 @@
   ;   :dispatch (Re-Frame metamorphic-event)}]
   [db [_ renderer-id]]
   (let [visible-element-order (r get-visible-element-order db renderer-id)]
-       (letfn [(f [event-list dex element-id]
-                  ; Az időzített esemény-lista aktuális elemének eltűntetési eseményének időértéke,
-                  ; az utolsó (előző) elem időértéke ({:ms ...}), összeadva az előző elem eltűnéséhez
-                  ; szükséges idővel
-                  (if (zero? dex)
-                      ; The first destroying event in the list ...
-                      [{:dispatch [:x.ui/destroy-element! renderer-id element-id] :ms 0}]
-                      ; The other destroying events in the list ...
-                      (let [prev-element-id  (get-in event-list [(dec dex) :dispatch 2])
-                            prev-event-delay (get-in event-list [(dec dex) :ms])
-                            destroying-delay (r get-destroying-delay db renderer-id prev-element-id)]
-                           (conj event-list {:dispatch [:x.ui/destroy-element! renderer-id element-id]
-                                             :ms       (+ prev-event-delay destroying-delay)}))))]
-              (reduce-kv f [] visible-element-order))))
+       (letfn [(f0 [event-list dex element-id]
+                   ; Az időzített esemény-lista aktuális elemének eltűntetési eseményének időértéke,
+                   ; az utolsó (előző) elem időértéke ({:ms ...}), összeadva az előző elem eltűnéséhez
+                   ; szükséges idővel
+                   (if (zero? dex)
+                       ; The first destroying event in the list ...
+                       [{:dispatch [:x.ui/destroy-element! renderer-id element-id] :ms 0}]
+                       ; The other destroying events in the list ...
+                       (let [prev-element-id  (get-in event-list [(dec dex) :dispatch 2])
+                             prev-event-delay (get-in event-list [(dec dex) :ms])
+                             destroying-delay (r get-destroying-delay db renderer-id prev-element-id)]
+                            (conj event-list {:dispatch [:x.ui/destroy-element! renderer-id element-id]
+                                              :ms       (+ prev-event-delay destroying-delay)}))))]
+              (reduce-kv f0 [] visible-element-order))))
 
 (defn get-visible-elements-destroying-duration
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -510,10 +510,10 @@
   ; @return (ms)
   [db [_ renderer-id]]
   (let [visible-element-order (r get-visible-element-order db renderer-id)]
-       (letfn [(f [duration element-id]
-                  (let [destroying-delay (r get-destroying-delay db renderer-id element-id)]
-                       (+ duration destroying-delay)))]
-              (reduce f 0 visible-element-order))))
+       (letfn [(f0 [duration element-id]
+                   (let [destroying-delay (r get-destroying-delay db renderer-id element-id)]
+                        (+ duration destroying-delay)))]
+              (reduce f0 0 visible-element-order))))
 
 (defn get-render-log
   ; WARNING! NON-PUBLIC! DO NOT USE!

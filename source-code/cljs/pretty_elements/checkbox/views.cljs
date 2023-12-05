@@ -37,9 +37,9 @@
   ; @param (keyword) checkbox-id
   ; @param (map) checkbox-props
   [checkbox-id checkbox-props]
-  (letfn [(f [option] [checkbox-option checkbox-id checkbox-props option])]
+  (letfn [(f0 [option] [checkbox-option checkbox-id checkbox-props option])]
          (let [options (input.env/get-input-options checkbox-id checkbox-props)]
-              (hiccup/put-with [:<>] options f))))
+              (hiccup/put-with [:<>] options f0))))
 
 (defn- checkbox-structure
   ; @ignore

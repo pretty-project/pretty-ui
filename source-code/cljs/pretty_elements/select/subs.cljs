@@ -18,10 +18,10 @@
   [db [_ select-id {:keys [option-value-f value-path] :as select-props}]]
   (let [selected-value (get-in db value-path)
         options        (r input.subs/get-input-options db select-id select-props)]
-       (letfn [(f [option] (let [option-value (option-value-f option)]
-                                (if (=  selected-value option-value)
-                                    (-> option))))]
-              (some f options))))
+       (letfn [(f0 [option] (let [option-value (option-value-f option)]
+                                 (if (=  selected-value option-value)
+                                     (-> option))))]
+              (some f0 options))))
 
 (defn get-selected-option-label
   ; @ignore

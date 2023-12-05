@@ -18,8 +18,8 @@
   ; @param (map) diagram-props
   ; {:sections (maps in vector)}
   [diagram-id {:keys [sections] :as diagram-props}]
-  (letfn [(f [section-props] [:circle (circle-diagram.attributes/section-attributes diagram-id diagram-props section-props)])]
-         (hiccup/put-with [:<>] sections f)))
+  (letfn [(f0 [section-props] [:circle (circle-diagram.attributes/section-attributes diagram-id diagram-props section-props)])]
+         (hiccup/put-with [:<>] sections f0)))
 
 (defn circle-diagram
   ; @ignore

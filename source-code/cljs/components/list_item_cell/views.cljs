@@ -14,10 +14,10 @@
   ; @param (map) cell-props
   ; {:rows (maps in vector)}
   [cell-id {:keys [rows] :as cell-props}]
-  (letfn [(f [rows row-props]
-             (if row-props (conj rows [pretty-elements/label (list-item-cell.prototypes/row-props-prototype row-props)])
-                           (->   rows)))]
-         (reduce f [:<>] rows)))
+  (letfn [(f0 [rows row-props]
+              (if row-props (conj rows [pretty-elements/label (list-item-cell.prototypes/row-props-prototype row-props)])
+                            (->   rows)))]
+         (reduce f0 [:<>] rows)))
 
 (defn- list-item-cell
   ; @param (keyword) cell-id

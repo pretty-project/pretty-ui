@@ -34,15 +34,15 @@
        (when (or rerender-same? (not= active-page page))
              (swap! content-swapper.state/SWAPPERS update-in [swapper-id :page-pool] vector/conj-item {:id page-id :page page})
              (swap! content-swapper.state/SWAPPERS assoc-in  [swapper-id :animation-direction] direction)
-             (letfn [(f [] (swap! content-swapper.state/SWAPPERS assoc-in [swapper-id :active-page] page-id))]
-                    (time/set-timeout! f 50))
-             (letfn [(f [] (let [active-page-id (get-in @content-swapper.state/SWAPPERS [swapper-id :active-page])]
-                                (when (= page-id active-page-id)
-                                      (swap! content-swapper.state/SWAPPERS dissoc-in [swapper-id :animation-direction])
-                                      (swap! content-swapper.state/SWAPPERS update-in [swapper-id :page-pool] vector/remove-items-by #(not= page-id (:id %))))))]))))
+             (letfn [(f0 [] (swap! content-swapper.state/SWAPPERS assoc-in [swapper-id :active-page] page-id))]
+                    (time/set-timeout! f0 50))
+             (letfn [(f0 [] (let [active-page-id (get-in @content-swapper.state/SWAPPERS [swapper-id :active-page])]
+                                 (when (= page-id active-page-id)
+                                       (swap! content-swapper.state/SWAPPERS dissoc-in [swapper-id :animation-direction])
+                                       (swap! content-swapper.state/SWAPPERS update-in [swapper-id :page-pool] vector/remove-items-by #(not= page-id (:id %))))))]))))
                     ; Cleaning the pool is disabled because it could cause flickering when the user swaps pages at the exact same time
                     ; as the cleaning function works ...
-                    ; (time/set-timeout! f 350)
+                    ; (time/set-timeout! f0 350)
 
 (defn go-fwd!
   ; @ignore
