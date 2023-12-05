@@ -3,9 +3,9 @@
     (:require [pretty-elements.button.attributes :as button.attributes]
               [pretty-elements.button.prototypes :as button.prototypes]
               [pretty-presets.api                :as pretty-presets]
+              [random.api                        :as random]
               [re-frame.api                      :as r]
-              [reagent.api                       :as reagent]
-              [random.api                        :as random]))
+              [reagent.api                       :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

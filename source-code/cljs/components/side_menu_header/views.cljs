@@ -1,8 +1,8 @@
 
 (ns components.side-menu-header.views
     (:require [components.side-menu-header.prototypes :as side-menu-header.prototypes]
-              [pretty-elements.api                           :as pretty-elements]
-              [pretty-elements.api                           :as pretty-elements]
+              [pretty-elements.api                    :as pretty-elements]
+              [pretty-elements.api                    :as pretty-elements]
               [random.api                             :as random]
               [re-frame.api                           :as r]
               [string.api                             :as string]))

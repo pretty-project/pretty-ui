@@ -3,8 +3,8 @@
     (:require [pretty-layouts.box-popup.views     :as box-popup.views]
               [pretty-layouts.plain-popup.views   :as plain-popup.views]
               [pretty-layouts.plain-surface.views :as plain-surface.views]
-              [pretty-layouts.struct-popup.views  :as struct-popup.views]
-              [pretty-layouts.sidebar.views       :as sidebar.views]))
+              [pretty-layouts.sidebar.views       :as sidebar.views]
+              [pretty-layouts.struct-popup.views  :as struct-popup.views]))
 
 
 ;; ----------------------------------------------------------------------------

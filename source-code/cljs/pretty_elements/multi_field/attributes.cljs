@@ -1,6 +1,6 @@
 
 (ns pretty-elements.multi-field.attributes
-    (:require [pretty-css.api   :as pretty-css]))
+    (:require [pretty-css.api :as pretty-css]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

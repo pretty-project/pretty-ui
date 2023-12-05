@@ -6,9 +6,9 @@
               [pretty-elements.multi-combo-box.attributes :as multi-combo-box.attributes]
               [pretty-elements.multi-combo-box.prototypes :as multi-combo-box.prototypes]
               [pretty-elements.multi-combo-box.utils      :as multi-combo-box.utils]
-              [random.api                          :as random]
-              [re-frame.api                        :as r]
-              [vector.api                          :as vector]))
+              [random.api                                 :as random]
+              [re-frame.api                               :as r]
+              [vector.api                                 :as vector]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

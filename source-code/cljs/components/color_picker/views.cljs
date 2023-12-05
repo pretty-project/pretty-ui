@@ -3,8 +3,8 @@
     (:require [components.color-picker.attributes :as color-picker.attributes]
               [components.color-picker.prototypes :as color-picker.prototypes]
               [components.component.views         :as component.views]
-              [pretty-elements.api                       :as pretty-elements]
               [metamorphic-content.api            :as metamorphic-content]
+              [pretty-elements.api                :as pretty-elements]
               [random.api                         :as random]
               [re-frame.api                       :as r]))
 

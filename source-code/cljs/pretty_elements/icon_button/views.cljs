@@ -1,12 +1,12 @@
 
 (ns pretty-elements.icon-button.views
-    (:require [pretty-elements.icon-button.attributes :as icon-button.attributes]
+    (:require [metamorphic-content.api                :as metamorphic-content]
+              [pretty-elements.icon-button.attributes :as icon-button.attributes]
               [pretty-elements.icon-button.prototypes :as icon-button.prototypes]
-              [metamorphic-content.api         :as metamorphic-content]
-              [pretty-presets.api              :as pretty-presets]
-              [random.api                      :as random]
-              [re-frame.api                    :as r]
-              [reagent.api                     :as reagent]))
+              [pretty-presets.api                     :as pretty-presets]
+              [random.api                             :as random]
+              [re-frame.api                           :as r]
+              [reagent.api                            :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

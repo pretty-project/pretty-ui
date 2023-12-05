@@ -2,7 +2,7 @@
 (ns pretty-elements.multiline-field.views
     (:require [pretty-elements.multiline-field.prototypes :as multiline-field.prototypes]
               [pretty-elements.text-field.views           :as text-field.views]
-              [random.api                          :as random]))
+              [random.api                                 :as random]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

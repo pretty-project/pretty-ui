@@ -2,7 +2,7 @@
 (ns pretty-elements.number-field.views
     (:require [pretty-elements.number-field.prototypes :as number-field.prototypes]
               [pretty-elements.text-field.views        :as text-field.views]
-              [random.api                       :as random]))
+              [random.api                              :as random]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

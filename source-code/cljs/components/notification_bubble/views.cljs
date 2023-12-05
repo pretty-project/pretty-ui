@@ -1,7 +1,7 @@
 
 (ns components.notification-bubble.views
-    (:require [pretty-elements.api                              :as pretty-elements]
-              [components.notification-bubble.prototypes :as notification-bubble.prototypes]
+    (:require [components.notification-bubble.prototypes :as notification-bubble.prototypes]
+              [pretty-elements.api                       :as pretty-elements]
               [random.api                                :as random]))
 
 ;; ----------------------------------------------------------------------------

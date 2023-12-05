@@ -1,8 +1,8 @@
 
 (ns pretty-elements.image.attributes
-    (:require [pretty-elements.image.utils :as image.utils]
-              [pretty-css.api       :as pretty-css]
-              [react.api            :as react]))
+    (:require [pretty-css.api              :as pretty-css]
+              [pretty-elements.image.utils :as image.utils]
+              [react.api                   :as react]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

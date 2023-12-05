@@ -1,10 +1,10 @@
 
 (ns pretty-elements.label.attributes
-    (:require [dom.api                     :as dom]
+    (:require [dom.api                            :as dom]
+              [metamorphic-content.api            :as metamorphic-content]
+              [pretty-css.api                     :as pretty-css]
               [pretty-elements.label.side-effects :as label.side-effects]
-              [pretty-elements.label.utils        :as label.utils]
-              [metamorphic-content.api     :as metamorphic-content]
-              [pretty-css.api              :as pretty-css]))
+              [pretty-elements.label.utils        :as label.utils]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

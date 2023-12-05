@@ -2,14 +2,14 @@
 ; WARNING! NOT TESTED! DO NOT USE!
 
 (ns pretty-elements.digit-field.views
-    (:require [css.api                         :as css]
-              [dom.api                         :as dom]
+    (:require [css.api                                :as css]
+              [dom.api                                :as dom]
+              [hiccup.api                             :as hiccup]
               [pretty-elements.digit-field.attributes :as digit-field.attributes]
               [pretty-elements.digit-field.prototypes :as digit-field.prototypes]
               [pretty-elements.digit-field.utils      :as digit-field.utils]
-              [hiccup.api                      :as hiccup]
-              [random.api                      :as random]
-              [re-frame.api                    :as r]))
+              [random.api                             :as random]
+              [re-frame.api                           :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

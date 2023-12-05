@@ -3,7 +3,7 @@
     (:require [metamorphic-content.api               :as metamorphic-content]
               [pretty-layouts.plain-popup.attributes :as plain-popup.attributes]
               [pretty-layouts.plain-popup.prototypes :as plain-popup.prototypes]
-              [pretty-presets.api                        :as pretty-presets]
+              [pretty-presets.api                    :as pretty-presets]
               [random.api                            :as random]
               [re-frame.api                          :as r]
               [reagent.api                           :as reagent]

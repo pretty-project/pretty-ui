@@ -1,16 +1,16 @@
 
 (ns pretty-elements.switch.views
-    (:require [pretty-elements.element.views     :as element.views]
+    (:require [hiccup.api                        :as hiccup]
+              [metamorphic-content.api           :as metamorphic-content]
+              [pretty-css.api                    :as pretty-css]
+              [pretty-elements.element.views     :as element.views]
               [pretty-elements.input.env         :as input.env]
               [pretty-elements.switch.attributes :as switch.attributes]
               [pretty-elements.switch.prototypes :as switch.prototypes]
-              [hiccup.api                 :as hiccup]
-              [metamorphic-content.api    :as metamorphic-content]
-              [pretty-css.api             :as pretty-css]
-              [pretty-presets.api         :as pretty-presets]
-              [random.api                 :as random]
-              [re-frame.api               :as r]
-              [reagent.api                :as reagent]))
+              [pretty-presets.api                :as pretty-presets]
+              [random.api                        :as random]
+              [re-frame.api                      :as r]
+              [reagent.api                       :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

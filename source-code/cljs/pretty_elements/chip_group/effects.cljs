@@ -1,7 +1,7 @@
 
 (ns pretty-elements.chip-group.effects
     (:require [pretty-elements.chip-group.events :as chip-group.events]
-              [re-frame.api               :as r :refer [r]]))
+              [re-frame.api                      :as r :refer [r]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

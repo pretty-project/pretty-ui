@@ -1,12 +1,12 @@
 
 (ns pretty-elements.data-table.views
-    (:require [pretty-elements.data-table.attributes :as data-table.attributes]
+    (:require [hiccup.api                            :as hiccup]
+              [metamorphic-content.api               :as metamorphic-content]
+              [pretty-elements.data-table.attributes :as data-table.attributes]
               [pretty-elements.data-table.prototypes :as data-table.prototypes]
               [pretty-elements.element.views         :as element.views]
-              [hiccup.api                     :as hiccup]
-              [metamorphic-content.api        :as metamorphic-content]
-              [pretty-presets.api             :as pretty-presets]
-              [random.api                     :as random]))
+              [pretty-presets.api                    :as pretty-presets]
+              [random.api                            :as random]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -2,7 +2,7 @@
 (ns pretty-elements.plain-field.env
     (:require [pretty-elements.plain-field.config :as plain-field.config]
               [pretty-elements.plain-field.state  :as plain-field.state]
-              [time.api                    :as time]))
+              [time.api                           :as time]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

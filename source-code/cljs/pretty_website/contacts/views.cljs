@@ -2,9 +2,9 @@
 (ns pretty-website.contacts.views
     (:require [hiccup.api                         :as hiccup]
               [metamorphic-content.api            :as metamorphic-content]
+              [pretty-presets.api                 :as pretty-presets]
               [pretty-website.contacts.attributes :as contacts.attributes]
               [pretty-website.contacts.prototypes :as contacts.prototypes]
-              [pretty-presets.api                  :as pretty-presets]
               [random.api                         :as random]))
 
 ;; ----------------------------------------------------------------------------

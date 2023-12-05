@@ -1,6 +1,6 @@
 
 (ns pretty-elements.chip-group.prototypes
-    (:require [noop.api             :refer [return]]
+    (:require [noop.api                    :refer [return]]
               [pretty-elements.input.utils :as input.utils]))
 
 ;; ----------------------------------------------------------------------------

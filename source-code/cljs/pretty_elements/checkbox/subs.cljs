@@ -1,8 +1,8 @@
 
 (ns pretty-elements.checkbox.subs
     (:require [pretty-elements.input.subs :as input.subs]
-              [re-frame.api        :as r :refer [r]]
-              [vector.api          :as vector]))
+              [re-frame.api               :as r :refer [r]]
+              [vector.api                 :as vector]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -1,7 +1,7 @@
 
 (ns pretty-elements.combo-box.attributes
     (:require [pretty-elements.combo-box.env :as combo-box.env]
-              [re-frame.api           :as r]))
+              [re-frame.api                  :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

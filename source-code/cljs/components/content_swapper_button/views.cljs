@@ -1,8 +1,8 @@
 
 (ns components.content-swapper-button.views
     (:require [components.content-swapper-button.prototypes :as content-swapper-button.prototypes]
-              [pretty-elements.api                                 :as pretty-elements]
-              [pretty-elements.api :as pretty-elements]
+              [pretty-elements.api                          :as pretty-elements]
+              [pretty-elements.api                          :as pretty-elements]
               [random.api                                   :as random]))
 
 ;; ----------------------------------------------------------------------------

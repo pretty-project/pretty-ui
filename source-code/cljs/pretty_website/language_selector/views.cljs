@@ -1,9 +1,9 @@
 
 (ns pretty-website.language-selector.views
     (:require [hiccup.api                                  :as hiccup]
+              [pretty-presets.api                          :as pretty-presets]
               [pretty-website.language-selector.attributes :as language-selector.attributes]
               [pretty-website.language-selector.prototypes :as language-selector.prototypes]
-              [pretty-presets.api                  :as pretty-presets]
               [random.api                                  :as random]))
 
 ;; ----------------------------------------------------------------------------

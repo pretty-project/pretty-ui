@@ -1,9 +1,9 @@
 
 (ns pretty-elements.slider.side-effects
-    (:require [dom.api               :as dom]
+    (:require [dom.api                      :as dom]
               [pretty-elements.slider.state :as slider.state]
-              [re-frame.api          :as r]
-              [window.api            :as window]))
+              [re-frame.api                 :as r]
+              [window.api                   :as window]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

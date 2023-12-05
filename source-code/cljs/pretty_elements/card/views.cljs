@@ -1,10 +1,10 @@
 
 (ns pretty-elements.card.views
-    (:require [pretty-elements.card.attributes :as card.attributes]
+    (:require [metamorphic-content.api         :as metamorphic-content]
+              [pretty-elements.card.attributes :as card.attributes]
               [pretty-elements.card.prototypes :as card.prototypes]
-              [metamorphic-content.api  :as metamorphic-content]
-              [pretty-presets.api       :as pretty-presets]
-              [random.api               :as random]))
+              [pretty-presets.api              :as pretty-presets]
+              [random.api                      :as random]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

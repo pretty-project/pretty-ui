@@ -3,7 +3,7 @@
     (:require [metamorphic-content.api                 :as metamorphic-content]
               [pretty-layouts.plain-surface.attributes :as plain-surface.attributes]
               [pretty-layouts.plain-surface.prototypes :as plain-surface.prototypes]
-              [pretty-presets.api                        :as pretty-presets]
+              [pretty-presets.api                      :as pretty-presets]
               [random.api                              :as random]
               [re-frame.api                            :as r]
               [reagent.api                             :as reagent]))

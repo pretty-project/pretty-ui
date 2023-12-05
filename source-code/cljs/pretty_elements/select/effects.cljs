@@ -1,11 +1,11 @@
 
 (ns pretty-elements.select.effects
     (:require [pretty-elements.input.env             :as input.env]
+              [pretty-elements.plain-field.env       :as plain-field.env]
               [pretty-elements.select.config         :as select.config]
               [pretty-elements.select.events         :as select.events]
-              [pretty-elements.plain-field.env       :as plain-field.env]
               [pretty-elements.text-field.prototypes :as text-field.prototypes]
-              [re-frame.api                   :as r :refer [r]]))
+              [re-frame.api                          :as r :refer [r]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -2,8 +2,8 @@
 (ns pretty-elements.counter.events
     (:require [pretty-elements.counter.subs :as counter.subs]
               [pretty-elements.input.events :as input.events]
-              [re-frame.api          :refer [r]]
-              [re-frame.db.api       :as r.db]))
+              [re-frame.api                 :refer [r]]
+              [re-frame.db.api              :as r.db]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

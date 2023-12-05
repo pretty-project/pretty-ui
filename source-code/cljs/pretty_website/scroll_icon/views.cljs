@@ -1,9 +1,9 @@
 
 (ns pretty-website.scroll-icon.views
-    (:require [pretty-website.scroll-icon.attributes :as scroll-icon.attributes]
+    (:require [pretty-presets.api                    :as pretty-presets]
+              [pretty-website.scroll-icon.attributes :as scroll-icon.attributes]
               [pretty-website.scroll-icon.prototypes :as scroll-icon.prototypes]
               [pretty-website.scroll-sensor.views    :as scroll-sensor.views]
-              [pretty-presets.api                  :as pretty-presets]
               [random.api                            :as random]))
 
 ;; ----------------------------------------------------------------------------

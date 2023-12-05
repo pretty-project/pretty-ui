@@ -1,12 +1,12 @@
 
 (ns pretty-elements.content-swapper.side-effects
-    (:require [pretty-elements.content-swapper.env   :as content-swapper.env]
+    (:require [map.api                               :refer [dissoc-in]]
+              [pretty-elements.content-swapper.env   :as content-swapper.env]
               [pretty-elements.content-swapper.state :as content-swapper.state]
-              [map.api                        :refer [dissoc-in]]
-              [random.api                     :as random]
-              [re-frame.api                   :as r]
-              [time.api                       :as time]
-              [vector.api                     :as vector]))
+              [random.api                            :as random]
+              [re-frame.api                          :as r]
+              [time.api                              :as time]
+              [vector.api                            :as vector]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

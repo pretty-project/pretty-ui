@@ -1,16 +1,16 @@
 
 (ns pretty-elements.color-selector.views
-    (:require [pretty-elements.button.views              :as button.views]
+    (:require [metamorphic-content.api                   :as metamorphic-content]
+              [pretty-elements.button.views              :as button.views]
               [pretty-elements.color-selector.attributes :as color-selector.attributes]
               [pretty-elements.color-selector.prototypes :as color-selector.prototypes]
               [pretty-elements.icon-button.views         :as icon-button.views]
               [pretty-elements.input.env                 :as input.env]
-              [metamorphic-content.api            :as metamorphic-content]
-              [pretty-layouts.api                 :as pretty-layouts]
-              [pretty-presets.api                 :as pretty-presets]
-              [random.api                         :as random]
-              [re-frame.api                       :as r]
-              [reagent.api                        :as reagent]))
+              [pretty-layouts.api                        :as pretty-layouts]
+              [pretty-presets.api                        :as pretty-presets]
+              [random.api                                :as random]
+              [re-frame.api                              :as r]
+              [reagent.api                               :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

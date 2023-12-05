@@ -3,7 +3,7 @@
     (:require [components.list-item-cell.helpers    :as list-item-cell.helpers]
               [components.list-item-cell.prototypes :as list-item-cell.prototypes]
               [css.api                              :as css]
-              [pretty-elements.api                         :as pretty-elements]
+              [pretty-elements.api                  :as pretty-elements]
               [random.api                           :as random]))
 
 ;; ----------------------------------------------------------------------------

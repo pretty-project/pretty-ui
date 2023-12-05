@@ -1,13 +1,13 @@
 
 (ns pretty-elements.text-field.attributes
-    (:require [dom.api                         :as dom]
+    (:require [dom.api                                :as dom]
+              [metamorphic-content.api                :as metamorphic-content]
+              [pretty-css.api                         :as pretty-css]
               [pretty-elements.input.env              :as input.env]
               [pretty-elements.plain-field.attributes :as plain-field.attributes]
               [pretty-elements.text-field.env         :as text-field.env]
-              [metamorphic-content.api         :as metamorphic-content]
-              [pretty-css.api                  :as pretty-css]
-              [random.api                      :as random]
-              [re-frame.api                    :as r]))
+              [random.api                             :as random]
+              [re-frame.api                           :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

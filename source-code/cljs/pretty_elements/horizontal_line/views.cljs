@@ -2,8 +2,8 @@
 (ns pretty-elements.horizontal-line.views
     (:require [pretty-elements.horizontal-line.attributes :as horizontal-line.attributes]
               [pretty-elements.horizontal-line.prototypes :as horizontal-line.prototypes]
-              [pretty-presets.api                  :as pretty-presets]
-              [random.api                          :as random]))
+              [pretty-presets.api                         :as pretty-presets]
+              [random.api                                 :as random]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

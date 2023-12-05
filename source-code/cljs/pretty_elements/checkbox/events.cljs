@@ -2,9 +2,9 @@
 (ns pretty-elements.checkbox.events
     (:require [pretty-elements.input.events :as input.events]
               [pretty-elements.input.subs   :as input.subs]
-              [re-frame.api          :refer [r]]
-              [re-frame.db.api       :as r.db]
-              [vector.api            :as vector]))
+              [re-frame.api                 :refer [r]]
+              [re-frame.db.api              :as r.db]
+              [vector.api                   :as vector]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

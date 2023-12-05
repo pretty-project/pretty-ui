@@ -1,14 +1,14 @@
 
 (ns pretty-elements.multi-field.views
-    (:require [pretty-elements.combo-box.views        :as combo-box.views]
+    (:require [hiccup.api                             :as hiccup]
+              [loop.api                               :refer [reduce-indexed]]
+              [pretty-elements.combo-box.views        :as combo-box.views]
               [pretty-elements.multi-field.attributes :as multi-field.attributes]
               [pretty-elements.multi-field.prototypes :as multi-field.prototypes]
               [pretty-elements.multi-field.utils      :as multi-field.utils]
               [pretty-elements.text-field.views       :as text-field.views]
-              [hiccup.api                      :as hiccup]
-              [loop.api                        :refer [reduce-indexed]]
-              [random.api                      :as random]
-              [re-frame.api                    :as r]))
+              [random.api                             :as random]
+              [re-frame.api                           :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

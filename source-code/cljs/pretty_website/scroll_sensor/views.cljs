@@ -1,9 +1,9 @@
 
 (ns pretty-website.scroll-sensor.views
-    (:require [hiccup.api                                :as hiccup]
-             ;[pretty-website.scroll-sensor.prototypes   :as scroll-sensor.prototypes]
+    (:require ;[pretty-website.scroll-sensor.prototypes   :as scroll-sensor.prototypes]
+              [hiccup.api                                :as hiccup]
+              [pretty-presets.api                        :as pretty-presets]
               [pretty-website.scroll-sensor.side-effects :as scroll-sensor.side-effects]
-              [pretty-presets.api                  :as pretty-presets]
               [random.api                                :as random]
               [reagent.api                               :as reagent]))
 

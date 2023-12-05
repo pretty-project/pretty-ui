@@ -2,7 +2,7 @@
 (ns pretty-elements.stepper.views
     (:require [pretty-elements.stepper.attributes :as stepper.attributes]
               [pretty-elements.stepper.prototypes :as stepper.prototypes]
-              [random.api                  :as random]))
+              [random.api                         :as random]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

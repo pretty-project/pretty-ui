@@ -1,8 +1,8 @@
 
 (ns pretty-elements.toggle.attributes
     (:require [dom.api        :as dom]
-              [pretty-css.api :as pretty-css]
               [hiccup.api     :as hiccup]
+              [pretty-css.api :as pretty-css]
               [re-frame.api   :as r]))
 
 ;; ----------------------------------------------------------------------------

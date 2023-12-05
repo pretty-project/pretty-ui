@@ -1,7 +1,7 @@
 
 (ns pretty-elements.content-swapper.attributes
-    (:require [pretty-elements.content-swapper.state :as content-swapper.state]
-              [pretty-css.api                 :as pretty-css]))
+    (:require [pretty-css.api                        :as pretty-css]
+              [pretty-elements.content-swapper.state :as content-swapper.state]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

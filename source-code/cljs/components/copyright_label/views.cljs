@@ -1,7 +1,7 @@
 
 (ns components.copyright-label.views
     (:require [components.copyright-label.prototypes :as copyright-label.prototypes]
-              [pretty-elements.api                          :as pretty-elements]
+              [pretty-elements.api                   :as pretty-elements]
               [random.api                            :as random]
               [re-frame.api                          :as r]))
 

@@ -1,12 +1,12 @@
 
 (ns pretty-elements.dropdown-menu.views
-    (:require [pretty-elements.dropdown-menu.attributes :as dropdown-menu.attributes]
+    (:require [metamorphic-content.api                  :as metamorphic-content]
+              [pretty-elements.dropdown-menu.attributes :as dropdown-menu.attributes]
               [pretty-elements.dropdown-menu.env        :as dropdown-menu.env]
               [pretty-elements.dropdown-menu.prototypes :as dropdown-menu.prototypes]
               [pretty-elements.dropdown-menu.state      :as dropdown-menu.state]
               [pretty-elements.menu-bar.views           :as menu-bar.views]
-              [metamorphic-content.api           :as metamorphic-content]
-              [random.api                        :as random]))
+              [random.api                               :as random]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

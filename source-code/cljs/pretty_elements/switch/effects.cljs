@@ -1,7 +1,7 @@
 
 (ns pretty-elements.switch.effects
     (:require [pretty-elements.checkbox.events :as checkbox.events]
-              [re-frame.api             :as r :refer [r]]))
+              [re-frame.api                    :as r :refer [r]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

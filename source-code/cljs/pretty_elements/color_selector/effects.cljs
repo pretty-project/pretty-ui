@@ -1,7 +1,7 @@
 
 (ns pretty-elements.color-selector.effects
     (:require [pretty-elements.color-selector.events :as color-selector.events]
-              [re-frame.api                   :as r :refer [r]]))
+              [re-frame.api                          :as r :refer [r]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

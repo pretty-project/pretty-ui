@@ -1,9 +1,9 @@
 
 (ns pretty-elements.combo-box.effects
-    (:require [pretty-elements.combo-box.events :as combo-box.events]
-              [pretty-elements.combo-box.env    :as combo-box.env]
+    (:require [pretty-elements.combo-box.env    :as combo-box.env]
+              [pretty-elements.combo-box.events :as combo-box.events]
               [pretty-elements.plain-field.env  :as plain-field.env]
-              [re-frame.api              :as r :refer [r]]))
+              [re-frame.api                     :as r :refer [r]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

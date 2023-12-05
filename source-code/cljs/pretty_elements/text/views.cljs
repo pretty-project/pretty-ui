@@ -1,12 +1,12 @@
 
 (ns pretty-elements.text.views
-    (:require [pretty-elements.element.views   :as element.views]
+    (:require [hiccup.api                      :as hiccup]
+              [metamorphic-content.api         :as metamorphic-content]
+              [pretty-elements.element.views   :as element.views]
               [pretty-elements.text.attributes :as text.attributes]
               [pretty-elements.text.prototypes :as text.prototypes]
-              [hiccup.api               :as hiccup]
-              [metamorphic-content.api  :as metamorphic-content]
-              [pretty-presets.api       :as pretty-presets]
-              [random.api               :as random]))
+              [pretty-presets.api              :as pretty-presets]
+              [random.api                      :as random]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

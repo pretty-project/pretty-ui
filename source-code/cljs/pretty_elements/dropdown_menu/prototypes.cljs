@@ -1,7 +1,7 @@
 
 (ns pretty-elements.dropdown-menu.prototypes
     (:require [pretty-elements.dropdown-menu.state :as dropdown-menu.state]
-              [vector.api                   :as vector]))
+              [vector.api                          :as vector]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

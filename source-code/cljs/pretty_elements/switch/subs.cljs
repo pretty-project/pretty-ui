@@ -1,7 +1,7 @@
 
 (ns pretty-elements.switch.subs
     (:require [pretty-elements.checkbox.subs :as checkbox.subs]
-              [re-frame.api           :as r]))
+              [re-frame.api                  :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

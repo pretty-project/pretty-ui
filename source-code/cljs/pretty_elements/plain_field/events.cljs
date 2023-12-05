@@ -2,8 +2,8 @@
 (ns pretty-elements.plain-field.events
     (:require [pretty-elements.input.events :as input.events]
               [pretty-elements.input.utils  :as input.utils]
-              [re-frame.api          :as r :refer [r]]
-              [re-frame.db.api       :as r.db]))
+              [re-frame.api                 :as r :refer [r]]
+              [re-frame.db.api              :as r.db]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

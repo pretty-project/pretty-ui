@@ -1,11 +1,11 @@
 
 (ns pretty-layouts.struct-popup.views
-    (:require [metamorphic-content.api                :as metamorphic-content]
+    (:require [hiccup.api                             :as hiccup]
+              [metamorphic-content.api                :as metamorphic-content]
               [pretty-layouts.struct-popup.attributes :as struct-popup.attributes]
               [pretty-layouts.struct-popup.prototypes :as struct-popup.prototypes]
               [pretty-layouts.struct-popup.utils      :as struct-popup.utils]
-              [pretty-presets.api                        :as pretty-presets]
-              [hiccup.api                             :as hiccup]
+              [pretty-presets.api                     :as pretty-presets]
               [random.api                             :as random]
               [re-frame.api                           :as r]
               [reagent.api                            :as reagent]

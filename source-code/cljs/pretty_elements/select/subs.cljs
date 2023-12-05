@@ -1,7 +1,7 @@
 
 (ns pretty-elements.select.subs
     (:require [pretty-elements.input.subs :as input.subs]
-              [re-frame.api        :as r :refer [r]]))
+              [re-frame.api               :as r :refer [r]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

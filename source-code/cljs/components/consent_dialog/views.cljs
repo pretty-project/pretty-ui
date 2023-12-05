@@ -1,8 +1,8 @@
 
 (ns components.consent-dialog.views
     (:require [components.consent-dialog.prototypes :as consent-dialog.prototypes]
-              [pretty-elements.api                         :as pretty-elements]
               [metamorphic-content.api              :as metamorphic-content]
+              [pretty-elements.api                  :as pretty-elements]
               [pretty-layouts.api                   :as pretty-layouts]
               [random.api                           :as random]))
 

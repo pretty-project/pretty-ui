@@ -1,8 +1,8 @@
 
 (ns pretty-elements.color-selector.events
     (:require [pretty-elements.input.events :as input.events]
-              [re-frame.api          :refer [r]]
-              [vector.api            :as vector]))
+              [re-frame.api                 :refer [r]]
+              [vector.api                   :as vector]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -1,10 +1,10 @@
 
 (ns pretty-elements.column.views
-    (:require [pretty-elements.column.attributes :as column.attributes]
+    (:require [metamorphic-content.api           :as metamorphic-content]
+              [pretty-elements.column.attributes :as column.attributes]
               [pretty-elements.column.prototypes :as column.prototypes]
-              [metamorphic-content.api    :as metamorphic-content]
-              [pretty-presets.api         :as pretty-presets]
-              [random.api                 :as random]))
+              [pretty-presets.api                :as pretty-presets]
+              [random.api                        :as random]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

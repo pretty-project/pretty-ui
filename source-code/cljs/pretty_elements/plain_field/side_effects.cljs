@@ -1,10 +1,10 @@
 
 (ns pretty-elements.plain-field.side-effects
-    (:require [dom.api                    :as dom]
+    (:require [dom.api                           :as dom]
+              [hiccup.api                        :as hiccup]
+              [keypress-handler.api              :as keypress-handler]
               [pretty-elements.plain-field.state :as plain-field.state]
-              [hiccup.api                 :as hiccup]
-              [keypress-handler.api       :as keypress-handler]
-              [re-frame.api               :as r]))
+              [re-frame.api                      :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -2,7 +2,7 @@
 (ns pretty-elements.password-field.prototypes
     (:require [pretty-elements.password-field.env :as password-field.env]
               [pretty-elements.plain-field.env    :as plain-field.env]
-              [vector.api                  :as vector]))
+              [vector.api                         :as vector]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -1,7 +1,7 @@
 
 (ns pretty-elements.dropdown-menu.attributes
-    (:require [pretty-elements.dropdown-menu.state :as dropdown-menu.state]
-              [pretty-css.api               :as pretty-css]))
+    (:require [pretty-css.api                      :as pretty-css]
+              [pretty-elements.dropdown-menu.state :as dropdown-menu.state]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -1,14 +1,14 @@
 
 (ns pretty-elements.plain-field.views
-    (:require [pretty-elements.plain-field.attributes :as plain-field.attributes]
+    (:require [metamorphic-content.api                :as metamorphic-content]
+              [pretty-elements.plain-field.attributes :as plain-field.attributes]
               [pretty-elements.plain-field.env        :as plain-field.env]
               [pretty-elements.plain-field.prototypes :as plain-field.prototypes]
               [pretty-elements.plain-field.utils      :as plain-field.utils]
-              [metamorphic-content.api         :as metamorphic-content]
-              [pretty-presets.api              :as pretty-presets]
-              [random.api                      :as random]
-              [re-frame.api                    :as r]
-              [reagent.api                     :as reagent]))
+              [pretty-presets.api                     :as pretty-presets]
+              [random.api                             :as random]
+              [re-frame.api                           :as r]
+              [reagent.api                            :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

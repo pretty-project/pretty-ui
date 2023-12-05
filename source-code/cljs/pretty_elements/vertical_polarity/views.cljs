@@ -1,10 +1,10 @@
 
 (ns pretty-elements.vertical-polarity.views
-    (:require [pretty-elements.vertical-polarity.attributes :as vertical-polarity.attributes]
+    (:require [metamorphic-content.api                      :as metamorphic-content]
+              [pretty-elements.vertical-polarity.attributes :as vertical-polarity.attributes]
               [pretty-elements.vertical-polarity.prototypes :as vertical-polarity.prototypes]
-              [metamorphic-content.api               :as metamorphic-content]
-              [pretty-presets.api                    :as pretty-presets]
-              [random.api                            :as random]))
+              [pretty-presets.api                           :as pretty-presets]
+              [random.api                                   :as random]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

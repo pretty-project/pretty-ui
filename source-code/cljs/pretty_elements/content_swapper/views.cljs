@@ -1,15 +1,15 @@
 
 (ns pretty-elements.content-swapper.views
-    (:require [pretty-elements.content-swapper.attributes :as content-swapper.attributes]
-             ;[pretty-elements.content-swapper.prototypes :as content-swapper.prototypes]
+    (:require ;[pretty-elements.content-swapper.prototypes :as content-swapper.prototypes]
+              [hiccup.api                                 :as hiccup]
+              [metamorphic-content.api                    :as metamorphic-content]
+              [pretty-elements.content-swapper.attributes :as content-swapper.attributes]
               [pretty-elements.content-swapper.state      :as content-swapper.state]
-              [hiccup.api                          :as hiccup]
-              [metamorphic-content.api             :as metamorphic-content]
-              [pretty-presets.api                  :as pretty-presets]
-              [random.api                          :as random]
-              [re-frame.api                        :as r]
-              [react.api                           :as react]
-              [reagent.api                         :as reagent]))
+              [pretty-presets.api                         :as pretty-presets]
+              [random.api                                 :as random]
+              [re-frame.api                               :as r]
+              [react.api                                  :as react]
+              [reagent.api                                :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

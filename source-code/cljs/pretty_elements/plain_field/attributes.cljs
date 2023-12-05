@@ -1,10 +1,10 @@
 
 (ns pretty-elements.plain-field.attributes
-    (:require [pretty-elements.plain-field.env   :as plain-field.env]
+    (:require [hiccup.api                        :as hiccup]
+              [pretty-css.api                    :as pretty-css]
+              [pretty-elements.plain-field.env   :as plain-field.env]
               [pretty-elements.plain-field.utils :as plain-field.utils]
-              [pretty-css.api             :as pretty-css]
-              [hiccup.api                 :as hiccup]
-              [re-frame.api               :as r]))
+              [re-frame.api                      :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -1,7 +1,7 @@
 
 (ns components.popup-menu-label.views
     (:require [components.popup-menu-label.prototypes :as popup-menu-label.prototypes]
-              [pretty-elements.api                           :as pretty-elements]
+              [pretty-elements.api                    :as pretty-elements]
               [random.api                             :as random]))
 
 ;; ----------------------------------------------------------------------------

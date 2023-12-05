@@ -2,8 +2,8 @@
 (ns components.input-table.views
     (:require [components.input-table.helpers    :as input-table.helpers]
               [components.input-table.prototypes :as input-table.prototypes]
-              [pretty-elements.api                      :as pretty-elements]
               [metamorphic-content.api           :as metamorphic-content]
+              [pretty-elements.api               :as pretty-elements]
               [random.api                        :as random]))
 
 ;; ----------------------------------------------------------------------------

@@ -3,7 +3,7 @@
     (:require ;[components.data-table.views      :as data-table.views]
               [components.menu-table.helpers    :as menu-table.helpers]
               [components.menu-table.prototypes :as menu-table.prototypes]
-              [pretty-elements.api                     :as pretty-elements]
+              [pretty-elements.api              :as pretty-elements]
               [random.api                       :as random]
               [vector.api                       :as vector]))
 

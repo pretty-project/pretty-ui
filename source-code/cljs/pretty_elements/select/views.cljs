@@ -1,6 +1,8 @@
 
 (ns pretty-elements.select.views
-    (:require [pretty-elements.button.views      :as button.views]
+    (:require [hiccup.api                        :as hiccup]
+              [metamorphic-content.api           :as metamorphic-content]
+              [pretty-elements.button.views      :as button.views]
               [pretty-elements.element.views     :as element.views]
               [pretty-elements.icon-button.views :as icon-button.views]
               [pretty-elements.input.env         :as input.env]
@@ -8,13 +10,11 @@
               [pretty-elements.select.env        :as select.env]
               [pretty-elements.select.prototypes :as select.prototypes]
               [pretty-elements.text-field.views  :as text-field.views]
-              [hiccup.api                 :as hiccup]
-              [metamorphic-content.api    :as metamorphic-content]
-              [pretty-layouts.api         :as pretty-layouts]
-              [random.api                 :as random]
-              [re-frame.api               :as r]
-              [reagent.api                :as reagent]
-              [vector.api                 :as vector]))
+              [pretty-layouts.api                :as pretty-layouts]
+              [random.api                        :as random]
+              [re-frame.api                      :as r]
+              [reagent.api                       :as reagent]
+              [vector.api                        :as vector]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

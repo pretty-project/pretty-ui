@@ -1,7 +1,7 @@
 
 (ns components.section-description.views
     (:require [components.section-description.prototypes :as section-description.prototypes]
-              [pretty-elements.api                              :as pretty-elements]
+              [pretty-elements.api                       :as pretty-elements]
               [random.api                                :as random]))
 
 ;; ----------------------------------------------------------------------------

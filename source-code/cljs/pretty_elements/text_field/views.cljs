@@ -1,19 +1,19 @@
 
 (ns pretty-elements.text-field.views
-    (:require [pretty-elements.element.views         :as element.views]
+    (:require [hiccup.api                            :as hiccup]
+              [metamorphic-content.api               :as metamorphic-content]
+              [pretty-elements.element.views         :as element.views]
               [pretty-elements.form.state            :as form.state]
               [pretty-elements.plain-field.env       :as plain-field.env]
               [pretty-elements.plain-field.views     :as plain-field.views]
               [pretty-elements.text-field.attributes :as text-field.attributes]
               [pretty-elements.text-field.prototypes :as text-field.prototypes]
-              [hiccup.api                     :as hiccup]
-              [metamorphic-content.api        :as metamorphic-content]
-              [pretty-presets.api             :as pretty-presets]
-              [random.api                     :as random]
-              [re-frame.api                   :as r]
-              [reagent.api                    :as reagent]
-              [time.api                       :as time]
-              [vector.api                     :as vector]))
+              [pretty-presets.api                    :as pretty-presets]
+              [random.api                            :as random]
+              [re-frame.api                          :as r]
+              [reagent.api                           :as reagent]
+              [time.api                              :as time]
+              [vector.api                            :as vector]))
 
 ;; -- Field adornments components ---------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -1,10 +1,10 @@
 
 (ns pretty-elements.chip.views
-    (:require [pretty-elements.chip.attributes :as chip.attributes]
+    (:require [metamorphic-content.api         :as metamorphic-content]
+              [pretty-elements.chip.attributes :as chip.attributes]
               [pretty-elements.chip.prototypes :as chip.prototypes]
-              [metamorphic-content.api  :as metamorphic-content]
-              [pretty-presets.api       :as pretty-presets]
-              [random.api               :as random]))
+              [pretty-presets.api              :as pretty-presets]
+              [random.api                      :as random]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

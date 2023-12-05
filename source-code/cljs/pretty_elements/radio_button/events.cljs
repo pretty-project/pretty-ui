@@ -1,7 +1,7 @@
 
 (ns pretty-elements.radio-button.events
     (:require [pretty-elements.input.events :as input.events]
-              [re-frame.api          :refer [r]]))
+              [re-frame.api                 :refer [r]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

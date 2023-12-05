@@ -3,10 +3,10 @@
     (:require [pretty-elements.counter.attributes :as counter.attributes]
               [pretty-elements.counter.prototypes :as counter.prototypes]
               [pretty-elements.element.views      :as element.views]
-              [pretty-presets.api          :as pretty-presets]
-              [random.api                  :as random]
-              [re-frame.api                :as r]
-              [reagent.api                 :as reagent]))
+              [pretty-presets.api                 :as pretty-presets]
+              [random.api                         :as random]
+              [re-frame.api                       :as r]
+              [reagent.api                        :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -1,8 +1,8 @@
 
 (ns pretty-elements.image.utils
-    (:require [dom.api               :as dom]
+    (:require [dom.api                      :as dom]
               [pretty-elements.image.config :as image.config]
-              [react.api             :as react]))
+              [react.api                    :as react]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

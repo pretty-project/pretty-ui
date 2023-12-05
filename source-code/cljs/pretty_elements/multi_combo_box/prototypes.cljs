@@ -1,9 +1,9 @@
 
 (ns pretty-elements.multi-combo-box.prototypes
-    (:require [pretty-elements.input.utils           :as input.utils]
-              [pretty-elements.multi-combo-box.utils :as multi-combo-box.utils]
-              [loop.api                       :refer [<-walk]]
-              [noop.api                       :refer [return]]))
+    (:require [loop.api                              :refer [<-walk]]
+              [noop.api                              :refer [return]]
+              [pretty-elements.input.utils           :as input.utils]
+              [pretty-elements.multi-combo-box.utils :as multi-combo-box.utils]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

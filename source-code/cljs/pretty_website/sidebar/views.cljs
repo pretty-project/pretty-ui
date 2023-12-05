@@ -1,11 +1,11 @@
 
 (ns pretty-website.sidebar.views
-    (:require [pretty-elements.api                      :as pretty-elements]
-              [metamorphic-content.api           :as metamorphic-content]
+    (:require [metamorphic-content.api           :as metamorphic-content]
+              [pretty-elements.api               :as pretty-elements]
+              [pretty-presets.api                :as pretty-presets]
               [pretty-website.sidebar.attributes :as sidebar.attributes]
               [pretty-website.sidebar.prototypes :as sidebar.prototypes]
               [pretty-website.sidebar.state      :as sidebar.state]
-              [pretty-presets.api                  :as pretty-presets]
               [random.api                        :as random]
               [react.api                         :as react]))
 

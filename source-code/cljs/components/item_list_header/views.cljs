@@ -2,7 +2,7 @@
 (ns components.item-list-header.views
     (:require [components.item-list-header.helpers    :as item-list-header.helpers]
               [components.item-list-header.prototypes :as item-list-header.prototypes]
-              [pretty-elements.api                           :as pretty-elements]
+              [pretty-elements.api                    :as pretty-elements]
               [random.api                             :as random]))
 
 ;; ----------------------------------------------------------------------------

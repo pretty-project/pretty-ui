@@ -2,7 +2,7 @@
 (ns pretty-elements.text-field.effects
     (:require [pretty-elements.plain-field.env    :as plain-field.env]
               [pretty-elements.plain-field.events :as plain-field.events]
-              [re-frame.api                :as r :refer [r]]))
+              [re-frame.api                       :as r :refer [r]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -2,8 +2,8 @@
 (ns pretty-elements.icon.views
     (:require [pretty-elements.icon.attributes :as icon.attributes]
               [pretty-elements.icon.prototypes :as icon.prototypes]
-              [pretty-presets.api       :as pretty-presets]
-              [random.api               :as random]))
+              [pretty-presets.api              :as pretty-presets]
+              [random.api                      :as random]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

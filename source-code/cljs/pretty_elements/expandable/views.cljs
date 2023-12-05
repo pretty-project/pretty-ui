@@ -1,11 +1,11 @@
 
 (ns pretty-elements.expandable.views
-    (:require [pretty-elements.expandable.attributes :as expandable.attributes]
+    (:require [metamorphic-content.api               :as metamorphic-content]
+              [pretty-elements.expandable.attributes :as expandable.attributes]
               [pretty-elements.expandable.env        :as expandable.env]
               [pretty-elements.expandable.prototypes :as expandable.prototypes]
-              [metamorphic-content.api        :as metamorphic-content]
-              [pretty-presets.api             :as pretty-presets]
-              [random.api                     :as random]))
+              [pretty-presets.api                    :as pretty-presets]
+              [random.api                            :as random]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -1,7 +1,7 @@
 
 (ns pretty-elements.counter.effects
     (:require [pretty-elements.counter.events :as counter.events]
-              [re-frame.api            :as r :refer [r]]))
+              [re-frame.api                   :as r :refer [r]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

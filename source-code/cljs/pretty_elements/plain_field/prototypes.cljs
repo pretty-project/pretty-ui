@@ -1,7 +1,7 @@
 
 (ns pretty-elements.plain-field.prototypes
-    (:require [pretty-elements.input.utils :as input.utils]
-              [noop.api             :refer [return]]))
+    (:require [noop.api                    :refer [return]]
+              [pretty-elements.input.utils :as input.utils]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

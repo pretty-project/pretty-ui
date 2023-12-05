@@ -3,7 +3,7 @@
     (:require [metamorphic-content.api           :as metamorphic-content]
               [pretty-layouts.sidebar.attributes :as sidebar.attributes]
               [pretty-layouts.sidebar.prototypes :as sidebar.prototypes]
-              [pretty-presets.api                        :as pretty-presets]
+              [pretty-presets.api                :as pretty-presets]
               [random.api                        :as random]
               [re-frame.api                      :as r]
               [reagent.api                       :as reagent]

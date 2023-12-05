@@ -2,7 +2,7 @@
 (ns pretty-elements.multi-field.effects
     (:require [pretty-elements.multi-field.events :as multi-field.events]
               [pretty-elements.multi-field.utils  :as multi-field.utils]
-              [re-frame.api                :as r :refer [r]]))
+              [re-frame.api                       :as r :refer [r]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

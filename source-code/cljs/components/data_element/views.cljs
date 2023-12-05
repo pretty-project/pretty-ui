@@ -1,7 +1,7 @@
 
 (ns components.data-element.views
     (:require [components.data-element.prototypes :as data-element.prototypes]
-              [pretty-elements.api                       :as pretty-elements]
+              [pretty-elements.api                :as pretty-elements]
               [random.api                         :as random]))
 
 ;; ----------------------------------------------------------------------------

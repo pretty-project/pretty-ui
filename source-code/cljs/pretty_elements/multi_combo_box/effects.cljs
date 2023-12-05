@@ -5,7 +5,7 @@
               [pretty-elements.multi-combo-box.prototypes :as multi-combo-box.prototypes]
               [pretty-elements.multi-combo-box.utils      :as multi-combo-box.utils]
               [pretty-elements.plain-field.env            :as plain-field.env]
-              [re-frame.api                        :as r :refer [r]]))
+              [re-frame.api                               :as r :refer [r]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

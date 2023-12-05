@@ -1,15 +1,15 @@
 
 (ns pretty-elements.combo-box.views
-    (:require [pretty-elements.combo-box.env        :as combo-box.env]
+    (:require [hiccup.api                           :as hiccup]
+              [loop.api                             :refer [reduce-indexed]]
+              [metamorphic-content.api              :as metamorphic-content]
               [pretty-elements.combo-box.attributes :as combo-box.attributes]
+              [pretty-elements.combo-box.env        :as combo-box.env]
               [pretty-elements.combo-box.prototypes :as combo-box.prototypes]
               [pretty-elements.text-field.views     :as text-field.views]
-              [hiccup.api                    :as hiccup]
-              [loop.api                      :refer [reduce-indexed]]
-              [metamorphic-content.api       :as metamorphic-content]
-              [random.api                    :as random]
-              [re-frame.api                  :as r]
-              [reagent.api                   :as reagent]))
+              [random.api                           :as random]
+              [re-frame.api                         :as r]
+              [reagent.api                          :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

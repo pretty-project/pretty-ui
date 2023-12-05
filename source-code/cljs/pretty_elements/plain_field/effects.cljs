@@ -1,9 +1,9 @@
 
 (ns pretty-elements.plain-field.effects
     (:require [pretty-elements.input.env          :as input.env]
-              [pretty-elements.plain-field.events :as plain-field.events]
               [pretty-elements.plain-field.env    :as plain-field.env]
-              [re-frame.api                :as r :refer [r]]))
+              [pretty-elements.plain-field.events :as plain-field.events]
+              [re-frame.api                       :as r :refer [r]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
