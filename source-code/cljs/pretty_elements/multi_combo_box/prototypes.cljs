@@ -67,13 +67,13 @@
   ; stored in the application state.
   ; The combo-box element implemented in the multi-combo-box has its own value-path
   ; which is where the field content stored in the application state.
-  ; Therefore the value-path property isn't inherited from the multi-combo-box
+  ; Therefore, the value-path property isn't inherited from the multi-combo-box
   ; to the combo-box.
   ;
   ; XXX#5062
   ; The options-path of multi-combo-box element is the same as the options-path
   ; of the implemented combo-box element.
-  ; Therefore the options-path property is inherited from the multi-combo-box
+  ; Therefore, the options-path property is inherited from the multi-combo-box
   ; to the combo-box.
   (<-walk {:field-value-f  return
            :option-label-f return

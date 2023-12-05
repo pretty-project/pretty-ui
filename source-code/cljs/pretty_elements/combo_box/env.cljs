@@ -105,7 +105,7 @@
   ;    E.g. It can displays a placeholder label when no option displayed.
   ;         But it doesn't seen OK if the surface is visible when there are no
   ;         selectable options for the combo-box.
-  ; 2. The ESC event has to check whether any option is rendered on the surface
+  ; 2. The ESC event must check whether any option is rendered on the surface
   ;    or not. (That's the perfect solution!)
   (let [surface-id (hiccup/value box-id "surface")]
        (if-let [surface-element (dom/get-element-by-id surface-id)]

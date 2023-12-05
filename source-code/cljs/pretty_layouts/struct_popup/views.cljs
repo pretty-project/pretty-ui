@@ -75,11 +75,11 @@
   ;  :footer (metamorphic-content)(opt)
   ;  :header (metamorphic-content)(opt)}
   [popup-id {:keys [body footer header]}]
-  ; The header sensor has to be placed at the beginning of the body content ...
-  ; The footer sensor has to be placed at the end of the body content ...
+  ; The header sensor must be placed at the beginning of the body content ...
+  ; The footer sensor must be placed at the end of the body content ...
   ; ... because the sensors have to be scrolled with the body content.
   ;
-  ; The body content element has to be stretched vertically to its wrapper
+  ; The body content element must be stretched vertically to its wrapper
   ; (to the body element) to provide the center alignment ability for the content.
   [:div {:class :pl-struct-popup--body :data-scroll-axis :y}
         [:div {:class :pl-struct-popup--body-content}

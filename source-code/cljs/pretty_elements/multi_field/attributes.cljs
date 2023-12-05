@@ -32,8 +32,8 @@
   ; @return (map)
   ; {}
   [_ group-props]
-  ; Each field separatelly reacts to the disabled state, therefore no need
-  ; to the group reacts to it.
+  ; Each field separatelly reacts to the disabled state.
+  ; Therefore, no need to the group reacts to it.
   (let [group-props (dissoc group-props :disabled?)]
        (-> {:class :pe-multi-field}
            (pretty-css/default-attributes group-props)

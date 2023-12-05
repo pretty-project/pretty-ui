@@ -51,7 +51,7 @@
   ; content get change from an empty string to a nonempty string (or vica versa),
   ; because it contains the ':disabled?' value that depends on whether the field
   ; content is an empty string.
-  ; Therefore every component that calls this 'end-adornments-prototype' function
+  ; Therefore, every component that calls this 'end-adornments-prototype' function
   ; rerenders when the field value changes between empty and nonempty strings.
   (if emptiable? (let [empty-field-adornment-props (text-field.env/empty-field-adornment-props field-id field-props)]
                       (vector/conj-item end-adornments empty-field-adornment-props))

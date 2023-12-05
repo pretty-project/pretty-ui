@@ -77,17 +77,17 @@
   ;        the label 'Copy' (as a pseudo-element).
   ;    ... The tooltip is implemented by the '{:data-tooltip-content ...}' CSS preset,
   ;        which has to be applied on the sensor element.
-  ; 2. The '.pe-label--content' element has the '{overflow: hidden}' setting, therefore it's
-  ;    not capable to be applied with the '{:data-tooltip-content ...}' preset.
-  ; 3. The '.pe-label--body' element always fits with its environment in width, therefore
-  ;    it's often too wide to be the sensor element.
+  ; 2. The '.pe-label--content' element has the '{overflow: hidden}' setting.
+  ;    Therefore, it isn't capable to be applied with the '{:data-tooltip-content ...}' preset.
+  ; 3. The '.pe-label--body' element always fits with its environment in width.
+  ;    Therefore it's often too wide to be the sensor element.
   ;
   ; XXX#7039 Why the label element without a 'target-id' property shown in a DIV tag?
   ; - A label element without a 'target-id' value doesn't use 'for' HTML attribute and
   ;   it would violate the HTML rules:
   ;   "A <label> isn't associated with a form field."
   ;   "To fix this issue, nest the <input> in the <label> or provide a for attribute on the <label> that matches a form field id."
-  ; - Therefore if no 'target-id' value provided (=> no 'for' attribute on the HTML element)
+  ; - Therefore, if no 'target-id' value provided (=> no 'for' attribute on the HTML element)
   ;   it's better to use a DIV tag instead of using a LABEL tag.
   (if on-copy [:div (label.attributes/copyable-attributes label-id label-props)
                     [(if target-id :label :div)

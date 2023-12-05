@@ -18,7 +18,7 @@
   [box-id box-props]
   (let [highlighted-option-dex (combo-box.env/get-highlighted-option-dex box-id)
         rendered-options       (combo-box.env/get-rendered-options       box-id box-props)]
-       ; If no option selected, then the first option has to be selected at the first time ...
+       ; If no option selected, then the first option must be selected at the first time ...
        (if (nil? highlighted-option-dex)
            (swap! combo-box.state/OPTION-HIGHLIGHTS assoc box-id 0)
            (let [next-option-dex (seqable/next-dex rendered-options highlighted-option-dex)]

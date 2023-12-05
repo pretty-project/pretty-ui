@@ -4,7 +4,7 @@
 
 .pe-blank--body {
   /* XXX#6667
-   * The blank element takes height property therefore its body has to fit into it. */
+   * The blank element takes height property. Therefore, its body must fit into it. */
   height: 100%;
 }
 
@@ -66,7 +66,7 @@
   display:     flex;
 
   /* XXX#6669
-   * The body element is a BUTTON tag therefore its width has to be set to fit
+   * The body element is a BUTTON tag. Therefore, its width must be set to fit
    * the body into its parent. */
   width: 100%;
 }
@@ -86,7 +86,7 @@
   /* XXX#6667 */
   /* If the card element's height is limited by its parent element, in order to
    * apply the overflow property on the card's content, the card body element's
-   * height has to be specified! */
+   * height must be specified! */
   height: 100%;
 }
 
@@ -370,7 +370,7 @@
 }
 
 .pe-content-swapper--body[data-animation-direction] {
-  /* Because the appering or disappearing pages animated to move in LTR or RTL
+  /* Because the appering / disappearing pages animated to move in LTR or RTL
    * directions, the body has to hide the overflowing pages during animations. */
   overflow-x: hidden;
 }
@@ -1198,8 +1198,8 @@
 
   /* XXX#6661
    * The height of this label without content is 12px (horizontal padding x 2),
-   * that's the same as the bottom padding of the option list,
-   * therefore in case of no label defined, the top and bottom spacings are the same. */
+   * that's the same as the bottom padding of the option list.
+   * Therefore, in case of no label defined, the top and bottom spacings are the same. */
   padding: 6px 12px;
 }
 
@@ -1467,8 +1467,8 @@ textarea.pe-text-field--input {
   text-align: center;
 
   /* XXX#0617
-   * The label adornment's padding and the adornment wrapper's padding adds up,
-   * therefore the label adornments are 16px far from the edge, but this isn't
+   * The label adornment's padding and the adornment wrapper's padding adds up.
+   * Therefore, the label adornments are 16px far from the edge, but this isn't
    * a problem, because the icon adornments (with no padding) look the same! */
   padding: 0 4px;
 }

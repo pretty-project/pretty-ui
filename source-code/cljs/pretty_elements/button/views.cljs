@@ -53,9 +53,9 @@
   ; This phenomenon caused by:
   ; 1. The keydown event focuses the button via the 'button.side-effects/key-pressed' function.
   ; 2. One of the default actions of the 13 (ENTER) key is to fire the on-click
-  ;    function on a focused button element, therefore the on-click function
+  ;    function on a focused button element. Therefore, the 'on-click' function
   ;    fires repeatedly during the 13 (ENTER) key is pressed.
-  ; In case of using any other key than the 13 (ENTER) the on-click function fires only by
+  ; In case of using any other key than the 13 (ENTER) the 'on-click' function fires only by
   ; the 'button.side-effects/key-released' function.
   ;
   ; @param (keyword)(opt) button-id

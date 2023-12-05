@@ -42,7 +42,7 @@
   ; and '{display: flex}' properties can only used together (without errors)
   ; if the width of the scroll container element ('.pe-menu-bar--body') is not greater
   ; than the total width of the elements within.
-  ; Therefore the '{:horizontal-align :space-between}' setting cannot be implemented,
+  ; Therefore, the '{:horizontal-align :space-between}' setting cannot be implemented,
   ; while keeping the '{overflow-x: scroll}' property.
   [:div (menu-bar.attributes/menu-bar-attributes bar-id bar-props)
         [:div (menu-bar.attributes/menu-bar-body-attributes bar-id bar-props)

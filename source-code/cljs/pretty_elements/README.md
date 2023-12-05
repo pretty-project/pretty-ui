@@ -3,11 +3,11 @@
 
 - Every element has its entry component named `element` in the `views.cljs` namespace.
 
-- The functional documentation of the element has to be placed in the entry
+- The functional documentation of the element must be placed in the entry
   component's header. Every other component should be ignored from documentation
   readers by using the `@ignore` tag in their headers.
 
-- Every element has to take two arguments. An element ID (optional) and an element
+- Every element must take two arguments. An element ID (optional) and an element
   properties map (required).
   The `random.api/generate-keyword` function provides the element ID in case of it
   is not passed.

@@ -93,8 +93,8 @@
   ; @param (map) field-props
   ; {}
   [field-id {:keys [multiline? placeholder surface] :as field-props}]
-  ; The placeholder element has an absolute position, therefore ...
-  ; ... it has to be placed within the same ancestor element as the input element!
+  ; The placeholder element has an absolute position. Therefore, ...
+  ; ... it must be placed within the same ancestor element as the input element!
   ; ... but it cannot be in the very same parent element as the input element!
   ;     (otherwise somehow it covers the input regardless their order)
   [:div (text-field.attributes/field-attributes field-id field-props)

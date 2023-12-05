@@ -65,8 +65,8 @@
   ; @param (keyword) field-id
   [field-id]
   ; The 'show-surface!' function stores which field displays its surface currently.
-  ; Only one field allowed to displays its surface at a time, therefore this
-  ; function overwrites the previously set value.
+  ; Only one field allowed to displays its surface at a time,
+  ; Therefore, this function overwrites the previously set value.
   ;
   ; BUG#6071
   ; Ensure that you only display surfaces for focused fields!

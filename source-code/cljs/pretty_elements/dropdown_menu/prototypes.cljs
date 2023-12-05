@@ -18,7 +18,7 @@
           ; The :on-mouse-over property of items in menu-bar element takes metamorphic-events.
           ; If the f0 function returned the reseted value (by the reset! function),
           ; the on-mouse-over handler would try to dispatch it as a metamorphic-event.
-          ; Therefore the f0 function returns a nil to avoid that.
+          ; Therefore, the f0 function returns a nil to avoid that.
           (f0 [dex %] (swap! dropdown-menu.state/MENUS assoc-in [menu-id :active-dex] dex)
                       (-> nil))
 

@@ -18,7 +18,7 @@
   ;  :on-mount (Re-Frame metamorphic-event)(opt)
   ;  :value-path (Re-Frame path vector)}
   (fn [{:keys [db]} [_ field-id {:keys [autofocus? initial-value on-mount value-path] :as field-props}]]
-      ; The autofocus has to be delayed, otherwise the caret shown up at not at the end of the content.
+      ; The autofocus has to be delayed, otherwise the caret would shown up not at the end of the content.
       (let [stored-value (get-in db value-path)]
            {:dispatch-later [(if autofocus?    {:ms 50 :fx [:pretty-elements.plain-field/focus-field! field-id]})]
             :dispatch-n     [(if on-mount      (r/metamorphic-event<-params on-mount (or initial-value stored-value)))
@@ -81,9 +81,9 @@
   ; {:on-blur (Re-Frame metamorphic-event)(opt)}
   (fn [{:keys [db]} [_ field-id {:keys [on-blur] :as field-props}]]
       ; - When the user leaves a field it writes its actual field content into the Re-Frame state immediately.
-      ; - Normally this state-writing action happens delayed after last key pressed (when
-      ;   the ':pretty-elements.plain-field/type-ended' effect is being dispatched), but there
-      ;   could be a case when it has to happen immediately.
+      ; - Normally this state-writing action happens delayed after last key is being pressed
+      ;   (when the ':pretty-elements.plain-field/type-ended' effect is being dispatched),
+      ;   but there could be a case when it has to happen immediately.
       ;   E.g. The user ends typing and quickly clicks on a button that validates
       ;        the field or validates a form that contains the field.
       ;        When the validator functions are being applied on the stored value of

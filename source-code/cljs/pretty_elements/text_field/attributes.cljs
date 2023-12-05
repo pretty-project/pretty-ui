@@ -28,7 +28,7 @@
   [field-id field-props {:keys [disabled? on-click tab-indexed? tooltip-content] :as adornment-props}]
   ; BUG#2105
   ; An on-mouse-down event fired anywhere out of the input could trigger the
-  ; on-blur event of the field, therefore the surface would dissapears unless
+  ; on-blur event of the field. Therefore, the surface would dissapears unless
   ; if the on-mouse-down event prevented.
   ;
   ; If the user clicks on a field accessory (adornment, surface, placeholder, etc.)

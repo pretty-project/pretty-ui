@@ -34,21 +34,21 @@
   ; If the {:disabled? true} state of the plain-field element would set the
   ; disabled="true" attribute on the input DOM element ...
   ; ... the input loses its focus.
-  ; ... the on-blur event doesn't occur in some browsers, therefore
-  ;     the keypress handler stays in type mode and the field stays marked
-  ;     as focused.
+  ; ... the on-blur event doesn't occur in some browsers.
+  ;     Therefore, the keypress handler stays in type mode and the field stays
+  ;     marked as focused.
   ; ... after the {:disabled? true} state ends, the field doesn't get back
   ;     its focused state.
   ; Therefore, the input DOM element doesn't get the disabled="true" attribute!
   ;
   ; BUG#8809
   ; The React would warn that the input stepped into uncontrolled state
-  ; if it has no :on-change property, therefore, the input DOM element must keep
+  ; if it has no :on-change property. Therefore, the input DOM element must keep
   ; its :on-change property in {:disabled? true} state!
   ;
   ; BUG#8811
-  ; In some cases the input element didn't fire the on-change function therefore
-  ; it had been replaced by the on-input function.
+  ; In some cases the input element didn't fire the on-change function.
+  ; Therefore it had been replaced by the on-input function.
   ; E.g.: When a text-field appeared on the UI with a content that was in the application
   ;       state before the field did mount and the first interaction with the field
   ;       was a full selection (cmd + A) and a clear action (backspace), the on-change
