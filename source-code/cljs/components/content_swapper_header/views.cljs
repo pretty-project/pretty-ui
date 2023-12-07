@@ -1,9 +1,9 @@
 
 (ns components.content-swapper-header.views
     (:require [components.content-swapper-header.prototypes :as content-swapper-header.prototypes]
+              [fruits.random.api                            :as random]
               [pretty-elements.api                          :as pretty-elements]
-              [pretty-elements.api                          :as pretty-elements]
-              [random.api                                   :as random]))
+              [pretty-elements.api                          :as pretty-elements]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -1,9 +1,9 @@
 
 (ns pretty-elements.horizontal-spacer.views
-    (:require [pretty-elements.horizontal-spacer.attributes :as horizontal-spacer.attributes]
+    (:require [fruits.random.api                            :as random]
+              [pretty-elements.horizontal-spacer.attributes :as horizontal-spacer.attributes]
               [pretty-elements.horizontal-spacer.prototypes :as horizontal-spacer.prototypes]
-              [pretty-presets.api                           :as pretty-presets]
-              [random.api                                   :as random]))
+              [pretty-presets.api                           :as pretty-presets]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -1,10 +1,10 @@
 
 (ns pretty-elements.horizontal-group.views
-    (:require [hiccup.api                                  :as hiccup]
+    (:require [fruits.hiccup.api                           :as hiccup]
+              [fruits.random.api                           :as random]
               [pretty-elements.horizontal-group.attributes :as horizontal-group.attributes]
               [pretty-elements.horizontal-group.prototypes :as horizontal-group.prototypes]
-              [pretty-presets.api                          :as pretty-presets]
-              [random.api                                  :as random]))
+              [pretty-presets.api                          :as pretty-presets]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

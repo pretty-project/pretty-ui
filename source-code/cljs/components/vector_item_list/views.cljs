@@ -3,8 +3,8 @@
     (:require [components.illustration.views          :as illustration.views]
               [components.vector-item-list.attributes :as vector-item-list.attributes]
               [components.vector-item-list.prototypes :as vector-item-list.prototypes]
+              [fruits.random.api                      :as random]
               [pretty-elements.api                    :as pretty-elements]
-              [random.api                             :as random]
               [re-frame.api                           :as r]))
 
 ;; ----------------------------------------------------------------------------

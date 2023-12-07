@@ -1,12 +1,12 @@
 
 (ns pretty-elements.text-field.attributes
     (:require [dom.api                                :as dom]
+              [fruits.random.api                      :as random]
               [metamorphic-content.api                :as metamorphic-content]
               [pretty-css.api                         :as pretty-css]
               [pretty-elements.input.env              :as input.env]
               [pretty-elements.plain-field.attributes :as plain-field.attributes]
               [pretty-elements.text-field.env         :as text-field.env]
-              [random.api                             :as random]
               [re-frame.api                           :as r]))
 
 ;; ----------------------------------------------------------------------------

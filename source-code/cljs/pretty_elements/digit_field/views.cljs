@@ -2,13 +2,14 @@
 ; WARNING! NOT TESTED! DO NOT USE!
 
 (ns pretty-elements.digit-field.views
-    (:require [css.api                                :as css]
-              [dom.api                                :as dom]
-              [hiccup.api                             :as hiccup]
+    (:require [dom.api                                :as dom]
+              [fruits.css.api                         :as css]
+              [fruits.hiccup.api                      :as hiccup]
+              [fruits.random.api                      :as random]
+              [fruits.string.api                      :as string]
               [pretty-elements.digit-field.attributes :as digit-field.attributes]
               [pretty-elements.digit-field.prototypes :as digit-field.prototypes]
               [pretty-elements.digit-field.utils      :as digit-field.utils]
-              [random.api                             :as random]
               [re-frame.api                           :as r]))
 
 ;; ----------------------------------------------------------------------------
@@ -37,7 +38,7 @@
                                       :on-mouse-up #(dom/focus-element! (dom/get-element-by-id (hiccup/value field-id "input")))
                                       ; prevent selecting
                                       :on-mouse-down #(.preventDefault %)}
-                                     (string.api/nth-character (:value field-props) %2)]))
+                                     (fruits.string.api/nth-character (:value field-props) %2)]))
     [:div {:class :pe-digit-field--cover :style {:width (-> field-props digit-field.utils/field-props->digits-width css/px)}}]
     (range 4)))
 

@@ -1,7 +1,7 @@
 
 (ns components.spinner.views
     (:require [components.spinner.prototypes :as spinner.prototypes]
-              [random.api                    :as random]))
+              [fruits.random.api             :as random]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

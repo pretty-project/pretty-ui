@@ -1,14 +1,14 @@
 
 (ns pretty-elements.chip-group.views
-    (:require [metamorphic-content.api               :as metamorphic-content]
+    (:require [fruits.random.api                     :as random]
+              [fruits.vector.api                     :as vector]
+              [metamorphic-content.api               :as metamorphic-content]
               [pretty-elements.chip-group.attributes :as chip-group.attributes]
               [pretty-elements.chip-group.prototypes :as chip-group.prototypes]
               [pretty-elements.chip.views            :as chip.views]
               [pretty-elements.element.views         :as element.views]
               [pretty-presets.api                    :as pretty-presets]
-              [random.api                            :as random]
-              [re-frame.api                          :as r]
-              [vector.api                            :as vector]))
+              [re-frame.api                          :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -1,8 +1,7 @@
 
 (ns components.list-item-avatar.views
-    (:require ; [components.user-avatar.prototypes :as user-avatar.prototypes]
-              [components.user-avatar.views :as user-avatar.views]
-              [random.api                   :as random]))
+    (:require [components.user-avatar.views :as user-avatar.views]
+              [fruits.random.api            :as random]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

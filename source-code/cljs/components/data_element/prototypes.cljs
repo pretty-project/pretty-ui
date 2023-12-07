@@ -1,7 +1,7 @@
 
 (ns components.data-element.prototypes
-    (:require [metamorphic-content.api :as metamorphic-content]
-              [vector.api              :as vector]))
+    (:require [fruits.vector.api       :as vector]
+              [metamorphic-content.api :as metamorphic-content]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -1,6 +1,6 @@
 
 (ns pretty-elements.plain-field.attributes
-    (:require [hiccup.api                        :as hiccup]
+    (:require [fruits.hiccup.api                 :as hiccup]
               [pretty-css.api                    :as pretty-css]
               [pretty-elements.plain-field.env   :as plain-field.env]
               [pretty-elements.plain-field.utils :as plain-field.utils]

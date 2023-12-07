@@ -1,6 +1,8 @@
 
 (ns pretty-elements.text-field.views
-    (:require [hiccup.api                            :as hiccup]
+    (:require [fruits.hiccup.api                     :as hiccup]
+              [fruits.random.api                     :as random]
+              [fruits.vector.api                     :as vector]
               [metamorphic-content.api               :as metamorphic-content]
               [pretty-elements.element.views         :as element.views]
               [pretty-elements.form.state            :as form.state]
@@ -9,11 +11,9 @@
               [pretty-elements.text-field.attributes :as text-field.attributes]
               [pretty-elements.text-field.prototypes :as text-field.prototypes]
               [pretty-presets.api                    :as pretty-presets]
-              [random.api                            :as random]
               [re-frame.api                          :as r]
               [reagent.api                           :as reagent]
-              [time.api                              :as time]
-              [vector.api                            :as vector]))
+              [time.api                              :as time]))
 
 ;; -- Field adornments components ---------------------------------------------
 ;; ----------------------------------------------------------------------------

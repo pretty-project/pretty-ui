@@ -1,7 +1,7 @@
 
 (ns pretty-elements.button.side-effects
     (:require [dom.api              :as dom]
-              [hiccup.api           :as hiccup]
+              [fruits.hiccup.api    :as hiccup]
               [keypress-handler.api :as keypress-handler]
               [re-frame.api         :as r]))
 

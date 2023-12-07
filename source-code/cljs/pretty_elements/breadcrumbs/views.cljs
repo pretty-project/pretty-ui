@@ -1,11 +1,11 @@
 
 (ns pretty-elements.breadcrumbs.views
-    (:require [hiccup.api                             :as hiccup]
+    (:require [fruits.hiccup.api                      :as hiccup]
+              [fruits.random.api                      :as random]
               [metamorphic-content.api                :as metamorphic-content]
               [pretty-elements.breadcrumbs.attributes :as breadcrumbs.attributes]
               [pretty-elements.breadcrumbs.prototypes :as breadcrumbs.prototypes]
-              [pretty-presets.api                     :as pretty-presets]
-              [random.api                             :as random]))
+              [pretty-presets.api                     :as pretty-presets]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

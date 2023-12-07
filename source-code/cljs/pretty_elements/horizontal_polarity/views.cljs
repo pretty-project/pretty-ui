@@ -1,10 +1,10 @@
 
 (ns pretty-elements.horizontal-polarity.views
-    (:require [metamorphic-content.api                        :as metamorphic-content]
+    (:require [fruits.random.api                              :as random]
+              [metamorphic-content.api                        :as metamorphic-content]
               [pretty-elements.horizontal-polarity.attributes :as horizontal-polarity.attributes]
               [pretty-elements.horizontal-polarity.prototypes :as horizontal-polarity.prototypes]
-              [pretty-presets.api                             :as pretty-presets]
-              [random.api                                     :as random]))
+              [pretty-presets.api                             :as pretty-presets]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

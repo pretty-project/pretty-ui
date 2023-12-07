@@ -1,10 +1,10 @@
 
 (ns pretty-elements.slider.views
-    (:require [pretty-elements.element.views     :as element.views]
+    (:require [fruits.random.api                 :as random]
+              [pretty-elements.element.views     :as element.views]
               [pretty-elements.slider.attributes :as slider.attributes]
               [pretty-elements.slider.prototypes :as slider.prototypes]
               [pretty-presets.api                :as pretty-presets]
-              [random.api                        :as random]
               [re-frame.api                      :as r]
               [reagent.api                       :as reagent]))
 

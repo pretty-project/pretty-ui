@@ -1,6 +1,6 @@
 
 (ns pretty-diagrams.line-diagram.attributes
-    (:require [css.api                            :as css]
+    (:require [fruits.css.api                     :as css]
               [pretty-css.api                     :as pretty-css]
               [pretty-diagrams.line-diagram.utils :as line-diagram.utils]))
 

@@ -1,8 +1,8 @@
 
 (ns renderers.surface-renderer.views
     (:require [dom.api                               :as dom]
+              [fruits.random.api                     :as random]
               [metamorphic-content.api               :as metamorphic-content]
-              [random.api                            :as random]
               [renderers.renderer.env                :as renderer.env]
               [renderers.surface-renderer.attributes :as surface-renderer.attributes]
               [renderers.surface-renderer.prototypes :as surface-renderer.prototypes]))

@@ -1,12 +1,12 @@
 
 (ns pretty-elements.combo-box.env
     (:require [dom.api                         :as dom]
-              [hiccup.api                      :as hiccup]
+              [fruits.hiccup.api               :as hiccup]
+              [fruits.string.api               :as string]
+              [fruits.vector.api               :as vector]
               [pretty-elements.combo-box.state :as combo-box.state]
               [pretty-elements.input.env       :as input.env]
-              [pretty-elements.plain-field.env :as plain-field.env]
-              [string.api                      :as string]
-              [vector.api                      :as vector]))
+              [pretty-elements.plain-field.env :as plain-field.env]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

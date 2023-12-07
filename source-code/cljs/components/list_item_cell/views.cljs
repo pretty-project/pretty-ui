@@ -2,9 +2,9 @@
 (ns components.list-item-cell.views
     (:require [components.list-item-cell.helpers    :as list-item-cell.helpers]
               [components.list-item-cell.prototypes :as list-item-cell.prototypes]
-              [css.api                              :as css]
-              [pretty-elements.api                  :as pretty-elements]
-              [random.api                           :as random]))
+              [fruits.css.api                       :as css]
+              [fruits.random.api                    :as random]
+              [pretty-elements.api                  :as pretty-elements]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

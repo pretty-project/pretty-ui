@@ -1,6 +1,6 @@
 
 (ns pretty-diagrams.line-diagram.prototypes
-    (:require [math.api                           :as math]
+    (:require [fruits.math.api                    :as math]
               [pretty-diagrams.line-diagram.utils :as line-diagram.utils]))
 
 ;; ----------------------------------------------------------------------------

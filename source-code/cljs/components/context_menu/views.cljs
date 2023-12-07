@@ -1,9 +1,9 @@
 
 (ns components.context-menu.views
-    (:require [pretty-elements.api :as pretty-elements]
+    (:require [fruits.random.api   :as random]
               [pretty-elements.api :as pretty-elements]
-              [pretty-layouts.api  :as pretty-layouts]
-              [random.api          :as random]))
+              [pretty-elements.api :as pretty-elements]
+              [pretty-layouts.api  :as pretty-layouts]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

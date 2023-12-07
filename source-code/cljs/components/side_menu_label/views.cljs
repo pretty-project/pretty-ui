@@ -1,8 +1,8 @@
 
 (ns components.side-menu-label.views
     (:require [components.side-menu-label.prototypes :as side-menu-label.prototypes]
-              [pretty-elements.api                   :as pretty-elements]
-              [random.api                            :as random]))
+              [fruits.random.api                     :as random]
+              [pretty-elements.api                   :as pretty-elements]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

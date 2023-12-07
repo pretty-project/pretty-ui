@@ -1,11 +1,11 @@
 
 (ns pretty-elements.combo-box.side-effects
-    (:require [keypress-handler.api                     :as keypress-handler]
+    (:require [fruits.seqable.api                       :as seqable]
+              [keypress-handler.api                     :as keypress-handler]
               [pretty-elements.combo-box.env            :as combo-box.env]
               [pretty-elements.combo-box.state          :as combo-box.state]
               [pretty-elements.plain-field.side-effects :as plain-field.side-effects]
-              [re-frame.api                             :as r]
-              [seqable.api                              :as seqable]))
+              [re-frame.api                             :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

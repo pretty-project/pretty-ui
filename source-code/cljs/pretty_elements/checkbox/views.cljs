@@ -1,13 +1,13 @@
 
 (ns pretty-elements.checkbox.views
-    (:require [hiccup.api                          :as hiccup]
+    (:require [fruits.hiccup.api                   :as hiccup]
+              [fruits.random.api                   :as random]
               [metamorphic-content.api             :as metamorphic-content]
               [pretty-elements.checkbox.attributes :as checkbox.attributes]
               [pretty-elements.checkbox.prototypes :as checkbox.prototypes]
               [pretty-elements.element.views       :as element.views]
               [pretty-elements.input.env           :as input.env]
               [pretty-presets.api                  :as pretty-presets]
-              [random.api                          :as random]
               [re-frame.api                        :as r]
               [reagent.api                         :as reagent]))
 

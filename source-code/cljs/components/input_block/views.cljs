@@ -2,8 +2,8 @@
 (ns components.input-block.views
     (:require [components.input-block.helpers    :as input-block.helpers]
               [components.input-block.prototypes :as input-block.prototypes]
-              [metamorphic-content.api           :as metamorphic-content]
-              [random.api                        :as random]))
+              [fruits.random.api                 :as random]
+              [metamorphic-content.api           :as metamorphic-content]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

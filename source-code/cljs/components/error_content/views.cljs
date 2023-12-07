@@ -1,8 +1,8 @@
 
 (ns components.error-content.views
     (:require [components.error-content.prototypes :as error-content.prototypes]
-              [pretty-elements.api                 :as pretty-elements]
-              [random.api                          :as random]))
+              [fruits.random.api                   :as random]
+              [pretty-elements.api                 :as pretty-elements]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -1,9 +1,9 @@
 
 (ns pretty-elements.ghost.views
-    (:require [pretty-elements.ghost.attributes :as ghost.attributes]
+    (:require [fruits.random.api                :as random]
+              [pretty-elements.ghost.attributes :as ghost.attributes]
               [pretty-elements.ghost.prototypes :as ghost.prototypes]
-              [pretty-presets.api               :as pretty-presets]
-              [random.api                       :as random]))
+              [pretty-presets.api               :as pretty-presets]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

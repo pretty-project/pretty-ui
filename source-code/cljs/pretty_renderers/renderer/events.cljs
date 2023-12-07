@@ -15,10 +15,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.ui.renderer.events
-    (:require [re-frame.api          :as r :refer [r]]
+    (:require [fruits.vector.api     :as vector]
+              [re-frame.api          :as r :refer [r]]
               [re-frame.db.api       :as r.db]
               [time.api              :as time]
-              [vector.api            :as vector]
               [x.ui.renderer.helpers :as renderer.helpers]))
 
 ;; ----------------------------------------------------------------------------

@@ -1,9 +1,9 @@
 
 (ns components.popup-label-bar.views
     (:require [components.popup-label-bar.prototypes :as popup-label-bar.prototypes]
+              [fruits.random.api                     :as random]
               [pretty-elements.api                   :as pretty-elements]
-              [pretty-elements.api                   :as pretty-elements]
-              [random.api                            :as random]))
+              [pretty-elements.api                   :as pretty-elements]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

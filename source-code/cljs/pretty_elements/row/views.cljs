@@ -1,10 +1,10 @@
 
 (ns pretty-elements.row.views
-    (:require [metamorphic-content.api        :as metamorphic-content]
+    (:require [fruits.random.api              :as random]
+              [metamorphic-content.api        :as metamorphic-content]
               [pretty-elements.row.attributes :as row.attributes]
               [pretty-elements.row.prototypes :as row.prototypes]
-              [pretty-presets.api             :as pretty-presets]
-              [random.api                     :as random]))
+              [pretty-presets.api             :as pretty-presets]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

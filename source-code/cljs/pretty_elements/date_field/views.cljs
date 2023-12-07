@@ -1,8 +1,8 @@
 
 (ns pretty-elements.date-field.views
-    (:require [pretty-elements.date-field.prototypes :as date-field.prototypes]
-              [pretty-elements.text-field.views      :as text-field.views]
-              [random.api                            :as random]))
+    (:require [fruits.random.api                     :as random]
+              [pretty-elements.date-field.prototypes :as date-field.prototypes]
+              [pretty-elements.text-field.views      :as text-field.views]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

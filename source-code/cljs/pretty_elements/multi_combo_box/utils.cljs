@@ -1,6 +1,6 @@
 
 (ns pretty-elements.multi-combo-box.utils
-    (:require [keyword.api :as keyword]))
+    (:require [fruits.keyword.api :as keyword]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

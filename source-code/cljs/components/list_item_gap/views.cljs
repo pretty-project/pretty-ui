@@ -1,7 +1,7 @@
 
 (ns components.list-item-gap.views
-    (:require [css.api    :as css]
-              [random.api :as random]))
+    (:require [fruits.css.api    :as css]
+              [fruits.random.api :as random]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

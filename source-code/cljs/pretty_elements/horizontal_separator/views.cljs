@@ -1,10 +1,10 @@
 
 (ns pretty-elements.horizontal-separator.views
-    (:require [metamorphic-content.api                         :as metamorphic-content]
+    (:require [fruits.random.api                               :as random]
+              [metamorphic-content.api                         :as metamorphic-content]
               [pretty-elements.horizontal-separator.attributes :as horizontal-separator.attributes]
               [pretty-elements.horizontal-separator.prototypes :as horizontal-separator.prototypes]
-              [pretty-presets.api                              :as pretty-presets]
-              [random.api                                      :as random]))
+              [pretty-presets.api                              :as pretty-presets]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

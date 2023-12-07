@@ -1,6 +1,6 @@
 
 (ns pretty-layouts.struct-popup.utils
-    (:require [hiccup.api                        :as hiccup]
+    (:require [fruits.hiccup.api                 :as hiccup]
               [intersection-observer.api         :as intersection-observer]
               [pretty-layouts.struct-popup.state :as struct-popup.state]))
 

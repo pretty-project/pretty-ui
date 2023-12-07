@@ -1,9 +1,9 @@
 
 (ns pretty-diagrams.point-diagram.views
-    (:require [pretty-diagrams.point-diagram.attributes :as point-diagram.attributes]
+    (:require [fruits.random.api                        :as random]
+              [pretty-diagrams.point-diagram.attributes :as point-diagram.attributes]
               [pretty-diagrams.point-diagram.prototypes :as point-diagram.prototypes]
-              [pretty-presets.api                       :as pretty-presets]
-              [random.api                               :as random]))
+              [pretty-presets.api                       :as pretty-presets]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -1,8 +1,8 @@
 
 (ns components.illustration.views
     (:require [components.illustration.prototypes :as illustration.prototypes]
-              [css.api                            :as css]
-              [random.api                         :as random]))
+              [fruits.css.api                     :as css]
+              [fruits.random.api                  :as random]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

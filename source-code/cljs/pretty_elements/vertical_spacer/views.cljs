@@ -1,9 +1,9 @@
 
 (ns pretty-elements.vertical-spacer.views
-    (:require [pretty-elements.vertical-spacer.attributes :as vertical-spacer.attributes]
+    (:require [fruits.random.api                          :as random]
+              [pretty-elements.vertical-spacer.attributes :as vertical-spacer.attributes]
               [pretty-elements.vertical-spacer.prototypes :as vertical-spacer.prototypes]
-              [pretty-presets.api                         :as pretty-presets]
-              [random.api                                 :as random]))
+              [pretty-presets.api                         :as pretty-presets]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -1,7 +1,7 @@
 
 (ns pretty-elements.text-field.env
-    (:require [pretty-elements.plain-field.env :as plain-field.env]
-              [string.api                      :as string]))
+    (:require [fruits.string.api               :as string]
+              [pretty-elements.plain-field.env :as plain-field.env]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

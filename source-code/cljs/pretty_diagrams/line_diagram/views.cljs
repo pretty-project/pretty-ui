@@ -1,10 +1,10 @@
 
 (ns pretty-diagrams.line-diagram.views
-    (:require [hiccup.api                              :as hiccup]
+    (:require [fruits.hiccup.api                       :as hiccup]
+              [fruits.random.api                       :as random]
               [pretty-diagrams.line-diagram.attributes :as line-diagram.attributes]
               [pretty-diagrams.line-diagram.prototypes :as line-diagram.prototypes]
-              [pretty-presets.api                      :as pretty-presets]
-              [random.api                              :as random]))
+              [pretty-presets.api                      :as pretty-presets]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

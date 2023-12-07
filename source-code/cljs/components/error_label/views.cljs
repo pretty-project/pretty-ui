@@ -1,8 +1,8 @@
 
 (ns components.error-label.views
     (:require [components.error-label.prototypes :as error-label.prototypes]
-              [pretty-elements.api               :as pretty-elements]
-              [random.api                        :as random]))
+              [fruits.random.api                 :as random]
+              [pretty-elements.api               :as pretty-elements]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

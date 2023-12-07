@@ -1,9 +1,9 @@
 
 (ns pretty-elements.color-selector.attributes
-    (:require [dom.api        :as dom]
-              [pretty-css.api :as pretty-css]
-              [re-frame.api   :as r]
-              [vector.api     :as vector]))
+    (:require [dom.api           :as dom]
+              [fruits.vector.api :as vector]
+              [pretty-css.api    :as pretty-css]
+              [re-frame.api      :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -2,9 +2,9 @@
 (ns components.side-menu.views
     (:require [components.side-menu.helpers    :as side-menu.helpers]
               [components.side-menu.prototypes :as side-menu.prototypes]
+              [fruits.random.api               :as random]
               [metamorphic-content.api         :as metamorphic-content]
               [pretty-elements.api             :as pretty-elements]
-              [random.api                      :as random]
               [window-observer.api             :as window-observer]))
 
 ;; ----------------------------------------------------------------------------

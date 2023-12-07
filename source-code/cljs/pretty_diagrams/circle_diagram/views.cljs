@@ -1,12 +1,12 @@
 
 (ns pretty-diagrams.circle-diagram.views
-    (:require [hiccup.api                                :as hiccup]
+    (:require [fruits.hiccup.api                         :as hiccup]
+              [fruits.random.api                         :as random]
+              [fruits.svg.api                            :as svg]
               [pretty-diagrams.circle-diagram.attributes :as circle-diagram.attributes]
               [pretty-diagrams.circle-diagram.prototypes :as circle-diagram.prototypes]
               [pretty-diagrams.diagram.views             :as diagram.views]
-              [pretty-presets.api                        :as pretty-presets]
-              [random.api                                :as random]
-              [svg.api                                   :as svg]))
+              [pretty-presets.api                        :as pretty-presets]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

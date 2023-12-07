@@ -1,11 +1,11 @@
 
 (ns components.side-menu-header.views
     (:require [components.side-menu-header.prototypes :as side-menu-header.prototypes]
+              [fruits.random.api                      :as random]
+              [fruits.string.api                      :as string]
               [pretty-elements.api                    :as pretty-elements]
               [pretty-elements.api                    :as pretty-elements]
-              [random.api                             :as random]
-              [re-frame.api                           :as r]
-              [string.api                             :as string]))
+              [re-frame.api                           :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

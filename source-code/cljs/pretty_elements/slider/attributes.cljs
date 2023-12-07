@@ -1,6 +1,6 @@
 
 (ns pretty-elements.slider.attributes
-    (:require [css.api                             :as css]
+    (:require [fruits.css.api                      :as css]
               [pretty-css.api                      :as pretty-css]
               [pretty-elements.slider.side-effects :as slider.side-effects]
               [pretty-elements.slider.state        :as slider.state]

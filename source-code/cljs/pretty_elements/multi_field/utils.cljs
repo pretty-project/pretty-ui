@@ -1,7 +1,7 @@
 
 (ns pretty-elements.multi-field.utils
-    (:require [hiccup.api :as hiccup]
-              [vector.api :as vector]))
+    (:require [fruits.hiccup.api :as hiccup]
+              [fruits.vector.api :as vector]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

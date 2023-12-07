@@ -1,10 +1,10 @@
 
 (ns pretty-elements.text-field.prototypes
-    (:require [loop.api                       :refer [<-walk]]
-              [noop.api                       :refer [return]]
+    (:require [fruits.loop.api                :refer [<-walk]]
+              [fruits.noop.api                :refer [return]]
+              [fruits.vector.api              :as vector]
               [pretty-elements.input.utils    :as input.utils]
-              [pretty-elements.text-field.env :as text-field.env]
-              [vector.api                     :as vector]))
+              [pretty-elements.text-field.env :as text-field.env]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

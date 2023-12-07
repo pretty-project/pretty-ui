@@ -2,8 +2,8 @@
 (ns components.compact-list-header.views
     (:require [components.compact-list-header.attributes :as compact-list-header.attributes]
               [components.compact-list-header.prototypes :as compact-list-header.prototypes]
-              [pretty-elements.api                       :as pretty-elements]
-              [random.api                                :as random]))
+              [fruits.random.api                         :as random]
+              [pretty-elements.api                       :as pretty-elements]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

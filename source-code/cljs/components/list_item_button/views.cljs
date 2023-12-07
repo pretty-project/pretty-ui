@@ -1,9 +1,9 @@
 
 (ns components.list-item-button.views
     (:require [components.list-item-button.prototypes :as list-item-button.prototypes]
-              [css.api                                :as css]
-              [pretty-elements.api                    :as pretty-elements]
-              [random.api                             :as random]))
+              [fruits.css.api                         :as css]
+              [fruits.random.api                      :as random]
+              [pretty-elements.api                    :as pretty-elements]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

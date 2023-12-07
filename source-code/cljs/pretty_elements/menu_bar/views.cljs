@@ -1,11 +1,11 @@
 
 (ns pretty-elements.menu-bar.views
-    (:require [hiccup.api                          :as hiccup]
+    (:require [fruits.hiccup.api                   :as hiccup]
+              [fruits.random.api                   :as random]
               [metamorphic-content.api             :as metamorphic-content]
               [pretty-elements.menu-bar.attributes :as menu-bar.attributes]
               [pretty-elements.menu-bar.prototypes :as menu-bar.prototypes]
-              [pretty-presets.api                  :as pretty-presets]
-              [random.api                          :as random]))
+              [pretty-presets.api                  :as pretty-presets]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

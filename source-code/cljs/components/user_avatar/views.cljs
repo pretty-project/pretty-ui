@@ -2,12 +2,12 @@
 (ns components.user-avatar.views
     (:require [components.user-avatar.attributes :as user-avatar.attributes]
               [components.user-avatar.prototypes :as user-avatar.prototypes]
-              [css.api                           :as css]
-              [pretty-elements.api               :as pretty-elements]
-              [random.api                        :as random]
-              [string.api                        :as string]
-              [svg.api                           :as svg]
-              [vector.api                        :as vector]))
+              [fruits.css.api                    :as css]
+              [fruits.random.api                 :as random]
+              [fruits.string.api                 :as string]
+              [fruits.svg.api                    :as svg]
+              [fruits.vector.api                 :as vector]
+              [pretty-elements.api               :as pretty-elements]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

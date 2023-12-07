@@ -1,8 +1,8 @@
 
 (ns components.list-item-drag-handle.views
     (:require [components.list-item-drag-handle.prototypes :as list-item-drag-handle.prototypes]
-              [pretty-elements.api                         :as pretty-elements]
-              [random.api                                  :as random]))
+              [fruits.random.api                           :as random]
+              [pretty-elements.api                         :as pretty-elements]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -1,6 +1,6 @@
 
 (ns pretty-elements.multiline-field.prototypes
-    (:require [random.api :as random]))
+    (:require [fruits.random.api :as random]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

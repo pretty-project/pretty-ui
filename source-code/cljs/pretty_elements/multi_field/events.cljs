@@ -1,8 +1,8 @@
 
 (ns pretty-elements.multi-field.events
-    (:require [pretty-elements.multi-field.subs :as multi-field.subs]
-              [re-frame.api                     :refer [r]]
-              [vector.api                       :as vector]))
+    (:require [fruits.vector.api                :as vector]
+              [pretty-elements.multi-field.subs :as multi-field.subs]
+              [re-frame.api                     :refer [r]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

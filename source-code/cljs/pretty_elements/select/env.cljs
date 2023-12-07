@@ -1,9 +1,9 @@
 
 (ns pretty-elements.select.env
-    (:require [metamorphic-content.api         :as metamorphic-content]
+    (:require [fruits.string.api               :as string]
+              [metamorphic-content.api         :as metamorphic-content]
               [pretty-elements.plain-field.env :as plain-field.env]
-              [re-frame.api                    :as r]
-              [string.api                      :as string]))
+              [re-frame.api                    :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

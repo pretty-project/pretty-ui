@@ -1,10 +1,10 @@
 
 (ns pretty-website.follow-us-links.views
-    (:require [hiccup.api                                :as hiccup]
+    (:require [fruits.hiccup.api                         :as hiccup]
+              [fruits.random.api                         :as random]
               [pretty-presets.api                        :as pretty-presets]
               [pretty-website.follow-us-links.attributes :as follow-us-links.attributes]
-              [pretty-website.follow-us-links.prototypes :as follow-us-links.prototypes]
-              [random.api                                :as random]))
+              [pretty-website.follow-us-links.prototypes :as follow-us-links.prototypes]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -1,11 +1,11 @@
 
 (ns pretty-elements.thumbnail.views
-    (:require [css.api                              :as css]
+    (:require [fruits.css.api                       :as css]
+              [fruits.random.api                    :as random]
               [pretty-elements.element.views        :as element.views]
               [pretty-elements.thumbnail.attributes :as thumbnail.attributes]
               [pretty-elements.thumbnail.prototypes :as thumbnail.prototypes]
-              [pretty-presets.api                   :as pretty-presets]
-              [random.api                           :as random]))
+              [pretty-presets.api                   :as pretty-presets]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

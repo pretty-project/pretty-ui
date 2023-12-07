@@ -1,6 +1,6 @@
 
 (ns pretty-elements.label.prototypes
-    (:require [hiccup.api              :as hiccup]
+    (:require [fruits.hiccup.api       :as hiccup]
               [metamorphic-content.api :as metamorphic-content]))
 
 ;; ----------------------------------------------------------------------------

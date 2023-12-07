@@ -1,6 +1,6 @@
 
 (ns pretty-elements.expandable.env
-    (:require [logic.api                        :refer [nonfalse?]]
+    (:require [fruits.logic.api                 :refer [nonfalse?]]
               [pretty-elements.expandable.state :as expandable.state]))
 
 ;; ----------------------------------------------------------------------------

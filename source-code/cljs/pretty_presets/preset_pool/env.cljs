@@ -1,6 +1,6 @@
 
 (ns pretty-presets.preset-pool.env
-    (:require [map.api                          :as map]
+    (:require [fruits.map.api                   :as map]
               [pretty-presets.preset-pool.state :as preset-pool.state]))
 
 ;; ----------------------------------------------------------------------------

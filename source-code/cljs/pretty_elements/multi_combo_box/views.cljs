@@ -1,14 +1,14 @@
 
 (ns pretty-elements.multi-combo-box.views
-    (:require [pretty-elements.chip-group.views           :as chip-group.views]
+    (:require [fruits.random.api                          :as random]
+              [fruits.vector.api                          :as vector]
+              [pretty-elements.chip-group.views           :as chip-group.views]
               [pretty-elements.combo-box.views            :as combo-box.views]
               [pretty-elements.element.views              :as element.views]
               [pretty-elements.multi-combo-box.attributes :as multi-combo-box.attributes]
               [pretty-elements.multi-combo-box.prototypes :as multi-combo-box.prototypes]
               [pretty-elements.multi-combo-box.utils      :as multi-combo-box.utils]
-              [random.api                                 :as random]
-              [re-frame.api                               :as r]
-              [vector.api                                 :as vector]))
+              [re-frame.api                               :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

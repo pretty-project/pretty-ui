@@ -1,11 +1,11 @@
 
 (ns pretty-website.multi-menu.views
-    (:require [pretty-elements.api                  :as pretty-elements]
+    (:require [fruits.random.api                    :as random]
+              [pretty-elements.api                  :as pretty-elements]
               [pretty-presets.api                   :as pretty-presets]
               [pretty-website.multi-menu.attributes :as multi-menu.attributes]
               [pretty-website.multi-menu.prototypes :as multi-menu.prototypes]
               [pretty-website.sidebar.views         :as sidebar.views]
-              [random.api                           :as random]
               [window-observer.api                  :as window-observer]))
 
 ;; ----------------------------------------------------------------------------

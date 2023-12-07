@@ -1,6 +1,6 @@
 
 (ns renderers.surface-renderer.attributes
-    (:require [hiccup.api :as hiccup]))
+    (:require [fruits.hiccup.api :as hiccup]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

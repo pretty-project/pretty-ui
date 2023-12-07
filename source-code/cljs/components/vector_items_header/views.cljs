@@ -2,9 +2,9 @@
 (ns components.vector-items-header.views
     (:require [components.vector-items-header.attributes :as vector-items-header.attributes]
               [components.vector-items-header.prototypes :as vector-items-header.prototypes]
-              [pretty-elements.api                       :as pretty-elements]
-              [random.api                                :as random]
-              [vector.api                                :as vector]))
+              [fruits.random.api                         :as random]
+              [fruits.vector.api                         :as vector]
+              [pretty-elements.api                       :as pretty-elements]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

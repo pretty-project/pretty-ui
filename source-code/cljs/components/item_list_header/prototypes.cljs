@@ -1,6 +1,6 @@
 
 (ns components.item-list-header.prototypes
-    (:require [vector.api :as vector]))
+    (:require [fruits.vector.api :as vector]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

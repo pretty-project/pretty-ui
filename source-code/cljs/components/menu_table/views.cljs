@@ -1,11 +1,10 @@
 
 (ns components.menu-table.views
-    (:require ;[components.data-table.views      :as data-table.views]
-              [components.menu-table.helpers    :as menu-table.helpers]
+    (:require [components.menu-table.helpers    :as menu-table.helpers]
               [components.menu-table.prototypes :as menu-table.prototypes]
-              [pretty-elements.api              :as pretty-elements]
-              [random.api                       :as random]
-              [vector.api                       :as vector]))
+              [fruits.random.api                :as random]
+              [fruits.vector.api                :as vector]
+              [pretty-elements.api              :as pretty-elements]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

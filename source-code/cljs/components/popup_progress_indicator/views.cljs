@@ -1,7 +1,7 @@
 
 (ns components.popup-progress-indicator.views
-    (:require [pretty-elements.api :as pretty-elements]
-              [random.api          :as random]))
+    (:require [fruits.random.api   :as random]
+              [pretty-elements.api :as pretty-elements]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

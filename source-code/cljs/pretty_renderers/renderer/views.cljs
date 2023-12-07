@@ -1,9 +1,9 @@
 
 (ns renderers.renderer.views
-    (:require [hiccup.api               :as hiccup]
+    (:require [fruits.hiccup.api        :as hiccup]
+              [fruits.vector.api        :as vector]
               [reagent.api              :as reagent]
-              [renderers.renderer.utils :as renderer.utils]
-              [vector.api               :as vector]))
+              [renderers.renderer.utils :as renderer.utils]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

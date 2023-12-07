@@ -2,10 +2,10 @@
 (ns components.item-list-row.views
     (:require [components.item-list-row.helpers    :as item-list-row.helpers]
               [components.item-list-row.prototypes :as item-list-row.prototypes]
-              [css.api                             :as css]
+              [fruits.css.api                      :as css]
+              [fruits.random.api                   :as random]
               [metamorphic-content.api             :as metamorphic-content]
-              [pretty-elements.api                 :as pretty-elements]
-              [random.api                          :as random]))
+              [pretty-elements.api                 :as pretty-elements]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

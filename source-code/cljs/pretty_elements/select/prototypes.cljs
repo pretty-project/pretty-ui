@@ -1,6 +1,6 @@
 
 (ns pretty-elements.select.prototypes
-    (:require [noop.api                    :refer [return]]
+    (:require [fruits.noop.api             :refer [return]]
               [pretty-elements.input.utils :as input.utils]))
 
 ;; ----------------------------------------------------------------------------

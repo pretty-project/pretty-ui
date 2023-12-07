@@ -1,7 +1,7 @@
 
 (ns pretty-website.contacts.attributes
-    (:require [href.api       :as href]
-              [pretty-css.api :as pretty-css]))
+    (:require [fruits.href.api :as href]
+              [pretty-css.api  :as pretty-css]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -1,8 +1,8 @@
 
 (ns pretty-elements.password-field.views
-    (:require [pretty-elements.password-field.prototypes :as password-field.prototypes]
+    (:require [fruits.random.api                         :as random]
+              [pretty-elements.password-field.prototypes :as password-field.prototypes]
               [pretty-elements.text-field.views          :as text-field.views]
-              [random.api                                :as random]
               [re-frame.api                              :as r]
               [reagent.api                               :as reagent]))
 

@@ -1,10 +1,10 @@
 
 (ns components.vector-item-controls.views
     (:require [components.vector-item-controls.prototypes :as vector-item-controls.prototypes]
+              [fruits.random.api                          :as random]
+              [fruits.vector.api                          :as vector]
               [pretty-elements.api                        :as pretty-elements]
-              [random.api                                 :as random]
-              [re-frame.api                               :as r]
-              [vector.api                                 :as vector]))
+              [re-frame.api                               :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

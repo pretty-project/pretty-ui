@@ -9,7 +9,7 @@
 
 - Every element must take two arguments. An element ID (optional) and an element
   properties map (required).
-  The `random.api/generate-keyword` function provides the element ID in case of it
+  The `fruits.random.api/generate-keyword` function provides the element ID in case of it
   is not passed.
 
 - Every element got its default properties by a prototype function placed in the
@@ -21,7 +21,7 @@
 (ns pretty-elements.button.views
     (:require [pretty-elements.button.attributes :as button.attributes]  
               [pretty-elements.button.prototypes :as button.prototypes]  
-              [random.api                 :as random]))
+              [fruits.random.api                 :as random]))
 
 (defn- button
   ; @ignore

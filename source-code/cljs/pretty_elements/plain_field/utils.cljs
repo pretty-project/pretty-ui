@@ -1,14 +1,14 @@
 
 (ns pretty-elements.plain-field.utils
     (:require [dom.api                                  :as dom]
-              [hiccup.api                               :as hiccup]
+              [fruits.hiccup.api                        :as hiccup]
+              [fruits.string.api                        :as string]
               [pretty-elements.plain-field.config       :as plain-field.config]
               [pretty-elements.plain-field.env          :as plain-field.env]
               [pretty-elements.plain-field.side-effects :as plain-field.side-effects]
               [pretty-elements.plain-field.state        :as plain-field.state]
               [re-frame.api                             :as r]
               [reagent.api                              :as reagent]
-              [string.api                               :as string]
               [time.api                                 :as time]))
 
 ;; ----------------------------------------------------------------------------

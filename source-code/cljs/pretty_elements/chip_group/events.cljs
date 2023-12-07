@@ -1,8 +1,8 @@
 
 (ns pretty-elements.chip-group.events
-    (:require [re-frame.api    :refer [r]]
-              [re-frame.db.api :as r.db]
-              [vector.api      :as vector]))
+    (:require [fruits.vector.api :as vector]
+              [re-frame.api      :refer [r]]
+              [re-frame.db.api   :as r.db]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

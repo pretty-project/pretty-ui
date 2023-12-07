@@ -1,10 +1,10 @@
 
 (ns pretty-layouts.box-popup.views
-    (:require [metamorphic-content.api             :as metamorphic-content]
+    (:require [fruits.random.api                   :as random]
+              [metamorphic-content.api             :as metamorphic-content]
               [pretty-layouts.box-popup.attributes :as box-popup.attributes]
               [pretty-layouts.box-popup.prototypes :as box-popup.prototypes]
               [pretty-presets.api                  :as pretty-presets]
-              [random.api                          :as random]
               [re-frame.api                        :as r]
               [reagent.api                         :as reagent]
               [scroll-lock.api                     :as scroll-lock]))

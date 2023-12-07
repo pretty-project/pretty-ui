@@ -1,10 +1,10 @@
 
 (ns pretty-website.scroll-icon.views
-    (:require [pretty-presets.api                    :as pretty-presets]
+    (:require [fruits.random.api                     :as random]
+              [pretty-presets.api                    :as pretty-presets]
               [pretty-website.scroll-icon.attributes :as scroll-icon.attributes]
               [pretty-website.scroll-icon.prototypes :as scroll-icon.prototypes]
-              [pretty-website.scroll-sensor.views    :as scroll-sensor.views]
-              [random.api                            :as random]))
+              [pretty-website.scroll-sensor.views    :as scroll-sensor.views]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -1,9 +1,9 @@
 
 (ns pretty-elements.image.views
-    (:require [pretty-elements.image.attributes :as image.attributes]
+    (:require [fruits.random.api                :as random]
+              [pretty-elements.image.attributes :as image.attributes]
               [pretty-elements.image.prototypes :as image.prototypes]
-              [pretty-presets.api               :as pretty-presets]
-              [random.api                       :as random]))
+              [pretty-presets.api               :as pretty-presets]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

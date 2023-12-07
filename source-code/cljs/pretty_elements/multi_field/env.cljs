@@ -1,8 +1,8 @@
 
 (ns pretty-elements.multi-field.env
-    (:require [metamorphic-content.api :as metamorphic-content]
-              [re-frame.api            :as r]
-              [vector.api              :as vector]))
+    (:require [fruits.vector.api       :as vector]
+              [metamorphic-content.api :as metamorphic-content]
+              [re-frame.api            :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

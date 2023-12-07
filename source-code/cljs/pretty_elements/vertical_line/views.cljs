@@ -1,9 +1,9 @@
 
 (ns pretty-elements.vertical-line.views
-    (:require [pretty-elements.vertical-line.attributes :as vertical-line.attributes]
+    (:require [fruits.random.api                        :as random]
+              [pretty-elements.vertical-line.attributes :as vertical-line.attributes]
               [pretty-elements.vertical-line.prototypes :as vertical-line.prototypes]
-              [pretty-presets.api                       :as pretty-presets]
-              [random.api                               :as random]))
+              [pretty-presets.api                       :as pretty-presets]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -1,7 +1,7 @@
 
 (ns pretty-website.scroll-sensor.side-effects
-    (:require [dom.api    :as dom]
-              [hiccup.api :as hiccup]))
+    (:require [dom.api           :as dom]
+              [fruits.hiccup.api :as hiccup]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

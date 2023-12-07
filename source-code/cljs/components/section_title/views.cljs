@@ -2,8 +2,8 @@
 (ns components.section-title.views
     (:require [auto-title.api                      :as auto-title]
               [components.section-title.prototypes :as section-title.prototypes]
-              [pretty-elements.api                 :as pretty-elements]
-              [random.api                          :as random]))
+              [fruits.random.api                   :as random]
+              [pretty-elements.api                 :as pretty-elements]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

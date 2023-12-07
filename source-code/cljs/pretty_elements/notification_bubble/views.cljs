@@ -1,12 +1,12 @@
 
 (ns pretty-elements.notification-bubble.views
-    (:require [metamorphic-content.api                        :as metamorphic-content]
+    (:require [fruits.random.api                              :as random]
+              [metamorphic-content.api                        :as metamorphic-content]
               [pretty-elements.button.views                   :as button.views]
               [pretty-elements.icon-button.views              :as icon-button.views]
               [pretty-elements.notification-bubble.attributes :as notification-bubble.attributes]
               [pretty-elements.notification-bubble.prototypes :as notification-bubble.prototypes]
-              [pretty-presets.api                             :as pretty-presets]
-              [random.api                                     :as random]))
+              [pretty-presets.api                             :as pretty-presets]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

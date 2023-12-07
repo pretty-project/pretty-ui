@@ -1,8 +1,8 @@
 
 (ns components.ghost-view.views
     (:require [components.ghost-view.prototypes :as ghost-view.prototypes]
-              [pretty-elements.api              :as pretty-elements]
-              [random.api                       :as random]))
+              [fruits.random.api                :as random]
+              [pretty-elements.api              :as pretty-elements]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
