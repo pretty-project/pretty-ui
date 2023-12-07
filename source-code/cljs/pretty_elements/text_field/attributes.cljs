@@ -173,7 +173,7 @@
   ; - By using randomly generated ':auto-complete' and ':name' values, the browser cannot
   ;   suggest values to the field.
   ; - If you want the browser to suggest values for the field, pass an understandable value
-  ;   for the ':autofill-name' property (E.g. :phone-number)!
+  ;   for the ':autofill-name' property (e.g., :phone-number)!
   (-> (plain-field.attributes/field-input-attributes field-id field-props)
       (merge {:class      :pe-text-field--input
               :max-length max-length

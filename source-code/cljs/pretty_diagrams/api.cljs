@@ -7,7 +7,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; pretty-diagrams.*.views
+; @redirect (pretty-diagrams.*)
 (def line-diagram   line-diagram.views/diagram)
 (def point-diagram  point-diagram.views/diagram)
 (def circle-diagram circle-diagram.views/diagram)

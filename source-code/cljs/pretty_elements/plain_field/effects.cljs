@@ -84,15 +84,15 @@
       ; - Normally this state-writing action happens delayed after last key is being pressed
       ;   (when the ':pretty-elements.plain-field/type-ended' effect is being dispatched),
       ;   but there could be a case when it has to happen immediately.
-      ;   E.g. The user ends typing and quickly clicks on a button that validates
-      ;        the field or validates a form that contains the field.
-      ;        When the validator functions are being applied on the stored value of
-      ;        the field (stored in the Re-Frame state) it's important to the state
-      ;        contains the actual field content!
-      ;        The solution is that the 'on-mouse-down' event of the button fires the
-      ;        'on-blur' event of the field and that event writes the field content into
-      ;        the state immediately and when the 'on-mouse-up' event of the button
-      ;        starts the validating, the actual field content is already in the application state.
+      ;   E.g., The user ends typing and quickly clicks on a button that validates
+      ;         the field or validates a form that contains the field.
+      ;         When the validator functions are being applied on the stored value of
+      ;         the field (stored in the Re-Frame state) it's important to the state
+      ;         contains the actual field content!
+      ;         The solution is that the 'on-mouse-down' event of the button fires the
+      ;         'on-blur' event of the field and that event writes the field content into
+      ;         the state immediately and when the 'on-mouse-up' event of the button
+      ;         starts the validating, the actual field content is already in the application state.
       (let [field-content (plain-field.env/get-field-content field-id)]
            {:db         (r plain-field.events/store-value! db field-id field-props field-content)
             :dispatch-n [(if on-blur (r/metamorphic-event<-params on-blur field-content))]

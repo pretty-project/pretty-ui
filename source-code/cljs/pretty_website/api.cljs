@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; pretty-website.*.views
+; @redirect (pretty-website.*)
 (def contacts          contacts.views/component)
 (def follow-us-links   follow-us-links.views/component)
 (def language-selector language-selector.views/component)

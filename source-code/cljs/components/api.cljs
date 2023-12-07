@@ -51,7 +51,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; components.*.views
+; @redirect (components.*)
 (def color-picker             color-picker.views/component)
 (def compact-list-header      compact-list-header.views/component)
 (def content-swapper-button   content-swapper-button.views/component)

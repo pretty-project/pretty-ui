@@ -32,12 +32,12 @@
   ; 'text-field' element, but they have to be set in the prototype of the 'combo-box'
   ; element also, because some of the keypress events of the 'combo-box' element
   ; uses these properties.
-  ; E.g. The '[:pretty-elements.combo-box/field-focused ...]' event registers keypress
-  ;      events for the 'combo-box' which events can dispatch the original keypress
-  ;      events of the 'text-field'.
-  ;      For example the ESC button event of the 'combo-box' dispatches the ESC button
-  ;      event of the 'text-field' which dispatches the '[:pretty-elements.text-field/empty-field! ...]'
-  ;      event which requires the 'field-value-f' function.
+  ; E.g., The '[:pretty-elements.combo-box/field-focused ...]' event registers keypress
+  ;       events for the 'combo-box' which events can dispatch the original keypress
+  ;       events of the 'text-field'.
+  ;       For example the ESC button event of the 'combo-box' dispatches the ESC button
+  ;       event of the 'text-field' which dispatches the '[:pretty-elements.text-field/empty-field! ...]'
+  ;       event which requires the 'field-value-f' function.
   (<-walk {:field-content-f return
            :field-value-f   return
            :option-label-f  return

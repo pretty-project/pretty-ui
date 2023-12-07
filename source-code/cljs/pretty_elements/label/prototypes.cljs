@@ -41,7 +41,7 @@
   [{:keys [border-color color font-size icon marker-color target-id tooltip-content] :as label-props}]
   ; BUG#9811
   ; In some cases the content can be an empty string for a short while before it
-  ; gets its value (e.g. from a subscription or a HTTP request, etc.).
+  ; gets its value (e.g., from a subscription or a HTTP request, etc.).
   ; Therefore, the placeholder has to get the same height even if it's empty!
   ;
   ; Otherwise an empty placeholder and a delayed content would cause a short

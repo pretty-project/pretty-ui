@@ -10,17 +10,17 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; pretty-layouts.box-popup.views
+; @redirect (pretty-layouts.box-popup.views)
 (def box-popup box-popup.views/layout)
 
-; pretty-layouts.plain-popup.views
+; @redirect (pretty-layouts.plain-popup.views)
 (def plain-popup plain-popup.views/layout)
 
-; pretty-layouts.plain-surface.views
+; @redirect (pretty-layouts.plain-surface.views)
 (def plain-surface plain-surface.views/layout)
 
-; pretty-layouts.struct-popup.views
+; @redirect (pretty-layouts.struct-popup.views)
 (def struct-popup struct-popup.views/layout)
 
-; pretty-layouts.sidebar.views
+; @redirect (pretty-layouts.sidebar.views)
 (def sidebar sidebar.views/layout)
