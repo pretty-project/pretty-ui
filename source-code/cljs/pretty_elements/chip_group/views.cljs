@@ -52,9 +52,9 @@
               [chip-group-chips group-id group-props]]])
 
 (defn element
-  ; @warning
-  ; The {:deletable? true} setting only works when the chip values are not statically provided
-  ; with the {:chips [...]} property but dinamically provided by using the {:chips-path [...]} property!
+  ; @important
+  ; The {:deletable? true} setting only works when the chip values are not provided as static data
+  ; via the {:chips [...]} property, but provided dinamically by using the {:chips-path [...]} property!
   ;
   ; @param (keyword)(opt) group-id
   ; @param (map) group-props

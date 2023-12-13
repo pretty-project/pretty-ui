@@ -34,7 +34,7 @@
   ; @info
   ; XXX#0713 (source-code/cljs/pretty_elements/menu_bar/views.cljs)
   ; The 'dropdown-menu' element is based on the 'menu-bar' element.
-  ; For more information check out the documentation of the 'menu-bar' element.
+  ; For more information, check out the documentation of the 'menu-bar' element.
   ;
   ; @param (keyword)(opt) menu-id
   ; @param (map) menu-props

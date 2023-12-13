@@ -42,12 +42,12 @@
                             :reagent-render         (fn [_ swapper-props] [content-swapper-structure swapper-id swapper-props])})))
 
 (defn element
-  ; @warning
+  ; @important
   ; XXX#0517
   ; The 'content-swapper' element's pages have absolute positioning.
   ; Therefore, the 'content-swapper' element and its body are stretched to their
   ; parents in order to clear space for the pages because they are not doing it
-  ; for themeself because their absolute positioning.
+  ; for themeself (because their absolute positioning).
   ;
   ; @param (keyword)(opt) swapper-id
   ; @param (map) swapper-props

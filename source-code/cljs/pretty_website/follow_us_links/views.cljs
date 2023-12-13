@@ -22,7 +22,7 @@
                      (hiccup/put-with [:<>] links f0))]])
 
 (defn component
-  ; @warning
+  ; @important
   ; To use this component you have to add the Font Awesome icon set to your project!
   ;
   ; @description

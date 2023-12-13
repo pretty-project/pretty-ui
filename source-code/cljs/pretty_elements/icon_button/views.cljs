@@ -39,7 +39,7 @@
                        :reagent-render         (fn [_ button-props] [icon-button-structure button-id button-props])}))
 
 (defn element
-  ; @warning
+  ; @important
   ; BUG#9912 (source-code/cljs/pretty_elements/button.views)
   ;
   ; @param (keyword)(opt) button-id

@@ -2,12 +2,12 @@
 ### field-content-f
 
 The combo-box element uses the 'field-content-f' in the same way as the text-field element.
-For more information check out the text-field element's README!
+For more information, check out the text-field element's README!
 
 ### field-value-f
 
 The combo-box element uses the 'field-value-f' in the same way as the text-field element.
-For more information check out the text-field element's README!
+For more information, check out the text-field element's README!
 
 ### option-label-f  
 

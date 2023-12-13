@@ -35,7 +35,7 @@
   ; @info
   ; XXX#0715 (source-code/cljs/pretty_elements/dropdown_menu/views.cljs)
   ; The 'multi-menu' component is based on the 'dropdown-menu' element.
-  ; For more information check out the documentation of the 'dropdown-menu' element.
+  ; For more information, check out the documentation of the 'dropdown-menu' element.
   ;
   ; @description
   ; This component implements the 'dropdown-menu' element and in case of the viewport

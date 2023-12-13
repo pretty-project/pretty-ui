@@ -47,7 +47,7 @@
   ; XXX#0714
   ; Some other items based on the 'button' element and their documentations link here.
   ;
-  ; @warning
+  ; @important
   ; BUG#9912
   ; If the keypress key-code is 13 (ENTER) the on-click event will fire multiple times during the key is pressed!
   ; This phenomenon caused by:

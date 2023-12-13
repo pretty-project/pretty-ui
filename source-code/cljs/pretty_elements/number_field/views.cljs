@@ -11,7 +11,7 @@
   ; @info
   ; XXX#0711 (source-code/cljs/pretty_elements/text_field/views.cljs)
   ; The 'number-field' element is based on the 'text-field' element.
-  ; For more information check out the documentation of the 'text-field' element.
+  ; For more information, check out the documentation of the 'text-field' element.
   ;
   ; @description
   ; The 'number-field' element writes its actual value into the Re-Frame state

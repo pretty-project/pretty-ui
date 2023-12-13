@@ -13,8 +13,7 @@
   ; @param (map) menu-props
   ; {:menu-items (maps in vector)}
   [menu-id {:keys [item-default menu-items]}]
-  (letfn [
-          ; XXX#1239
+  (letfn [; XXX#1239
           ; The :on-mouse-over property of items in menu-bar element takes metamorphic-events.
           ; If the f0 function returned the reseted value (by the reset! function),
           ; the on-mouse-over handler would try to dispatch it as a metamorphic-event.
@@ -38,7 +37,7 @@
 
          ; Iterates over the menu items, applies these functions on them and returns
          ; the updated menu items vector.
-         (vector/->items-indexed menu-items f2)))
+         (vector/->items menu-items f2 {:provide-dex? true})))
 
 (defn surface-prototype
   ; @ignore

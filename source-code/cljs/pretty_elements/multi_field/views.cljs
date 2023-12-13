@@ -43,7 +43,7 @@
   ; @info
   ; XXX#0711 (source-code/cljs/pretty_elements/text_field/views.cljs)
   ; The 'multi-field' element is based on the 'text-field' or the 'combo-box' element.
-  ; For more information check out the documentation of the 'text-field' or the 'combo-box' element.
+  ; For more information, check out the documentation of the 'text-field' or the 'combo-box' element.
   ;
   ; @description
   ; - The 'multi-field' element writes its actual value into the Re-Frame state delayed, after

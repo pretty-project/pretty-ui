@@ -17,7 +17,7 @@
         [:div (stepper.attributes/stepper-body-attributes stepper-id stepper-props)]])
 
 (defn element
-  ; @warning
+  ; @important
   ; UNFINISHED! DO NOT USE!
   ;
   ; @param (keyword)(opt) stepper-id

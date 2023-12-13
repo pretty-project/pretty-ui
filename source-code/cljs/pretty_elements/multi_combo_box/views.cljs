@@ -58,7 +58,7 @@
   ; @info
   ; XXX#0711 (source-code/cljs/pretty_elements/text_field/views.cljs)
   ; The 'multi-combo-box' element is based on the 'text-field' element.
-  ; For more information check out the documentation of the 'text-field' element.
+  ; For more information, check out the documentation of the 'text-field' element.
   ;
   ; @description
   ; The 'multi-combo-box' element writes its actual value into the Re-Frame state
@@ -68,7 +68,7 @@
   ; @param (keyword)(opt) box-id
   ; @param (map) box-props
   ; {:chip-group (map)(opt)
-  ;   For more information check out the documentation of the chip-group element.
+  ;   For more information, check out the documentation of the 'chip-group' element.
   ;   {:deletable? (boolean)(opt)
   ;     Default: true}
   ;  :field-value-f (function)(opt)

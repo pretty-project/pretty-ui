@@ -90,7 +90,7 @@
   ; @info
   ; XXX#0714 (source-code/cljs/pretty_elements/button/views.cljs)
   ; The 'color-selector' element is based on the 'button' element.
-  ; For more information check out the documentation of the 'button' element.
+  ; For more information, check out the documentation of the 'button' element.
   ;
   ; @info
   ; XXX#0709

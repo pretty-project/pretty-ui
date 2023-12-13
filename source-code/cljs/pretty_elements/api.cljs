@@ -109,7 +109,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; @redirect (pretty-elements.*)
+; @redirect (pretty-elements.*/element)
 (def breadcrumbs          breadcrumbs.views/element)
 (def blank                blank.views/element)
 (def button               button.views/element)

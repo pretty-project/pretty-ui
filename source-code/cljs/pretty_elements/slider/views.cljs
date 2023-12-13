@@ -36,7 +36,7 @@
                        :reagent-render      (fn [_ slider-props] [slider-structure slider-id slider-props])}))
 
 (defn element
-  ; @warning
+  ; @important
   ; UNFINISHED! DO NOT USE!
   ;
   ; @param (keyword)(opt) slider-id

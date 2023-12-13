@@ -23,7 +23,7 @@
                                 :style  {:fill "none" :stroke "red" :stroke-width "2px"}}]]]])
 
 (defn diagram
-  ; @warning
+  ; @important
   ; UNFINISHED! DO NOT USE!
   ;
   ; @param (keyword)(opt) diagram-id
