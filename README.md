@@ -9,10 +9,6 @@ websites and web applications using Reagent and Re-Frame.
 > UI components in this library are Reagent components. For more information, check out
   the [Reagent Project](https://github.com/reagent-project/reagent).
 
-### Documentation
-
-The <strong>pretty-ui</strong> functional documentation is [available here](documentation/COVER.md).
-
 ### deps.edn
 
 ```
@@ -26,7 +22,7 @@ Check out the latest commit on the [release branch](https://github.com/pretty-pr
 
 ### Documentation
 
-The <strong>pretty-ui</strong> functional documentation is [available here](documentation/COVER.md).
+The <strong>pretty-ui</strong> functional documentation is [available here](https://pretty-project.github.io/pretty-ui).
 
 ### Changelog
 
