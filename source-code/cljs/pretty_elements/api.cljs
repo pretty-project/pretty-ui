@@ -103,6 +103,12 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+; @tutorial (global) First steps
+; @redirect (tutorials/*)
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 ; Initializing the viewport resize observer before using subscriptions for viewport dimensions
 (window-observer/listen-to-viewport-resize!)
 

@@ -13,7 +13,16 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; @redirect (pretty-website.*)
+; @tutorial First steps
+; @redirect (tutorials/*)
+
+; @tutorial Introduction
+; @redirect (tutorials/*)
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @redirect (pretty-website.contacts.views/component)
 (def contacts          contacts.views/component)
 (def follow-us-links   follow-us-links.views/component)
 (def language-selector language-selector.views/component)
