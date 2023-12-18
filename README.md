@@ -13,7 +13,7 @@ websites and web applications using Reagent and Re-Frame.
 
 ```
 {:deps {pretty-project/pretty-ui {:git/url "https://github.com/pretty-project/pretty-ui"
-                                  :sha     "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"}}
+                                  :sha     "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"}}}
 ```
 
 ### Current version

@@ -265,7 +265,7 @@
 .pl-struct-popup--hack {
   /* In struct-popup layouts, the header and footer must be above the body (Z axis)
    * to make the possibly visible shadows of header and footer visible.
-   * The footer element is placed after the body element in the DOM tree by default,
+   * The footer element is placed after the body element in the DOM-tree by default,
    * but the header had to be moved after the body and the .pl-struct-popup--hack
    * contains them (header and body) to make their visible order normal again. */
   display:        flex;
