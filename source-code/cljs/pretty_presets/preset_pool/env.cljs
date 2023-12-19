@@ -16,7 +16,7 @@
   ; (apply-preset {:fill-color :muted
   ;                :preset     :my-preset})
   ;
-  ; @example
+  ; @usage
   ; (reg-preset! :my-preset {:hover-color :highlight})
   ; (apply-preset {:fill-color :muted
   ;                :preset     :my-preset})

@@ -148,7 +148,7 @@
    [element (random/generate-keyword) bar-props])
 
   ([bar-id bar-props]
-   (fn [_ bar-props] ; XXX#0106 (README.md#parametering)
+   (fn [_ bar-props] ; XXX#0106 (tutorials.api#parametering)
        (let [bar-props (pretty-presets/apply-preset             bar-props)
              bar-props (menu-bar.prototypes/bar-props-prototype bar-props)]
             [menu-bar bar-id bar-props]))))

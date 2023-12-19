@@ -95,6 +95,6 @@
    ; A data-element komponens value tulajdonságának típusa lehet metamorphic-content
    ; típus vagy metamorphic-content típusok vektorban (egyszerre több értéket is
    ; fel tud sorolni).
-   (fn [_ element-props] ; XXX#0106 (README.md#parametering)
+   (fn [_ element-props] ; XXX#0106 (tutorials.api#parametering)
        (let [element-props (data-element.prototypes/element-props-prototype element-props)]
             [data-element element-id element-props]))))

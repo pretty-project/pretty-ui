@@ -56,22 +56,22 @@
   ; {:font-size (keyword)
   ;  :line-height (keyword)}
   ;
-  ; @example
+  ; @usage
   ; (field-auto-height :my-field {:font-size :s :line-height :auto})
   ; =>
   ; "calc(var( --line-height-s ) * 1)"
   ;
-  ; @example
+  ; @usage
   ; (field-auto-height :my-field {:font-size :s :line-height :text-block})
   ; =>
   ; "calc(var( --text-block-height-s ) * 1)"
   ;
-  ; @example
+  ; @usage
   ; (field-auto-height :my-field {:font-size :s :line-height :xxl})
   ; =>
   ; "calc(var( --line-height-xxl ) * 1)"
   ;
-  ; @example
+  ; @usage
   ; (field-auto-height :my-field {:font-size :s :line-height 48})
   ; =>
   ; "calc(48px * 1)"

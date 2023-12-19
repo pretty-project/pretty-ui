@@ -29,7 +29,7 @@
   ; XXX#5068 (source-code/cljs/pretty_elements/text_field/prototypes.cljs)
   ; XXX#5067
   ; The 'field-content-f' and 'field-value-f' properties are belong to the
-  ; 'text-field' element, but they have to be set in the prototype of the 'combo-box'
+  ; 'text-field' element, but they have to be in the prototype of the 'combo-box'
   ; element also, because some of the keypress events of the 'combo-box' element
   ; uses these properties.
   ; E.g., The '[:pretty-elements.combo-box/field-focused ...]' event registers keypress

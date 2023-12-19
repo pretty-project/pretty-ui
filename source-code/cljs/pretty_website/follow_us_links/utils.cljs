@@ -9,7 +9,7 @@
   ;
   ; @param (keyword) provider
   ;
-  ; @example
+  ; @usage
   ; (provider->fa-icon-class :instagram)
   ; =>
   ; "fa-instagram"

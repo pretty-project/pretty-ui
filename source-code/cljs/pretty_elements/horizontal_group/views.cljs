@@ -58,7 +58,7 @@
    [element (random/generate-keyword) group-props])
 
   ([group-id group-props]
-   (fn [_ group-props] ; XXX#0106 (README.md#parametering)
+   (fn [_ group-props] ; XXX#0106 (tutorials.api#parametering)
        (let [group-props (pretty-presets/apply-preset                       group-props)
              group-props (horizontal-group.prototypes/group-props-prototype group-props)]
             [horizontal-group group-id group-props]))))

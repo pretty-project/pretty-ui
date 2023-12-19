@@ -10,17 +10,36 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; @redirect (pretty-layouts.box-popup.views)
-(def box-popup box-popup.views/layout)
+; @tutorial First steps
+; @redirect (tutorials/first-steps)
 
-; @redirect (pretty-layouts.plain-popup.views)
-(def plain-popup plain-popup.views/layout)
+; @tutorial Introduction
+; @redirect (tutorials/introduction)
 
-; @redirect (pretty-layouts.plain-surface.views)
+; @tutorial Parametering
+; @redirect (tutorials/parametering)
+
+; @tutorial Presets
+; @redirect (tutorials/presets)
+
+; @tutorial Event handlers
+; @redirect (tutorials/event-handlers)
+
+; @tutorial Content types
+; @redirect (tutorials/content-types)
+
+; @tutorial Value paths of inputs
+; @redirect (tutorials/value-paths-of-inputs)
+
+; @tutorial Option paths of optionable inputs
+; @redirect (tutorials/option-paths-of-optionable-inputs)
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @redirect (*/layout)
+(def box-popup     box-popup.views/layout)
+(def plain-popup   plain-popup.views/layout)
 (def plain-surface plain-surface.views/layout)
-
-; @redirect (pretty-layouts.struct-popup.views)
-(def struct-popup struct-popup.views/layout)
-
-; @redirect (pretty-layouts.sidebar.views)
-(def sidebar sidebar.views/layout)
+(def struct-popup  struct-popup.views/layout)
+(def sidebar       sidebar.views/layout)

@@ -102,7 +102,7 @@
    [element (random/generate-keyword) card-props])
 
   ([card-id card-props]
-   (fn [_ card-props] ; XXX#0106 (README.md#parametering)
+   (fn [_ card-props] ; XXX#0106 (tutorials.api#parametering)
        (let [card-props (pretty-presets/apply-preset          card-props)
              card-props (card.prototypes/card-props-prototype card-props)]
             [card card-id card-props]))))

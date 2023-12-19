@@ -69,7 +69,7 @@
    [element (random/generate-keyword) polarity-props])
 
   ([polarity-id polarity-props]
-   (fn [_ polarity-props] ; XXX#0106 (README.md#parametering)
+   (fn [_ polarity-props] ; XXX#0106 (tutorials.api#parametering)
        (let [polarity-props (pretty-presets/apply-preset                             polarity-props)
              polarity-props (horizontal-polarity.prototypes/polarity-props-prototype polarity-props)]
             [horizontal-polarity polarity-id polarity-props]))))

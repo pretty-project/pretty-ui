@@ -40,6 +40,6 @@
    [component (random/generate-keyword) header-props])
 
   ([header-id header-props]
-   (fn [_ header-props] ; XXX#0106 (README.md#parametering)
+   (fn [_ header-props] ; XXX#0106 (tutorials.api#parametering)
        (let [header-props (compact-list-header.prototypes/header-props-prototype header-props)]
             [compact-list-header header-id header-props]))))

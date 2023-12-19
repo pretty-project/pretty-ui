@@ -56,9 +56,8 @@
   [field-id _]
   ; HACK#9910 (source-code/cljs/pretty_elements/plain_field/views.cljs)
   ;
-  ; After the field unmounted, its content and output have to removed from the state
-  ; otherwise next time when the field remounts its previous content and output could
-  ; affect it.
+  ; After the field unmounted, its content and output have to be removed from the state.
+  ; Otherwise next time when the field remounts, its previous content and output could affect it.
   ; + It has to be checked whether the field is still mounted to the DOM-tree because
   ;   it might be mounted if the field is duplicated on the page (with the same ID).
   ;   It's pretty common to use duplicated fields by displaying a field on a page of a

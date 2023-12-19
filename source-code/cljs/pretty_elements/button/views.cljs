@@ -36,7 +36,7 @@
   ; @param (keyword) button-id
   ; @param (map) button-props
   [button-id button-props]
-  ; XXX#0106 (README.md#parametering)
+  ; XXX#0106 (tutorials.api#parametering)
   (reagent/lifecycles {:component-did-mount    (fn [_ _] (r/dispatch [:pretty-elements.button/button-did-mount    button-id button-props]))
                        :component-will-unmount (fn [_ _] (r/dispatch [:pretty-elements.button/button-will-unmount button-id button-props]))
                        :component-did-update   (fn [%]   (r/dispatch [:pretty-elements.button/button-did-update   button-id %]))
@@ -179,7 +179,7 @@
    [element (random/generate-keyword) button-props])
 
   ([button-id button-props]
-   (fn [_ button-props] ; XXX#0106 (README.md#parametering)
+   (fn [_ button-props] ; XXX#0106 (tutorials.api#parametering)
        (let [button-props (pretty-presets/apply-preset              button-props)
              button-props (button.prototypes/button-props-prototype button-props)]
             [button button-id button-props]))))

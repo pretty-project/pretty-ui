@@ -85,7 +85,7 @@
    [element (random/generate-keyword) row-props])
 
   ([row-id row-props]
-   (fn [_ row-props] ; XXX#0106 (README.md#parametering)
+   (fn [_ row-props] ; XXX#0106 (tutorials.api#parametering)
        (let [row-props (pretty-presets/apply-preset        row-props)
              row-props (row.prototypes/row-props-prototype row-props)]
             [row row-id row-props]))))

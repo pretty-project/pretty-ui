@@ -48,6 +48,6 @@
    [component (random/generate-keyword) header-props])
 
   ([header-id header-props]
-   (fn [_ header-props] ; XXX#0106 (README.md#parametering)
+   (fn [_ header-props] ; XXX#0106 (tutorials.api#parametering)
        (let [] ; header-props (side-menu-header.prototypes/header-props-prototype header-props)
             [side-menu-header header-id header-props]))))

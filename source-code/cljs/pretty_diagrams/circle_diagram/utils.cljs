@@ -14,7 +14,7 @@
   ; @param (map) diagram-props
   ; {:sections (maps in vector)}
   ;
-  ; @example
+  ; @usage
   ; (diagram-props<-total-value {:sections [{:value 50} {:value 25} {:value 50}]})
   ; =>
   ; {:sections [{:value 25 :sum 0} {:value 25 :sum 25} {:value 50 :sum 50}] :total-value 100}

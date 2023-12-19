@@ -33,7 +33,7 @@
   ; @param (keyword) counter-id
   ; @param (map) counter-props
   [counter-id counter-props]
-  ; XXX#0106 (README.md#parametering)
+  ; XXX#0106 (tutorials.api#parametering)
   (reagent/lifecycles {:component-did-mount (fn [_ _] (r/dispatch [:pretty-elements.counter/counter-did-mount counter-id counter-props]))
                        :reagent-render      (fn [_ counter-props] [counter-structure counter-id counter-props])}))
 
@@ -90,7 +90,7 @@
    [element (random/generate-keyword) counter-props])
 
   ([counter-id counter-props]
-   (fn [_ counter-props] ; XXX#0106 (README.md#parametering)
+   (fn [_ counter-props] ; XXX#0106 (tutorials.api#parametering)
        (let [counter-props (pretty-presets/apply-preset                           counter-props)
              counter-props (counter.prototypes/counter-props-prototype counter-id counter-props)]
             [counter counter-id counter-props]))))

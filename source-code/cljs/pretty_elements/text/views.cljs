@@ -108,7 +108,7 @@
    [element (random/generate-keyword) text-props])
 
   ([text-id text-props]
-   (fn [_ text-props] ; XXX#0106 (README.md#parametering)
+   (fn [_ text-props] ; XXX#0106 (tutorials.api#parametering)
        (let [text-props (pretty-presets/apply-preset          text-props)
              text-props (text.prototypes/text-props-prototype text-props)]
             [text text-id text-props]))))

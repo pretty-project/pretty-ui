@@ -79,6 +79,6 @@
    [component (random/generate-keyword) picker-props])
 
   ([picker-id picker-props]
-   (fn [_ picker-props] ; XXX#0106 (README.md#parametering)
+   (fn [_ picker-props] ; XXX#0106 (tutorials.api#parametering)
        (let [picker-props (color-picker.prototypes/picker-props-prototype picker-id picker-props)]
             [color-picker picker-id picker-props]))))

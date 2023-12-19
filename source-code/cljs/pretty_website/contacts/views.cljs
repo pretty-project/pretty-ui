@@ -87,7 +87,7 @@
    [component (random/generate-keyword) contacts-props])
 
   ([contacts-id contacts-props]
-   (fn [_ contacts-props] ; XXX#0106 (README.md#parametering)
+   (fn [_ contacts-props] ; XXX#0106 (tutorials.api#parametering)
        (let [contacts-props (pretty-presets/apply-preset contacts-props)]
             ; contacts-props (contacts.prototypes/contacts-props-prototype contacts-props)
             [contacts contacts-id contacts-props]))))

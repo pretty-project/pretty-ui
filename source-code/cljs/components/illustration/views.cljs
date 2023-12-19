@@ -40,6 +40,6 @@
    [component (random/generate-keyword) illustration-props])
 
   ([illustration-id illustration-props]
-   (fn [_ illustration-props] ; XXX#0106 (README.md#parametering)
+   (fn [_ illustration-props] ; XXX#0106 (tutorials.api#parametering)
        (let [illustration-props (illustration.prototypes/illustration-props-prototype illustration-props)]
             [illustration illustration-id illustration-props]))))

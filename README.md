@@ -6,7 +6,7 @@
 The <strong>pretty-ui</strong> is a ClojureScript UI component set designed for making
 websites and web applications using Reagent and Re-Frame.
 
-> UI components in this library are Reagent components. Check out the [Reagent Project](https://github.com/reagent-project/reagent).
+> UI components in this library are [Reagent](https://github.com/reagent-project/reagent) components.
 
 ### deps.edn
 

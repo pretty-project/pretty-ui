@@ -62,7 +62,7 @@
    [diagram (random/generate-keyword) diagram-props])
 
   ([diagram-id diagram-props]
-   (fn [_ diagram-props] ; XXX#0106 (README.md#parametering)
+   (fn [_ diagram-props] ; XXX#0106 (tutorials.api#parametering)
        (let [diagram-props (pretty-presets/apply-preset                     diagram-props)
              diagram-props (line-diagram.prototypes/diagram-props-prototype diagram-props)]
             [line-diagram diagram-id diagram-props]))))

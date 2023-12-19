@@ -25,7 +25,7 @@
   ; @param (keyword) renderer-id
   ; @param (keyword) key
   ;
-  ; @example
+  ; @usage
   ; (data-key :my-renderer :data-items)
   ; =>
   ; :my-renderer/data-items
@@ -39,7 +39,7 @@
   ;
   ; @param (keyword) renderer-id
   ;
-  ; @example
+  ; @usage
   ; (renderer-id->dom-id :my-renderer)
   ; =>
   ; :x-app-my-renderer

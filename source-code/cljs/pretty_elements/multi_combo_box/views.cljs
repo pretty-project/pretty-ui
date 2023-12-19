@@ -93,7 +93,7 @@
    [element (random/generate-keyword) box-props])
 
   ([box-id box-props]
-   (fn [_ box-props] ; XXX#0106 (README.md#parametering)
+   (fn [_ box-props] ; XXX#0106 (tutorials.api#parametering)
        (let [box-props (multi-combo-box.prototypes/box-props-prototype box-id box-props)
              box-props (assoc-in box-props [:surface :content] [combo-box.views/combo-box-surface-content box-id box-props])]
             [multi-combo-box box-id box-props]))))

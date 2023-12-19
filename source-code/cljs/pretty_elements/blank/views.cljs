@@ -71,7 +71,7 @@
    [element (random/generate-keyword) blank-props])
 
   ([blank-id blank-props]
-   (fn [_ blank-props] ; XXX#0106 (README.md#parametering)
+   (fn [_ blank-props] ; XXX#0106 (tutorials.api#parametering)
        (let [blank-props (pretty-presets/apply-preset            blank-props)
              blank-props (blank.prototypes/blank-props-prototype blank-props)]
             [blank blank-id blank-props]))))

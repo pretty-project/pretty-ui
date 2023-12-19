@@ -15,7 +15,7 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   [field-id field-props]
-  ; XXX#0106 (README.md#parametering)
+  ; XXX#0106 (tutorials.api#parametering)
   (reagent/lifecycles {:component-will-unmount (fn [_ _] (r/dispatch [:pretty-elements.password-field/field-will-unmount field-id field-props]))
                        :reagent-render         (fn [_ field-props] [text-field.views/element field-id field-props])}))
 
@@ -42,6 +42,6 @@
    [element (random/generate-keyword) field-props])
 
   ([field-id field-props]
-   (fn [_ field-props] ; XXX#0106 (README.md#parametering)
+   (fn [_ field-props] ; XXX#0106 (tutorials.api#parametering)
        (let [field-props (password-field.prototypes/field-props-prototype field-id field-props)]
             [password-field field-id field-props]))))

@@ -27,12 +27,12 @@
   ;
   ; @param (vector) value-path
   ;
-  ; @example
+  ; @usage
   ; (value-path->vector-item? [:my-value])
   ; =>
   ; false
   ;
-  ; @example
+  ; @usage
   ; (value-path->vector-item? [:my-value 2])
   ; =>
   ; true

@@ -45,7 +45,7 @@
   ; @param (map) group-props
   ; @param (integer) field-dex
   ;
-  ; @example
+  ; @usage
   ; (field-dex->react-key :my-group {...} 3)
   ; =>
   ; "my-group--3"
@@ -61,7 +61,7 @@
   ; @param (map) group-props
   ; @param (integer) field-dex
   ;
-  ; @example
+  ; @usage
   ; (field-dex->field-id :my-group {...} 3)
   ; =>
   ; :my-group--3

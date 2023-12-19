@@ -31,7 +31,7 @@
   ; @param (keyword) slider-id
   ; @param (map) slider-props
   [slider-id slider-props]
-  ; XXX#0106 (README.md#parametering)
+  ; XXX#0106 (tutorials.api#parametering)
   (reagent/lifecycles {:component-did-mount (fn [_ _] (r/dispatch [:pretty-elements.slider/slider-did-mount slider-id slider-props]))
                        :reagent-render      (fn [_ slider-props] [slider-structure slider-id slider-props])}))
 
@@ -79,7 +79,7 @@
    [element (random/generate-keyword) slider-props])
 
   ([slider-id slider-props]
-   (fn [_ slider-props] ; XXX#0106 (README.md#parametering)
+   (fn [_ slider-props] ; XXX#0106 (tutorials.api#parametering)
        (let [slider-props (pretty-presets/apply-preset                        slider-props)
              slider-props (slider.prototypes/slider-props-prototype slider-id slider-props)]
             [slider slider-id slider-props]))))

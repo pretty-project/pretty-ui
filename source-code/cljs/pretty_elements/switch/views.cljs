@@ -59,7 +59,7 @@
   ; @param (keyword) switch-id
   ; @param (map) switch-props
   [switch-id switch-props]
-  ; XXX#0106 (README.md#parametering)
+  ; XXX#0106 (tutorials.api#parametering)
   (reagent/lifecycles {:component-did-mount (fn [_ _] (r/dispatch [:pretty-elements.switch/switch-did-mount switch-id switch-props]))
                        :reagent-render      (fn [_ switch-props] [switch-structure switch-id switch-props])}))
 
@@ -128,7 +128,7 @@
    [element (random/generate-keyword) switch-props])
 
   ([switch-id switch-props]
-   (fn [_ switch-props] ; XXX#0106 (README.md#parametering)
+   (fn [_ switch-props] ; XXX#0106 (tutorials.api#parametering)
        (let [switch-props (pretty-presets/apply-preset                        switch-props)
              switch-props (switch.prototypes/switch-props-prototype switch-id switch-props)]
             [switch switch-id switch-props]))))

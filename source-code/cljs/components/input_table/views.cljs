@@ -82,6 +82,6 @@
    [component (random/generate-keyword) table-props])
 
   ([table-id table-props]
-   (fn [_ table-props] ; XXX#0106 (README.md#parametering)
+   (fn [_ table-props] ; XXX#0106 (tutorials.api#parametering)
        (let [table-props (input-table.prototypes/table-props-prototype table-props)]
             [input-table table-id table-props]))))

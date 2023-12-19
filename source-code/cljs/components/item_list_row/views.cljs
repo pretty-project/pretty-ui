@@ -60,6 +60,6 @@
    [component (random/generate-keyword) row-props])
 
   ([row-id row-props]
-   (fn [_ row-props] ; XXX#0106 (README.md#parametering)
+   (fn [_ row-props] ; XXX#0106 (tutorials.api#parametering)
        (let [row-props (item-list-row.prototypes/row-props-prototype row-props)]
             [item-list-row row-id row-props]))))

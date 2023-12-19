@@ -56,7 +56,7 @@
    [element (random/generate-keyword) ghost-props])
 
   ([ghost-id ghost-props]
-   (fn [_ ghost-props] ; XXX#0106 (README.md#parametering)
+   (fn [_ ghost-props] ; XXX#0106 (tutorials.api#parametering)
        (let [ghost-props (pretty-presets/apply-preset            ghost-props)
              ghost-props (ghost.prototypes/ghost-props-prototype ghost-props)]
             [ghost ghost-id ghost-props]))))

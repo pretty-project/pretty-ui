@@ -65,6 +65,6 @@
    [element (random/generate-keyword) group-props])
 
   ([group-id group-props]
-   (fn [_ group-props] ; XXX#0106 (README.md#parametering)
+   (fn [_ group-props] ; XXX#0106 (tutorials.api#parametering)
        (let [group-props (multi-field.prototypes/group-props-prototype group-id group-props)]
             [multi-field group-id group-props]))))

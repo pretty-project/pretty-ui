@@ -29,7 +29,7 @@
   ; @param (map) surface-props
   ; {}
   [surface-id {:keys [on-mount on-unmount] :as surface-props}]
-  ; XXX#0106 (README.md#parametering)
+  ; XXX#0106 (tutorials.api#parametering)
   (reagent/lifecycles {:component-did-mount    (fn [_ _] (r/dispatch on-mount))
                        :component-will-unmount (fn [_ _] (r/dispatch on-unmount))
                        :reagent-render         (fn [_ surface-props] [plain-surface-structure surface-id surface-props])}))
@@ -57,7 +57,7 @@
    [layout (random/generate-keyword) surface-props])
 
   ([surface-id surface-props]
-   (fn [_ surface-props] ; XXX#0106 (README.md#parametering)
+   (fn [_ surface-props] ; XXX#0106 (tutorials.api#parametering)
        (let [surface-props (pretty-presets/apply-preset                      surface-props)
              surface-props (plain-surface.prototypes/surface-props-prototype surface-props)]
             [plain-surface surface-id surface-props]))))

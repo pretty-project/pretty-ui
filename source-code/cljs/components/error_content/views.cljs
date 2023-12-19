@@ -48,6 +48,6 @@
    [component (random/generate-keyword) content-props])
 
   ([content-id content-props]
-   (fn [_ content-props] ; XXX#0106 (README.md#parametering)
+   (fn [_ content-props] ; XXX#0106 (tutorials.api#parametering)
        (let [] ; content-props (error-content.prototypes/content-props-prototype content-props)
             [error-content content-id content-props]))))

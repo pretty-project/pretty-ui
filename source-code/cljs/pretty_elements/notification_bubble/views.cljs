@@ -125,7 +125,7 @@
    [element (random/generate-keyword) bubble-props])
 
   ([bubble-id bubble-props]
-   (fn [_ bubble-props] ; XXX#0106 (README.md#parametering)
+   (fn [_ bubble-props] ; XXX#0106 (tutorials.api#parametering)
        (let [bubble-props (pretty-presets/apply-preset                           bubble-props)
              bubble-props (notification-bubble.prototypes/bubble-props-prototype bubble-props)]
             [notification-bubble bubble-id bubble-props]))))

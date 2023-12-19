@@ -57,7 +57,7 @@
    [element (random/generate-keyword) separator-props])
 
   ([separator-id separator-props]
-   (fn [_ separator-props] ; XXX#0106 (README.md#parametering)
+   (fn [_ separator-props] ; XXX#0106 (tutorials.api#parametering)
        (let [separator-props (pretty-presets/apply-preset                               separator-props)
              separator-props (horizontal-separator.prototypes/separator-props-prototype separator-props)]
             [horizontal-separator separator-id separator-props]))))

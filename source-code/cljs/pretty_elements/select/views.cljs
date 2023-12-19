@@ -69,7 +69,7 @@
   ; @param (keyword) select-id
   ; @param (map) select-props
   [select-id select-props]
-  ; XXX#0106 (README.md#parametering)
+  ; XXX#0106 (tutorials.api#parametering)
   (reagent/lifecycles {:reagent-render         (fn [_ select-props] [select-option-list select-id select-props])
                        :component-did-mount    (fn [_ _] (r/dispatch [:pretty-elements.select/select-options-did-mount    select-id select-props]))
                        :component-will-unmount (fn [_ _] (r/dispatch [:pretty-elements.select/select-options-will-unmount select-id select-props]))}))
@@ -128,7 +128,7 @@
   ; @param (keyword) select-id
   ; @param (map) select-props
   [select-id select-props]
-  ; XXX#0106 (README.md#parametering)
+  ; XXX#0106 (tutorials.api#parametering)
   (reagent/lifecycles {:component-did-mount (fn [_ _] (r/dispatch [:pretty-elements.select/select-button-did-mount select-id select-props]))
                        :reagent-render      (fn [_ select-props] [select-button select-id select-props])}))
 
@@ -239,6 +239,6 @@
    [element (random/generate-keyword) select-props])
 
   ([select-id select-props]
-   (fn [_ select-props] ; XXX#0106 (README.md#parametering)
+   (fn [_ select-props] ; XXX#0106 (tutorials.api#parametering)
        (let [select-props (select.prototypes/select-props-prototype select-id select-props)]
             [select select-id select-props]))))

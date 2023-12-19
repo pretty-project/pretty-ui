@@ -43,7 +43,7 @@
   ; @param (keyword) selector-id
   ; @param (map) selector-props
   [selector-id selector-props]
-  ; XXX#0106 (README.md#parametering)
+  ; XXX#0106 (tutorials.api#parametering)
   (reagent/lifecycles {:component-did-mount (fn [_ _] (r/dispatch [:pretty-elements.color-selector/options-did-mount selector-id selector-props]))
                        :reagent-render      (fn [_ selector-props] [color-selector-option-list selector-id selector-props])}))
 
@@ -140,7 +140,7 @@
    [element (random/generate-keyword) selector-props])
 
   ([selector-id selector-props]
-   (fn [_ selector-props] ; XXX#0106 (README.md#parametering)
+   (fn [_ selector-props] ; XXX#0106 (tutorials.api#parametering)
        (let [selector-props (pretty-presets/apply-preset                                    selector-props)
              selector-props (color-selector.prototypes/selector-props-prototype selector-id selector-props)]
             [color-selector selector-id selector-props]))))

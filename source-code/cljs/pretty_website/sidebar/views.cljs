@@ -67,7 +67,7 @@
    [component (random/generate-keyword) sidebar-props])
 
   ([sidebar-id sidebar-props]
-   (fn [_ sidebar-props] ; XXX#0106 (README.md#parametering)
+   (fn [_ sidebar-props] ; XXX#0106 (tutorials.api#parametering)
        (let [sidebar-props (pretty-presets/apply-preset                sidebar-props)
              sidebar-props (sidebar.prototypes/sidebar-props-prototype sidebar-props)]
             [sidebar sidebar-id sidebar-props]))))

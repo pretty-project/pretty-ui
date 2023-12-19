@@ -23,7 +23,7 @@
 
 (defn component
   ; @important
-  ; To use this component you have to add the Font Awesome icon set to your project!
+  ; To use this component you must add the Font Awesome icon set to your project!
   ;
   ; @description
   ; This component uses Font Awesome brand icons for social media provider links.
@@ -63,7 +63,7 @@
    [component (random/generate-keyword) links-props])
 
   ([links-id links-props]
-   (fn [_ links-props] ; XXX#0106 (README.md#parametering)
+   (fn [_ links-props] ; XXX#0106 (tutorials.api#parametering)
        (let [links-props (pretty-presets/apply-preset links-props)]
             ; links-props (follow-us-links.prototypes/links-props-prototype links-props)
             [follow-us-links links-id links-props]))))

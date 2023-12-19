@@ -41,6 +41,6 @@
    [component (random/generate-keyword) title-props])
 
   ([title-id title-props]
-   (fn [_ title-props] ; XXX#0106 (README.md#parametering)
+   (fn [_ title-props] ; XXX#0106 (tutorials.api#parametering)
        (let [title-props (section-title.prototypes/title-props-prototype title-props)]
             [section-title title-id title-props]))))

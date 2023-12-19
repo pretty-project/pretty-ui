@@ -83,7 +83,7 @@
    [element (random/generate-keyword) chip-props])
 
   ([chip-id chip-props]
-   (fn [_ chip-props] ; XXX#0106 (README.md#parametering)
+   (fn [_ chip-props] ; XXX#0106 (tutorials.api#parametering)
        (let [chip-props (pretty-presets/apply-preset          chip-props)
              chip-props (chip.prototypes/chip-props-prototype chip-props)]
             [chip chip-id chip-props]))))

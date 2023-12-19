@@ -28,6 +28,6 @@
    [component (random/generate-keyword) handle-props])
 
   ([handle-id handle-props]
-   (fn [_ handle-props] ; XXX#0106 (README.md#parametering)
+   (fn [_ handle-props] ; XXX#0106 (tutorials.api#parametering)
        (let [] ; handle-props (list-item-drag-handle.prototypes/handle-props-prototype handle-props)
             [list-item-drag-handle handle-id handle-props]))))

@@ -34,7 +34,7 @@
    [element (random/generate-keyword) line-props])
 
   ([line-id line-props]
-   (fn [_ line-props] ; XXX#0106 (README.md#parametering)
+   (fn [_ line-props] ; XXX#0106 (tutorials.api#parametering)
        (let [line-props (pretty-presets/apply-preset                     line-props)
              line-props (horizontal-line.prototypes/line-props-prototype line-props)]
             [:div (horizontal-line.attributes/line-attributes line-id line-props)

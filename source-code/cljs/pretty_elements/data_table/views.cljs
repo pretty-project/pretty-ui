@@ -149,7 +149,7 @@
    [element (random/generate-keyword) table-props])
 
   ([table-id table-props]
-   (fn [_ table-props] ; XXX#0106 (README.md#parametering)
+   (fn [_ table-props] ; XXX#0106 (tutorials.api#parametering)
        (let [ ; table-props (data-table.prototypes/table-props-prototype table-props)
              table-props (pretty-presets/apply-preset     table-props)]
             [data-table table-id table-props]))))

@@ -9,7 +9,8 @@
 ;
 ; Implement the [pretty-project/pretty-normalizer](https://github.com/pretty-project/pretty-normalizer) library in your project.
 ;
-; Place the 'pretty-ui.min.css' file in the HTML header. You can find it in the [resources/public](https://github.com/pretty-project/pretty-ui/tree/release/resources/public) folder of this repository.
+; Place the 'pretty-ui.min.css' file in the HTML header.
+; You can find it in the [resources/public](https://github.com/pretty-project/pretty-ui/tree/release/resources/public) folder of this repository.
 
 ; @tutorial Introduction
 ;

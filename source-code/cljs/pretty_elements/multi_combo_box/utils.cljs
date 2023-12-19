@@ -10,7 +10,7 @@
   ;
   ; @param (keyword) box-id
   ;
-  ; @example
+  ; @usage
   ; (box-id->group-id :my-multi-combo-box)
   ; =>
   ; :my-multi-combo-box--chip-group
@@ -24,7 +24,7 @@
   ;
   ; @param (keyword) box-id
   ;
-  ; @example
+  ; @usage
   ; (box-id->field-id :my-multi-combo-box)
   ; =>
   ; :my-multi-combo-box--text-field

@@ -80,7 +80,7 @@
    [element (random/generate-keyword) expandable-props])
 
   ([expandable-id expandable-props]
-   (fn [_ expandable-props] ; XXX#0106 (README.md#parametering)
+   (fn [_ expandable-props] ; XXX#0106 (tutorials.api#parametering)
        (let [expandable-props (pretty-presets/apply-preset                      expandable-props)
              expandable-props (expandable.prototypes/expandable-props-prototype expandable-props)]
             [expandable expandable-id expandable-props]))))

@@ -55,6 +55,6 @@
    [component (random/generate-keyword) label-props])
 
   ([label-id label-props]
-   (fn [_ label-props] ; XXX#0106 (README.md#parametering)
+   (fn [_ label-props] ; XXX#0106 (tutorials.api#parametering)
        (let [label-props (copyright-label.prototypes/label-props-prototype label-props)]
             [copyright-label label-id label-props]))))

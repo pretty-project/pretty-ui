@@ -95,7 +95,7 @@
    [element (random/generate-keyword) breadcrumbs-props])
 
   ([breadcrumbs-id breadcrumbs-props]
-   (fn [_ breadcrumbs-props] ; XXX#0106 (README.md#parametering)
+   (fn [_ breadcrumbs-props] ; XXX#0106 (tutorials.api#parametering)
        (let [breadcrumbs-props (pretty-presets/apply-preset                        breadcrumbs-props)
              breadcrumbs-props (breadcrumbs.prototypes/breadcrumbs-props-prototype breadcrumbs-props)]
             [breadcrumbs breadcrumbs-id breadcrumbs-props]))))
