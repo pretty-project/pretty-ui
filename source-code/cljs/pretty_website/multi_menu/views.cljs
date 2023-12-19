@@ -40,7 +40,7 @@
   ; @description
   ; This component implements the 'dropdown-menu' element and in case of the viewport
   ; width is smaller than the given threshold, it displays the menu items
-  ; on a sidebar menu and replaces the menu bar with a single menu button.
+  ; on a sidebar menu and replaces the menu bar with a menu button.
   ;
   ; @param (keyword)(opt) menu-id
   ; @param (map) menu-props
