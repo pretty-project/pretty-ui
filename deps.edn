@@ -24,8 +24,8 @@
                                                   :sha     "f19edbc9b6c39d07d4267a0eac14a2826137898f"}
          org.clojure/clojurescript               {:mvn/version "1.10.891"}
          pretty-project/pretty-css               {:git/url "https://github.com/pretty-project/pretty-css"
-                                                  :sha     "a44d6390795f2a5016a7ed46a27533fc67104e5b"}
+                                                  :sha     "079167084ee6c6da2731aabe94ff562f429548c1"}
          pretty-project/pretty-icons             {:git/url "https://github.com/pretty-project/pretty-icons"
-                                                  :sha     "a44d6390795f2a5016a7ed46a27533fc67104e5b"}
+                                                  :sha     "079167084ee6c6da2731aabe94ff562f429548c1"}
          pretty-project/pretty-normalizer        {:git/url "https://github.com/pretty-project/pretty-normalizer"
-                                                  :sha     "a44d6390795f2a5016a7ed46a27533fc67104e5b"}}}
+                                                  :sha     "079167084ee6c6da2731aabe94ff562f429548c1"}}}
