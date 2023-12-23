@@ -18,7 +18,7 @@
 
 (defn element
   ; @important
-  ; UNFINISHED! DO NOT USE!
+  ; This function is incomplete and may not behave as expected.
   ;
   ; @param (keyword)(opt) stepper-id
   ; @param (map) stepper-props

@@ -24,7 +24,7 @@
 
 (defn diagram
   ; @important
-  ; UNFINISHED! DO NOT USE!
+  ; This function is incomplete and may not behave as expected.
   ;
   ; @param (keyword)(opt) diagram-id
   ; @param (map) diagram-props
