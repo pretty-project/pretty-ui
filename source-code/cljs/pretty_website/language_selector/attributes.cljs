@@ -1,6 +1,6 @@
 
 (ns pretty-website.language-selector.attributes
-    (:require [dictionary.api :as dictionary]
+    (:require [app-dictionary.api :as app-dictionary]
               [dom.api        :as dom]
               [pretty-css.api :as pretty-css]))
 
@@ -17,7 +17,7 @@
   ; @return (map)
   ; {}
   [_ selector-props language]
-  (let [selected? (= language @dictionary/SELECTED-LANGUAGE)]
+  (let [selected? (= language @app-dictionary/SELECTED-LANGUAGE)]
        (-> {:class               :pw-language-selector--language-button
             :data-click-effect   :opacity
             :data-font-weight    (if selected? :semi-bold :normal)
@@ -26,7 +26,7 @@
             :data-line-height    :auto
             :data-selectable     false
             :data-selected       selected?
-            :on-click            #(dictionary/select-language! language)
+            :on-click            #(app-dictionary/select-language! language)
             :on-mouse-up         #(dom/blur-active-element!)}
            (pretty-css/font-attributes selector-props))))
 
