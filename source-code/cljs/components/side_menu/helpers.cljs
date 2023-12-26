@@ -30,5 +30,6 @@
   ;
   ; @return (map)
   [_ menu-props]
-  (-> {} (pretty-css/default-attributes menu-props)
+  (-> {} (pretty-css/class-attributes   menu-props)
+         (pretty-css/state-attributes   menu-props)
          (pretty-css/outdent-attributes menu-props)))

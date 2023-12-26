@@ -13,15 +13,11 @@
   ; @return (map)
   ; {:border-position (keyword)
   ;  :border-width (keyword)
-  ;  :height (keyword)
   ;  :horizontal-align (keyword)
-  ;  :vertical-align (keyword)
-  ;  :width (keyword)}
+  ;  :vertical-align (keyword)}
   [{:keys [border-color] :as column-props}]
-  (merge {:height           :auto
-          :horizontal-align :center
-          :vertical-align   :top
-          :width            :content}
+  (merge {:horizontal-align :center
+          :vertical-align   :top}
          (if border-color {:border-position :all
                            :border-width    :xxs})
          (-> column-props)))

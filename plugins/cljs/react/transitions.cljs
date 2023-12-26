@@ -5,7 +5,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; react-transition-group
+; @redirect (react-transition-group/*)
 (def transition     react-transition-group/Transition)
 (def css-transition react-transition-group/CSSTransition)
 

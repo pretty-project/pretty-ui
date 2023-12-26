@@ -33,5 +33,6 @@
   ; {}
   [_ field-props]
   (-> {:class :pe-digit-field}
-      (pretty-css/default-attributes field-props)
+      (pretty-css/class-attributes   field-props)
+      (pretty-css/state-attributes   field-props)
       (pretty-css/outdent-attributes field-props)))

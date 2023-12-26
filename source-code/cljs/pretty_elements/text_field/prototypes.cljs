@@ -16,13 +16,13 @@
   ; @param (map) adornment-props
   ; {:icon (keyword)(opt)
   ;  :label (metamorphic-content)(opt)
-  ;  :on-click (Re-Frame metamorphic-event)(opt)}
+  ;  :on-click (function or Re-Frame metamorphic-event)(opt)}
   ;
   ; @return (map)
   ; {:click-effect (keyword)
-  ;  :color (keyword)
   ;  :icon-family (keyword)
-  ;  :tab-indexed? (boolean)}
+  ;  :tab-indexed? (boolean)
+  ;  :text-color (keyword)}
   [field-props {:keys [icon label on-click timeout] :as adornment-props}]
   (merge (if icon     {:icon-family    :material-symbols-outlined
                        :icon-size      :s})
@@ -30,8 +30,8 @@
                        :letter-spacing :auto
                        :line-height    :text-block})
          (if on-click {:click-effect   :opacity})
-         {:color        :default
-          :tab-indexed? true}
+         {:tab-indexed? true
+          :text-color   :default}
          (-> adornment-props)
          ; Inherits the reveal effect from the field-props into the adornment-props
          (select-keys field-props [:reveal-effect])))
@@ -63,10 +63,7 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   ; {:border-color (keyword)(opt)
-  ;  :marker-color (keyword)(opt)
-  ;  :on-blur (Re-Frame metamorphic-event)(opt)
-  ;  :on-focus (Re-Frame metamorphic-event)(opt)
-  ;  :on-type-ended (Re-Frame metamorphic-event)(opt)}
+  ;  :marker-color (keyword)(opt)}
   ;
   ; @return (map)
   ; {:border-position (keyword)
@@ -79,12 +76,11 @@
   ;  :line-height (keyword)
   ;  :marker-position (keyword)
   ;  :type (keyword)
-  ;  :value-path (Re-Frame path vector)
-  ;  :width (keyword)}
-  [field-id {:keys [border-color marker-color on-blur on-focus on-type-ended] :as field-props}]
+  ;  :value-path (Re-Frame path vector)}
+  [field-id {:keys [border-color marker-color] :as field-props}]
   ; XXX#5068
   ; By using the '<-walk' function the ':on-blur', ':on-type-ended' and ':on-focus'
-  ; events take the 'field-props' map AFTER it is being merged with the default values!
+  ; events take the 'field-props' map AFTER it gets merged with the default values!
   (<-walk {:field-content-f return
            :field-value-f   return
            :font-size       :s
@@ -92,12 +88,11 @@
            :font-weight     :normal
            :line-height     :text-block
            :type            :text
-           :value-path      (input.utils/default-value-path field-id)
-           :width           :content}
+           :value-path      (input.utils/default-value-path field-id)}
           (fn [%] (merge % (if border-color {:border-position :all
                                              :border-width    :xxs})
                            (if marker-color {:marker-position :tr})))
           (fn [%] (merge % field-props))
-          (fn [%] (merge % {:on-blur       {:dispatch-n [on-blur       [:pretty-elements.text-field/field-blurred field-id %]]}
-                            :on-focus      {:dispatch-n [on-focus      [:pretty-elements.text-field/field-focused field-id %]]}
-                            :on-type-ended {:dispatch-n [on-type-ended [:pretty-elements.text-field/type-ended    field-id %]]}}))))
+          (fn [%] (merge % {:on-blur       [:pretty-elements.text-field/field-blurred field-id %]
+                            :on-focus      [:pretty-elements.text-field/field-focused field-id %]
+                            :on-type-ended [:pretty-elements.text-field/type-ended    field-id %]}))))

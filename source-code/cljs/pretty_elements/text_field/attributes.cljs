@@ -7,7 +7,8 @@
               [pretty-elements.input.env              :as input.env]
               [pretty-elements.plain-field.attributes :as plain-field.attributes]
               [pretty-elements.text-field.env         :as text-field.env]
-              [re-frame.api                           :as r]))
+              [re-frame.api                           :as r]
+              [pretty-elements.element.side-effects :as element.side-effects]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -19,7 +20,7 @@
   ; @param (map) field-props
   ; @param (map) adornment-props
   ; {:disabled? (boolean)(opt)
-  ;  :on-click (Re-Frame metamorphic-event)
+  ;  :on-click (function or Re-Frame metamorphic-event)
   ;  :tab-indexed? (boolean)(opt)
   ;  :tooltip-content (metamorphic-content)(opt)}
   ;
@@ -42,7 +43,7 @@
                                     (r/dispatch-fx [:pretty-elements.plain-field/focus-field! field-id])))}
       (merge (if disabled?        {:disabled   "1" :data-disabled true :data-cursor :default})
              (if-not tab-indexed? {:tab-index "-1"})
-             (if-not disabled?    {:on-mouse-up #(do (r/dispatch on-click))}))
+             (if-not disabled?    {:on-mouse-up #(element.side-effects/dispatch-event-handler! on-click)}))
       (pretty-css/color-attributes  adornment-props)
       (pretty-css/effect-attributes adornment-props)
       (pretty-css/font-attributes   adornment-props)
@@ -184,7 +185,8 @@
                                 :name          (or autofill-name (random/generate-keyword))
                                 :on-blur       (fn [_] (r/dispatch [:pretty-elements.text-field/field-blurred field-id field-props]))
                                 :on-focus      (fn [_] (r/dispatch [:pretty-elements.text-field/field-focused field-id field-props]))}))
-      (pretty-css/effect-attributes field-props)))
+      (pretty-css/effect-attributes       field-props)
+      (pretty-css/element-size-attributes field-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -201,6 +203,7 @@
   [_ {:keys [disabled?] :as field-props}]
   (-> {:class        :pe-text-field
        :data-covered disabled?}
-      (pretty-css/default-attributes      field-props)
+      (pretty-css/class-attributes        field-props)
+      (pretty-css/state-attributes        field-props)
       (pretty-css/outdent-attributes      field-props)
-      (pretty-css/element-size-attributes field-props)))
+      (pretty-css/wrapper-size-attributes field-props)))

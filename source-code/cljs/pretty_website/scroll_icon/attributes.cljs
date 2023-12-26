@@ -51,5 +51,6 @@
   [icon-id icon-props]
   (-> {:class        :pw-scroll-icon
        :data-visible (icon-id @scroll-icon.state/ICON-VISIBLE?)}
-      (pretty-css/default-attributes icon-props)
+      (pretty-css/class-attributes   icon-props)
+      (pretty-css/state-attributes   icon-props)
       (pretty-css/outdent-attributes icon-props)))

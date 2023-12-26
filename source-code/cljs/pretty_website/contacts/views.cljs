@@ -63,20 +63,18 @@
   ;     :email-addresses (strings in vector)(opt)
   ;     :info (metamorphic-content)(opt)
   ;     :label (metamorphic-content)(opt)
-  ;     :phone-numbers (numbers or strings in vector)(opt)}]
+  ;     :phone-numbers (numbers or strings in vector)(opt)
   ;  :class (keyword or keywords in vector)(opt)
+  ;   ...
   ;  :indent (map)(opt)
-  ;   {:bottom (keyword)(opt)
-  ;    :left (keyword)(opt)
-  ;    :right (keyword)(opt)
-  ;    :top (keyword)(opt)
-  ;    :horizontal (keyword)(opt)
-  ;    :vertical (keyword)(opt)
+  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword)
   ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
   ;  :outdent (map)(opt)
-  ;   Same as the :indent property.
+  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
   ;  :preset (keyword)(opt)
-  ;  :style (map)(opt)}
+  ;  :style (map)(opt)
+  ;   Inline style map applied on the component body element.}
   ;
   ; @usage
   ; [contacts {...}]
@@ -87,7 +85,8 @@
    [component (random/generate-keyword) contacts-props])
 
   ([contacts-id contacts-props]
-   (fn [_ contacts-props] ; XXX#0106 (tutorials.api#parametering)
+   ; @note (tutorials#parametering)
+   (fn [_ contacts-props]
        (let [contacts-props (pretty-presets/apply-preset contacts-props)]
             ; contacts-props (contacts.prototypes/contacts-props-prototype contacts-props)
             [contacts contacts-id contacts-props]))))

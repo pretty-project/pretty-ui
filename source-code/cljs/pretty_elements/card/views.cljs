@@ -14,13 +14,15 @@
   ;
   ; @param (keyword) card-id
   ; @param (map) card-props
-  ; {:href (string)(opt)
-  ;  :on-click (Re-Frame metamorphic-event)(opt)}
-  [card-id {:keys [content href on-click] :as card-props}]
+  ; {:content (metamorphic-content)(opt)
+  ;  :content-value-f (function)
+  ;  :href (string)(opt)
+  ;  :on-click (function)(opt)}
+  [card-id {:keys [content content-value-f href on-click] :as card-props}]
   [:div (card.attributes/card-attributes card-id card-props)
         [(cond href :a on-click :button :else :div)
          (card.attributes/card-body-attributes card-id card-props)
-         [metamorphic-content/compose content]]])
+         [metamorphic-content/compose (content-value-f content)]]])
 
 (defn element
   ; @info
@@ -37,30 +39,31 @@
   ;   :tl, :tr, :br, :bl, :left, :right, :bottom, :top
   ;   Default: :tr
   ;  :border-color (keyword or string)(opt)
-  ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;  :border-position (keyword)(opt)
-  ;   :all, :bottom, :top, :left, :right, :horizontal, :vertical
   ;  :border-radius (map)(opt)
   ;  :border-width (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  ;  :content (metamorphic-content)(opt)
   ;  :class (keyword or keywords in vector)(opt)
+  ;  :click-effect (keyword)(opt)
+  ;   :none, :opacity
+  ;   Default: :opacity (if 'href' or 'on-click' is provided)
+  ;  :content (metamorphic-content)(opt)
+  ;  :content-value-f (function)(opt)
+  ;   Default: return
   ;  :cursor (keyword)(opt)
   ;   :default, :disabled, :grab, :grabbing, :move, :pointer, :progress
-  ;   Default: :default or :pointer
   ;  :disabled? (boolean)(opt)
   ;  :fill-color (keyword or string)(opt)
-  ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
-  ;  :height (keyword)(opt)
-  ;   :auto, :content, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  ;   Default: :auto
+  ;  :fill-pattern (keyword)(opt)
+  ;   Default: :cover
+  ;  :height (keyword, px or string)(opt)
   ;  :horizontal-align (keyword)(opt)
   ;   :center, :left, :right
   ;   Default: :left
   ;  :hover-color (keyword or string)(opt)
   ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;  :hover-effect (keyword)(opt)
-  ;   :opacity
+  ;   :none, :opacity
   ;  :href (string)(opt)
   ;  :indent (map)(opt)
   ;   {:bottom (keyword)(opt)
@@ -82,16 +85,14 @@
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;  :min-width (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  ;  :on-click (Re-Frame metamorphic-event)(opt)
+  ;  :on-click (function or Re-Frame metamorphic-event)(opt)
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
   ;  :preset (keyword)(opt)
   ;  :style (map)(opt)
   ;  :target (keyword)(opt)
   ;   :blank, :self
-  ;  :width (keyword)(opt)
-  ;   :auto, :content, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  ;   Default: :content}
+  ;  :width (keyword, px or string)(opt)}
   ;
   ; @usage
   ; [card {...}]
@@ -102,7 +103,8 @@
    [element (random/generate-keyword) card-props])
 
   ([card-id card-props]
-   (fn [_ card-props] ; XXX#0106 (tutorials.api#parametering)
+   ; @note (tutorials#parametering)
+   (fn [_ card-props]
        (let [card-props (pretty-presets/apply-preset          card-props)
              card-props (card.prototypes/card-props-prototype card-props)]
             [card card-id card-props]))))

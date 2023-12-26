@@ -53,7 +53,7 @@
   ; @param (keyword) button-id
   ; @param (map) button-props
   [button-id button-props]
-  ; XXX#0106 (tutorials.api#parametering)
+  ; @note (tutorials#parametering)
   (reagent/lifecycles {:component-did-mount (fn [_ _] (r/dispatch [:pretty-elements.radio-button/button-did-mount button-id button-props]))
                        :reagent-render      (fn [_ button-props] [radio-button-structure button-id button-props])}))
 
@@ -61,7 +61,6 @@
   ; @param (keyword) button-id
   ; @param (map) button-props
   ; {:border-color (keyword or string)(opt)
-  ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;   Default: :default
   ;  :border-radius (map)(opt)
   ;   {:tl (keyword)(opt)
@@ -75,6 +74,9 @@
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;   Default: :xs
   ;  :class (keyword or keywords in vector)(opt)
+  ;  :click-effect (keyword)(opt)
+  ;   :none, :opacity
+  ;   Default: :opacity
   ;  :default-value (*)(opt)
   ;  :deselectable? (boolean)(opt)
   ;  :disabled? (boolean)(opt)
@@ -82,6 +84,9 @@
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
   ;   Default: :s
   ;  :helper (metamorphic-content)(opt)
+  ;  :hover-effect (keyword)(opt)
+  ;   :none, :opacity
+  ;   Default: :none
   ;  :indent (map)(opt)
   ;   {:bottom (keyword)(opt)
   ;    :left (keyword)(opt)
@@ -96,7 +101,8 @@
   ;  :label (metamorphic-content)
   ;  :marker-color (keyword)(opt)
   ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
-  ;  :on-select (Re-Frame metamorphic-event)(opt)
+  ;  :on-select (function or Re-Frame metamorphic-event)(opt)
+  ;   This event takes the selected option's value as its last parameter.
   ;  :option-helper-f (function)(opt)
   ;  :option-label-f (function)(opt)
   ;   Default: return
@@ -125,7 +131,8 @@
    [element (random/generate-keyword) button-props])
 
   ([button-id button-props]
-   (fn [_ button-props] ; XXX#0106 (tutorials.api#parametering)
+   ; @note (tutorials#parametering)
+   (fn [_ button-props]
        (let [button-props (pretty-presets/apply-preset                              button-props)
              button-props (radio-button.prototypes/button-props-prototype button-id button-props)]
             [radio-button button-id button-props]))))

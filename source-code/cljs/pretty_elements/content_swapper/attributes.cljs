@@ -33,5 +33,6 @@
   ; {:class (keyword or keywords in vector)}
   [_ swapper-props]
   (-> {:class :pe-content-swapper}
-      (pretty-css/default-attributes swapper-props)
+      (pretty-css/class-attributes   swapper-props)
+      (pretty-css/state-attributes   swapper-props)
       (pretty-css/outdent-attributes swapper-props)))

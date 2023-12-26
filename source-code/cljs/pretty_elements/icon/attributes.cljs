@@ -33,5 +33,6 @@
   ; @return (map)
   [_ icon-props]
   (-> {:class :pe-icon}
-      (pretty-css/default-attributes icon-props)
+      (pretty-css/class-attributes   icon-props)
+      (pretty-css/state-attributes   icon-props)
       (pretty-css/outdent-attributes icon-props)))

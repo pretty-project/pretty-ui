@@ -33,5 +33,6 @@
   ; {}
   [_ diagram-props]
   (-> {:class :pd-point-diagram}
-      (pretty-css/default-attributes diagram-props)
+      (pretty-css/class-attributes   diagram-props)
+      (pretty-css/state-attributes   diagram-props)
       (pretty-css/outdent-attributes diagram-props)))

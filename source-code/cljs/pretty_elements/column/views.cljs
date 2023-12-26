@@ -24,9 +24,7 @@
   ; @param (keyword)(opt) column-id
   ; @param (map) column-props
   ; {:border-color (keyword or string)(opt)
-  ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;  :border-position (keyword)(opt)
-  ;   :all, :bottom, :top, :left, :right, :horizontal, :vertical
   ;  :border-radius (map)(opt)
   ;   {:tl (keyword)(opt)
   ;    :tr (keyword)(opt)
@@ -39,12 +37,11 @@
   ;  :class (keyword or keywords in vector)(opt)
   ;  :content (metamorphic-content)
   ;  :fill-color (keyword or string)(opt)
-  ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+  ;  :fill-pattern (keyword)(opt)
+  ;   Default: :cover
   ;  :gap (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :auto
-  ;  :height (keyword)(opt)
-  ;   :auto, :content, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  ;   Default: :auto
+  ;  :height (keyword, px or string)(opt)
   ;  :horizontal-align (keyword)(opt)
   ;   :center, :left, :right
   ;   Default: :center
@@ -73,9 +70,7 @@
   ;   Default: :top
   ;  :wrap-items? (boolean)(opt)
   ;   Default: false
-  ;  :width (keyword)(opt)
-  ;   :auto, :content, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  ;   Default: :content}
+  ;  :width (keyword, px or string)(opt)}
   ;
   ; @usage
   ; [elements/column {...}]
@@ -86,7 +81,8 @@
    [element (random/generate-keyword) column-props])
 
   ([column-id column-props]
-   (fn [_ column-props] ; XXX#0106 (tutorials.api#parametering)
+   ; @note (tutorials#parametering)
+   (fn [_ column-props]
        (let [column-props (pretty-presets/apply-preset              column-props)
              column-props (column.prototypes/column-props-prototype column-props)]
             [column column-id column-props]))))

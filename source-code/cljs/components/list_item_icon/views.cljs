@@ -31,5 +31,6 @@
    [component (random/generate-keyword) icon-props])
 
   ([icon-id icon-props]
-   (fn [_ icon-props] ; XXX#0106 (tutorials.api#parametering)
+   ; @note (tutorials#parametering)
+   (fn [_ icon-props]
        [list-item-icon icon-id icon-props])))

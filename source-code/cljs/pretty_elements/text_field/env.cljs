@@ -40,9 +40,8 @@
        (if multiline? (let [line-count (-> field-content string/line-count inc)]
                            ; BUG#1481
                            ; Google Chrome Version 89.0.4389.114
-                           ; The height of a textarea element has to be min. 2 rows!
-                           ; Otherwise the browsers doesn't wraps the content in
-                           ; every case.
+                           ; The height of a textarea element has to be at least 2 rows!
+                           ; Otherwise, the browsers might not wrap the content.
                            (inc line-count))
 
                       ; If the field is NOT multiline ...

@@ -44,6 +44,7 @@
    [component (random/generate-keyword) button-props])
 
   ([button-id button-props]
-   (fn [_ button-props] ; XXX#0106 (tutorials.api#parametering)
+   ; @note (tutorials#parametering)
+   (fn [_ button-props]
        (let [button-props (content-swapper-button.prototypes/button-props-prototype button-props)]
             [pretty-elements/button button-id button-props]))))

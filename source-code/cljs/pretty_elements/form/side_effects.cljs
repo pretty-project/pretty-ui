@@ -30,8 +30,8 @@
   ;
   ; @return (metamorphic-content)
   [input-id {:keys [on-invalid on-valid]}]
-  ; After an input is once validated, the ':validate-when-change?' toggle must be turned on,
-  ; otherwise the input might stuck in an invalid state even if it's not invalid anymore.
+  ; After an input is once validated, the ':validate-when-change?' toggle must be turned on.
+  ; Otherwise, the input might stuck in an invalid state even if it's not invalid anymore.
   (swap! form.state/FORM-INPUTS assoc-in [input-id :validate-when-change?] true)
 
   (let [stored-value (form.env/get-input-stored-value input-id)
@@ -53,10 +53,10 @@
   ; @ignore
   ;
   ; @description
-  ; Iterates over the form inputs registered with the same form ID and validates
-  ; the inputs until one fails on one of its validators.
-  ; If any input fails it dispatches the 'on-invalid' event if any,
-  ; otherwise it dispatches the 'on-valid' event if any.
+  ; - Iterates over the form inputs registered with the same form ID and validates
+  ;   the inputs until one fails on one of its validators.
+  ; - If any input fails it dispatches the 'on-invalid' event (if any).
+  ;   Otherwise, it dispatches the 'on-valid' event (if any).
   ;
   ; @param (keyword) form-id
   ; @param (keyword) validation-props

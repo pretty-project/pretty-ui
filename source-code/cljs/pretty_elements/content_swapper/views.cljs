@@ -36,7 +36,7 @@
   ; {:initial-page (metamorphic-content)}
   [swapper-id {:keys [initial-page] :as swapper-props}]
   (let [initial-state {:page-pool [{:id :initial-page :page initial-page}] :active-page :initial-page}]
-       ; XXX#0106 (tutorials.api#parametering)
+       ; @note (tutorials#parametering)
        (reagent/lifecycles {:component-did-mount    (fn [_ _] (swap! content-swapper.state/SWAPPERS update swapper-id merge initial-state))
                             :component-will-unmount (fn [_ _] (swap! content-swapper.state/SWAPPERS dissoc swapper-id))
                             :reagent-render         (fn [_ swapper-props] [content-swapper-structure swapper-id swapper-props])})))
@@ -75,7 +75,8 @@
    [element (random/generate-keyword) swapper-props])
 
   ([swapper-id swapper-props]
-   (fn [_ swapper-props] ; XXX#0106 (tutorials.api#parametering)
+   ; @note (tutorials#parametering)
+   (fn [_ swapper-props]
        (let [ ; swapper-props (content-swapper.prototypes/swapper-props-prototype swapper-props)
              swapper-props (pretty-presets/apply-preset swapper-props)]
             [content-swapper swapper-id swapper-props]))))

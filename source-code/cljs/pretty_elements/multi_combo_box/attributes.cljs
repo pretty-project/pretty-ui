@@ -33,5 +33,6 @@
   ; {}
   [_ box-props]
   (-> {:class :pe-multi-combo-box}
-      (pretty-css/default-attributes box-props)
+      (pretty-css/class-attributes   box-props)
+      (pretty-css/state-attributes   box-props)
       (pretty-css/outdent-attributes box-props)))

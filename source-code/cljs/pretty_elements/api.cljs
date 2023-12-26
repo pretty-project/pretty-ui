@@ -17,6 +17,8 @@
               [pretty-elements.counter.effects]
               [pretty-elements.counter.events]
               [pretty-elements.counter.subs]
+              [pretty-elements.element.effects]
+              [pretty-elements.element.side-effects]
               [pretty-elements.form.effects]
               [pretty-elements.form.side-effects]
               [pretty-elements.input.events]

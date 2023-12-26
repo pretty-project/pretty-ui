@@ -33,5 +33,6 @@
   ; {:class (keyword or keywords in vector)}
   [_ stepper-props]
   (-> {:class :pe-stepper}
-      (pretty-css/default-attributes stepper-props)
+      (pretty-css/class-attributes   stepper-props)
+      (pretty-css/state-attributes   stepper-props)
       (pretty-css/outdent-attributes stepper-props)))

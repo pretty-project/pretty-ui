@@ -42,10 +42,10 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  ; {:on-click (Re-Frame metamorphic-event)(opt)}
+  ; {:on-click (function)(opt)}
   [button-id {:keys [on-click]}]
   (blur-button! button-id)
-  (r/dispatch   on-click))
+  (on-click))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

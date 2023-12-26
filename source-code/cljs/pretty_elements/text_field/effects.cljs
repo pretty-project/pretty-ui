@@ -34,9 +34,10 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ; {:on-enter (Re-Frame metamorphic-event)(opt)}
+  ; {:on-enter (function or Re-Frame metamorphic-event)(opt)}
   (fn [{:keys [db]} [_ field-id {:keys [on-enter]}]]
-      {:dispatch on-enter}))
+      (let [field-content (plain-field.env/get-field-content field-id)]
+           [:pretty-elements.element/dispatch-event-handler! on-enter field-content])))
 
 (r/reg-event-fx :pretty-elements.text-field/ESC-pressed
   ; @ignore
@@ -55,10 +56,10 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ; {:on-empty (Re-Frame metamorphic-event)(opt)}
+  ; {:on-empty (function or Re-Frame metamorphic-event)(opt)}
   (fn [{:keys [db]} [_ field-id {:keys [on-empty] :as field-props}]]
       (if (plain-field.env/field-filled? field-id)
-          {:dispatch (if on-empty (r/metamorphic-event<-params on-empty ""))
+          {:dispatch [:pretty-elements.element/dispatch-event-handler! on-empty ""]
            :db       (r plain-field.events/empty-field! db field-id field-props)
            :fx       [:pretty-elements.plain-field/empty-field! field-id]})))
 
@@ -71,8 +72,10 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   ; {}
-  (fn [_ [_ field-id {:keys [validate-when-change?] :as field-props}]]
-      {:fx-n [(if validate-when-change? [:pretty-elements.form/validate-input! field-id field-props])]}))
+  (fn [_ [_ field-id {:keys [on-type-ended validate-when-change?] :as field-props}]]
+      (let [field-content (plain-field.env/get-field-content field-id)]
+           {:dispatch-n [[:pretty-elements.element/dispatch-event-handler! on-type-ended field-content]]
+            :fx-n       [(if validate-when-change? [:pretty-elements.form/validate-input! field-id field-props])]})))
 
 (r/reg-event-fx :pretty-elements.text-field/field-blurred
   ; @ignore
@@ -80,16 +83,20 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   ; {:validate-when-leave? (boolean)(opt)}
-  (fn [_ [_ field-id {:keys [validate-when-leave?] :as field-props}]]
-      {:dispatch [:pretty-elements.plain-field/field-blurred          field-id field-props]
-       :fx-n     [[:pretty-elements.text-field/remove-keypress-events! field-id field-props]
-                  (if validate-when-leave? [:pretty-elements.form/validate-input! field-id field-props])]}))
+  (fn [_ [_ field-id {:keys [on-blur validate-when-leave?] :as field-props}]]
+      (let [field-content (plain-field.env/get-field-content field-id)]
+           {:dispatch-n [[:pretty-elements.element/dispatch-event-handler!    on-blur  field-content]
+                         [:pretty-elements.plain-field/field-blurred          field-id field-props]]
+            :fx-n       [[:pretty-elements.text-field/remove-keypress-events! field-id field-props]
+                         (if validate-when-leave? [:pretty-elements.form/validate-input! field-id field-props])]})))
 
 (r/reg-event-fx :pretty-elements.text-field/field-focused
   ; @ignore
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  (fn [_ [_ field-id field-props]]
-      {:dispatch [:pretty-elements.plain-field/field-focused       field-id field-props]
-       :fx       [:pretty-elements.text-field/reg-keypress-events! field-id field-props]}))
+  (fn [_ [_ field-id {:keys [on-focus] :as field-props}]]
+      (let [field-content (plain-field.env/get-field-content field-id)]
+           {:dispatch-n [[:pretty-elements.element/dispatch-event-handler! on-focus field-content]
+                         [:pretty-elements.plain-field/field-focused       field-id field-props]]
+            :fx-n       [[:pretty-elements.text-field/reg-keypress-events! field-id field-props]]})))

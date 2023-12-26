@@ -33,9 +33,7 @@
   ; @param (keyword)(opt) text-id
   ; @param (map) text-props
   ; {:border-color (keyword or string)(opt)
-  ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;  :border-position (keyword)(opt)
-  ;   :all, :bottom, :top, :left, :right, :horizontal, :vertical
   ;  :border-radius (map)(opt)
   ;   {:tl (keyword)(opt)
   ;    :tr (keyword)(opt)
@@ -46,18 +44,17 @@
   ;  :border-width (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;  :class (keyword or keywords in vector)(opt)
-  ;  :color (keyword or string)(opt)
-  ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
-  ;   Default: :default
   ;  :content (metamorphic-content)(opt)
   ;  :fill-color (keyword or string)(opt)
-  ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+  ;  :fill-pattern (keyword)(opt)
+  ;   Default: :cover
   ;  :font-size (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
   ;   Default: :s
   ;  :font-weight (keyword)(opt)
   ;   :inherit, :thin, :extra-light, :light, :normal, :medium, :semi-bold, :bold, :extra-bold, :black
   ;   Default: :normal
+  ;  :height (keyword, px or string)(opt)
   ;  :horizontal-align (keyword)(opt)
   ;   :center, :left, :right
   ;   Default: :left
@@ -77,8 +74,8 @@
   ;   :auto, :inherit, :text-block, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;   Default: :text-block
   ;  :max-lines (integer)(opt)
-  ;  :min-width (keyword)(opt)
-  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;  :min-height (keyword, px or string)(opt)
+  ;  :min-width (keyword, px or string)(opt)
   ;  :on-copy (Re-Frame metamorphic-event)(opt)
   ;   This event takes the text content as its last parameter.
   ;  :outdent (map)(opt)
@@ -89,15 +86,16 @@
   ;  :selectable? (boolean)(opt)
   ;   Default: true
   ;  :style (map)(opt)
+  ;  :text-color (keyword or string)(opt)
+  ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
+  ;   Default: :default
   ;  :text-direction (keyword)(opt)
   ;   :normal, :reversed
   ;   Default :normal
   ;  :text-overflow (keyword)(opt)
   ;   :ellipsis, :wrap
   ;   Default: :wrap
-  ;  :width (keyword)(opt)
-  ;   :auto, :content, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  ;   Default: :content}
+  ;  :width (keyword, px or string)(opt)}
   ;
   ; @usage
   ; [text {...}]
@@ -108,7 +106,8 @@
    [element (random/generate-keyword) text-props])
 
   ([text-id text-props]
-   (fn [_ text-props] ; XXX#0106 (tutorials.api#parametering)
+   ; @note (tutorials#parametering)
+   (fn [_ text-props]
        (let [text-props (pretty-presets/apply-preset          text-props)
              text-props (text.prototypes/text-props-prototype text-props)]
             [text text-id text-props]))))

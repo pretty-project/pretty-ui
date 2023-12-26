@@ -60,6 +60,7 @@
    [element (random/generate-keyword) menu-props])
 
   ([menu-id menu-props]
-   (fn [_ menu-props] ; XXX#0106 (tutorials.api#parametering)
+   ; @note (tutorials#parametering)
+   (fn [_ menu-props]
        (let [menu-props (dropdown-menu.prototypes/menu-props-prototype menu-id menu-props)]
             [dropdown-menu menu-id menu-props]))))

@@ -18,5 +18,6 @@
   [_ {:keys [style] :as spacer-props}]
   (-> {:class :pe-vertical-spacer
        :style style}
-      (pretty-css/default-attributes    spacer-props)
+      (pretty-css/class-attributes      spacer-props)
+      (pretty-css/state-attributes      spacer-props)
       (pretty-css/block-size-attributes spacer-props)))

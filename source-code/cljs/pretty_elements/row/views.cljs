@@ -24,9 +24,7 @@
   ; @param (keyword)(opt) row-id
   ; @param (map) row-props
   ; {:border-color (keyword or string)(opt)
-  ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;  :border-position (keyword)(opt)
-  ;   :all, :bottom, :top, :left, :right, :horizontal, :vertical
   ;  :border-radius (map)(opt)
   ;   {:tl (keyword)(opt)
   ;    :tr (keyword)(opt)
@@ -39,12 +37,11 @@
   ;  :class (keyword or keywords in vector)(opt)
   ;  :content (metamorphic-content)(opt)
   ;  :fill-color (keyword or string)(opt)
-  ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+  ;  :fill-pattern (keyword)(opt)
+  ;   Default: :cover
   ;  :gap (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :auto
-  ;  :height (keyword)(opt)
-  ;   :auto, :content, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  ;   Default: :auto
+  ;  :height (keyword, px or string)(opt)
   ;  :horizontal-align (keyword)(opt)
   ;   :center, :left, :right, :space-around, :space-between, :space-evenly
   ;   Default: :left
@@ -56,14 +53,10 @@
   ;    :horizontal (keyword)(opt)
   ;    :vertical (keyword)(opt)
   ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
-  ;  :max-height (keyword)(opt)
-  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  ;  :max-width (keyword)(opt)
-  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  ;  :min-height (keyword)(opt)
-  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  ;  :min-width (keyword)(opt)
-  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;  :max-height (keyword, px or string)(opt)
+  ;  :max-width (keyword, px or string)(opt)
+  ;  :min-height (keyword, px or string)(opt)
+  ;  :min-width (keyword, px or string)(opt)
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
   ;  :preset (keyword)(opt)
@@ -71,9 +64,7 @@
   ;  :vertical-align (keyword)(opt)
   ;   :top, :center, :bottom
   ;   Default: :center
-  ;  :width (keyword)(opt)
-  ;   :auto, :content, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  ;   Default: :content
+  ;  :width (keyword, px or string)(opt)
   ;  :wrap-items? (boolean)(opt)}
   ;
   ; @usage
@@ -85,7 +76,8 @@
    [element (random/generate-keyword) row-props])
 
   ([row-id row-props]
-   (fn [_ row-props] ; XXX#0106 (tutorials.api#parametering)
+   ; @note (tutorials#parametering)
+   (fn [_ row-props]
        (let [row-props (pretty-presets/apply-preset        row-props)
              row-props (row.prototypes/row-props-prototype row-props)]
             [row row-id row-props]))))

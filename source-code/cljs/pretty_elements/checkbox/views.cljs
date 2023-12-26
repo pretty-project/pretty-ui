@@ -25,7 +25,7 @@
   [checkbox-id {:keys [option-helper-f option-label-f] :as checkbox-props} option]
   [:button (checkbox.attributes/checkbox-option-attributes checkbox-id checkbox-props option)
            [:div (checkbox.attributes/checkbox-option-button-attributes checkbox-id checkbox-props option)]
-           [:div {:class :pe-checkbox--option-content :data-click-target :opacity}
+           [:div {:class :pe-checkbox--option-content}
                  [:div (checkbox.attributes/checkbox-option-label-attributes checkbox-id checkbox-props option)
                        (-> option option-label-f metamorphic-content/compose)]
                  (if option-helper-f [:div (checkbox.attributes/checkbox-option-helper-attributes checkbox-id checkbox-props option)
@@ -58,7 +58,7 @@
   ; @param (keyword) checkbox-id
   ; @param (map) checkbox-props
   [checkbox-id checkbox-props]
-  ; XXX#0106 (tutorials.api#parametering)
+  ; @note (tutorials#parametering)
   (reagent/lifecycles {:component-did-mount (fn [_ _] (r/dispatch [:pretty-elements.checkbox/checkbox-did-mount checkbox-id checkbox-props]))
                        :reagent-render      (fn [_ checkbox-props] [checkbox-structure checkbox-id checkbox-props])}))
 
@@ -66,7 +66,6 @@
   ; @param (keyword)(opt) checkbox-id
   ; @param (map) checkbox-props
   ; {:border-color (keyword or string)(opt)
-  ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;   Default: :default
   ;  :border-radius (map)(opt)
   ;   {:tl (keyword)(opt)
@@ -75,17 +74,22 @@
   ;    :bl (keyword)(opt)
   ;    :all (keyword)(opt)
   ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
-  ;   Default: {:all :xs}
   ;  :border-width (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;   Default: :xs
   ;  :class (keyword or keywords in vector)(opt)
+  ;  :click-effect (keyword)(opt)
+  ;   :none, :opacity
+  ;   Default: :opacity
   ;  :default-value (boolean)(opt)
   ;  :disabled? (boolean)(opt)
   ;  :font-size (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
   ;   Default: :s
   ;  :helper (metamorphic-content)(opt)
+  ;  :hover-effect (keyword)(opt)
+  ;   :none, :opacity
+  ;   Default: :none
   ;  :indent (map)(opt)
   ;   {:bottom (keyword)(opt)
   ;    :left (keyword)(opt)
@@ -98,8 +102,10 @@
   ;  :initial-value (boolean)(opt)
   ;  :marker-color (keyword)(opt)
   ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
-  ;  :on-check (Re-Frame metamorphic-event)(opt)
-  ;  :on-uncheck (Re-Frame metamorphic-event)(opt)
+  ;  :on-checked (function or Re-Frame metamorphic-event)(opt)
+  ;   This event takes the checked option's value as its last parameter.
+  ;  :on-unchecked (function or Re-Frame metamorphic-event)(opt)
+  ;   This event takes the unchecked option's value as its last parameter.
   ;  :option-helper-f (function)(opt)
   ;  :option-label-f (function)(opt)
   ;   Default: return
@@ -126,7 +132,8 @@
    [element (random/generate-keyword) checkbox-props])
 
   ([checkbox-id checkbox-props]
-   (fn [_ checkbox-props] ; XXX#0106 (tutorials.api#parametering)
+   ; @note (tutorials#parametering)
+   (fn [_ checkbox-props]
        (let [checkbox-props (pretty-presets/apply-preset                              checkbox-props)
              checkbox-props (checkbox.prototypes/checkbox-props-prototype checkbox-id checkbox-props)]
             [checkbox checkbox-id checkbox-props]))))

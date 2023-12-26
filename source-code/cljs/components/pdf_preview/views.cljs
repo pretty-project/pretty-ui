@@ -30,6 +30,7 @@
    [component (random/generate-keyword) preview-props])
 
   ([preview-id preview-props]
-   (fn [_ preview-props] ; XXX#0106 (tutorials.api#parametering)
-       (let [] ;preview-props (pdf-preview.prototypes/preview-props-prototype preview-props)
+   ; @note (tutorials#parametering)
+   (fn [_ preview-props]
+       (let [] ; preview-props (pdf-preview.prototypes/preview-props-prototype preview-props)
             [pdf-preview preview-id preview-props]))))

@@ -36,5 +36,6 @@
   ; Therefore, no need to the group reacts to it.
   (let [group-props (dissoc group-props :disabled?)]
        (-> {:class :pe-multi-field}
-           (pretty-css/default-attributes group-props)
+           (pretty-css/class-attributes   group-props)
+           (pretty-css/state-attributes   group-props)
            (pretty-css/outdent-attributes group-props))))

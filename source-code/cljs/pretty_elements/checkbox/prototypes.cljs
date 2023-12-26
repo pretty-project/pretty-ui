@@ -15,8 +15,8 @@
   ; @return (map)
   ; {:border-color (keyword or string)
   ;  :border-position (keyword)
-  ;  :border-radius (map)
   ;  :border-width (keyword)
+  ;  :click-effect (keyword)
   ;  :font-size (keyword)
   ;  :option-label-f (function)
   ;  :option-value-f (function)
@@ -26,8 +26,8 @@
   [checkbox-id checkbox-props]
   (merge {:border-color        :default
           :border-position     :all
-          :border-radius       {:all :xs}
           :border-width        :xs
+          :click-effect        :opacity
           :font-size           :s
           :option-label-f      return
           :option-value-f      return

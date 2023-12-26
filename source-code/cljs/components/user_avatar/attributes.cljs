@@ -77,5 +77,6 @@
   ; {}
   [_ avatar-props]
   (-> {:class :c-user-avatar}
-      (pretty-css/default-attributes avatar-props)
+      (pretty-css/class-attributes   avatar-props)
+      (pretty-css/state-attributes   avatar-props)
       (pretty-css/outdent-attributes avatar-props)))

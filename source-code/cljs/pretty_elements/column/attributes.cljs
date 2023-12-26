@@ -21,9 +21,12 @@
        :data-vertical-column-align   vertical-align
        :data-wrap-items              wrap-items?
        :style                        style}
-      (pretty-css/border-attributes column-props)
-      (pretty-css/color-attributes  column-props)
-      (pretty-css/indent-attributes column-props)))
+      (pretty-css/border-attributes           column-props)
+      (pretty-css/color-attributes            column-props)
+      (pretty-css/element-max-size-attributes column-props)
+      (pretty-css/element-min-size-attributes column-props)
+      (pretty-css/element-size-attributes     column-props)
+      (pretty-css/indent-attributes           column-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -38,8 +41,7 @@
   ; {}
   [_ column-props]
   (-> {:class :pe-column}
-      (pretty-css/default-attributes          column-props)
-      (pretty-css/outdent-attributes          column-props)
-      (pretty-css/element-max-size-attributes column-props)
-      (pretty-css/element-min-size-attributes column-props)
-      (pretty-css/element-size-attributes     column-props)))
+      (pretty-css/class-attributes        column-props)
+      (pretty-css/state-attributes        column-props)
+      (pretty-css/outdent-attributes      column-props)
+      (pretty-css/wrapper-size-attributes column-props)))

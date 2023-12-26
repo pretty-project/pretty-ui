@@ -5,7 +5,8 @@
               [pretty-elements.button.prototypes :as button.prototypes]
               [pretty-presets.api                :as pretty-presets]
               [re-frame.api                      :as r]
-              [reagent.api                       :as reagent]))
+              [reagent.api                       :as reagent]
+              [metamorphic-content.api :as metamorphic-content]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -15,20 +16,21 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  ; {:href (string)(opt)
+  ; {:content (metamorphic-content)(opt)
+  ;  :content-value-f (function)
+  ;  :href (string)(opt)
   ;  :icon (keyword)(opt)
   ;  :icon-position (keyword)(opt)
-  ;  :label (string)(opt)
-  ;  :on-click (Re-Frame metamorphic-event)(opt)}
-  [button-id {:keys [href icon icon-position label on-click] :as button-props}]
+  ;  :on-click (function)(opt)}
+  [button-id {:keys [content content-value-f href icon icon-position on-click] :as button-props}]
   [:div (button.attributes/button-attributes button-id button-props)
         [(cond href :a on-click :button :else :div)
          (button.attributes/button-body-attributes button-id button-props)
-         (case icon-position :left  [:<> (if icon  [:i   (button.attributes/button-icon-attributes  button-id button-props) icon])
-                                         (if label [:div (button.attributes/button-label-attributes button-id button-props) label])]
-                             :right [:<> (if label [:div (button.attributes/button-label-attributes button-id button-props) label])
-                                         (if icon  [:i   (button.attributes/button-icon-attributes  button-id button-props) icon])]
-                                    [:<> (if label [:div (button.attributes/button-label-attributes button-id button-props) label])])]])
+         (case icon-position :left  [:<> (if icon    [:i   (button.attributes/button-icon-attributes  button-id button-props) icon])
+                                         (if content [:div (button.attributes/button-label-attributes button-id button-props) [metamorphic-content/compose (content-value-f content)]])]
+                             :right [:<> (if content [:div (button.attributes/button-label-attributes button-id button-props) [metamorphic-content/compose (content-value-f content)]])
+                                         (if icon    [:i   (button.attributes/button-icon-attributes  button-id button-props) icon])]
+                                    [:<> (if content [:div (button.attributes/button-label-attributes button-id button-props) [metamorphic-content/compose (content-value-f content)]])])]])
 
 (defn button
   ; @ignore
@@ -36,7 +38,7 @@
   ; @param (keyword) button-id
   ; @param (map) button-props
   [button-id button-props]
-  ; XXX#0106 (tutorials.api#parametering)
+  ; @note (tutorials#parametering)
   (reagent/lifecycles {:component-did-mount    (fn [_ _] (r/dispatch [:pretty-elements.button/button-did-mount    button-id button-props]))
                        :component-will-unmount (fn [_ _] (r/dispatch [:pretty-elements.button/button-will-unmount button-id button-props]))
                        :component-did-update   (fn [%]   (r/dispatch [:pretty-elements.button/button-did-update   button-id %]))
@@ -47,9 +49,8 @@
   ; XXX#0714
   ; Some other items based on the 'button' element and their documentations link here.
   ;
-  ; @important
-  ; BUG#9912
-  ; If the keypress key-code is 13 (ENTER) the on-click event will fire multiple times during the key is pressed!
+  ; @bug (#9912)
+  ; If the keypress key-code is 13 (ENTER) the on-click event fires multiple times during the key is pressed!
   ; This phenomenon caused by:
   ; 1. The keydown event focuses the button via the 'button.side-effects/key-pressed' function.
   ; 2. One of the default actions of the 13 (ENTER) key is to fire the on-click
@@ -68,9 +69,7 @@
   ;   :tl, :tr, :br, :bl, :left, :right, :bottom, :top
   ;   Default: :tr
   ;  :border-color (keyword or string)(opt)
-  ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;  :border-position (keyword)(opt)
-  ;   :all, :bottom, :top, :left, :right, :horizontal, :vertical
   ;  :border-radius (map)(opt)
   ;   {:tl (keyword)(opt)
   ;    :tr (keyword)(opt)
@@ -81,31 +80,35 @@
   ;  :border-width (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;  :class (keyword or keywords in vector)(opt)
-  ;  :color (keyword or string)(opt)
-  ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
-  ;   Default: :inherit
+  ;  :click-effect (keyword)(opt)
+  ;   :none, :opacity
+  ;   Default: :opacity
+  ;  :content (metamorphic-content)(opt)
+  ;  :content-value-f (function)(opt)
+  ;   Default: return
   ;  :cursor (keyword)(opt)
-  ;   :default, :disabled, :grab, :grabbing, :move, :pointer, :progress}
+  ;   :default, :disabled, :grab, :grabbing, :move, :pointer, :progress
   ;   Default: :pointer
   ;  :disabled? (boolean)(opt)
   ;  :fill-color (keyword or string)(opt)
-  ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+  ;  :fill-pattern (keyword)(opt)
+  ;   Default: :cover
   ;  :font-size (keyword)(opt)
-  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
   ;   Default: :s
   ;  :font-weight (keyword)(opt)
-  ;   :inherit, :thin, :extra-light, :light, :normal, :medium, :semi-bold, :bold, :extra-bold, :black
   ;   Default: :medium
   ;  :gap (keyword)(opt)
   ;   Distance between the icon and the label
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :auto
+  ;  :height (keyword, px or string)(opt)
   ;  :horizontal-align (keyword)(opt)
   ;   :center, :left, :right
   ;   Default: :center
   ;  :hover-color (keyword or string)(opt)
   ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;  :hover-effect (keyword)(opt)
-  ;   :opacity
+  ;   :none, :opacity
+  ;   Default: :none
   ;  :href (string)(opt)
   ;  :icon (keyword)(opt)
   ;  :icon-color (keyword or string)(opt)
@@ -133,7 +136,6 @@
   ;    :key-code (integer)
   ;    :required? (boolean)(opt)
   ;     Default: false}
-  ;  :label (metamorphic-content)(opt)
   ;  :line-height (keyword)(opt)
   ;   :auto, :inherit, :text-block, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;   Default: :text-block
@@ -141,8 +143,8 @@
   ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
   ;  :marker-position (keyword)(opt)
   ;   :tl, :tr, :br, :bl, left, :right, bottom, :top
-  ;  :on-click (Re-Frame metamorphic-event)(opt)
-  ;  :on-mouse-over (Re-Frame metamorphic-event)(opt)
+  ;  :on-click (function or Re-Frame metamorphic-event)(opt)
+  ;  :on-mouse-over (function or Re-Frame metamorphic-event)(opt)
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
   ;  :preset (keyword)(opt)
@@ -155,6 +157,8 @@
   ;   Default: :ltr
   ;  :progress-duration (ms)(opt)
   ;   Default: 250
+  ;  :text-color (keyword or string)(opt)
+  ;   Default: :inherit
   ;  :text-overflow (keyword)(opt)
   ;   :ellipsis, :hidden, :wrap
   ;   Default: :no-wrap
@@ -163,9 +167,7 @@
   ;  :tooltip-content (metamorphic-content)(opt)
   ;  :tooltip-position (keyword)(opt)
   ;   :left, :right
-  ;  :width (keyword)(opt)
-  ;   :auto, :content, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  ;   Default: :content}
+  ;  :width (keyword, px or string)(opt)}
   ;
   ; @usage
   ; [button {...}]
@@ -179,7 +181,8 @@
    [element (random/generate-keyword) button-props])
 
   ([button-id button-props]
-   (fn [_ button-props] ; XXX#0106 (tutorials.api#parametering)
+   ; @note (tutorials#parametering)
+   (fn [_ button-props]
        (let [button-props (pretty-presets/apply-preset              button-props)
              button-props (button.prototypes/button-props-prototype button-props)]
             [button button-id button-props]))))

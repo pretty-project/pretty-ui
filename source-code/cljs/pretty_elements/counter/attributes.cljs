@@ -111,5 +111,6 @@
   ; @return (map)
   [_ counter-props]
   (-> {:class :pe-counter}
-      (pretty-css/default-attributes counter-props)
+      (pretty-css/class-attributes   counter-props)
+      (pretty-css/state-attributes   counter-props)
       (pretty-css/outdent-attributes counter-props)))

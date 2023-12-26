@@ -1,5 +1,6 @@
 
-(ns pretty-elements.blank.prototypes)
+(ns pretty-elements.blank.prototypes
+    (:require [fruits.noop.api :refer [return]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -10,7 +11,7 @@
   ; @param (map) blank-props
   ;
   ; @return (map)
-  ; {:width (keyword)}
+  ; {:content-value-f (function)}
   [blank-props]
-  (merge {:width :content}
+  (merge {:content-value-f return}
          (-> blank-props)))

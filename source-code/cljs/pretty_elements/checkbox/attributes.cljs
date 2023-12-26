@@ -64,18 +64,16 @@
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  :data-checked (boolean)
-  ;  :data-click-effect (keyword)
-  ;  :disabled (boolean)
-  ;  :on-click (function)
-  ;  :on-mouse-up (function)}
-  [checkbox-id {:keys [disabled? value-path] :as checkbox-props} option]
-  (let [option-checked? @(r/subscribe [:pretty-elements.checkbox/option-checked? checkbox-id checkbox-props option])]
-       (merge {:class             :pe-checkbox--option
-               :data-checked      option-checked?
-               :data-click-effect :targeted}
-              (if disabled? {:disabled    true}
-                            {:on-click    #(r/dispatch [:pretty-elements.checkbox/toggle-option! checkbox-id checkbox-props option])
-                             :on-mouse-up #(dom/blur-active-element!)}))))
+  ;  :disabled (boolean)}
+  [checkbox-id {:keys [disabled?] :as checkbox-props} option]
+  (let [option-checked? @(r/subscribe [:pretty-elements.checkbox/option-checked? checkbox-id checkbox-props option])
+        on-check-event  #(r/dispatch  [:pretty-elements.checkbox/toggle-option!  checkbox-id checkbox-props option])]
+       (-> {:class        :pe-checkbox--option
+            :data-checked option-checked?
+            :disabled     disabled?}
+           (pretty-css/effect-attributes checkbox-props)
+           (pretty-css/mouse-event-attributes {:on-click    on-check-event
+                                               :on-mouse-up dom/blur-active-element!}))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -113,5 +111,6 @@
   ; {:class (keyword or keywords in vector)}
   [_ checkbox-props]
   (-> {:class :pe-checkbox}
-      (pretty-css/default-attributes checkbox-props)
+      (pretty-css/class-attributes   checkbox-props)
+      (pretty-css/state-attributes   checkbox-props)
       (pretty-css/outdent-attributes checkbox-props)))

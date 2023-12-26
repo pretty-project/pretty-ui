@@ -8,13 +8,14 @@
   ; @ignore
   ;
   ; @param (map) line-props
+  ; {:color (keyword or string)(opt)}
   ;
   ; @return (map)
   ; {:fill-color (keyword or string)
-  ;  :height (keyword)
+  ;  :height (keyword, px or string)
   ;  :strength (px)}
-  [line-props]
-  (merge {:fill-color :default
+  [{:keys [color] :as line-props}]
+  (merge {:fill-color (or color :muted)
           :height     :parent
           :strength   1}
          (-> line-props)))

@@ -1,6 +1,4 @@
 
-; WARNING! NOT TESTED! DO NOT USE!
-
 (ns pretty-elements.digit-field.views
     (:require [dom.api                                :as dom]
               [fruits.css.api                         :as css]
@@ -21,10 +19,10 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   [field-id field-props]
-  [:input {:class :pe-digit-field--input
-           :type "text"
-           ; XXX#4460 (source-code/cljs/pretty_elements/button/attributes.cljs)
-           :id (hiccup/value field-id "input")
+  ; @note (pretty-elements.button.attributes#4460)
+  [:input {:class     :pe-digit-field--input
+           :type      "text"
+           :id        (hiccup/value field-id "input")
            :on-change #(let [v (dom/event->value %)]
                             (r/dispatch-sync [:set-item! (:value-path field-props) (str v)]))}])
 
@@ -53,6 +51,9 @@
         [digit-field-cover                       field-id field-props]])
 
 (defn element
+  ; @important
+  ; This function is incomplete and may not behave as expected.
+  ;
   ; @description
   ; The 'digit-field' element writes its actual value into the Re-Frame state
   ; delayed after the user stopped typing or without a delay when the user
@@ -82,6 +83,7 @@
    [element (random/generate-keyword) field-props])
 
   ([field-id field-props]
-   (fn [_ field-props] ; XXX#0106 (tutorials.api#parametering)
+   ; @note (tutorials#parametering)
+   (fn [_ field-props]
        (let [] ; field-props (digit-field.prototypes/field-props-prototype field-props)
             [digit-field field-id field-props]))))

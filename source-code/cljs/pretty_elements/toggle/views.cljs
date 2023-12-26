@@ -25,9 +25,7 @@
   ; @param (keyword)(opt) toggle-id
   ; @param (map) toggle-props
   ; {:border-color (keyword or string)(opt)
-  ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;  :border-position (keyword)(opt)
-  ;   :all, :bottom, :top, :left, :right, :horizontal, :vertical
   ;  :border-radius (map)(opt)
   ;   {:tl (keyword)(opt)
   ;    :tr (keyword)(opt)
@@ -44,10 +42,9 @@
   ;   Default: :pointer
   ;  :disabled? (boolean)(opt)
   ;  :fill-color (keyword or string)(opt)
-  ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
-  ;  :height (keyword)(opt)
-  ;   :auto, :content, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  ;   Default: :auto
+  ;  :fill-pattern (keyword)(opt)
+  ;   Default: :cover
+  ;  :height (keyword, px or string)(opt)
   ;  :hover-color (keyword or string)(opt)
   ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;  :hover-effect (keyword)(opt)
@@ -73,9 +70,7 @@
   ;  :style (map)(opt)
   ;  :target (keyword)(opt)
   ;   :blank, :self
-  ;  :width (keyword)(opt)
-  ;   :auto, :content, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  ;   Default: :content}
+  ;  :width (keyword, px or string)(opt)}
   ;
   ; @usage
   ; [toggle {...}]
@@ -86,7 +81,8 @@
    [element (random/generate-keyword) toggle-props])
 
   ([toggle-id toggle-props]
-   (fn [_ toggle-props] ; XXX#0106 (tutorials.api#parametering)
+   ; @note (tutorials#parametering)
+   (fn [_ toggle-props]
        (let [toggle-props (pretty-presets/apply-preset              toggle-props)
              toggle-props (toggle.prototypes/toggle-props-prototype toggle-props)]
             [toggle toggle-id toggle-props]))))

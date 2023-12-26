@@ -28,7 +28,7 @@
   ;  :type (keyword)
   ;  :value (string)}
   [field-id {:keys [disabled? on-change-f] :as field-props}]
-  ; XXX#4460 (source-code/cljs/pretty_elements/button/views.cljs)
+  ; @note (pretty-elements.button.attributes#4460)
   ;
   ; BUG#8806
   ; If the {:disabled? true} state of the plain-field element would set the
@@ -83,7 +83,7 @@
   ;  :id (string)
   ;  :on-mouse-down (function)}
   [field-id {:keys [surface]}]
-  ; XXX#4460 (source-code/cljs/pretty_elements/button/views.cljs)
+  ; @note (pretty-elements.button.attributes#4460)
   ; BUG#2105 (source-code/cljs/pretty_elements/text_field/attributes.cljs)
   (-> {:class                 :pe-plain-field--surface
        :data-box-shadow-color :default
@@ -125,5 +125,6 @@
   [_ {:keys [disabled?] :as field-props}]
   (-> {:class        :pe-plain-field
        :data-covered disabled?}
-      (pretty-css/default-attributes field-props)
+      (pretty-css/class-attributes   field-props)
+      (pretty-css/state-attributes   field-props)
       (pretty-css/outdent-attributes field-props)))

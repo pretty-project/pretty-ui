@@ -22,5 +22,6 @@
   ;
   ; @return (map)
   [_ table-props]
-  (-> {} (pretty-css/default-attributes table-props)
+  (-> {} (pretty-css/class-attributes   table-props)
+         (pretty-css/state-attributes   table-props)
          (pretty-css/outdent-attributes table-props)))

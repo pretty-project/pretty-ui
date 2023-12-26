@@ -78,5 +78,6 @@
   ; {}
   [_ picker-props]
   (-> {:class :c-color-picker}
-      (pretty-css/default-attributes picker-props)
+      (pretty-css/class-attributes   picker-props)
+      (pretty-css/state-attributes   picker-props)
       (pretty-css/outdent-attributes picker-props)))

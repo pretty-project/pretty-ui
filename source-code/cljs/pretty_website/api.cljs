@@ -37,6 +37,9 @@
 ; @tutorial Option paths of optionable inputs
 ; @redirect (tutorials/option-paths-of-optionable-inputs)
 
+; @tutorial Customizing items
+; @redirect (tutorials/customizing-items)
+
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 

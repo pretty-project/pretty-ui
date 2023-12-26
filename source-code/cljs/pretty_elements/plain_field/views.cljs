@@ -80,7 +80,7 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   [field-id field-props]
-  ; XXX#0106 (tutorials.api#parametering)
+  ; @note (tutorials#parametering)
   (reagent/lifecycles {:component-did-mount    (fn [_ _] (r/dispatch [:pretty-elements.plain-field/field-did-mount    field-id field-props]))
                        :component-will-unmount (fn [_ _] (r/dispatch [:pretty-elements.plain-field/field-will-unmount field-id field-props]))
                        :reagent-render         (fn [_ field-props] [plain-field-structure field-id field-props])}))
@@ -113,22 +113,22 @@
   ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
   ;  :initial-value (string)(opt)
   ;  :modifier-f (function)(opt)
-  ;  :on-blur (Re-Frame metamorphic-event)(opt)
+  ;  :on-blur (function or Re-Frame metamorphic-event)(opt)
   ;   This event takes the field content as its last parameter.
   ;  :on-change-f (function)(opt)
   ;   This function takes the field-id, the field-props and the change event as its parameters.
-  ;  :on-changed (Re-Frame metamorphic-event)(opt)
+  ;  :on-changed (function or Re-Frame metamorphic-event)(opt)
   ;   It happens BEFORE the application state gets updated with the actual value!
   ;   If you want to get the ACTUAL value from the application state, use the
   ;   :on-type-ended event instead!
   ;   This event takes the field content as its last parameter.
-  ;  :on-focus (Re-Frame metamorphic-event)(opt)
+  ;  :on-focus (function or Re-Frame metamorphic-event)(opt)
   ;   This event takes the field content as its last parameter.
-  ;  :on-mount (Re-Frame metamorphic-event)(opt)
+  ;  :on-mount (function or Re-Frame metamorphic-event)(opt)
   ;   This event takes the field content as its last parameter.
-  ;  :on-type-ended (Re-Frame metamorphic-event)(opt)
+  ;  :on-type-ended (function or Re-Frame metamorphic-event)(opt)
   ;   This event takes the field content as its last parameter.
-  ;  :on-unmount (Re-Frame metamorphic-event)(opt)
+  ;  :on-unmount (function or Re-Frame metamorphic-event)(opt)
   ;   This event takes the field content as its last parameter.
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
@@ -149,7 +149,8 @@
    [element (random/generate-keyword) field-props])
 
   ([field-id field-props]
-   (fn [_ field-props] ; XXX#0106 (tutorials.api#parametering)
+   ; @note (tutorials#parametering)
+   (fn [_ field-props]
        (let [field-props (pretty-presets/apply-preset                           field-props)
              field-props (plain-field.prototypes/field-props-prototype field-id field-props)]
             [plain-field field-id field-props]))))

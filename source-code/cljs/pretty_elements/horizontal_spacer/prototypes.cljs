@@ -10,7 +10,9 @@
   ; @param (map) spacer-props
   ;
   ; @return (map)
-  ; {:height (keyword)}
+  ; {:height (keyword, px or string)
+  ;  :width (keyword, px or string)}
   [spacer-props]
-  (merge {:height :s}
+  (merge {:height :s
+          :width  :auto}
          (-> spacer-props)))

@@ -25,10 +25,9 @@
   ; 1. Adding the new page to the page pool, associated with a randomly generated ID.
   ; 2. Setting the animation direction.
   ; 3. Setting the newly generated page ID as the active page ID (this action mounts the newly added page).
-  ;    Without an additional delay (50ms) the animation does not working properly (10ms was not enough).
-  ; 4. Cleaning up the page pool after the animation ended if no further page changing happened
-  ;    (the animation has to be disarmed before the cleaning, otherwise changing the pool can
-  ;     cause an animated rerending of the active page).
+  ;    Without an additional delay (ca. 50ms) the animation does not working properly (10ms was not enough).
+  ; 4. Cleaning up the page pool (after the animation ended) if no further page-changing happened
+  ;    (the animation has to be disarmed before the cleaning; otherwise, changing the pool can cause an animated rerending of the active page).
   (let [page-id     (random/generate-keyword)
         active-page (content-swapper.env/get-active-page swapper-id)]
        (when (or rerender-same? (not= active-page page))

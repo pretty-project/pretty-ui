@@ -35,6 +35,7 @@
   ; @param (map) polarity-props
   ; {:class (keyword or keywords in vector)(opt)
   ;  :end-content (metamorphic-content)
+  ;  :height (keyword, px or string)(opt)
   ;  :indent (map)(opt)
   ;   {:bottom (keyword)(opt)
   ;    :left (keyword)(opt)
@@ -52,8 +53,7 @@
   ;  :vertical-align (keyword)(opt)
   ;   :bottom, :center, :top
   ;   Default: :center
-  ;  :width (keyword)(opt)
-  ;   :auto, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;  :width (keyword, px or string)(opt)
   ;   Default: :auto}
   ;
   ; @usage
@@ -69,7 +69,8 @@
    [element (random/generate-keyword) polarity-props])
 
   ([polarity-id polarity-props]
-   (fn [_ polarity-props] ; XXX#0106 (tutorials.api#parametering)
+   ; @note (tutorials#parametering)
+   (fn [_ polarity-props]
        (let [polarity-props (pretty-presets/apply-preset                             polarity-props)
              polarity-props (horizontal-polarity.prototypes/polarity-props-prototype polarity-props)]
             [horizontal-polarity polarity-id polarity-props]))))

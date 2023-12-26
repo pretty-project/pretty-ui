@@ -33,6 +33,7 @@
    [element (random/generate-keyword) stepper-props])
 
   ([stepper-id stepper-props]
-   (fn [_ stepper-props] ; XXX#0106 (tutorials.api#parametering)
+   ; @note (tutorials#parametering)  
+   (fn [_ stepper-props]
        (let [] ; stepper-props (stepper.prototypes/stepper-props-prototype stepper-props)
             [stepper stepper-id stepper-props]))))

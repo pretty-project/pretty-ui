@@ -105,6 +105,7 @@
    [component (random/generate-keyword) view-props])
 
   ([view-id view-props]
-   (fn [_ view-props] ; XXX#0106 (tutorials.api#parametering)
+   ; @note (tutorials#parametering)
+   (fn [_ view-props]
        (let [] ; view-props (ghost-view.prototypes/view-props-prototype view-props)
             [ghost-view view-id view-props]))))

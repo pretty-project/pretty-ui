@@ -33,5 +33,6 @@
   ; {:class (keyword or keywords in vector)}
   [_ menu-props]
   (-> {:class :pw-multi-menu}
-      (pretty-css/default-attributes menu-props)
+      (pretty-css/class-attributes   menu-props)
+      (pretty-css/state-attributes   menu-props)
       (pretty-css/outdent-attributes menu-props)))

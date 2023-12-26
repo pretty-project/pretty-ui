@@ -70,5 +70,6 @@
   ; {}
   [_ expandable-props]
   (-> {:class :pe-expandable}
-      (pretty-css/default-attributes expandable-props)
+      (pretty-css/class-attributes   expandable-props)
+      (pretty-css/state-attributes   expandable-props)
       (pretty-css/outdent-attributes expandable-props)))

@@ -17,8 +17,7 @@
   ;  :line-height (keyword)
   ;  :placeholder (metamorphic-content)
   ;  :selectable? (boolean)
-  ;  :text-overflow (keyword)
-  ;  :width (keyword)}
+  ;  :text-overflow (keyword)}
   [text-props]
   ; BUG#9811 (source-code/cljs/pretty_elements/label/views.cljs)
   (merge {:font-size        :s
@@ -27,6 +26,5 @@
           :line-height      :text-block
           :placeholder      "\u00A0"
           :selectable?      true
-          :text-overflow    :wrap
-          :width            :content}
+          :text-overflow    :wrap}
          (-> text-props)))

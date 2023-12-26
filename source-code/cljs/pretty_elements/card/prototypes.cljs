@@ -1,6 +1,9 @@
 
 (ns pretty-elements.card.prototypes
-    (:require [metamorphic-content.api :as metamorphic-content]))
+    (:require [metamorphic-content.api :as metamorphic-content]
+              [fruits.noop.api :refer [return]]
+              [dom.api :as dom]
+              [pretty-elements.element.side-effects :as element.side-effects]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -11,11 +14,9 @@
   ; @param (map) card-props
   ; {:badge-content (metamorphic-content)(opt)
   ;  :border-color (keyword)(opt)
-  ;  :cursor (keyword)(opt)
-  ;  :disabled? (boolean)(opt)
   ;  :href (string)(opt)
   ;  :marker-color (keyword)(opt)
-  ;  :on-click (Re-Frame metamorphic-event)(opt)}
+  ;  :on-click (function or Re-Frame metamorphic-event)(opt)}
   ;
   ; @return (map)
   ; {:badge-color (keyword)
@@ -23,23 +24,29 @@
   ;  :badge-position (keyword)
   ;  :border-position (keyword)
   ;  :border-width (keyword)
+  ;  :click-effect (keyword)
+  ;  :content-value-f (function)
   ;  :cursor (keyword)
-  ;  :height (keyword)
-  ;  :hover-color (keyword)
   ;  :marker-color (keyword)
-  ;  :width (keyword)}
-  [{:keys [badge-content border-color cursor disabled? href marker-color on-click] :as card-props}]
-  ; XXX#5603 (source-code/cljs/pretty_elements/button/prototypes.cljs)
-  (merge {:height :auto
-          :width  :content}
+  ;  :on-click (function)
+  ;  :on-mouse-up (function)}
+  [{:keys [badge-content border-color href marker-color on-click] :as card-props}]
+  ; @note (pretty-elements.button.prototypes#7861)
+  ;
+  ; @bug (#7901)
+  ; Using the 'dom/blur-active-element!' function as 'on-mouse-up' event must be conditional.
+  ; Otherwise, in case the card is not clickable and it contains a 'text-field' element
+  ; the blur function would drop the focus of the field when the card gets clicked.
+  (merge {:content-value-f return}
          (if badge-content {:badge-color     :primary
                             :badge-position  :tr})
          (if border-color  {:border-position :all
                             :border-width    :xxs})
          (if marker-color  {:marker-position :tr})
-         (if href          {:cursor          :pointer})
-         (if on-click      {:cursor          :pointer})
+         (if href          {:click-effect    :opacity})
+         (if on-click      {:click-effect    :opacity})
          (-> card-props)
          (if badge-content {:badge-content (metamorphic-content/compose badge-content)})
-         (if disabled?     {:cursor      (or cursor :default)
-                            :hover-color :none})))
+         (if href          {:on-mouse-up   #(dom/blur-active-element!)})
+         (if on-click      {:on-click      #(element.side-effects/dispatch-event-handler! on-click)
+                            :on-mouse-up   #(dom/blur-active-element!)})))

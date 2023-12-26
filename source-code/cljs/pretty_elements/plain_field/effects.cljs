@@ -15,14 +15,14 @@
   ; @param (map) field-props
   ; {:autofocus? (boolean)(opt)
   ;  :initial-value (*)(opt)
-  ;  :on-mount (Re-Frame metamorphic-event)(opt)
+  ;  :on-mount (function or Re-Frame metamorphic-event)(opt)
   ;  :value-path (Re-Frame path vector)}
   (fn [{:keys [db]} [_ field-id {:keys [autofocus? initial-value on-mount value-path] :as field-props}]]
-      ; The autofocus has to be delayed, otherwise the caret would shown up not at the end of the content.
+      ; The autofocus has to be delayed; otherwise, the caret would shown up not at the end of the content.
       (let [stored-value (get-in db value-path)]
            {:dispatch-later [(if autofocus?    {:ms 50 :fx [:pretty-elements.plain-field/focus-field! field-id]})]
-            :dispatch-n     [(if on-mount      (r/metamorphic-event<-params on-mount (or initial-value stored-value)))
-                             (if initial-value [:pretty-elements.plain-field/use-initial-value! field-id field-props])]})))
+            :dispatch-n     [(if initial-value [:pretty-elements.plain-field/use-initial-value! field-id field-props])
+                             [:pretty-elements.element/dispatch-event-handler! on-mount (or initial-value stored-value)]]})))
 
 (r/reg-event-fx :pretty-elements.plain-field/field-will-unmount
   ; @ignore
@@ -30,12 +30,12 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   ; {:autoclear? (boolean)(opt)
-  ;  :on-unmount (Re-Frame metamorphic-event)(opt)
+  ;  :on-unmount (function or Re-Frame metamorphic-event)(opt)
   ;  :value-path (Re-Frame path vector)}
   (fn [{:keys [db]} [_ field-id {:keys [autoclear? on-unmount value-path] :as field-props}]]
       (let [stored-value (get-in db value-path)]
-           {:db          (if autoclear? (r plain-field.events/clear-value! db field-id field-props) db)
-            :dispatch-n [(if on-unmount (r/metamorphic-event<-params on-unmount stored-value))]})))
+           {:db       (if autoclear? (r plain-field.events/clear-value! db field-id field-props) db)
+            :dispatch [:pretty-elements.element/dispatch-event-handler! on-unmount stored-value]})))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -56,7 +56,7 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ; {:on-type-ended (Re-Frame metamorphic-event)(opt)}
+  ; {:on-type-ended (function or Re-Frame metamorphic-event)(opt)}
   (fn [{:keys [db]} [_ field-id {:keys [on-type-ended] :as field-props}]]
       ; BUG#6071 (source-code/cljs/pretty_elements/plain_field/side_effects.cljs)
       ;
@@ -70,15 +70,15 @@
            (if-let [field-focused? (input.env/input-focused? field-id)]
                    {:db       (r plain-field.events/store-value! db field-id field-props field-content)
                     :fx       [:pretty-elements.plain-field/show-surface! field-id]
-                    :dispatch (if on-type-ended (r/metamorphic-event<-params on-type-ended field-content))}
-                   {:dispatch (if on-type-ended (r/metamorphic-event<-params on-type-ended field-content))}))))
+                    :dispatch [:pretty-elements.element/dispatch-event-handler! on-type-ended field-content]}
+                   {:dispatch [:pretty-elements.element/dispatch-event-handler! on-type-ended field-content]}))))
 
 (r/reg-event-fx :pretty-elements.plain-field/field-blurred
   ; @ignore
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ; {:on-blur (Re-Frame metamorphic-event)(opt)}
+  ; {:on-blur (function or Re-Frame metamorphic-event)(opt)}
   (fn [{:keys [db]} [_ field-id {:keys [on-blur] :as field-props}]]
       ; - When the user leaves a field it writes its actual field content into the Re-Frame state immediately.
       ; - Normally this state-writing action happens delayed after last key is being pressed
@@ -95,7 +95,7 @@
       ;         starts the validating, the actual field content is already in the application state.
       (let [field-content (plain-field.env/get-field-content field-id)]
            {:db         (r plain-field.events/store-value! db field-id field-props field-content)
-            :dispatch-n [(if on-blur (r/metamorphic-event<-params on-blur field-content))]
+            :dispatch-n [[:pretty-elements.element/dispatch-event-handler! on-blur field-content]]
             :fx-n       [[:pretty-elements.plain-field/hide-surface!      field-id]
                          [:pretty-elements.input/unmark-input-as-focused! field-id]
                          [:pretty-elements.plain-field/quit-type-mode!    field-id]]})))
@@ -105,10 +105,10 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ; {:on-focus (Re-Frame metamorphic-event)(opt)}
+  ; {:on-focus (function or Re-Frame metamorphic-event)(opt)}
   (fn [_ [_ field-id {:keys [on-focus]}]]
       (let [field-content (plain-field.env/get-field-content field-id)]
-           {:dispatch-n [(if on-focus (r/metamorphic-event<-params on-focus field-content))]
+           {:dispatch-n [[:pretty-elements.element/dispatch-event-handler! on-focus field-content]]
             :fx-n       [[:pretty-elements.plain-field/show-surface!    field-id]
                          [:pretty-elements.input/mark-input-as-focused! field-id]
                          [:pretty-elements.plain-field/set-type-mode!   field-id]]})))

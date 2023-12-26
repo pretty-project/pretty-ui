@@ -34,10 +34,7 @@
   ;   :contain, :cover
   ;   Default: :contain
   ;  :border-color (keyword or string)(opt)
-  ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
-  ;   Default: :default
   ;  :border-position (keyword)(opt)
-  ;   :all, :bottom, :top, :left, :right, :horizontal, :vertical
   ;  :border-radius (map)(opt)
   ;   {:tl (keyword)(opt)
   ;    :tr (keyword)(opt)
@@ -50,8 +47,7 @@
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;  :class (keyword or keywords in vector)(opt)
   ;  :disabled? (boolean)(opt)
-  ;  :height (keyword)(opt)
-  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;  :height (keyword, px or string)(opt)
   ;   Default: :s
   ;  :helper (metamorphic-content)(opt)
   ;  :href (string)(opt)
@@ -78,8 +74,7 @@
   ;  :target (keyword)(opt)
   ;   :blank, :self
   ;  :uri (string)(opt)
-  ;  :width (keyword)(opt)
-  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;  :width (keyword, px or string)(opt)
   ;   Default: :s}
   ;
   ; @usage
@@ -91,7 +86,8 @@
    [element (random/generate-keyword) thumbnail-props])
 
   ([thumbnail-id thumbnail-props]
-   (fn [_ thumbnail-props] ; XXX#0106 (tutorials.api#parametering)
+   ; @note (tutorials#parametering)
+   (fn [_ thumbnail-props]
        (let [thumbnail-props (pretty-presets/apply-preset                    thumbnail-props)
              thumbnail-props (thumbnail.prototypes/thumbnail-props-prototype thumbnail-props)]
             [thumbnail thumbnail-id thumbnail-props]))))

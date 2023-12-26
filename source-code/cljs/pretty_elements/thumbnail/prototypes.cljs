@@ -15,17 +15,16 @@
   ;  :border-color (keyword)
   ;  :border-position (keyword)
   ;  :border-width (keyword)
-  ;  :height (keyword)
+  ;  :height (keyword, px or string)
   ;  :icon (keyword)
   ;  :icon-family (keyword)
-  ;  :width (keyword)}
+  ;  :width (keyword, px or string)}
   [{:keys [border-color] :as thumbnail-props}]
   (merge {:background-size :contain
           :height          :s
-          :width           :s
           :icon            :image
-          :icon-family     :material-symbols-outlined}
-         (if border-color {:border-color    :default
-                           :border-position :all
+          :icon-family     :material-symbols-outlined
+          :width           :s}
+         (if border-color {:border-position :all
                            :border-width    :xxs})
          (-> thumbnail-props)))

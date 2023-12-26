@@ -87,13 +87,14 @@
   ; @return (map)
   ; {}
   [button-id {:keys [disabled?] :as button-props} option]
-  (let [option-selected? @(r/subscribe [:pretty-elements.radio-button/option-selected? button-id button-props option])]
-       (merge {:class             :pe-radio-button--option
-               :data-click-effect :targeted
-               :data-selected option-selected?}
-              (if disabled? {:disabled    true}
-                            {:on-click    #(r/dispatch [:pretty-elements.radio-button/select-option! button-id button-props option])
-                             :on-mouse-up #(dom/blur-active-element!)}))))
+  (let [option-selected? @(r/subscribe [:pretty-elements.radio-button/option-selected? button-id button-props option])
+        on-select-event  #(r/dispatch  [:pretty-elements.radio-button/select-option!   button-id button-props option])]
+       (-> {:class         :pe-radio-button--option
+            :data-selected option-selected?
+            :disabled      disabled?}
+           (pretty-css/effect-attributes button-props)
+           (pretty-css/mouse-event-attributes {:on-click    on-select-event
+                                               :on-mouse-up dom/blur-active-element!}))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -127,5 +128,6 @@
   ; {}
   [_ button-props]
   (-> {:class :pe-radio-button}
-      (pretty-css/default-attributes button-props)
+      (pretty-css/class-attributes   button-props)
+      (pretty-css/state-attributes   button-props)
       (pretty-css/outdent-attributes button-props)))

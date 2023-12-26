@@ -33,7 +33,7 @@
   ; @param (keyword) counter-id
   ; @param (map) counter-props
   [counter-id counter-props]
-  ; XXX#0106 (tutorials.api#parametering)
+  ; @note (tutorials#parametering)
   (reagent/lifecycles {:component-did-mount (fn [_ _] (r/dispatch [:pretty-elements.counter/counter-did-mount counter-id counter-props]))
                        :reagent-render      (fn [_ counter-props] [counter-structure counter-id counter-props])}))
 
@@ -41,7 +41,6 @@
   ; @param (keyword)(opt) counter-id
   ; @param (map) counter-props
   ; {:border-color (keyword or string)(opt)
-  ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;   Default: :default
   ;  :border-radius (map)(opt)
   ;   {:tl (keyword)(opt)
@@ -90,7 +89,8 @@
    [element (random/generate-keyword) counter-props])
 
   ([counter-id counter-props]
-   (fn [_ counter-props] ; XXX#0106 (tutorials.api#parametering)
+   ; @note (tutorials#parametering)
+   (fn [_ counter-props]
        (let [counter-props (pretty-presets/apply-preset                           counter-props)
              counter-props (counter.prototypes/counter-props-prototype counter-id counter-props)]
             [counter counter-id counter-props]))))

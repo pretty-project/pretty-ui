@@ -36,16 +36,14 @@
   ;    :horizontal (keyword)(opt)
   ;    :vertical (keyword)(opt)
   ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
-  ;  :height (keyword)(opt)
-  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;  :height (keyword, px or string)(opt)
   ;   Default: :s
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
   ;  :preset (keyword)(opt)
   ;  :style (map)(opt)
-  ;  :width (keyword)(opt)
-  ;   :auto, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  ;   Default: :auto}
+  ;  :width (keyword, px or string)(opt)
+  ;   Default: :s}
   ;
   ; @usage
   ; [ghost {...}]
@@ -56,7 +54,8 @@
    [element (random/generate-keyword) ghost-props])
 
   ([ghost-id ghost-props]
-   (fn [_ ghost-props] ; XXX#0106 (tutorials.api#parametering)
+   ; @note (tutorials#parametering)
+   (fn [_ ghost-props]
        (let [ghost-props (pretty-presets/apply-preset            ghost-props)
              ghost-props (ghost.prototypes/ghost-props-prototype ghost-props)]
             [ghost ghost-id ghost-props]))))

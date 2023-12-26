@@ -43,7 +43,7 @@
   ; @param (keyword) selector-id
   ; @param (map) selector-props
   [selector-id selector-props]
-  ; XXX#0106 (tutorials.api#parametering)
+  ; @note (tutorials#parametering)
   (reagent/lifecycles {:component-did-mount (fn [_ _] (r/dispatch [:pretty-elements.color-selector/options-did-mount selector-id selector-props]))
                        :reagent-render      (fn [_ selector-props] [color-selector-option-list selector-id selector-props])}))
 
@@ -118,10 +118,18 @@
   ;    :border-position (keyword)(opt)
   ;    :border-radius (map)(opt)
   ;    :border-width (keyword)(opt)
+  ;    :click-effect (keyword)(opt)
+  ;     :none, :opacity
+  ;     Default: :opacity
   ;    :cover-color (keyword or string)(opt)
   ;     Default: :black
   ;    :fill-color (keyword or string)(opt)
   ;     Default: :default
+  ;    :fill-pattern (keyword)(opt)
+  ;     Default: :cover
+  ;    :hover-effect (keyword)(opt)
+  ;     :none, :opacity
+  ;     Default: :none
   ;    :indent (map)(opt)
   ;    :label (metamorphic-content)(opt)
   ;    :min-width (keyword)(opt)
@@ -140,7 +148,8 @@
    [element (random/generate-keyword) selector-props])
 
   ([selector-id selector-props]
-   (fn [_ selector-props] ; XXX#0106 (tutorials.api#parametering)
+   ; @note (tutorials#parametering)
+   (fn [_ selector-props]
        (let [selector-props (pretty-presets/apply-preset                                    selector-props)
              selector-props (color-selector.prototypes/selector-props-prototype selector-id selector-props)]
             [color-selector selector-id selector-props]))))

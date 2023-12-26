@@ -2,11 +2,7 @@
 /***** Blank *****/
 /*** Body ***/
 
-.pe-blank--body {
-  /* XXX#6667
-   * The blank element takes height property. Therefore, its body must fit into it. */
-  height: 100%;
-}
+.pe-blank--body {}
 
 /*** Body ***/
 /***** Blank *****/
@@ -64,11 +60,6 @@
 .pe-button--body {
   align-items: center;
   display:     flex;
-
-  /* XXX#6669
-   * The body element is a BUTTON tag. Therefore, its width must be set to fit
-   * the body into its parent. */
-  width: 100%;
 }
 
 /*** Body ***/
@@ -82,12 +73,6 @@
 .pe-card--body {
   display:        flex;
   flex-direction: column;
-
-  /* XXX#6667 */
-  /* If the card element's height is limited by its parent element, in order to
-   * apply the overflow property on the card's content, the card body element's
-   * height must be specified! */
-  height: 100%;
 }
 
 /*** Body ***/
@@ -134,7 +119,7 @@
 }
 
 .pe-checkbox--option-helper {
-  color: var( --color-muted );
+  color: var( --text-color-muted );
 
   /* XXX#5049 */
   text-align: left;
@@ -165,22 +150,38 @@
 /*** Body ***/
 
 .pe-chip--body {
-  border-radius: 3px;
-  display:       flex;
-  height:        24px;
-  padding-right: 12px;
+  display: flex;
 }
 
 /*** Body ***/
 
+/*** Content ***/
+
+.pe-chip--content {
+  padding-right: 6px;
+}
+
+/*** Content ***/
+
+/*** Icon ***/
+
+.pe-chip--icon-placeholder {
+  height: 24px;
+  width: 6px;
+}
+
+/*** Icon ***/
+
 /*** Button ***/
 
 .pe-chip--primary-button {
-  background-color: rgba(255, 255, 255, .65);
-  border-radius:    3px;
-  color:            var( --color-default );
+  background-color: rgba( 255, 255, 255, .65 );
+  border-radius:    var( --adaptive-border-radius );
+  color:            var( --text-color-default     );
   height:           20px;
-  margin:           2px 12px 2px 2px;
+  left:             2px;
+  position:         absolute;
+  top:              2px;
   width:            20px;
 }
 
@@ -193,8 +194,9 @@
   line-height:     20px;
 }
 
-.pe-chip--primary-button--placeholder {
-  width: 12px;
+.pe-chip--primary-button-spacer {
+  height: 24px;
+  width:  24px;
 }
 
 /*** Button ***/
@@ -225,7 +227,7 @@
 /*** Chip-group no-chips label ***/
 
 .pe-chip-group--chips-placeholder {
-  color: var( --color-highlight );
+  color: var( --text-color-highlight );
 }
 
 /*** Chip-group no-chips label ***/
@@ -265,7 +267,7 @@
   align-items: center;
   background-color: var( --fill-color-default );
   border-radius: 12px;
-  color: var( --color-default );
+  color: var( --text-color-default );
   content: 'check';
   display: flex;
   font-size: var( --icon-size-xs );
@@ -296,10 +298,6 @@
 .pe-column--body {
   display: flex;
   flex-direction: column;
-
-  /* XXX#6667 */
-  /* The {height: 100%} setting is necessary to make the content vertically alignable! */
-  height: 100%;
 }
 
 .pe-column--body[data-wrap-items="true"] {
@@ -343,7 +341,7 @@
 }
 
 .pe-combo-box--field-content-option {
-  color: var( --color-muted )}
+  color: var( --text-color-muted )}
 
 /*** Combo-box option ***/
 /***** Combo-box *****/
@@ -506,7 +504,7 @@
 .pe-counter--increase-button::after,
 .pe-counter--reset-button::before,
 .pe-counter--reset-button::after {
-  background-color: var( --color-default );
+  background-color: var( --text-color-default );
   border-radius: 1px;
   content: '';
   position: absolute;
@@ -547,7 +545,7 @@
 /*** Column ***/
 
 .pe-data-table--column {
-  display: grid
+  display: grid;
 }
 
 /*** Column ***/
@@ -555,15 +553,14 @@
 /*** Row ***/
 
 .pe-data-table--row {
-  display: grid
+  display: grid;
 }
 
 /*** Row ***/
 
 /*** Cell ***/
 
-.pe-data-table--cell {
-}
+.pe-data-table--cell {}
 
 /*** Cell ***/
 /***** Data table *****/
@@ -603,7 +600,7 @@
 
 .pe-digit-field--cover--digit {
   align-items: center;
-  border-color: var( --color-highlight );
+  border-color: var( --text-color-highlight );
   border-radius: var( --border-radius-s );
   border-style: solid;
   border-width: 1px;
@@ -697,9 +694,6 @@
   animation-duration:        2s;
   animation-name:            opacity-1-05-1;
   background-color:          var( --ghost-color );
-
-  /* XXX#6667 */
-  height: 100%;
 }
 
 /*** Body ***/
@@ -753,7 +747,6 @@
 }
 
 /*** Body ***/
-
 
 /*** Line ***/
 
@@ -822,10 +815,7 @@
 /***** Image *****/
 /*** Body ***/
 
-.pe-image--body {
-  height: 100%;
-  width:  100%;
-}
+.pe-image--body {}
 
 /*** Body ***/
 /***** Image *****/
@@ -854,11 +844,6 @@
 .pe-label--body {
   align-items: center;
   display: flex;
-
-  /* */
-  /* Making the label's body as high as its parent to make it fill the available
-   * vertical space if the element has ':max-height' property. */
-  flex-grow: 1;
 }
 
 /*** Body ***/
@@ -884,7 +869,7 @@
 
 .pe-label--helper,
 .pe-label--info-text {
-  color: var( --color-muted );
+  color: var( --text-color-muted );
 }
 
 /*** Helper, info-text ***/
@@ -892,7 +877,7 @@
 /*** Info-text button ***/
 
 .pe-label--info-text-button {
-  color: var( --color-muted );
+  color: var( --text-color-muted );
 }
 
 /*** Info-text button ***/
@@ -968,9 +953,6 @@
   align-items:     center;
   display:         flex;
   justify-content: space-between;
-
-  /* XXX#6667 */
-  height: 100%;
 }
 
 /*** Body ***/
@@ -992,7 +974,7 @@
 
 .pe-radio-button--clear-button {
   background-color: var( --fill-color-default );
-  border-color:     var( --color-default );
+  border-color:     var( --text-color-default );
   margin-bottom:    6px;
   margin-top:       6px;
   padding:          8px;
@@ -1000,7 +982,7 @@
 
 .pe-radio-button--clear-button::before,
 .pe-radio-button--clear-button::after {
-  background-color: var( --color-default );
+  background-color: var( --text-color-default );
   border-radius:    1px;
   content:          '';
   position:         absolute;
@@ -1048,7 +1030,7 @@
 }
 
 .pe-radio-button--option-helper {
-  color: var( --color-muted );
+  color: var( --text-color-muted );
 
   /* XXX#5049 */
   text-align: left;
@@ -1074,7 +1056,7 @@
 .pe-radio-button--option-button::before {
   animation-name:     opacity-0-1;
   animation-duration: .1s;
-  background-color:   var( --color-default          );
+  background-color:   var( --text-color-default     );
   border-radius:      var( --adaptive-border-radius );
   content:            '';
   display:            block;
@@ -1116,7 +1098,7 @@
 
 .pe-select-button {
   /* XXX#6668 */
-  -width: fit-content;
+  width: fit-content;
 }
 
 /*** Select button element ***/
@@ -1154,7 +1136,7 @@
 
 .pe-select--options-placeholder {
   align-self: center;
-  color:      var( --color-highlight );
+  color:      var( --text-color-highlight );
   padding:    0 36px;
 }
 
@@ -1178,7 +1160,7 @@
 }
 
 .pe-select--option[data-selected="true"]::before {
-  background-color: var( --color-primary );
+  background-color: var( --text-color-primary );
   border-radius:    50%;
   content:          '';
   height:           6px;
@@ -1277,10 +1259,6 @@
   flex-shrink: 0;
 }
 
-.pe-horizontal-spacer {
-  width: 100%;
-}
-
 /***** Spacer *****/
 
 
@@ -1325,7 +1303,7 @@
 }
 
 .pe-switch--option-helper {
-  color: var( --color-muted );
+  color: var( --text-color-muted );
 
   /* XXX#5049 */
   text-align: left;
@@ -1336,7 +1314,7 @@
 /*** Thumb ***/
 
 .pe-switch--option-track::before {
-  background-color: var( --color-default );
+  background-color: var( --text-color-default );
   border-radius:    50%;
   content:          '';
   display:          block;
@@ -1423,7 +1401,7 @@
 }
 
 .pe-text-field--input {
-  color:   var( --color-default );
+  color:   var( --text-color-default );
   height:  100%;
   padding: 6px 0;
   width:   100%;
@@ -1478,8 +1456,8 @@ textarea.pe-text-field--input {
 /*** Invalid content message ***/
 
 .pe-text-field--invalid-content-message {
-  color:          var( --color-warning );
-  font-size:      var( --font-size-xxs );
+  color:          var( --text-color-warning );
+  font-size:      var( --font-size-xxs      );
   font-weight:    var( --font-weight-medium );
   letter-spacing: var( --letter-spacing-xxs );
   line-height:    18px;
@@ -1491,7 +1469,7 @@ textarea.pe-text-field--input {
 /*** Placeholder ***/
 
 .pe-text-field--placeholder {
-  color:       var( --color-highlight );
+  color:       var( --text-color-highlight );
   font-weight: 400;
   left:        0;
   max-width:   100%;
@@ -1540,15 +1518,6 @@ textarea.pe-text-field--input {
 
 
 /***** Thumbnail *****/
-/*** Element ***/
-
-.pe-thumbnail {
-  /* XXX#6668 */
-  width: fit-content;
-}
-
-/*** Element ***/
-
 /*** Body ***/
 
 .pe-thumbnail--body {
@@ -1573,7 +1542,7 @@ textarea.pe-text-field--input {
 
 .pe-thumbnail--icon {
   background-color: var( --fill-color-highlight );
-  color:            var( --color-highlight );
+  color:            var( --text-color-highlight );
   height:           100%;
   left:             0;
   position:         absolute;
@@ -1594,11 +1563,8 @@ textarea.pe-text-field--input {
   font-weight: 500;
   width:       100%;
 
-  /* Overwriting the user-agent rule */
+  /* Normalizing 'text-align' user agent rule */
   text-align: left;
-
-  /* XXX#6667 */
-  height: 100%;
 }
 
 /*** Body ***/
@@ -1628,22 +1594,6 @@ textarea.pe-text-field--input {
 
 
 /***** Vertical polarity *****/
-/*** Element ***/
-
-.pe-vertical-polarity {
-  /* XXX#6668 */
-  width: fit-content;
-}
-
-.pe-vertical-polarity {
-  /* WARNING! DEPRECATED! DO NOT USE! */
- -width: 100%;
-  /* WARNING! DEPRECATED! DO NOT USE! */
-  height: 100%;
-}
-
-/*** Element ***/
-
 /*** Body ***/
 
 .pe-vertical-polarity--body {

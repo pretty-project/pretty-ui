@@ -64,5 +64,6 @@
   ; {:class (keyword or keywords in vector)}
   [_ selector-props]
   (-> {:class :pw-language-selector}
-      (pretty-css/default-attributes selector-props)
+      (pretty-css/class-attributes   selector-props)
+      (pretty-css/state-attributes   selector-props)
       (pretty-css/outdent-attributes selector-props)))

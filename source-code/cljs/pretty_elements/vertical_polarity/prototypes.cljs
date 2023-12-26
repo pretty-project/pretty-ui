@@ -10,7 +10,7 @@
   ; @param (map) polarity-props
   ;
   ; @return (map)
-  ; {:height (keyword)
+  ; {:height (keyword, px or string)
   ;  :horizontal-align (keyword)}
   [polarity-props]
   (merge {:height           :parent

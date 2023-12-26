@@ -91,7 +91,8 @@
    [element (random/generate-keyword) group-props])
 
   ([group-id group-props]
-   (fn [_ group-props] ; XXX#0106 (tutorials.api#parametering)
+   ; @note (tutorials#parametering)
+   (fn [_ group-props]
        (let [group-props (pretty-presets/apply-preset                          group-props)
              group-props (chip-group.prototypes/group-props-prototype group-id group-props)]
             [chip-group group-id group-props]))))

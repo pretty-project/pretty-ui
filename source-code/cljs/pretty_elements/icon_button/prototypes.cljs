@@ -10,8 +10,7 @@
   ;
   ; @param (map) button-props
   ; {:badge-content (metamorphic-content)(opt)
-  ;  :cursor (keyword)(opt)
-  ;  :disabled? (boolean)(opt)
+  ;  :badge-color (keyword)(opt
   ;  :marker-color (keyword)(opt)
   ;  :progress (percent)(opt)
   ;  :tooltip-content (metamorphic-content)(opt)}
@@ -19,8 +18,6 @@
   ; @return (map)
   ; {:badge-color (keyword)
   ;  :badge-position (keyword)
-  ;  :cursor (pointer)
-  ;  :hover-color (keyword)
   ;  :icon-family (keyword)
   ;  :icon-size (keyword)
   ;  :marker-position (keyword)
@@ -29,8 +26,7 @@
   ;  :progress-duration (ms)
   ;  :tooltip-content (string)
   ;  :tooltip-position (keyword)}
-  [{:keys [badge-content border-color cursor disabled? marker-color progress tooltip-content] :as button-props}]
-  ; XXX#5603 (source-code/cljs/pretty_elements/button/prototypes.cljs)
+  [{:keys [badge-content border-color marker-color progress tooltip-content] :as button-props}]
   (merge {:icon-family :material-symbols-outlined
           :icon-size   :m}
          (if badge-content   {:badge-color        :primary
@@ -43,7 +39,4 @@
                               :progress-duration  250})
          (if tooltip-content {:tooltip-position   :right})
          (-> button-props)
-         (if disabled?       {:cursor      (or cursor :default)
-                              :hover-color :none}
-                             {:cursor      :pointer})
          (if tooltip-content {:tooltip-content (metamorphic-content/compose tooltip-content)})))

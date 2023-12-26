@@ -39,7 +39,8 @@
    [component (random/generate-keyword) icon-props])
 
   ([icon-id icon-props]
-   (fn [_ icon-props] ; XXX#0106 (tutorials.api#parametering)
+   ; @note (tutorials#parametering)
+   (fn [_ icon-props]
        (let [icon-props (pretty-presets/apply-preset                 icon-props)
              icon-props (scroll-icon.prototypes/icon-props-prototype icon-props)]
             [scroll-icon icon-id icon-props]))))

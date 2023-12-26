@@ -35,6 +35,7 @@
    [component (random/generate-keyword) label-props])
 
   ([label-id label-props]
-   (fn [_ label-props] ; XXX#0106 (tutorials.api#parametering)
+   ; @note (tutorials#parametering)
+   (fn [_ label-props]
        (let [label-props (popup-menu-label.prototypes/label-props-prototype label-props)]
             [pretty-elements/label label-id label-props]))))

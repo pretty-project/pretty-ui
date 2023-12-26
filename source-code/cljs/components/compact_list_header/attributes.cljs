@@ -31,5 +31,6 @@
   ; {}
   [_ header-props]
   (-> {:class :c-compact-list-header}
-      (pretty-css/default-attributes header-props)
+      (pretty-css/class-attributes   header-props)
+      (pretty-css/state-attributes   header-props)
       (pretty-css/outdent-attributes header-props)))

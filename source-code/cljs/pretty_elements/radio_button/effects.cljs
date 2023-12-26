@@ -25,12 +25,14 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  ; {:on-select (Re-Frame metamorphic-event)(opt)}
+  ; {:on-select (function or Re-Frame metamorphic-event)(opt)
+  ;  :option-value-f (function)}
   ; @param (*) option
-  (fn [{:keys [db]} [_ button-id {:keys [on-select] :as button-props} option]]
-      {:db (r radio-button.events/select-option! db button-id button-props option)
-       :fx [:pretty-elements.input/mark-input-as-visited! button-id]
-       :dispatch on-select}))
+  (fn [{:keys [db]} [_ button-id {:keys [on-select option-value-f] :as button-props} option]]
+      (let [option-value (option-value-f option)]
+           {:db       (r radio-button.events/select-option! db button-id button-props option)
+            :fx       [:pretty-elements.input/mark-input-as-visited! button-id]
+            :dispatch [:pretty-elements/dispatch-event-handler! on-select option-value]})))
 
 (r/reg-event-fx :pretty-elements.radio-button/clear-value!
   ; @ignore

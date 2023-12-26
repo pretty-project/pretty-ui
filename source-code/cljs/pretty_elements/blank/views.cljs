@@ -14,38 +14,29 @@
   ;
   ; @param (keyword) blank-id
   ; @param (map) blank-props
-  ; {:content (metamorphic-content)}
-  [blank-id {:keys [content] :as blank-props}]
+  ; {:content (metamorphic-content)(opt)
+  ;  :content-value-f (function)}
+  [blank-id {:keys [content content-value-f] :as blank-props}]
   [:div (blank.attributes/blank-attributes blank-id blank-props)
         [:div (blank.attributes/blank-body-attributes blank-id blank-props)
-              [metamorphic-content/compose content]]])
+              [metamorphic-content/compose (content-value-f content)]]])
 
 (defn element
   ; @param (keyword)(opt) blank-id
   ; @param (map) blank-props
-  ; {:background-pattern (keyword)(opt)
-  ;   :stripes
-  ;  :border-color (keyword or string)(opt)
-  ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+  ; {:border-color (keyword or string)(opt)
   ;  :border-position (keyword)(opt)
-  ;   :all, :bottom, :top, :left, :right, :horizontal, :vertical
   ;  :border-radius (map)(opt)
-  ;   {:tl (keyword)(opt)
-  ;    :tr (keyword)(opt)
-  ;    :br (keyword)(opt)
-  ;    :bl (keyword)(opt)
-  ;    :all (keyword)(opt)
-  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
   ;  :border-width (keyword)(opt)
-  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;  :class (keyword or keywords in vector)(opt)
-  ;  :content (metamorphic-content)
+  ;  :content (metamorphic-content)(opt)
+  ;  :content-value-f (function)(opt)
+  ;   Default: return
   ;  :disabled? (boolean)(opt)
   ;  :fill-color (keyword or string)(opt)
-  ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
-  ;  :height (keyword)(opt)
-  ;   :auto, :content, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  ;   Default: :content
+  ;  :fill-pattern (keyword)(opt)
+  ;   Default: :cover
+  ;  :height (keyword, px or string)(opt)
   ;  :indent (map)(opt)
   ;   {:bottom (keyword)(opt)
   ;    :left (keyword)(opt)
@@ -58,9 +49,7 @@
   ;   Same as the :indent property.
   ;  :preset (keyword)(opt)
   ;  :style (map)(opt)
-  ;  :width (keyword)(opt)
-  ;   :auto, :content, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  ;   Default: :content}
+  ;  :width (keyword, px or string)(opt)}
   ;
   ; @usage
   ; [blank {...}]
@@ -71,7 +60,8 @@
    [element (random/generate-keyword) blank-props])
 
   ([blank-id blank-props]
-   (fn [_ blank-props] ; XXX#0106 (tutorials.api#parametering)
+   ; @note (tutorials#parametering)
+   (fn [_ blank-props]
        (let [blank-props (pretty-presets/apply-preset            blank-props)
              blank-props (blank.prototypes/blank-props-prototype blank-props)]
             [blank blank-id blank-props]))))

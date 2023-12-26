@@ -132,9 +132,7 @@
   ; @param (keyword)(opt) label-id
   ; @param (map) label-props
   ; {:border-color (keyword or string)(opt)
-  ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;  :border-position (keyword)(opt)
-  ;   :all, :bottom, :top, :left, :right, :horizontal, :vertical
   ;  :border-radius (map)(opt)
   ;   {:tl (keyword)(opt)
   ;    :tr (keyword)(opt)
@@ -145,13 +143,11 @@
   ;  :border-width (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;  :class (keyword or keywords in vector)(opt)
-  ;  :color (keyword or string)(opt)
-  ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
-  ;   Default: :inherit
   ;  :content (metamorphic-content)
   ;  :disabled? (boolean)(opt)
   ;  :fill-color (keyword or string)(opt)
-  ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+  ;  :fill-pattern (keyword)(opt)
+  ;   Default: :cover
   ;  :font-size (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
   ;   Default: :s
@@ -161,6 +157,7 @@
   ;  :gap (keyword)(opt)
   ;   Distance between the icon, the info-text button and the label
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :auto
+  ;  :height (keyword, px or string)(opt)
   ;  :horizontal-align (keyword)(opt)
   ;   :center, :left, :right
   ;   Default: :left
@@ -195,10 +192,8 @@
   ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
   ;  :marker-position (keyword)(opt)
   ;   :tl, :tr, :br, :bl, left, :right, bottom, :top
-  ;  :min-height (keyword)(opt)
-  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  ;  :min-width (keyword)(opt)
-  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;  :min-height (keyword, px or string)(opt)
+  ;  :min-width (keyword, px or string)(opt)
   ;  :on-copy (Re-Frame metamorphic-event)(opt)
   ;   This event takes the label content as its last parameter
   ;  :outdent (map)(opt)
@@ -211,6 +206,9 @@
   ;  :style (map)(opt)
   ;  :target-id (keyword)(opt)
   ;   The input element's ID, that you want to connect to the label with using the 'for' HTML attribute.
+  ;  :text-color (keyword or string)(opt)
+  ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
+  ;   Default: :inherit
   ;  :text-direction (keyword)(opt)
   ;   :normal, :reversed
   ;   Default :normal
@@ -223,9 +221,7 @@
   ;   :left, :right
   ;  :vertical-position (keyword)(opt)
   ;   :bottom, :center, :top
-  ;  :width (keyword)(opt)
-  ;   :auto, :content, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  ;   Default: :content}
+  ;  :width (keyword, px or string)(opt)}
   ;
   ; @usage
   ; [label {...}]
@@ -236,7 +232,8 @@
    [element (random/generate-keyword) label-props])
 
   ([label-id label-props]
-   (fn [_ label-props] ; XXX#0106 (tutorials.api#parametering)
+   ; @note (tutorials#parametering)
+   (fn [_ label-props]
        (let [label-props (pretty-presets/apply-preset            label-props)
              label-props (label.prototypes/label-props-prototype label-props)]
             [label label-id label-props]))))

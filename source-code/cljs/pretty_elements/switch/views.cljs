@@ -59,7 +59,7 @@
   ; @param (keyword) switch-id
   ; @param (map) switch-props
   [switch-id switch-props]
-  ; XXX#0106 (tutorials.api#parametering)
+  ; @note (tutorials#parametering)
   (reagent/lifecycles {:component-did-mount (fn [_ _] (r/dispatch [:pretty-elements.switch/switch-did-mount switch-id switch-props]))
                        :reagent-render      (fn [_ switch-props] [switch-structure switch-id switch-props])}))
 
@@ -67,7 +67,6 @@
   ; @param (keyword)(opt) switch-id
   ; @param (map) switch-props
   ; {:border-color (keyword or string)(opt)
-  ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;   Default: :default
   ;  :border-radius (map)(opt)
   ;   {:tl (keyword)(opt)
@@ -81,12 +80,18 @@
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;   Default: :xs
   ;  :class (keyword or keywords in vector)(opt)
+  ;  :click-effect (keyword)(opt)
+  ;   :none, :opacity
+  ;   Default: :opacity
   ;  :default-value (boolean)(opt)
   ;  :disabled? (boolean)(opt)
   ;  :font-size (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
   ;   Default: :s
   ;  :helper (metamorphic-content)(opt)
+  ;  :hover-effect (keyword)(opt)
+  ;   :none, :opacity
+  ;   Default: :none
   ;  :indent (map)(opt)
   ;   {:bottom (keyword)(opt)
   ;    :left (keyword)(opt)
@@ -128,7 +133,8 @@
    [element (random/generate-keyword) switch-props])
 
   ([switch-id switch-props]
-   (fn [_ switch-props] ; XXX#0106 (tutorials.api#parametering)
+   ; @note (tutorials#parametering)
+   (fn [_ switch-props]
        (let [switch-props (pretty-presets/apply-preset                        switch-props)
              switch-props (switch.prototypes/switch-props-prototype switch-id switch-props)]
             [switch switch-id switch-props]))))

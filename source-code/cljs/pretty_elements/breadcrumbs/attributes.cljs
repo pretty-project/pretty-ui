@@ -1,8 +1,6 @@
 
 (ns pretty-elements.breadcrumbs.attributes
-    (:require [dom.api        :as dom]
-              [pretty-css.api :as pretty-css]
-              [re-frame.api   :as r]))
+    (:require [pretty-css.api :as pretty-css]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -11,19 +9,18 @@
   ; @param (keyword) breadcrumbs-id
   ; @param (map) breadcrumbs-props
   ; @param (map) crumb-props
-  ; {}
+  ; {:disabled? (boolean)(opt)}
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
+  ;  :disabled (boolean)
   ;  :data-font-size (keyword)
   ;  :data-font-weight (keyword)
   ;  :data-letter-spacing (keyword)
   ;  :data-line-height (keyword)
   ;  :data-selectable (boolean)
-  ;  :data-text-overflow (keyword)
-  ;  :on-click (function)
-  ;  :on-mouse-up (function)}
-  [_ _ {:keys [on-click] :as crumb-props}]
+  ;  :data-text-overflow (keyword)}
+  [_ _ {:keys [disabled?] :as crumb-props}]
   (-> {:class               :pe-breadcrumbs--crumb
        :data-font-size      :xs
        :data-font-weight    :semi-bold
@@ -31,11 +28,12 @@
        :data-line-height    :text-block
        :data-selectable     false
        :data-text-overflow  :ellipsis
-       :on-click    #(r/dispatch on-click)
-       :on-mouse-up #(dom/blur-active-element!)}
+       :disabled            disabled?}
       (pretty-css/color-attributes  crumb-props)
+      (pretty-css/cursor-attributes crumb-props)
       (pretty-css/effect-attributes crumb-props)
-      (pretty-css/link-attributes   crumb-props)))
+      (pretty-css/link-attributes   crumb-props)
+      (pretty-css/state-attributes  crumb-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -72,5 +70,6 @@
   ; {:class (keyword or keywords in vector)}
   [_ breadcrumbs-props]
   (-> {:class :pe-breadcrumbs}
-      (pretty-css/default-attributes breadcrumbs-props)
+      (pretty-css/class-attributes   breadcrumbs-props)
+      (pretty-css/state-attributes   breadcrumbs-props)
       (pretty-css/outdent-attributes breadcrumbs-props)))

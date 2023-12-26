@@ -50,5 +50,6 @@
   ; {}
   [_ group-props]
   (-> {:class :pe-chip-group}
-      (pretty-css/default-attributes group-props)
+      (pretty-css/class-attributes   group-props)
+      (pretty-css/state-attributes   group-props)
       (pretty-css/outdent-attributes group-props)))

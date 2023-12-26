@@ -26,7 +26,7 @@
   ; @param (map) adornment-props
   ; {:icon (keyword)(opt)
   ;  :label (string)(opt)
-  ;  :on-click (Re-Frame metamorphic-event)(opt)
+  ;  :on-click (function or Re-Frame metamorphic-event)(opt)
   ;  :timeout (ms)(opt)}
   [field-id field-props adornment-props]
   ; Local state for the countdown timer
@@ -46,7 +46,7 @@
                   (if @time-left ; ...
                                  (let [adornment-props (text-field.prototypes/adornment-props-prototype field-props adornment-props)
                                        adornment-props (dissoc adornment-props :click-effect :hover-effect :icon-family :icon-size)
-                                       adornment-props (assoc  adornment-props :color :highlight)]
+                                       adornment-props (assoc  adornment-props :text-color :highlight)]
                                       [:div (text-field.attributes/adornment-attributes field-id field-props adornment-props)
                                             (-> @time-left time/ms->s (str "s"))])
 
@@ -96,7 +96,7 @@
   ; The placeholder element has an absolute position. Therefore, ...
   ; ... it must be placed within the same ancestor element as the input element!
   ; ... but it cannot be in the very same parent element as the input element!
-  ;     (otherwise somehow it covers the input regardless their order)
+  ;     (otherwise, somehow it covers the input, regardless their order)
   [:div (text-field.attributes/field-attributes field-id field-props)
         ; ...
         [element.views/element-label field-id field-props]
@@ -133,7 +133,7 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   [field-id field-props]
-  ; XXX#0106 (tutorials.api#parametering)
+  ; @note (tutorials#parametering)
   (reagent/lifecycles {:component-did-mount    (fn [_ _] (r/dispatch [:pretty-elements.text-field/field-did-mount    field-id field-props]))
                        :component-will-unmount (fn [_ _] (r/dispatch [:pretty-elements.text-field/field-will-unmount field-id field-props]))
                        :reagent-render         (fn [_ field-props] [text-field-structure field-id field-props])}))
@@ -144,8 +144,8 @@
   ; Some other items based on the 'text-field' element and their documentations link here.
   ;
   ; @description
-  ; The 'text-field' element writes its actual value into the Re-Frame state delayed, after
-  ; the user stopped typing or without a delay when the user leaves the field!
+  ; The 'text-field' element writes its actual value into the Re-Frame state delayed,
+  ; only when the user stopped typing or without a delay when the user leaves the field!
   ;
   ; @param (keyword)(opt) field-id
   ; @param (map) field-props
@@ -157,9 +157,7 @@
   ;   Leave empty if you don't want autosuggestions.
   ;  :autofocus? (boolean)(opt)
   ;  :border-color (keyword or string)(opt)
-  ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;  :border-position (keyword)(opt)
-  ;   :all, :bottom, :top, :left, :right, :horizontal, :vertical
   ;  :border-radius (map)(opt)
   ;   {:tl (keyword)(opt)
   ;    :tr (keyword)(opt)
@@ -176,9 +174,6 @@
   ;   [{:click-effect (keyword)(opt)
   ;      :opacity
   ;      Default: :opacity
-  ;     :color (keyword)(opt)
-  ;      :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
-  ;      Default: :default
   ;     :disabled? (boolean)(opt)
   ;     :hover-effect (keyword)(opt)
   ;      :opacity
@@ -187,10 +182,13 @@
   ;      :material-symbols-filled, :material-symbols-outlined
   ;      Default: :material-symbols-outlined
   ;     :label (string)(opt)
-  ;     :on-click (Re-Frame metamorphic-event)(opt)
+  ;     :on-click (function or Re-Frame metamorphic-event)(opt)
   ;     :preset (keyword)(opt)
   ;     :tab-indexed? (boolean)(opt)
   ;      Default: true
+  ;     :text-color (keyword)(opt)
+  ;      :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
+  ;      Default: :default
   ;     :timeout (ms)(opt)
   ;      Disables the adornment for a specific time after the on-click event fired.
   ;     :tooltip-content (metamorphic-content)(opt)}]
@@ -208,6 +206,7 @@
   ;   Default: :normal
   ;  :form-id (keyword)(opt)
   ;   Different inputs with the same form ID could be validated at the same time.
+  ;  :height (keyword, px or string)(opt)
   ;  :helper (metamorphic-content)(opt)
   ;  :indent (map)(opt)
   ;   {:bottom (keyword)(opt)
@@ -276,9 +275,7 @@
   ;  [{:f (function)
   ;    :invalid-message (metamorphic-content)(opt)}]
   ;  :value-path (Re-Frame path vector)(opt)
-  ;  :width (keyword)(opt)
-  ;   :auto, :content, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  ;   Default: :content}
+  ;  :width (keyword, px or string)(opt)}
   ;
   ; @usage
   ; [text-field {...}]
@@ -303,7 +300,8 @@
    [element (random/generate-keyword) field-props])
 
   ([field-id field-props]
-   (fn [_ field-props] ; XXX#0106 (tutorials.api#parametering)
+   ; @note (tutorials#parametering)
+   (fn [_ field-props]
        (let [field-props (pretty-presets/apply-preset                          field-props)
              field-props (text-field.prototypes/field-props-prototype field-id field-props)]
             [text-field field-id field-props]))))

@@ -18,7 +18,8 @@
   [_ {:keys [style] :as group-props}]
   (-> {:class :pe-vertical-group--body
        :style style}
-      (pretty-css/indent-attributes group-props)))
+      (pretty-css/element-size-attributes group-props)
+      (pretty-css/indent-attributes       group-props)))
 
 (defn group-attributes
   ; @ignore
@@ -30,6 +31,7 @@
   ; {}
   [_ group-props]
   (-> {:class :pe-vertical-group}
-      (pretty-css/default-attributes      group-props)
+      (pretty-css/class-attributes        group-props)
+      (pretty-css/state-attributes        group-props)
       (pretty-css/outdent-attributes      group-props)
-      (pretty-css/element-size-attributes group-props)))
+      (pretty-css/wrapper-size-attributes group-props)))

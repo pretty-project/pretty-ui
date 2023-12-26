@@ -12,11 +12,12 @@
   ; @param (keyword)(opt) spacer-id
   ; @param (map) spacer-props
   ; {:class (keyword or keywords in vector)(opt)
-  ;  :height (keyword)(opt)
-  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;  :height (keyword, px or string)(opt)
   ;   Default: :s
   ;  :preset (keyword)(opt)
-  ;  :style (map)(opt)}
+  ;  :style (map)(opt)
+  ;  :width (keyword, px or string)(opt)
+  ;   Default: :auto}
   ;
   ; @usage
   ; [horizontal-spacer {...}]
@@ -27,7 +28,8 @@
    [element (random/generate-keyword) spacer-props])
 
   ([spacer-id spacer-props]
-   (fn [_ spacer-props] ; XXX#0106 (tutorials.api#parametering)
+   ; @note (tutorials#parametering)
+   (fn [_ spacer-props]
        (let [spacer-props (pretty-presets/apply-preset                         spacer-props)
              spacer-props (horizontal-spacer.prototypes/spacer-props-prototype spacer-props)]
             [:div (horizontal-spacer.attributes/spacer-attributes spacer-id spacer-props)]))))

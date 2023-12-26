@@ -62,19 +62,17 @@
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
-  ;  :data-click-effect (keyword)
   ;  :data-switched (boolean)
-  ;  :disabled (boolean)
-  ;  :on-click (function)
-  ;  :on-mouse-up (function)}
+  ;  :disabled (boolean)}
   [switch-id {:keys [border-radius disabled?] :as switch-props} option]
-  (let [option-switched? @(r/subscribe [:pretty-elements.switch/option-switched? switch-id switch-props option])]
-       (merge {:class             :pe-switch--option
-               :data-click-effect :targeted
-               :data-switched option-switched?}
-              (if disabled? {:disabled    true}
-                            {:on-click    #(r/dispatch [:pretty-elements.switch/toggle-option! switch-id switch-props option])
-                             :on-mouse-up #(dom/blur-active-element!)}))))
+  (let [option-switched? @(r/subscribe [:pretty-elements.switch/option-switched? switch-id switch-props option])
+        on-switch-event  #(r/dispatch  [:pretty-elements.switch/toggle-option!   switch-id switch-props option])]
+       (-> {:class         :pe-switch--option
+            :data-switched option-switched?
+            :disabled      disabled?}
+           (pretty-css/effect-attributes switch-props)
+           (pretty-css/mouse-event-attributes {:on-click    on-switch-event
+                                               :on-mouse-up dom/blur-active-element!}))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -109,5 +107,6 @@
   ; {}
   [_ switch-props]
   (-> {:class :pe-switch}
-      (pretty-css/default-attributes switch-props)
+      (pretty-css/class-attributes   switch-props)
+      (pretty-css/state-attributes   switch-props)
       (pretty-css/outdent-attributes switch-props)))

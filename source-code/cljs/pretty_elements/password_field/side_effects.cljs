@@ -11,8 +11,8 @@
   ;
   ; @description
   ; Resets the password visibility state. When a password field unmounts it's
-  ; important to reset its visibility state, otherwise the newly mounted password
-  ; fields could remember their previous instance's state and it's highly not
+  ; important to reset its visibility state; otherwise, the newly mounted password
+  ; fields would remember their previous instance's state, and it's strongly not
   ; recommended to mount a password field with a visibility ON state!
   ;
   ; @param (keyword) field-id

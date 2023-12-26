@@ -49,5 +49,6 @@
   ; {:class (keyword or keywords in vector)}
   [_ button-props]
   (-> {:class :pe-icon-button}
-      (pretty-css/default-attributes button-props)
+      (pretty-css/class-attributes   button-props)
+      (pretty-css/state-attributes   button-props)
       (pretty-css/outdent-attributes button-props)))

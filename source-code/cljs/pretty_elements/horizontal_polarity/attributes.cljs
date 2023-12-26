@@ -21,7 +21,8 @@
   (-> {:class               :pe-horizontal-polarity--body
        :data-vertical-align vertical-align
        :style               style}
-      (pretty-css/indent-attributes polarity-props)))
+      (pretty-css/indent-attributes       polarity-props)
+      (pretty-css/element-size-attributes polarity-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -36,6 +37,7 @@
   ; {}
   [_ polarity-props]
   (-> {:class :pe-horizontal-polarity}
-      (pretty-css/default-attributes      polarity-props)
+      (pretty-css/class-attributes        polarity-props)
+      (pretty-css/state-attributes        polarity-props)
       (pretty-css/outdent-attributes      polarity-props)
-      (pretty-css/element-size-attributes polarity-props)))
+      (pretty-css/wrapper-size-attributes polarity-props)))

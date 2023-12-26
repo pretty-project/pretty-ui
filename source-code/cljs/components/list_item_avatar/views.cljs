@@ -31,6 +31,7 @@
    [component (random/generate-keyword) avatar-props])
 
   ([avatar-id avatar-props]
-   (fn [_ avatar-props] ; XXX#0106 (tutorials.api#parametering)
+   ; @note (tutorials#parametering)
+   (fn [_ avatar-props]
        (let [] ; avatar-props (list-item-avatar.prototypes/avatar-props-prototype avatar-props)
             [list-item-avatar avatar-id avatar-props]))))

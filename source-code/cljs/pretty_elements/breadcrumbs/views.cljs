@@ -16,14 +16,17 @@
   ; @param (keyword) breadcrumbs-id
   ; @param (map) breadcrumbs-props
   ; @param (map) crumb-props
-  ; {:href (string)(opt)
-  ;  :label (metamorphic-content)(opt)
-  ;  :on-click (Re-Frame metamorphic-event)(opt)
+  ; {:content (metamorphic-content)(opt)
+  ;  :content-value-f (function)
+  ;  :href (string)(opt)
+  ;  :on-click (function)(opt)
   ;  :placeholder (metamorphic-content)(opt)}
-  [breadcrumbs-id breadcrumbs-props {:keys [href label on-click placeholder] :as crumb-props}]
+  ;  :placeholder-value-f (function)}
+  [breadcrumbs-id breadcrumbs-props {:keys [content content-value-f href on-click placeholder placeholder-value-f] :as crumb-props}]
   [(cond href :a on-click :button :else :div)
    (breadcrumbs.attributes/crumb-attributes breadcrumbs-id breadcrumbs-props crumb-props)
-   (metamorphic-content/compose label placeholder)])
+   (metamorphic-content/compose (content-value-f     content)
+                                (placeholder-value-f placeholder))])
 
 (defn- breadcrumbs-crumb-list
   ; @ignore
@@ -32,14 +35,13 @@
   ; @param (map) breadcrumbs-props
   ; {:crumbs (maps in vector)}
   [breadcrumbs-id {:keys [crumbs] :as breadcrumbs-props}]
-  ; A separator DIV placed between crumbs instead of applying CSS gap.
+  ; A separator DIV is placed between crumbs instead of applying a CSS gap.
   ; The separator DIVs contain pseudo elements which displays a small dot between each crumbs.
-  ; In case the crumbs contain those pseudo elements they would be part
-  ; of the crumbs and would be clickable.
+  ; If the crumbs contained those pseudo elements, they would be part of the crumbs and would be clickable.
   ; ... And we don't want clickable dots between crumbs, do we?
   (letfn [(f0 [dex crumb-props]
-              (let [crumb-props (pretty-presets/apply-preset                  crumb-props)
-                    crumb-props (breadcrumbs.prototypes/crumb-props-prototype crumb-props)]
+              (let [crumb-props (pretty-presets/apply-preset crumb-props)
+                    crumb-props (breadcrumbs.prototypes/crumb-props-prototype breadcrumbs-id breadcrumbs-props crumb-props)]
                    [:<> (if (-> dex zero? not) [:div {:class :pe-breadcrumbs--separator}])
                         [breadcrumbs-crumb breadcrumbs-id breadcrumbs-props crumb-props]]))]
          (hiccup/put-with-indexed [:<>] crumbs f0)))
@@ -61,10 +63,21 @@
   ; @param (map) breadcrumbs-props
   ; {:class (keyword or keywords in vector)(opt)
   ;  :crumbs (maps in vector)
-  ;   [{:href (string)(opt)
-  ;     :label (metamorphic-content)(opt)
-  ;     :on-click (Re-Frame metamorphic-event)(opt)
+  ;   [{:click-effect (keyword)(opt)
+  ;      :none, :opacity
+  ;      Default: :opacity (if 'href' or 'on-click' is provided)
+  ;     :content (metamorphic-content)(opt)
+  ;     :content-value-f (function)(opt)
+  ;      Default: return
+  ;     :disabled? (boolean)(opt)
+  ;     :href (string)(opt)
+  ;     :hover-effect (keyword)(opt)
+  ;      :none, :opacity
+  ;      Default: :none
+  ;     :on-click (function or Re-Frame metamorphic-event)(opt)
   ;     :placeholder (metamorphic-content)(opt)
+  ;     :placeholder-value-f (function)(opt)
+  ;      Default: return
   ;     :preset (keyword)(opt)}]
   ;  :disabled? (boolean)(opt)
   ;  :font-size (keyword)(opt)
@@ -88,14 +101,12 @@
   ;
   ; @usage
   ; [breadcrumbs :my-breadcrumbs {...}]
-  ;
-  ; @preview (pretty-elements/breadcrumbs-2.png)
-  ; [breadcrumbs {:crumbs [...]}]
   ([breadcrumbs-props]
    [element (random/generate-keyword) breadcrumbs-props])
 
   ([breadcrumbs-id breadcrumbs-props]
-   (fn [_ breadcrumbs-props] ; XXX#0106 (tutorials.api#parametering)
-       (let [breadcrumbs-props (pretty-presets/apply-preset                        breadcrumbs-props)
-             breadcrumbs-props (breadcrumbs.prototypes/breadcrumbs-props-prototype breadcrumbs-props)]
+   ; @note (tutorials#parametering)
+   (fn [_ breadcrumbs-props]
+       (let [breadcrumbs-props (pretty-presets/apply-preset breadcrumbs-props)]
+             ; breadcrumbs-props (breadcrumbs.prototypes/breadcrumbs-props-prototype breadcrumbs-props)
             [breadcrumbs breadcrumbs-id breadcrumbs-props]))))

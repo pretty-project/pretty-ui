@@ -20,6 +20,5 @@
   (merge {:max-value     100
           :min-value     0
           :initial-value [0 100]
-          :value-path    (input.utils/default-value-path slider-id)
-          :width         :auto}
+          :value-path    (input.utils/default-value-path slider-id)}
          (-> slider-props)))

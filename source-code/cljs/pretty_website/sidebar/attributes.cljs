@@ -59,5 +59,6 @@
   [_ {:keys [position] :as sidebar-props}]
   (-> {:class         :pw-sidebar
        :data-position position}
-      (pretty-css/default-attributes sidebar-props)
+      (pretty-css/class-attributes   sidebar-props)
+      (pretty-css/state-attributes   sidebar-props)
       (pretty-css/outdent-attributes sidebar-props)))

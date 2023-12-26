@@ -18,8 +18,9 @@
   [line-id {:keys [strength style] :as line-props}]
   (-> {:class :pe-vertical-line--body
        :style (merge style {:width (css/px strength)})}
-      (pretty-css/color-attributes  line-props)
-      (pretty-css/indent-attributes line-props)))
+      (pretty-css/color-attributes        line-props)
+      (pretty-css/element-size-attributes line-props)
+      (pretty-css/indent-attributes       line-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -34,6 +35,7 @@
   ; {:class (keyword or keywords in vector)}
   [_ line-props]
   (-> {:class :pe-vertical-line}
-      (pretty-css/default-attributes      line-props)
+      (pretty-css/class-attributes        line-props)
+      (pretty-css/state-attributes        line-props)
       (pretty-css/outdent-attributes      line-props)
-      (pretty-css/element-size-attributes line-props)))
+      (pretty-css/wrapper-size-attributes line-props)))

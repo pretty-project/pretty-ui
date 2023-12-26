@@ -19,7 +19,12 @@
   (-> {:class :pe-ghost--body
        :style style}
       (pretty-css/border-attributes ghost-props)
-      (pretty-css/indent-attributes ghost-props)))
+      (pretty-css/indent-attributes ghost-props)
+      ; The ghost element uses ...
+      ; ... block height profiles
+      ; ... element width profiles
+      (pretty-css/block-size-attributes   (dissoc ghost-props :width))
+      (pretty-css/element-size-attributes (dissoc ghost-props :height))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -34,8 +39,7 @@
   ; {:class (keyword or keywords in vector)}
   [_ ghost-props]
   (-> {:class :pe-ghost}
-      (pretty-css/default-attributes ghost-props)
+      (pretty-css/class-attributes   ghost-props)
+      (pretty-css/state-attributes   ghost-props)
       (pretty-css/outdent-attributes ghost-props)
-      ; The ghost element uses block height but element width
-      (pretty-css/block-size-attributes   (dissoc ghost-props :width))
-      (pretty-css/element-size-attributes (dissoc ghost-props :height))))
+      (pretty-css/wrapper-size-attributes ghost-props)))

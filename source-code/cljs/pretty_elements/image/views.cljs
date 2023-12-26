@@ -32,9 +32,7 @@
   ;  :class (keyword or keywords in vector)(opt)
   ;  :error-src (string)(opt)
   ;   TODO
-  ;  :height (keyword)(opt)
-  ;   :content, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  ;   Default: :content
+  ;  :height (keyword, px or string)(opt)
   ;  :indent (map)(opt)
   ;   {:bottom (keyword)(opt)
   ;    :left (keyword)(opt)
@@ -44,16 +42,14 @@
   ;    :vertical (keyword)(opt)
   ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
   ;  :lazy-load? (boolean)(opt)
-  ;   Default: false
   ;   TODO
+  ;   Default: false
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
   ;  :preset (keyword)(opt)
   ;  :src (string)(opt)
   ;  :style (map)(opt)
-  ;  :width (keyword)(opt)
-  ;   :content, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  ;   Default: :content}
+  ;  :width (keyword, px or string)(opt)}
   ;
   ; @usage
   ; [image {...}]
@@ -64,7 +60,8 @@
    [element (random/generate-keyword) image-props])
 
   ([image-id image-props]
-   (fn [_ image-props] ; XXX#0106 (tutorials.api#parametering)
-       (let [image-props (pretty-presets/apply-preset            image-props)
-             image-props (image.prototypes/image-props-prototype image-props)]
+   ; @note (tutorials#parametering)
+   (fn [_ image-props]
+       (let [image-props (pretty-presets/apply-preset image-props)]
+             ; image-props (image.prototypes/image-props-prototype image-props)
             [image image-id image-props]))))

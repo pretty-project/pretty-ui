@@ -59,7 +59,8 @@
    [component (random/generate-keyword) selector-props])
 
   ([selector-id selector-props]
-   (fn [_ selector-props] ; XXX#0106 (tutorials.api#parametering)
+   ; @note (tutorials#parametering)
+   (fn [_ selector-props]
        (let [selector-props (pretty-presets/apply-preset                           selector-props)
              selector-props (language-selector.prototypes/selector-props-prototype selector-props)]
             [language-selector selector-id selector-props]))))

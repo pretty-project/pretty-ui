@@ -59,6 +59,7 @@
    [component (random/generate-keyword) indicator-props])
 
   ([indicator-id indicator-props]
-   (fn [_ indicator-props] ; XXX#0106 (tutorials.api#parametering)
+   ; @note (tutorials#parametering)
+   (fn [_ indicator-props]
        (let [] ; indicator-props (popup-progress-indicator.prototypes/indicator-props-prototype indicator-props)
             [popup-progress-indicator indicator-id indicator-props]))))

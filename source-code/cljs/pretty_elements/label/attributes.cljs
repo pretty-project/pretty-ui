@@ -91,13 +91,15 @@
        :data-vertical-position     vertical-position
        :style                      style
        :data-letter-spacing        :auto}
-      (pretty-css/border-attributes  label-props)
-      (pretty-css/color-attributes   label-props)
-      (pretty-css/font-attributes    label-props)
-      (pretty-css/indent-attributes  label-props)
-      (pretty-css/marker-attributes  label-props)
-      (pretty-css/text-attributes    label-props)
-      (pretty-css/tooltip-attributes label-props)))
+      (pretty-css/border-attributes           label-props)
+      (pretty-css/color-attributes            label-props)
+      (pretty-css/font-attributes             label-props)
+      (pretty-css/element-min-size-attributes label-props)
+      (pretty-css/element-size-attributes     label-props)
+      (pretty-css/indent-attributes           label-props)
+      (pretty-css/marker-attributes           label-props)
+      (pretty-css/text-attributes             label-props)
+      (pretty-css/tooltip-attributes          label-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -112,7 +114,7 @@
   ; {}
   [_ label-props]
   (-> {:class :pe-label}
-      (pretty-css/default-attributes          label-props)
-      (pretty-css/outdent-attributes          label-props)
-      (pretty-css/element-min-size-attributes label-props)
-      (pretty-css/element-size-attributes     label-props)))
+      (pretty-css/class-attributes        label-props)
+      (pretty-css/state-attributes        label-props)
+      (pretty-css/outdent-attributes      label-props)
+      (pretty-css/wrapper-size-attributes label-props)))

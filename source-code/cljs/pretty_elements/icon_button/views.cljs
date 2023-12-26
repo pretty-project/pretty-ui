@@ -32,15 +32,14 @@
   ; @param (keyword) button-id
   ; @param (map) button-props
   [button-id button-props]
-  ; XXX#0106 (tutorials.api#parametering)
+  ; @note (tutorials#parametering)
   (reagent/lifecycles {:component-did-mount    (fn [_ _] (r/dispatch [:pretty-elements.button/button-did-mount    button-id button-props]))
                        :component-will-unmount (fn [_ _] (r/dispatch [:pretty-elements.button/button-will-unmount button-id button-props]))
                        :component-did-update   (fn [%]   (r/dispatch [:pretty-elements.button/button-did-update   button-id %]))
                        :reagent-render         (fn [_ button-props] [icon-button-structure button-id button-props])}))
 
 (defn element
-  ; @important
-  ; BUG#9912 (source-code/cljs/pretty_elements/button.views)
+  ; @bug (pretty-elements.button.views#9912)
   ;
   ; @param (keyword)(opt) button-id
   ; @param (map) button-props
@@ -52,7 +51,6 @@
   ;   :tl, :tr, :br, :bl, :left, :right, :bottom, :top
   ;   Default: :tr
   ;  :border-color (keyword or string)(opt)
-  ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;  :border-position (keyword)(opt)
   ;   :all, :bottom, :top, :left, :right, :horizontal, :vertical
   ;  :border-radius (map)(opt)
@@ -70,7 +68,8 @@
   ;   Default: :pointer
   ;  :disabled? (boolean)(opt)
   ;  :fill-color (keyword or string)(opt)
-  ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+  ;  :fill-pattern (keyword)(opt)
+  ;   Default: :cover
   ;  :hover-color (keyword or string)(opt)
   ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;  :hover-effect (keyword)(opt)
@@ -137,7 +136,8 @@
    [element (random/generate-keyword) button-props])
 
   ([button-id button-props]
-   (fn [_ button-props] ; XXX#0106 (tutorials.api#parametering)
+   ; @note (tutorials#parametering)
+   (fn [_ button-props]
        (let [button-props (pretty-presets/apply-preset                   button-props)
              button-props (icon-button.prototypes/button-props-prototype button-props)]
             [icon-button button-id button-props]))))

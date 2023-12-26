@@ -69,7 +69,7 @@
   ; @param (keyword) select-id
   ; @param (map) select-props
   [select-id select-props]
-  ; XXX#0106 (tutorials.api#parametering)
+  ; @note (tutorials#parametering)
   (reagent/lifecycles {:reagent-render         (fn [_ select-props] [select-option-list select-id select-props])
                        :component-did-mount    (fn [_ _] (r/dispatch [:pretty-elements.select/select-options-did-mount    select-id select-props]))
                        :component-will-unmount (fn [_ _] (r/dispatch [:pretty-elements.select/select-options-will-unmount select-id select-props]))}))
@@ -128,7 +128,7 @@
   ; @param (keyword) select-id
   ; @param (map) select-props
   [select-id select-props]
-  ; XXX#0106 (tutorials.api#parametering)
+  ; @note (tutorials#parametering)
   (reagent/lifecycles {:component-did-mount (fn [_ _] (r/dispatch [:pretty-elements.select/select-button-did-mount select-id select-props]))
                        :reagent-render      (fn [_ select-props] [select-button select-id select-props])}))
 
@@ -190,12 +190,13 @@
   ;  :initial-options (vector)(opt)
   ;  :initial-value (*)(opt)
   ;  :label (metamorphic-content)(opt)
-  ;   Label of the button if the :layout property is :button or :icon-button,
-  ;   otherwise it is displayed as the element label above the select button.
+  ;   Label of the button in case the ':layout' property is set to ':button' or ':icon-button' value.
+  ;   Otherwise, displayed as element label above the select button.
   ;  :layout (keyword)(opt)
   ;   :button, :icon-button, :select-button
   ;   Default: :select-button
-  ;  :on-select (Re-Frame metamorphic-event)(opt)
+  ;  :on-select (function or Re-Frame metamorphic-event)(opt)
+  ;   This event takes the selected option's value as its last parameter.
   ;  :option-field-placeholder (metamorphic-content)(opt)
   ;   Default: :add!
   ;  :option-label-f (function)(opt)
@@ -239,6 +240,7 @@
    [element (random/generate-keyword) select-props])
 
   ([select-id select-props]
-   (fn [_ select-props] ; XXX#0106 (tutorials.api#parametering)
+   ; @note (tutorials#parametering)
+   (fn [_ select-props]
        (let [select-props (select.prototypes/select-props-prototype select-id select-props)]
             [select select-id select-props]))))

@@ -47,6 +47,7 @@
    [component (random/generate-keyword) title-props])
 
   ([title-id title-props]
-   (fn [_ title-props] ; XXX#0106 (tutorials.api#parametering)
+   ; @note (tutorials#parametering)
+   (fn [_ title-props]
        (let [title-props (popup-menu-title.prototypes/title-props-prototype title-props)]
             [pretty-elements/label title-id title-props]))))

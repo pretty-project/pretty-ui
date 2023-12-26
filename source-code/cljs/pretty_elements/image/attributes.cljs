@@ -27,7 +27,8 @@
        :ref      (react/set-reference-f  image-id)
        :style    style
        :src      src}
-      (pretty-css/indent-attributes image-props)))
+      (pretty-css/indent-attributes       image-props)
+      (pretty-css/element-size-attributes image-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -42,6 +43,7 @@
   ; {:class (keyword or keywords in vector)}
   [_ image-props]
   (-> {:class :pe-image}
-      (pretty-css/default-attributes      image-props)
+      (pretty-css/class-attributes        image-props)
+      (pretty-css/state-attributes        image-props)
       (pretty-css/outdent-attributes      image-props)
-      (pretty-css/element-size-attributes image-props)))
+      (pretty-css/wrapper-size-attributes image-props)))

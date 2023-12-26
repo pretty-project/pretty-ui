@@ -74,6 +74,7 @@
    [component (random/generate-keyword) list-props])
 
   ([list-id list-props]
-   (fn [_ list-props] ; XXX#0106 (tutorials.api#parametering)
+   ; @note (tutorials#parametering)
+   (fn [_ list-props]
        (let [] ; list-props (vector-item-list.prototypes/list-props-prototype list-props)
             [vector-item-list list-id list-props]))))

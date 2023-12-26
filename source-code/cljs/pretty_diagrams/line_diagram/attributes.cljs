@@ -56,7 +56,8 @@
   [_ {:keys [style] :as diagram-props}]
   (-> {:class :pd-line-diagram--body
        :style style}
-      (pretty-css/indent-attributes diagram-props)))
+      (pretty-css/indent-attributes       diagram-props)
+      (pretty-css/element-size-attributes diagram-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -71,6 +72,7 @@
   ; {:class (keyword or keywords in vector)}
   [_ diagram-props]
   (-> {:class :pd-line-diagram}
-      (pretty-css/default-attributes      diagram-props)
+      (pretty-css/class-attributes        diagram-props)
+      (pretty-css/state-attributes        diagram-props)
       (pretty-css/outdent-attributes      diagram-props)
-      (pretty-css/element-size-attributes diagram-props)))
+      (pretty-css/wrapper-size-attributes diagram-props)))

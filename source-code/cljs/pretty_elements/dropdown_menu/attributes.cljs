@@ -75,5 +75,6 @@
   ;   solves the problem.
   (-> {:class :pe-dropdown-menu
        :on-mouse-leave #(swap! dropdown-menu.state/MENUS assoc-in [menu-id :active-dex] nil)}
-      (pretty-css/default-attributes menu-props)
+      (pretty-css/class-attributes   menu-props)
+      (pretty-css/state-attributes   menu-props)
       (pretty-css/outdent-attributes menu-props)))

@@ -14,8 +14,8 @@
   ; {:content (metamorphic-content)(opt)
   ;  :placeholder (metamorphic-content)(opt)}
   [title-id {:keys [content placeholder] :as title-props}]
-  ; The sensor and title must be placed in a common element, otherwise in some
-  ; cases the sensor might be in a wrong position!
+  ; The sensor and title must be placed in a common element.
+  ; Otherwise, in some cases the sensor would be in a wrong position!
   [:div.c-section-title [auto-title/sensor {:placeholder placeholder :title content :offset -12}]
                         [pretty-elements/label title-id title-props]])
 
@@ -41,6 +41,7 @@
    [component (random/generate-keyword) title-props])
 
   ([title-id title-props]
-   (fn [_ title-props] ; XXX#0106 (tutorials.api#parametering)
+   ; @note (tutorials#parametering)
+   (fn [_ title-props]
        (let [title-props (section-title.prototypes/title-props-prototype title-props)]
             [section-title title-id title-props]))))

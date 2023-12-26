@@ -2,7 +2,7 @@
 (ns pretty-elements.menu-bar.attributes
     (:require [dom.api        :as dom]
               [pretty-css.api :as pretty-css]
-              [re-frame.api   :as r]))
+              [pretty-elements.element.side-effects :as element.side-effects]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -49,8 +49,8 @@
   ; {:active? (boolean)(opt)
   ;  :disabled? (boolean)(opt)
   ;  :hover-effect (keyword)(opt)
-  ;  :on-click (Re-Frame metamorphic-event)(opt)
-  ;  :on-mouse-over (Re-Frame metamorphic-event)(opt)}
+  ;  :on-click (function or Re-Frame metamorphic-event)(opt)
+  ;  :on-mouse-over (function or Re-Frame metamorphic-event)(opt)}
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
@@ -67,8 +67,8 @@
                              :data-click-effect :opacity
                              :data-hover-effect hover-effect
                              :on-mouse-up       #(dom/blur-active-element!)}
-                            (some? on-click)      (assoc :on-click      #(r/dispatch on-click))
-                            (some? on-mouse-over) (assoc :on-mouse-over #(r/dispatch on-mouse-over))))
+                            (some? on-click)      (assoc :on-click      #(element.side-effects/dispatch-event-handler! on-click))
+                            (some? on-mouse-over) (assoc :on-mouse-over #(element.side-effects/dispatch-event-handler! on-mouse-over))))
       (pretty-css/badge-attributes  item-props)
       (pretty-css/border-attributes item-props)
       (pretty-css/color-attributes  item-props)
@@ -143,5 +143,6 @@
   ; {}
   [_ bar-props]
   (-> {:class :pe-menu-bar}
-      (pretty-css/default-attributes bar-props)
+      (pretty-css/class-attributes   bar-props)
+      (pretty-css/state-attributes   bar-props)
       (pretty-css/outdent-attributes bar-props)))

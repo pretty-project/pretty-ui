@@ -33,6 +33,7 @@
    [component (random/generate-keyword) description-props])
 
   ([description-id description-props]
-   (fn [_ description-props] ; XXX#0106 (tutorials.api#parametering)
+   ; @note (tutorials#parametering)  
+   (fn [_ description-props]
        (let [description-props (section-description.prototypes/description-props-prototype description-props)]
             [pretty-elements/label description-id description-props]))))

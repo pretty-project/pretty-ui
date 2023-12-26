@@ -63,7 +63,8 @@
    [component (random/generate-keyword) links-props])
 
   ([links-id links-props]
-   (fn [_ links-props] ; XXX#0106 (tutorials.api#parametering)
+   ; @note (tutorials#parametering)
+   (fn [_ links-props]
        (let [links-props (pretty-presets/apply-preset links-props)]
-            ; links-props (follow-us-links.prototypes/links-props-prototype links-props)
+             ; links-props (follow-us-links.prototypes/links-props-prototype links-props)
             [follow-us-links links-id links-props]))))

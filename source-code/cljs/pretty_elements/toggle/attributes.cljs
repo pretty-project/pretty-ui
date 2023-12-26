@@ -3,7 +3,7 @@
     (:require [dom.api           :as dom]
               [fruits.hiccup.api :as hiccup]
               [pretty-css.api    :as pretty-css]
-              [re-frame.api      :as r]))
+              [pretty-elements.element.side-effects :as element.side-effects]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -14,8 +14,8 @@
   ; @param (keyword) toggle-id
   ; @param (map) toggle-props
   ; {:disabled? (boolean)(opt)
-  ;  :on-click (Re-Frame metamorphic-event)(opt)
-  ;  :on-mouse-over (Re-Frame metamorphic-event)(opt)}
+  ;  :on-click (function or Re-Frame metamorphic-event)(opt)
+  ;  :on-mouse-over (function or Re-Frame metamorphic-event)(opt)}
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
@@ -28,7 +28,7 @@
   ;  :on-mouse-over (function)
   ;  :on-mouse-up (function)}
   [toggle-id {:keys [disabled? on-click on-mouse-over] :as toggle-props}]
-  ; XXX#4460 (source-code/cljs/pretty_elements/button/utils.cljs)
+  ; @note (pretty-elements.button.attributes#4460)
   (-> (if disabled? {:class              :pe-toggle--body
                      :disabled           true
                      :data-selectable    false
@@ -38,14 +38,15 @@
                      :data-selectable    false
                      :data-text-overflow :hidden
                      :id                 (hiccup/value toggle-id "body")
-                     :on-click           #(r/dispatch on-click)
-                     :on-mouse-over      #(r/dispatch on-mouse-over)
+                     :on-click           #(element.side-effects/dispatch-event-handler! on-click)
+                     :on-mouse-over      #(element.side-effects/dispatch-event-handler! on-mouse-over)
                      :on-mouse-up        #(dom/blur-active-element!)})
-      (pretty-css/border-attributes toggle-props)
-      (pretty-css/color-attributes  toggle-props)
-      (pretty-css/cursor-attributes toggle-props)
-      (pretty-css/indent-attributes toggle-props)
-      (pretty-css/link-attributes   toggle-props)))
+      (pretty-css/border-attributes       toggle-props)
+      (pretty-css/color-attributes        toggle-props)
+      (pretty-css/cursor-attributes       toggle-props)
+      (pretty-css/element-size-attributes toggle-props)
+      (pretty-css/indent-attributes       toggle-props)
+      (pretty-css/link-attributes         toggle-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -60,6 +61,7 @@
   ; {:class (keyword or keywords in vector)}
   [_ toggle-props]
   (-> {:class :pe-toggle}
-      (pretty-css/default-attributes      toggle-props)
+      (pretty-css/class-attributes        toggle-props)
+      (pretty-css/state-attributes        toggle-props)
       (pretty-css/outdent-attributes      toggle-props)
-      (pretty-css/element-size-attributes toggle-props)))
+      (pretty-css/wrapper-size-attributes toggle-props)))

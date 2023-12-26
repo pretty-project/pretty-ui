@@ -1,6 +1,9 @@
 
 (ns pretty-elements.button.prototypes
-    (:require [metamorphic-content.api :as metamorphic-content]))
+    (:require [metamorphic-content.api :as metamorphic-content]
+              [dom.api :as dom]
+              [pretty-elements.element.side-effects :as element.side-effects]
+              [fruits.noop.api :refer [return]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -11,12 +14,12 @@
   ; @param (map) button-props
   ; {:badge-content (metamorphic-content)(opt)
   ;  :border-color (keyword)(opt)
-  ;  :cursor (keyword)(opt)
-  ;  :disabled? (boolean)(opt)
+  ;  :content (metamorphic-content)(opt)
   ;  :font-size (keyword)(opt)
   ;  :icon (keyword)(opt)
-  ;  :label (metamorphic-content)(opt)
   ;  :marker-color (keyword)(opt)
+  ;  :on-click (function or Re-Frame metamorphic-event)
+  ;  :on-mouse-over (function or Re-Frame metamorphic-event)
   ;  :progress (percent)(opt)
   ;  :tooltip-content (metamorphic-content)(opt)}
   ;
@@ -26,32 +29,34 @@
   ;  :badge-position (keyword)
   ;  :border-position (keyword)
   ;  :border-width (keyword)
-  ;  :cursor (keyword)
+  ;  :click-effect (keyword)
+  ;  :content-value-f (function)
   ;  :font-size (keyword)
   ;  :font-weight (keyword)
   ;  :horizontal-align (keyword)
-  ;  :hover-color (keyword)
   ;  :icon-family (keyword)
   ;  :icon-position (keyword)
   ;  :icon-size (keyword)
-  ;  :label (string)
   ;  :line-height (keyword)
+  ;  :on-click (function)
+  ;  :on-mouse-over (function)
+  ;  :on-mouse-up (function)
   ;  :progress-color (keyword)
   ;  :progress-direction (keyword)
   ;  :progress-duration (ms)
   ;  :text-overflow (keyword)
   ;  :tooltip-content (string)
-  ;  :tooltip-position (keyword)
-  ;  :width (keyword)}
-  [{:keys [badge-content border-color cursor disabled? font-size icon label marker-color progress tooltip-content] :as button-props}]
-  ; XXX#5603
-  ; Uses the default cursor instead of the pointer cursor when disabled if no custom cursor has been set.
-  (merge {:font-size        :s
+  ;  :tooltip-position (keyword)}
+  [{:keys [badge-content border-color content font-size icon marker-color on-click on-mouse-over progress tooltip-content] :as button-props}]
+  ; @note (#7861)
+  ; Badge content and tooltip content must be composed before they get passed to the Pretty CSS element attribute functions.
+  (merge {:click-effect     :opacity
+          :content-value-f  return
+          :font-size        :s
           :font-weight      :medium
           :horizontal-align :center
           :line-height      :text-block
-          :text-overflow    :hidden
-          :width            :content}
+          :text-overflow    :hidden}
          (if badge-content   {:badge-color        :primary
                               :badge-position     :tr})
          (if border-color    {:border-position    :all
@@ -66,8 +71,7 @@
          (if tooltip-content {:tooltip-position   :right})
          (-> button-props)
          (if badge-content   {:badge-content   (metamorphic-content/compose badge-content)})
-         (if label           {:label           (metamorphic-content/compose label)})
          (if tooltip-content {:tooltip-content (metamorphic-content/compose tooltip-content)})
-         (if disabled?       {:cursor      (or cursor :default)
-                              :hover-color :none}
-                             {:cursor      :pointer})))
+         (if on-mouse-over   {:on-mouse-over   #(element.side-effects/dispatch-event-handler! on-mouse-over)})
+         (if on-click        {:on-click        #(element.side-effects/dispatch-event-handler! on-click)
+                              :on-mouse-up     #(dom/blur-active-element!)})))

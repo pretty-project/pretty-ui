@@ -13,12 +13,10 @@
   ; @return (map)
   ; {}
   [{:keys [border-color] :as bubble-props}]
-  (merge {:color       :default
-          :font-size   :s
+  (merge {:font-size   :s
           :font-weight :medium
-          :height      :auto
           :selectable? false
-          :width       :content}
+          :text-color  :default}
          (if border-color {:border-position :all
                            :border-width    :xxs})
          (-> bubble-props)))

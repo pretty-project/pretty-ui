@@ -82,6 +82,7 @@
   ; {}
   [_ select-props]
   (-> {:class :pe-select-button}
-      (pretty-css/default-attributes select-props)
+      (pretty-css/class-attributes   select-props)
+      (pretty-css/state-attributes   select-props)
       (pretty-css/outdent-attributes select-props)
       (pretty-css/effect-attributes  select-props)))

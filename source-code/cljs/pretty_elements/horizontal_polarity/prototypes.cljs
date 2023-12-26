@@ -11,7 +11,7 @@
   ;
   ; @return (map)
   ; {:vertical-align (keyword)
-  ;  :width (keyword)}
+  ;  :width (keyword, px or string)}
   [polarity-props]
   (merge {:vertical-align :center
           :width          :auto}

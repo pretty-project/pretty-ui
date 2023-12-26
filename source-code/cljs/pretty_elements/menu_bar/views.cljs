@@ -19,7 +19,7 @@
   ; {:href (string)(opt)
   ;  :icon (keyword)(opt)
   ;  :label (metamorphic-content)(opt)
-  ;  :on-click (Re-Frame metamorphic-event)(opt)}
+  ;  :on-click (function or Re-Frame metamorphic-event)(opt)}
   [bar-id bar-props {:keys [href icon label on-click] :as item-props}]
   (let [item-props (pretty-presets/apply-preset                        item-props)
         item-props (menu-bar.prototypes/item-props-prototype bar-props item-props)]
@@ -79,15 +79,12 @@
   ;     :tl, :tr, :br, :bl, :left, :right, :bottom, :top
   ;     Default: :tr
   ;    :border-color (keyword or string)(opt)
-  ;     :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;    :border-radius (map)(opt)
   ;    :border-width (keyword)(opt)
   ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  ;    :color (keyword or string)(opt)
-  ;     :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
-  ;     Default: :inherit
   ;    :fill-color (keyword or string)(opt)
-  ;     :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+  ;    :fill-pattern (keyword)(opt)
+  ;     Default: :cover
   ;    :font-size (keyword)(opt)
   ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
   ;     Default: :s
@@ -116,7 +113,10 @@
   ;    :marker-position (keyword)(opt)
   ;     :tl, :tr, :br, :bl, left, :right, bottom, :top
   ;     Default: :tr
-  ;    :outdent (map)(opt)}
+  ;    :outdent (map)(opt)
+  ;    :text-color (keyword or string)(opt)
+  ;     :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
+  ;     Default: :inherit}
   ;  :menu-items (maps in vector)
   ;   [{:badge-color (keyword)(opt)
   ;      :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
@@ -126,8 +126,8 @@
   ;     :href (string)(opt)
   ;     :icon (keyword)(opt)
   ;     :label (metamorphic-content)(opt)
-  ;     :on-click (Re-Frame metamorphic-event)(opt)
-  ;     :on-mouse-over (Re-Frame metamorphic-event)(opt)
+  ;     :on-click (function or Re-Frame metamorphic-event)(opt)
+  ;     :on-mouse-over (function or Re-Frame metamorphic-event)(opt)
   ;     :preset (keyword)(opt)
   ;     :target (keyword)(opt)
   ;      :blank, :self}]
@@ -148,7 +148,8 @@
    [element (random/generate-keyword) bar-props])
 
   ([bar-id bar-props]
-   (fn [_ bar-props] ; XXX#0106 (tutorials.api#parametering)
+   ; @note (tutorials#parametering)
+   (fn [_ bar-props]
        (let [bar-props (pretty-presets/apply-preset             bar-props)
              bar-props (menu-bar.prototypes/bar-props-prototype bar-props)]
             [menu-bar bar-id bar-props]))))

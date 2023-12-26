@@ -12,17 +12,15 @@
   ; @param (keyword)(opt) line-id
   ; @param (map) line-props
   ; {:class (keyword or keywords in vector)(opt)
-  ;  :fill-color (keyword or string)(opt)
-  ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
-  ;   Default: :default
+  ;  :color (keyword or string)(opt)
+  ;   Default: :muted
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
   ;  :preset (keyword)(opt)
   ;  :style (map)(opt)
   ;  :strength (px)(opt)
   ;   Default: 1
-  ;  :width (keyword)(opt)
-  ;   :auto, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;  :width (keyword, px or string)(opt)
   ;   Default: :auto}
   ;
   ; @usage
@@ -34,7 +32,8 @@
    [element (random/generate-keyword) line-props])
 
   ([line-id line-props]
-   (fn [_ line-props] ; XXX#0106 (tutorials.api#parametering)
+   ; @note (tutorials#parametering)
+   (fn [_ line-props]
        (let [line-props (pretty-presets/apply-preset                     line-props)
              line-props (horizontal-line.prototypes/line-props-prototype line-props)]
             [:div (horizontal-line.attributes/line-attributes line-id line-props)

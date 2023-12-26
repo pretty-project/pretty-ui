@@ -37,6 +37,7 @@
    [component (random/generate-keyword) block-props])
 
   ([block-id block-props]
-   (fn [_ block-props] ; XXX#0106 (tutorials.api#parametering)
+   ; @note (tutorials#parametering)
+   (fn [_ block-props]
        (let [] ; block-props (input-block.prototypes/block-props-prototype block-props)
             [input-block block-id block-props]))))

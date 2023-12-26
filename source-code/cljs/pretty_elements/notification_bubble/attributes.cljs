@@ -39,8 +39,11 @@
   [_ {:keys [selectable?] :as bubble-props}]
   (-> {:class           :pe-notification-bubble--body
        :data-selectable selectable?}
-      (pretty-css/border-attributes bubble-props)
-      (pretty-css/color-attributes  bubble-props)))
+      (pretty-css/border-attributes           bubble-props)
+      (pretty-css/color-attributes            bubble-props)
+      (pretty-css/element-max-size-attributes bubble-props)
+      (pretty-css/element-min-size-attributes bubble-props)
+      (pretty-css/element-size-attributes     bubble-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -55,8 +58,7 @@
   ; {:class (keyword or keywords in vector)}
   [_ bubble-props]
   (-> {:class :pe-notification-bubble}
-      (pretty-css/default-attributes          bubble-props)
-      (pretty-css/outdent-attributes          bubble-props)
-      (pretty-css/element-max-size-attributes bubble-props)
-      (pretty-css/element-min-size-attributes bubble-props)
-      (pretty-css/element-size-attributes     bubble-props)))
+      (pretty-css/class-attributes        bubble-props)
+      (pretty-css/state-attributes        bubble-props)
+      (pretty-css/outdent-attributes      bubble-props)
+      (pretty-css/wrapper-size-attributes bubble-props)))

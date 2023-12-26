@@ -77,7 +77,8 @@
   [_ {:keys [style] :as slider-props}]
   (-> {:class :pe-slider--body
        :style style}
-      (pretty-css/indent-attributes slider-props)))
+      (pretty-css/indent-attributes       slider-props)
+      (pretty-css/element-size-attributes slider-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -92,6 +93,7 @@
   ; {}
   [_ slider-props]
   (-> {:class :pe-slider}
-      (pretty-css/default-attributes      slider-props)
+      (pretty-css/class-attributes        slider-props)
+      (pretty-css/state-attributes        slider-props)
       (pretty-css/outdent-attributes      slider-props)
-      (pretty-css/element-size-attributes slider-props)))
+      (pretty-css/wrapper-size-attributes slider-props)))

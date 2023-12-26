@@ -74,10 +74,7 @@
   ; {:class (keyword or keywords in vector)(opt)
   ;  :columns (maps in vector)(opt)
   ;   [{:cells (maps in vector)
-  ;      [{:color (keyword or string)(opt)
-  ;         :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
-  ;         Default: :inherit
-  ;        :content (metamorphic-content)(opt)
+  ;      [{:content (metamorphic-content)(opt)
   ;        :font-size (keyword)(opt)
   ;         :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
   ;         Default: :s
@@ -95,6 +92,9 @@
   ;        :preset (keyword)(opt)
   ;        :selectable? (boolean)(opt)
   ;         Default: true
+  ;        :text-color (keyword or string)(opt)
+  ;         :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
+  ;         Default: :inherit
   ;        :text-overflow (keyword)(opt)
   ;         :ellipsis, :hidden, :wrap
   ;         Default: :ellipsis
@@ -106,8 +106,7 @@
   ;     :preset (keyword)(opt)
   ;     :template (string)(opt)
   ;      Default: "repeat(*cell-count*, 1fr)"
-  ;     :width (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;     :width (keyword, px or string)(opt)
   ;      Default: :s}]
   ;  :disabled? (boolean)(opt)
   ;  :indent (map)(opt)
@@ -124,8 +123,7 @@
   ;  :preset (keyword)(opt)
   ;  :rows (maps in vector)(opt)
   ;   [{:cells (maps in vector)
-  ;     :height (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;     :height (keyword, px or string)(opt)
   ;      Default: :s
   ;     :preset (keyword)(opt)
   ;     :template (string)(opt)
@@ -149,7 +147,8 @@
    [element (random/generate-keyword) table-props])
 
   ([table-id table-props]
-   (fn [_ table-props] ; XXX#0106 (tutorials.api#parametering)
+   ; @note (tutorials#parametering)
+   (fn [_ table-props]
        (let [ ; table-props (data-table.prototypes/table-props-prototype table-props)
              table-props (pretty-presets/apply-preset     table-props)]
             [data-table table-id table-props]))))

@@ -50,6 +50,7 @@
    [component (random/generate-keyword) bar-props])
 
   ([bar-id bar-props]
-   (fn [_ bar-props] ; XXX#0106 (tutorials.api#parametering)
+   ; @note (tutorials#parametering)
+   (fn [_ bar-props]
        (let [bar-props (popup-label-bar.prototypes/bar-props-prototype bar-props)]
             [popup-label-bar bar-id bar-props]))))

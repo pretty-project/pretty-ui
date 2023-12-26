@@ -30,29 +30,10 @@
 ;; ----------------------------------------------------------------------------
 
 (defn renderer
-  ; @description
-  ; Rendering/removing content on/from the 'surface-renderer' renderer could be
-  ; done by its Re-Frame effects.
-  ;
-  ; @param (keyword) renderer-id
+  ; @param (keyword)(opt) renderer-id
   ; @param (map) renderer-props
-  ; {:autoreset-scroll-y? (boolean)(opt)
-  ;   Resets the document scroll Y position when a new content rendered.
-  ;   Default: true
-  ;  :max-elements-rendered (integer)(opt)
-  ;   Default: 1
-  ;  :queue-behavior (keyword)
-  ;   If the rendered element count exceeds the :max-elements-rendered property value,
-  ;   a new content rendering request could ...
-  ;   ... be ignored.
-  ;   ... pushes the oldest rendered content out of the queue in order to render the new content.
-  ;   ... being put to the end of the queue and wait until another rendered content is being removed.
-  ;   :ignore, :push, :wait
-  ;   Default: :push
-  ;  :rerender-same? (boolean)
-  ;   If a content rendering request has the same ID as an already rendered content
-  ;   this property determines whether the new content replaces the old one.
-  ;   Default: false}
+  ; {:max-elements-rendered (integer)(opt)
+  ;   Default: 1}
   ;
   ; @usage
   ; [surface-renderer {...}]
@@ -61,9 +42,8 @@
   ; [surface-renderer :my-surface-renderer {...}]
   ;
   ; @usage
-  ; [surface-renderer {:queue-behavior :ignore
-  ;                    :rerender-same? true}]
-  ; (r/dispatch [:renderers.surface-renderer/render-surface! :my-surface {...}])
+  ; [surface-renderer {}]
+  ; (r/dispatch [:pretty-renderers.surface-renderer/render-surface! :my-surface {...}])
   ([renderer-props]
    [renderer (random/generate-keyword) renderer-props])
 

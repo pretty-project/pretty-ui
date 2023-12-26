@@ -27,6 +27,7 @@
   ;  :default-props (map)(opt)
   ;  :element (Reagent component symbol)
   ;  :group-items (maps in vector)
+  ;  :height (keyword, px or string)(opt)
   ;  :indent (map)(opt)
   ;   {:bottom (keyword)(opt)
   ;    :left (keyword)(opt)
@@ -39,9 +40,7 @@
   ;   Same as the :indent property.
   ;  :preset (keyword)(opt)
   ;  :style (map)(opt)
-  ;  :width (keyword)(opt)
-  ;   :auto, :content, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  ;   Default: :content}
+  ;  :width (keyword, px or string)(opt)}
   ;
   ; @usage
   ; [horizontal-group {...}]
@@ -58,7 +57,8 @@
    [element (random/generate-keyword) group-props])
 
   ([group-id group-props]
-   (fn [_ group-props] ; XXX#0106 (tutorials.api#parametering)
-       (let [group-props (pretty-presets/apply-preset                       group-props)
-             group-props (horizontal-group.prototypes/group-props-prototype group-props)]
+   ; @note (tutorials#parametering)
+   (fn [_ group-props]
+       (let [group-props (pretty-presets/apply-preset group-props)]
+             ; group-props (horizontal-group.prototypes/group-props-prototype group-props)
             [horizontal-group group-id group-props]))))

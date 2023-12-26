@@ -75,7 +75,8 @@
    [diagram (random/generate-keyword) diagram-props])
 
   ([diagram-id diagram-props]
-   (fn [_ diagram-props] ; XXX#0106 (tutorials.api#parametering)
+   ; @note (tutorials#parametering)
+   (fn [_ diagram-props]
        (let [diagram-props (pretty-presets/apply-preset                       diagram-props)
              diagram-props (circle-diagram.prototypes/diagram-props-prototype diagram-props)]
             [circle-diagram diagram-id diagram-props]))))

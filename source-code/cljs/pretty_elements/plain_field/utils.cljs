@@ -6,6 +6,7 @@
               [pretty-elements.plain-field.config       :as plain-field.config]
               [pretty-elements.plain-field.env          :as plain-field.env]
               [pretty-elements.plain-field.side-effects :as plain-field.side-effects]
+              [pretty-elements.element.side-effects :as element.side-effects]
               [pretty-elements.plain-field.state        :as plain-field.state]
               [re-frame.api                             :as r]
               [reagent.api                              :as reagent]
@@ -56,14 +57,14 @@
   [field-id _]
   ; HACK#9910 (source-code/cljs/pretty_elements/plain_field/views.cljs)
   ;
-  ; After the field unmounted, its content and output have to be removed from the state.
-  ; Otherwise next time when the field remounts, its previous content and output could affect it.
-  ; + It has to be checked whether the field is still mounted to the DOM-tree because
-  ;   it might be mounted if the field is duplicated on the page (with the same ID).
+  ; When the field is unmounted, its content and output have to be removed from the state.
+  ; Otherwise, the next time when the field remounts, its previous content and output would affect it.
+  ; + It has to be checked whether the field is still mounted into the DOM-tree because
+  ;   it might be mounted (if the field is duplicated on the page with the same ID).
   ;   It's pretty common to use duplicated fields by displaying a field on a page of a
   ;   content swapper and the same field on another page of that very content swapper.
   ;   And during the content swapper animated page changing process, there is short overlap
-  ;   in the lifetimes of that fields.
+  ;   in the lifetimes of the fields.
   (letfn [(f0 [] (let [input-id      (hiccup/value field-id "input")
                        input-element (dom/get-element-by-id input-id)]
                       (when-not input-element (plain-field.side-effects/set-field-content! field-id nil)
@@ -112,7 +113,7 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ; {:on-changed (Re-Frame metamorphic-event)(opt)}
+  ; {:on-changed (function or Re-Frame metamorphic-event)(opt)}
   ; @param (string) field-content
   [field-id {:keys [on-changed] :as field-props} field-content]
   (let [timestamp (time/elapsed)]
@@ -120,8 +121,7 @@
        (plain-field.side-effects/set-field-content! field-id field-content)
        (letfn [(f0 [] (resolve-field-change-f field-id field-props))]
               (time/set-timeout! f0 plain-field.config/TYPE-ENDED-AFTER))
-       (if on-changed (let [on-changed (r/metamorphic-event<-params on-changed field-content)]
-                           (r/dispatch-sync on-changed)))))
+       (if on-changed (element.side-effects/dispatch-sync-event-handler! on-changed field-content))))
 
 (defn on-change-f
   ; @ignore

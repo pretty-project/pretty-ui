@@ -1,9 +1,7 @@
 
 (ns pretty-elements.button.attributes
-    (:require [dom.api           :as dom]
-              [fruits.hiccup.api :as hiccup]
-              [pretty-css.api    :as pretty-css]
-              [re-frame.api      :as r]))
+    (:require [fruits.hiccup.api :as hiccup]
+              [pretty-css.api    :as pretty-css]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -46,10 +44,6 @@
   ; {:disabled? (boolean)(opt)
   ;  :gap (keyword)(opt)
   ;  :horizontal-align (keyword)
-  ;  :hover-effect (keyword)(opt)
-  ;  :href (string)(opt)
-  ;  :on-click (Re-Frame metamorphic-event)(opt)
-  ;  :on-mouse-over (Re-Frame metamorphic-event)(opt)
   ;  :style (map)(opt)}
   ;
   ; @return (map)
@@ -57,45 +51,33 @@
   ;  :data-column-gap (keyword)
   ;  :data-selectable (boolean)
   ;  :disabled (boolean)
-  ;  :href (string)
   ;  :id (string)
-  ;  :on-click (function)
-  ;  :on-mouse-over (function)
-  ;  :on-mouse-up (function)
   ;  :style (map)}
-  [button-id {:keys [disabled? gap horizontal-align hover-effect href on-click on-mouse-over style] :as button-props}]
-  ; XXX#4460
-  ; By setting the :id attribute the body component becomes targetable for
-  ; DOM actions. (setting focus/blur, etc.)
-  (-> (if disabled? {:class                     :pe-button--body
-                     :disabled                  true
-                     :data-letter-spacing       :auto
-                     :data-column-gap           gap
-                     :data-horizontal-row-align horizontal-align
-                     :data-selectable           false
-                     :style                     style}
-                    {:class                     :pe-button--body
-                     :id                        (hiccup/value button-id "body")
-                     :on-click                  #(r/dispatch  on-click)
-                     :on-mouse-over             #(r/dispatch  on-mouse-over)
-                     :on-mouse-up               #(dom/blur-active-element!)
-                     :data-click-effect         :opacity
-                     :data-hover-effect         hover-effect
-                     :data-letter-spacing       :auto
-                     :data-column-gap           gap
-                     :data-horizontal-row-align horizontal-align
-                     :data-selectable           false
-                     :style                     style})
-      (pretty-css/badge-attributes    button-props)
-      (pretty-css/border-attributes   button-props)
-      (pretty-css/color-attributes    button-props)
-      (pretty-css/cursor-attributes   button-props)
-      (pretty-css/font-attributes     button-props)
-      (pretty-css/marker-attributes   button-props)
-      (pretty-css/indent-attributes   button-props)
-      (pretty-css/link-attributes     button-props)
-      (pretty-css/progress-attributes button-props)
-      (pretty-css/tooltip-attributes  button-props)))
+  [button-id {:keys [disabled? gap horizontal-align style] :as button-props}]
+  ; @note (#4460)
+  ; Setting the ':id' attribute on the button body component makes it targetable for DOM actions (e.g., focus, blur, etc.).
+  (let [button-body-id (hiccup/value button-id "body")]
+       (-> {:class                     :pe-button--body
+            :data-letter-spacing       :auto
+            :data-column-gap           gap
+            :data-horizontal-row-align horizontal-align
+            :data-selectable           false
+            :disabled                  disabled?
+            :id                        button-body-id
+            :style                     style}
+           (pretty-css/badge-attributes        button-props)
+           (pretty-css/border-attributes       button-props)
+           (pretty-css/color-attributes        button-props)
+           (pretty-css/cursor-attributes       button-props)
+           (pretty-css/effect-attributes       button-props)
+           (pretty-css/element-size-attributes button-props)
+           (pretty-css/font-attributes         button-props)
+           (pretty-css/indent-attributes       button-props)
+           (pretty-css/link-attributes         button-props)
+           (pretty-css/marker-attributes       button-props)
+           (pretty-css/mouse-event-attributes  button-props)
+           (pretty-css/progress-attributes     button-props)
+           (pretty-css/tooltip-attributes      button-props))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -110,6 +92,7 @@
   ; {:class (keyword or keywords in vector)}
   [_ button-props]
   (-> {:class :pe-button}
-      (pretty-css/default-attributes      button-props)
+      (pretty-css/class-attributes        button-props)
+      (pretty-css/state-attributes        button-props)
       (pretty-css/outdent-attributes      button-props)
-      (pretty-css/element-size-attributes button-props)))
+      (pretty-css/wrapper-size-attributes button-props)))

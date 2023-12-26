@@ -20,8 +20,9 @@
   (-> {:class           :pe-horizontal-separator--body
        :data-selectable false
        :style           style}
-      (pretty-css/color-attributes  separator-props)
-      (pretty-css/indent-attributes separator-props)))
+      (pretty-css/color-attributes        separator-props)
+      (pretty-css/indent-attributes       separator-props)
+      (pretty-css/element-size-attributes separator-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -36,6 +37,7 @@
   ; {:class (keyword or keywords in vector)}
   [_ separator-props]
   (-> {:class :pe-horizontal-separator}
-      (pretty-css/default-attributes      separator-props)
+      (pretty-css/class-attributes        separator-props)
+      (pretty-css/state-attributes        separator-props)
       (pretty-css/outdent-attributes      separator-props)
-      (pretty-css/element-size-attributes separator-props)))
+      (pretty-css/wrapper-size-attributes separator-props)))

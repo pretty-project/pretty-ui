@@ -44,8 +44,7 @@
   ;   Same as the :indent property.
   ;  :preset (keyword)(opt)
   ;  :style (map)(opt)
-  ;  :width (keyword)(opt)
-  ;   :auto, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;  :width (keyword, px or string)(opt)
   ;   Default: :auto}
   ;
   ; @usage
@@ -57,7 +56,8 @@
    [element (random/generate-keyword) separator-props])
 
   ([separator-id separator-props]
-   (fn [_ separator-props] ; XXX#0106 (tutorials.api#parametering)
+   ; @note (tutorials#parametering)
+   (fn [_ separator-props]
        (let [separator-props (pretty-presets/apply-preset                               separator-props)
              separator-props (horizontal-separator.prototypes/separator-props-prototype separator-props)]
             [horizontal-separator separator-id separator-props]))))

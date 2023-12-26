@@ -2,7 +2,7 @@
 (ns pretty-elements.thumbnail.attributes
     (:require [dom.api        :as dom]
               [pretty-css.api :as pretty-css]
-              [re-frame.api   :as r]))
+              [pretty-elements.element.side-effects :as element.side-effects]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -27,7 +27,7 @@
                      :data-click-effect    (if (or href on-click) :opacity)
                      :data-selectable      false
                      :style                style
-                     :on-click             #(r/dispatch on-click)
+                     :on-click             #(element.side-effects/dispatch-event-handler! on-click)
                      :on-mouse-up          #(dom/blur-active-element!)})
       (pretty-css/border-attributes         thumbnail-props)
       (pretty-css/indent-attributes         thumbnail-props)
@@ -47,5 +47,7 @@
   ; {}
   [_ thumbnail-props]
   (-> {:class :pe-thumbnail}
-      (pretty-css/default-attributes thumbnail-props)
-      (pretty-css/outdent-attributes thumbnail-props)))
+      (pretty-css/class-attributes        thumbnail-props)
+      (pretty-css/state-attributes        thumbnail-props)
+      (pretty-css/outdent-attributes      thumbnail-props)
+      (pretty-css/wrapper-size-attributes thumbnail-props)))

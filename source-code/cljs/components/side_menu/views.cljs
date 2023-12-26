@@ -52,7 +52,8 @@
    [component (random/generate-keyword) menu-props])
 
   ([menu-id {:keys [threshold] :as menu-props}]
-   (fn [_ menu-props] ; XXX#0106 (tutorials.api#parametering)
+   ; @note (tutorials#parametering)
+   (fn [_ menu-props]
        (let [menu-props (side-menu.prototypes/menu-props-prototype menu-props)]
             (if (or (not                                 threshold)
                     (window-observer/viewport-width-min? threshold))

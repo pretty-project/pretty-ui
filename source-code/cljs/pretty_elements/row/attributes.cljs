@@ -30,9 +30,12 @@
        :data-vertical-row-align   vertical-align
        :data-wrap-items           wrap-items?
        :style                     style}
-      (pretty-css/border-attributes row-props)
-      (pretty-css/color-attributes  row-props)
-      (pretty-css/indent-attributes row-props)))
+      (pretty-css/border-attributes           row-props)
+      (pretty-css/color-attributes            row-props)
+      (pretty-css/indent-attributes           row-props)
+      (pretty-css/element-max-size-attributes row-props)
+      (pretty-css/element-min-size-attributes row-props)
+      (pretty-css/element-size-attributes     row-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -47,8 +50,7 @@
   ; {}
   [_ row-props]
   (-> {:class :pe-row}
-      (pretty-css/default-attributes          row-props)
-      (pretty-css/outdent-attributes          row-props)
-      (pretty-css/element-max-size-attributes row-props)
-      (pretty-css/element-min-size-attributes row-props)
-      (pretty-css/element-size-attributes     row-props)))
+      (pretty-css/class-attributes        row-props)
+      (pretty-css/state-attributes        row-props)
+      (pretty-css/outdent-attributes      row-props)
+      (pretty-css/wrapper-size-attributes row-props)))

@@ -30,6 +30,7 @@
    [element (random/generate-keyword) field-props])
 
   ([field-id field-props]
-   (fn [_ field-props] ; XXX#0106 (tutorials.api#parametering)
+   ; @note (tutorials#parametering)
+   (fn [_ field-props]
        (let [field-props (number-field.prototypes/field-props-prototype field-id field-props)]
             [text-field.views/element field-id field-props]))))

@@ -32,7 +32,7 @@
   ; @param (map) popup-props
   ; {:footer (metamorphic-content)(opt)}
   [popup-id {:keys [footer] :as popup-props}]
-  ; XXX#0106 (tutorials.api#parametering)
+  ; @note (tutorials#parametering)
   (if footer (reagent/lifecycles {:component-did-mount    (fn [_ _] (struct-popup.utils/footer-did-mount-f    popup-id))
                                   :component-will-unmount (fn [_ _] (struct-popup.utils/footer-will-unmount-f popup-id))
                                   :reagent-render         (fn [_ popup-props] [footer-structure popup-id popup-props])})))
@@ -58,7 +58,7 @@
   ; @param (map) popup-props
   ; {:header (metamorphic-content)(opt)}
   [popup-id {:keys [header] :as popup-props}]
-  ; XXX#0106 (tutorials.api#parametering)
+  ; @note (tutorials#parametering)
   (if header (reagent/lifecycles {:component-did-mount    (fn [_ _] (struct-popup.utils/header-did-mount-f    popup-id))
                                   :component-will-unmount (fn [_ _] (struct-popup.utils/header-will-unmount-f popup-id))
                                   :reagent-render         (fn [_ popup-props] [header-structure popup-id popup-props])})))
@@ -113,7 +113,7 @@
   ; @param (map) popup-props
   ; {}
   [popup-id {:keys [lock-scroll? on-mount on-unmount] :as popup-props}]
-  ; XXX#0106 (tutorials.api#parametering)
+  ; @note (tutorials#parametering)
   (reagent/lifecycles {:component-did-mount    (fn [_ _] (if lock-scroll? (scroll-lock/add-scroll-prohibition! popup-id))
                                                          (if on-mount     (r/dispatch on-mount)))
                        :component-will-unmount (fn [_ _] (if lock-scroll? (scroll-lock/remove-scroll-prohibition! popup-id))
@@ -178,7 +178,8 @@
    [layout (random/generate-keyword) popup-props])
 
   ([popup-id popup-props]
-   (fn [_ popup-props] ; XXX#0106 (tutorials.api#parametering)
+   ; @note (tutorials#parametering)
+   (fn [_ popup-props]
        (let [popup-props (pretty-presets/apply-preset                   popup-props)
              popup-props (struct-popup.prototypes/popup-props-prototype popup-props)]
             [struct-popup popup-id popup-props]))))

@@ -139,6 +139,7 @@
    [component (random/generate-keyword) table-props])
 
   ([table-id table-props]
-   (fn [_ table-props] ; XXX#0106 (tutorials.api#parametering)
+   ; @note (tutorials#parametering)
+   (fn [_ table-props]
        (let [table-props (menu-table.prototypes/table-props-prototype table-props)]
             [menu-table table-id table-props]))))

@@ -33,5 +33,6 @@
   ; {}
   [_ list-props]
   (-> {:class :c-vector-item-list}
-      (pretty-css/default-attributes list-props)
+      (pretty-css/class-attributes   list-props)
+      (pretty-css/state-attributes   list-props)
       (pretty-css/outdent-attributes list-props)))

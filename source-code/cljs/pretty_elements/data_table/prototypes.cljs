@@ -12,7 +12,7 @@
   ;
   ; @return (map)
   ; {:template (string)
-  ;  :width (keyword)}
+  ;  :width (keyword, px or string)}
   [{:keys [cells] :as column-props}]
   (merge {:template (css/repeat- (count cells) (css/fr 1))
           :width :s}
@@ -24,7 +24,7 @@
   ; @param (map) row-props
   ;
   ; @return (map)
-  ; {:height (keyword)
+  ; {:height (keyword, px or string)
   ;  :template (string)}
   [{:keys [cells] :as row-props}]
   (merge {:height :s

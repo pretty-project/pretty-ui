@@ -58,7 +58,8 @@
    [element (random/generate-keyword) icon-props])
 
   ([icon-id icon-props]
-   (fn [_ icon-props] ; XXX#0106 (tutorials.api#parametering)
+   ; @note (tutorials#parametering)
+   (fn [_ icon-props]
        (let [icon-props (pretty-presets/apply-preset          icon-props)
              icon-props (icon.prototypes/icon-props-prototype icon-props)]
             [icon icon-id icon-props]))))

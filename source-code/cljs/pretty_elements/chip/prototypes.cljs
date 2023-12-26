@@ -1,5 +1,6 @@
 
-(ns pretty-elements.chip.prototypes)
+(ns pretty-elements.chip.prototypes
+    (:require [fruits.noop.api :refer [return]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -12,17 +13,17 @@
   ;  :primary-button (map)(opt)}
   ;
   ; @return (map)
-  ; {:color (keyword or string)
-  ;  :fill-color (keyword or string)
+  ; {:border-radius (map)
+  ;  :content-value-f (function)
   ;  :icon-family (keyword)
   ;  :primary-button (map)
   ;   {:icon-family (keyword)}
+  ;  :text-color (keyword or string)
   ;  :width (keyword)}
   [{:keys [icon primary-button] :as chip-props}]
-  (merge {:color      :default
-          :fill-color :primary
-          :width      :content}
-         (if icon {:icon-family :material-symbols-outlined})
+  (merge {:content-value-f  return
+          :text-color       :default
+          :width            :content}
+         (if icon           {:icon-family :material-symbols-outlined})
          (-> chip-props)
-         (if primary-button {:primary-button (merge {:icon-family :material-symbols-outlined}
-                                                    (-> primary-button))})))
+         (if primary-button {:primary-button (merge {:icon-family :material-symbols-outlined} primary-button)})))

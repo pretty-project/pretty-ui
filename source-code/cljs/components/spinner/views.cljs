@@ -32,6 +32,7 @@
    [component (random/generate-keyword) spinner-props])
 
   ([spinner-id spinner-props]
-   (fn [_ spinner-props] ; XXX#0106 (tutorials.api#parametering)
+   ; @note (tutorials#parametering)
+   (fn [_ spinner-props]
        (let [spinner-props (spinner.prototypes/spinner-props-prototype spinner-props)]
             [spinner spinner-id spinner-props]))))

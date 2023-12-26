@@ -69,7 +69,8 @@
    [component (random/generate-keyword) menu-props])
 
   ([menu-id menu-props]
-   (fn [_ menu-props] ; XXX#0106 (tutorials.api#parametering)
+   ; @note (tutorials#parametering)
+   (fn [_ menu-props]
        (let [menu-props (pretty-presets/apply-preset                menu-props)
              menu-props (multi-menu.prototypes/menu-props-prototype menu-props)]
             [multi-menu menu-id menu-props]))))

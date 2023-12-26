@@ -66,11 +66,13 @@
                           :data-horizontal-text-align   horizontal-align
                           :style                        style
                           :data-letter-spacing          :auto}))
-      (pretty-css/border-attributes text-props)
-      (pretty-css/color-attributes  text-props)
-      (pretty-css/font-attributes   text-props)
-      (pretty-css/indent-attributes text-props)
-      (pretty-css/text-attributes   text-props)))
+      (pretty-css/border-attributes           text-props)
+      (pretty-css/color-attributes            text-props)
+      (pretty-css/font-attributes             text-props)
+      (pretty-css/indent-attributes           text-props)
+      (pretty-css/text-attributes             text-props)
+      (pretty-css/element-min-size-attributes text-props)
+      (pretty-css/element-size-attributes     text-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -85,7 +87,7 @@
   ; {}
   [_ text-props]
   (-> {:class :pe-text}
-      (pretty-css/default-attributes          text-props)
-      (pretty-css/outdent-attributes          text-props)
-      (pretty-css/element-min-size-attributes text-props)
-      (pretty-css/element-size-attributes     text-props)))
+      (pretty-css/class-attributes        text-props)
+      (pretty-css/state-attributes        text-props)
+      (pretty-css/outdent-attributes      text-props)
+      (pretty-css/wrapper-size-attributes text-props)))

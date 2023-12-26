@@ -55,5 +55,6 @@
   ; {:class (keyword or keywords in vector)}
   [_ links-props]
   (-> {:class :pw-follow-us-links}
-      (pretty-css/default-attributes links-props)
+      (pretty-css/class-attributes   links-props)
+      (pretty-css/state-attributes   links-props)
       (pretty-css/outdent-attributes links-props)))

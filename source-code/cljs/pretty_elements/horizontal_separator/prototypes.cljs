@@ -11,7 +11,7 @@
   ;
   ; @return (map)
   ; {:color (keyword)
-  ;  :width (keyword)}
+  ;  :width (keyword, px or string)}
   [separator-props]
   (merge {:color :default
           :width :auto}

@@ -130,5 +130,6 @@
   ; {:class (keyword or keywords in vector)}
   [_ contacts-props]
   (-> {:class :pw-contacts}
-      (pretty-css/default-attributes contacts-props)
+      (pretty-css/class-attributes   contacts-props)
+      (pretty-css/state-attributes   contacts-props)
       (pretty-css/outdent-attributes contacts-props)))
