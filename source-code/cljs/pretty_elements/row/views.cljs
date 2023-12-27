@@ -36,6 +36,8 @@
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;  :class (keyword or keywords in vector)(opt)
   ;  :content (metamorphic-content)(opt)
+  ;  :content-value-f (function)(opt)
+  ;   Default: return
   ;  :fill-color (keyword or string)(opt)
   ;  :fill-pattern (keyword)(opt)
   ;   Default: :cover
@@ -59,6 +61,9 @@
   ;  :min-width (keyword, px or string)(opt)
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
+  ;  :placeholder (metamorphic-content)(opt)
+  ;  :placeholder-value-f (function)(opt)
+  ;   Default: return
   ;  :preset (keyword)(opt)
   ;  :style (map)(opt)
   ;  :vertical-align (keyword)(opt)

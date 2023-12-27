@@ -2,7 +2,8 @@
 (ns pretty-elements.password-field.prototypes
     (:require [fruits.vector.api                  :as vector]
               [pretty-elements.password-field.env :as password-field.env]
-              [pretty-elements.plain-field.env    :as plain-field.env]))
+              [pretty-elements.plain-field.env    :as plain-field.env]
+              [pretty-build-kit.api :as pretty-build-kit]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

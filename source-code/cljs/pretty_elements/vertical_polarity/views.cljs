@@ -54,7 +54,8 @@
   ;  :preset (keyword)(opt)
   ;  :style (map)(opt)
   ;  :start-content (metamorphic-content)(opt)
-  ;  :width (keyword, px or string)(opt)}
+  ;  :width (keyword, px or string)(opt)
+  ;   Default: :auto}
   ;
   ; @usage
   ; [vertical-polarity {...}]

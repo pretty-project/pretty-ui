@@ -33,15 +33,9 @@
   ;   Default: :default
   ;   W/ {:label ...}
   ;  :indent (map)(opt)
-  ;   {:bottom (keyword)(opt)
-  ;    :left (keyword)(opt)
-  ;    :right (keyword)(opt)
-  ;    :top (keyword)(opt)
-  ;    :horizontal (keyword)(opt)
-  ;    :vertical (keyword)(opt)
-  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
+  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :outdent (map)(opt)
-  ;   Same as the :indent property.
+  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :points (integers in vector)
   ;  :preset (keyword)(opt)
   ;  :strength (px)(opt)

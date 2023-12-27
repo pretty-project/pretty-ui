@@ -1,5 +1,6 @@
 
-(ns pretty-layouts.sidebar.prototypes)
+(ns pretty-layouts.sidebar.prototypes
+    (:require [pretty-build-kit.api :as pretty-build-kit]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

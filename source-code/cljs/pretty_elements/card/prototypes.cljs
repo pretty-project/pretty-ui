@@ -3,7 +3,8 @@
     (:require [metamorphic-content.api :as metamorphic-content]
               [fruits.noop.api :refer [return]]
               [dom.api :as dom]
-              [pretty-elements.element.side-effects :as element.side-effects]))
+              [pretty-elements.element.side-effects :as element.side-effects]
+              [pretty-build-kit.api :as pretty-build-kit]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -37,7 +38,8 @@
   ; Using the 'dom/blur-active-element!' function as 'on-mouse-up' event must be conditional.
   ; Otherwise, in case the card is not clickable and it contains a 'text-field' element
   ; the blur function would drop the focus of the field when the card gets clicked.
-  (merge {:content-value-f return}
+  (merge {:content-value-f return
+          :placeholder-value-f return}
          (if badge-content {:badge-color     :primary
                             :badge-position  :tr})
          (if border-color  {:border-position :all

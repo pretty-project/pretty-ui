@@ -1,7 +1,9 @@
 
 (ns pretty-elements.dropdown-menu.prototypes
     (:require [fruits.vector.api                   :as vector]
-              [pretty-elements.dropdown-menu.state :as dropdown-menu.state]))
+              [pretty-elements.dropdown-menu.state :as dropdown-menu.state]
+              [pretty-build-kit.api :as pretty-build-kit]
+              [fruits.noop.api :refer [return]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -13,6 +15,10 @@
   ; @param (map) menu-props
   ; {:menu-items (maps in vector)}
   [menu-id {:keys [item-default menu-items]}]
+
+  ;:content-value-f return
+  ;:placeholder-value-f return
+
   (letfn [; XXX#1239
           ; The :on-mouse-over property of items in menu-bar element takes metamorphic-events.
           ; If the f0 function returned the reseted value (by the reset! function),

@@ -36,7 +36,9 @@
   ;  :border-width (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;  :class (keyword or keywords in vector)(opt)
-  ;  :content (metamorphic-content)
+  ;  :content (metamorphic-content)(opt)
+  ;  :content-value-f (function)(opt)
+  ;   Default: return
   ;  :cursor (keyword)(opt)
   ;   :default, :disabled, :grab, :grabbing, :move, :pointer, :progress
   ;   Default: :pointer
@@ -66,6 +68,9 @@
   ;  :on-right-click (Re-Frame metamorphic-event)(opt)
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
+  ;  :placeholder (metamorphic-content)(opt)
+  ;  :placeholder-value-f (function)(opt)
+  ;   Default: return
   ;  :preset (keyword)(opt)
   ;  :style (map)(opt)
   ;  :target (keyword)(opt)

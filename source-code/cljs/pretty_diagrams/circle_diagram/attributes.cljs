@@ -8,7 +8,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn section-attributes
+(defn diagram-section-attributes
   ; @ignore
   ;
   ; @param (keyword) diagram-id
@@ -44,23 +44,40 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn diagram-body-attributes
+(defn diagram-svg-container-attributes
   ; @ignore
   ;
   ; @param (keyword) diagram-id
   ; @param (map) diagram-props
-  ; {:diameter (px)
-  ;  :style (map)(opt)}
+  ; {:diameter (px)}
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  :style (map)
   ;   {:height (string)
   ;    :width (string)}}
-  [_ {:keys [diameter style] :as diagram-props}]
+  [_ {:keys [diameter] :as diagram-props}]
+  (-> {:class :pd-circle-diagram--svg-container
+       :style {:height (css/px diameter)
+               :width  (css/px diameter)}}))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+
+(defn diagram-body-attributes
+  ; @ignore
+  ;
+  ; @param (keyword) diagram-id
+  ; @param (map) diagram-props
+  ; {:style (map)(opt)}
+  ;
+  ; @return (map)
+  ; {:class (keyword or keywords in vector)
+  ;  :style (map)}
+  [_ {:keys [style] :as diagram-props}]
   (-> {:class :pd-circle-diagram--body
-       :style (merge style {:height (css/px diameter)
-                            :width  (css/px diameter)})}
+       :style style}
       (pretty-css/indent-attributes diagram-props)))
 
 ;; ----------------------------------------------------------------------------

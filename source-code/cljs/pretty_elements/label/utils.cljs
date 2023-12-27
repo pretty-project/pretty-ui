@@ -11,8 +11,9 @@
   ; @param (keyword) label-id
   ; @param (map) label-props
   ; {:content (metamorphic-content)(opt)
+  ;  :content-value-f (function)
   ;  :on-copy (Re-Frame metamorphic-event)}
   ;
   ; @return (function)
-  [_ {:keys [content on-copy]}]
-  (fn [_] (r/dispatch (r/metamorphic-event<-params on-copy content))))
+  [_ {:keys [content content-value-f on-copy]}]
+  (fn [_] (r/dispatch (r/metamorphic-event<-params on-copy (content-value-f content)))))

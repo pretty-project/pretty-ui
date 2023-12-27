@@ -1,5 +1,7 @@
 
-(ns pretty-elements.column.prototypes)
+(ns pretty-elements.column.prototypes
+    (:require [pretty-build-kit.api :as pretty-build-kit]
+              [fruits.noop.api :refer [return]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -17,7 +19,9 @@
   ;  :vertical-align (keyword)}
   [{:keys [border-color] :as column-props}]
   (merge {:horizontal-align :center
-          :vertical-align   :top}
+          :vertical-align   :top
+          :content-value-f return
+          :placeholder-value-f return}
          (if border-color {:border-position :all
                            :border-width    :xxs})
          (-> column-props)))

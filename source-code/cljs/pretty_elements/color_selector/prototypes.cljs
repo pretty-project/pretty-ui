@@ -1,7 +1,8 @@
 
 (ns pretty-elements.color-selector.prototypes
     (:require [pretty-elements.color-selector.config :as color-selector.config]
-              [pretty-elements.input.utils           :as input.utils]))
+              [pretty-elements.input.utils           :as input.utils]
+              [pretty-build-kit.api :as pretty-build-kit]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

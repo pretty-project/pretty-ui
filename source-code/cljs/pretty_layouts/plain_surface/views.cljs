@@ -16,7 +16,7 @@
   ;
   ; @param (keyword) surface-id
   ; @param (map) surface-props
-  ; {:content (metamorphic-content)}
+  ; {:content (metamorphic-content)(opt)}
   [surface-id {:keys [content] :as surface-props}]
   [:div {:class :pl-plain-surface}
         [:div (plain-surface.attributes/surface-body-attributes surface-id surface-props)

@@ -88,6 +88,9 @@
   ;  :on-click (function or Re-Frame metamorphic-event)(opt)
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
+  ;  :placeholder (metamorphic-content)(opt)
+  ;  :placeholder-value-f (function)(opt)
+  ;   Default: return
   ;  :preset (keyword)(opt)
   ;  :style (map)(opt)
   ;  :target (keyword)(opt)

@@ -14,7 +14,7 @@
   ;
   ; @param (keyword) column-id
   ; @param (map) column-props
-  ; {:content (metamorphic-content)}
+  ; {:content (metamorphic-content)(opt)}
   [column-id {:keys [content] :as column-props}]
   [:div (column.attributes/column-attributes column-id column-props)
         [:div (column.attributes/column-body-attributes column-id column-props)
@@ -35,7 +35,9 @@
   ;  :border-width (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;  :class (keyword or keywords in vector)(opt)
-  ;  :content (metamorphic-content)
+  ;  :content (metamorphic-content)(opt)
+  ;  :content-value-f (function)(opt)
+  ;   Default: return
   ;  :fill-color (keyword or string)(opt)
   ;  :fill-pattern (keyword)(opt)
   ;   Default: :cover
@@ -63,6 +65,9 @@
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
+  ;  :placeholder (metamorphic-content)(opt)
+  ;  :placeholder-value-f (function)(opt)
+  ;   Default: return
   ;  :preset (keyword)(opt)
   ;  :style (map)(opt)
   ;  :vertical-align (keyword)(opt)

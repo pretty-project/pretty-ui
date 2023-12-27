@@ -1,7 +1,9 @@
 
 (ns pretty-elements.label.prototypes
     (:require [fruits.hiccup.api       :as hiccup]
-              [metamorphic-content.api :as metamorphic-content]))
+              [metamorphic-content.api :as metamorphic-content]
+              [pretty-build-kit.api :as pretty-build-kit]
+              [fruits.noop.api :refer [return]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -52,7 +54,9 @@
           :horizontal-align :left
           :line-height      :text-block
           :placeholder      "\u00A0"
-          :selectable?      false}
+          :selectable?      false
+          :content-value-f return
+          :placeholder-value-f return}
          (if border-color    {:border-position :all
                               :border-width    :xxs})
          (if marker-color    {:marker-position :tr})

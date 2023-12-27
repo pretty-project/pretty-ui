@@ -1,5 +1,6 @@
 
-(ns pretty-elements.horizontal-separator.prototypes)
+(ns pretty-elements.horizontal-separator.prototypes
+    (:require [pretty-build-kit.api :as pretty-build-kit]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

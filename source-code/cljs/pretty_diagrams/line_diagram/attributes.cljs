@@ -2,7 +2,8 @@
 (ns pretty-diagrams.line-diagram.attributes
     (:require [fruits.css.api                     :as css]
               [pretty-css.api                     :as pretty-css]
-              [pretty-diagrams.line-diagram.utils :as line-diagram.utils]))
+              [pretty-diagrams.line-diagram.utils :as line-diagram.utils]
+              [metamorphic-content.api :as metamorphic-content]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -12,18 +13,20 @@
   ;
   ; @param (keyword) diagram-id
   ; @param (map) diagram-props
-  ; {:style (map)(opt)}
+  ; @param (map) section-props
+  ; {:color (keyword or string)
+  ;  :label (metamorphic-content)(opt)}
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
-  ;  :data-background-color (keyword)}
   ;  :style (map)
   ;   {:width (string)}}
-  [_ diagram-props {:keys [color] :as section-props}]
+  [_ diagram-props {:keys [color label] :as section-props}]
   (let [value-ratio (line-diagram.utils/section-props->value-ratio diagram-props section-props)]
-       {:class           :pd-line-diagram--section
-        :data-fill-color color
-        :style           {:width (css/percent value-ratio)}}))
+       (-> {:class :pd-line-diagram--section
+            :style {:width (css/percent value-ratio)}}
+           (pretty-css/badge-attributes {:badge-content label :badge-position :bl})
+           (pretty-css/color-attributes {:fill-color color}))))
 
 (defn diagram-sections-attributes
   ; @ignore

@@ -26,22 +26,15 @@
   ; @param (keyword)(opt) diagram-id
   ; @param (map) diagram-props
   ; {:indent (map)(opt)
-  ;   {:bottom (keyword)(opt)
-  ;    :left (keyword)(opt)
-  ;    :right (keyword)(opt)
-  ;    :top (keyword)(opt)
-  ;    :horizontal (keyword)(opt)
-  ;    :vertical (keyword)(opt)
-  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
+  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :outdent (map)(opt)
-  ;   Same as the :indent property.
+  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :preset (keyword)(opt)
   ;  :sections (maps in vector)}
   ;   [{:color (keyword or string)(opt)
   ;      :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;      Default: primary
   ;     :label (metamorphic-content)(opt)
-  ;      TODO
   ;     :value (integer)}]
   ;  :strength (px)(opt)
   ;    Default: 2
@@ -49,7 +42,7 @@
   ;    Max: 6
   ;  :total-value (integer)(opt)
   ;   Default: Sum of the section values
-  ;  :width (keyword)(opt)
+  ;  :width (keyword, px or string)(opt)
   ;   auto, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;   Default: :auto}
   ;

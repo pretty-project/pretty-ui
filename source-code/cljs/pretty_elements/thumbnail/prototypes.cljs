@@ -1,5 +1,6 @@
 
-(ns pretty-elements.thumbnail.prototypes)
+(ns pretty-elements.thumbnail.prototypes
+    (:require [pretty-build-kit.api :as pretty-build-kit]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

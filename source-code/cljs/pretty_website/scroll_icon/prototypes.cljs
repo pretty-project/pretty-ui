@@ -1,5 +1,6 @@
 
-(ns pretty-website.scroll-icon.prototypes)
+(ns pretty-website.scroll-icon.prototypes
+    (:require [pretty-build-kit.api :as pretty-build-kit]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

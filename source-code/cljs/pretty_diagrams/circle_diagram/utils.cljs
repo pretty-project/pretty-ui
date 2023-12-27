@@ -24,15 +24,13 @@
   ;   [{:sum (integer)}]
   ;  :total-value (integer)}
   [{:keys [sections] :as diagram-props}]
-  ; XXX#1218
-  ; This function iterates over the sections (from the 'diagram-props' map) ...
-  ; ... and calculates the total value of all sections.
-  ; ... and calculates the previous sections summary value of each section.
-  ;
-  ; The diagram needs ...
-  ; ... the total value to calculates how the sections related to the total.
-  ; ... the previous sections summary of each section to calculates how
-  ;     a section has to be rotated.
+  ; @note (#1218)
+  ; - This function iterates over the sections (from the 'diagram-props' map) ...
+  ;   ... and calculates the total value of all sections.
+  ;   ... and calculates the summary value of the previous sections for each section.
+  ; - The diagram needs ...
+  ;   ... the total value to calculate how the section values are related to the total value.
+  ;   ... the summary value of previous sections for each section to calculate how the section has to be rotated.
   (letfn [(f0 [{:keys [total-value] :as diagram-props} dex {:keys [value]}]
               (-> diagram-props (update   :total-value + value)
                                 (assoc-in [:sections dex :sum] (or total-value 0))))]

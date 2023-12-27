@@ -18,7 +18,7 @@
   ;  :indent (map)
   ;  :outdent (map)
   ;  :text-transform (keyword)
-  ;  :width (keyword)}
+  ;  :width (keyword, px or string)}
   [title-props]
   (merge {:border-color     :default
           :border-position  :bottom

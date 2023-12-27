@@ -36,7 +36,7 @@
   ;
   ; @param (keyword) bubble-id
   ; @param (map) bubble-props
-  ; {:content (metamorphic-content)}
+  ; {:content (metamorphic-content)(opt)}
   [bubble-id {:keys [content] :as bubble-props}]
   [:div (notification-bubble.attributes/bubble-attributes bubble-id bubble-props)
         [:div (notification-bubble.attributes/bubble-body-attributes bubble-id bubble-props)
@@ -64,7 +64,9 @@
   ;  :border-width (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;  :class (keyword or keywords in vector)(opt)
-  ;  :content (metamorphic-content)
+  ;  :content (metamorphic-content)(opt)
+  ;  :content-value-f (function)(opt)
+  ;   Default: return
   ;  :disabled? (boolean)(opt)
   ;  :font-size (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
@@ -90,6 +92,9 @@
   ;  :min-width (keyword, px or string)(opt)
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
+  ;  :placeholder (metamorphic-content)(opt)
+  ;  :placeholder-value-f (function)(opt)
+  ;   Default: return
   ;  :preset (keyword)(opt)
   ;  :primary-button (map)(opt)
   ;   {:layout (keyword)

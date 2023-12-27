@@ -1,5 +1,7 @@
 
-(ns pretty-elements.expandable.prototypes)
+(ns pretty-elements.expandable.prototypes
+    (:require [pretty-build-kit.api :as pretty-build-kit]
+              [fruits.noop.api :refer [return]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -14,6 +16,8 @@
   ; {:expanded? (boolean)
   ;  :icon-family (keyword)}
   [{:keys [icon] :as expandable-props}]
-  (merge {:expanded? false}
+  (merge {:expanded? false
+          :content-value-f return
+          :placeholder-value-f return}
          (if icon {:icon-family :material-symbols-outlined})
          (-> expandable-props)))

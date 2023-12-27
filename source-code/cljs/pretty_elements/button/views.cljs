@@ -24,7 +24,7 @@
   ;  :on-click (function)(opt)}
   [button-id {:keys [content content-value-f href icon icon-position on-click] :as button-props}]
   [:div (button.attributes/button-attributes button-id button-props)
-        [(cond href :a on-click :button :else :div)
+        [(cond href :a on-click :button :else :button)
          (button.attributes/button-body-attributes button-id button-props)
          (case icon-position :left  [:<> (if icon    [:i   (button.attributes/button-icon-attributes  button-id button-props) icon])
                                          (if content [:div (button.attributes/button-label-attributes button-id button-props) [metamorphic-content/compose (content-value-f content)]])]
@@ -124,13 +124,7 @@
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
   ;   Default: :s
   ;  :indent (map)(opt)
-  ;   {:bottom (keyword)(opt)
-  ;    :left (keyword)(opt)
-  ;    :right (keyword)(opt)
-  ;    :top (keyword)(opt)
-  ;    :horizontal (keyword)(opt)
-  ;    :vertical (keyword)(opt)
-  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
+  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :keypress (map)(opt)
   ;   {:exclusive? (boolean)(opt)
   ;    :key-code (integer)
@@ -147,6 +141,9 @@
   ;  :on-mouse-over (function or Re-Frame metamorphic-event)(opt)
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
+  ;  :placeholder (metamorphic-content)(opt)
+  ;  :placeholder-value-f (function)(opt)
+  ;   Default: return
   ;  :preset (keyword)(opt)
   ;  :progress (percent)(opt)
   ;  :progress-color (keyword or string)(opt)

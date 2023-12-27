@@ -17,7 +17,7 @@
   ;
   ; @param (keyword) sidebar-id
   ; @param (map) sidebar-props
-  ; {:content (metamorphic-content)
+  ; {:content (metamorphic-content)(opt)
   ;  :threshold (px)}
   [sidebar-id {:keys [content threshold] :as sidebar-props}]
   (if (window-observer/viewport-width-min? threshold)

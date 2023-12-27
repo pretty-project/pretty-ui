@@ -1,5 +1,7 @@
 
-(ns pretty-elements.toggle.prototypes)
+(ns pretty-elements.toggle.prototypes
+    (:require [pretty-build-kit.api :as pretty-build-kit]
+              [fruits.noop.api :refer [return]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -16,7 +18,8 @@
   ;  :border-width (keyword)
   ;  :marker-position (keyword)}
   [{:keys [border-color marker-color] :as toggle-props}]
-  (merge {}
+  (merge {:content-value-f return
+          :placeholder-value-f return}
          (if marker-color {:marker-position :tr})
          (if border-color {:border-position :all
                            :border-width    :xxs})

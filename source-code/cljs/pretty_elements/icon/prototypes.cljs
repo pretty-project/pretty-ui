@@ -1,5 +1,6 @@
 
-(ns pretty-elements.icon.prototypes)
+(ns pretty-elements.icon.prototypes
+    (:require [pretty-build-kit.api :as pretty-build-kit]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

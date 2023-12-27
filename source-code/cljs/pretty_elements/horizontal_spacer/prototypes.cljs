@@ -1,5 +1,6 @@
 
-(ns pretty-elements.horizontal-spacer.prototypes)
+(ns pretty-elements.horizontal-spacer.prototypes
+    (:require [pretty-build-kit.api :as pretty-build-kit]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

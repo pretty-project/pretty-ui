@@ -17,7 +17,7 @@
   ;
   ; @param (keyword) popup-id
   ; @param (map) popup-props
-  ; {:content (metamorphic-content)}
+  ; {:content (metamorphic-content)(opt)}
   [popup-id {:keys [content cover-color] :as popup-props}]
   [:div (plain-popup.attributes/popup-attributes popup-id popup-props)
         (if cover-color [:div (plain-popup.attributes/popup-cover-attributes popup-id popup-props)])
@@ -41,7 +41,7 @@
 (defn layout
   ; @param (keyword)(opt) popup-id
   ; @param (map) popup-props
-  ; {:content (metamorphic-content)(opt)
+  ; {:content (metamorphic-content)
   ;  :cover-color (keyword or string)(opt)
   ;  :lock-scroll? (boolean)(opt)
   ;  :on-cover (Re-Frame metamorphic-event)(opt)

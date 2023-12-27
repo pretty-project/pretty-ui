@@ -2,7 +2,8 @@
 (ns pretty-elements.multi-field.prototypes
     (:require [pretty-elements.input.utils       :as input.utils]
               [pretty-elements.multi-field.env   :as multi-field.env]
-              [pretty-elements.multi-field.utils :as multi-field.utils]))
+              [pretty-elements.multi-field.utils :as multi-field.utils]
+              [pretty-build-kit.api :as pretty-build-kit]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

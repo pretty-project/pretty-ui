@@ -46,7 +46,9 @@
   ; @param (keyword)(opt) expandable-id
   ; @param (map) expandable-props
   ; {:class (keywords or keywords in vector)(opt)
-  ;  :content (metamorphic-content)
+  ;  :content (metamorphic-content)(opt)
+  ;  :content-value-f (function)(opt)
+  ;   Default: return
   ;  :disabled? (boolean)(opt)
   ;  :expanded? (boolean)(opt)
   ;   Default: true
@@ -68,6 +70,9 @@
   ;  :label (metamorphic-content)(opt)
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
+  ;  :placeholder (metamorphic-content)(opt)
+  ;  :placeholder-value-f (function)(opt)
+  ;   Default: return
   ;  :preset (keyword)(opt)
   ;  :style (map)(opt)}
   ;

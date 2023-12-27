@@ -1,6 +1,7 @@
 
 (ns pretty-elements.slider.prototypes
-    (:require [pretty-elements.input.utils :as input.utils]))
+    (:require [pretty-elements.input.utils :as input.utils]
+              [pretty-build-kit.api :as pretty-build-kit]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

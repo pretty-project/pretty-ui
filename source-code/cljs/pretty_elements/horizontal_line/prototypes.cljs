@@ -1,5 +1,6 @@
 
-(ns pretty-elements.horizontal-line.prototypes)
+(ns pretty-elements.horizontal-line.prototypes
+    (:require [pretty-build-kit.api :as pretty-build-kit]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

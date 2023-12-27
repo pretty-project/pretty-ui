@@ -18,7 +18,8 @@
   ; @param (map) diagram-props
   ; {:sections (maps in vector)}
   [diagram-id {:keys [sections] :as diagram-props}]
-  (letfn [(f0 [section-props] [:circle (circle-diagram.attributes/section-attributes diagram-id diagram-props section-props)])]
+  (letfn [(f0 [section-props] (let [section-props (circle-diagram.prototypes/section-props-prototype section-props)]
+                                   [:circle (circle-diagram.attributes/diagram-section-attributes diagram-id diagram-props section-props)]))]
          (hiccup/put-with [:<>] sections f0)))
 
 (defn circle-diagram
@@ -28,11 +29,13 @@
   ; @param (map) diagram-props
   ; {:diameter (px)}
   [diagram-id {:keys [diameter] :as diagram-props}]
+  ; Without the SVG container element, the indent property of the body element would shrink the SVG element.
   [:div (circle-diagram.attributes/diagram-attributes diagram-id diagram-props)
         [diagram.views/diagram-label                  diagram-id diagram-props]
         [:div (circle-diagram.attributes/diagram-body-attributes diagram-id diagram-props)
-              [:svg (svg/wrapper-attributes  {:height diameter :width diameter})
-                    [circle-diagram-sections diagram-id diagram-props]]]])
+              [:div (circle-diagram.attributes/diagram-svg-container-attributes diagram-id diagram-props)
+                    [:svg (svg/wrapper-attributes {:height diameter :width diameter})
+                          [circle-diagram-sections diagram-id diagram-props]]]]])
 
 (defn diagram
   ; @param (keyword)(opt) diagram-id
@@ -42,21 +45,15 @@
   ;   Default: 48
   ;  :helper (metamorphic-content)(opt)
   ;  :indent (map)(opt)
-  ;   {:bottom (keyword)(opt)
-  ;    :left (keyword)(opt)
-  ;    :right (keyword)(opt)
-  ;    :top (keyword)(opt)
-  ;    :horizontal (keyword)(opt)
-  ;    :vertical (keyword)(opt)
-  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
+  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :info-text (metamorphic-content)(opt)
   ;  :label (metamorphic-content)(opt)
   ;  :outdent (map)(opt)
-  ;   Same as the :indent property.
+  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :preset (keyword)(opt)
   ;  :sections (maps in vector)}
   ;   [{:color (keyword or string)
-  ;      :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+  ;      Default: :primary
   ;     :label (metamorphic-content)(opt)
   ;      TODO
   ;     :value (integer)}]

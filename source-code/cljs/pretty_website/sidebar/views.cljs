@@ -17,7 +17,7 @@
   ;
   ; @param (keyword) sidebar-id
   ; @param (map) sidebar-props
-  ; {:content (metamorphic-content)}
+  ; {:content (metamorphic-content)(opt)}
   [sidebar-id {:keys [content] :as sidebar-props}]
   [:<> [pretty-elements/icon-button (sidebar.prototypes/menu-button-props-prototype sidebar-id sidebar-props)]
        [react/mount-animation {:mounted? (= sidebar-id @sidebar.state/VISIBLE-SIDEBAR)}
@@ -37,7 +37,9 @@
   ;  :border-width (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;  :class (keyword or keywords in vector)(opt)
-  ;  :content (metamorphic-content)
+  ;  :content (metamorphic-content)(opt)
+  ;  :content-value-f (function)(opt)
+  ;   Default: return
   ;  :cover-color (keyword or string)(opt)
   ;   Default: :black
   ;  :fill-color (keyword or string)(opt)
@@ -52,6 +54,9 @@
   ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
+  ;  :placeholder (metamorphic-content)(opt)
+  ;  :placeholder-value-f (function)(opt)
+  ;   Default: return
   ;  :position (keyword)(opt)
   ;   :left, :right
   ;   Default: :left

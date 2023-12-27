@@ -73,6 +73,9 @@
   ;   TODO Makes the chip clickable
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
+  ;  :placeholder (metamorphic-content)(opt)
+  ;  :placeholder-value-f (function)(opt)
+  ;   Default: return
   ;  :preset (keyword)(opt)
   ;  :primary-button (map)(opt)
   ;   {:click-effect (keyword)(opt)

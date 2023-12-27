@@ -2,10 +2,27 @@
 (ns pretty-elements.breadcrumbs.prototypes
     (:require [fruits.noop.api :refer [return]]
               [pretty-elements.element.side-effects :as element.side-effects]
-              [dom.api :as dom]))
+              [dom.api :as dom]
+              [pretty-build-kit.api :as pretty-build-kit]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+(defn element-props-prototype
+  [_ {:keys [disabled?]} {:keys [href on-click] :as crumb-props}]
+  (cond-> crumb-props
+          :inherit-state      (pretty-build-kit/default-values      {:disabled? disabled?})
+          :derive-fns/default (pretty-build-kit/default-values      {:content-value-f return :placeholder-value-f return})
+          :text/default       (pretty-build-kit/default-values      {:text-color :muted})
+          :border/default     (pretty-build-kit/default-value-group {:border-color :primary :border-position :all :border-width :xxs})
+          :icon/default       (pretty-build-kit/default-value-group {:icon :people :icon-color :primary :icon-position :right :icon-size :s})
+          (or href on-click)  (pretty-build-kit/default-values      {:text-color :default :click-effect :opacity})
+          (or href on-click)  (pretty-build-kit/forced-values       {:on-mouse-up dom/blur-active-element!})
+          :on-click/wrap      (pretty-build-kit/value-wrap-fns      {:on-click element.side-effects/dispatch-event-handler!})))
+
+
+
+
 
 (defn crumb-props-prototype
   ; @ignore

@@ -1,5 +1,6 @@
 
-(ns pretty-elements.vertical-group.prototypes)
+(ns pretty-elements.vertical-group.prototypes
+    (:require [pretty-build-kit.api :as pretty-build-kit]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -10,4 +11,8 @@
   ; @param (map) group-props
   ;
   ; @return (map)
-  [_])
+  ; {}
+  [group-props]
+  (merge {:height :parent
+          :width  :auto}
+         (-> group-props)))

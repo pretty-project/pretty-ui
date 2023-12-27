@@ -4,7 +4,8 @@
               [fruits.noop.api                :refer [return]]
               [fruits.vector.api              :as vector]
               [pretty-elements.input.utils    :as input.utils]
-              [pretty-elements.text-field.env :as text-field.env]))
+              [pretty-elements.text-field.env :as text-field.env]
+              [pretty-build-kit.api :as pretty-build-kit]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -81,6 +82,11 @@
   ; XXX#5068
   ; By using the '<-walk' function the ':on-blur', ':on-type-ended' and ':on-focus'
   ; events take the 'field-props' map AFTER it gets merged with the default values!
+
+
+  ; surface
+  ; {:content-value-f return :placeholder-value-f return}
+
   (<-walk {:field-content-f return
            :field-value-f   return
            :font-size       :s

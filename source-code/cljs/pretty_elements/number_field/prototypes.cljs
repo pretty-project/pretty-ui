@@ -1,5 +1,6 @@
 
-(ns pretty-elements.number-field.prototypes)
+(ns pretty-elements.number-field.prototypes
+    (:require [pretty-build-kit.api :as pretty-build-kit]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

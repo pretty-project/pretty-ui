@@ -1,6 +1,8 @@
 
 (ns pretty-elements.text.prototypes
-    (:require [metamorphic-content.api :as metamorphic-content]))
+    (:require [metamorphic-content.api :as metamorphic-content]
+              [pretty-build-kit.api :as pretty-build-kit]
+              [fruits.noop.api :refer [return]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -26,5 +28,7 @@
           :line-height      :text-block
           :placeholder      "\u00A0"
           :selectable?      true
-          :text-overflow    :wrap}
+          :text-overflow    :wrap
+          :content-value-f return
+          :placeholder-value-f return}
          (-> text-props)))

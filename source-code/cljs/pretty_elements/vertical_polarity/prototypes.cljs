@@ -1,5 +1,6 @@
 
-(ns pretty-elements.vertical-polarity.prototypes)
+(ns pretty-elements.vertical-polarity.prototypes
+    (:require [pretty-build-kit.api :as pretty-build-kit]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -11,8 +12,10 @@
   ;
   ; @return (map)
   ; {:height (keyword, px or string)
-  ;  :horizontal-align (keyword)}
+  ;  :horizontal-align (keyword)
+  ;  :width (keyword, px or string)}
   [polarity-props]
   (merge {:height           :parent
-          :horizontal-align :center}
+          :horizontal-align :center
+          :width :auto}
          (-> polarity-props)))

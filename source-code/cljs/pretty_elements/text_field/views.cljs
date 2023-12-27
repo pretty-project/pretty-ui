@@ -263,7 +263,12 @@
   ;  :surface (map)(opt)
   ;   {:border-radius (map)(opt)
   ;    :content (metamorphic-content)(opt)
-  ;    :indent (map)(opt)}
+  ;    :content-value-f (function)(opt)
+  ;     Default: return
+  ;    :indent (map)(opt)
+  ;    :placeholder (metamorphic-content)(opt)
+  ;    :placeholder-value-f (function)(opt)
+  ;     Default: return}
   ;  :type (keyword)(opt)
   ;   :email, :number, :password, :tel, :text
   ;   Default: :text

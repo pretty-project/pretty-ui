@@ -1,6 +1,7 @@
 
 (ns pretty-elements.date-field.prototypes
-    (:require [fruits.random.api :as random]))
+    (:require [fruits.random.api :as random]
+              [pretty-css.api :as pretty-css]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

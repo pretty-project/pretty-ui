@@ -279,6 +279,20 @@
 ;
 ;
 ;
+; @title :height
+;
+; @code Usage
+; [pretty-elements/button {:height (keyword, px or string)}]
+; [pretty-elements/button {:height :xxl}]
+; [pretty-elements/button {:height 100}]
+; [pretty-elements/button {:height "10%"}]
+;
+; @code Values
+; :auto, :content, :parent,
+; :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+;
+;
+;
 ; @title :text-color
 ;
 ; @code Usage
@@ -302,4 +316,5 @@
 ; [pretty-elements/button {:width "10%"}]
 ;
 ; @code Values
-; :auto, :content, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+; :auto, :content, :parent,
+; :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl

@@ -1,6 +1,7 @@
 
 (ns pretty-elements.menu-bar.prototypes
-    (:require [metamorphic-content.api :as metamorphic-content]))
+    (:require [metamorphic-content.api :as metamorphic-content]
+              [pretty-build-kit.api :as pretty-build-kit]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

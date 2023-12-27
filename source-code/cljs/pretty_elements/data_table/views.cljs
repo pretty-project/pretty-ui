@@ -75,6 +75,8 @@
   ;  :columns (maps in vector)(opt)
   ;   [{:cells (maps in vector)
   ;      [{:content (metamorphic-content)(opt)
+  ;        :content-value-f (function)(opt)
+  ;         Default: return
   ;        :font-size (keyword)(opt)
   ;         :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
   ;         Default: :s
@@ -89,6 +91,8 @@
   ;         :auto, :inherit, :text-block, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;         Default: :text-block
   ;        :placeholder (metamorphic-content)(opt)
+  ;        :placeholder-value-f (function)(opt)
+  ;         Default: return
   ;        :preset (keyword)(opt)
   ;        :selectable? (boolean)(opt)
   ;         Default: true

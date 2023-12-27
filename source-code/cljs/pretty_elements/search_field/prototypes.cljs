@@ -1,6 +1,7 @@
 
 (ns pretty-elements.search-field.prototypes
-    (:require [pretty-elements.plain-field.env :as plain-field.env]))
+    (:require [pretty-elements.plain-field.env :as plain-field.env]
+              [pretty-build-kit.api :as pretty-build-kit]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
