@@ -27,7 +27,8 @@
   ; {:border-color (keyword or string)(opt)
   ;  :border-position (keyword)(opt)
   ;  :border-radius (map)(opt)
-  ;  :border-width (keyword)(opt)
+  ;   {:all, :tl, :tr, :br, :bl (keyword, px or string)(opt)}
+  ;  :border-width (keyword, px or string)(opt)
   ;  :class (keyword or keywords in vector)(opt)
   ;  :content (metamorphic-content)(opt)
   ;  :content-value-f (function)(opt)

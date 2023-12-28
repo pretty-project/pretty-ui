@@ -23,7 +23,7 @@
   ; {:click-effect (keyword)
   ;  :icon-family (keyword)
   ;  :tab-indexed? (boolean)
-  ;  :text-color (keyword)}
+  ;  :text-color (keyword or string)}
   [field-props {:keys [icon label on-click timeout] :as adornment-props}]
   (merge (if icon     {:icon-family    :material-symbols-outlined
                        :icon-size      :s})
@@ -63,16 +63,16 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ; {:border-color (keyword)(opt)
+  ; {:border-color (keyword or string)(opt)
   ;  :marker-color (keyword)(opt)}
   ;
   ; @return (map)
   ; {:border-position (keyword)
-  ;  :border-width (keyword)
+  ;  :border-width (keyword, px or string)
   ;  :field-content-f (function)
   ;  :field-value-f (function)
-  ;  :font-size (keyword)
-  ;  :font-weight (keyword)
+  ;  :font-size (keyword, px or string)
+  ;  :font-weight (keyword or integer)
   ;  :form-id (keyword)
   ;  :line-height (keyword)
   ;  :marker-position (keyword)

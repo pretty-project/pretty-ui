@@ -13,9 +13,8 @@
   ; @param (map) text-props
   ;
   ; @return (map)
-  ; {:font-size (keyword)
-  ;  :font-weight (keyword)
-  ;  :horizontal-align (keyword)
+  ; {:font-size (keyword, px or string)
+  ;  :font-weight (keyword or integer)
   ;  :line-height (keyword)
   ;  :placeholder (metamorphic-content)
   ;  :selectable? (boolean)
@@ -24,7 +23,6 @@
   ; BUG#9811 (source-code/cljs/pretty_elements/label/views.cljs)
   (merge {:font-size        :s
           :font-weight      :normal
-          :horizontal-align :left
           :line-height      :text-block
           :placeholder      "\u00A0"
           :selectable?      true

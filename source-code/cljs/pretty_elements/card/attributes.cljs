@@ -16,14 +16,14 @@
   ;
   ; @return (map)
   ; {}
-  [card-id {:keys [disabled? horizontal-align style] :as card-props}]
-  (-> {:class                        :pe-card--body
-       :data-horizontal-column-align horizontal-align
-       :disabled                     disabled?
-       :style                        style}
+  [card-id {:keys [disabled? style] :as card-props}]
+  (-> {:class    :pe-card--body
+       :disabled disabled?
+       :style    style}
       (pretty-css/badge-attributes            card-props)
       (pretty-css/border-attributes           card-props)
       (pretty-css/color-attributes            card-props)
+      (pretty-css/column-attributes           card-props)
       (pretty-css/cursor-attributes           card-props)
       (pretty-css/effect-attributes           card-props)
       (pretty-css/element-max-size-attributes card-props)

@@ -61,54 +61,40 @@
   ;
   ; @param (keyword)(opt) button-id
   ; @param (map) button-props
-  ; {:badge-color (keyword)(opt)
-  ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+  ; {:badge-color (keyword or string)(opt)
   ;   Default: :primary
   ;  :badge-content (metamorphic-content)(opt)
   ;  :badge-position (keyword)(opt)
-  ;   :tl, :tr, :br, :bl, :left, :right, :bottom, :top
   ;   Default: :tr
   ;  :border-color (keyword or string)(opt)
   ;  :border-position (keyword)(opt)
   ;  :border-radius (map)(opt)
-  ;   {:tl (keyword)(opt)
-  ;    :tr (keyword)(opt)
-  ;    :br (keyword)(opt)
-  ;    :bl (keyword)(opt)
-  ;    :all (keyword)(opt)
-  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
-  ;  :border-width (keyword)(opt)
-  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;   {:all, :tl, :tr, :br, :bl (keyword, px or string)(opt)}
+  ;  :border-width (keyword, px or string)(opt)
   ;  :class (keyword or keywords in vector)(opt)
   ;  :click-effect (keyword)(opt)
-  ;   :none, :opacity
   ;   Default: :opacity
   ;  :content (metamorphic-content)(opt)
   ;  :content-value-f (function)(opt)
   ;   Default: return
-  ;  :cursor (keyword)(opt)
-  ;   :default, :disabled, :grab, :grabbing, :move, :pointer, :progress
+  ;  :cursor (keyword or string)(opt)
   ;   Default: :pointer
   ;  :disabled? (boolean)(opt)
   ;  :fill-color (keyword or string)(opt)
   ;  :fill-pattern (keyword)(opt)
   ;   Default: :cover
-  ;  :font-size (keyword)(opt)
+  ;  :font-size (keyword, px or string)(opt)
   ;   Default: :s
-  ;  :font-weight (keyword)(opt)
+  ;  :font-weight (keyword or integer)(opt)
   ;   Default: :medium
-  ;  :gap (keyword)(opt)
-  ;   Distance between the icon and the label
-  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :auto
+  ;  :gap (keyword, px or string)(opt)
+  ;   Distance between the icon and the content.
   ;  :height (keyword, px or string)(opt)
   ;  :horizontal-align (keyword)(opt)
-  ;   :center, :left, :right
   ;   Default: :center
   ;  :hover-color (keyword or string)(opt)
   ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;  :hover-effect (keyword)(opt)
-  ;   :none, :opacity
-  ;   Default: :none
   ;  :href (string)(opt)
   ;  :icon (keyword)(opt)
   ;  :icon-color (keyword or string)(opt)
@@ -140,7 +126,7 @@
   ;  :on-click (function or Re-Frame metamorphic-event)(opt)
   ;  :on-mouse-over (function or Re-Frame metamorphic-event)(opt)
   ;  :outdent (map)(opt)
-  ;   Same as the :indent property.
+  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :placeholder (metamorphic-content)(opt)
   ;  :placeholder-value-f (function)(opt)
   ;   Default: return

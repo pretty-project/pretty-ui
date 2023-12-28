@@ -38,18 +38,16 @@
   ;
   ; @param (keyword) selector-id
   ; @param (map) selector-props
-  ; {:gap (keyword)(opt)
-  ;  :style (map)(opt)}
+  ; {:style (map)(opt)}
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
-  ;  :data-gap (keyword)
   ;  :style (map)}
-  [_ {:keys [gap style] :as selector-props}]
-  (-> {:class    :pw-language-selector--body
-       :data-gap gap
-       :style    style}
-      (pretty-css/indent-attributes selector-props)))
+  [_ {:keys [style] :as selector-props}]
+  (-> {:class :pw-language-selector--body
+       :style style}
+      (pretty-css/indent-attributes selector-props)
+      (pretty-css/row-attributes    selector-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

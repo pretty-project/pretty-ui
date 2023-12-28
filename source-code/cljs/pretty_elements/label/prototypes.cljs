@@ -13,19 +13,19 @@
   ;
   ; @param (map) label-props
   ; {:border-color (keyword or string)(opt)
-  ;  :font-size (keyword)(opt)
+  ;  :font-size (keyword, px or string)(opt)
   ;  :icon (keyword)(opt)
   ;  :marker-color (keyword)
-  ;  :text-color (keyword)(opt)
+  ;  :text-color (keyword or string)(opt)
   ;  :target-id (keyword)(opt)
   ;  :tooltip-content (metamorphic-content)(opt)}
   ;
   ; @return (map)
   ; {:border-position (keyword)
-  ;  :border-width (keyword)
+  ;  :border-width (keyword, px or string)
   ;  :copyable? (boolean)
-  ;  :font-size (keyword)
-  ;  :font-weight (keyword)
+  ;  :font-size (keyword, px or string)
+  ;  :font-weight (keyword or integer)
   ;  :horizontal-align (keyword)
   ;  :icon-color (keyword)
   ;  :icon-family (keyword)
@@ -51,7 +51,6 @@
   ;   character provides the consistent height for the element until the content gets its value.
   (merge {:font-size        :s
           :font-weight      :medium
-          :horizontal-align :left
           :line-height      :text-block
           :placeholder      "\u00A0"
           :selectable?      false

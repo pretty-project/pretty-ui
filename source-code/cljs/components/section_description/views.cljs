@@ -17,7 +17,7 @@
   ; @param (map) description-props
   ; {:color (keyword or string)(opt)
   ;   Default: :muted
-  ;  :font-size (keyword)(opt)
+  ;  :font-size (keyword, px or string)(opt)
   ;   Default: :xxs
   ;  :horizontal-align (keyword)(opt)
   ;   Default: :center

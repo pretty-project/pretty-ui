@@ -63,38 +63,22 @@
   ; {:border-color (keyword or string)(opt)
   ;   Default: :default
   ;  :border-radius (map)(opt)
-  ;   {:tl (keyword)(opt)
-  ;    :tr (keyword)(opt)
-  ;    :br (keyword)(opt)
-  ;    :bl (keyword)(opt)
-  ;    :all (keyword)(opt)
-  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
+  ;   {:all, :tl, :tr, :br, :bl (keyword, px or string)(opt)}
   ;   Default: {:all :m}
-  ;  :border-width (keyword)(opt)
-  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;  :border-width (keyword, px or string)(opt)
   ;   Default: :xs
   ;  :class (keyword or keywords in vector)(opt)
   ;  :click-effect (keyword)(opt)
-  ;   :none, :opacity
   ;   Default: :opacity
   ;  :default-value (*)(opt)
   ;  :deselectable? (boolean)(opt)
   ;  :disabled? (boolean)(opt)
-  ;  :font-size (keyword)(opt)
-  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
+  ;  :font-size (keyword, px or string)(opt)
   ;   Default: :s
   ;  :helper (metamorphic-content)(opt)
   ;  :hover-effect (keyword)(opt)
-  ;   :none, :opacity
-  ;   Default: :none
   ;  :indent (map)(opt)
-  ;   {:bottom (keyword)(opt)
-  ;    :left (keyword)(opt)
-  ;    :right (keyword)(opt)
-  ;    :top (keyword)(opt)
-  ;    :horizontal (keyword)(opt)
-  ;    :vertical (keyword)(opt)
-  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
+  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :info-text (metamorphic-content)(opt)
   ;  :initial-options (vector)(opt)
   ;  :initial-value (*)(opt)
@@ -114,7 +98,7 @@
   ;   Default: :vertical
   ;  :options-path (Re-Frame path vector)(opt)
   ;  :outdent (map)(opt)
-  ;   Same as the :indent property.
+  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :preset (keyword)(opt)
   ;  :style (map)(opt)
   ;  :value-path (Re-Frame path vector)(opt)}

@@ -15,27 +15,29 @@
   ;
   ; @param (keyword)(opt) title-id
   ; @param (map) title-props
-  ; {:border-color (keyword)
+  ; {:border-color (keyword or string)
   ;   Default: :default
   ;  :border-position (keyword)
   ;   Default: :bottom
-  ;  :border-width (keyword)
+  ;  :border-width (keyword, px or string)
   ;   Default: :xs
-  ;  :font-weight (keyword)
+  ;  :font-weight (keyword or integer)
   ;   Default: :semi-bold
-  ;  :gap (keyword)
+  ;  :gap (keyword, px or string)
   ;   Default: :auto
   ;  :icon-position (keyword)
   ;   Default: :right
   ;  :icon-size (keyword)
   ;   Default: :xl
   ;  :indent (map)
+  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;   Default: {:bottom :xxs}
   ;  :outdent (map)
+  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;   Default: {:bottom :s}
   ;  :text-transform (keyword)(opt)
   ;   Default: :uppercase
-  ;  :width (keyword)(opt)
+  ;  :width (keyword, px or string)(opt)
   ;   Default: :auto}
   ;
   ; @usage

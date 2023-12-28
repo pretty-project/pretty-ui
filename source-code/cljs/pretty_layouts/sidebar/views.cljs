@@ -42,29 +42,16 @@
 (defn layout
   ; @param (keyword)(opt) sidebar-id
   ; @param (map) sidebar-props
-  ; {:border-color (keyword)(opt)
-  ;   :default, :highlight, :invert, :primary, :secondary, :success, :transparent, :warning
+  ; {:border-color (keyword or string)(opt)
   ;  :border-radius (map)(opt)
-  ;   {:tl (keyword)(opt)
-  ;    :tr (keyword)(opt)
-  ;    :br (keyword)(opt)
-  ;    :bl (keyword)(opt)
-  ;    :all (keyword)(opt)
-  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
-  ;  :border-width (keyword)(opt)
-  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;   {:all, :tl, :tr, :br, :bl (keyword, px or string)(opt)}
+  ;  :border-width (keyword, px or string)(opt)
   ;   Default: :xxs
   ;  :content (metamorphic-content)
   ;  :fill-color (keyword or string)(opt)
   ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;  :indent (map)(opt)
-  ;   {:bottom (keyword)(opt)
-  ;    :left (keyword)(opt)
-  ;    :right (keyword)(opt)
-  ;    :top (keyword)(opt)
-  ;    :horizontal (keyword)(opt)
-  ;    :vertical (keyword)(opt)
-  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
+  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :min-width (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;  :on-mount (Re-Frame metamorphic-event)(opt)

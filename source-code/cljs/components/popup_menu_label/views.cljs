@@ -17,7 +17,7 @@
   ; @param (map) label-props
   ; {:color (keyword or string)(opt)
   ;   Default: :muted
-  ;  :gap (keyword)(opt)
+  ;  :gap (keyword, px or string)(opt)
   ;   Default: :xs
   ;  :horizontal-align (keyword)(opt)
   ;   Default: :left

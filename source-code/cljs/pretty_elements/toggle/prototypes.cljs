@@ -15,7 +15,7 @@
   ;
   ; @return (map)
   ; {:border-position (keyword)
-  ;  :border-width (keyword)
+  ;  :border-width (keyword, px or string)
   ;  :marker-position (keyword)}
   [{:keys [border-color marker-color] :as toggle-props}]
   (merge {:content-value-f return

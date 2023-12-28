@@ -41,16 +41,11 @@
   ; @param (keyword) table-id
   ; @param (map) table-props
   ; @param (map) cell-props
-  ; {}
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)
-  ;  :data-horizontal-text-align (keyword)
-  ;  :data-selectable (boolean)}
-  [_ _ {:keys [horizontal-align selectable?] :as cell-props}]
-  (-> {:class                      :pe-data-table--cell
-       :data-horizontal-text-align horizontal-align
-       :data-selectable            selectable?}
+  ; {:class (keyword or keywords in vector)}
+  [_ _ cell-props]
+  (-> {:class :pe-data-table--cell}
       (pretty-css/color-attributes  cell-props)
       (pretty-css/font-attributes   cell-props)
       (pretty-css/indent-attributes cell-props)

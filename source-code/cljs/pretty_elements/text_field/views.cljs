@@ -159,24 +159,16 @@
   ;  :border-color (keyword or string)(opt)
   ;  :border-position (keyword)(opt)
   ;  :border-radius (map)(opt)
-  ;   {:tl (keyword)(opt)
-  ;    :tr (keyword)(opt)
-  ;    :br (keyword)(opt)
-  ;    :bl (keyword)(opt)
-  ;    :all (keyword)(opt)
-  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
-  ;  :border-width (keyword)(opt)
-  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;   {:all, :tl, :tr, :br, :bl (keyword, px or string)(opt)}
+  ;  :border-width (keyword, px or string)(opt)
   ;  :class (keyword or keywords in vector)(opt)
   ;  :disabled? (boolean)(opt)
   ;  :emptiable? (boolean)(opt)
   ;  :end-adornments (maps in vector)(opt)
   ;   [{:click-effect (keyword)(opt)
-  ;      :opacity
   ;      Default: :opacity
   ;     :disabled? (boolean)(opt)
   ;     :hover-effect (keyword)(opt)
-  ;      :opacity
   ;     :icon (keyword)
   ;     :icon-family (keyword)(opt)
   ;      :material-symbols-filled, :material-symbols-outlined
@@ -186,8 +178,7 @@
   ;     :preset (keyword)(opt)
   ;     :tab-indexed? (boolean)(opt)
   ;      Default: true
-  ;     :text-color (keyword)(opt)
-  ;      :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
+  ;     :text-color (keyword or string)(opt)
   ;      Default: :default
   ;     :timeout (ms)(opt)
   ;      Disables the adornment for a specific time after the on-click event fired.
@@ -198,10 +189,9 @@
   ;  :field-value-f (function)(opt)
   ;   From field content to application state modifier function.
   ;   Default: return
-  ;  :font-size (keyword)(opt)
-  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
+  ;  :font-size (keyword, px or string)(opt)
   ;   Default: :s
-  ;  :font-weight (keyword)(opt)
+  ;  :font-weight (keyword or integer)(opt)
   ;   :inherit, :thin, :extra-light, :light, :normal, :medium, :semi-bold, :bold, :extra-bold, :black
   ;   Default: :normal
   ;  :form-id (keyword)(opt)
@@ -209,13 +199,7 @@
   ;  :height (keyword, px or string)(opt)
   ;  :helper (metamorphic-content)(opt)
   ;  :indent (map)(opt)
-  ;   {:bottom (keyword)(opt)
-  ;    :left (keyword)(opt)
-  ;    :right (keyword)(opt)
-  ;    :top (keyword)(opt)
-  ;    :horizontal (keyword)(opt)
-  ;    :vertical (keyword)(opt)
-  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
+  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :info-text (metamorphic-content)(opt)
   ;  :initial-value (string)(opt)
   ;  :label (metamorphic-content)(opt)
@@ -252,16 +236,16 @@
   ;  :on-valid (Re-Frame metamorphic-event)(opt)
   ;   This event takes the field content as its last parameter.
   ;  :outdent (map)(opt)
-  ;   Same as the :indent property.
+  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :placeholder (metamorphic-content)(opt)
   ;  :preset (keyword)(opt)
   ;  :reveal-effect (keyword)(opt)
-  ;   :delayed, :opacity
   ;  :start-adornments (maps in vector)(opt)
   ;   Same as the :end-adornments property.
   ;  :style (map)(opt)
   ;  :surface (map)(opt)
   ;   {:border-radius (map)(opt)
+  ;     {:all, :tl, :tr, :br, :bl (keyword, px or string)(opt)}
   ;    :content (metamorphic-content)(opt)
   ;    :content-value-f (function)(opt)
   ;     Default: return

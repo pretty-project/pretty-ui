@@ -52,7 +52,7 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ; {:font-size (keyword)
+  ; {:font-size (keyword, px or string)
   ;  :line-height (keyword)}
   ;
   ; @usage

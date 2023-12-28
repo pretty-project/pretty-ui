@@ -64,10 +64,11 @@
 (defn- context-menu-header
   ; @param (keyword) menu-id
   ; @param (map) menu-props
-  [menu-id menu-props]
-  [pretty-elements/horizontal-polarity ::context-menu-header
-                                       {:start-content [header-label      menu-id menu-props]
-                                        :end-content   [close-icon-button menu-id menu-props]}])
+  [menu-id menu-props])
+  ; use row instead of horizontal-polarity
+  ;[pretty-elements/horizontal-polarity ::context-menu-header
+  ;                                     {:start-content [header-label      menu-id menu-props]
+  ;                                      :end-content   [close-icon-button menu-id menu-props]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

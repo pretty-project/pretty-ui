@@ -115,19 +115,16 @@
   ;
   ; @param (keyword) bar-id
   ; @param (map) bar-props
-  ; {:horizontal-align (keyword)
-  ;  :style (map)(opt)}
+  ; {:style (map)(opt)}
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
-  ;  :data-horizontal-align (keyword)
   ;  :data-selectable (boolean)
   ;  :style (map)}
-  [_ {:keys [horizontal-align style] :as bar-props}]
-  (-> {:class                 :pe-menu-bar--body
-       :data-horizontal-align horizontal-align
-       :data-selectable       false
-       :style                 style}
+  [_ {:keys [style] :as bar-props}]
+  (-> {:class           :pe-menu-bar--body
+       :data-selectable false
+       :style           style}
       (pretty-css/indent-attributes bar-props)))
 
 ;; ----------------------------------------------------------------------------

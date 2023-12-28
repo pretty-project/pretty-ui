@@ -70,7 +70,6 @@
               [pretty-elements.ghost.views                :as ghost.views]
               [pretty-elements.horizontal-group.views     :as horizontal-group.views]
               [pretty-elements.horizontal-line.views      :as horizontal-line.views]
-              [pretty-elements.horizontal-polarity.views  :as horizontal-polarity.views]
               [pretty-elements.horizontal-separator.views :as horizontal-separator.views]
               [pretty-elements.horizontal-spacer.views    :as horizontal-spacer.views]
               [pretty-elements.icon-button.views          :as icon-button.views]
@@ -98,7 +97,6 @@
               [pretty-elements.toggle.views               :as toggle.views]
               [pretty-elements.vertical-group.views       :as vertical-group.views]
               [pretty-elements.vertical-line.views        :as vertical-line.views]
-              [pretty-elements.vertical-polarity.views    :as vertical-polarity.views]
               [pretty-elements.vertical-spacer.views      :as vertical-spacer.views]
               [window-observer.api                        :as window-observer]))
 
@@ -160,7 +158,6 @@
 (def ghost                ghost.views/element)
 (def horizontal-group     horizontal-group.views/element)
 (def horizontal-line      horizontal-line.views/element)
-(def horizontal-polarity  horizontal-polarity.views/element)
 (def horizontal-separator horizontal-separator.views/element)
 (def horizontal-spacer    horizontal-spacer.views/element)
 (def icon                 icon.views/element)
@@ -188,5 +185,4 @@
 (def toggle               toggle.views/element)
 (def vertical-group       vertical-group.views/element)
 (def vertical-line        vertical-line.views/element)
-(def vertical-polarity    vertical-polarity.views/element)
 (def vertical-spacer      vertical-spacer.views/element)

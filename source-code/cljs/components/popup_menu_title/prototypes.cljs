@@ -8,11 +8,11 @@
   ; @param (map) title-props
   ;
   ; @return (map)
-  ; {:border-color (keyword)
+  ; {:border-color (keyword or string)
   ;  :border-position (keyword)
-  ;  :border-width (keyword)
-  ;  :font-weight (keyword)
-  ;  :gap (keyword)
+  ;  :border-width (keyword, px or string)
+  ;  :font-weight (keyword or integer)
+  ;  :gap (keyword, px or string)
   ;  :icon-position (keyword)
   ;  :icon-size (keyword)
   ;  :indent (map)

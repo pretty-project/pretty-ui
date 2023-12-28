@@ -16,9 +16,9 @@
   ;
   ; @param (keyword)(opt) button-id
   ; @param (map) button-props
-  ; {:font-size (keyword)(opt)
+  ; {:font-size (keyword, px or string)(opt)
   ;   Default: :xs
-  ;  :gap (keyword)(opt)
+  ;  :gap (keyword, px or string)(opt)
   ;   Default: :auto
   ;  :horizontal-align (keyword)(opt)
   ;   Default: :left
@@ -32,7 +32,7 @@
   ;   Default: :m
   ;  :indent (map)(opt)
   ;   Default: {:all :xs}
-  ;  :width (keyword)(opt)
+  ;  :width (keyword, px or string)(opt)
   ;   Default: :auto}
   ;
   ; @usage

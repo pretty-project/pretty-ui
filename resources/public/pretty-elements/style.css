@@ -300,10 +300,6 @@
   flex-direction: column;
 }
 
-.pe-column--body[data-wrap-items="true"] {
-  flex-wrap: wrap;
-}
-
 /*** Body ***/
 /***** Column *****/
 
@@ -714,30 +710,6 @@
 
 
 
-/***** Horizontal polarity *****/
-/*** Body ***/
-
-.pe-horizontal-polarity--body {
-  display:         flex;
-  justify-content: space-between;
-}
-
-/*** Body ***/
-
-/*** Content ***/
-
-.pe-horizontal-polarity--start-content,
-.pe-horizontal-polarity--middle-content,
-.pe-horizontal-polarity--end-content {
-  /* DEPRECATED! What was the purpose? */
-  -display: flex;
-}
-
-/*** Content ***/
-/***** Horizontal polarity *****/
-
-
-
 /***** Horizontal separator *****/
 /*** Body ***/
 
@@ -842,7 +814,6 @@
 /*** Body ***/
 
 .pe-label--body {
-  align-items: center;
   display: flex;
 }
 
@@ -889,14 +860,16 @@
 /*** Element ***/
 
 .pe-menu-bar {
+  /* DEPRECATED! It prevented the scrollability of the menu-bar. */
   /* XXX#6668 */
-  width: fit-content;
+  -width: fit-content;
 }
 
 /*** Element ***/
 
 /*** Item ***/
 
+/* */
 /* Az .pe-menu-bar--menu-item elemben alkalmazott esztétikai távolságok (margin, padding),
  * meg kell feleljenek a felsorolt felhasználási módoknak:
  * 1. A menü-elemek kizárólag ikonokat jelenítenek meg
@@ -908,8 +881,7 @@
   align-items: center;
   display:     flex;
 
-  /* If the item both displays label and icon, the column-gap property sets the distance
-   * between them */
+  /* Sets the distance between item labels and icons.  */
   column-gap: 6px;
 }
 
@@ -1082,10 +1054,6 @@
   /* XXX#6667 */
   /* The {height: 100%} setting is necessary to make the content vertically alignable! */
   height: 100%;
-}
-
-.pe-row--body[data-wrap-items="true"] {
-  flex-wrap: wrap;
 }
 
 /*** Body ***/
@@ -1341,9 +1309,8 @@
 .pe-text--body {
   display: flex;
   flex-direction: column;
-  justify-content: center;
 
-  /* The word-break property can split words into chunks! Don't use it! */
+  /* The word-break property splits words into chunks! Don't use it! */
   -word-break: break-all;
 }
 
@@ -1590,28 +1557,3 @@ textarea.pe-text-field--input {
 
 /*** Body ***/
 /***** Vertical line *****/
-
-
-
-/***** Vertical polarity *****/
-/*** Body ***/
-
-.pe-vertical-polarity--body {
-  display:         flex;
-  flex-direction:  column;
-  justify-content: space-between;
-}
-
-/*** Body ***/
-
-/*** Content ***/
-
-.pe-vertical-polarity--start-content,
-.pe-vertical-polarity--middle-content,
-.pe-vertical-polarity--end-content {
-  display: flex;
-  flex-direction: column;
-}
-
-/*** Content ***/
-/***** Vertical polarity *****/

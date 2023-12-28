@@ -10,9 +10,9 @@
 (defn- illustration
   ; @param (keyword) illustration-id
   ; @param (map) illustration-props
-  ; {:height (keyword)
+  ; {:height (keyword, px or string)
   ;  :uri (string)
-  ;  :width (keyword)}
+  ;  :width (keyword, px or string)}
   [_ {:keys [height uri width]}]
   [:div.c-illustration [:div.c-illustration--body {:style {:background-image (css/url uri)}
                                                    :data-element-height height
@@ -22,13 +22,11 @@
   ; @param (keyword)(opt) illustration-id
   ; @param (map) illustration-props
   ; {:class (keyword or keywords in vector)(opt)
-  ;  :height (keyword)(opt)
-  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;  :height (keyword, px or string)(opt)
   ;   Default: :xxl
   ;  :uri (string)
   ;  :style (map)(opt)
-  ;  :width (keyword)(opt)
-  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;  :width (keyword, px or string)(opt)
   ;   Default: :xxl}
   ;
   ; @usage

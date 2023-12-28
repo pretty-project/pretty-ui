@@ -11,13 +11,13 @@
   ;
   ; @param (map) button-props
   ; {:badge-content (metamorphic-content)(opt)
-  ;  :badge-color (keyword)(opt
+  ;  :badge-color (keyword or string)(opt
   ;  :marker-color (keyword)(opt)
   ;  :progress (percent)(opt)
   ;  :tooltip-content (metamorphic-content)(opt)}
   ;
   ; @return (map)
-  ; {:badge-color (keyword)
+  ; {:badge-color (keyword or string)
   ;  :badge-position (keyword)
   ;  :icon-family (keyword)
   ;  :icon-size (keyword)

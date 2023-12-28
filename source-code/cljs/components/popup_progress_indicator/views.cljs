@@ -39,9 +39,11 @@
   ;   Default: "var( --fill-color-default )"
   ;  :helper (metamorphic-content)(opt)
   ;  :indent (map)(opt)
+  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :info-text (metamorphic-content)(opt)
   ;  :label (metamorphic-content)(opt)
   ;  :outdent (map)(opt)
+  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :overflow (keyword)(opt)
   ;   :hidden, :visible
   ;   Default: :visible

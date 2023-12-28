@@ -194,6 +194,39 @@
 ;
 ;
 ;
+; @title :badge-color
+;
+; @code Usage
+; [pretty-elements/button {:badge-color (keyword or string)}]
+; [pretty-elements/button {:badge-color :soft-blue}]
+; [pretty-elements/button {:badge-color "#888"}]
+;
+; @code Values
+; :inherit, :transparent,
+; :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning,
+; :black, :grey, :white, :hard-blue, :soft-blue, :hard-green, :khaki-green, :soft-green, :hard-purple, :soft-purple, :hard-red, soft-red
+;
+;
+;
+; @title :badge-content
+;
+; @code Usage
+; [pretty-elements/button {:badge-content (metamorphic-content)}]
+; [pretty-elements/button {:badge-content "My content"}]
+;
+;
+;
+; @title :badge-position
+;
+; @code Usage
+; [pretty-elements/button {:badge-position (keyword)}]
+; [pretty-elements/button {:badge-position :tr}]
+;
+; @code Values
+; :tl, :tr, :br, :bl, :left, :right, :bottom, :top
+;
+;
+;
 ; @title :border-color
 ;
 ; @code Usage
@@ -222,13 +255,38 @@
 ; @title :border-radius
 ;
 ; @code Usage
-; [pretty-elements/button {:border-radius (map)}]
+; [pretty-elements/button {:border-radius (map) {:all, :tl, :tr, :br, :bl (keyword, px or string)}}]
 ; [pretty-elements/button {:border-radius {:all :xs}}]
 ; [pretty-elements/button {:border-radius {:all :xs :tr :m}}]
+; [pretty-elements/button {:border-radius {:all 10}}]
+; [pretty-elements/button {:border-radius {:all "10px"}}]
+; [pretty-elements/button {:border-radius {:all "5%"}}]
 ;
 ; @code Values
-; :tl, :tr, :br, :bl, :all (keyword)
 ; :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+;
+;
+;
+; @title :click-effect
+;
+; @code Usage
+; [pretty-elements/button {:click-effect (keyword)}]
+; [pretty-elements/button {:click-effect :opacity}]
+;
+; @code Values
+; :none, :opacity
+;
+;
+;
+; @title :cursor
+;
+; @code Usage
+; [pretty-elements/button {:cursor (keyword or string)}]
+; [pretty-elements/button {:cursor :pointer}]
+; [pretty-elements/button {:cursor "pointer"}]
+;
+; @code Values
+; :default, :disabled, :grab, :grabbing, :move, :pointer, :progress
 ;
 ;
 ;
@@ -260,8 +318,11 @@
 ; @title :font-size
 ;
 ; @code Usage
-; [pretty-elements/button {:font-size (keyword)}]
+; [pretty-elements/button {:font-size (keyword, px or string)}]
 ; [pretty-elements/button {:font-size :xl}]
+; [pretty-elements/button {:font-size 12}]
+; [pretty-elements/button {:font-size "12px"}]
+; [pretty-elements/button {:font-size "1em"}]
 ;
 ; @code Values
 ; :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
@@ -271,11 +332,27 @@
 ; @title :font-weight
 ;
 ; @code Usage
-; [pretty-elements/button {:font-weight (keyword)}]
+; [pretty-elements/button {:font-weight (keyword or integer)}]
 ; [pretty-elements/button {:font-weight :medium}]
+; [pretty-elements/button {:font-weight 500}]
 ;
 ; @code Values
-; :inherit, :thin, :extra-light, :light, :normal, :medium, :semi-bold, :bold, :extra-bold, :black
+; :inherit, :thin, :extra-light, :light, :normal, :medium, :semi-bold, :bold, :extra-bold, :black, :extra-black
+;
+;
+;
+; @title :gap
+;
+; @code Usage
+; [pretty-elements/button {:gap (keyword, px or string)}]
+; [pretty-elements/button {:gap :xs}]
+; [pretty-elements/button {:gap 10}]
+; [pretty-elements/button {:gap "10px"}]
+; [pretty-elements/button {:gap "5%"}]
+;
+; @code Values
+; :auto
+; :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
 ;
 ;
 ;
@@ -284,12 +361,58 @@
 ; @code Usage
 ; [pretty-elements/button {:height (keyword, px or string)}]
 ; [pretty-elements/button {:height :xxl}]
-; [pretty-elements/button {:height 100}]
-; [pretty-elements/button {:height "10%"}]
+; [pretty-elements/button {:height 10}]
+; [pretty-elements/button {:height "10px"}]
+; [pretty-elements/button {:height "5%"}]
 ;
 ; @code Values
 ; :auto, :content, :parent,
 ; :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+;
+;
+;
+; @title :horizontal-align
+;
+; @code Usage
+; [pretty-elements/button {:horizontal-align (keyword)}]
+; [pretty-elements/button {:horizontal-align :right}]
+;
+; @code Values
+; :center, :left, :right,
+; :space-around, :space-between, :space-evenly
+;
+;
+;
+; @title :hover-effect
+;
+; @code Usage
+; [pretty-elements/button {:hover-effect (keyword)}]
+; [pretty-elements/button {:hover-effect :opacity}]
+;
+; @code Values
+; :none, :opacity
+;
+;
+;
+; @title :reveal-effect
+;
+; @code Usage
+; [pretty-elements/button {:reveal-effect (keyword)}]
+; [pretty-elements/button {:reveal-effect :opacity}]
+;
+; @code Values
+; :none, :delayed, :opacity
+;
+;
+;
+; @title :text-align
+;
+; @code Usage
+; [pretty-elements/text {:text-align (keyword)}]
+; [pretty-elements/text {:text-align :left}]
+;
+; @code Values
+; :center, :left, :right,
 ;
 ;
 ;
@@ -307,13 +430,26 @@
 ;
 ;
 ;
+; @title :vertical-align
+;
+; @code Usage
+; [pretty-elements/text {:vertical-align (keyword)}]
+; [pretty-elements/text {:vertical-align :bottom}]
+;
+; @code Values
+; :top, :center, :bottom,
+; :space-around, :space-between, :space-evenly
+;
+;
+;
 ; @title :width
 ;
 ; @code Usage
 ; [pretty-elements/button {:width (keyword, px or string)}]
 ; [pretty-elements/button {:width :xxl}]
-; [pretty-elements/button {:width 100}]
-; [pretty-elements/button {:width "10%"}]
+; [pretty-elements/button {:width 10}]
+; [pretty-elements/button {:width "10px"}]
+; [pretty-elements/button {:width "5%"}]
 ;
 ; @code Values
 ; :auto, :content, :parent,

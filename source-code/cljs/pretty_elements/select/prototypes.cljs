@@ -12,13 +12,13 @@
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
-  ; {:border-color (keyword)(opt)
+  ; {:border-color (keyword or string)(opt)
   ;  :popup (map)(opt)}
   ;
   ; @return (map)
   ; {:add-option-f (function)
   ;  :border-position (keyword)
-  ;  :border-width (keyword)
+  ;  :border-width (keyword, px or string)
   ;  :option-field-placeholder (metamorphic-content)
   ;  :layout (keyword)
   ;  :option-label-f (function)

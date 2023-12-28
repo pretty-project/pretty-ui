@@ -100,26 +100,20 @@
   ; @param (map) selector-props
   ; {:class (keyword or keywords in vector)(opt)
   ;  :indent (map)(opt)
-  ;   {:bottom (keyword)(opt)
-  ;    :left (keyword)(opt)
-  ;    :right (keyword)(opt)
-  ;    :top (keyword)(opt)
-  ;    :horizontal (keyword)(opt)
-  ;    :vertical (keyword)(opt)
-  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
+  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :on-select (Re-Frame metamorphic-event)(opt)
   ;  :options (strings in vector)(opt)
   ;  :options-label (metamorphic-content)(opt)
   ;  :options-path (Re-Frame path vector)(opt)
   ;  :outdent (map)(opt)
-  ;   Same as the :indent property.
+  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :popup (map)(opt)
   ;   {:border-color (keyword or string)(opt)
   ;    :border-position (keyword)(opt)
   ;    :border-radius (map)(opt)
-  ;    :border-width (keyword)(opt)
+  ;     {:all, :tl, :tr, :br, :bl (keyword, px or string)(opt)}
+  ;    :border-width (keyword, px or string)(opt)
   ;    :click-effect (keyword)(opt)
-  ;     :none, :opacity
   ;     Default: :opacity
   ;    :cover-color (keyword or string)(opt)
   ;     Default: :black
@@ -128,8 +122,6 @@
   ;    :fill-pattern (keyword)(opt)
   ;     Default: :cover
   ;    :hover-effect (keyword)(opt)
-  ;     :none, :opacity
-  ;     Default: :none
   ;    :indent (map)(opt)
   ;    :label (metamorphic-content)(opt)
   ;    :min-width (keyword)(opt)

@@ -12,7 +12,7 @@
   ; {:border-color (keyword or string)(opt)}
   ;
   ; @return (map)
-  ; {:border-width (keyword)
+  ; {:border-width (keyword, px or string)
   ;  :position (keyword)
   ;  :threshold (px)}
   [{:keys [border-color] :as sidebar-props}]

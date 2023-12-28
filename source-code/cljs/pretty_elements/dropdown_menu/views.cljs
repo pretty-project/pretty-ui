@@ -50,7 +50,8 @@
   ;   {:border-color (keyword or string)(opt)
   ;    :border-position (keyword)(opt)
   ;    :border-radius (map)(opt)
-  ;    :border-width (keyword)(opt)
+  ;     {:all, :tl, :tr, :br, :bl (keyword, px or string)(opt)}
+  ;    :border-width (keyword, px or string)(opt)
   ;    :fill-color (keyword or string)
   ;    :indent (map)(opt)
   ;    :outdent (map)(opt)

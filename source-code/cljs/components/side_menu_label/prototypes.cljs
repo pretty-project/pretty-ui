@@ -10,8 +10,8 @@
   ; @param (map) label-props
   ;
   ; @return (map)
-  ; {:font-size (keyword)
-  ;  :gap (keyword)
+  ; {:font-size (keyword, px or string)
+  ;  :gap (keyword, px or string)
   ;  :horizontal-align (keyword)
   ;  :icon-size (keyword)
   ;  :indent (map)

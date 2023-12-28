@@ -17,7 +17,7 @@
   ; @param (map) label-props
   ; {:color (keyword or string)(opt)
   ;   Default: :warning
-  ;  :font-size (keyword)(opt)
+  ;  :font-size (keyword, px or string)(opt)
   ;   Default: :xs}
   ;
   ; @usage

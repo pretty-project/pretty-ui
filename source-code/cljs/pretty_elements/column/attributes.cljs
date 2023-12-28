@@ -14,15 +14,12 @@
   ;
   ; @return (map)
   ; {}
-  [_ {:keys [gap horizontal-align style vertical-align wrap-items?] :as column-props}]
-  (-> {:class                        :pe-column--body
-       :data-row-gap                 gap
-       :data-horizontal-column-align horizontal-align
-       :data-vertical-column-align   vertical-align
-       :data-wrap-items              wrap-items?
-       :style                        style}
+  [_ {:keys [style] :as column-props}]
+  (-> {:class :pe-column--body
+       :style style}
       (pretty-css/border-attributes           column-props)
       (pretty-css/color-attributes            column-props)
+      (pretty-css/column-attributes           column-props)
       (pretty-css/element-max-size-attributes column-props)
       (pretty-css/element-min-size-attributes column-props)
       (pretty-css/element-size-attributes     column-props)

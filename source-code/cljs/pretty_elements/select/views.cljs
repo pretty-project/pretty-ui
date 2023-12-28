@@ -212,7 +212,8 @@
   ;   {:border-color (keyword or string)(opt)
   ;    :border-position (keyword)(opt)
   ;    :border-radius (map)(opt)
-  ;    :border-width (keyword)(opt)
+  ;     {:all, :tl, :tr, :br, :bl (keyword, px or string)(opt)}
+  ;    :border-width (keyword, px or string)(opt)
   ;    :cover-color (keyword or string)(opt)
   ;     Default: :black
   ;    :fill-color (keyword or string)(opt)
@@ -222,7 +223,6 @@
   ;    :min-width (keyword)(opt)
   ;    :outdent (map)(opt)}
   ;  :reveal-effect (keyword)(opt)
-  ;   :delayed, :opacity
   ;  :value-path (Re-Frame path vector)(opt)}
   ;
   ; @usage

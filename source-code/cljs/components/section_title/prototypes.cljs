@@ -9,8 +9,8 @@
   ; @param (map) title-props
   ;
   ; @return (map)
-  ; {:font-size (keyword)
-  ;  :font-weight (keyword)}
+  ; {:font-size (keyword, px or string)
+  ;  :font-weight (keyword or integer)}
   [title-props]
   (if (window-observer/viewport-width-min? 720)
       (merge title-props {:font-size :5xl :font-weight :semi-bold})

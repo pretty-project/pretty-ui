@@ -13,7 +13,7 @@
   ; {:close-button (map)(opt)
   ;  :label (map)(opt)}
   [_ {:keys [close-button label]}]
-  [:div {:class :c-popup-menu-header :data-orientation :horizontal :data-horizontal-row-align :space-between}
+  [:div {:class :c-popup-menu-header :data-orientation :horizontal :data-row-horizontal-align :space-between}
         (if label        [pretty-elements/label ::header-label label]
                          [:div {:class :c-popup-menu-header--label-placeholder}])
         (if close-button [pretty-elements/icon-button ::close-button close-button])])

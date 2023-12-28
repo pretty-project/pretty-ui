@@ -16,8 +16,8 @@
   ; {:border-color (keyword or string)
   ;  :border-radius (map)
   ;  :border-position (keyword)
-  ;  :border-width (keyword)
-  ;  :font-size (keyword)
+  ;  :border-width (keyword, px or string)
+  ;  :font-size (keyword, px or string)
   ;  :initial-value (integer)
   ;  :value-path (Re-Frame path vector)}
   [counter-id counter-props]

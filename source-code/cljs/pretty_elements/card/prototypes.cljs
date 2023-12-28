@@ -14,20 +14,20 @@
   ;
   ; @param (map) card-props
   ; {:badge-content (metamorphic-content)(opt)
-  ;  :border-color (keyword)(opt)
+  ;  :border-color (keyword or string)(opt)
   ;  :href (string)(opt)
   ;  :marker-color (keyword)(opt)
   ;  :on-click (function or Re-Frame metamorphic-event)(opt)}
   ;
   ; @return (map)
-  ; {:badge-color (keyword)
+  ; {:badge-color (keyword or string)
   ;  :badge-content (string)
   ;  :badge-position (keyword)
   ;  :border-position (keyword)
-  ;  :border-width (keyword)
+  ;  :border-width (keyword, px or string)
   ;  :click-effect (keyword)
   ;  :content-value-f (function)
-  ;  :cursor (keyword)
+  ;  :cursor (keyword or string)
   ;  :marker-color (keyword)
   ;  :on-click (function)
   ;  :on-mouse-up (function)}

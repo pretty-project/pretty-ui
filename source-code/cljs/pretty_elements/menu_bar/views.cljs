@@ -37,9 +37,8 @@
   ; @param (map) bar-props
   ; {:menu-items (maps in vector)}
   [bar-id {:keys [menu-items] :as bar-props}]
-  ; XXX#5406
   ; For menu bars with horizontal orientation, the '{overflow-x: scroll}'
-  ; and '{display: flex}' properties can only used together (without errors)
+  ; and '{display: flex}' properties can only used together (properly)
   ; if the width of the scroll container element ('.pe-menu-bar--body') is not greater
   ; than the total width of the elements within.
   ; Therefore, the '{:horizontal-align :space-between}' setting cannot be implemented,
@@ -62,39 +61,26 @@
   ; @param (keyword)(opt) bar-id
   ; @param (map) bar-props
   ; {:class (keyword or keywords in vector)(opt)
-  ;  :horizontal-align (keyword)(opt)
-  ;   :center, :left, :right
-  ;   Default: :left
-  ;   W/ {:orientation :horizontal}
   ;  :indent (map)(opt)
-  ;   {:bottom (keyword)(opt)
-  ;    :left (keyword)(opt)
-  ;    :right (keyword)(opt)
-  ;    :top (keyword)(opt)
-  ;    :horizontal (keyword)(opt)
-  ;    :vertical (keyword)(opt)
-  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
+  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :item-default (map)(opt)
   ;   {:badge-position (keyword)(opt)
-  ;     :tl, :tr, :br, :bl, :left, :right, :bottom, :top
   ;     Default: :tr
   ;    :border-color (keyword or string)(opt)
   ;    :border-radius (map)(opt)
-  ;    :border-width (keyword)(opt)
-  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;     {:all, :tl, :tr, :br, :bl (keyword, px or string)(opt)}
+  ;    :border-width (keyword, px or string)(opt)
   ;    :fill-color (keyword or string)(opt)
   ;    :fill-pattern (keyword)(opt)
   ;     Default: :cover
-  ;    :font-size (keyword)(opt)
-  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
+  ;    :font-size (keyword, px or string)(opt)
   ;     Default: :s
-  ;    :font-weight (keyword)(opt)
+  ;    :font-weight (keyword or integer)(opt)
   ;     :inherit, :thin, :extra-light, :light, :normal, :medium, :semi-bold, :bold, :extra-bold, :black
   ;     Default :medium
   ;    :hover-color (keyword or string)(opt)
   ;     :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;    :hover-effect (keyword)(opt)
-  ;     :opacity
   ;    :icon-color (keyword or string)(opt)
   ;     :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
   ;     Default: :inherit
@@ -105,6 +91,7 @@
   ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
   ;     Default: :s
   ;    :indent (map)(opt)
+  ;     {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;    :line-height (keyword)(opt)
   ;     :auto, :inherit, :text-block, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;     Default: :text-block
@@ -114,12 +101,12 @@
   ;     :tl, :tr, :br, :bl, left, :right, bottom, :top
   ;     Default: :tr
   ;    :outdent (map)(opt)
+  ;     {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;    :text-color (keyword or string)(opt)
   ;     :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
   ;     Default: :inherit}
   ;  :menu-items (maps in vector)
-  ;   [{:badge-color (keyword)(opt)
-  ;      :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+  ;   [{:badge-color (keyword or string)(opt)
   ;      Default: :primary
   ;     :badge-content (metamorphic-content)(opt)
   ;     :disabled? (boolean)(opt)
@@ -135,7 +122,7 @@
   ;   :horizontal, :vertical
   ;   Default: :horizontal
   ;  :outdent (map)(opt)
-  ;   Same as the :indent property.
+  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :preset (keyword)(opt)
   ;  :style (map)(opt)}
   ;

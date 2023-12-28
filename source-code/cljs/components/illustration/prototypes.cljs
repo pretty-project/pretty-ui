@@ -10,8 +10,8 @@
   ; @param (map) illustration-props
   ;
   ; @return (map)
-  ; {:height (keyword)
-  ;  :width (keyword)}
+  ; {:height (keyword, px or string)
+  ;  :width (keyword, px or string)}
   [illustration-props]
   (merge {:height :xxl
           :width  :xxl}

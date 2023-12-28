@@ -23,9 +23,9 @@
   ;
   ; @param (keyword)(opt) button-id
   ; @param (map) button-props
-  ; {:fill-color (keyword)(opt)
+  ; {:fill-color (keyword or string)(opt)
   ;   Default: :highlight
-  ;  :font-size (keyword)(opt)
+  ;  :font-size (keyword, px or string)(opt)
   ;   Default: :xs
   ;  :hover-color (keyword)(opt)
   ;   Default: :highlight}

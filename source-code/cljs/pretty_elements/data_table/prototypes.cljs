@@ -13,8 +13,8 @@
   ; @param (map) cell-props
   ;
   ; @return (map)
-  ; {:font-size (keyword)
-  ;  :font-weight (keyword)
+  ; {:font-size (keyword, px or string)
+  ;  :font-weight (keyword or integer)
   ;  :line-height (keyword)
   ;  :text-overflow (keyword)}
   [cell-props]

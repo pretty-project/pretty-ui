@@ -11,7 +11,7 @@
 (defn- copyright-label
   ; @param (keyword) label-id
   ; @param (map) label-props
-  ; {:font-size (keyword)}
+  ; {:font-size (keyword, px or string)}
   [_ {:keys [font-size]}]
   (let [server-year    @(r/subscribe [:x.core/get-server-year])]
         ;copyright-label (x.app-details/copyright-label server-year)]
@@ -40,7 +40,7 @@
 (defn component
   ; @param (keyword)(opt) label-id
   ; @param (map) label-props
-  ; {:font-size (keyword)(opt)
+  ; {:font-size (keyword, px or string)(opt)
   ;   Default: :xxs}
   ;
   ; @usage

@@ -13,7 +13,7 @@
   ;
   ; @return (map)
   ; {:border-position (keyword)
-  ;  :border-width (keyword)
+  ;  :border-width (keyword, px or string)
   ;  :cells (vector)
   ;  :marker-position (keyword)}
   [{:keys [border-color cells marker-color] :as row-props}]

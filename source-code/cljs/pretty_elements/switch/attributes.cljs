@@ -12,7 +12,7 @@
   ;
   ; @param (keyword) switch-id
   ; @param (map) switch-props
-  ; {:font-size (keyword)}
+  ; {:font-size (keyword, px or string)}
   ;
   ; @return (map)
   [_ _]
@@ -26,7 +26,7 @@
   ;
   ; @param (keyword) switch-id
   ; @param (map) switch-props
-  ; {:font-size (keyword)}
+  ; {:font-size (keyword, px or string)}
   ;
   ; @return (map)
   ; {}

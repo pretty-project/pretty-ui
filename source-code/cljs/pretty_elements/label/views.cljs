@@ -134,14 +134,8 @@
   ; {:border-color (keyword or string)(opt)
   ;  :border-position (keyword)(opt)
   ;  :border-radius (map)(opt)
-  ;   {:tl (keyword)(opt)
-  ;    :tr (keyword)(opt)
-  ;    :br (keyword)(opt)
-  ;    :bl (keyword)(opt)
-  ;    :all (keyword)(opt)
-  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
-  ;  :border-width (keyword)(opt)
-  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;   {:all, :tl, :tr, :br, :bl (keyword, px or string)(opt)}
+  ;  :border-width (keyword, px or string)(opt)
   ;  :class (keyword or keywords in vector)(opt)
   ;  :content (metamorphic-content)(opt)
   ;  :content-value-f (function)(opt)
@@ -150,21 +144,15 @@
   ;  :fill-color (keyword or string)(opt)
   ;  :fill-pattern (keyword)(opt)
   ;   Default: :cover
-  ;  :font-size (keyword)(opt)
-  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
+  ;  :font-size (keyword, px or string)(opt)
   ;   Default: :s
-  ;  :font-weight (keyword)(opt)
+  ;  :font-weight (keyword or integer)(opt)
   ;   :inherit, :thin, :extra-light, :light, :normal, :medium, :semi-bold, :bold, :extra-bold, :black
   ;   Default :medium
-  ;  :gap (keyword)(opt)
-  ;   Distance between the icon, the info-text button and the label
-  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :auto
+  ;  :gap (keyword, px or string)(opt)
+  ;   Distance between the icon, the info-text button and the content.
   ;  :height (keyword, px or string)(opt)
   ;  :horizontal-align (keyword)(opt)
-  ;   :center, :left, :right
-  ;   Default: :left
-  ;  :horizontal-position (keyword)(opt)
-  ;   :center, :left, :right
   ;  :icon (keyword)(opt)
   ;  :icon-color (keyword or string)(opt)
   ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
@@ -179,13 +167,7 @@
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
   ;   Default: :s
   ;  :indent (map)(opt)
-  ;   {:bottom (keyword)(opt)
-  ;    :left (keyword)(opt)
-  ;    :right (keyword)(opt)
-  ;    :top (keyword)(opt)
-  ;    :horizontal (keyword)(opt)
-  ;    :vertical (keyword)(opt)
-  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
+  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :info-text (metamorphic-content)(opt)
   ;  :line-height (keyword)(opt)
   ;   :auto, :inherit, :text-block, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
@@ -199,7 +181,7 @@
   ;  :on-copy (Re-Frame metamorphic-event)(opt)
   ;   This event takes the label content as its last parameter
   ;  :outdent (map)(opt)
-  ;   Same as the :indent property.
+  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :placeholder (metamorphic-content)(opt)
   ;   Default: "\u00A0"
   ;  :placeholder-value-f (function)(opt)
@@ -223,8 +205,7 @@
   ;  :tooltip-content (metamorphic-content)(opt)
   ;  :tooltip-position (keyword)(opt)
   ;   :left, :right
-  ;  :vertical-position (keyword)(opt)
-  ;   :bottom, :center, :top
+  ;  :vertical-align (keyword)(opt)
   ;  :width (keyword, px or string)(opt)}
   ;
   ; @usage

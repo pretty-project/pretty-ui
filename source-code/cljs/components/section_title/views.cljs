@@ -27,9 +27,9 @@
   ;
   ; @param (keyword)(opt) title-id
   ; @param (map) title-props
-  ; {:font-size (keyword)(opt)
+  ; {:font-size (keyword, px or string)(opt)
   ;   Default: :5xl
-  ;  :font-weight (keyword)(opt)
+  ;  :font-weight (keyword or integer)(opt)
   ;   Default: :semi-bold}
   ;
   ; @usage

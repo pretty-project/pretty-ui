@@ -48,7 +48,7 @@
   ; @param (keyword) picker-id
   ; @param (map) picker-props
   ; {:color-stamp (map)
-  ;   {:gap (keyword)(opt)}
+  ;   {:gap (keyword, px or string)(opt)}
   ;  :on-select (Re-Frame metamorphic-event)(opt)
   ;  :style (map)(opt)
   ;  :value-path (Re-Frame path vector)}

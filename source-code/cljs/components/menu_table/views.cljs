@@ -113,6 +113,7 @@
   ; {:class (keyword or keywords in vector)(opt)
   ;  :disabled? (boolean)(opt)}
   ;  :indent (map)(opt)
+  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :items (maps in vector)(opt)
   ;  [{:label (metamorphic-content)(opt)
   ;    :link (string)(opt)
@@ -120,6 +121,7 @@
   ;     :blank, :self}]
   ;  :label (metamorphic-content)(opt)
   ;  :outdent (map)(opt)
+  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :placeholder (metamorphic-content)(opt)
   ;   Default: :no-items-to-show
   ;  :style (map)(opt)}

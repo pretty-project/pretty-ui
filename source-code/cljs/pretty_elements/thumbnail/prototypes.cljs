@@ -13,9 +13,9 @@
   ;
   ; @return (map)
   ; {:background-size (keyword)
-  ;  :border-color (keyword)
+  ;  :border-color (keyword or string)
   ;  :border-position (keyword)
-  ;  :border-width (keyword)
+  ;  :border-width (keyword, px or string)
   ;  :height (keyword, px or string)
   ;  :icon (keyword)
   ;  :icon-family (keyword)

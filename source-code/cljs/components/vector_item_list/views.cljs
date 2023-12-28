@@ -52,8 +52,10 @@
   ; {:class (keyword or keywords in vector)(opt)
   ;  :disabled? (boolean)(opt)
   ;  :indent (map)(opt)
+  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :item-element (Reagent component symbol)
   ;  :outdent (map)(opt)
+  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :placeholder (map)(opt)
   ;   {:illustration (string)(opt)
   ;    :label (metamorphic-content)(opt)}

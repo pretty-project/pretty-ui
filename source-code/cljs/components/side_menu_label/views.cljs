@@ -15,9 +15,9 @@
   ;
   ; @param (keyword)(opt) label-id
   ; @param (map) label-props
-  ; {:font-size (keyword)(opt)
+  ; {:font-size (keyword, px or string)(opt)
   ;   Default: :xs
-  ;  :gap (keyword)(opt)
+  ;  :gap (keyword, px or string)(opt)
   ;   Default: :xs
   ;  :horizontal-align (keyword)(opt)
   ;   Default: :left

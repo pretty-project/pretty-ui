@@ -64,7 +64,6 @@
   ; {:class (keyword or keywords in vector)(opt)
   ;  :crumbs (maps in vector)
   ;   [{:click-effect (keyword)(opt)
-  ;      :none, :opacity
   ;      Default: :opacity (if 'href' or 'on-click' is provided)
   ;     :content (metamorphic-content)(opt)
   ;     :content-value-f (function)(opt)
@@ -72,21 +71,18 @@
   ;     :disabled? (boolean)(opt)
   ;     :href (string)(opt)
   ;     :hover-effect (keyword)(opt)
-  ;      :none, :opacity
-  ;      Default: :none
   ;     :on-click (function or Re-Frame metamorphic-event)(opt)
   ;     :placeholder (metamorphic-content)(opt)
   ;     :placeholder-value-f (function)(opt)
   ;      Default: return
   ;     :preset (keyword)(opt)}]
   ;  :disabled? (boolean)(opt)
-  ;  :font-size (keyword)(opt)
-  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :inherit
+  ;  :font-size (keyword, px or string)(opt)
   ;   Default: :s
   ;  :indent (map)(opt)
   ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :outdent (map)(opt)
-  ;   Same as the :indent property.
+  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :preset (keyword)(opt)
   ;  :style (map)(opt)}
   ;

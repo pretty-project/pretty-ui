@@ -11,40 +11,39 @@
   ; @param (keyword) element-id
   ; @param (map) element-props
   ; {:disabled? (boolean)(opt)
-  ;  :font-size (keyword)
+  ;  :font-size (keyword, px or string)
   ;  :helper (metamorphic-content)(opt)
   ;  :info-text (metamorphic-content)(opt)
   ;  :label (metamorphic-content)(opt)
   ;  :marked? (boolean)(opt)}
   [_ {:keys [disabled? font-size helper info-text label marked?]}]
   ; XXX#0510 (source-code/app/pretty_components/frontend/data_element/prototypes.cljs)
-  (if label [pretty-elements/label {:content             label}
-                                   :disabled?           disabled?
-                                   :font-size           font-size
-                                   :helper              helper
-                                   :horizontal-position :left
-                                   :info-text           info-text
-                                   :marked?             marked?
-                                   :selectable?         false]))
+  (if label [pretty-elements/label {:content          label
+                                    :disabled?        disabled?
+                                    :font-size        font-size
+                                    :helper           helper
+                                    :horizontal-align :left
+                                    :info-text        info-text
+                                    :marked?          marked?
+                                    :selectable?      false}]))
 
 (defn- data-element-value
   ; @param (keyword) element-id
   ; @param (map) element-props
   ; {:copyable? (boolean)(opt)
   ;  :disabled? (boolean)(opt)
-  ;  :font-size (keyword)
+  ;  :font-size (keyword, px or string)
   ;  :placeholder (metamorphic-content)(opt)}
   ; @param (metamorphic-content) value
   [_ {:keys [copyable? disabled? font-size placeholder]} value]
-  [pretty-elements/text {:copyable?           copyable?}
-                        :color               :muted
-                        :content             value
-                        :disabled?           disabled?
-                        :font-size           font-size
-                        :horizontal-position :left
-                        :line-height         :text-block
-                        :placeholder         placeholder
-                        :selectable?         true])
+  [pretty-elements/text {:copyable?   copyable?
+                         :color       :muted
+                         :content     value
+                         :disabled?   disabled?
+                         :font-size   font-size
+                         :line-height :text-block
+                         :placeholder placeholder
+                         :selectable? true}])
 
 (defn- data-element-values
   ; @param (keyword) element-id
@@ -69,16 +68,17 @@
   ; @param (map) element-props
   ; {:copyable? (boolean)(opt)
   ;  :disabled? (boolean)(opt)
-  ;  :font-size (keyword)(opt)
-  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;  :font-size (keyword, px or string)(opt)
   ;   Default: :s
   ;  :helper (metamorphic-content)(opt)
   ;  :indent (map)(opt)
+  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :info-text (metamorphic-content)(opt)
   ;  :marked? (boolean)(opt)
   ;   Default: false
   ;  :label (metamorphic-content)(opt)
   ;  :outdent (map)(opt)
+  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :placeholder (metamorphic-content)(opt)
   ;  :value (metamorphic-content or metamorphic-contents in vector)(opt)}
   ;

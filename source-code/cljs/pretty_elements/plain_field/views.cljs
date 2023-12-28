@@ -104,13 +104,7 @@
   ;  :field-value-f (function)(opt)
   ;   Default: return
   ;  :indent (map)(opt)
-  ;   {:bottom (keyword)(opt)
-  ;    :left (keyword)(opt)
-  ;    :right (keyword)(opt)
-  ;    :top (keyword)(opt)
-  ;    :horizontal (keyword)(opt)
-  ;    :vertical (keyword)(opt)
-  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
+  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :initial-value (string)(opt)
   ;  :modifier-f (function)(opt)
   ;  :on-blur (function or Re-Frame metamorphic-event)(opt)
@@ -131,11 +125,12 @@
   ;  :on-unmount (function or Re-Frame metamorphic-event)(opt)
   ;   This event takes the field content as its last parameter.
   ;  :outdent (map)(opt)
-  ;   Same as the :indent property.
+  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :preset (keyword)(opt)
   ;  :style (map)(opt)
   ;  :surface (map)(opt)
   ;   {:border-radius (map)(opt)
+  ;     {:all, :tl, :tr, :br, :bl (keyword, px or string)(opt)}
   ;    :content (metamorphic-content)(opt)
   ;    :content-value-f (function)(opt)
   ;     Default: return

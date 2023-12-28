@@ -33,8 +33,8 @@
   ;
   ; @param (map) button-props
   ; {:badge-content (metamorphic-content)(opt)
-  ;  :border-color (keyword)(opt)
-  ;  :font-size (keyword)(opt)
+  ;  :border-color (keyword or string)(opt)
+  ;  :font-size (keyword, px or string)(opt)
   ;  :icon (keyword)(opt)
   ;  :marker-color (keyword)(opt)
   ;  :on-click (function or Re-Frame metamorphic-event)
@@ -43,15 +43,15 @@
   ;  :tooltip-content (metamorphic-content)(opt)}
   ;
   ; @return (map)
-  ; {:badge-color (keyword)
+  ; {:badge-color (keyword or string)
   ;  :badge-content (string)
   ;  :badge-position (keyword)
   ;  :border-position (keyword)
-  ;  :border-width (keyword)
+  ;  :border-width (keyword, px or string)
   ;  :click-effect (keyword)
   ;  :content-value-f (function)
-  ;  :font-size (keyword)
-  ;  :font-weight (keyword)
+  ;  :font-size (keyword, px or string)
+  ;  :font-weight (keyword or integer)
   ;  :horizontal-align (keyword)
   ;  :icon-family (keyword)
   ;  :icon-position (keyword)

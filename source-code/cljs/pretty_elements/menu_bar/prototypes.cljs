@@ -17,7 +17,7 @@
   ;  :marker-color (keyword)(opt)}
   ;
   ; @return (map)
-  ; {:badge-color (keyword)
+  ; {:badge-color (keyword or string)
   ;  :badge-content (string)
   ;  :badge-position (keyword)
   ;  :icon-family (keyword)}
@@ -40,13 +40,9 @@
   ; @ignore
   ;
   ; @param (map) bar-props
-  ; {:orientation (keyword)(opt)}
   ;
   ; @return (map)
-  ; {:horizontal-align (keyword)
-  ;  :orientation (keyword)}
-  [{:keys [orientation] :as bar-props}]
+  ; {:orientation (keyword)}
+  [bar-props]
   (merge {:orientation :horizontal}
-         (if-not (= orientation :vertical)
-                 {:horizontal-align :left})
          (-> bar-props)))

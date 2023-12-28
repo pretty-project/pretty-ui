@@ -9,7 +9,7 @@
   ;
   ; @return (map)
   ; {:color (keyword)
-  ;  :font-size (keyword)
+  ;  :font-size (keyword, px or string)
   ;  :horizontal-align (keyword)
   ;  :indent (map)
   ;  :line-height (keyword)}

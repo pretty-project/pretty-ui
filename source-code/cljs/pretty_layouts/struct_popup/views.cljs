@@ -124,17 +124,10 @@
   ; @param (keyword)(opt) popup-id
   ; @param (map) popup-props
   ; {:body (metamorphic-content)
-  ;  :border-color (keyword)(opt)
-  ;   :default, :highlight, :invert, :primary, :secondary, :success, :transparent, :warning
+  ;  :border-color (keyword or string)(opt)
   ;  :border-radius (map)(opt)
-  ;   {:tl (keyword)(opt)
-  ;    :tr (keyword)(opt)
-  ;    :br (keyword)(opt)
-  ;    :bl (keyword)(opt)
-  ;    :all (keyword)(opt)
-  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
-  ;  :border-width (keyword)(opt)
-  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;   {:all, :tl, :tr, :br, :bl (keyword, px or string)(opt)}
+  ;  :border-width (keyword, px or string)(opt)
   ;   Default: :xxs
   ;  :cover-color (keyword or string)(opt)
   ;  :fill-color (keyword or string)(opt)
@@ -143,13 +136,7 @@
   ;  :footer (metamorphic-content)(opt)
   ;  :header (metamorphic-content)(opt)
   ;  :indent (map)(opt)
-  ;   {:bottom (keyword)(opt)
-  ;    :left (keyword)(opt)
-  ;    :right (keyword)(opt)
-  ;    :top (keyword)(opt)
-  ;    :horizontal (keyword)(opt)
-  ;    :vertical (keyword)(opt)
-  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
+  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :lock-scroll? (boolean)(opt)
   ;  :max-height (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
@@ -163,7 +150,7 @@
   ;  :on-mount (Re-Frame metamorphic-event)(opt)
   ;  :on-unmount (Re-Frame metamorphic-event)(opt)
   ;  :outdent (map)(opt)
-  ;   Same as the :indent property.
+  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :preset (keyword)(opt)
   ;  :stretch-orientation (keyword)(opt)
   ;   :both, :horizontal, :vertical

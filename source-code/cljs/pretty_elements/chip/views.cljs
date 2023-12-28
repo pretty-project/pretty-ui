@@ -32,15 +32,9 @@
   ; @param (keyword)(opt) chip-id
   ; @param (map) chip-props
   ; {:border-radius (map)(opt)
-  ;   {:tl (keyword)(opt)
-  ;    :tr (keyword)(opt)
-  ;    :br (keyword)(opt)
-  ;    :bl (keyword)(opt)
-  ;    :all (keyword)(opt)
-  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
+  ;   {:all, :tl, :tr, :br, :bl (keyword, px or string)(opt)}
   ;  :class (keyword or keywords in vector)(opt)
   ;  :click-effect (keyword)(opt)
-  ;   :none, :opacity
   ;   Default: :opacity
   ;  :content (metamorphic-content)(opt)
   ;  :content-value-f (function)(opt)
@@ -51,8 +45,6 @@
   ;   Default: :cover
   ;  :height (keyword, px or string)(opt)
   ;  :hover-effect (keyword)(opt)
-  ;   :none, :opacity
-  ;   Default: :none
   ;  :href (string)(opt)
   ;   TODO Makes the chip clickable
   ;  :icon (keyword)(opt)
@@ -60,30 +52,21 @@
   ;   :material-symbols-filled, :material-symbols-outlined
   ;   Default: :material-symbols-outlined
   ;  :indent (map)(opt)
-  ;   {:bottom (keyword)(opt)
-  ;    :left (keyword)(opt)
-  ;    :right (keyword)(opt)
-  ;    :top (keyword)(opt)
-  ;    :horizontal (keyword)(opt)
-  ;    :vertical (keyword)(opt)
-  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
+  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :min-width (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;  :on-click (function or Re-Frame metamorphic-event)(opt)
   ;   TODO Makes the chip clickable
   ;  :outdent (map)(opt)
-  ;   Same as the :indent property.
+  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :placeholder (metamorphic-content)(opt)
   ;  :placeholder-value-f (function)(opt)
   ;   Default: return
   ;  :preset (keyword)(opt)
   ;  :primary-button (map)(opt)
   ;   {:click-effect (keyword)(opt)
-  ;     :none, :opacity
   ;     Default: :opacity
   ;    :hover-effect (keyword)(opt)
-  ;     :none, :opacity
-  ;     Default: :none
   ;    :icon (keyword)
   ;    :icon-family (keyword)(opt)
   ;     :material-symbols-filled, :material-symbols-outlined

@@ -35,8 +35,7 @@
   ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;  :border-position (keyword)(opt)
   ;   :all, :bottom, :top, :left, :right, :horizontal, :vertical
-  ;  :border-width (keyword)(opt)
-  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;  :border-width (keyword, px or string)(opt)
   ;  :cells (metamorphic-contents in vector)
   ;  :disabled? (boolean)(opt)
   ;  :drag-attributes (map)(opt)

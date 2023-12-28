@@ -53,20 +53,15 @@
   ; @param (keyword) picker-id
   ; @param (map) picker-props
   ; {:click-effect (keyword)(opt)
-  ;   :opacity
   ;   Default: :opacity
   ;  :color-stamp (map)(opt)
   ;   {:border-radius (map)(opt)
-  ;    :gap (keyword)(opt)
-  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :auto
-  ;    :height (keyword)(opt)
-  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;    :gap (keyword, px or string)(opt)
+  ;    :height (keyword, px or string)(opt)
   ;     Default: :l
-  ;    :width (keyword)(opt)
-  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;    :width (keyword, px or string)(opt)
   ;     Default: :l}
   ;  :hover-effect (keyword)(opt)
-  ;   :opacity
   ;  :placeholder (metamorphic-content)(opt)
   ;   Default: :choose-color!}
   ;
@@ -80,6 +75,6 @@
 
   ([picker-id picker-props]
    ; @note (tutorials#parametering)
-   (fn [_ picker-props] 
+   (fn [_ picker-props]
        (let [picker-props (color-picker.prototypes/picker-props-prototype picker-id picker-props)]
             [color-picker picker-id picker-props]))))

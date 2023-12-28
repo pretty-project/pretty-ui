@@ -58,9 +58,11 @@
   ;   :material-symbols-filled, :material-symbols-outlined
   ;   Default: :material-symbols-outlined
   ;  :indent (map)(opt)
+  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :initials (string)(opt)
   ;   Displays initial letters instead of displaying an icon
   ;  :outdent (map)(opt)
+  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :size (px)(opt)
   ;   Default: 60
   ;  :style (map)(opt)

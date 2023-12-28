@@ -41,11 +41,12 @@
 (defn- consent-dialog-header
   ; @param (keyword) dialog-id
   ; @param (map) dialog-props
-  [dialog-id dialog-props]
-  [pretty-elements/horizontal-polarity ::consent-dialog-header
-                                       {:start-content  [secondary-button dialog-id dialog-props]
-                                        :middle-content [header-label     dialog-id dialog-props]
-                                        :end-content    [primary-button   dialog-id dialog-props]}])
+  [dialog-id dialog-props])
+  ; use row instead of horizontal-polarity
+  ;[pretty-elements/horizontal-polarity ::consent-dialog-header
+  ;                                     {:start-content  [secondary-button dialog-id dialog-props]
+  ;                                      :middle-content [header-label     dialog-id dialog-props]
+  ;                                      :end-content    [primary-button   dialog-id dialog-props]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

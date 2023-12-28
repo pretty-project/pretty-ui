@@ -11,7 +11,7 @@
   ; {:value (metamorphic-content or metamorphic-contents in vector)}
   ;
   ; @return (map)
-  ; {:font-size (keyword)
+  ; {:font-size (keyword, px or string)
   ;  :value (metamorphic-contents in vector)}
   [{:keys [marked? value] :as element-props}]
   ; XXX#0516 (source-code/app/common/frontend/data_element/views.cljs)

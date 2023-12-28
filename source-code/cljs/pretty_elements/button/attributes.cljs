@@ -42,7 +42,7 @@
   ; @param (keyword) button-id
   ; @param (map) button-props
   ; {:disabled? (boolean)(opt)
-  ;  :gap (keyword)(opt)
+  ;  :gap (keyword, px or string)(opt)
   ;  :horizontal-align (keyword)
   ;  :style (map)(opt)}
   ;
@@ -58,9 +58,9 @@
   ; Setting the ':id' attribute on the button body component makes it targetable for DOM actions (e.g., focus, blur, etc.).
   (let [button-body-id (hiccup/value button-id "body")]
        (-> {:class                     :pe-button--body
-            :data-letter-spacing       :auto
             :data-column-gap           gap
-            :data-horizontal-row-align horizontal-align
+            :data-letter-spacing       :auto
+            :data-row-horizontal-align horizontal-align
             :data-selectable           false
             :disabled                  disabled?
             :id                        button-body-id

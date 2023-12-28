@@ -35,9 +35,9 @@
   ;   [{:color (keyword or string)(opt)
   ;      Default: :default
   ;     :content (metamorphic-content)
-  ;     :font-size (keyword)(opt)
+  ;     :font-size (keyword, px or string)(opt)
   ;       Default: :s
-  ;     :font-weight (keyword)(opt)
+  ;     :font-weight (keyword or integer)(opt)
   ;     :placeholder (metamorphic-content)(opt)}]}
   ;
   ; @usage

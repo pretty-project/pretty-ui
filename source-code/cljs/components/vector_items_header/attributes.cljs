@@ -15,13 +15,13 @@
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
-  ;  :data-horizontal-row-align (keyword)
+  ;  :data-row-horizontal-align (keyword)
   ;  :data-orientation (keyword)
   ;  :style (map)}
   [_ {:keys [horizontal-align style] :as header-props}]
   (-> {:class                     :c-vector-items-header--body
        :data-orientation          :horizontal
-       :data-horizontal-row-align horizontal-align
+       :data-row-horizontal-align horizontal-align
        :style                     style}
       (pretty-css/indent-attributes header-props)))
 

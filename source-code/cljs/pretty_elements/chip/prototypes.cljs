@@ -11,10 +11,11 @@
 
 (defn element-props-prototype
   [{:keys [font-size on-click] :as button-props}]
+  ; nem biztos hogy mind kell a chip-hez!!!!
   (cond-> button-props
           :derive-fns/default     (pretty-build-kit/default-values      {:content-value-f return :placeholder-value-f return})
           :text/default           (pretty-build-kit/default-values      {:text-color :default})
-          :layout/default         (pretty-build-kit/default-values      {:horizontal-align :center})
+          :layout/default         (pretty-build-kit/default-values      {})
           :badge/default          (pretty-build-kit/default-value-group {:badge-content nil :badge-color :primary :badge-position :tr})
           :border/default         (pretty-build-kit/default-value-group {:border-color :primary :border-position :all :border-width :xxs})
           :icon/default           (pretty-build-kit/default-value-group {:icon nil :icon-color :primary :icon-position :left :icon-size (or font-size :s)})

@@ -15,19 +15,22 @@
   ;
   ; @param (keyword) bubble-id
   ; @param (map) bubble-props
-  ; {:border-color (keyword)(opt)
+  ; {:border-color (keyword or string)(opt)
   ;   Default: :secondary
   ;  :border-radius (map)(opt)
+  ;   {:all, :tl, :tr, :br, :bl (keyword, px or string)(opt)}
   ;   Default: {:all :m}
-  ;  :border-width (keyword)(opt)
+  ;  :border-width (keyword, px or string)(opt)
   ;   Default: :xs
   ;  :fill-color (keyword or string)(opt)
   ;   Default: :default
   ;  :indent (map)(opt)
+  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;   Default: {:horizontal :xs :vertical :xs}
   ;  :min-width (keyword)(opt)
   ;   Default: :m
   ;  :outdent (map)(opt)
+  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;   Default: {:bottom :xs :vertical :xs}
   ;  :primary-button (map)(opt)
   ;   Default: {:border-radius {:all :s}
@@ -46,6 +49,6 @@
 
   ([bubble-id bubble-props]
    ; @note (tutorials#parametering)
-   (fn [_ bubble-props] 
+   (fn [_ bubble-props]
        (let [bubble-props (notification-bubble.prototypes/bubble-props-prototype bubble-id bubble-props)]
             [pretty-elements/notification-bubble bubble-id bubble-props]))))
