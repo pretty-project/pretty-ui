@@ -62,7 +62,7 @@
   ; @param (map) bar-props
   ; {:class (keyword or keywords in vector)(opt)
   ;  :indent (map)(opt)
-  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
+  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :item-default (map)(opt)
   ;   {:badge-position (keyword)(opt)
   ;     Default: :tr
@@ -76,34 +76,25 @@
   ;    :font-size (keyword, px or string)(opt)
   ;     Default: :s
   ;    :font-weight (keyword or integer)(opt)
-  ;     :inherit, :thin, :extra-light, :light, :normal, :medium, :semi-bold, :bold, :extra-bold, :black
   ;     Default :medium
   ;    :hover-color (keyword or string)(opt)
-  ;     :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;    :hover-effect (keyword)(opt)
   ;    :icon-color (keyword or string)(opt)
-  ;     :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
   ;     Default: :inherit
   ;    :icon-family (keyword)(opt)
-  ;     :material-symbols-filled, :material-symbols-outlined
   ;     Default: :material-symbols-outlined
-  ;    :icon-size (keyword)(opt)
-  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
-  ;     Default: :s
+  ;    :icon-size (keyword, px or string)(opt)
+  ;     Default: provided :font-size (if any) or :s
   ;    :indent (map)(opt)
-  ;     {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;    :line-height (keyword)(opt)
-  ;     :auto, :inherit, :text-block, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;     {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
+  ;    :line-height (keyword, px or string)(opt)
   ;     Default: :text-block
-  ;    :marker-color (keyword)(opt)
-  ;     :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
+  ;    :marker-color (keyword or string)(opt)
   ;    :marker-position (keyword)(opt)
-  ;     :tl, :tr, :br, :bl, left, :right, bottom, :top
   ;     Default: :tr
   ;    :outdent (map)(opt)
-  ;     {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
+  ;     {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;    :text-color (keyword or string)(opt)
-  ;     :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
   ;     Default: :inherit}
   ;  :menu-items (maps in vector)
   ;   [{:badge-color (keyword or string)(opt)
@@ -122,7 +113,7 @@
   ;   :horizontal, :vertical
   ;   Default: :horizontal
   ;  :outdent (map)(opt)
-  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
+  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :preset (keyword)(opt)
   ;  :style (map)(opt)}
   ;

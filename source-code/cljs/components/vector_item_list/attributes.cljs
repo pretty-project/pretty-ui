@@ -1,6 +1,6 @@
 
 (ns components.vector-item-list.attributes
-    (:require [pretty-css.api :as pretty-css]))
+    (:require [pretty-build-kit.api :as pretty-build-kit]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -18,7 +18,7 @@
   [_ {:keys [style] :as list-props}]
   (-> {:class :c-vector-item-list--body
        :style style}
-      (pretty-css/indent-attributes list-props)))
+      (pretty-build-kit/indent-attributes list-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -33,6 +33,6 @@
   ; {}
   [_ list-props]
   (-> {:class :c-vector-item-list}
-      (pretty-css/class-attributes   list-props)
-      (pretty-css/state-attributes   list-props)
-      (pretty-css/outdent-attributes list-props)))
+      (pretty-build-kit/class-attributes   list-props)
+      (pretty-build-kit/outdent-attributes list-props)
+      (pretty-build-kit/state-attributes   list-props)))

@@ -1,6 +1,6 @@
 
 (ns pretty-elements.horizontal-group.attributes
-    (:require [pretty-css.api :as pretty-css]))
+    (:require [pretty-build-kit.api :as pretty-build-kit]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -18,8 +18,8 @@
   [_ {:keys [style] :as group-props}]
   (-> {:class :pe-horizontal-group--body
        :style style}
-      (pretty-css/indent-attributes       group-props)
-      (pretty-css/element-size-attributes group-props)))
+      (pretty-build-kit/indent-attributes       group-props)
+      (pretty-build-kit/element-size-attributes group-props)))
 
 (defn group-attributes
   ; @ignore
@@ -31,7 +31,7 @@
   ; {}
   [_ group-props]
   (-> {:class :pe-horizontal-group}
-      (pretty-css/class-attributes        group-props)
-      (pretty-css/state-attributes        group-props)
-      (pretty-css/outdent-attributes      group-props)
-      (pretty-css/wrapper-size-attributes group-props)))
+      (pretty-build-kit/class-attributes        group-props)
+      (pretty-build-kit/outdent-attributes      group-props)
+      (pretty-build-kit/state-attributes        group-props)
+      (pretty-build-kit/wrapper-size-attributes group-props)))

@@ -1,7 +1,7 @@
 
 (ns pretty-elements.select.attributes
     (:require [dom.api        :as dom]
-              [pretty-css.api :as pretty-css]
+              [pretty-build-kit.api :as pretty-build-kit]
               [re-frame.api   :as r]))
 
 ;; ----------------------------------------------------------------------------
@@ -82,7 +82,7 @@
   ; {}
   [_ select-props]
   (-> {:class :pe-select-button}
-      (pretty-css/class-attributes   select-props)
-      (pretty-css/state-attributes   select-props)
-      (pretty-css/outdent-attributes select-props)
-      (pretty-css/effect-attributes  select-props)))
+      (pretty-build-kit/class-attributes   select-props)
+      (pretty-build-kit/effect-attributes  select-props)
+      (pretty-build-kit/outdent-attributes select-props)
+      (pretty-build-kit/state-attributes   select-props)))

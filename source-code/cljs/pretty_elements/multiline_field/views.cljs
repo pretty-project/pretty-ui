@@ -19,11 +19,11 @@
   ;
   ; @param (keyword)(opt) field-id
   ; @param (map) field-props
-  ; {:max-height (integer)(opt)
+  ; {:max-lines (integer)(opt)
   ;   TODO
   ;   Max line count
   ;   Default: 32
-  ;  :min-height (integer)(opt)
+  ;  :min-lines (integer)(opt)
   ;   TODO
   ;   Min line count
   ;   Default: 1}

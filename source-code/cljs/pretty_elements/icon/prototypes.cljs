@@ -11,9 +11,9 @@
   ; @param (map) icon-props
   ;
   ; @return (map)
-  ; {:icon-color (keyword)
+  ; {:icon-color (keyword or string)
   ;  :icon-family (keyword)
-  ;  :icon-size (keyword)}
+  ;  :icon-size (keyword, px or string)}
   [icon-props]
   (merge {:icon-color  :default
           :icon-family :material-symbols-outlined

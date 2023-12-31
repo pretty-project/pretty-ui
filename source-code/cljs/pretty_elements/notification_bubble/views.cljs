@@ -36,12 +36,13 @@
   ;
   ; @param (keyword) bubble-id
   ; @param (map) bubble-props
-  ; {:content (metamorphic-content)(opt)}
-  [bubble-id {:keys [content] :as bubble-props}]
+  ; {:content (metamorphic-content)(opt)
+  ;  :placeholder (metamorphic-content)(opt)}
+  [bubble-id {:keys [content placeholder] :as bubble-props}]
   [:div (notification-bubble.attributes/bubble-attributes bubble-id bubble-props)
         [:div (notification-bubble.attributes/bubble-body-attributes bubble-id bubble-props)
               [:div (notification-bubble.attributes/bubble-content-attributes bubble-id bubble-props)
-                    [metamorphic-content/compose content]]
+                    [metamorphic-content/compose content placeholder]]
               [notification-bubble-secondary-button bubble-id bubble-props]
               [notification-bubble-primary-button   bubble-id bubble-props]]])
 
@@ -59,29 +60,24 @@
   ;  :border-width (keyword, px or string)(opt)
   ;  :class (keyword or keywords in vector)(opt)
   ;  :content (metamorphic-content)(opt)
-  ;  :content-value-f (function)(opt)
-  ;   Default: return
   ;  :disabled? (boolean)(opt)
   ;  :font-size (keyword, px or string)(opt)
   ;   Default: :s
   ;  :font-weight (keyword or integer)(opt)
-  ;   :inherit, :thin, :extra-light, :light, :normal, :medium, :semi-bold, :bold, :extra-bold, :black
   ;   Default :medium
   ;  :fill-color (keyword or string)(opt)
   ;  :fill-pattern (keyword)(opt)
   ;   Default: :cover
   ;  :height (keyword, px or string)(opt)
   ;  :indent (map)(opt)
-  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
+  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :max-height (keyword, px or string)(opt)
   ;  :max-width (keyword, px or string)(opt)
   ;  :min-height (keyword, px or string)(opt)
   ;  :min-width (keyword, px or string)(opt)
   ;  :outdent (map)(opt)
-  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
+  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :placeholder (metamorphic-content)(opt)
-  ;  :placeholder-value-f (function)(opt)
-  ;   Default: return
   ;  :preset (keyword)(opt)
   ;  :primary-button (map)(opt)
   ;   {:layout (keyword)
@@ -95,7 +91,6 @@
   ;   Default: false
   ;  :style (map)(opt)
   ;  :text-color (keyword or string)(opt)
-  ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
   ;   Default: :default
   ;  :width (keyword, px or string)(opt)}
   ;

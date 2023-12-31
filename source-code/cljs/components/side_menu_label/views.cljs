@@ -21,7 +21,7 @@
   ;   Default: :xs
   ;  :horizontal-align (keyword)(opt)
   ;   Default: :left
-  ;  :icon-size (keyword)(opt)
+  ;  :icon-size (keyword, px or string)(opt)
   ;   Default: :m
   ;  :indent (map)(opt)
   ;   Default: {:horizontal :xs :vertical :s}

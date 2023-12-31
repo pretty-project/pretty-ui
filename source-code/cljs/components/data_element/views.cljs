@@ -72,13 +72,13 @@
   ;   Default: :s
   ;  :helper (metamorphic-content)(opt)
   ;  :indent (map)(opt)
-  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
+  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :info-text (metamorphic-content)(opt)
   ;  :marked? (boolean)(opt)
   ;   Default: false
   ;  :label (metamorphic-content)(opt)
   ;  :outdent (map)(opt)
-  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
+  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :placeholder (metamorphic-content)(opt)
   ;  :value (metamorphic-content or metamorphic-contents in vector)(opt)}
   ;

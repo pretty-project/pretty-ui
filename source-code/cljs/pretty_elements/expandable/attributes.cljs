@@ -1,7 +1,7 @@
 
 (ns pretty-elements.expandable.attributes
     (:require [dom.api                                 :as dom]
-              [pretty-css.api                          :as pretty-css]
+              [pretty-build-kit.api                          :as pretty-build-kit]
               [pretty-elements.expandable.side-effects :as expandable.side-effects]))
 
 ;; ----------------------------------------------------------------------------
@@ -19,7 +19,7 @@
   ; {}
   [_ expandable-props]
   (-> {:class :pe-expandable--icon}
-      (pretty-css/icon-attributes expandable-props)))
+      (pretty-build-kit/icon-attributes expandable-props)))
 
 (defn expandable-header-attributes
   ; @ignore
@@ -55,7 +55,7 @@
   [_ {:keys [style] :as expandable-props}]
   (-> {:class :pe-expandable--body
        :style style}
-      (pretty-css/indent-attributes expandable-props)))
+      (pretty-build-kit/indent-attributes expandable-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -70,6 +70,6 @@
   ; {}
   [_ expandable-props]
   (-> {:class :pe-expandable}
-      (pretty-css/class-attributes   expandable-props)
-      (pretty-css/state-attributes   expandable-props)
-      (pretty-css/outdent-attributes expandable-props)))
+      (pretty-build-kit/class-attributes   expandable-props)
+      (pretty-build-kit/outdent-attributes expandable-props)
+      (pretty-build-kit/state-attributes   expandable-props)))

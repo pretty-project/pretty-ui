@@ -29,14 +29,14 @@
   (let [chips (or chips @(r/subscribe [:get-item chips-path]))]
        (if (vector/nonempty? chips)
 
-           ; Iterating over the 'chips' vector if it's nonempty
-           ; Every item in the vector displayed on a chip with applying the 'chip-label-f' on the item
+           ; Iterates over the 'chips' vector if it's nonempty.
+           ; Every item in the vector displayed on a chip with the 'chip-label-f' function applied on the item.
            (letfn [(f0 [chip-list chip-dex chip]
                        (let [chip-props (chip-group.prototypes/chip-props-prototype group-id group-props chip-dex chip)]
                             (conj chip-list [chip.views/element chip-props])))]
                   (reduce-kv f0 [:div {:class :pe-chip-group--chips}] chips))
 
-           ; Displaying the placeholder if the 'chips' vector is NOT nonempty
+           ; Displays the placeholder if the 'chips' value is NOT a nonempty vector.
            (if placeholder [:div (chip-group.attributes/chip-group-placeholder-attributes group-id group-props)
                                  (metamorphic-content/compose placeholder)]))))
 
@@ -54,7 +54,7 @@
 (defn element
   ; @important
   ; The {:deletable? true} setting only works when the chip values are not provided as static data
-  ; via the {:chips [...]} property, but provided dinamically by using the {:chips-path [...]} property!
+  ; via the ':chips' property, but provided dinamically by using the ':chips-path' property!
   ;
   ; @param (keyword)(opt) group-id
   ; @param (map) group-props
@@ -67,11 +67,11 @@
   ;   Default: false
   ;  :helper (metamorphic-content)(opt)
   ;  :indent (map)(opt)
-  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
+  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :info-text (metamorphic-content)(opt)
   ;  :label (metamorphic-content)(opt)
   ;  :outdent (map)(opt)
-  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
+  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :placeholder (metamorphic-content)(opt)
   ;  :preset (keyword)(opt)
   ;  :style (map)(opt)}

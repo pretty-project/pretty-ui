@@ -1,6 +1,6 @@
 
 (ns pretty-diagrams.point-diagram.attributes
-    (:require [pretty-css.api :as pretty-css]))
+    (:require [pretty-build-kit.api :as pretty-build-kit]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -18,7 +18,7 @@
   [_ {:keys [style] :as diagram-props}]
   (-> {:class :pd-point-diagram--body
        :style (merge style {:width "500px" :height "300px"})} ; TEMP
-      (pretty-css/indent-attributes diagram-props)))
+      (pretty-build-kit/indent-attributes diagram-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -33,6 +33,6 @@
   ; {}
   [_ diagram-props]
   (-> {:class :pd-point-diagram}
-      (pretty-css/class-attributes   diagram-props)
-      (pretty-css/state-attributes   diagram-props)
-      (pretty-css/outdent-attributes diagram-props)))
+      (pretty-build-kit/class-attributes   diagram-props)
+      (pretty-build-kit/outdent-attributes diagram-props)
+      (pretty-build-kit/state-attributes   diagram-props)))

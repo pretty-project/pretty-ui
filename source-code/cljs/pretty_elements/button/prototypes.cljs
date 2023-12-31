@@ -2,8 +2,6 @@
 (ns pretty-elements.button.prototypes
     (:require [metamorphic-content.api :as metamorphic-content]
               [dom.api :as dom]
-              [pretty-elements.element.side-effects :as element.side-effects]
-              [fruits.noop.api :refer [return]]
               [pretty-build-kit.api :as pretty-build-kit]))
 
 
@@ -14,7 +12,7 @@
   [{:keys [font-size on-click] :as button-props}]
   (cond-> button-props
           :effects/default        (pretty-build-kit/default-values      {:click-effect :opacity})
-          :derive-fns/default     (pretty-build-kit/default-values      {:content-value-f return :placeholder-value-f return})
+          :derive-fns/default     (pretty-build-kit/default-values      {})
           :text/default           (pretty-build-kit/default-values      {:font-size :s :font-weight :medium :line-height :text-block :text-overflow :hidden})
           :layout/default         (pretty-build-kit/default-values      {:horizontal-align :center})
           :badge/default          (pretty-build-kit/default-value-group {:badge-content nil :badge-color :primary :badge-position :tr})
@@ -24,8 +22,8 @@
           :tooltip/default        (pretty-build-kit/default-value-group {:tooltip-content nil :tooltip-position :right})
           :badge-content/update   (pretty-build-kit/value-update-fns    {:badge-content   metamorphic-content/compose})
           :tooltip-content/update (pretty-build-kit/value-update-fns    {:tooltip-content metamorphic-content/compose})
-          :on-mouse-over/wrap     (pretty-build-kit/value-wrap-fns      {:on-mouse-over   element.side-effects/dispatch-event-handler!})
-          :on-click/wrap          (pretty-build-kit/value-wrap-fns      {:on-click        element.side-effects/dispatch-event-handler!})
+          :on-mouse-over/wrap     (pretty-build-kit/value-wrap-fns      {:on-mouse-over   pretty-build-kit/dispatch-event-handler!})
+          :on-click/wrap          (pretty-build-kit/value-wrap-fns      {:on-click        pretty-build-kit/dispatch-event-handler!})
           (-> on-click)           (pretty-build-kit/forced-values       {:on-mouse-up     dom/blur-active-element!})))
 
 (defn button-props-prototype
@@ -36,7 +34,7 @@
   ;  :border-color (keyword or string)(opt)
   ;  :font-size (keyword, px or string)(opt)
   ;  :icon (keyword)(opt)
-  ;  :marker-color (keyword)(opt)
+  ;  :marker-color (keyword or string)(opt)
   ;  :on-click (function or Re-Frame metamorphic-event)
   ;  :on-mouse-over (function or Re-Frame metamorphic-event)
   ;  :progress (percent)(opt)
@@ -49,18 +47,17 @@
   ;  :border-position (keyword)
   ;  :border-width (keyword, px or string)
   ;  :click-effect (keyword)
-  ;  :content-value-f (function)
   ;  :font-size (keyword, px or string)
   ;  :font-weight (keyword or integer)
   ;  :horizontal-align (keyword)
   ;  :icon-family (keyword)
   ;  :icon-position (keyword)
-  ;  :icon-size (keyword)
-  ;  :line-height (keyword)
+  ;  :icon-size (keyword, px or string)
+  ;  :line-height (keyword, px or string)
   ;  :on-click (function)
   ;  :on-mouse-over (function)
   ;  :on-mouse-up (function)
-  ;  :progress-color (keyword)
+  ;  :progress-color (keyword or string)
   ;  :progress-direction (keyword)
   ;  :progress-duration (ms)
   ;  :text-overflow (keyword)
@@ -74,9 +71,7 @@
           :font-weight      :medium
           :horizontal-align :center
           :line-height      :text-block
-          :text-overflow    :hidden
-          :content-value-f return
-          :placeholder-value-f return}
+          :text-overflow    :hidden}
          (if badge-content   {:badge-color        :primary
                               :badge-position     :tr})
          (if border-color    {:border-position    :all
@@ -92,6 +87,6 @@
          (-> button-props)
          (if badge-content   {:badge-content   (metamorphic-content/compose badge-content)})
          (if tooltip-content {:tooltip-content (metamorphic-content/compose tooltip-content)})
-         (if on-mouse-over   {:on-mouse-over   #(element.side-effects/dispatch-event-handler! on-mouse-over)})
-         (if on-click        {:on-click        #(element.side-effects/dispatch-event-handler! on-click)
+         (if on-mouse-over   {:on-mouse-over   #(pretty-build-kit/dispatch-event-handler! on-mouse-over)})
+         (if on-click        {:on-click        #(pretty-build-kit/dispatch-event-handler! on-click)
                               :on-mouse-up     #(dom/blur-active-element!)})))

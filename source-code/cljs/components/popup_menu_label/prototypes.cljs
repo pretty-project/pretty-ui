@@ -11,7 +11,7 @@
   ; {:color (keyword)
   ;  :gap (keyword, px or string)
   ;  :horizontal-align (keyword)
-  ;  :icon-size (keyword)
+  ;  :icon-size (keyword, px or string)
   ;  :indent (map)}
   [label-props]
   (merge {:color            :muted

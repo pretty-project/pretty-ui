@@ -1,8 +1,7 @@
 
 (ns pretty-elements.data-table.prototypes
     (:require [fruits.css.api :as css]
-              [pretty-build-kit.api :as pretty-build-kit]
-              [fruits.noop.api :refer [return]]))
+              [pretty-build-kit.api :as pretty-build-kit]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -15,15 +14,13 @@
   ; @return (map)
   ; {:font-size (keyword, px or string)
   ;  :font-weight (keyword or integer)
-  ;  :line-height (keyword)
+  ;  :line-height (keyword, px or string)
   ;  :text-overflow (keyword)}
   [cell-props]
   (merge {:font-size     :s
           :font-weight   :normal
           :line-height   :text-block
-          :text-overflow :ellipsis
-          :content-value-f return
-          :placeholder-value-f return}
+          :text-overflow :ellipsis}
          (-> cell-props)))
 
 (defn column-props-prototype

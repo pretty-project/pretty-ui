@@ -1,7 +1,7 @@
 
 (ns pretty-elements.button.attributes
     (:require [fruits.hiccup.api :as hiccup]
-              [pretty-css.api    :as pretty-css]))
+              [pretty-build-kit.api    :as pretty-build-kit]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -16,12 +16,12 @@
   ; {:class (keyword or keywords in vector)}
   [_ button-props]
   (-> {:class :pe-button--icon}
-      (pretty-css/icon-attributes button-props)))
+      (pretty-build-kit/icon-attributes button-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn button-label-attributes
+(defn button-content-attributes
   ; @ignore
   ;
   ; @param (keyword) button-id
@@ -30,8 +30,8 @@
   ; @return (map)
   ; {:class (keyword or keywords in vector)}
   [_ button-props]
-  (-> {:class :pe-button--label}
-      (pretty-css/text-attributes button-props)))
+  (-> {:class :pe-button--content}
+      (pretty-build-kit/text-attributes button-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -65,19 +65,19 @@
             :disabled                  disabled?
             :id                        button-body-id
             :style                     style}
-           (pretty-css/badge-attributes        button-props)
-           (pretty-css/border-attributes       button-props)
-           (pretty-css/color-attributes        button-props)
-           (pretty-css/cursor-attributes       button-props)
-           (pretty-css/effect-attributes       button-props)
-           (pretty-css/element-size-attributes button-props)
-           (pretty-css/font-attributes         button-props)
-           (pretty-css/indent-attributes       button-props)
-           (pretty-css/link-attributes         button-props)
-           (pretty-css/marker-attributes       button-props)
-           (pretty-css/mouse-event-attributes  button-props)
-           (pretty-css/progress-attributes     button-props)
-           (pretty-css/tooltip-attributes      button-props))))
+           (pretty-build-kit/badge-attributes        button-props)
+           (pretty-build-kit/border-attributes       button-props)
+           (pretty-build-kit/color-attributes        button-props)
+           (pretty-build-kit/cursor-attributes       button-props)
+           (pretty-build-kit/effect-attributes       button-props)
+           (pretty-build-kit/element-size-attributes button-props)
+           (pretty-build-kit/font-attributes         button-props)
+           (pretty-build-kit/indent-attributes       button-props)
+           (pretty-build-kit/link-attributes         button-props)
+           (pretty-build-kit/marker-attributes       button-props)
+           (pretty-build-kit/mouse-event-attributes  button-props)
+           (pretty-build-kit/progress-attributes     button-props)
+           (pretty-build-kit/tooltip-attributes      button-props))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -92,7 +92,7 @@
   ; {:class (keyword or keywords in vector)}
   [_ button-props]
   (-> {:class :pe-button}
-      (pretty-css/class-attributes        button-props)
-      (pretty-css/state-attributes        button-props)
-      (pretty-css/outdent-attributes      button-props)
-      (pretty-css/wrapper-size-attributes button-props)))
+      (pretty-build-kit/class-attributes        button-props)
+      (pretty-build-kit/outdent-attributes      button-props)
+      (pretty-build-kit/state-attributes        button-props)
+      (pretty-build-kit/wrapper-size-attributes button-props)))

@@ -17,20 +17,23 @@
   ; @param (keyword) button-id
   ; @param (map) button-props
   ; {:content (metamorphic-content)(opt)
-  ;  :content-value-f (function)
   ;  :href (string)(opt)
   ;  :icon (keyword)(opt)
   ;  :icon-position (keyword)(opt)
-  ;  :on-click (function)(opt)}
-  [button-id {:keys [content content-value-f href icon icon-position on-click] :as button-props}]
+  ;  :on-click (function)(opt)
+  ;  :placeholder (metamorphic-content)(opt)}
+  [button-id {:keys [content href icon icon-position on-click placeholder] :as button-props}]
   [:div (button.attributes/button-attributes button-id button-props)
         [(cond href :a on-click :button :else :button)
          (button.attributes/button-body-attributes button-id button-props)
-         (case icon-position :left  [:<> (if icon    [:i   (button.attributes/button-icon-attributes  button-id button-props) icon])
-                                         (if content [:div (button.attributes/button-label-attributes button-id button-props) [metamorphic-content/compose (content-value-f content)]])]
-                             :right [:<> (if content [:div (button.attributes/button-label-attributes button-id button-props) [metamorphic-content/compose (content-value-f content)]])
-                                         (if icon    [:i   (button.attributes/button-icon-attributes  button-id button-props) icon])]
-                                    [:<> (if content [:div (button.attributes/button-label-attributes button-id button-props) [metamorphic-content/compose (content-value-f content)]])])]])
+         (case icon-position :left  [:<> (if   icon        [:i   (button.attributes/button-icon-attributes    button-id button-props) icon])
+                                         (cond content     [:div (button.attributes/button-content-attributes button-id button-props) [metamorphic-content/compose content]]
+                                               placeholder [:div (button.attributes/button-content-attributes button-id button-props) [metamorphic-content/compose placeholder]])]
+                             :right [:<> (cond content     [:div (button.attributes/button-content-attributes button-id button-props) [metamorphic-content/compose content]]
+                                               placeholder [:div (button.attributes/button-content-attributes button-id button-props) [metamorphic-content/compose placeholder]])
+                                         (if   icon        [:i   (button.attributes/button-icon-attributes    button-id button-props) icon])]
+                                    [:<> (cond content     [:div (button.attributes/button-content-attributes button-id button-props) [metamorphic-content/compose content]]
+                                               placeholder [:div (button.attributes/button-content-attributes button-id button-props) [metamorphic-content/compose placeholder]])])]])
 
 (defn button
   ; @ignore
@@ -75,8 +78,6 @@
   ;  :click-effect (keyword)(opt)
   ;   Default: :opacity
   ;  :content (metamorphic-content)(opt)
-  ;  :content-value-f (function)(opt)
-  ;   Default: return
   ;  :cursor (keyword or string)(opt)
   ;   Default: :pointer
   ;  :disabled? (boolean)(opt)
@@ -93,63 +94,51 @@
   ;  :horizontal-align (keyword)(opt)
   ;   Default: :center
   ;  :hover-color (keyword or string)(opt)
-  ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;  :hover-effect (keyword)(opt)
   ;  :href (string)(opt)
   ;  :icon (keyword)(opt)
   ;  :icon-color (keyword or string)(opt)
-  ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
   ;   Default: :inherit
   ;  :icon-family (keyword)(opt)
-  ;   :material-symbols-filled, :material-symbols-outlined
   ;   Default: :material-symbols-outlined
   ;  :icon-position (keyword)(opt)
-  ;   :left, :right
   ;   Default: :left
-  ;  :icon-size (keyword)(opt)
-  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
-  ;   Default: :s
+  ;  :icon-size (keyword, px or string)(opt)
+  ;   Default: provided :font-size (if any) or :s
   ;  :indent (map)(opt)
-  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
+  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :keypress (map)(opt)
   ;   {:exclusive? (boolean)(opt)
+  ;     Exclusive keypress events temporarly disable every other previously registered keypress events.
+  ;     Default: false
   ;    :key-code (integer)
   ;    :required? (boolean)(opt)
+  ;     Only required keypress events remain active during a text-field is in focused state.
   ;     Default: false}
-  ;  :line-height (keyword)(opt)
-  ;   :auto, :inherit, :text-block, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;  :line-height (keyword, px or string)(opt)
   ;   Default: :text-block
-  ;  :marker-color (keyword)(opt)
-  ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
+  ;  :marker-color (keyword or string)(opt)
   ;  :marker-position (keyword)(opt)
-  ;   :tl, :tr, :br, :bl, left, :right, bottom, :top
   ;  :on-click (function or Re-Frame metamorphic-event)(opt)
   ;  :on-mouse-over (function or Re-Frame metamorphic-event)(opt)
   ;  :outdent (map)(opt)
-  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
+  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :placeholder (metamorphic-content)(opt)
-  ;  :placeholder-value-f (function)(opt)
-  ;   Default: return
   ;  :preset (keyword)(opt)
   ;  :progress (percent)(opt)
   ;  :progress-color (keyword or string)(opt)
-  ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;   Default: :muted
   ;  :progress-direction (keyword)(opt)
-  ;   :ltr, :rtl, :ttb, :btt
   ;   Default: :ltr
   ;  :progress-duration (ms)(opt)
   ;   Default: 250
   ;  :text-color (keyword or string)(opt)
   ;   Default: :inherit
   ;  :text-overflow (keyword)(opt)
-  ;   :ellipsis, :hidden, :wrap
-  ;   Default: :no-wrap
+  ;   Default: :hidden
   ;  :text-transform (keyword)(opt)
-  ;   :capitalize, :lowercase, :uppercase
   ;  :tooltip-content (metamorphic-content)(opt)
   ;  :tooltip-position (keyword)(opt)
-  ;   :left, :right
   ;  :width (keyword, px or string)(opt)}
   ;
   ; @usage

@@ -15,10 +15,6 @@
   ; @param (map) menu-props
   ; {:menu-items (maps in vector)}
   [menu-id {:keys [item-default menu-items]}]
-
-  ;:content-value-f return
-  ;:placeholder-value-f return
-
   (letfn [; XXX#1239
           ; The :on-mouse-over property of items in menu-bar element takes metamorphic-events.
           ; If the f0 function returned the reseted value (by the reset! function),

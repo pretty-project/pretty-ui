@@ -100,13 +100,13 @@
   ; @param (map) selector-props
   ; {:class (keyword or keywords in vector)(opt)
   ;  :indent (map)(opt)
-  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
+  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :on-select (Re-Frame metamorphic-event)(opt)
   ;  :options (strings in vector)(opt)
   ;  :options-label (metamorphic-content)(opt)
   ;  :options-path (Re-Frame path vector)(opt)
   ;  :outdent (map)(opt)
-  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
+  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :popup (map)(opt)
   ;   {:border-color (keyword or string)(opt)
   ;    :border-position (keyword)(opt)
@@ -124,7 +124,7 @@
   ;    :hover-effect (keyword)(opt)
   ;    :indent (map)(opt)
   ;    :label (metamorphic-content)(opt)
-  ;    :min-width (keyword)(opt)
+  ;    :min-width (keyword, px or string)(opt)
   ;    :outdent (map)(opt)
   ;    :preset (keyword)(opt)}
   ;  :preset (keyword)(opt)

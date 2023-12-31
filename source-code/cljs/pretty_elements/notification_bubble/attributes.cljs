@@ -1,6 +1,6 @@
 
 (ns pretty-elements.notification-bubble.attributes
-    (:require [pretty-css.api :as pretty-css]))
+    (:require [pretty-build-kit.api :as pretty-build-kit]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -20,8 +20,8 @@
   (-> {:class               :pe-notification-bubble--content
        :style               style
        :data-letter-spacing :auto}
-      (pretty-css/font-attributes   bubble-props)
-      (pretty-css/indent-attributes bubble-props)))
+      (pretty-build-kit/font-attributes   bubble-props)
+      (pretty-build-kit/indent-attributes bubble-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -39,11 +39,11 @@
   [_ {:keys [selectable?] :as bubble-props}]
   (-> {:class           :pe-notification-bubble--body
        :data-selectable selectable?}
-      (pretty-css/border-attributes           bubble-props)
-      (pretty-css/color-attributes            bubble-props)
-      (pretty-css/element-max-size-attributes bubble-props)
-      (pretty-css/element-min-size-attributes bubble-props)
-      (pretty-css/element-size-attributes     bubble-props)))
+      (pretty-build-kit/border-attributes           bubble-props)
+      (pretty-build-kit/color-attributes            bubble-props)
+      (pretty-build-kit/element-max-size-attributes bubble-props)
+      (pretty-build-kit/element-min-size-attributes bubble-props)
+      (pretty-build-kit/element-size-attributes     bubble-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -58,7 +58,7 @@
   ; {:class (keyword or keywords in vector)}
   [_ bubble-props]
   (-> {:class :pe-notification-bubble}
-      (pretty-css/class-attributes        bubble-props)
-      (pretty-css/state-attributes        bubble-props)
-      (pretty-css/outdent-attributes      bubble-props)
-      (pretty-css/wrapper-size-attributes bubble-props)))
+      (pretty-build-kit/class-attributes        bubble-props)
+      (pretty-build-kit/outdent-attributes      bubble-props)
+      (pretty-build-kit/state-attributes        bubble-props)
+      (pretty-build-kit/wrapper-size-attributes bubble-props)))

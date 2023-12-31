@@ -13,18 +13,23 @@
   ; {:item-default (map)}
   ; @param (map) item-props
   ; {:badge-content (metamorphic-content)(opt)
-  ;  :icon (keyword)(opt)}
-  ;  :marker-color (keyword)(opt)}
+  ;  :font-size (keyword, px or string)(opt)
+  ;  :icon (keyword)(opt)
+  ;  :marker-color (keyword or string)(opt)}
   ;
   ; @return (map)
   ; {:badge-color (keyword or string)
   ;  :badge-content (string)
   ;  :badge-position (keyword)
-  ;  :icon-family (keyword)}
-  [{:keys [item-default]} {:keys [badge-content icon marker-color] :as item-props}]
+  ;  :font-size (keyword, px or string)
+  ;  :font-weight (keyword or integer)
+  ;  :icon-family (keyword)
+  ;  :icon-size (keyword, px or string)
+  ;  :line-height (keyword, px or string)}
+  [{:keys [item-default]} {:keys [badge-content font-size icon marker-color] :as item-props}]
   (merge {:font-size   :s
           :font-weight :medium
-          :icon-size   :s
+          :icon-size   (or font-size :s)
           :line-height :text-block}
          (if badge-content {:badge-color :primary :badge-position :tr})
          (if marker-color  {:marker-position :tr})

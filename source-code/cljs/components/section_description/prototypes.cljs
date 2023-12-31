@@ -12,7 +12,7 @@
   ;  :font-size (keyword, px or string)
   ;  :horizontal-align (keyword)
   ;  :indent (map)
-  ;  :line-height (keyword)}
+  ;  :line-height (keyword, px or string)}
   [description-props]
   (merge {:color            :muted
           :font-size        :xxs

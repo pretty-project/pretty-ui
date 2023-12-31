@@ -9,7 +9,7 @@
   ; @param (map) row-props
   ; {:border-color (keyword or string)(opt)}
   ;  :cells (vector)
-  ;  :marker-color (keyword)(opt)}
+  ;  :marker-color (keyword or string)(opt)}
   ;
   ; @return (map)
   ; {:border-position (keyword)

@@ -46,7 +46,7 @@
   ;  :height (keyword, px or string)(opt)
   ;  :helper (metamorphic-content)(opt)
   ;  :indent (map)(opt)
-  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
+  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :info-text (metamorphic-content)(opt)
   ;  :initial-value (vector)(opt)
   ;   Default: [0 100]
@@ -56,7 +56,7 @@
   ;  :min-value (integer)(opt)
   ;   Default: 0
   ;  :outdent (map)(opt)
-  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
+  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :preset (keyword)(opt)
   ;  :resetable? (boolean)(opt)
   ;  :style (map)(opt)

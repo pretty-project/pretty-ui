@@ -34,39 +34,34 @@
   ;
   ; @param (keyword) expandable-id
   ; @param (map) expandable-props
-  ; {:content (metamorphic-content)(opt)}
-  [expandable-id {:keys [content] :as expandable-props}]
+  ; {:content (metamorphic-content)(opt)
+  ;  :placeholder (metamorphic-content)(opt)}
+  [expandable-id {:keys [content placeholder] :as expandable-props}]
   [:div (expandable.attributes/expandable-attributes expandable-id expandable-props)
         [expandable-header                           expandable-id expandable-props]
         (if (expandable.env/expanded? expandable-id)
             [:div (expandable.attributes/expandable-body-attributes expandable-id expandable-props)
-                  [metamorphic-content/compose content]])])
+                  [metamorphic-content/compose content placeholder]])])
 
 (defn element
   ; @param (keyword)(opt) expandable-id
   ; @param (map) expandable-props
   ; {:class (keywords or keywords in vector)(opt)
   ;  :content (metamorphic-content)(opt)
-  ;  :content-value-f (function)(opt)
-  ;   Default: return
   ;  :disabled? (boolean)(opt)
   ;  :expanded? (boolean)(opt)
   ;   Default: true
   ;  :icon (keyword)(opt)
   ;  :icon-color (keyword or string)(opt)
-  ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
   ;   Default: :inherit
   ;  :icon-family (keyword)(opt)
-  ;   :material-symbols-filled, :material-symbols-outlined
   ;   Default: :material-symbols-outlined
   ;  :indent (map)(opt)
-  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
+  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :label (metamorphic-content)(opt)
   ;  :outdent (map)(opt)
-  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
+  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :placeholder (metamorphic-content)(opt)
-  ;  :placeholder-value-f (function)(opt)
-  ;   Default: return
   ;  :preset (keyword)(opt)
   ;  :style (map)(opt)}
   ;

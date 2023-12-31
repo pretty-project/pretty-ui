@@ -2,8 +2,7 @@
 (ns pretty-elements.label.prototypes
     (:require [fruits.hiccup.api       :as hiccup]
               [metamorphic-content.api :as metamorphic-content]
-              [pretty-build-kit.api :as pretty-build-kit]
-              [fruits.noop.api :refer [return]]))
+              [pretty-build-kit.api :as pretty-build-kit]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -15,7 +14,7 @@
   ; {:border-color (keyword or string)(opt)
   ;  :font-size (keyword, px or string)(opt)
   ;  :icon (keyword)(opt)
-  ;  :marker-color (keyword)
+  ;  :marker-color (keyword or string)
   ;  :text-color (keyword or string)(opt)
   ;  :target-id (keyword)(opt)
   ;  :tooltip-content (metamorphic-content)(opt)}
@@ -27,11 +26,11 @@
   ;  :font-size (keyword, px or string)
   ;  :font-weight (keyword or integer)
   ;  :horizontal-align (keyword)
-  ;  :icon-color (keyword)
+  ;  :icon-color (keyword or string)
   ;  :icon-family (keyword)
   ;  :icon-position (keyword)
-  ;  :icon-size (keyword)
-  ;  :line-height (keyword)
+  ;  :icon-size (keyword, px or string)
+  ;  :line-height (keyword, px or string)
   ;  :marker-position (keyword)
   ;  :placeholder (metamorphic-content)
   ;  :selectable? (boolean)
@@ -53,9 +52,7 @@
           :font-weight      :medium
           :line-height      :text-block
           :placeholder      "\u00A0"
-          :selectable?      false
-          :content-value-f return
-          :placeholder-value-f return}
+          :selectable?      false}
          (if border-color    {:border-position :all
                               :border-width    :xxs})
          (if marker-color    {:marker-position :tr})

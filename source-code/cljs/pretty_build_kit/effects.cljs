@@ -1,14 +1,12 @@
 
-(ns pretty-elements.element.effects
+(ns pretty-build-kit.effects
     (:require [re-frame.extra.api :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (r/reg-event-fx
-  :pretty-elements.element/dispatch-event-handler!
-  ; @ignore
-  ;
+  :pretty-build-kit/dispatch-event-handler!
   ; @description
   ; ...
   ;

@@ -17,16 +17,13 @@
   ; @param (map) breadcrumbs-props
   ; @param (map) crumb-props
   ; {:content (metamorphic-content)(opt)
-  ;  :content-value-f (function)
   ;  :href (string)(opt)
   ;  :on-click (function)(opt)
-  ;  :placeholder (metamorphic-content)(opt)}
-  ;  :placeholder-value-f (function)}
-  [breadcrumbs-id breadcrumbs-props {:keys [content content-value-f href on-click placeholder placeholder-value-f] :as crumb-props}]
+  ;  :placeholder (metamorphic-content)(opt)}}
+  [breadcrumbs-id breadcrumbs-props {:keys [content href on-click placeholder] :as crumb-props}]
   [(cond href :a on-click :button :else :div)
    (breadcrumbs.attributes/crumb-attributes breadcrumbs-id breadcrumbs-props crumb-props)
-   (metamorphic-content/compose (content-value-f     content)
-                                (placeholder-value-f placeholder))])
+   [metamorphic-content/compose content placeholder]])
 
 (defn- breadcrumbs-crumb-list
   ; @ignore
@@ -66,23 +63,19 @@
   ;   [{:click-effect (keyword)(opt)
   ;      Default: :opacity (if 'href' or 'on-click' is provided)
   ;     :content (metamorphic-content)(opt)
-  ;     :content-value-f (function)(opt)
-  ;      Default: return
   ;     :disabled? (boolean)(opt)
   ;     :href (string)(opt)
   ;     :hover-effect (keyword)(opt)
   ;     :on-click (function or Re-Frame metamorphic-event)(opt)
   ;     :placeholder (metamorphic-content)(opt)
-  ;     :placeholder-value-f (function)(opt)
-  ;      Default: return
   ;     :preset (keyword)(opt)}]
   ;  :disabled? (boolean)(opt)
   ;  :font-size (keyword, px or string)(opt)
   ;   Default: :s
   ;  :indent (map)(opt)
-  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
+  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :outdent (map)(opt)
-  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
+  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :preset (keyword)(opt)
   ;  :style (map)(opt)}
   ;

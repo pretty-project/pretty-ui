@@ -2,7 +2,7 @@
 (ns pretty-website.language-selector.attributes
     (:require [app-dictionary.api :as app-dictionary]
               [dom.api        :as dom]
-              [pretty-css.api :as pretty-css]))
+              [pretty-build-kit.api :as pretty-build-kit]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -28,7 +28,7 @@
             :data-selected       selected?
             :on-click            #(app-dictionary/select-language! language)
             :on-mouse-up         #(dom/blur-active-element!)}
-           (pretty-css/font-attributes selector-props))))
+           (pretty-build-kit/font-attributes selector-props))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -46,8 +46,8 @@
   [_ {:keys [style] :as selector-props}]
   (-> {:class :pw-language-selector--body
        :style style}
-      (pretty-css/indent-attributes selector-props)
-      (pretty-css/row-attributes    selector-props)))
+      (pretty-build-kit/indent-attributes selector-props)
+      (pretty-build-kit/row-attributes    selector-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -62,6 +62,6 @@
   ; {:class (keyword or keywords in vector)}
   [_ selector-props]
   (-> {:class :pw-language-selector}
-      (pretty-css/class-attributes   selector-props)
-      (pretty-css/state-attributes   selector-props)
-      (pretty-css/outdent-attributes selector-props)))
+      (pretty-build-kit/class-attributes   selector-props)
+      (pretty-build-kit/state-attributes   selector-props)
+      (pretty-build-kit/outdent-attributes selector-props)))

@@ -70,7 +70,7 @@
         ; ...
         (and surface (plain-field.env/surface-visible? field-id)
                      [:div (plain-field.attributes/field-surface-attributes field-id field-props)
-                           [metamorphic-content/compose surface]])
+                           [metamorphic-content/compose (:content surface) (:placeholder surface)]])
         ; HACK#9910
         [plain-field-synchronizer field-id field-props]])
 
@@ -104,7 +104,7 @@
   ;  :field-value-f (function)(opt)
   ;   Default: return
   ;  :indent (map)(opt)
-  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
+  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :initial-value (string)(opt)
   ;  :modifier-f (function)(opt)
   ;  :on-blur (function or Re-Frame metamorphic-event)(opt)
@@ -125,19 +125,15 @@
   ;  :on-unmount (function or Re-Frame metamorphic-event)(opt)
   ;   This event takes the field content as its last parameter.
   ;  :outdent (map)(opt)
-  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
+  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :preset (keyword)(opt)
   ;  :style (map)(opt)
   ;  :surface (map)(opt)
   ;   {:border-radius (map)(opt)
   ;     {:all, :tl, :tr, :br, :bl (keyword, px or string)(opt)}
   ;    :content (metamorphic-content)(opt)
-  ;    :content-value-f (function)(opt)
-  ;     Default: return
   ;    :indent (map)(opt)
-  ;    :placeholder (metamorphic-content)(opt)
-  ;    :placeholder-value-f (function)(opt)
-  ;     Default: return}
+  ;    :placeholder (metamorphic-content)(opt)}
   ;  :value-path (Re-Frame path vector)(opt)}
   ;
   ; @usage

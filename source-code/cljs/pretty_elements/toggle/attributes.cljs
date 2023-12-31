@@ -2,8 +2,7 @@
 (ns pretty-elements.toggle.attributes
     (:require [dom.api           :as dom]
               [fruits.hiccup.api :as hiccup]
-              [pretty-css.api    :as pretty-css]
-              [pretty-elements.element.side-effects :as element.side-effects]))
+              [pretty-build-kit.api    :as pretty-build-kit]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -38,15 +37,15 @@
                      :data-selectable    false
                      :data-text-overflow :hidden
                      :id                 (hiccup/value toggle-id "body")
-                     :on-click           #(element.side-effects/dispatch-event-handler! on-click)
-                     :on-mouse-over      #(element.side-effects/dispatch-event-handler! on-mouse-over)
+                     :on-click           #(pretty-build-kit/dispatch-event-handler! on-click)
+                     :on-mouse-over      #(pretty-build-kit/dispatch-event-handler! on-mouse-over)
                      :on-mouse-up        #(dom/blur-active-element!)})
-      (pretty-css/border-attributes       toggle-props)
-      (pretty-css/color-attributes        toggle-props)
-      (pretty-css/cursor-attributes       toggle-props)
-      (pretty-css/element-size-attributes toggle-props)
-      (pretty-css/indent-attributes       toggle-props)
-      (pretty-css/link-attributes         toggle-props)))
+      (pretty-build-kit/border-attributes       toggle-props)
+      (pretty-build-kit/color-attributes        toggle-props)
+      (pretty-build-kit/cursor-attributes       toggle-props)
+      (pretty-build-kit/element-size-attributes toggle-props)
+      (pretty-build-kit/indent-attributes       toggle-props)
+      (pretty-build-kit/link-attributes         toggle-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -61,7 +60,7 @@
   ; {:class (keyword or keywords in vector)}
   [_ toggle-props]
   (-> {:class :pe-toggle}
-      (pretty-css/class-attributes        toggle-props)
-      (pretty-css/state-attributes        toggle-props)
-      (pretty-css/outdent-attributes      toggle-props)
-      (pretty-css/wrapper-size-attributes toggle-props)))
+      (pretty-build-kit/class-attributes        toggle-props)
+      (pretty-build-kit/outdent-attributes      toggle-props)
+      (pretty-build-kit/state-attributes        toggle-props)
+      (pretty-build-kit/wrapper-size-attributes toggle-props)))

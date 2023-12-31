@@ -17,8 +17,6 @@
               [pretty-elements.counter.effects]
               [pretty-elements.counter.events]
               [pretty-elements.counter.subs]
-              [pretty-elements.element.effects]
-              [pretty-elements.element.side-effects]
               [pretty-elements.form.effects]
               [pretty-elements.form.side-effects]
               [pretty-elements.input.events]
@@ -99,33 +97,6 @@
               [pretty-elements.vertical-line.views        :as vertical-line.views]
               [pretty-elements.vertical-spacer.views      :as vertical-spacer.views]
               [window-observer.api                        :as window-observer]))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; @tutorial First steps
-; @redirect (tutorials/first-steps)
-
-; @tutorial Introduction
-; @redirect (tutorials/introduction)
-
-; @tutorial Parametering
-; @redirect (tutorials/parametering)
-
-; @tutorial Presets
-; @redirect (tutorials/presets)
-
-; @tutorial Event handlers
-; @redirect (tutorials/event-handlers)
-
-; @tutorial Content types
-; @redirect (tutorials/content-types)
-
-; @tutorial Value paths of inputs
-; @redirect (tutorials/value-paths-of-inputs)
-
-; @tutorial Option paths of optionable inputs
-; @redirect (tutorials/option-paths-of-optionable-inputs)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

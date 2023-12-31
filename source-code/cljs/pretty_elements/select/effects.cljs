@@ -74,7 +74,7 @@
            {:db             (r select.events/select-option! db select-id select-props option)
             :dispatch-later [               {:ms select.config/CLOSE-POPUP-DELAY     :fx       [:pretty-elements.input/close-popup!  select-id select-props]}
                              (if autoclear? {:ms select.config/AUTOCLEAR-VALUE-DELAY :dispatch [:pretty-elements.select/clear-value! select-id select-props]})
-                             (if on-select  {:ms select.config/ON-SELECT-DELAY       :dispatch [:pretty-elements.element/dispatch-event-handler! on-select option-value]})]})))
+                             (if on-select  {:ms select.config/ON-SELECT-DELAY       :dispatch [:pretty-build-kit/dispatch-event-handler! on-select option-value]})]})))
 
 (r/reg-event-fx :pretty-elements.select/clear-value!
   ; @ignore

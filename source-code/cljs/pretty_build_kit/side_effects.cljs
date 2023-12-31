@@ -1,13 +1,11 @@
 
-(ns pretty-elements.element.side-effects
+(ns pretty-build-kit.side-effects
     (:require [re-frame.extra.api :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn dispatch-event-handler!
-  ; @ignore
-  ;
   ; @description
   ; ...
   ;
@@ -21,8 +19,6 @@
         (vector? event-handler) (-> (apply r/metamorphic-event<-params event-handler params) r/dispatch)))
 
 (defn dispatch-sync-event-handler!
-  ; @ignore
-  ;
   ; @description
   ; ...
   ;

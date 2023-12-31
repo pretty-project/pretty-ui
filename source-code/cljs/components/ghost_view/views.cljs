@@ -90,13 +90,13 @@
   ;  :breadcrumb-count (integer)(opt)
   ;   W/ {:layout :box-surface, :box-surface-header}
   ;  :indent (map)(opt)
-  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
+  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :item-count (integer)(opt)
   ;   W/ {:layout :item-list :item-count 3
   ;  :layout (keyword)
   ;   :box-surface, :box-surface-body, :box-surface-header, :item-list
   ;  :outdent (map)(opt)
-  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}}
+  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}}
   ;
   ; @usage
   ; [ghost-view {...}]

@@ -15,14 +15,14 @@
   ; @param (keyword) card-id
   ; @param (map) card-props
   ; {:content (metamorphic-content)(opt)
-  ;  :content-value-f (function)
   ;  :href (string)(opt)
-  ;  :on-click (function)(opt)}
-  [card-id {:keys [content content-value-f href on-click] :as card-props}]
+  ;  :on-click (function)(opt)
+  ;  :placeholder (metamorphic-content)(opt)}
+  [card-id {:keys [content href on-click placeholder] :as card-props}]
   [:div (card.attributes/card-attributes card-id card-props)
         [(cond href :a on-click :button :else :div)
          (card.attributes/card-body-attributes card-id card-props)
-         [metamorphic-content/compose (content-value-f content)]]])
+         [metamorphic-content/compose content placeholder]]])
 
 (defn element
   ; @info
@@ -45,8 +45,6 @@
   ;  :click-effect (keyword)(opt)
   ;   Default: :opacity (if 'href' or 'on-click' is provided)
   ;  :content (metamorphic-content)(opt)
-  ;  :content-value-f (function)(opt)
-  ;   Default: return
   ;  :cursor (keyword or string)(opt)
   ;  :disabled? (boolean)(opt)
   ;  :fill-color (keyword or string)(opt)
@@ -55,33 +53,23 @@
   ;  :height (keyword, px or string)(opt)
   ;  :horizontal-align (keyword)(opt)
   ;  :hover-color (keyword or string)(opt)
-  ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;  :hover-effect (keyword)(opt)
   ;  :href (string)(opt)
   ;  :indent (map)(opt)
-  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :marker-color (keyword)(opt)
-  ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
+  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
+  ;  :marker-color (keyword or string)(opt)
   ;  :marker-position (keyword)(opt)
-  ;   :tl, :tr, :br, :bl, left, :right, bottom, :top
-  ;  :max-height (keyword)(opt)
-  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  ;  :max-width (keyword)(opt)
-  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  ;  :min-height (keyword)(opt)
-  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  ;  :min-width (keyword)(opt)
-  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;  :max-height (keyword, px or string)(opt)
+  ;  :max-width (keyword, px or string)(opt)
+  ;  :min-height (keyword, px or string)(opt)
+  ;  :min-width (keyword, px or string)(opt)
   ;  :on-click (function or Re-Frame metamorphic-event)(opt)
   ;  :outdent (map)(opt)
-  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
+  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :placeholder (metamorphic-content)(opt)
-  ;  :placeholder-value-f (function)(opt)
-  ;   Default: return
   ;  :preset (keyword)(opt)
   ;  :style (map)(opt)
   ;  :target (keyword)(opt)
-  ;   :blank, :self
   ;  :width (keyword, px or string)(opt)}
   ;
   ; @usage

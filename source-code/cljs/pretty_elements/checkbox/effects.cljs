@@ -30,5 +30,5 @@
            {:db       (r checkbox.events/toggle-option! db checkbox-id checkbox-props option)
             :fx       [:pretty-elements.input/mark-input-as-visited! checkbox-id]
             :dispatch (if (r checkbox.subs/option-checked? db checkbox-id checkbox-props option)
-                          [:pretty-elements.element/dispatch-event-handler! on-unchecked option-value]
-                          [:pretty-elements.element/dispatch-event-handler! on-checked   option-value])})))
+                          [:pretty-build-kit/dispatch-event-handler! on-unchecked option-value]
+                          [:pretty-build-kit/dispatch-event-handler! on-checked   option-value])})))

@@ -1,7 +1,7 @@
 
 (ns pretty-elements.text.attributes
     (:require [fruits.css.api                   :as css]
-              [pretty-css.api                   :as pretty-css]
+              [pretty-build-kit.api                   :as pretty-build-kit]
               [pretty-elements.label.attributes :as label.attributes]))
 
 ;; ----------------------------------------------------------------------------
@@ -62,14 +62,14 @@
                          {:class                        :pe-text--body
                           :style                        style
                           :data-letter-spacing          :auto}))
-      (pretty-css/border-attributes           text-props)
-      (pretty-css/color-attributes            text-props)
-      (pretty-css/column-attributes           text-props)
-      (pretty-css/font-attributes             text-props)
-      (pretty-css/indent-attributes           text-props)
-      (pretty-css/text-attributes             text-props)
-      (pretty-css/element-min-size-attributes text-props)
-      (pretty-css/element-size-attributes     text-props)))
+      (pretty-build-kit/border-attributes           text-props)
+      (pretty-build-kit/color-attributes            text-props)
+      (pretty-build-kit/column-attributes           text-props)
+      (pretty-build-kit/element-min-size-attributes text-props)
+      (pretty-build-kit/element-size-attributes     text-props)
+      (pretty-build-kit/font-attributes             text-props)
+      (pretty-build-kit/indent-attributes           text-props)
+      (pretty-build-kit/text-attributes             text-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -84,7 +84,7 @@
   ; {}
   [_ text-props]
   (-> {:class :pe-text}
-      (pretty-css/class-attributes        text-props)
-      (pretty-css/state-attributes        text-props)
-      (pretty-css/outdent-attributes      text-props)
-      (pretty-css/wrapper-size-attributes text-props)))
+      (pretty-build-kit/class-attributes        text-props)
+      (pretty-build-kit/outdent-attributes      text-props)
+      (pretty-build-kit/state-attributes        text-props)
+      (pretty-build-kit/wrapper-size-attributes text-props)))

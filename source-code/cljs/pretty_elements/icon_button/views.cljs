@@ -62,42 +62,37 @@
   ;  :fill-pattern (keyword)(opt)
   ;   Default: :cover
   ;  :hover-color (keyword or string)(opt)
-  ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;  :hover-effect (keyword)(opt)
   ;  :href (string)(opt)
   ;  :icon (keyword)
   ;  :icon-color (keyword or string)(opt)
-  ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
   ;   Default: :inherit
   ;  :icon-family (keyword)(opt)
-  ;   :material-symbols-filled, :material-symbols-outlined
-  ;   Default: :material-symbols-filled
-  ;  :icon-size (keyword)(opt)
-  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;   Default: :material-symbols-outlined
+  ;  :icon-size (keyword, px or string)(opt)
   ;   Default: :m
   ;  :indent (map)(opt)
-  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
+  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :keypress (map)(constant)(opt)
   ;   {:exclusive? (boolean)(opt)
+  ;     Exclusive keypress events temporarly disable every other previously registered keypress events.
+  ;     Default: false
   ;    :key-code (integer)
   ;    :required? (boolean)(opt)
+  ;     Only required keypress events remain active during a text-field is in focused state.
   ;     Default: false}
   ;  :label (metamorphic-content)(opt)
-  ;  :marker-color (keyword)(opt)
-  ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
+  ;  :marker-color (keyword or string)(opt)
   ;  :marker-position (keyword)(opt)
-  ;   :tl, :tr, :br, :bl, left, :right, bottom, :top
-  ;  :on-click (Re-Frame metamorphic-event)(opt)
-  ;  :on-mouse-over (Re-Frame metamorphic-event)(opt)
+  ;  :on-click (function or Re-Frame metamorphic-event)(opt)
+  ;  :on-mouse-over (function or Re-Frame metamorphic-event)(opt)
   ;  :outdent (map)(opt)
-  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
+  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :preset (keyword)(opt)
   ;  :progress (percent)(opt)
   ;  :progress-color (keyword or string)
-  ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;   Default: :muted
   ;  :progress-direction (keyword)(opt)
-  ;   :ltr, :rtl, :ttb, :btt
   ;   Default: :ltr
   ;  :progress-duration (ms)(opt)
   ;   Default: 250
@@ -105,8 +100,7 @@
   ;  :target (keyword)(opt)
   ;   :blank, :self
   ;  :tooltip-content (metamorphic-content)(opt)
-  ;  :tooltip-position (keyword)(opt)
-  ;   :left, :right}
+  ;  :tooltip-position (keyword)(opt)}
   ;
   ; @usage
   ; [icon-button {...}]

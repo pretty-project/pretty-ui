@@ -1,6 +1,6 @@
 
 (ns pretty-layouts.plain-surface.attributes
-    (:require [pretty-css.api :as pretty-css]))
+    (:require [pretty-build-kit.api :as pretty-build-kit]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -21,4 +21,4 @@
   (-> {:class            :pl-plain-surface--body
        :data-orientation content-orientation
        :style            style}
-      (pretty-css/color-attributes surface-props)))
+      (pretty-build-kit/color-attributes surface-props)))

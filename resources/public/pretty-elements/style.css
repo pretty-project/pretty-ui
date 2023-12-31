@@ -770,6 +770,15 @@
 
 /*** Element ***/
 
+/*** Body ***/
+
+.pe-icon-button--body {
+  display:         flex;
+  justify-content: center;
+}
+
+/*** Body ***/
+
 /*** Icon-button label ***/
 
 .pe-icon-button--label {
@@ -1077,7 +1086,7 @@
   -justify-content: space-between;
 }
 
-.pe-select-button .pe-button--label {
+.pe-select-button .pe-button--content {
   -margin-left: 12px;
 }
 

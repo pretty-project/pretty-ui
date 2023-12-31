@@ -14,11 +14,12 @@
   ;
   ; @param (keyword) row-id
   ; @param (map) row-props
-  ; {:content (metamorphic-content)(opt)}
-  [row-id {:keys [content] :as row-props}]
+  ; {:content (metamorphic-content)(opt)
+  ;  :placeholder (metamorphic-content)(opt)}
+  [row-id {:keys [content placeholder] :as row-props}]
   [:div (row.attributes/row-attributes row-id row-props)
         [:div (row.attributes/row-body-attributes row-id row-props)
-              [metamorphic-content/compose content]]])
+              [metamorphic-content/compose content placeholder]]])
 
 (defn element
   ; @param (keyword)(opt) row-id
@@ -30,8 +31,6 @@
   ;  :border-width (keyword, px or string)(opt)
   ;  :class (keyword or keywords in vector)(opt)
   ;  :content (metamorphic-content)(opt)
-  ;  :content-value-f (function)(opt)
-  ;   Default: return
   ;  :fill-color (keyword or string)(opt)
   ;  :fill-pattern (keyword)(opt)
   ;   Default: :cover
@@ -40,16 +39,14 @@
   ;  :horizontal-align (keyword)(opt)
   ;   Default: :left
   ;  :indent (map)(opt)
-  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
+  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :max-height (keyword, px or string)(opt)
   ;  :max-width (keyword, px or string)(opt)
   ;  :min-height (keyword, px or string)(opt)
   ;  :min-width (keyword, px or string)(opt)
   ;  :outdent (map)(opt)
-  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
+  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :placeholder (metamorphic-content)(opt)
-  ;  :placeholder-value-f (function)(opt)
-  ;   Default: return
   ;  :preset (keyword)(opt)
   ;  :style (map)(opt)
   ;  :vertical-align (keyword)(opt)

@@ -14,12 +14,12 @@
   ;
   ; @return (map)
   ; {:autofill-name (keyword)
-  ;  :max-height (integer)
-  ;  :min-height (integer)
+  ;  :max-lines (integer)
+  ;  :min-lines (integer)
   ;  :multiline? (boolean)}
   [field-id field-props]
-  (merge {:max-height 32
-          :min-height 1}
+  (merge {:max-lines 32
+          :min-lines 1}
          (-> field-props)
          {:multiline? true
           ; XXX#6782 (source-code/cljs/pretty_elements/text_field/prototypes.cljs)

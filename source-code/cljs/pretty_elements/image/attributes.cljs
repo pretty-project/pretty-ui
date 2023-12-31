@@ -1,6 +1,6 @@
 
 (ns pretty-elements.image.attributes
-    (:require [pretty-css.api              :as pretty-css]
+    (:require [pretty-build-kit.api              :as pretty-build-kit]
               [pretty-elements.image.utils :as image.utils]
               [react.api                   :as react]))
 
@@ -27,8 +27,8 @@
        :ref      (react/set-reference-f  image-id)
        :style    style
        :src      src}
-      (pretty-css/indent-attributes       image-props)
-      (pretty-css/element-size-attributes image-props)))
+      (pretty-build-kit/element-size-attributes image-props)
+      (pretty-build-kit/indent-attributes       image-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -43,7 +43,7 @@
   ; {:class (keyword or keywords in vector)}
   [_ image-props]
   (-> {:class :pe-image}
-      (pretty-css/class-attributes        image-props)
-      (pretty-css/state-attributes        image-props)
-      (pretty-css/outdent-attributes      image-props)
-      (pretty-css/wrapper-size-attributes image-props)))
+      (pretty-build-kit/class-attributes        image-props)
+      (pretty-build-kit/outdent-attributes      image-props)
+      (pretty-build-kit/state-attributes        image-props)
+      (pretty-build-kit/wrapper-size-attributes image-props)))

@@ -39,6 +39,16 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn get-input-value
+  ; @ignore
+  ;
+  ; @param (keyword) input-id
+  ; @param (map) input-props
+  ;
+  ; @return (*)
+  [input-id input-props]
+  @(r/subscribe [:pretty-elements.input/get-input-value input-id input-props]))
+
 (defn get-input-options
   ; @ignore
   ;
@@ -50,8 +60,7 @@
   ; @return (vector)
   [_ {:keys [options options-path]}]
   ; XXX#2781
-  ; (A) In selectable elements the selectable options derived from the element's
-  ;     :options property.
-  ; (B) If the :options property hasn't been set, the options derived from the
-  ;     application state by using the :options-path property.
+  ; (A) In selectable elements the selectable options primarily derived from the element's ':options' property.
+  ; (B) If the ':options' property is not provided, the options derived from the application state by using
+  ;     the ':options-path' property.
   (or options @(r/subscribe [:get-item options-path])))

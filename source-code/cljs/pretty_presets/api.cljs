@@ -7,8 +7,8 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; @redirect (pretty-presets.preset-pool.env)
+; @redirect (pretty-presets.preset-pool.env/*)
 (def apply-preset preset-pool.env/apply-preset)
 
-; @redirect (pretty-presets.preset-pool.side-effects)
+; @redirect (pretty-presets.preset-pool.side-effects/*)
 (def reg-preset! preset-pool.side-effects/reg-preset!)

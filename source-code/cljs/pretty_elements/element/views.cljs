@@ -16,7 +16,7 @@
   ; {:helper (metamorphic-content)(opt)
   ;  :info-text (metamorphic-content)(opt)
   ;  :label (metamorphic-content)(opt)
-  ;  :marker-color (keyword)(opt)}
+  ;  :marker-color (keyword or string)(opt)}
   [element-id {:keys [helper info-text label marker-color]}]
   ; TODO
   ; Using the target-id property when no input element connected to the label

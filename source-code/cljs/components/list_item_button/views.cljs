@@ -27,7 +27,7 @@
   ;   Default: :highlight
   ;  :font-size (keyword, px or string)(opt)
   ;   Default: :xs
-  ;  :hover-color (keyword)(opt)
+  ;  :hover-color (keyword or string)(opt)
   ;   Default: :highlight}
   ;
   ; @usage

@@ -1,7 +1,7 @@
 
 (ns components.color-picker.attributes
     (:require [dom.api        :as dom]
-              [pretty-css.api :as pretty-css]
+              [pretty-build-kit.api :as pretty-build-kit]
               [re-frame.api   :as r]))
 
 ;; ----------------------------------------------------------------------------
@@ -64,8 +64,8 @@
             :on-click        #(r/dispatch on-click)
             :on-mouse-up     #(dom/blur-active-element!)
             :style           style}
-           (pretty-css/effect-attributes picker-props)
-           (pretty-css/indent-attributes picker-props))))
+           (pretty-build-kit/effect-attributes picker-props)
+           (pretty-build-kit/indent-attributes picker-props))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -78,6 +78,6 @@
   ; {}
   [_ picker-props]
   (-> {:class :c-color-picker}
-      (pretty-css/class-attributes   picker-props)
-      (pretty-css/state-attributes   picker-props)
-      (pretty-css/outdent-attributes picker-props)))
+      (pretty-build-kit/class-attributes   picker-props)
+      (pretty-build-kit/outdent-attributes picker-props)
+      (pretty-build-kit/state-attributes   picker-props)))

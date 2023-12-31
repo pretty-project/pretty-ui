@@ -1,6 +1,6 @@
 
 (ns pretty-elements.time-field.attributes
-    (:require [pretty-css.api :as pretty-css]))
+    (:require [pretty-build-kit.api :as pretty-build-kit]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -18,7 +18,7 @@
   [_ {:keys [style] :as field-props}]
   (-> {:class :pe-time-field--body
        :style style}
-      (pretty-css/indent-attributes field-props)))
+      (pretty-build-kit/indent-attributes field-props)))
 
 (defn field-attributes
   ; @ignore
@@ -30,6 +30,6 @@
   ; {}
   [_ field-props]
   (-> {:class :pe-time-field}
-      (pretty-css/class-attributes   field-props)
-      (pretty-css/state-attributes   field-props)
-      (pretty-css/outdent-attributes field-props)))
+      (pretty-build-kit/class-attributes   field-props)
+      (pretty-build-kit/outdent-attributes field-props)
+      (pretty-build-kit/state-attributes   field-props)))

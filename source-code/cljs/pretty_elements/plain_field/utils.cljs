@@ -6,8 +6,8 @@
               [pretty-elements.plain-field.config       :as plain-field.config]
               [pretty-elements.plain-field.env          :as plain-field.env]
               [pretty-elements.plain-field.side-effects :as plain-field.side-effects]
-              [pretty-elements.element.side-effects :as element.side-effects]
               [pretty-elements.plain-field.state        :as plain-field.state]
+              [pretty-build-kit.api :as pretty-build-kit]
               [re-frame.api                             :as r]
               [reagent.api                              :as reagent]
               [time.api                                 :as time]))
@@ -121,7 +121,7 @@
        (plain-field.side-effects/set-field-content! field-id field-content)
        (letfn [(f0 [] (resolve-field-change-f field-id field-props))]
               (time/set-timeout! f0 plain-field.config/TYPE-ENDED-AFTER))
-       (if on-changed (element.side-effects/dispatch-sync-event-handler! on-changed field-content))))
+       (if on-changed (pretty-build-kit/dispatch-sync-event-handler! on-changed field-content))))
 
 (defn on-change-f
   ; @ignore

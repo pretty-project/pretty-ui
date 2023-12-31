@@ -1,8 +1,7 @@
 
 (ns pretty-elements.chip.attributes
     (:require [dom.api        :as dom]
-              [pretty-css.api :as pretty-css]
-              [pretty-elements.element.side-effects :as element.side-effects]))
+              [pretty-build-kit.api :as pretty-build-kit]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -47,12 +46,12 @@
   [_ {{:keys [all tl]} :border-radius {:keys [on-click]} :primary-button :keys [disabled?]}]
   (if disabled? {:class             :pe-chip--primary-button
                  :disabled          true
-                 :style {"--adaptive-border-radius" (pretty-css/adaptive-border-radius (or all tl) 0.9)}}
+                 :style {"--adaptive-border-radius" (pretty-build-kit/adaptive-border-radius (or all tl) 0.9)}}
                 {:class             :pe-chip--primary-button
                  :data-click-effect :opacity
-                 :on-click          #(element.side-effects/dispatch-event-handler! on-click)
+                 :on-click          #(pretty-build-kit/dispatch-event-handler! on-click)
                  :on-mouse-up       #(dom/blur-active-element!)
-                 :style {"--adaptive-border-radius" (pretty-css/adaptive-border-radius (or all tl) 0.9)}}))
+                 :style {"--adaptive-border-radius" (pretty-build-kit/adaptive-border-radius (or all tl) 0.9)}}))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -62,7 +61,7 @@
   ;
   ; @param (keyword) chip-id
   ; @param (map) chip-props
-  ; {:on-click (Re-Frame metamorphic-event)(opt)
+  ; {:on-click (function or Re-Frame metamorphic-event)(opt)
   ;  :style (map)(opt)}
   ;
   ; @return (map)
@@ -79,11 +78,11 @@
                    {:class             :pe-chip--body
                     :data-selectable   false
                     :style             style})
-      (pretty-css/border-attributes           chip-props)
-      (pretty-css/color-attributes            chip-props)
-      (pretty-css/element-min-size-attributes chip-props)
-      (pretty-css/element-size-attributes     chip-props)
-      (pretty-css/indent-attributes           chip-props)))
+      (pretty-build-kit/border-attributes           chip-props)
+      (pretty-build-kit/color-attributes            chip-props)
+      (pretty-build-kit/element-min-size-attributes chip-props)
+      (pretty-build-kit/element-size-attributes     chip-props)
+      (pretty-build-kit/indent-attributes           chip-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -98,7 +97,7 @@
   ; {:class (keyword or keywords in vector)}
   [_ chip-props]
   (-> {:class :pe-chip}
-      (pretty-css/class-attributes        chip-props)
-      (pretty-css/state-attributes        chip-props)
-      (pretty-css/outdent-attributes      chip-props)
-      (pretty-css/wrapper-size-attributes chip-props)))
+      (pretty-build-kit/class-attributes        chip-props)
+      (pretty-build-kit/outdent-attributes      chip-props)
+      (pretty-build-kit/state-attributes        chip-props)
+      (pretty-build-kit/wrapper-size-attributes chip-props)))

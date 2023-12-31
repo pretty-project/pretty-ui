@@ -1,6 +1,6 @@
 
 (ns pretty-layouts.sidebar.attributes
-    (:require [pretty-css.api :as pretty-css]))
+    (:require [pretty-build-kit.api :as pretty-build-kit]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -20,7 +20,7 @@
   ; because, the sidebar might get a border-color value which is unwanted on
   ; the sensor!
   (-> {:class :pl-sidebar--sensor}
-      (pretty-css/color-attributes {:fill-color fill-color})))
+      (pretty-build-kit/color-attributes {:fill-color fill-color})))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -38,10 +38,10 @@
   [_ {:keys [style] :as sidebar-props}]
   (-> {:class :pl-sidebar--body
        :style style}
-      (pretty-css/border-attributes           sidebar-props)
-      (pretty-css/color-attributes            sidebar-props)
-      (pretty-css/element-min-size-attributes sidebar-props)
-      (pretty-css/indent-attributes           sidebar-props)))
+      (pretty-build-kit/border-attributes           sidebar-props)
+      (pretty-build-kit/color-attributes            sidebar-props)
+      (pretty-build-kit/element-min-size-attributes sidebar-props)
+      (pretty-build-kit/indent-attributes           sidebar-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

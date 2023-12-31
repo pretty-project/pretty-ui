@@ -13,7 +13,7 @@
   ; {:font-size (keyword, px or string)
   ;  :gap (keyword, px or string)
   ;  :horizontal-align (keyword)
-  ;  :icon-size (keyword)
+  ;  :icon-size (keyword, px or string)
   ;  :indent (map)
   ;  :style (map)}
   [label-props]

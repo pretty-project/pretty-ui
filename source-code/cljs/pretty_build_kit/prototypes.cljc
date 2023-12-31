@@ -131,7 +131,7 @@
   ; Use keyword type keys in both maps!
   ;
   ; @description
-  ; Updates values in the given 'element-props' map with functions from the given 'value-update-fns' map
+  ; Updates values within the given 'element-props' map with functions from the given 'value-update-fns' map
   ; in case their keys are present in both maps.
   ;
   ; @param (map) element-props
@@ -157,7 +157,7 @@
   ; Use keyword type keys in both maps!
   ;
   ; @description
-  ; Wraps values in the given 'element-props' map with functions from the given 'value-wrap-fns' map
+  ; Wraps values within the given 'element-props' map with functions from the given 'value-wrap-fns' map
   ; in case their keys are present in both maps.
   ;
   ; @param (map) element-props

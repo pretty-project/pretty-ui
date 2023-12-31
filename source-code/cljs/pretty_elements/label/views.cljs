@@ -2,7 +2,7 @@
 (ns pretty-elements.label.views
     (:require [fruits.random.api                :as random]
               [metamorphic-content.api          :as metamorphic-content]
-              [pretty-css.api                   :as pretty-css]
+              [pretty-build-kit.api                   :as pretty-build-kit]
               [pretty-elements.label.attributes :as label.attributes]
               [pretty-elements.label.env        :as label.env]
               [pretty-elements.label.prototypes :as label.prototypes]
@@ -16,8 +16,9 @@
   ;
   ; @param (keyword) label-id
   ; @param (map) label-props
-  ; {:helper (metamorphic-content)}
+  ; {:helper (metamorphic-content)(opt)}
   [_ {:keys [helper]}]
+  ; The 'label' element implements the 'helper' property for other elements that use the 'label' element as their actual label.
   (if helper [:div {:class               :pe-label--helper
                     :data-font-size      :xs
                     :data-letter-spacing :auto
@@ -54,7 +55,7 @@
   ; @param (map) label-props
   ; {:icon (keyword)}
   [_ {:keys [icon] :as label-props}]
-  (if icon [:i (pretty-css/icon-attributes {:class :pe-label--icon} label-props) icon]))
+  (if icon [:i (pretty-build-kit/icon-attributes {:class :pe-label--icon} label-props) icon]))
 
 (defn- label-content
   ; @ignore
@@ -91,9 +92,11 @@
   ;   it's better to use a DIV tag instead of using a LABEL tag.
   (if on-copy [:div (label.attributes/copyable-attributes label-id label-props)
                     [(if target-id :label :div)
-                     (label.attributes/content-attributes label-id label-props) (metamorphic-content/compose content placeholder)]]
+                     (label.attributes/content-attributes label-id label-props)
+                     (metamorphic-content/compose content placeholder)]]
               [:<>  [(if target-id :label :div)
-                     (label.attributes/content-attributes label-id label-props) (metamorphic-content/compose content placeholder)]]))
+                     (label.attributes/content-attributes label-id label-props)
+                     (metamorphic-content/compose content placeholder)]]))
 
 (defn- label-body
   ; @ignore
@@ -138,8 +141,6 @@
   ;  :border-width (keyword, px or string)(opt)
   ;  :class (keyword or keywords in vector)(opt)
   ;  :content (metamorphic-content)(opt)
-  ;  :content-value-f (function)(opt)
-  ;   Default: return
   ;  :disabled? (boolean)(opt)
   ;  :fill-color (keyword or string)(opt)
   ;  :fill-pattern (keyword)(opt)
@@ -147,45 +148,36 @@
   ;  :font-size (keyword, px or string)(opt)
   ;   Default: :s
   ;  :font-weight (keyword or integer)(opt)
-  ;   :inherit, :thin, :extra-light, :light, :normal, :medium, :semi-bold, :bold, :extra-bold, :black
   ;   Default :medium
   ;  :gap (keyword, px or string)(opt)
   ;   Distance between the icon, the info-text button and the content.
   ;  :height (keyword, px or string)(opt)
+  ;  :helper (metamorphic-content)(opt)
   ;  :horizontal-align (keyword)(opt)
   ;  :icon (keyword)(opt)
   ;  :icon-color (keyword or string)(opt)
-  ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
   ;   Default: :inherit
   ;  :icon-family (keyword)(opt)
-  ;   :material-symbols-filled, :material-symbols-outlined
   ;   Default: :material-symbols-outlined
   ;  :icon-position (keyword)(opt)
-  ;   :left, :right
   ;   Default: :left
-  ;  :icon-size (keyword)(opt)
-  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
-  ;   Default: :s
+  ;  :icon-size (keyword, px or string)(opt)
+  ;   Default: provided :font-size (if any) or :s
   ;  :indent (map)(opt)
-  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
+  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :info-text (metamorphic-content)(opt)
-  ;  :line-height (keyword)(opt)
-  ;   :auto, :inherit, :text-block, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;  :line-height (keyword, px or string)(opt)
   ;   Default: :text-block
-  ;  :marker-color (keyword)(opt)
-  ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
+  ;  :marker-color (keyword or string)(opt)
   ;  :marker-position (keyword)(opt)
-  ;   :tl, :tr, :br, :bl, left, :right, bottom, :top
   ;  :min-height (keyword, px or string)(opt)
   ;  :min-width (keyword, px or string)(opt)
   ;  :on-copy (Re-Frame metamorphic-event)(opt)
   ;   This event takes the label content as its last parameter
   ;  :outdent (map)(opt)
-  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
+  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :placeholder (metamorphic-content)(opt)
   ;   Default: "\u00A0"
-  ;  :placeholder-value-f (function)(opt)
-  ;   Default: return
   ;  :preset (keyword)(opt)
   ;  :selectable? (boolean)(opt)
   ;   Default: false
@@ -193,18 +185,14 @@
   ;  :target-id (keyword)(opt)
   ;   The input element's ID, that you want to connect to the label with using the 'for' HTML attribute.
   ;  :text-color (keyword or string)(opt)
-  ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
   ;   Default: :inherit
   ;  :text-direction (keyword)(opt)
   ;   :normal, :reversed
   ;   Default :normal
   ;  :text-overflow (keyword)(opt)
-  ;   :ellipsis, :hidden, :wrap
   ;  :text-transform (keyword)(opt)
-  ;   :capitalize, :lowercase, :uppercase
   ;  :tooltip-content (metamorphic-content)(opt)
   ;  :tooltip-position (keyword)(opt)
-  ;   :left, :right
   ;  :vertical-align (keyword)(opt)
   ;  :width (keyword, px or string)(opt)}
   ;

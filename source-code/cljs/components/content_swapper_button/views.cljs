@@ -28,7 +28,7 @@
   ;   Default: :chevron_right
   ;  :icon-position (keyword)(opt)
   ;   Default: :right
-  ;  :icon-size (keyword)(opt)
+  ;  :icon-size (keyword, px or string)(opt)
   ;   Default: :m
   ;  :indent (map)(opt)
   ;   Default: {:all :xs}

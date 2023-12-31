@@ -21,9 +21,9 @@
   ;   Default: false}
   ;
   ; @usage
-  ; (defn my-component   [] [:div "My component"])
-  ; (defn your-component [] [mount-animation {:mounted? true}
-  ;                                          [my-component]])
+  ; (defn my-component      [] [:div "My component"])
+  ; (defn another-component [] [mount-animation {:mounted? true}
+  ;                                             [my-component]])
   [{:keys [animation-timeout mounted?] :or {animation-timeout 350}} component]
   [:> css-transition {:in            mounted?
                       :classNames    {:enter  :r-mount   :enterActive  :r-mounting   :enterDone  :r-mounted

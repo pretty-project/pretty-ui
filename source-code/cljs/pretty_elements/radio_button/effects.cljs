@@ -32,7 +32,7 @@
       (let [option-value (option-value-f option)]
            {:db       (r radio-button.events/select-option! db button-id button-props option)
             :fx       [:pretty-elements.input/mark-input-as-visited! button-id]
-            :dispatch [:pretty-elements/dispatch-event-handler! on-select option-value]})))
+            :dispatch [:pretty-build-kit/dispatch-event-handler! on-select option-value]})))
 
 (r/reg-event-fx :pretty-elements.radio-button/clear-value!
   ; @ignore

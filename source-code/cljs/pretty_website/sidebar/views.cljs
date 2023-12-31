@@ -17,15 +17,16 @@
   ;
   ; @param (keyword) sidebar-id
   ; @param (map) sidebar-props
-  ; {:content (metamorphic-content)(opt)}
-  [sidebar-id {:keys [content] :as sidebar-props}]
+  ; {:content (metamorphic-content)(opt)
+  ;  :placeholder (metamorphic-content)(opt)}
+  [sidebar-id {:keys [content placeholder] :as sidebar-props}]
   [:<> [pretty-elements/icon-button (sidebar.prototypes/menu-button-props-prototype sidebar-id sidebar-props)]
        [react/mount-animation {:mounted? (= sidebar-id @sidebar.state/VISIBLE-SIDEBAR)}
                               [:div (sidebar.attributes/sidebar-attributes sidebar-id sidebar-props)
                                     [:div (sidebar.attributes/sidebar-cover-attributes sidebar-id sidebar-props)]
                                     [:div (sidebar.attributes/sidebar-body-attributes sidebar-id sidebar-props)
                                           [:div {:class :pw-sidebar--content}
-                                                [metamorphic-content/compose content]]]]]])
+                                                [metamorphic-content/compose content placeholder]]]]]])
 
 (defn component
   ; @param (keyword)(opt) sidebar-id
@@ -37,19 +38,15 @@
   ;  :border-width (keyword, px or string)(opt)
   ;  :class (keyword or keywords in vector)(opt)
   ;  :content (metamorphic-content)(opt)
-  ;  :content-value-f (function)(opt)
-  ;   Default: return
   ;  :cover-color (keyword or string)(opt)
   ;   Default: :black
   ;  :fill-color (keyword or string)(opt)
   ;   Default: :white
   ;  :indent (map)(opt)
-  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
+  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :outdent (map)(opt)
-  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
+  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :placeholder (metamorphic-content)(opt)
-  ;  :placeholder-value-f (function)(opt)
-  ;   Default: return
   ;  :position (keyword)(opt)
   ;   :left, :right
   ;   Default: :left

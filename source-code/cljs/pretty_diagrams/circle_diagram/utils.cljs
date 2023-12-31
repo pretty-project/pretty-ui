@@ -1,9 +1,5 @@
 
-(ns pretty-diagrams.circle-diagram.utils
-    (:require [fruits.css.api                        :as css]
-              [fruits.math.api                       :as math]
-              [pretty-css.api                        :as pretty-css]
-              [pretty-diagrams.circle-diagram.config :as circle-diagram.config]))
+(ns pretty-diagrams.circle-diagram.utils)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -27,13 +27,13 @@
   ;   Default: :auto
   ;  :icon-position (keyword)
   ;   Default: :right
-  ;  :icon-size (keyword)
+  ;  :icon-size (keyword, px or string)
   ;   Default: :xl
   ;  :indent (map)
-  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
+  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;   Default: {:bottom :xxs}
   ;  :outdent (map)
-  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
+  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;   Default: {:bottom :s}
   ;  :text-transform (keyword)(opt)
   ;   Default: :uppercase

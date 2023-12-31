@@ -17,7 +17,7 @@
   ; @param (map) thumbnail-props
   ; {:background-size (keyword)
   ;  :href (string)(opt)
-  ;  :on-click (Re-Frame metamorphic-event)(opt)
+  ;  :on-click (function or Re-Frame metamorphic-event)(opt)
   ;  :uri (string)(opt)}
   [thumbnail-id {:keys [background-size href on-click uri] :as thumbnail-props}]
   [:div (thumbnail.attributes/thumbnail-attributes thumbnail-id thumbnail-props)
@@ -48,15 +48,14 @@
   ;  :icon (keyword)(opt)
   ;   Default: :icon
   ;  :icon-family (keyword)(opt)
-  ;   :material-symbols-filled, :material-symbols-outlined
   ;   Default: :material-symbols-outlined
   ;  :indent (map)(opt)
-  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
+  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :info-text (metamorphic-content)(opt)
   ;  :label (metamorphic-content)(opt)
-  ;  :on-click (Re-Frame metamorphic-event)(opt)
+  ;  :on-click (function or Re-Frame metamorphic-event)(opt)
   ;  :outdent (map)(opt)
-  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
+  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :preset (keyword)(opt)
   ;  :style (map)(opt)
   ;  :target (keyword)(opt)

@@ -32,19 +32,14 @@
   ; @param (keyword)(opt) row-id
   ; @param (map) row-props
   ; {:border-color (keyword or string)(opt)
-  ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;  :border-position (keyword)(opt)
-  ;   :all, :bottom, :top, :left, :right, :horizontal, :vertical
   ;  :border-width (keyword, px or string)(opt)
   ;  :cells (metamorphic-contents in vector)
   ;  :disabled? (boolean)(opt)
   ;  :drag-attributes (map)(opt)
   ;  :fill-color (keyword or string)(opt)
-  ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
-  ;  :marker-color (keyword)(opt)
-  ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+  ;  :marker-color (keyword or string)(opt)
   ;  :marker-position (keyword)(opt)
-  ;   :tl, :tr, :br, :bl
   ;  :template (string)}
   ;
   ; @usage

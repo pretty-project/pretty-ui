@@ -37,7 +37,7 @@
   ; {:on-enter (function or Re-Frame metamorphic-event)(opt)}
   (fn [{:keys [db]} [_ field-id {:keys [on-enter]}]]
       (let [field-content (plain-field.env/get-field-content field-id)]
-           [:pretty-elements.element/dispatch-event-handler! on-enter field-content])))
+           [:pretty-build-kit/dispatch-event-handler! on-enter field-content])))
 
 (r/reg-event-fx :pretty-elements.text-field/ESC-pressed
   ; @ignore
@@ -59,7 +59,7 @@
   ; {:on-empty (function or Re-Frame metamorphic-event)(opt)}
   (fn [{:keys [db]} [_ field-id {:keys [on-empty] :as field-props}]]
       (if (plain-field.env/field-filled? field-id)
-          {:dispatch [:pretty-elements.element/dispatch-event-handler! on-empty ""]
+          {:dispatch [:pretty-build-kit/dispatch-event-handler! on-empty ""]
            :db       (r plain-field.events/empty-field! db field-id field-props)
            :fx       [:pretty-elements.plain-field/empty-field! field-id]})))
 
@@ -74,7 +74,7 @@
   ; {}
   (fn [_ [_ field-id {:keys [on-type-ended validate-when-change?] :as field-props}]]
       (let [field-content (plain-field.env/get-field-content field-id)]
-           {:dispatch-n [[:pretty-elements.element/dispatch-event-handler! on-type-ended field-content]]
+           {:dispatch-n [[:pretty-build-kit/dispatch-event-handler! on-type-ended field-content]]
             :fx-n       [(if validate-when-change? [:pretty-elements.form/validate-input! field-id field-props])]})))
 
 (r/reg-event-fx :pretty-elements.text-field/field-blurred
@@ -85,7 +85,7 @@
   ; {:validate-when-leave? (boolean)(opt)}
   (fn [_ [_ field-id {:keys [on-blur validate-when-leave?] :as field-props}]]
       (let [field-content (plain-field.env/get-field-content field-id)]
-           {:dispatch-n [[:pretty-elements.element/dispatch-event-handler!    on-blur  field-content]
+           {:dispatch-n [[:pretty-build-kit/dispatch-event-handler! on-blur field-content]
                          [:pretty-elements.plain-field/field-blurred          field-id field-props]]
             :fx-n       [[:pretty-elements.text-field/remove-keypress-events! field-id field-props]
                          (if validate-when-leave? [:pretty-elements.form/validate-input! field-id field-props])]})))
@@ -97,6 +97,6 @@
   ; @param (map) field-props
   (fn [_ [_ field-id {:keys [on-focus] :as field-props}]]
       (let [field-content (plain-field.env/get-field-content field-id)]
-           {:dispatch-n [[:pretty-elements.element/dispatch-event-handler! on-focus field-content]
+           {:dispatch-n [[:pretty-build-kit/dispatch-event-handler! on-focus field-content]
                          [:pretty-elements.plain-field/field-focused       field-id field-props]]
             :fx-n       [[:pretty-elements.text-field/reg-keypress-events! field-id field-props]]})))

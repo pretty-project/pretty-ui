@@ -1,6 +1,6 @@
 
 (ns pretty-elements.dropdown-menu.attributes
-    (:require [pretty-css.api                      :as pretty-css]
+    (:require [pretty-build-kit.api                      :as pretty-build-kit]
               [pretty-elements.dropdown-menu.state :as dropdown-menu.state]))
 
 ;; ----------------------------------------------------------------------------
@@ -17,9 +17,9 @@
   ; {:class (keyword or keywords in vector)}
   [_ {:keys [surface]}]
   (-> {:class :pe-dropdown-menu--surface-body}
-      (pretty-css/border-attributes surface)
-      (pretty-css/color-attributes  surface)
-      (pretty-css/indent-attributes surface)))
+      (pretty-build-kit/border-attributes surface)
+      (pretty-build-kit/color-attributes  surface)
+      (pretty-build-kit/indent-attributes surface)))
 
 (defn menu-surface-attributes
   ; @ignore
@@ -32,7 +32,7 @@
   ; {:class (keyword or keywords in vector)}
   [_ {:keys [surface]}]
   (-> {:class :pe-dropdown-menu--surface}
-      (pretty-css/outdent-attributes surface)))
+      (pretty-build-kit/outdent-attributes surface)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -50,7 +50,7 @@
   [_ {:keys [style] :as menu-props}]
   (-> {:class :pe-dropdown-menu--body
        :style style}
-      (pretty-css/indent-attributes menu-props)))
+      (pretty-build-kit/indent-attributes menu-props)))
 
 (defn menu-attributes
   ; @ignore
@@ -75,6 +75,6 @@
   ;   solves the problem.
   (-> {:class :pe-dropdown-menu
        :on-mouse-leave #(swap! dropdown-menu.state/MENUS assoc-in [menu-id :active-dex] nil)}
-      (pretty-css/class-attributes   menu-props)
-      (pretty-css/state-attributes   menu-props)
-      (pretty-css/outdent-attributes menu-props)))
+      (pretty-build-kit/class-attributes   menu-props)
+      (pretty-build-kit/outdent-attributes menu-props)
+      (pretty-build-kit/state-attributes   menu-props)))

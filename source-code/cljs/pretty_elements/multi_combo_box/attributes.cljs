@@ -1,6 +1,6 @@
 
 (ns pretty-elements.multi-combo-box.attributes
-    (:require [pretty-css.api :as pretty-css]))
+    (:require [pretty-build-kit.api :as pretty-build-kit]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -18,7 +18,7 @@
   [_ {:keys [style] :as box-props}]
   (-> {:class :pe-multi-combo-box--body
        :style style}
-      (pretty-css/indent-attributes box-props)))
+      (pretty-build-kit/indent-attributes box-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -33,6 +33,6 @@
   ; {}
   [_ box-props]
   (-> {:class :pe-multi-combo-box}
-      (pretty-css/class-attributes   box-props)
-      (pretty-css/state-attributes   box-props)
-      (pretty-css/outdent-attributes box-props)))
+      (pretty-build-kit/class-attributes   box-props)
+      (pretty-build-kit/outdent-attributes box-props)
+      (pretty-build-kit/state-attributes   box-props)))

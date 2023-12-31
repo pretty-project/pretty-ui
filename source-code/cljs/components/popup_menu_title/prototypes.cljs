@@ -14,7 +14,7 @@
   ;  :font-weight (keyword or integer)
   ;  :gap (keyword, px or string)
   ;  :icon-position (keyword)
-  ;  :icon-size (keyword)
+  ;  :icon-size (keyword, px or string)
   ;  :indent (map)
   ;  :outdent (map)
   ;  :text-transform (keyword)

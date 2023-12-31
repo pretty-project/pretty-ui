@@ -220,7 +220,7 @@
   ;     Default: :default
   ;    :indent (map)(opt)
   ;    :label (metamorphic-content)(opt)
-  ;    :min-width (keyword)(opt)
+  ;    :min-width (keyword, px or string)(opt)
   ;    :outdent (map)(opt)}
   ;  :reveal-effect (keyword)(opt)
   ;  :value-path (Re-Frame path vector)(opt)}

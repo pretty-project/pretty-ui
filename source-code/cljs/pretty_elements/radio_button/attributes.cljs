@@ -2,7 +2,7 @@
 (ns pretty-elements.radio-button.attributes
     (:require [dom.api                 :as dom]
               [metamorphic-content.api :as metamorphic-content]
-              [pretty-css.api          :as pretty-css]
+              [pretty-build-kit.api          :as pretty-build-kit]
               [re-frame.api            :as r]))
 
 ;; ----------------------------------------------------------------------------
@@ -26,7 +26,7 @@
               {:class             :pe-radio-button--clear-button
                :data-disabled     true
                :disabled          true})
-      (pretty-css/border-attributes button-props)))
+      (pretty-build-kit/border-attributes button-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -73,8 +73,8 @@
   ; {}
   [_ {{:keys [all]} :border-radius :as button-props}]
   (-> {:class :pe-radio-button--option-button
-       :style {"--adaptive-border-radius" (pretty-css/adaptive-border-radius all 0.3)}}
-      (pretty-css/border-attributes button-props)))
+       :style {"--adaptive-border-radius" (pretty-build-kit/adaptive-border-radius all 0.3)}}
+      (pretty-build-kit/border-attributes button-props)))
 
 (defn radio-button-option-attributes
   ; @ignore
@@ -92,9 +92,9 @@
        (-> {:class         :pe-radio-button--option
             :data-selected option-selected?
             :disabled      disabled?}
-           (pretty-css/effect-attributes button-props)
-           (pretty-css/mouse-event-attributes {:on-click    on-select-event
-                                               :on-mouse-up dom/blur-active-element!}))))
+           (pretty-build-kit/effect-attributes button-props)
+           (pretty-build-kit/mouse-event-attributes {:on-click    on-select-event
+                                                     :on-mouse-up dom/blur-active-element!}))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -113,7 +113,7 @@
        :data-options-orientation options-orientation
        :data-selectable          false
        :style                    style}
-      (pretty-css/indent-attributes button-props)))
+      (pretty-build-kit/indent-attributes button-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -128,6 +128,6 @@
   ; {}
   [_ button-props]
   (-> {:class :pe-radio-button}
-      (pretty-css/class-attributes   button-props)
-      (pretty-css/state-attributes   button-props)
-      (pretty-css/outdent-attributes button-props)))
+      (pretty-build-kit/class-attributes   button-props)
+      (pretty-build-kit/outdent-attributes button-props)
+      (pretty-build-kit/state-attributes   button-props)))

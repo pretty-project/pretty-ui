@@ -1,7 +1,7 @@
 
 (ns pretty-elements.counter.attributes
     (:require [dom.api        :as dom]
-              [pretty-css.api :as pretty-css]
+              [pretty-build-kit.api :as pretty-build-kit]
               [re-frame.api   :as r]))
 
 ;; ----------------------------------------------------------------------------
@@ -33,7 +33,7 @@
                 :data-click-effect :opacity
                 :on-click          #(r/dispatch [:pretty-elements.counter/increase-value! counter-id counter-props])
                 :on-mouse-up       #(dom/blur-active-element!)})
-           (pretty-css/border-attributes counter-props))))
+           (pretty-build-kit/border-attributes counter-props))))
 
 (defn decrease-button-attributes
   ; @ignore
@@ -61,7 +61,7 @@
                 :data-click-effect :opacity
                 :on-click          #(r/dispatch [:pretty-elements.counter/decrease-value! counter-id counter-props])
                 :on-mouse-up       #(dom/blur-active-element!)})
-           (pretty-css/border-attributes counter-props))))
+           (pretty-build-kit/border-attributes counter-props))))
 
 (defn reset-button-attributes
   ; @ignore
@@ -76,7 +76,7 @@
   ; The reset button border color is independent from the increase and decrease
   ; buttons border color.
   (-> {:class :pe-counter--reset-button}
-      (pretty-css/border-attributes counter-props)
+      (pretty-build-kit/border-attributes counter-props)
       (merge {:data-border-color :default})))
 
 ;; ----------------------------------------------------------------------------
@@ -97,7 +97,7 @@
   (-> {:class           :pe-counter--body
        :data-selectable false
        :style           style}
-      (pretty-css/indent-attributes counter-props)))
+      (pretty-build-kit/indent-attributes counter-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -111,6 +111,6 @@
   ; @return (map)
   [_ counter-props]
   (-> {:class :pe-counter}
-      (pretty-css/class-attributes   counter-props)
-      (pretty-css/state-attributes   counter-props)
-      (pretty-css/outdent-attributes counter-props)))
+      (pretty-build-kit/class-attributes   counter-props)
+      (pretty-build-kit/outdent-attributes counter-props)
+      (pretty-build-kit/state-attributes   counter-props)))

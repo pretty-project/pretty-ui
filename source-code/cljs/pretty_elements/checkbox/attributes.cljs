@@ -1,7 +1,7 @@
 
 (ns pretty-elements.checkbox.attributes
     (:require [dom.api        :as dom]
-              [pretty-css.api :as pretty-css]
+              [pretty-build-kit.api :as pretty-build-kit]
               [re-frame.api   :as r]))
 
 ;; ----------------------------------------------------------------------------
@@ -51,7 +51,7 @@
   [_ checkbox-props _]
   (-> {:class            :pe-checkbox--option-button
        :data-icon-family :material-symbols-outlined}
-      (pretty-css/border-attributes checkbox-props)))
+      (pretty-build-kit/border-attributes checkbox-props)))
 
 (defn checkbox-option-attributes
   ; @ignore
@@ -71,9 +71,9 @@
        (-> {:class        :pe-checkbox--option
             :data-checked option-checked?
             :disabled     disabled?}
-           (pretty-css/effect-attributes checkbox-props)
-           (pretty-css/mouse-event-attributes {:on-click    on-check-event
-                                               :on-mouse-up dom/blur-active-element!}))))
+           (pretty-build-kit/effect-attributes checkbox-props)
+           (pretty-build-kit/mouse-event-attributes {:on-click    on-check-event
+                                                     :on-mouse-up dom/blur-active-element!}))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -96,7 +96,7 @@
        :data-options-orientation options-orientation
        :data-selectable          false
        :style                    style}
-      (pretty-css/indent-attributes checkbox-props)))
+      (pretty-build-kit/indent-attributes checkbox-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -111,6 +111,6 @@
   ; {:class (keyword or keywords in vector)}
   [_ checkbox-props]
   (-> {:class :pe-checkbox}
-      (pretty-css/class-attributes   checkbox-props)
-      (pretty-css/state-attributes   checkbox-props)
-      (pretty-css/outdent-attributes checkbox-props)))
+      (pretty-build-kit/class-attributes   checkbox-props)
+      (pretty-build-kit/outdent-attributes checkbox-props)
+      (pretty-build-kit/state-attributes   checkbox-props)))

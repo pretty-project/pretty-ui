@@ -2,7 +2,7 @@
 (ns pretty-elements.color-selector.attributes
     (:require [dom.api           :as dom]
               [fruits.vector.api :as vector]
-              [pretty-css.api    :as pretty-css]
+              [pretty-build-kit.api    :as pretty-build-kit]
               [re-frame.api      :as r]))
 
 ;; ----------------------------------------------------------------------------
@@ -62,7 +62,7 @@
   [_ {:keys [style] :as selector-props}]
   (-> {:class :pe-color-selector--options-body
        :style style}
-      (pretty-css/indent-attributes selector-props)))
+      (pretty-build-kit/indent-attributes selector-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -77,6 +77,6 @@
   ; {:class (keyword or keywords in vector)}
   [_ selector-props]
   (-> {:class :pe-color-selector--options}
-      (pretty-css/class-attributes   selector-props)
-      (pretty-css/state-attributes   selector-props)
-      (pretty-css/outdent-attributes selector-props)))
+      (pretty-build-kit/class-attributes   selector-props)
+      (pretty-build-kit/outdent-attributes selector-props)
+      (pretty-build-kit/state-attributes   selector-props)))

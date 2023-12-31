@@ -39,24 +39,20 @@
   ;  :border-width (keyword, px or string)(opt)
   ;  :class (keyword or keywords in vector)(opt)
   ;  :content (metamorphic-content)(opt)
-  ;  :content-value-f (function)(opt)
-  ;   Default: return
   ;  :fill-color (keyword or string)(opt)
   ;  :fill-pattern (keyword)(opt)
   ;   Default: :cover
   ;  :font-size (keyword, px or string)(opt)
   ;   Default: :s
   ;  :font-weight (keyword or integer)(opt)
-  ;   :inherit, :thin, :extra-light, :light, :normal, :medium, :semi-bold, :bold, :extra-bold, :black
   ;   Default: :normal
   ;  :height (keyword, px or string)(opt)
   ;  :horizontal-align (keyword)(opt)
   ;  :indent (map)(opt)
-  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
+  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :info-text (metamorphic-content)(opt)
   ;  :label (metamorphic-content)(opt)
-  ;  :line-height (keyword)(opt)
-  ;   :auto, :inherit, :text-block, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;  :line-height (keyword, px or string)(opt)
   ;   Default: :text-block
   ;  :max-lines (integer)(opt)
   ;  :min-height (keyword, px or string)(opt)
@@ -64,24 +60,20 @@
   ;  :on-copy (Re-Frame metamorphic-event)(opt)
   ;   This event takes the text content as its last parameter.
   ;  :outdent (map)(opt)
-  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
+  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :placeholder (metamorphic-content)(opt)
   ;   Default: "\u00A0"
-  ;  :placeholder-value-f (function)(opt)
-  ;   Default: return
   ;  :preset (keyword)(opt)
   ;  :selectable? (boolean)(opt)
   ;   Default: true
   ;  :style (map)(opt)
   ;  :text-color (keyword or string)(opt)
-  ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
   ;   Default: :default
   ;  :text-direction (keyword)(opt)
   ;   :normal, :reversed
   ;   Default :normal
   ;  :text-align (keyword)(opt)
   ;  :text-overflow (keyword)(opt)
-  ;   :ellipsis, :wrap
   ;   Default: :wrap
   ;  :vertical-align (keyword)(opt)
   ;  :width (keyword, px or string)(opt)}

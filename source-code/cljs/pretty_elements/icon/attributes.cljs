@@ -1,6 +1,6 @@
 
 (ns pretty-elements.icon.attributes
-    (:require [pretty-css.api :as pretty-css]))
+    (:require [pretty-build-kit.api :as pretty-build-kit]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -18,8 +18,8 @@
   (-> {:class           :pe-icon--body
        :data-selectable false
        :style           style}
-      (pretty-css/icon-attributes   icon-props)
-      (pretty-css/indent-attributes icon-props)))
+      (pretty-build-kit/icon-attributes   icon-props)
+      (pretty-build-kit/indent-attributes icon-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -33,6 +33,6 @@
   ; @return (map)
   [_ icon-props]
   (-> {:class :pe-icon}
-      (pretty-css/class-attributes   icon-props)
-      (pretty-css/state-attributes   icon-props)
-      (pretty-css/outdent-attributes icon-props)))
+      (pretty-build-kit/class-attributes   icon-props)
+      (pretty-build-kit/outdent-attributes icon-props)
+      (pretty-build-kit/state-attributes   icon-props)))

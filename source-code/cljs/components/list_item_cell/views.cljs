@@ -30,7 +30,7 @@
 (defn component
   ; @param (keyword)(opt) cell-id
   ; @param (map) cell-props
-  ; {:on-click (Re-Frame metamorphic-event)(opt)
+  ; {:on-click (function or Re-Frame metamorphic-event)(opt)
   ;  :rows (maps in vector)
   ;   [{:color (keyword or string)(opt)
   ;      Default: :default
@@ -52,7 +52,7 @@
    [component (random/generate-keyword) cell-props])
 
   ([cell-id cell-props]
-   ; @note (tutorials#parametering)  
+   ; @note (tutorials#parametering)
    (fn [_ cell-props]
        (let [] ; cell-props (list-item-cell.prototypes/cell-props-prototype cell-props)
             [list-item-cell cell-id cell-props]))))

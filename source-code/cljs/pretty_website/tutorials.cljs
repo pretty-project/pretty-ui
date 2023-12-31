@@ -1,4 +1,5 @@
 
+; FOR DOCUMENTATION READERS ONLY!
 (ns tutorials)
 
 ; @note
@@ -8,7 +9,7 @@
 
 ; @tutorial First steps
 ;
-; Implement the [pretty-project/pretty-css](https://github.com/pretty-project/pretty-css) library in your project.
+; Implement the [pretty-project/pretty-build-kit](https://github.com/pretty-project/pretty-build-kit) library in your project.
 ;
 ; Implement the [pretty-project/pretty-icons](https://github.com/pretty-project/pretty-icons) library in your project.
 ;
@@ -29,6 +30,20 @@
 ; - Website components (e.g., side menu, contacts section, etc.).
 ;
 ; In the following tutorials they all referred as Pretty UI items.
+
+
+
+; @tutorial Abbreviations
+;
+; BTT: Bottom To Top
+; LTR: Left To Right
+; RTL: Right To Left
+; TTB: Top To Bottom
+;
+; BR: Bottom Right
+; BL: Bottom Left
+; TL: Top Left
+; TR: Top Right
 
 
 
@@ -190,6 +205,33 @@
 
 
 
+; @tutorial Values of optionable inputs
+;
+; - If an optionable input ...
+;   ... got only one option to select, its output (in the Re-Frame state) is a single value.
+;   ... got more than one option to select, its output (in the Re-Frame state) is a vector of selected options.
+;
+; @code Example
+; (ns my-namespace
+;   (:require [pretty-inputs.api :as pretty-inputs]
+;             [re-frame.core     :as r]))
+;
+; (defn my-ui
+;   []
+;   [:<> [pretty-inputs/checkbox     {:options ["a" "b" "c"] :value-path [:my-value]}]
+;        [pretty-inputs/radio-button {:options "abc"         :value-path [:another-value]}]])
+;
+; (println @(r/subscribe [:get-item [:my-value]]))
+; =>
+; [] ["a"], ["a" "b"], ["a", "c"], ["a", "b", "c"], ["b"], ["b" "c"], ["c"]
+;
+; (println @(r/subscribe [:get-item [:another-value]]))
+; =>
+; nil, "abc"
+; @---
+
+
+
 ; @tutorial Customizing items
 ;
 ;
@@ -201,8 +243,8 @@
 ; [pretty-elements/button {:badge-color :soft-blue}]
 ; [pretty-elements/button {:badge-color "#888"}]
 ;
-; @code Values
-; :inherit, :transparent,
+; @code Predefined values
+; :transparent,
 ; :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning,
 ; :black, :grey, :white, :hard-blue, :soft-blue, :hard-green, :khaki-green, :soft-green, :hard-purple, :soft-purple, :hard-red, soft-red
 ;
@@ -212,7 +254,9 @@
 ;
 ; @code Usage
 ; [pretty-elements/button {:badge-content (metamorphic-content)}]
-; [pretty-elements/button {:badge-content "My content"}]
+; [pretty-elements/button {:badge-content "My string"}]
+; [pretty-elements/button {:badge-content :my-dictionary-term}]
+; [pretty-elements/button {:badge-content 123}]
 ;
 ;
 ;
@@ -222,8 +266,9 @@
 ; [pretty-elements/button {:badge-position (keyword)}]
 ; [pretty-elements/button {:badge-position :tr}]
 ;
-; @code Values
-; :tl, :tr, :br, :bl, :left, :right, :bottom, :top
+; @code Predefined values
+; :left, :right, :bottom, :top,
+; :tl, :tr, :br, :bl
 ;
 ;
 ;
@@ -234,8 +279,8 @@
 ; [pretty-elements/button {:border-color :soft-blue}]
 ; [pretty-elements/button {:border-color "#888"}]
 ;
-; @code Values
-; :inherit, :transparent,
+; @code Predefined values
+; :transparent,
 ; :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning,
 ; :black, :grey, :white, :hard-blue, :soft-blue, :hard-green, :khaki-green, :soft-green, :hard-purple, :soft-purple, :hard-red, soft-red
 ;
@@ -247,8 +292,10 @@
 ; [pretty-elements/button {:border-position (keyword)}]
 ; [pretty-elements/button {:border-position :top}]
 ;
-; @code Values
-; :all, :bottom, :top, :left, :right, :horizontal, :vertical
+; @code Predefined values
+; :all,
+; :bottom, :left, :right, :top,
+; :horizontal, :vertical
 ;
 ;
 ;
@@ -257,13 +304,36 @@
 ; @code Usage
 ; [pretty-elements/button {:border-radius (map) {:all, :tl, :tr, :br, :bl (keyword, px or string)}}]
 ; [pretty-elements/button {:border-radius {:all :xs}}]
-; [pretty-elements/button {:border-radius {:all :xs :tr :m}}]
+; [pretty-elements/button {:border-radius {:all :xs :tr :xxl}}]
 ; [pretty-elements/button {:border-radius {:all 10}}]
 ; [pretty-elements/button {:border-radius {:all "10px"}}]
 ; [pretty-elements/button {:border-radius {:all "5%"}}]
 ;
-; @code Values
+; @code Predefined values
 ; :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+;
+;
+;
+; @title :border-width
+;
+; @code Usage
+; [pretty-elements/button {:border-width (keyword, px or string)]
+; [pretty-elements/button {:border-width :xs]
+; [pretty-elements/button {:border-width 10]
+; [pretty-elements/button {:border-width "10px"]
+; [pretty-elements/button {:border-width "5%"]
+;
+; @code Predefined values
+; :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+;
+;
+;
+; @title :class
+;
+; @code Usage
+; [pretty-elements/button {:class (keyword or keywords in vector)]
+; [pretty-elements/button {:class :my-class]
+; [pretty-elements/button {:class [:my-class :another-class]]
 ;
 ;
 ;
@@ -273,8 +343,20 @@
 ; [pretty-elements/button {:click-effect (keyword)}]
 ; [pretty-elements/button {:click-effect :opacity}]
 ;
-; @code Values
+; @code Predefined values
 ; :none, :opacity
+;
+;
+;
+; @title :content
+;
+; @code Usage
+; [pretty-elements/button {:content (metamorphic-content)}]
+; [pretty-elements/button {:content "My string"}]
+; [pretty-elements/button {:content :my-dictionary-term}]
+; [pretty-elements/button {:content 123}]
+; [pretty-elements/button {:content [:div "My hiccup"]}]
+; [pretty-elements/button {:content #'my-reagent-component}]
 ;
 ;
 ;
@@ -285,8 +367,16 @@
 ; [pretty-elements/button {:cursor :pointer}]
 ; [pretty-elements/button {:cursor "pointer"}]
 ;
-; @code Values
+; @code Predefined values
 ; :default, :disabled, :grab, :grabbing, :move, :pointer, :progress
+;
+;
+;
+; @title :disabled?
+;
+; @code Usage
+; [pretty-elements/button {:disabled? (boolean)}]
+; [pretty-elements/button {:disabled? true}]
 ;
 ;
 ;
@@ -297,8 +387,8 @@
 ; [pretty-elements/button {:fill-color :soft-blue}]
 ; [pretty-elements/button {:fill-color "#888"}]
 ;
-; @code Values
-; :inherit, :transparent,
+; @code Predefined values
+; :transparent,
 ; :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning,
 ; :black, :grey, :white, :hard-blue, :soft-blue, :hard-green, :khaki-green, :soft-green, :hard-purple, :soft-purple, :hard-red, soft-red
 ;
@@ -310,7 +400,7 @@
 ; [pretty-elements/button {:fill-pattern (keyword)}]
 ; [pretty-elements/button {:fill-pattern :striped}]
 ;
-; @code Values
+; @code Predefined values
 ; :cover, :striped
 ;
 ;
@@ -319,13 +409,14 @@
 ;
 ; @code Usage
 ; [pretty-elements/button {:font-size (keyword, px or string)}]
-; [pretty-elements/button {:font-size :xl}]
-; [pretty-elements/button {:font-size 12}]
-; [pretty-elements/button {:font-size "12px"}]
-; [pretty-elements/button {:font-size "1em"}]
+; [pretty-elements/button {:font-size :xs}]
+; [pretty-elements/button {:font-size 10}]
+; [pretty-elements/button {:font-size "10px"}]
+; [pretty-elements/button {:font-size "5em"}]
 ;
-; @code Values
-; :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
+; @code Predefined values
+; :inherit,
+; :micro, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
 ;
 ;
 ;
@@ -336,8 +427,9 @@
 ; [pretty-elements/button {:font-weight :medium}]
 ; [pretty-elements/button {:font-weight 500}]
 ;
-; @code Values
-; :inherit, :thin, :extra-light, :light, :normal, :medium, :semi-bold, :bold, :extra-bold, :black, :extra-black
+; @code Predefined values
+; :inherit,
+; :thin, :extra-light, :light, :normal, :medium, :semi-bold, :bold, :extra-bold, :black, :extra-black
 ;
 ;
 ;
@@ -350,9 +442,18 @@
 ; [pretty-elements/button {:gap "10px"}]
 ; [pretty-elements/button {:gap "5%"}]
 ;
-; @code Values
-; :auto
+; @code Predefined values
+; :auto,
 ; :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+;
+;
+;
+; @title :helper
+; @code Usage
+; [pretty-elements/button {:content (metamorphic-content)}]
+; [pretty-elements/button {:content "My string"}]
+; [pretty-elements/button {:content :my-dictionary-term}]
+; [pretty-elements/button {:content 123}]
 ;
 ;
 ;
@@ -360,12 +461,12 @@
 ;
 ; @code Usage
 ; [pretty-elements/button {:height (keyword, px or string)}]
-; [pretty-elements/button {:height :xxl}]
+; [pretty-elements/button {:height :xs}]
 ; [pretty-elements/button {:height 10}]
 ; [pretty-elements/button {:height "10px"}]
 ; [pretty-elements/button {:height "5%"}]
 ;
-; @code Values
+; @code Predefined values
 ; :auto, :content, :parent,
 ; :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
 ;
@@ -377,9 +478,23 @@
 ; [pretty-elements/button {:horizontal-align (keyword)}]
 ; [pretty-elements/button {:horizontal-align :right}]
 ;
-; @code Values
+; @code Predefined values
 ; :center, :left, :right,
 ; :space-around, :space-between, :space-evenly
+;
+;
+;
+; @title :hover-color
+;
+; @code Usage
+; [pretty-elements/button {:hover-color (keyword or string)}]
+; [pretty-elements/button {:hover-color :soft-blue}]
+; [pretty-elements/button {:hover-color "#888"}]
+;
+; @code Predefined values
+; :transparent,
+; :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning,
+; :black, :grey, :white, :hard-blue, :soft-blue, :hard-green, :khaki-green, :soft-green, :hard-purple, :soft-purple, :hard-red, soft-red
 ;
 ;
 ;
@@ -389,8 +504,304 @@
 ; [pretty-elements/button {:hover-effect (keyword)}]
 ; [pretty-elements/button {:hover-effect :opacity}]
 ;
-; @code Values
+; @code Predefined values
 ; :none, :opacity
+;
+;
+;
+; @title :href
+;
+; @code Usage
+; [pretty-elements/button {:href (string)}]
+; [pretty-elements/button {:href "https://..."}]
+;
+;
+;
+; @title :icon
+;
+; @code Usage
+; [pretty-elements/button {:icon (keyword)}]
+; [pretty-elements/button {:icon :any_material_icons_icon_name}]
+; [pretty-elements/button {:icon :any_material_symbols_icon_name}]
+;
+;
+;
+; @title :icon-color
+;
+; @code Usage
+; [pretty-elements/button {:icon-color (keyword or string)}]
+; [pretty-elements/button {:icon-color :soft-blue}]
+; [pretty-elements/button {:icon-color "#888"}]
+;
+; @code Predefined values
+; :inherit,
+; :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning,
+; :black, :grey, :white, :hard-blue, :soft-blue, :hard-green, :khaki-green, :soft-green, :hard-purple, :soft-purple, :hard-red, soft-red
+;
+;
+;
+; @title :icon-family
+;
+; @code Usage
+; [pretty-elements/button {:icon-family (keyword)}]
+; [pretty-elements/button {:icon-family :material-symbols-outlined}]
+;
+; @code Predefined values
+; :material-symbols-filled, :material-symbols-outlined
+;
+;
+;
+; @title :icon-position
+;
+; @code Usage
+; [pretty-elements/button {:icon-position (keyword)}]
+; [pretty-elements/button {:icon-position :left}]
+;
+; @code Predefined values
+; :left, :right
+;
+;
+;
+; @title :icon-size
+;
+; @code Usage
+; [pretty-elements/button {:icon-size (keyword, px or string)}]
+; [pretty-elements/button {:icon-size :xs}]
+; [pretty-elements/button {:icon-size 10}]
+; [pretty-elements/button {:icon-size "10px"}]
+; [pretty-elements/button {:icon-size "5em"}]
+;
+; @code Predefined values
+; :inherit,
+; :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+;
+;
+;
+; @title :indent
+;
+; @code Usage
+; [pretty-elements/button {:indent (map) {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)}}]
+; [pretty-elements/button {:indent {:all :xs}}]
+; [pretty-elements/button {:indent {:all :xs :tr :xxl}}]
+; [pretty-elements/button {:indent {:all 10}}]
+; [pretty-elements/button {:indent {:all "10px"}}]
+; [pretty-elements/button {:indent {:all "5%"}}]
+;
+; @code Predefined values
+; :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+;
+;
+;
+; @title :keypress
+;
+; @code Usage
+; [pretty-elements/button {:keypress (map)}]
+; [pretty-elements/button {:keypress {:key-code 13} :on-click (fn [] ...)}]
+;
+;
+;
+; @title :line-height
+;
+; @code Usage
+; [pretty-elements/button {:line-height (keyword, px or string)}]
+; [pretty-elements/button {:line-height :xs}]
+; [pretty-elements/button {:line-height 10}]
+; [pretty-elements/button {:line-height "10px"}]
+; [pretty-elements/button {:line-height "5em"}]
+;
+; @code Predefined values
+; :auto, :inherit, :text-block,
+; :micro, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+;
+;
+;
+; @title :marker-color
+;
+; @code Usage
+; [pretty-elements/button {:marker-color (keyword or string)}]
+; [pretty-elements/button {:marker-color :soft-blue}]
+; [pretty-elements/button {:marker-color "#888"}]
+;
+; @code Predefined values
+; :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning,
+; :black, :grey, :white, :hard-blue, :soft-blue, :hard-green, :khaki-green, :soft-green, :hard-purple, :soft-purple, :hard-red, soft-red
+;
+;
+;
+; @title :marker-content
+;
+; @code Usage
+; [pretty-elements/button {:marker-content (metamorphic-content)}]
+; [pretty-elements/button {:marker-content "My string"}]
+; [pretty-elements/button {:marker-content :my-dictionary-term}]
+; [pretty-elements/button {:marker-content 123}]
+;
+;
+;
+; @title :marker-position
+;
+; @code Usage
+; [pretty-elements/button {:marker-position (keyword)}]
+; [pretty-elements/button {:marker-position :tr}]
+;
+; @code Predefined values
+; :left, :right, :bottom, :top,
+; :tl, :tr, :br, :bl
+;
+;
+;
+; @title :max-height
+;
+; @code Usage
+; [pretty-elements/button {:max-height (keyword, px or string)}]
+; [pretty-elements/button {:max-height :xs}]
+; [pretty-elements/button {:max-height 10}]
+; [pretty-elements/button {:max-height "10px"}]
+; [pretty-elements/button {:max-height "5%"}]
+;
+; @code Predefined values
+; :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+;
+;
+;
+; @title :max-width
+;
+; @code Usage
+; [pretty-elements/button {:max-width (keyword, px or string)}]
+; [pretty-elements/button {:max-width :xs}]
+; [pretty-elements/button {:max-width 10}]
+; [pretty-elements/button {:max-width "10px"}]
+; [pretty-elements/button {:max-width "5%"}]
+;
+; @code Predefined values
+; :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+;
+;
+;
+; @title :min-height
+;
+; @code Usage
+; [pretty-elements/button {:min-height (keyword, px or string)}]
+; [pretty-elements/button {:min-height :xs}]
+; [pretty-elements/button {:min-height 10}]
+; [pretty-elements/button {:min-height "10px"}]
+; [pretty-elements/button {:min-height "5%"}]
+;
+; @code Predefined values
+; :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+;
+;
+;
+; @title :min-width
+;
+; @code Usage
+; [pretty-elements/button {:min-width (keyword, px or string)}]
+; [pretty-elements/button {:min-width :xs}]
+; [pretty-elements/button {:min-width 10}]
+; [pretty-elements/button {:min-width "10px"}]
+; [pretty-elements/button {:min-width "5%"}]
+;
+; @code Predefined values
+; :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+;
+;
+;
+; @title :on-click
+;
+; @code Usage
+; [pretty-elements/button {:on-click (function or Re-Frame metamorphic-event)}]
+; [pretty-elements/button {:on-click (fn [] (println '...'))}]
+; [pretty-elements/button {:on-click my-function}]
+; [pretty-elements/button {:on-click [:my-event]}]
+;
+;
+;
+; @title :on-mouse-over
+;
+; @code Usage
+; [pretty-elements/button {:on-mouse-over (function or Re-Frame metamorphic-event)}]
+; [pretty-elements/button {:on-mouse-over (fn [] (println '...'))}]
+; [pretty-elements/button {:on-mouse-over my-function}]
+; [pretty-elements/button {:on-mouse-over [:my-event]}]
+;
+;
+;
+; @title :outdent
+;
+; @code Usage
+; [pretty-elements/button {:outdent (map) {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)}}]
+; [pretty-elements/button {:outdent {:all :xs}}]
+; [pretty-elements/button {:outdent {:all :xs :tr :xxl}}]
+; [pretty-elements/button {:outdent {:all 10}}]
+; [pretty-elements/button {:outdent {:all "10px"}}]
+; [pretty-elements/button {:outdent {:all "5%"}}]
+;
+; @code Predefined values
+; :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+;
+;
+;
+; @title :placeholder
+;
+; @code Usage
+; [pretty-elements/button {:placeholder (metamorphic-content)}]
+; [pretty-elements/button {:placeholder "My string"            :content nil}]
+; [pretty-elements/button {:placeholder :my-dictionary-term    :content nil}]
+; [pretty-elements/button {:placeholder 123                    :content nil}]
+; [pretty-elements/button {:placeholder [:div "My hiccup"      :content nil]}]
+; [pretty-elements/button {:placeholder #'my-reagent-component :content nil}]
+;
+;
+;
+; @title :preset
+;
+; @code Usage
+; (pretty-presets/reg-preset! :my-preset   {:fill-color :soft-blue :width :xs})
+; (pretty-presets/reg-preset! :my-preset-f #(merge % {:fill-color :soft-blue :width :xs}))
+; [pretty-elements/button {:preset (keyword)}]
+; [pretty-elements/button {:preset :my-preset}]
+; [pretty-elements/button {:preset :my-preset-f}]
+;
+;
+;
+; @title :progress
+;
+; @code Usage
+; [pretty-elements/button {:progress (percent)}]
+; [pretty-elements/button {:progress 42}]
+;
+;
+;
+; @title :progress-color
+;
+; @code Usage
+; [pretty-elements/button {:progress-color (keyword or string)}]
+; [pretty-elements/button {:progress-color :soft-blue}]
+; [pretty-elements/button {:progress-color "#888"}]
+;
+; @code Predefined values
+; :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning,
+; :black, :grey, :white, :hard-blue, :soft-blue, :hard-green, :khaki-green, :soft-green, :hard-purple, :soft-purple, :hard-red, soft-red
+;
+;
+;
+; @title :progress-direction
+;
+; @code Usage
+; [pretty-elements/button {:progress-direction (keyword)}]
+; [pretty-elements/button {:progress-direction :ltr}]
+;
+; @code Predefined values
+; :ltr, :rtl,
+; :btt, :ttb
+;
+;
+;
+; @title :progress-duration
+;
+; @code Usage
+; [pretty-elements/button {:progress-duration (ms)}]
+; [pretty-elements/button {:progress-duration 250}]
 ;
 ;
 ;
@@ -400,8 +811,19 @@
 ; [pretty-elements/button {:reveal-effect (keyword)}]
 ; [pretty-elements/button {:reveal-effect :opacity}]
 ;
-; @code Values
+; @code Predefined values
 ; :none, :delayed, :opacity
+;
+;
+;
+; @title :target
+;
+; @code Usage
+; [pretty-elements/text {:target (keyword)}]
+; [pretty-elements/text {:target :blank :href "https://..."}]
+;
+; @code Predefined values
+; :blank, :self
 ;
 ;
 ;
@@ -411,8 +833,8 @@
 ; [pretty-elements/text {:text-align (keyword)}]
 ; [pretty-elements/text {:text-align :left}]
 ;
-; @code Values
-; :center, :left, :right,
+; @code Predefined values
+; :center, :left, :right
 ;
 ;
 ;
@@ -420,13 +842,57 @@
 ;
 ; @code Usage
 ; [pretty-elements/button {:text-color (keyword or string)}]
-; [pretty-elements/button {:text-color :hard-purple}]
-; [pretty-elements/button {:text-color "#555"}]
+; [pretty-elements/button {:text-color :soft-blue}]
+; [pretty-elements/button {:text-color "#888"}]
 ;
-; @code Values
+; @code Predefined values
 ; :inherit,
 ; :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning,
 ; :black, :grey, :white, :hard-blue, :soft-blue, :hard-green, :khaki-green, :soft-green, :hard-purple, :soft-purple, :hard-red, soft-red
+;
+;
+;
+; @title :text-overflow
+;
+; @code Usage
+; [pretty-elements/button {:text-overflow (keyword)}]
+; [pretty-elements/button {:text-overflow :ellipsis}]
+;
+; @code Predefined values
+; :inherit,
+; :ellipsis, :hidden, :wrap
+;
+;
+;
+; @title :text-transform
+;
+; @code Usage
+; [pretty-elements/button {:text-transform (keyword)}]
+; [pretty-elements/button {:text-transform :lowercase}]
+;
+; @code Predefined values
+; :capitalize, :lowercase, :uppercase
+;
+;
+;
+; @title :tooltip-content
+;
+; @code Usage
+; [pretty-elements/button {:tooltip-content (metamorphic-content)}]
+; [pretty-elements/button {:tooltip-content "My string"}]
+; [pretty-elements/button {:tooltip-content :my-dictionary-term}]
+; [pretty-elements/button {:tooltip-content 123}]
+;
+;
+;
+; @title :tooltip-position
+;
+; @code Usage
+; [pretty-elements/button {:tooltip-position (keyword)}]
+; [pretty-elements/button {:tooltip-position :left}]
+;
+; @code Predefined values
+; :left, :right
 ;
 ;
 ;
@@ -436,8 +902,8 @@
 ; [pretty-elements/text {:vertical-align (keyword)}]
 ; [pretty-elements/text {:vertical-align :bottom}]
 ;
-; @code Values
-; :top, :center, :bottom,
+; @code Predefined values
+; :bottom, :center, :top,
 ; :space-around, :space-between, :space-evenly
 ;
 ;
@@ -446,11 +912,11 @@
 ;
 ; @code Usage
 ; [pretty-elements/button {:width (keyword, px or string)}]
-; [pretty-elements/button {:width :xxl}]
+; [pretty-elements/button {:width :xs}]
 ; [pretty-elements/button {:width 10}]
 ; [pretty-elements/button {:width "10px"}]
 ; [pretty-elements/button {:width "5%"}]
 ;
-; @code Values
+; @code Predefined values
 ; :auto, :content, :parent,
 ; :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl

@@ -20,7 +20,7 @@
 
 (defn cell-attributes
   ; @param (map) cell-props
-  ; {:on-click (Re-Frame metamorphic-event)(opt)}
+  ; {:on-click (function or Re-Frame metamorphic-event)(opt)}
   ;
   ; @return (map)
   ; {:data-click-effect (keyword)}

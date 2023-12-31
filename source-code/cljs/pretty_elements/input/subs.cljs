@@ -11,15 +11,15 @@
   ;
   ; @param (keyword) input-id
   ; @param (map) input-props
-  ; {:default-value (*)(opt)
+  ; {:projected-value (*)(opt)
   ;  :value-path (Re-Frame path vector)}
   ;
   ; @return (*)
-  [db [_ _ {:keys [default-value value-path] :as input-props}]]
+  [db [_ _ {:keys [projected-value value-path] :as input-props}]]
   (let [stored-value (get-in db value-path)]
        (if (or (= stored-value nil)
                (= stored-value ""))
-           (-> default-value)
+           (-> projected-value)
            (-> stored-value))))
 
 (defn get-input-options
@@ -32,7 +32,7 @@
   ;
   ; @return (vector)
   [db [_ _ {:keys [options options-path]}]]
-  ; XXX#2781 (source-code/cljs/pretty_elements/input/utils.cljs)
+  ; XXX#2781 (source-code/cljs/pretty_elements/input/env.cljs)
   (or options (get-in db options-path)))
 
 (defn validate-input-value?
@@ -66,10 +66,10 @@
   ; @return (boolean)
   [db [_ input-id input-props]]
   ; XXX#4410
-  ; - Integers and keywords aren't seqable values.
+  ; - Integers and keywords are not seqable values.
   ; - NILs, strings, vectors, maps, lists, etc. are seqable values.
-  ; - The following examples are both seqable and empty values:
-  ;   nil, "", [], {}, ()
+  ; - The followings are both seqable and empty values:
+  ;   NIL, "", [], {}, ()
   (let [input-value (r get-input-value db input-id input-props)]
        (and (-> input-value seqable?)
             (-> input-value empty?))))

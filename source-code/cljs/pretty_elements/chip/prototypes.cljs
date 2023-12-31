@@ -1,9 +1,7 @@
 
 (ns pretty-elements.chip.prototypes
-    (:require [fruits.noop.api :refer [return]]
-              [pretty-build-kit.api :as pretty-build-kit]
+    (:require [pretty-build-kit.api :as pretty-build-kit]
               [dom.api :as dom]
-              [pretty-elements.element.side-effects :as element.side-effects]
               [metamorphic-content.api :as metamorphic-content]))
 
 ;; ----------------------------------------------------------------------------
@@ -13,7 +11,7 @@
   [{:keys [font-size on-click] :as button-props}]
   ; nem biztos hogy mind kell a chip-hez!!!!
   (cond-> button-props
-          :derive-fns/default     (pretty-build-kit/default-values      {:content-value-f return :placeholder-value-f return})
+          :derive-fns/default     (pretty-build-kit/default-values      {})
           :text/default           (pretty-build-kit/default-values      {:text-color :default})
           :layout/default         (pretty-build-kit/default-values      {})
           :badge/default          (pretty-build-kit/default-value-group {:badge-content nil :badge-color :primary :badge-position :tr})
@@ -23,8 +21,8 @@
           :tooltip/default        (pretty-build-kit/default-value-group {:tooltip-content nil :tooltip-position :right})
           :badge-content/update   (pretty-build-kit/value-update-fns    {:badge-content   metamorphic-content/compose})
           :tooltip-content/update (pretty-build-kit/value-update-fns    {:tooltip-content metamorphic-content/compose})
-          :on-mouse-over/wrap     (pretty-build-kit/value-wrap-fns      {:on-mouse-over   element.side-effects/dispatch-event-handler!})
-          :on-click/wrap          (pretty-build-kit/value-wrap-fns      {:on-click        element.side-effects/dispatch-event-handler!})
+          :on-mouse-over/wrap     (pretty-build-kit/value-wrap-fns      {:on-mouse-over   pretty-build-kit/dispatch-event-handler!})
+          :on-click/wrap          (pretty-build-kit/value-wrap-fns      {:on-click        pretty-build-kit/dispatch-event-handler!})
           (-> on-click)           (pretty-build-kit/forced-values       {:on-mouse-up     dom/blur-active-element!})))
 
 (defn chip-props-prototype
@@ -36,15 +34,12 @@
   ;
   ; @return (map)
   ; {:border-radius (map)
-  ;  :content-value-f (function)
   ;  :icon-family (keyword)
   ;  :primary-button (map)
   ;   {:icon-family (keyword)}
   ;  :text-color (keyword or string)}
   [{:keys [icon primary-button] :as chip-props}]
-  (merge {:content-value-f  return
-          :placeholder-value-f return
-          :text-color       :default}
+  (merge {:text-color :default}
          (if icon           {:icon-family :material-symbols-outlined})
          (-> chip-props)
          (if primary-button {:primary-button (merge {:icon-family :material-symbols-outlined} primary-button)})))

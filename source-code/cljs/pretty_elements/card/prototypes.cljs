@@ -1,9 +1,7 @@
 
 (ns pretty-elements.card.prototypes
     (:require [metamorphic-content.api :as metamorphic-content]
-              [fruits.noop.api :refer [return]]
               [dom.api :as dom]
-              [pretty-elements.element.side-effects :as element.side-effects]
               [pretty-build-kit.api :as pretty-build-kit]))
 
 ;; ----------------------------------------------------------------------------
@@ -16,7 +14,7 @@
   ; {:badge-content (metamorphic-content)(opt)
   ;  :border-color (keyword or string)(opt)
   ;  :href (string)(opt)
-  ;  :marker-color (keyword)(opt)
+  ;  :marker-color (keyword or string)(opt)
   ;  :on-click (function or Re-Frame metamorphic-event)(opt)}
   ;
   ; @return (map)
@@ -26,9 +24,7 @@
   ;  :border-position (keyword)
   ;  :border-width (keyword, px or string)
   ;  :click-effect (keyword)
-  ;  :content-value-f (function)
   ;  :cursor (keyword or string)
-  ;  :marker-color (keyword)
   ;  :on-click (function)
   ;  :on-mouse-up (function)}
   [{:keys [badge-content border-color href marker-color on-click] :as card-props}]
@@ -38,8 +34,7 @@
   ; Using the 'dom/blur-active-element!' function as 'on-mouse-up' event must be conditional.
   ; Otherwise, in case the card is not clickable and it contains a 'text-field' element
   ; the blur function would drop the focus of the field when the card gets clicked.
-  (merge {:content-value-f return
-          :placeholder-value-f return}
+  (merge {}
          (if badge-content {:badge-color     :primary
                             :badge-position  :tr})
          (if border-color  {:border-position :all
@@ -50,5 +45,5 @@
          (-> card-props)
          (if badge-content {:badge-content (metamorphic-content/compose badge-content)})
          (if href          {:on-mouse-up   #(dom/blur-active-element!)})
-         (if on-click      {:on-click      #(element.side-effects/dispatch-event-handler! on-click)
+         (if on-click      {:on-click      #(pretty-build-kit/dispatch-event-handler! on-click)
                             :on-mouse-up   #(dom/blur-active-element!)})))

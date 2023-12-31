@@ -25,12 +25,12 @@
   ;  :fill-color (keyword or string)(opt)
   ;   Default: :default
   ;  :indent (map)(opt)
-  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
+  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;   Default: {:horizontal :xs :vertical :xs}
-  ;  :min-width (keyword)(opt)
+  ;  :min-width (keyword, px or string)(opt)
   ;   Default: :m
   ;  :outdent (map)(opt)
-  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
+  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;   Default: {:bottom :xs :vertical :xs}
   ;  :primary-button (map)(opt)
   ;   Default: {:border-radius {:all :s}

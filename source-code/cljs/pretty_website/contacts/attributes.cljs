@@ -1,7 +1,7 @@
 
 (ns pretty-website.contacts.attributes
     (:require [fruits.href.api :as href]
-              [pretty-css.api  :as pretty-css]))
+              [pretty-build-kit.api  :as pretty-build-kit]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -115,7 +115,7 @@
   [_ {:keys [style] :as contacts-props}]
   (-> {:class :pw-contacts--body
        :style style}
-      (pretty-css/indent-attributes contacts-props)))
+      (pretty-build-kit/indent-attributes contacts-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -130,6 +130,6 @@
   ; {:class (keyword or keywords in vector)}
   [_ contacts-props]
   (-> {:class :pw-contacts}
-      (pretty-css/class-attributes   contacts-props)
-      (pretty-css/state-attributes   contacts-props)
-      (pretty-css/outdent-attributes contacts-props)))
+      (pretty-build-kit/class-attributes   contacts-props)
+      (pretty-build-kit/outdent-attributes contacts-props)
+      (pretty-build-kit/state-attributes   contacts-props)))

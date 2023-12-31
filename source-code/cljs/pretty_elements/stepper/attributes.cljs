@@ -1,6 +1,6 @@
 
 (ns pretty-elements.stepper.attributes
-    (:require [pretty-css.api :as pretty-css]))
+    (:require [pretty-build-kit.api :as pretty-build-kit]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -18,7 +18,7 @@
   [_ {:keys [style] :as stepper-props}]
   (-> {:class :pe-stepper--body
        :style style}
-      (pretty-css/indent-attributes stepper-props)))
+      (pretty-build-kit/indent-attributes stepper-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -33,6 +33,6 @@
   ; {:class (keyword or keywords in vector)}
   [_ stepper-props]
   (-> {:class :pe-stepper}
-      (pretty-css/class-attributes   stepper-props)
-      (pretty-css/state-attributes   stepper-props)
-      (pretty-css/outdent-attributes stepper-props)))
+      (pretty-build-kit/class-attributes   stepper-props)
+      (pretty-build-kit/outdent-attributes stepper-props)
+      (pretty-build-kit/state-attributes   stepper-props)))

@@ -40,11 +40,7 @@
   ; @param (map) menu-props
   ; {:menu-items (maps in vector)
   ;   [{:content (metamorphic-content)(opt)
-  ;     :content-value-f (function)(opt)
-  ;      Default: return
   ;     :placeholder (metamorphic-content)(opt)
-  ;     :placeholder-value-f (function)(opt)
-  ;      Default: return
   ;     :preset (keyword)(opt)}]
   ;  :surface (map)(opt)
   ;   {:border-color (keyword or string)(opt)

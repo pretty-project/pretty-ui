@@ -1,6 +1,6 @@
 
 (ns pretty-elements.breadcrumbs.attributes
-    (:require [pretty-css.api :as pretty-css]))
+    (:require [pretty-build-kit.api :as pretty-build-kit]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -29,11 +29,11 @@
        :data-selectable     false
        :data-text-overflow  :ellipsis
        :disabled            disabled?}
-      (pretty-css/color-attributes  crumb-props)
-      (pretty-css/cursor-attributes crumb-props)
-      (pretty-css/effect-attributes crumb-props)
-      (pretty-css/link-attributes   crumb-props)
-      (pretty-css/state-attributes  crumb-props)))
+      (pretty-build-kit/color-attributes  crumb-props)
+      (pretty-build-kit/cursor-attributes crumb-props)
+      (pretty-build-kit/effect-attributes crumb-props)
+      (pretty-build-kit/link-attributes   crumb-props)
+      (pretty-build-kit/state-attributes  crumb-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -55,7 +55,7 @@
        :data-column-gap  :xs
        :data-scroll-axis :x
        :style            style}
-      (pretty-css/indent-attributes breadcrumbs-props)))
+      (pretty-build-kit/indent-attributes breadcrumbs-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -70,6 +70,6 @@
   ; {:class (keyword or keywords in vector)}
   [_ breadcrumbs-props]
   (-> {:class :pe-breadcrumbs}
-      (pretty-css/class-attributes   breadcrumbs-props)
-      (pretty-css/state-attributes   breadcrumbs-props)
-      (pretty-css/outdent-attributes breadcrumbs-props)))
+      (pretty-build-kit/class-attributes   breadcrumbs-props)
+      (pretty-build-kit/outdent-attributes breadcrumbs-props)
+      (pretty-build-kit/state-attributes   breadcrumbs-props)))

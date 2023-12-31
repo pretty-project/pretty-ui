@@ -1,7 +1,7 @@
 
 (ns pretty-elements.switch.attributes
     (:require [dom.api        :as dom]
-              [pretty-css.api :as pretty-css]
+              [pretty-build-kit.api :as pretty-build-kit]
               [re-frame.api   :as r]))
 
 ;; ----------------------------------------------------------------------------
@@ -49,8 +49,8 @@
   ; {}
   [_ {{:keys [all]} :border-radius :as switch-props}]
   (-> {:class :pe-switch--option-track
-       :style {"--adaptive-border-radius" (pretty-css/adaptive-border-radius all 0.75)}}
-      (pretty-css/border-attributes switch-props)))
+       :style {"--adaptive-border-radius" (pretty-build-kit/adaptive-border-radius all 0.75)}}
+      (pretty-build-kit/border-attributes switch-props)))
 
 (defn switch-option-attributes
   ; @ignore
@@ -70,9 +70,9 @@
        (-> {:class         :pe-switch--option
             :data-switched option-switched?
             :disabled      disabled?}
-           (pretty-css/effect-attributes switch-props)
-           (pretty-css/mouse-event-attributes {:on-click    on-switch-event
-                                               :on-mouse-up dom/blur-active-element!}))))
+           (pretty-build-kit/effect-attributes switch-props)
+           (pretty-build-kit/mouse-event-attributes {:on-click    on-switch-event
+                                                     :on-mouse-up dom/blur-active-element!}))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -95,7 +95,7 @@
        :data-options-orientation options-orientation
        :data-selectable          false
        :style                    style}
-      (pretty-css/indent-attributes switch-props)))
+      (pretty-build-kit/indent-attributes switch-props)))
 
 (defn switch-attributes
   ; @ignore
@@ -107,6 +107,6 @@
   ; {}
   [_ switch-props]
   (-> {:class :pe-switch}
-      (pretty-css/class-attributes   switch-props)
-      (pretty-css/state-attributes   switch-props)
-      (pretty-css/outdent-attributes switch-props)))
+      (pretty-build-kit/class-attributes   switch-props)
+      (pretty-build-kit/outdent-attributes switch-props)
+      (pretty-build-kit/state-attributes   switch-props)))

@@ -1,6 +1,6 @@
 
 (ns pretty-website.multi-menu.attributes
-    (:require [pretty-css.api :as pretty-css]))
+    (:require [pretty-build-kit.api :as pretty-build-kit]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -18,7 +18,7 @@
   [_ {:keys [style] :as menu-props}]
   (-> {:class :pw-multi-menu--body
        :style style}
-      (pretty-css/indent-attributes menu-props)))
+      (pretty-build-kit/indent-attributes menu-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -33,6 +33,6 @@
   ; {:class (keyword or keywords in vector)}
   [_ menu-props]
   (-> {:class :pw-multi-menu}
-      (pretty-css/class-attributes   menu-props)
-      (pretty-css/state-attributes   menu-props)
-      (pretty-css/outdent-attributes menu-props)))
+      (pretty-build-kit/class-attributes   menu-props)
+      (pretty-build-kit/state-attributes   menu-props)
+      (pretty-build-kit/outdent-attributes menu-props)))

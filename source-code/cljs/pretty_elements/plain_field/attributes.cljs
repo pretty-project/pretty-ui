@@ -1,7 +1,7 @@
 
 (ns pretty-elements.plain-field.attributes
     (:require [fruits.hiccup.api                 :as hiccup]
-              [pretty-css.api                    :as pretty-css]
+              [pretty-build-kit.api                    :as pretty-build-kit]
               [pretty-elements.plain-field.env   :as plain-field.env]
               [pretty-elements.plain-field.utils :as plain-field.utils]
               [re-frame.api                      :as r]))
@@ -89,8 +89,8 @@
        :data-box-shadow-color :default
        :id                    (hiccup/value field-id "surface")
        :on-mouse-down         #(.preventDefault %)}
-      (pretty-css/border-attributes surface)
-      (pretty-css/indent-attributes surface)))
+      (pretty-build-kit/border-attributes surface)
+      (pretty-build-kit/indent-attributes surface)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -108,7 +108,7 @@
   [_ {:keys [style] :as field-props}]
   (-> {:class :pe-plain-field--body
        :style style}
-      (pretty-css/indent-attributes field-props)))
+      (pretty-build-kit/indent-attributes field-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -125,6 +125,6 @@
   [_ {:keys [disabled?] :as field-props}]
   (-> {:class        :pe-plain-field
        :data-covered disabled?}
-      (pretty-css/class-attributes   field-props)
-      (pretty-css/state-attributes   field-props)
-      (pretty-css/outdent-attributes field-props)))
+      (pretty-build-kit/class-attributes   field-props)
+      (pretty-build-kit/outdent-attributes field-props)
+      (pretty-build-kit/state-attributes   field-props)))

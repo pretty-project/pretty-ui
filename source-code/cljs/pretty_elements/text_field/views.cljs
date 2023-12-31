@@ -171,7 +171,6 @@
   ;     :hover-effect (keyword)(opt)
   ;     :icon (keyword)
   ;     :icon-family (keyword)(opt)
-  ;      :material-symbols-filled, :material-symbols-outlined
   ;      Default: :material-symbols-outlined
   ;     :label (string)(opt)
   ;     :on-click (function or Re-Frame metamorphic-event)(opt)
@@ -192,24 +191,20 @@
   ;  :font-size (keyword, px or string)(opt)
   ;   Default: :s
   ;  :font-weight (keyword or integer)(opt)
-  ;   :inherit, :thin, :extra-light, :light, :normal, :medium, :semi-bold, :bold, :extra-bold, :black
   ;   Default: :normal
   ;  :form-id (keyword)(opt)
   ;   Different inputs with the same form ID could be validated at the same time.
   ;  :height (keyword, px or string)(opt)
   ;  :helper (metamorphic-content)(opt)
   ;  :indent (map)(opt)
-  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
+  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :info-text (metamorphic-content)(opt)
   ;  :initial-value (string)(opt)
   ;  :label (metamorphic-content)(opt)
-  ;  :line-height (keyword or px)(opt)
-  ;   :auto, :inherit, :text-block, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;  :line-height (keyword, px or string)(opt)
   ;   Default: :text-block
-  ;  :marker-color (keyword)(opt)
-  ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
+  ;  :marker-color (keyword or string)(opt)
   ;  :marker-position (keyword)(opt)
-  ;   :tl, :tr, :br, :bl, left, :right, bottom, :top
   ;  :max-length (integer)(opt)
   ;  :modifier-f (function)(opt)
   ;  :on-blur (Re-Frame metamorphic-event)(opt)
@@ -236,7 +231,7 @@
   ;  :on-valid (Re-Frame metamorphic-event)(opt)
   ;   This event takes the field content as its last parameter.
   ;  :outdent (map)(opt)
-  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
+  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :placeholder (metamorphic-content)(opt)
   ;  :preset (keyword)(opt)
   ;  :reveal-effect (keyword)(opt)
@@ -247,12 +242,8 @@
   ;   {:border-radius (map)(opt)
   ;     {:all, :tl, :tr, :br, :bl (keyword, px or string)(opt)}
   ;    :content (metamorphic-content)(opt)
-  ;    :content-value-f (function)(opt)
-  ;     Default: return
   ;    :indent (map)(opt)
-  ;    :placeholder (metamorphic-content)(opt)
-  ;    :placeholder-value-f (function)(opt)
-  ;     Default: return}
+  ;    :placeholder (metamorphic-content)(opt)}
   ;  :type (keyword)(opt)
   ;   :email, :number, :password, :tel, :text
   ;   Default: :text

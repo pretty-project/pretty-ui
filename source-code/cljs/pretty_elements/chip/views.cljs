@@ -15,7 +15,7 @@
   ; @param (keyword) chip-id
   ; @param (map) chip-props
   ; {}
-  [chip-id {:keys [content content-value-f href icon icon-family on-click primary-button] :as chip-props}]
+  [chip-id {:keys [content href icon icon-family on-click placeholder primary-button] :as chip-props}]
   [:div (chip.attributes/chip-attributes chip-id chip-props)
         [(cond href :a on-click :button :else :div)
          (chip.attributes/chip-body-attributes chip-id chip-props)
@@ -25,8 +25,8 @@
          (if primary-button [:div {:class :pe-chip--primary-button-spacer}])
          (if icon           [:i   {:class :pe-chip--icon :data-icon-family icon-family :data-icon-size :xs} icon]
                             [:div {:class :pe-chip--icon-placeholder}])
-         (if content        [:div (chip.attributes/chip-content-attributes chip-id chip-props)
-                                  [metamorphic-content/compose (content-value-f content)]])]])
+         (cond content      [:div (chip.attributes/chip-content-attributes chip-id chip-props) [metamorphic-content/compose content]]
+               placeholder  [:div (chip.attributes/chip-content-attributes chip-id chip-props) [metamorphic-content/compose placeholder]])]])
 
 (defn element
   ; @param (keyword)(opt) chip-id
@@ -49,19 +49,15 @@
   ;   TODO Makes the chip clickable
   ;  :icon (keyword)(opt)
   ;  :icon-family (keyword)(opt)
-  ;   :material-symbols-filled, :material-symbols-outlined
   ;   Default: :material-symbols-outlined
   ;  :indent (map)(opt)
-  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :min-width (keyword)(opt)
-  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
+  ;  :min-width (keyword, px or string)(opt)
   ;  :on-click (function or Re-Frame metamorphic-event)(opt)
   ;   TODO Makes the chip clickable
   ;  :outdent (map)(opt)
-  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
+  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :placeholder (metamorphic-content)(opt)
-  ;  :placeholder-value-f (function)(opt)
-  ;   Default: return
   ;  :preset (keyword)(opt)
   ;  :primary-button (map)(opt)
   ;   {:click-effect (keyword)(opt)
@@ -69,7 +65,6 @@
   ;    :hover-effect (keyword)(opt)
   ;    :icon (keyword)
   ;    :icon-family (keyword)(opt)
-  ;     :material-symbols-filled, :material-symbols-outlined
   ;     Default: :material-symbols-outlined
   ;    :on-click (function or Re-Frame metamorphic-event)}
   ;  :style (map)(opt)
@@ -78,7 +73,6 @@
   ;   :blank, :self
   ;   TODO
   ;  :text-color (keyword or string)(opt)
-  ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
   ;   Default: :default
   ;  :width (keyword, px or string)(opt)}
   ;

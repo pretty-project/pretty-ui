@@ -1,6 +1,6 @@
 
 (ns pretty-elements.multi-field.attributes
-    (:require [pretty-css.api :as pretty-css]))
+    (:require [pretty-build-kit.api :as pretty-build-kit]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -18,7 +18,7 @@
   [_ {:keys [style] :as group-props}]
   (-> {:class :pe-multi-field--body
        :style style}
-      (pretty-css/indent-attributes group-props)))
+      (pretty-build-kit/indent-attributes group-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -36,6 +36,6 @@
   ; Therefore, no need to the group reacts to it.
   (let [group-props (dissoc group-props :disabled?)]
        (-> {:class :pe-multi-field}
-           (pretty-css/class-attributes   group-props)
-           (pretty-css/state-attributes   group-props)
-           (pretty-css/outdent-attributes group-props))))
+           (pretty-build-kit/class-attributes   group-props)
+           (pretty-build-kit/outdent-attributes group-props)
+           (pretty-build-kit/state-attributes   group-props))))

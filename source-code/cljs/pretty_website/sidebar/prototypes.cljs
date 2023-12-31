@@ -1,7 +1,6 @@
 
 (ns pretty-website.sidebar.prototypes
-    (:require [pretty-build-kit.api :as pretty-build-kit]
-              [fruits.noop.api :refer [return]]))
+    (:require [pretty-build-kit.api :as pretty-build-kit]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -32,9 +31,7 @@
   ; the right and vica versa.
   (merge {:cover-color :black
           :fill-color  :white
-          :position    :left
-          :content-value-f return
-          :placeholder-value-f return}
+          :position    :left}
          (if border-color {:border-position (case position :right :left :right)
                            :border-width :xxs})
          (-> sidebar-props)))

@@ -15,7 +15,7 @@
   ;  :icon-family (keyword)
   ;  :size (px)}
   [avatar-props]
-  (merge {:colors      ["var( --color-muted )"]
+  (merge {:colors      ["var( --text-color-muted )"]
           :icon        :person
           :icon-family :material-symbols-outlined
           :size        60}

@@ -3,7 +3,7 @@
     (:require [fruits.hiccup.api                 :as hiccup]
               [fruits.random.api                 :as random]
               [metamorphic-content.api           :as metamorphic-content]
-              [pretty-css.api                    :as pretty-css]
+              [pretty-build-kit.api                    :as pretty-build-kit]
               [pretty-elements.element.views     :as element.views]
               [pretty-elements.input.env         :as input.env]
               [pretty-elements.switch.attributes :as switch.attributes]
@@ -76,20 +76,18 @@
   ;  :class (keyword or keywords in vector)(opt)
   ;  :click-effect (keyword)(opt)
   ;   Default: :opacity
-  ;  :default-value (boolean)(opt)
   ;  :disabled? (boolean)(opt)
   ;  :font-size (keyword, px or string)(opt)
   ;   Default: :s
   ;  :helper (metamorphic-content)(opt)
   ;  :hover-effect (keyword)(opt)
   ;  :indent (map)(opt)
-  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
+  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :info-text (metamorphic-content)(opt)
   ;  :initial-options (vector)(opt)
   ;  :initial-value (boolean)(opt)
   ;  :label (metamorphic-content)(opt)
-  ;  :marker-color (keyword)(opt)
-  ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
+  ;  :marker-color (keyword or string)(opt)
   ;  :on-check (Re-Frame metamorphic-event)(opt)
   ;  :on-uncheck (Re-Frame metamorphic-event)(opt)
   ;  :option-helper-f (function)(opt)
@@ -103,8 +101,9 @@
   ;   Default: :vertical
   ;  :options-path (Re-Frame path vector)(opt)
   ;  :outdent (map)(opt)
-  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
+  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :preset (keyword)(opt)
+  ;  :projected-value (*)(opt)
   ;  :style (map)(opt)
   ;  :value-path (Re-Frame path vector)(opt)}
   ;

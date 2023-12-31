@@ -44,13 +44,13 @@
   ;  :horizontal-align (keyword)(opt)
   ;   Default: :center
   ;  :indent (map)(opt)
-  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
+  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :initial-item (*)(opt)
   ;   Default: {}
   ;  :label (metamorphic-content)
   ;  :on-change (Re-Frame metamorphic-event)(opt)
   ;  :outdent (map)(opt)
-  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
+  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :style (map)(opt)
   ;  :value-path (Re-Frame path vector)}
   ;

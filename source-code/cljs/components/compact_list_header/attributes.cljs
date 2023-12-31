@@ -1,6 +1,6 @@
 
 (ns components.compact-list-header.attributes
-    (:require [pretty-css.api :as pretty-css]))
+    (:require [pretty-build-kit.api :as pretty-build-kit]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -16,9 +16,9 @@
   [_ {:keys [style] :as header-props}]
   (-> {:class :c-compact-list-header--body
        :style style}
-      (pretty-css/border-attributes header-props)
-      (pretty-css/color-attributes  header-props)
-      (pretty-css/indent-attributes header-props)))
+      (pretty-build-kit/border-attributes header-props)
+      (pretty-build-kit/color-attributes  header-props)
+      (pretty-build-kit/indent-attributes header-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -31,6 +31,6 @@
   ; {}
   [_ header-props]
   (-> {:class :c-compact-list-header}
-      (pretty-css/class-attributes   header-props)
-      (pretty-css/state-attributes   header-props)
-      (pretty-css/outdent-attributes header-props)))
+      (pretty-build-kit/class-attributes   header-props)
+      (pretty-build-kit/outdent-attributes header-props)
+      (pretty-build-kit/state-attributes   header-props)))

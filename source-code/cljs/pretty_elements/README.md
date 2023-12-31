@@ -34,7 +34,7 @@
 (defn element
   ; @param (keyword)(opt) button-id
   ; @param (map) button-props
-  ; {:on-click (Re-Frame metamorphic-event)}
+  ; {:on-click (function or Re-Frame metamorphic-event)}
   ([button-props]
    [element (random/generate-keyword) button-props])
 

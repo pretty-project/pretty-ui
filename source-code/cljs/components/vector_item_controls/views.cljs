@@ -111,7 +111,6 @@
   ;  :item-dex (integer)
   ;  :on-change (Re-Frame metamorphic-event)(opt)
   ;  :tooltip-position (keyword)(opt)
-  ;   :left, :right
   ;   Default: :right
   ;  :value-path (Re-Frame path vector)}
   ;

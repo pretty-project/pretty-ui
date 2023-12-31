@@ -1,8 +1,7 @@
 
 (ns pretty-elements.menu-bar.attributes
     (:require [dom.api        :as dom]
-              [pretty-css.api :as pretty-css]
-              [pretty-elements.element.side-effects :as element.side-effects]))
+              [pretty-build-kit.api :as pretty-build-kit]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -18,7 +17,7 @@
   ; {:class (keyword or keywords in vector)}
   [_ _ item-props]
   (-> {:class :pe-menu-bar--menu-item--icon}
-      (pretty-css/icon-attributes item-props)))
+      (pretty-build-kit/icon-attributes item-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -35,7 +34,7 @@
   [_ _ item-props]
   (-> {:class              :pe-menu-bar--menu-item--label
        :data-text-overflow :hidden}
-      (pretty-css/font-attributes item-props)))
+      (pretty-build-kit/font-attributes item-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -67,14 +66,14 @@
                              :data-click-effect :opacity
                              :data-hover-effect hover-effect
                              :on-mouse-up       #(dom/blur-active-element!)}
-                            (some? on-click)      (assoc :on-click      #(element.side-effects/dispatch-event-handler! on-click))
-                            (some? on-mouse-over) (assoc :on-mouse-over #(element.side-effects/dispatch-event-handler! on-mouse-over))))
-      (pretty-css/badge-attributes  item-props)
-      (pretty-css/border-attributes item-props)
-      (pretty-css/color-attributes  item-props)
-      (pretty-css/indent-attributes item-props)
-      (pretty-css/link-attributes   item-props)
-      (pretty-css/marker-attributes item-props)))
+                            (some? on-click)      (assoc :on-click      #(pretty-build-kit/dispatch-event-handler! on-click))
+                            (some? on-mouse-over) (assoc :on-mouse-over #(pretty-build-kit/dispatch-event-handler! on-mouse-over))))
+      (pretty-build-kit/badge-attributes  item-props)
+      (pretty-build-kit/border-attributes item-props)
+      (pretty-build-kit/color-attributes  item-props)
+      (pretty-build-kit/indent-attributes item-props)
+      (pretty-build-kit/link-attributes   item-props)
+      (pretty-build-kit/marker-attributes item-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -90,7 +89,7 @@
   ; {}
   [_ _ item-props]
   (-> {:class :pe-menu-bar--menu-item}
-      (pretty-css/outdent-attributes item-props)))
+      (pretty-build-kit/outdent-attributes item-props)))
 
 (defn menu-bar-items-attributes
   ; @ignore
@@ -125,7 +124,7 @@
   (-> {:class           :pe-menu-bar--body
        :data-selectable false
        :style           style}
-      (pretty-css/indent-attributes bar-props)))
+      (pretty-build-kit/indent-attributes bar-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -140,6 +139,6 @@
   ; {}
   [_ bar-props]
   (-> {:class :pe-menu-bar}
-      (pretty-css/class-attributes   bar-props)
-      (pretty-css/state-attributes   bar-props)
-      (pretty-css/outdent-attributes bar-props)))
+      (pretty-build-kit/class-attributes   bar-props)
+      (pretty-build-kit/outdent-attributes bar-props)
+      (pretty-build-kit/state-attributes   bar-props)))

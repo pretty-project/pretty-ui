@@ -64,7 +64,7 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   ; {:border-color (keyword or string)(opt)
-  ;  :marker-color (keyword)(opt)}
+  ;  :marker-color (keyword or string)(opt)}
   ;
   ; @return (map)
   ; {:border-position (keyword)
@@ -74,7 +74,7 @@
   ;  :font-size (keyword, px or string)
   ;  :font-weight (keyword or integer)
   ;  :form-id (keyword)
-  ;  :line-height (keyword)
+  ;  :line-height (keyword, px or string)
   ;  :marker-position (keyword)
   ;  :type (keyword)
   ;  :value-path (Re-Frame path vector)}
@@ -82,11 +82,6 @@
   ; XXX#5068
   ; By using the '<-walk' function the ':on-blur', ':on-type-ended' and ':on-focus'
   ; events take the 'field-props' map AFTER it gets merged with the default values!
-
-
-  ; surface
-  ; {:content-value-f return :placeholder-value-f return}
-
   (<-walk {:field-content-f return
            :field-value-f   return
            :font-size       :s

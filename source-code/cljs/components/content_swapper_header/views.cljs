@@ -32,7 +32,7 @@
   ;   Default: :chevron_left
   ;  :icon-position (keyword)(opt)
   ;   Default: :left
-  ;  :icon-size (keyword)(opt)
+  ;  :icon-size (keyword, px or string)(opt)
   ;   Default: :xl
   ;  :indent (map)(opt)
   ;   Default: {:horizontal :xs}

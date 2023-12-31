@@ -74,18 +74,16 @@
   ;  :class (keyword or keywords in vector)(opt)
   ;  :click-effect (keyword)(opt)
   ;   Default: :opacity
-  ;  :default-value (boolean)(opt)
   ;  :disabled? (boolean)(opt)
   ;  :font-size (keyword, px or string)(opt)
   ;   Default: :s
   ;  :helper (metamorphic-content)(opt)
   ;  :hover-effect (keyword)(opt)
   ;  :indent (map)(opt)
-  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
+  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :initial-options (vector)(opt)
   ;  :initial-value (boolean)(opt)
-  ;  :marker-color (keyword)(opt)
-  ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
+  ;  :marker-color (keyword or string)(opt)
   ;  :on-checked (function or Re-Frame metamorphic-event)(opt)
   ;   This event takes the checked option's value as its last parameter.
   ;  :on-unchecked (function or Re-Frame metamorphic-event)(opt)
@@ -102,8 +100,9 @@
   ;  :options-path (Re-Frame path vector)(opt)
   ;  :label (metamorphic-content)(opt)
   ;  :outdent (map)(opt)
-  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
+  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :preset (keyword)(opt)
+  ;  :projected-value (*)(opt)
   ;  :style (map)(opt)
   ;  :value-path (Re-Frame path vector)(opt)}
   ;

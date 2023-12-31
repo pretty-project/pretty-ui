@@ -22,7 +22,7 @@
       (let [stored-value (get-in db value-path)]
            {:dispatch-later [(if autofocus?    {:ms 50 :fx [:pretty-elements.plain-field/focus-field! field-id]})]
             :dispatch-n     [(if initial-value [:pretty-elements.plain-field/use-initial-value! field-id field-props])
-                             [:pretty-elements.element/dispatch-event-handler! on-mount (or initial-value stored-value)]]})))
+                             [:pretty-build-kit/dispatch-event-handler! on-mount (or initial-value stored-value)]]})))
 
 (r/reg-event-fx :pretty-elements.plain-field/field-will-unmount
   ; @ignore
@@ -35,7 +35,7 @@
   (fn [{:keys [db]} [_ field-id {:keys [autoclear? on-unmount value-path] :as field-props}]]
       (let [stored-value (get-in db value-path)]
            {:db       (if autoclear? (r plain-field.events/clear-value! db field-id field-props) db)
-            :dispatch [:pretty-elements.element/dispatch-event-handler! on-unmount stored-value]})))
+            :dispatch [:pretty-build-kit/dispatch-event-handler! on-unmount stored-value]})))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -70,8 +70,8 @@
            (if-let [field-focused? (input.env/input-focused? field-id)]
                    {:db       (r plain-field.events/store-value! db field-id field-props field-content)
                     :fx       [:pretty-elements.plain-field/show-surface! field-id]
-                    :dispatch [:pretty-elements.element/dispatch-event-handler! on-type-ended field-content]}
-                   {:dispatch [:pretty-elements.element/dispatch-event-handler! on-type-ended field-content]}))))
+                    :dispatch [:pretty-build-kit/dispatch-event-handler! on-type-ended field-content]}
+                   {:dispatch [:pretty-build-kit/dispatch-event-handler! on-type-ended field-content]}))))
 
 (r/reg-event-fx :pretty-elements.plain-field/field-blurred
   ; @ignore
@@ -81,21 +81,21 @@
   ; {:on-blur (function or Re-Frame metamorphic-event)(opt)}
   (fn [{:keys [db]} [_ field-id {:keys [on-blur] :as field-props}]]
       ; - When the user leaves a field it writes its actual field content into the Re-Frame state immediately.
-      ; - Normally this state-writing action happens delayed after last key is being pressed
-      ;   (when the ':pretty-elements.plain-field/type-ended' effect is being dispatched),
+      ; - Normally this state-writing action happens delayed after the last key is pressed
+      ;   (when the ':pretty-elements.plain-field/type-ended' effect is dispatched),
       ;   but there could be a case when it has to happen immediately.
-      ;   E.g., The user ends typing and quickly clicks on a button that validates
-      ;         the field or validates a form that contains the field.
+      ;   E.g., The user ends typing and quickly clicks on a button that triggers the validation
+      ;         of the field or a validation of a form that contains the field.
       ;         When the validator functions are being applied on the stored value of
       ;         the field (stored in the Re-Frame state) it's important to the state
       ;         contains the actual field content!
       ;         The solution is that the 'on-mouse-down' event of the button fires the
       ;         'on-blur' event of the field and that event writes the field content into
       ;         the state immediately and when the 'on-mouse-up' event of the button
-      ;         starts the validating, the actual field content is already in the application state.
+      ;         triggers the validation, the actual field content will be already in the application state.
       (let [field-content (plain-field.env/get-field-content field-id)]
            {:db         (r plain-field.events/store-value! db field-id field-props field-content)
-            :dispatch-n [[:pretty-elements.element/dispatch-event-handler! on-blur field-content]]
+            :dispatch-n [[:pretty-build-kit/dispatch-event-handler! on-blur field-content]]
             :fx-n       [[:pretty-elements.plain-field/hide-surface!      field-id]
                          [:pretty-elements.input/unmark-input-as-focused! field-id]
                          [:pretty-elements.plain-field/quit-type-mode!    field-id]]})))
@@ -108,7 +108,7 @@
   ; {:on-focus (function or Re-Frame metamorphic-event)(opt)}
   (fn [_ [_ field-id {:keys [on-focus]}]]
       (let [field-content (plain-field.env/get-field-content field-id)]
-           {:dispatch-n [[:pretty-elements.element/dispatch-event-handler! on-focus field-content]]
+           {:dispatch-n [[:pretty-build-kit/dispatch-event-handler! on-focus field-content]]
             :fx-n       [[:pretty-elements.plain-field/show-surface!    field-id]
                          [:pretty-elements.input/mark-input-as-focused! field-id]
                          [:pretty-elements.plain-field/set-type-mode!   field-id]]})))

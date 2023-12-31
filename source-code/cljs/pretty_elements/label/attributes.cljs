@@ -2,7 +2,7 @@
 (ns pretty-elements.label.attributes
     (:require [dom.api                            :as dom]
               [metamorphic-content.api            :as metamorphic-content]
-              [pretty-css.api                     :as pretty-css]
+              [pretty-build-kit.api                     :as pretty-build-kit]
               [pretty-elements.label.side-effects :as label.side-effects]
               [pretty-elements.label.utils        :as label.utils]))
 
@@ -69,7 +69,7 @@
   [_ {:keys [target-id] :as label-props}]
   (-> {:class :pe-label--content
        :for   target-id}
-      (pretty-css/text-attributes label-props)))
+      (pretty-build-kit/text-attributes label-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -87,16 +87,16 @@
   (-> {:class               :pe-label--body
        :style               style
        :data-letter-spacing :auto}
-      (pretty-css/border-attributes           label-props)
-      (pretty-css/color-attributes            label-props)
-      (pretty-css/font-attributes             label-props)
-      (pretty-css/element-min-size-attributes label-props)
-      (pretty-css/element-size-attributes     label-props)
-      (pretty-css/indent-attributes           label-props)
-      (pretty-css/marker-attributes           label-props)
-      (pretty-css/row-attributes              label-props)
-      (pretty-css/text-attributes             label-props)
-      (pretty-css/tooltip-attributes          label-props)))
+      (pretty-build-kit/border-attributes           label-props)
+      (pretty-build-kit/color-attributes            label-props)
+      (pretty-build-kit/font-attributes             label-props)
+      (pretty-build-kit/element-min-size-attributes label-props)
+      (pretty-build-kit/element-size-attributes     label-props)
+      (pretty-build-kit/indent-attributes           label-props)
+      (pretty-build-kit/marker-attributes           label-props)
+      (pretty-build-kit/row-attributes              label-props)
+      (pretty-build-kit/text-attributes             label-props)
+      (pretty-build-kit/tooltip-attributes          label-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -111,7 +111,7 @@
   ; {}
   [_ label-props]
   (-> {:class :pe-label}
-      (pretty-css/class-attributes        label-props)
-      (pretty-css/state-attributes        label-props)
-      (pretty-css/outdent-attributes      label-props)
-      (pretty-css/wrapper-size-attributes label-props)))
+      (pretty-build-kit/class-attributes        label-props)
+      (pretty-build-kit/outdent-attributes      label-props)
+      (pretty-build-kit/state-attributes        label-props)
+      (pretty-build-kit/wrapper-size-attributes label-props)))

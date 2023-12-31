@@ -37,7 +37,7 @@
   ; XXX#7234
   ; If a checkbox element ...
   ; ... displays more than one option, then the selected options' values
-  ;     will be listed in a vector (and stored in the application state).
+  ;     will be listed in a vector (in the application state).
   ;     {:my-value ["Selected option #1" "Selected option #2"]}
   ; ... displays only one option, then the selected option's value
   ;     will be stored as a single value (in the application state).

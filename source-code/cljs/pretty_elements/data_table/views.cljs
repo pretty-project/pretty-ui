@@ -75,36 +75,26 @@
   ;  :columns (maps in vector)(opt)
   ;   [{:cells (maps in vector)
   ;      [{:content (metamorphic-content)(opt)
-  ;        :content-value-f (function)(opt)
-  ;         Default: return
   ;        :font-size (keyword, px or string)(opt)
   ;         Default: :s
   ;        :font-weight (keyword or integer)(opt)
-  ;         :inherit, :thin, :extra-light, :light, :normal, :medium, :semi-bold, :bold, :extra-bold, :black
   ;         Default :normal
   ;        :horizontal-align (keyword)(opt)
   ;         Default: :left
   ;        :indent (map)(opt)
-  ;        :line-height (keyword)(opt)
-  ;         :auto, :inherit, :text-block, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;        :line-height (keyword, px or string)(opt)
   ;         Default: :text-block
   ;        :placeholder (metamorphic-content)(opt)
-  ;        :placeholder-value-f (function)(opt)
-  ;         Default: return
   ;        :preset (keyword)(opt)
   ;        :selectable? (boolean)(opt)
   ;         Default: true
   ;        :text-color (keyword or string)(opt)
-  ;         :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
   ;         Default: :inherit
   ;        :text-overflow (keyword)(opt)
-  ;         :ellipsis, :hidden, :wrap
   ;         Default: :ellipsis
   ;        :text-transform (keyword)(opt)
-  ;         :capitalize, :lowercase, :uppercase
   ;        :tooltip-content (metamorphic-content)(opt)
-  ;        :tooltip-position (keyword)(opt)
-  ;         :left, :right}]
+  ;        :tooltip-position (keyword)(opt)}]
   ;     :preset (keyword)(opt)
   ;     :template (string)(opt)
   ;      Default: "repeat(*cell-count*, 1fr)"
@@ -112,10 +102,10 @@
   ;      Default: :s}]
   ;  :disabled? (boolean)(opt)
   ;  :indent (map)(opt)
-  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
+  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :label (metamorphic-content)(opt)
   ;  :outdent (map)(opt)
-  ;   {:bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
+  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :preset (keyword)(opt)
   ;  :rows (maps in vector)(opt)
   ;   [{:cells (maps in vector)

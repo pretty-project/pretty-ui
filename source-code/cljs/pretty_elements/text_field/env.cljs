@@ -1,7 +1,8 @@
 
 (ns pretty-elements.text-field.env
     (:require [fruits.string.api               :as string]
-              [pretty-elements.plain-field.env :as plain-field.env]))
+              [pretty-elements.plain-field.env :as plain-field.env]
+              [pretty-build-kit.api :as pretty-build-kit]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -15,7 +16,7 @@
   ; @return (map)
   ; {disabled? (boolean)
   ;  :icon (keyword)
-  ;  :on-click (Re-Frame metamorphic-event)
+  ;  :on-click (function or Re-Frame metamorphic-event)
   ;  :tooltip (metamorphic-content)}
   [field-id field-props]
   ; XXX#5100 (source-code/cljs/pretty_elements/text_field/prototypes.cljs)
@@ -53,22 +54,22 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   ; {:font-size (keyword, px or string)
-  ;  :line-height (keyword)}
+  ;  :line-height (keyword, px or string)}
   ;
   ; @usage
   ; (field-auto-height :my-field {:font-size :s :line-height :auto})
   ; =>
-  ; "calc(var( --line-height-s ) * 1)"
+  ; "calc(var(--line-height-s) * 1)"
   ;
   ; @usage
   ; (field-auto-height :my-field {:font-size :s :line-height :text-block})
   ; =>
-  ; "calc(var( --text-block-height-s ) * 1)"
+  ; "calc(var(--text-block-height-s) * 1)"
   ;
   ; @usage
   ; (field-auto-height :my-field {:font-size :s :line-height :xxl})
   ; =>
-  ; "calc(var( --line-height-xxl ) * 1)"
+  ; "calc(var(--line-height-xxl) * 1)"
   ;
   ; @usage
   ; (field-auto-height :my-field {:font-size :s :line-height 48})
@@ -77,8 +78,6 @@
   ;
   ; @return (string)
   [field-id {:keys [font-size line-height] :as field-props}]
-  ; XXX#0886 (pretty-project/pretty-css)
-  (let [line-count (field-line-count field-id field-props)]
-       (case line-height :text-block (str "calc(var( --text-block-height-" (name font-size)   " ) * "line-count" + 12px)")
-                         :auto       (str "calc(var( --line-height-"       (name font-size)   " ) * "line-count" + 12px)")
-                                     (str "calc(var( --line-height-"       (name line-height) " ) * "line-count" + 12px)"))))
+  (let [line-count (field-line-count field-id field-props)
+        horizontal-indent 12]
+       (pretty-build-kit/adaptive-text-height font-size line-height line-count horizontal-indent)))

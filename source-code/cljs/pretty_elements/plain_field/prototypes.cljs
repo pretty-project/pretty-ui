@@ -18,10 +18,6 @@
   ;  :field-value-f (function)
   ;  :value-path (Re-Frame path vector)}
   [field-id field-props]
-  ; surface
-  ; :content-value-f return
-  ; :placeholder-value-f return]
-  ; akkor ez a sima text-field-nél nem is kell?
   (merge {:field-content-f return
           :field-value-f   return
           :value-path      (input.utils/default-value-path field-id)}

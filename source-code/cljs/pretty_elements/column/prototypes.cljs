@@ -1,7 +1,6 @@
 
 (ns pretty-elements.column.prototypes
-    (:require [pretty-build-kit.api :as pretty-build-kit]
-              [fruits.noop.api :refer [return]]))
+    (:require [pretty-build-kit.api :as pretty-build-kit]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -16,9 +15,7 @@
   ; {}
   [{:keys [border-color] :as column-props}]
   (merge {:horizontal-align    :center
-          :vertical-align      :top
-          :content-value-f     return
-          :placeholder-value-f return}
+          :vertical-align      :top}
          (if border-color {:border-position :all
                            :border-width    :xxs})
          (-> column-props)))
