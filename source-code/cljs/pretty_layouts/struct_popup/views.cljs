@@ -14,7 +14,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- footer-structure
+(defn- struct-popup-footer
   ; @ignore
   ;
   ; @param (keyword) popup-id
@@ -25,7 +25,7 @@
         [:div {:class :pl-struct-popup--footer-content}
               [metamorphic-content/compose footer]]])
 
-(defn- footer
+(defn- struct-popup-footer-lifecycles
   ; @ignore
   ;
   ; @param (keyword) popup-id
@@ -35,12 +35,12 @@
   ; @note (tutorials#parametering)
   (if footer (reagent/lifecycles {:component-did-mount    (fn [_ _] (struct-popup.utils/footer-did-mount-f    popup-id))
                                   :component-will-unmount (fn [_ _] (struct-popup.utils/footer-will-unmount-f popup-id))
-                                  :reagent-render         (fn [_ popup-props] [footer-structure popup-id popup-props])})))
+                                  :reagent-render         (fn [_ popup-props] [struct-popup-footer popup-id popup-props])})))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- header-structure
+(defn- struct-popup-header
   ; @ignore
   ;
   ; @param (keyword) popup-id
@@ -51,7 +51,7 @@
         [:div {:class :pl-struct-popup--header-content}
               [metamorphic-content/compose header]]])
 
-(defn- header
+(defn- struct-popup-header-lifecycles
   ; @ignore
   ;
   ; @param (keyword) popup-id
@@ -61,17 +61,17 @@
   ; @note (tutorials#parametering)
   (if header (reagent/lifecycles {:component-did-mount    (fn [_ _] (struct-popup.utils/header-did-mount-f    popup-id))
                                   :component-will-unmount (fn [_ _] (struct-popup.utils/header-will-unmount-f popup-id))
-                                  :reagent-render         (fn [_ popup-props] [header-structure popup-id popup-props])})))
+                                  :reagent-render         (fn [_ popup-props] [struct-popup-header popup-id popup-props])})))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- body
+(defn- struct-popup-body
   ; @ignore
   ;
   ; @param (keyword) popup-id
   ; @param (map) popup-props
-  ; {:body (metamorphic-content)
+  ; {:body (metamorphic-content)(opt)
   ;  :footer (metamorphic-content)(opt)
   ;  :header (metamorphic-content)(opt)}
   [popup-id {:keys [body footer header]}]
@@ -84,13 +84,23 @@
   [:div {:class :pl-struct-popup--body :data-scroll-axis :y}
         [:div {:class :pl-struct-popup--body-content}
               (if header [:div {:id (hiccup/value popup-id "header-sensor")}])
-              [metamorphic-content/compose body]
+              (if body   [metamorphic-content/compose body])
               (if footer [:div {:id (hiccup/value popup-id "footer-sensor")}])]])
 
+(defn- struct-popup-body-lifecycles
+  ; @ignore
+  ;
+  ; @param (keyword) popup-id
+  ; @param (map) popup-props
+  ; {:body (metamorphic-content)(opt)}
+  [popup-id {:keys [body] :as popup-props}]
+  ; @note (tutorials#parametering)
+  (if body (reagent/lifecycles {:reagent-render (fn [_ popup-props] [struct-popup-body popup-id popup-props])})))
+
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- struct-popup-structure
+(defn- struct-popup
   ; @ignore
   ;
   ; @param (keyword) popup-id
@@ -102,11 +112,11 @@
         [:div (struct-popup.attributes/popup-wrapper-attributes popup-id popup-props)
               [:div (struct-popup.attributes/popup-structure-attributes popup-id popup-props)
                     [:div {:class :pl-struct-popup--hack}
-                          [body   popup-id popup-props]
-                          [header popup-id popup-props]]
-                    [footer popup-id popup-props]]]])
+                          [struct-popup-body-lifecycles   popup-id popup-props]
+                          [struct-popup-header-lifecycles popup-id popup-props]]
+                    [struct-popup-footer-lifecycles popup-id popup-props]]]])
 
-(defn- struct-popup
+(defn- struct-popup-lifecycles
   ; @ignore
   ;
   ; @param (keyword) popup-id
@@ -118,12 +128,12 @@
                                                          (if on-mount     (r/dispatch on-mount)))
                        :component-will-unmount (fn [_ _] (if lock-scroll? (scroll-lock/remove-scroll-prohibition! popup-id))
                                                          (if on-unmount   (r/dispatch on-unmount)))
-                       :reagent-render         (fn [_ popup-props] [struct-popup-structure popup-id popup-props])}))
+                       :reagent-render         (fn [_ popup-props] [struct-popup popup-id popup-props])}))
 
 (defn layout
   ; @param (keyword)(opt) popup-id
   ; @param (map) popup-props
-  ; {:body (metamorphic-content)
+  ; {:body (metamorphic-content)(opt)
   ;  :border-color (keyword or string)(opt)
   ;  :border-radius (map)(opt)
   ;   {:all, :tl, :tr, :br, :bl (keyword, px or string)(opt)}
@@ -165,4 +175,4 @@
    (fn [_ popup-props]
        (let [popup-props (pretty-presets/apply-preset                   popup-props)
              popup-props (struct-popup.prototypes/popup-props-prototype popup-props)]
-            [struct-popup popup-id popup-props]))))
+            [struct-popup-lifecycles popup-id popup-props]))))

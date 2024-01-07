@@ -3,7 +3,8 @@
     (:require [components.compact-list-header.attributes :as compact-list-header.attributes]
               [components.compact-list-header.prototypes :as compact-list-header.prototypes]
               [fruits.random.api                         :as random]
-              [pretty-elements.api                       :as pretty-elements]))
+              [pretty-elements.api                       :as pretty-elements]
+              [pretty-inputs.api :as pretty-inputs]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -16,7 +17,7 @@
   [:div (compact-list-header.attributes/header-attributes header-id header-props)
         [:div (compact-list-header.attributes/header-body-attributes header-id header-props)
               [pretty-elements/icon-button order-button]
-              [pretty-elements/text-field  search-field]
+              [pretty-inputs/text-field    search-field]
               [pretty-elements/icon-button hide-button]]])
 
 (defn component

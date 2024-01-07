@@ -12,7 +12,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- sidebar-structure
+(defn- sidebar
   ; @ignore
   ;
   ; @param (keyword) sidebar-id
@@ -27,7 +27,7 @@
                   [:div (sidebar.attributes/sidebar-body-attributes sidebar-id sidebar-props)
                         [metamorphic-content/compose content]]]]))
 
-(defn- sidebar
+(defn- sidebar-lifecycles
   ; @ignore
   ;
   ; @param (keyword) sidebar-id
@@ -37,7 +37,7 @@
   ; @note (tutorials#parametering)
   (reagent/lifecycles {:component-did-mount    (fn [_ _] (r/dispatch on-mount))
                        :component-will-unmount (fn [_ _] (r/dispatch on-unmount))
-                       :reagent-render         (fn [_ sidebar-props] [sidebar-structure sidebar-id sidebar-props])}))
+                       :reagent-render         (fn [_ sidebar-props] [sidebar sidebar-id sidebar-props])}))
 
 (defn layout
   ; @param (keyword)(opt) sidebar-id
@@ -77,4 +77,4 @@
    (fn [_ sidebar-props]
        (let [sidebar-props (pretty-presets/apply-preset                sidebar-props)
              sidebar-props (sidebar.prototypes/sidebar-props-prototype sidebar-props)]
-            [sidebar sidebar-id sidebar-props]))))
+            [sidebar-lifecycles sidebar-id sidebar-props]))))

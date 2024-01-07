@@ -11,7 +11,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- plain-surface-structure
+(defn- plain-surface
   ; @ignore
   ;
   ; @param (keyword) surface-id
@@ -22,7 +22,7 @@
         [:div (plain-surface.attributes/surface-body-attributes surface-id surface-props)
               [metamorphic-content/compose content]]])
 
-(defn- plain-surface
+(defn- plain-surface-lifecycles
   ; @ignore
   ;
   ; @param (keyword) surface-id
@@ -32,7 +32,7 @@
   ; @note (tutorials#parametering)
   (reagent/lifecycles {:component-did-mount    (fn [_ _] (r/dispatch on-mount))
                        :component-will-unmount (fn [_ _] (r/dispatch on-unmount))
-                       :reagent-render         (fn [_ surface-props] [plain-surface-structure surface-id surface-props])}))
+                       :reagent-render         (fn [_ surface-props] [plain-surface surface-id surface-props])}))
 
 (defn layout
   ; @param (keyword)(opt) surface-id
@@ -61,4 +61,4 @@
    (fn [_ surface-props]
        (let [surface-props (pretty-presets/apply-preset                      surface-props)
              surface-props (plain-surface.prototypes/surface-props-prototype surface-props)]
-            [plain-surface surface-id surface-props]))))
+            [plain-surface-lifecycles surface-id surface-props]))))

@@ -66,13 +66,13 @@
                                                    :on-keyup   (fn [_] (key-released button-id button-props))
                                                    :prevent-default? true}))
 
-(defn remove-keypress-event!
+(defn dereg-keypress-event!
   ; @ignore
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
   [button-id _]
-  (keypress-handler/remove-keypress-event! button-id))
+  (keypress-handler/dereg-keypress-event! button-id))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -85,4 +85,4 @@
 ; @ignore
 ;
 ; @param (keyword) button-id
-(r/reg-fx :pretty-elements.button/remove-keypress-event! remove-keypress-event!)
+(r/reg-fx :pretty-elements.button/dereg-keypress-event! dereg-keypress-event!)

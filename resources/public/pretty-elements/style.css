@@ -10,7 +10,7 @@
 
 
 /***** Breadcrumbs *****/
-/*** Element ***/
+/*** Wrapper ***/
 
 .pe-breadcrumbs {
   /* XXX#6668
@@ -18,7 +18,7 @@
   width: fit-content;
 }
 
-/*** Element ***/
+/*** Wrapper ***/
 
 /*** Body ***/
 
@@ -80,72 +80,6 @@
 
 
 
-/***** Checkbox *****/
-/*** Element ***/
-
-.pe-checkbox {
-  /* XXX#6668 */
-  width: fit-content;
-}
-
-/*** Element ***/
-
-/*** Options ***/
-
-.pe-checkbox--body[data-options-orientation="horizontal"] {
-  display:    flex;
-  column-gap: 24px;
-}
-
-/*** Options ***/
-
-/*** Option ***/
-
-.pe-checkbox--option {
-  display:        flex;
-  padding-bottom: 6px;
-  padding-top:    6px;
-}
-
-.pe-checkbox--option-button {
-  background-color: var( --fill-color-default );
-  margin-right:     8px;
-  margin-top:       2px;
-}
-
-.pe-checkbox--option-label {
-  /* XXX#5049 */
-  text-align: left;
-}
-
-.pe-checkbox--option-helper {
-  color: var( --text-color-muted );
-
-  /* XXX#5049 */
-  text-align: left;
-}
-
-/*** Option ***/
-
-/*** Marker ***/
-
-.pe-checkbox--option-button::after {
-  content: '';
-  font-size:   16px;
-  height:      16px;
-  line-height: 16px;
-  width:       16px;
-}
-
-.pe-checkbox--option[data-checked="true"] .pe-checkbox--option-button::after {
-  content: 'done';
-}
-
-/*** Marker ***/
-/***** Checkbox *****/
-
-
-
 /***** Chip *****/
 /*** Body ***/
 
@@ -201,37 +135,6 @@
 
 /*** Button ***/
 /***** Chip *****/
-
-
-
-/***** Chip-group *****/
-/*** Element ***/
-
-.pe-chip-group {
-  /* XXX#6668 */
-  width: fit-content;
-}
-
-/*** Element ***/
-
-/*** Chip-group chips ***/
-
-.pe-chip-group--chips {
-  display:   flex;
-  flex-wrap: wrap;
-  gap:       12px;
-}
-
-/*** Chip-group chips ***/
-
-/*** Chip-group no-chips label ***/
-
-.pe-chip-group--chips-placeholder {
-  color: var( --text-color-highlight );
-}
-
-/*** Chip-group no-chips label ***/
-/***** Chip-group *****/
 
 
 
@@ -305,47 +208,8 @@
 
 
 
-/***** Combo-box *****/
-/*** Combo-box options ***/
-
-.pe-combo-box--options {
-  display: flex;
-  flex-direction: column;
-  max-height: 340px;
-}
-
-/*** Combo-box options ***/
-
-/*** Combo-box option ***/
-
-.pe-combo-box--field-content-option,
-.pe-combo-box--option {
-  align-items: center;
-  display: flex;
-  flex-shrink: 0;
-  padding: 8px 8px;
-  text-align: left;
-  width: 100%;
-}
-
-.pe-combo-box--option[data-highlighted="true"] {
-  background-color: var( --fill-color-highlight );
-}
-
-.pe-combo-box--option:hover {
-  background-color: var( --hover-color-highlight );
-}
-
-.pe-combo-box--field-content-option {
-  color: var( --text-color-muted )}
-
-/*** Combo-box option ***/
-/***** Combo-box *****/
-
-
-
 /***** Content swapper *****/
-/*** Element ***/
+/*** Wrapper ***/
 
 .pe-content-swapper {
   /* XXX#0517 (source-code/cljs/pretty_elements/content_swapper/views.cljs) */
@@ -353,7 +217,7 @@
   width:  100%;
 }
 
-/*** Element ***/
+/*** Wrapper ***/
 
 /*** Body ***/
 
@@ -454,89 +318,6 @@
 
 
 
-/***** Counter *****/
-/*** Element ***/
-
-.pe-counter {
-  /* XXX#6668 */
-  width: fit-content;
-}
-
-/*** Element ***/
-
-/*** Body ***/
-
-.pe-counter--body {
-  align-items: center;
-  display: flex;
-  padding-bottom: 6px;
-  padding-top: 6px;
-}
-
-/*** Body ***/
-
-/*** Value ***/
-
-.pe-counter--value {
-  font-weight: 500;
-  line-height: 24px;
-  min-width: 64px;
-  text-align: center;
-}
-
-/*** Value ***/
-
-/*** Button ***/
-
-.pe-counter--decrease-button,
-.pe-counter--increase-button,
-.pe-counter--reset-button {
-  background-color: var( --fill-color-default );
-  padding:          8px;
-}
-
-.pe-counter--decrease-button::before,
-.pe-counter--increase-button::before,
-.pe-counter--increase-button::after,
-.pe-counter--reset-button::before,
-.pe-counter--reset-button::after {
-  background-color: var( --text-color-default );
-  border-radius: 1px;
-  content: '';
-  position: absolute;
-}
-
-.pe-counter--decrease-button::before,
-.pe-counter--increase-button::before,
-.pe-counter--reset-button::before {
-  height: 2px;
-  left: 4px;
-  top: 7px;
-  width: 8px;
-}
-
-.pe-counter--increase-button::after,
-.pe-counter--reset-button::after {
-  height: 8px;
-  left: 7px;
-  top: 4px;
-  width: 2px;
-}
-
-.pe-counter--reset-button {
-  margin-left: 12px;
-}
-
-.pe-counter--reset-button::before,
-.pe-counter--reset-button::after {
-  transform: rotateZ( -45deg );
-}
-
-/*** Button ***/
-/***** Counter *****/
-
-
-
 /***** Data table *****/
 /*** Column ***/
 
@@ -563,66 +344,15 @@
 
 
 
-/***** Digit field *****/
-/***** Element *****/
-
-.pe-digit-field {
-  height: 48px;
-}
-
-/***** Element *****/
-
-/***** Input *****/
-
-.pe-digit-field--input {
-  color: var( --fill-color-default );
-  height: 100%;
-  width: 100%;
-}
-
-/***** Input *****/
-
-/***** Cover *****/
-
-.pe-digit-field--cover {
-  display: flex;
-  column-gap: 12px;
-  height: 100%;
-  left: 0;
-  position: absolute;
-  top: 0;
-  width: 100%;
-}
-
-.pe-digit-field--cover--digit {
-  align-items: center;
-  border-color: var( --text-color-highlight );
-  border-radius: var( --border-radius-s );
-  border-style: solid;
-  border-width: 1px;
-  cursor: text;
-  display: flex;
-  flex-direction: column;
-  font-weight: 600;
-  justify-content: center;
-  height: 100%;
-  width: 36px;
-}
-
-/***** Cover *****/
-/***** Digit field *****/
-
-
-
 /***** Dropdown menu *****/
-/*** Element ***/
+/*** Wrapper ***/
 
 .pe-dropdown-menu {
   /* XXX#6668 */
   width: fit-content;
 }
 
-/*** Element ***/
+/*** Wrapper ***/
 
 /*** Surface ***/
 
@@ -638,20 +368,15 @@
 
 
 
-/***** Element group *****/
-/***** Element group *****/
-
-
-
 /***** Expandable *****/
-/*** Element ***/
+/*** Wrapper ***/
 
 .pe-expandable {
   /* XXX#6668 */
   width: fit-content;
 }
 
-/*** Element ***/
+/*** Wrapper ***/
 
 /*** Header ***/
 
@@ -744,20 +469,20 @@
 
 
 /***** Icon *****/
-/*** Element ***/
+/*** Wrapper ***/
 
 .pe-icon {
   /* XXX#6668 */
   width: fit-content;
 }
 
-/*** Element ***/
+/*** Wrapper ***/
 /***** Icon *****/
 
 
 
 /***** Icon-button *****/
-/*** Element ***/
+/*** Wrapper ***/
 
 .pe-icon-button {
   align-items:    center;
@@ -768,7 +493,7 @@
   width: fit-content;
 }
 
-/*** Element ***/
+/*** Wrapper ***/
 
 /*** Body ***/
 
@@ -804,7 +529,7 @@
 
 
 /***** Label *****/
-/*** Element ***/
+/*** Wrapper ***/
 
 .pe-label {
   display: flex;
@@ -818,7 +543,7 @@
   max-width: 100%;
 }
 
-/*** Element ***/
+/*** Wrapper ***/
 
 /*** Body ***/
 
@@ -866,7 +591,7 @@
 
 
 /***** Menu bar *****/
-/*** Element ***/
+/*** Wrapper ***/
 
 .pe-menu-bar {
   /* DEPRECATED! It prevented the scrollability of the menu-bar. */
@@ -874,7 +599,7 @@
   -width: fit-content;
 }
 
-/*** Element ***/
+/*** Wrapper ***/
 
 /*** Item ***/
 
@@ -899,34 +624,6 @@
 
 
 
-/***** Multi combo-box *****/
-
-.pe-multi-combo-box--body {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-/***** Multi combo-box *****/
-
-
-
-/***** Multi field *****/
-/*** Element ***/
-
-.pe-multi-field {
-  display: flex;
-  flex-direction: column;
-
-  /* Without using a gap, the text-fields might be placed too close to each other. */
-  row-gap: 8px;
-}
-
-/*** Element ***/
-/***** Multi field *****/
-
-
-
 /***** Notification bubble *****/
 /*** Body ***/
 
@@ -938,118 +635,6 @@
 
 /*** Body ***/
 /***** Notification bubble *****/
-
-
-
-/***** Radio button *****/
-/*** Element ***/
-
-.pe-radio-button {
-  /* XXX#6668 */
-  width: fit-content;
-}
-
-/*** Element ***/
-
-/*** Clear button ***/
-
-.pe-radio-button--clear-button {
-  background-color: var( --fill-color-default );
-  border-color:     var( --text-color-default );
-  margin-bottom:    6px;
-  margin-top:       6px;
-  padding:          8px;
-}
-
-.pe-radio-button--clear-button::before,
-.pe-radio-button--clear-button::after {
-  background-color: var( --text-color-default );
-  border-radius:    1px;
-  content:          '';
-  position:         absolute;
-  transform:        rotateZ( -45deg );
-}
-
-.pe-radio-button--clear-button::before {
-  height: 2px;
-  left:   4px;
-  top:    7px;
-  width:  8px;
-}
-
-.pe-radio-button--clear-button::after {
-  height: 8px;
-  left:   7px;
-  top:    4px;
-  width:  2px;
-}
-
-/*** Clear button ***/
-
-/*** Options ***/
-
-.pe-radio-button--body[data-options-orientation="horizontal"] {
-  display:    flex;
-  column-gap: 24px;
-}
-
-/*** Options ***/
-
-/*** Option ***/
-
-.pe-radio-button--option {
-  display:        flex;
-  padding-bottom: 6px;
-  padding-top:    6px;
-}
-
-.pe-radio-button--option-label {
-  /* XXX#5049
-   * By using the {text-align: left} setting, no matter if the label or the helper
-   * is longer, both of them are aligned to the left. */
-  text-align: left;
-}
-
-.pe-radio-button--option-helper {
-  color: var( --text-color-muted );
-
-  /* XXX#5049 */
-  text-align: left;
-}
-
-/*** Option ***/
-
-/*** Option button ***/
-
-.pe-radio-button--option-button {
-  background-color: var( --fill-color-default );
-  margin-bottom:    2px;
-  margin-right:     8px;
-  margin-top:       2px;
-  padding:          8px;
-}
-
-/*** Option button ***/
-
-/*** Option marker ***/
-
-.pe-radio-button--option[data-selected="true"]
-.pe-radio-button--option-button::before {
-  animation-name:     opacity-0-1;
-  animation-duration: .1s;
-  background-color:   var( --text-color-default     );
-  border-radius:      var( --adaptive-border-radius );
-  content:            '';
-  display:            block;
-  height:             8px;
-  left:               4px;
-  position:           absolute;
-  top:                4px;
-  width:              8px;
-}
-
-/*** Option marker ***/
-/***** Radio button *****/
 
 
 
@@ -1070,165 +655,6 @@
 
 
 
-/***** Select *****/
-/*** Select button element ***/
-
-.pe-select-button {
-  /* XXX#6668 */
-  width: fit-content;
-}
-
-/*** Select button element ***/
-
-/*** Select button body ***/
-
-.pe-select-button .pe-button--body {
-  -justify-content: space-between;
-}
-
-.pe-select-button .pe-button--content {
-  -margin-left: 12px;
-}
-
-.pe-select-button .pe-button--icon {
-  -margin-right: 12px;
-}
-
-/*** Select button body ***/
-
-/*** Options ***/
-
-.pe-select--options {
-  /* XXX#0610 */
-  z-index: 9999;
-}
-
-.pe-select--option-list {
-  display: flex;
-  flex-direction: column;
-
-  /* XXX#6661 */
-  padding-bottom: 12px;
-}
-
-.pe-select--options-placeholder {
-  align-self: center;
-  color:      var( --text-color-highlight );
-  padding:    0 36px;
-}
-
-/*** Options ***/
-
-/*** Option ***/
-
-.pe-select--option {
-  display: flex;
-  padding: 6px 36px;
-  width:   100%;
-}
-
-.pe-select--option:hover,
-.pe-select--option[data-selected="true"]:hover {
-  background-color: var( --hover-color-highlight );
-}
-
-.pe-select--option[data-selected="true"] {
-  background-color: var( --fill-color-highlight );
-}
-
-.pe-select--option[data-selected="true"]::before {
-  background-color: var( --text-color-primary );
-  border-radius:    50%;
-  content:          '';
-  height:           6px;
-  left:             16px;
-  position:         absolute;
-  top:              16px;
-  width:            6px;
-}
-
-/*** Option ***/
-
-/*** Header ***/
-
-.pe-select--options--label {
-  display: flex;
-  justify-content: center;
-
-  /* XXX#6661
-   * The height of this label without content is 12px (horizontal padding x 2),
-   * that's the same as the bottom padding of the option list.
-   * Therefore, in case of no label defined, the top and bottom spacings are the same. */
-  padding: 6px 12px;
-}
-
-/*** Header ***/
-/***** Select *****/
-
-
-
-/***** Slider *****/
-/*** Body ***/
-
-.pe-slider--body {
-  height: 20px;
-}
-
-/*** Body ***/
-
-/*** Track ***/
-
-.pe-slider--track {
-  background-color: var( --fill-color-highlight );
-  border-radius: 2px;
-  height: 4px;
-  left: 0;
-  position: absolute;
-  top: 8px;
-  width: 100%;
-}
-
-/*** Track ***/
-
-/*** Line ***/
-
-.pe-slider--line {
-  cursor: grab;
-  height: 10px;
-  opacity: .3;
-  position: absolute;
-  top: 5px;
-}
-
-.pe-slider--line::after {
-  background-color: var( --border-color-primary );
-  border-radius: 2px;
-  content: '';
-  height: 4px;
-  position: absolute;
-  top: 3px;
-  width: 100%;
-}
-
-/*** Line ***/
-
-/*** Thumb ***/
-
-.pe-slider--thumb {
-  background-color: var( --border-color-primary );
-  border-radius: 6px;
-  cursor: grab;
-  height: 20px;
-  position: absolute;
-  top: 0;
-  width: 12px;
-}
-
-/*** Thumb ***/
-/***** Slider *****/
-
-
-
 /***** Spacer *****/
 
 .pe-horizontal-spacer,
@@ -1237,78 +663,6 @@
 }
 
 /***** Spacer *****/
-
-
-
-/***** Switch *****/
-/*** Element ***/
-
-.pe-switch {
-  /* XXX#6668 */
-  width: fit-content;
-}
-
-/*** Element ***/
-
-/*** Options ***/
-
-.pe-switch--body[data-options-orientation="horizontal"] {
-  display:    flex;
-  column-gap: 24px;
-}
-
-/*** Options ***/
-
-/*** Option ***/
-
-.pe-switch--option {
-  align-items:    center;
-  display:        flex;
-  padding-bottom: 6px;
-  padding-top:    6px;
-}
-
-.pe-switch--option-track {
-  background-color: var( --fill-color-default );
-  margin-right:     6px;
-  padding:          8px 18px;
-}
-
-.pe-switch--option-label {
-  /* XXX#5049 */
-  text-align: left;
-}
-
-.pe-switch--option-helper {
-  color: var( --text-color-muted );
-
-  /* XXX#5049 */
-  text-align: left;
-}
-
-/*** Option ***/
-
-/*** Thumb ***/
-
-.pe-switch--option-track::before {
-  background-color: var( --text-color-default );
-  border-radius:    50%;
-  content:          '';
-  display:          block;
-  height:           12px;
-  left:             2px;
-  position:         absolute;
-  top:              2px;
-  transition:       transform .1s ease-out;
-  width:            12px;
-}
-
-.pe-switch--option[data-switched="true"] .pe-switch--option-track::before {
-  transform: translateX( 20px );
-}
-
-/*** Thumb ***/
-/***** Switch *****/
 
 
 
@@ -1349,147 +703,6 @@
 
 /*** Copyable ***/
 /***** Text *****/
-
-
-
-/***** Text field *****/
-/*** Input container ***/
-
-/* The input container element contains the input and its accessories
- * (adornments, placeholder, etc.) */
-.pe-text-field--input-container {
-  background-color: var( --fill-color-default );
-  display: flex;
-  justify-content: space-between;
-}
-
-/*** Input container ***/
-
-/*** Input ***/
-
-.pe-text-field--input-structure {
-  flex-grow: 1;
-}
-
-.pe-text-field--input-emphasize {
-  height: 100%;
-  width: 100%;
-}
-
-.pe-text-field--input {
-  color:   var( --text-color-default );
-  height:  100%;
-  padding: 6px 0;
-  width:   100%;
-
-  /* The font-weight property doesn't inherited in input elements by default. */
-  font-weight: inherit;
-}
-
-.pe-text-field--input[type="date"] {
-  cursor: text;
-}
-
-textarea.pe-text-field--input {
-  overflow: hidden;
-  resize:   none;
-}
-
-/*** Input ***/
-
-/*** Adornments ***/
-
-.pe-text-field--adornments {
-  align-items: center;
-  display: flex;
-
-  /* XXX#0617 The text-field element has the same padding as the standard (12px) */
-  padding: 0 12px;
-}
-
-.pe-text-field--adornments-placeholder {
-  cursor: text;
-
-  /* XXX#0617 */
-  width: 12px;
-}
-
-.pe-text-field--adornment:not([data-icon-family]),
-.pe-text-field--adornment:not([data-icon-family]) {
-  font-weight: 500;
-  min-width: 24px;
-  text-align: center;
-
-  /* XXX#0617
-   * The label adornment's padding and the adornment wrapper's padding adds up.
-   * Therefore, the label adornments are 16px far from the edge, but this isn't
-   * a problem, because the icon adornments (with no padding) look the same! */
-  padding: 0 4px;
-}
-
-/*** Adornments ***/
-
-/*** Invalid content message ***/
-
-.pe-text-field--invalid-content-message {
-  color:          var( --text-color-warning );
-  font-size:      var( --font-size-xxs      );
-  font-weight:    var( --font-weight-medium );
-  letter-spacing: var( --letter-spacing-xxs );
-  line-height:    18px;
-  padding-top:    6px;
-}
-
-/*** Invalid content message ***/
-
-/*** Placeholder ***/
-
-.pe-text-field--placeholder {
-  color:       var( --text-color-highlight );
-  font-weight: 400;
-  left:        0;
-  max-width:   100%;
-  padding:     6px 0;
-  position:    absolute;
-  top:         0;
-}
-
-/*** Placeholder ***/
-
-/*** Surface ***/
-
-.pe-text-field--surface {
-  background-color: var( --fill-color-default );
-  left: 0;
-  overflow: hidden;
-  position: absolute;
-  width: 100%;
-  z-index: 9999;
-
-  /* Adding +6px to the surface Y axis offset makes the surface shadow not
-   * overlapping with the field border. */
- -top: 36px;
-  top: 42px;
-}
-
-/*** Surface ***/
-
-/*** Number field ***/
-
-.pe-text-field--input::-webkit-outer-spin-button,
-.pe-text-field--input::-webkit-inner-spin-button {
-  /* Chrome, Safari, Edge, Opera */
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-.pe-text-field--input[type="number"][type=number] {
-  /* Firefox */
-  -moz-appearance: textfield;
-}
-
-/*** Number field ***/
-/***** Text field *****/
 
 
 
@@ -1549,14 +762,14 @@ textarea.pe-text-field--input {
 
 
 /***** Vertical line *****/
-/*** Element ***/
+/*** Wrapper ***/
 
 .pe-vertical-line {
   /* XXX#6668 */
   width: fit-content;
 }
 
-/*** Element ***/
+/*** Wrapper ***/
 
 /*** Body ***/
 

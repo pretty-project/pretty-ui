@@ -11,7 +11,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- icon-button-structure
+(defn- icon-button
   ; @ignore
   ;
   ; @param (keyword) button-id
@@ -26,7 +26,7 @@
         (if label [:div {:class :pe-icon-button--label :data-selectable false}
                         (metamorphic-content/compose label)])])
 
-(defn- icon-button
+(defn- icon-button-lifecycles
   ; @ignore
   ;
   ; @param (keyword) button-id
@@ -36,7 +36,7 @@
   (reagent/lifecycles {:component-did-mount    (fn [_ _] (r/dispatch [:pretty-elements.button/button-did-mount    button-id button-props]))
                        :component-will-unmount (fn [_ _] (r/dispatch [:pretty-elements.button/button-will-unmount button-id button-props]))
                        :component-did-update   (fn [%]   (r/dispatch [:pretty-elements.button/button-did-update   button-id %]))
-                       :reagent-render         (fn [_ button-props] [icon-button-structure button-id button-props])}))
+                       :reagent-render         (fn [_ button-props] [icon-button button-id button-props])}))
 
 (defn element
   ; @bug (pretty-elements.button.views#9912)
@@ -118,4 +118,4 @@
    (fn [_ button-props]
        (let [button-props (pretty-presets/apply-preset                   button-props)
              button-props (icon-button.prototypes/button-props-prototype button-props)]
-            [icon-button button-id button-props]))))
+            [icon-button-lifecycles button-id button-props]))))

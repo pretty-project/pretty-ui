@@ -1,10 +1,10 @@
 
 (ns components.input.utils
-    (:require [pretty-elements.input.utils]))
+    (:require [pretty-inputs.input.utils]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; pretty-elements.input.utils
-(def default-options-path pretty-elements.input.utils/default-options-path)
-(def default-value-path   pretty-elements.input.utils/default-value-path)
+; @redirect (pretty-inputs.input.utils/*)
+(def default-options-path pretty-inputs.input.utils/default-options-path)
+(def default-value-path   pretty-inputs.input.utils/default-value-path)

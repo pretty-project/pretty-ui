@@ -1,6 +1,6 @@
 
 /***** Circle diagram *****/
-/*** Element ***/
+/*** Wrapper ***/
 
 .pd-circle-diagram {
   align-items:     center;
@@ -12,7 +12,7 @@
   width: fit-content;
 }
 
-/*** Element ***/
+/*** Wrapper ***/
 
 /*** Section ***/
 
@@ -30,7 +30,7 @@
 
 
 /***** Line diagram *****/
-/*** Element ***/
+/*** Wrapper ***/
 
 .pd-line-diagram {
   display:         flex;
@@ -38,7 +38,7 @@
   justify-content: center;
 }
 
-/*** Element ***/
+/*** Wrapper ***/
 
 /*** Sections ***/
 

@@ -11,7 +11,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- button-structure
+(defn- button
   ; @ignore
   ;
   ; @param (keyword) button-id
@@ -35,7 +35,7 @@
                                     [:<> (cond content     [:div (button.attributes/button-content-attributes button-id button-props) [metamorphic-content/compose content]]
                                                placeholder [:div (button.attributes/button-content-attributes button-id button-props) [metamorphic-content/compose placeholder]])])]])
 
-(defn button
+(defn button-lifecycles
   ; @ignore
   ;
   ; @param (keyword) button-id
@@ -45,7 +45,7 @@
   (reagent/lifecycles {:component-did-mount    (fn [_ _] (r/dispatch [:pretty-elements.button/button-did-mount    button-id button-props]))
                        :component-will-unmount (fn [_ _] (r/dispatch [:pretty-elements.button/button-will-unmount button-id button-props]))
                        :component-did-update   (fn [%]   (r/dispatch [:pretty-elements.button/button-did-update   button-id %]))
-                       :reagent-render         (fn [_ button-props] [button-structure button-id button-props])}))
+                       :reagent-render         (fn [_ button-props] [button button-id button-props])}))
 
 (defn element
   ; @info
@@ -157,4 +157,4 @@
    (fn [_ button-props]
        (let [button-props (pretty-presets/apply-preset              button-props)
              button-props (button.prototypes/button-props-prototype button-props)]
-            [button button-id button-props]))))
+            [button-lifecycles button-id button-props]))))

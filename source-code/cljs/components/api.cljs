@@ -39,14 +39,7 @@
               [components.user-avatar.views              :as user-avatar.views]
               [components.vector-item-controls.views     :as vector-item-controls.views]
               [components.vector-item-list.views         :as vector-item-list.views]
-              [components.vector-items-header.views      :as vector-items-header.views]
-              [window-observer.api                       :as window-observer]))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Initializing the viewport resize observer before using subscriptions for viewport dimensions
-(window-observer/listen-to-viewport-resize!)
+              [components.vector-items-header.views      :as vector-items-header.views]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

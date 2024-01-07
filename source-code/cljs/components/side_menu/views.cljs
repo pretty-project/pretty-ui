@@ -13,11 +13,14 @@
 (defn- side-menu
   ; @param (keyword) menu-id
   ; @param (map) menu-props
-  ; {:content (metamorphic-content)}
-  [menu-id {:keys [content] :as menu-props}]
-  [:div.c-side-menu (side-menu.helpers/menu-attributes menu-id menu-props)
-                    [:div.c-side-menu--body (side-menu.helpers/menu-body-attributes menu-id menu-props)
-                                            [metamorphic-content/compose content]]])
+  ; {:content (metamorphic-content)
+  ;  :threshold (px)(opt)}
+  [menu-id {:keys [content threshold] :as menu-props}]
+  (if (or (-> threshold not)
+          (-> threshold window-observer/viewport-width-min?))
+      [:div.c-side-menu (side-menu.helpers/menu-attributes menu-id menu-props)
+                        [:div.c-side-menu--body (side-menu.helpers/menu-body-attributes menu-id menu-props)
+                                                [metamorphic-content/compose content]]]))
 
 (defn component
   ; @param (keyword)(opt) menu-id
@@ -49,10 +52,8 @@
   ([menu-props]
    [component (random/generate-keyword) menu-props])
 
-  ([menu-id {:keys [threshold] :as menu-props}]
+  ([menu-id menu-props]
    ; @note (tutorials#parametering)
    (fn [_ menu-props]
        (let [menu-props (side-menu.prototypes/menu-props-prototype menu-props)]
-            (if (or (not                                 threshold)
-                    (window-observer/viewport-width-min? threshold))
-                [side-menu menu-id menu-props])))))
+            [side-menu menu-id menu-props]))))

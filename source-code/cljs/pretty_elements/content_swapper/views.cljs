@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- content-swapper-structure
+(defn- content-swapper
   ; @ignore
   ;
   ; @param (keyword) swapper-id
@@ -28,7 +28,7 @@
                                                                                     [metamorphic-content/compose page]]])]
                           (hiccup/put-with-indexed [:<>] page-pool f0)))]])
 
-(defn- content-swapper
+(defn- content-swapper-lifecycles
   ; @ignore
   ;
   ; @param (keyword) swapper-id
@@ -39,7 +39,7 @@
        ; @note (tutorials#parametering)
        (reagent/lifecycles {:component-did-mount    (fn [_ _] (swap! content-swapper.state/SWAPPERS update swapper-id merge initial-state))
                             :component-will-unmount (fn [_ _] (swap! content-swapper.state/SWAPPERS dissoc swapper-id))
-                            :reagent-render         (fn [_ swapper-props] [content-swapper-structure swapper-id swapper-props])})))
+                            :reagent-render         (fn [_ swapper-props] [content-swapper swapper-id swapper-props])})))
 
 (defn element
   ; @important
@@ -73,4 +73,4 @@
    (fn [_ swapper-props]
        (let [ ; swapper-props (content-swapper.prototypes/swapper-props-prototype swapper-props)
              swapper-props (pretty-presets/apply-preset swapper-props)]
-            [content-swapper swapper-id swapper-props]))))
+            [content-swapper-lifecycles swapper-id swapper-props]))))

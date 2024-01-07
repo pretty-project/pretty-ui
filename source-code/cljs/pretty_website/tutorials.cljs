@@ -9,7 +9,7 @@
 
 ; @tutorial First steps
 ;
-; Implement the [pretty-project/pretty-build-kit](https://github.com/pretty-project/pretty-build-kit) library in your project.
+; Implement the [pretty-project/pretty-css](https://github.com/pretty-project/pretty-css) library in your project.
 ;
 ; Implement the [pretty-project/pretty-icons](https://github.com/pretty-project/pretty-icons) library in your project.
 ;
@@ -30,20 +30,6 @@
 ; - Website components (e.g., side menu, contacts section, etc.).
 ;
 ; In the following tutorials they all referred as Pretty UI items.
-
-
-
-; @tutorial Abbreviations
-;
-; BTT: Bottom To Top
-; LTR: Left To Right
-; RTL: Right To Left
-; TTB: Top To Bottom
-;
-; BR: Bottom Right
-; BL: Bottom Left
-; TL: Top Left
-; TR: Top Right
 
 
 

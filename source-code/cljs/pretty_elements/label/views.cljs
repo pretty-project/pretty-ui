@@ -173,7 +173,7 @@
   ;  :min-height (keyword, px or string)(opt)
   ;  :min-width (keyword, px or string)(opt)
   ;  :on-copy (Re-Frame metamorphic-event)(opt)
-  ;   This event takes the label content as its last parameter
+  ;   Takes the label content as parameter.
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :placeholder (metamorphic-content)(opt)

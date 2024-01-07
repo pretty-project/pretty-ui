@@ -25,7 +25,7 @@
   ;
   ; @param (keyword) menu-id
   ; @param (map) menu-props
-  ; {}
+  ; {:threshold (px)}
   [menu-id {:keys [threshold] :as menu-props}]
   (if (window-observer/viewport-width-min? threshold)
       [pretty-elements/dropdown-menu menu-id menu-props]

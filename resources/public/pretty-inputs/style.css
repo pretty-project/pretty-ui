@@ -1,0 +1,837 @@
+
+/***** Checkbox *****/
+/*** Wrapper ***/
+
+.pi-checkbox {
+  /* XXX#6668 */
+  width: fit-content;
+}
+
+/*** Wrapper ***/
+
+/*** Options ***/
+
+.pi-checkbox--body[data-options-orientation="horizontal"] {
+  display:    flex;
+  column-gap: 24px;
+}
+
+/*** Options ***/
+
+/*** Option ***/
+
+.pi-checkbox--option {
+  display:        flex;
+  padding-bottom: 6px;
+  padding-top:    6px;
+}
+
+.pi-checkbox--option-button {
+  background-color: var( --fill-color-default );
+  margin-right:     8px;
+  margin-top:       2px;
+}
+
+.pi-checkbox--option-label {
+  /* XXX#5049 */
+  text-align: left;
+}
+
+.pi-checkbox--option-helper {
+  color: var( --text-color-muted );
+
+  /* XXX#5049 */
+  text-align: left;
+}
+
+/*** Option ***/
+
+/*** Marker ***/
+
+.pi-checkbox--option-button::after {
+  content: '';
+  font-size:   16px;
+  height:      16px;
+  line-height: 16px;
+  width:       16px;
+}
+
+.pi-checkbox--option[data-checked="true"] .pi-checkbox--option-button::after {
+  content: 'done';
+}
+
+/*** Marker ***/
+/***** Checkbox *****/
+
+
+
+/***** Chip-group *****/
+/*** Wrapper ***/
+
+.pi-chip-group {
+  /* XXX#6668 */
+  width: fit-content;
+}
+
+/*** Wrapper ***/
+
+/*** Chip-group chips ***/
+
+.pi-chip-group--chips {
+  display:   flex;
+  flex-wrap: wrap;
+  gap:       12px;
+}
+
+/*** Chip-group chips ***/
+
+/*** Chip-group no-chips label ***/
+
+.pi-chip-group--chips-placeholder {
+  color: var( --text-color-highlight );
+}
+
+/*** Chip-group no-chips label ***/
+/***** Chip-group *****/
+
+
+
+/***** Color-selector *****/
+/*** Color-selector options ***/
+
+.pi-color-selector--options {
+  /* XXX#0610
+   * Makes the popup above other contents */
+    z-index: 9999;
+}
+
+.pi-color-selector--options--label {
+  display: flex;
+  justify-content: center;
+
+  /* XXX#6661 */
+  padding: 6px 12px;
+}
+
+.pi-color-selector--options-body {
+  column-gap:      12px;
+  display:         flex;
+  justify-content: center;
+  padding:         12px;
+}
+
+/*** Color-selector options ***/
+
+/*** Color-selector option ***/
+
+.pi-color-selector--option[data-collected="true"]::after {
+  align-items: center;
+  background-color: var( --fill-color-default );
+  border-radius: 12px;
+  color: var( --text-color-default );
+  content: 'check';
+  display: flex;
+  font-size: var( --icon-size-xs );
+  font-weight: 600;
+  height: 20px;
+  justify-content: center;
+  left: 14px;
+  line-height: 20px;
+  position: absolute;
+  top: 14px;
+  width: 20px;
+}
+
+.pi-color-selector--option--color {
+  border-radius: var( --border-radius-m );
+  height: 48px;
+  width: 48px;
+}
+
+/*** Color-selector option ***/
+/***** Color-selector *****/
+
+
+
+/***** Combo-box *****/
+/*** Combo-box options ***/
+
+.pi-combo-box--options {
+  display: flex;
+  flex-direction: column;
+  max-height: 340px;
+}
+
+/*** Combo-box options ***/
+
+/*** Combo-box option ***/
+
+.pi-combo-box--field-content-option,
+.pi-combo-box--option {
+  align-items: center;
+  display: flex;
+  flex-shrink: 0;
+  padding: 8px 8px;
+  text-align: left;
+  width: 100%;
+}
+
+.pi-combo-box--option[data-highlighted="true"] {
+  background-color: var( --fill-color-highlight );
+}
+
+.pi-combo-box--option:hover {
+  background-color: var( --hover-color-highlight );
+}
+
+.pi-combo-box--field-content-option {
+  color: var( --text-color-muted )}
+
+/*** Combo-box option ***/
+/***** Combo-box *****/
+
+
+
+/***** Counter *****/
+/*** Wrapper ***/
+
+.pi-counter {
+  /* XXX#6668 */
+  width: fit-content;
+}
+
+/*** Wrapper ***/
+
+/*** Body ***/
+
+.pi-counter--body {
+  align-items: center;
+  display: flex;
+  padding-bottom: 6px;
+  padding-top: 6px;
+}
+
+/*** Body ***/
+
+/*** Value ***/
+
+.pi-counter--value {
+  font-weight: 500;
+  line-height: 24px;
+  min-width: 64px;
+  text-align: center;
+}
+
+/*** Value ***/
+
+/*** Button ***/
+
+.pi-counter--decrease-button,
+.pi-counter--increase-button,
+.pi-counter--reset-button {
+  background-color: var( --fill-color-default );
+  padding:          8px;
+}
+
+.pi-counter--decrease-button::before,
+.pi-counter--increase-button::before,
+.pi-counter--increase-button::after,
+.pi-counter--reset-button::before,
+.pi-counter--reset-button::after {
+  background-color: var( --text-color-default );
+  border-radius: 1px;
+  content: '';
+  position: absolute;
+}
+
+.pi-counter--decrease-button::before,
+.pi-counter--increase-button::before,
+.pi-counter--reset-button::before {
+  height: 2px;
+  left: 4px;
+  top: 7px;
+  width: 8px;
+}
+
+.pi-counter--increase-button::after,
+.pi-counter--reset-button::after {
+  height: 8px;
+  left: 7px;
+  top: 4px;
+  width: 2px;
+}
+
+.pi-counter--reset-button {
+  margin-left: 12px;
+}
+
+.pi-counter--reset-button::before,
+.pi-counter--reset-button::after {
+  transform: rotateZ( -45deg );
+}
+
+/*** Button ***/
+/***** Counter *****/
+
+
+
+/***** Digit field *****/
+/***** Element *****/
+
+.pi-digit-field {
+  height: 48px;
+}
+
+/***** Element *****/
+
+/***** Wrapper *****/
+
+.pi-digit-field--input {
+  color: var( --fill-color-default );
+  height: 100%;
+  width: 100%;
+}
+
+/***** Wrapper *****/
+
+/***** Cover *****/
+
+.pi-digit-field--cover {
+  display: flex;
+  column-gap: 12px;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.pi-digit-field--cover--digit {
+  align-items: center;
+  border-color: var( --text-color-highlight );
+  border-radius: var( --border-radius-s );
+  border-style: solid;
+  border-width: 1px;
+  cursor: text;
+  display: flex;
+  flex-direction: column;
+  font-weight: 600;
+  justify-content: center;
+  height: 100%;
+  width: 36px;
+}
+
+/***** Cover *****/
+/***** Digit field *****/
+
+
+
+/***** Multi combo-box *****/
+
+.pi-multi-combo-box--body {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/***** Multi combo-box *****/
+
+
+
+/***** Multi field *****/
+/*** Wrapper ***/
+
+.pi-multi-field {
+  display: flex;
+  flex-direction: column;
+
+  /* Without using a gap, the text-fields might be placed too close to each other. */
+  row-gap: 8px;
+}
+
+/*** Wrapper ***/
+/***** Multi field *****/
+
+
+
+/***** Radio button *****/
+/*** Wrapper ***/
+
+.pi-radio-button {
+  /* XXX#6668 */
+  width: fit-content;
+}
+
+/*** Wrapper ***/
+
+/*** Clear button ***/
+
+.pi-radio-button--clear-button {
+  background-color: var( --fill-color-default );
+  border-color:     var( --text-color-default );
+  margin-bottom:    6px;
+  margin-top:       6px;
+  padding:          8px;
+}
+
+.pi-radio-button--clear-button::before,
+.pi-radio-button--clear-button::after {
+  background-color: var( --text-color-default );
+  border-radius:    1px;
+  content:          '';
+  position:         absolute;
+  transform:        rotateZ( -45deg );
+}
+
+.pi-radio-button--clear-button::before {
+  height: 2px;
+  left:   4px;
+  top:    7px;
+  width:  8px;
+}
+
+.pi-radio-button--clear-button::after {
+  height: 8px;
+  left:   7px;
+  top:    4px;
+  width:  2px;
+}
+
+/*** Clear button ***/
+
+/*** Options ***/
+
+.pi-radio-button--body[data-options-orientation="horizontal"] {
+  display:    flex;
+  column-gap: 24px;
+}
+
+/*** Options ***/
+
+/*** Option ***/
+
+.pi-radio-button--option {
+  display:        flex;
+  padding-bottom: 6px;
+  padding-top:    6px;
+}
+
+.pi-radio-button--option-label {
+  /* XXX#5049
+   * By using the {text-align: left} setting, no matter if the label or the helper
+   * is longer, both of them are aligned to the left. */
+  text-align: left;
+}
+
+.pi-radio-button--option-helper {
+  color: var( --text-color-muted );
+
+  /* XXX#5049 */
+  text-align: left;
+}
+
+/*** Option ***/
+
+/*** Option button ***/
+
+.pi-radio-button--option-button {
+  background-color: var( --fill-color-default );
+  margin-bottom:    2px;
+  margin-right:     8px;
+  margin-top:       2px;
+  padding:          8px;
+}
+
+/*** Option button ***/
+
+/*** Option marker ***/
+
+.pi-radio-button--option[data-selected="true"]
+.pi-radio-button--option-button::before {
+  animation-name:     opacity-0-1;
+  animation-duration: .1s;
+  background-color:   var( --text-color-default     );
+  border-radius:      var( --adaptive-border-radius );
+  content:            '';
+  display:            block;
+  height:             8px;
+  left:               4px;
+  position:           absolute;
+  top:                4px;
+  width:              8px;
+}
+
+/*** Option marker ***/
+/***** Radio button *****/
+
+
+
+/***** Select *****/
+/*** Select button element ***/
+
+.pi-select-button {
+  /* XXX#6668 */
+  width: fit-content;
+}
+
+/*** Select button element ***/
+
+/*** Select button body ***/
+
+.pi-select-button .pe-button--body {
+  -justify-content: space-between;
+}
+
+.pi-select-button .pe-button--content {
+  -margin-left: 12px;
+}
+
+.pi-select-button .pe-button--icon {
+  -margin-right: 12px;
+}
+
+/*** Select button body ***/
+
+/*** Options ***/
+
+.pi-select--options {
+  /* XXX#0610 */
+  z-index: 9999;
+}
+
+.pi-select--option-list {
+  display: flex;
+  flex-direction: column;
+
+  /* XXX#6661 */
+  padding-bottom: 12px;
+}
+
+.pi-select--options-placeholder {
+  align-self: center;
+  color:      var( --text-color-highlight );
+  padding:    0 36px;
+}
+
+/*** Options ***/
+
+/*** Option ***/
+
+.pi-select--option {
+  display: flex;
+  padding: 6px 36px;
+  width:   100%;
+}
+
+.pi-select--option:hover,
+.pi-select--option[data-selected="true"]:hover {
+  background-color: var( --hover-color-highlight );
+}
+
+.pi-select--option[data-selected="true"] {
+  background-color: var( --fill-color-highlight );
+}
+
+.pi-select--option[data-selected="true"]::before {
+  background-color: var( --text-color-primary );
+  border-radius:    50%;
+  content:          '';
+  height:           6px;
+  left:             16px;
+  position:         absolute;
+  top:              16px;
+  width:            6px;
+}
+
+/*** Option ***/
+
+/*** Header ***/
+
+.pi-select--options--label {
+  display: flex;
+  justify-content: center;
+
+  /* XXX#6661
+   * The height of this label without content is 12px (horizontal padding x 2),
+   * that's the same as the bottom padding of the option list.
+   * Therefore, in case of no label defined, the top and bottom spacings are the same. */
+  padding: 6px 12px;
+}
+
+/*** Header ***/
+/***** Select *****/
+
+
+
+/***** Slider *****/
+/*** Body ***/
+
+.pi-slider--body {
+  height: 20px;
+}
+
+/*** Body ***/
+
+/*** Track ***/
+
+.pi-slider--track {
+  background-color: var( --fill-color-highlight );
+  border-radius: 2px;
+  height: 4px;
+  left: 0;
+  position: absolute;
+  top: 8px;
+  width: 100%;
+}
+
+/*** Track ***/
+
+/*** Line ***/
+
+.pi-slider--line {
+  cursor: grab;
+  height: 10px;
+  opacity: .3;
+  position: absolute;
+  top: 5px;
+}
+
+.pi-slider--line::after {
+  background-color: var( --border-color-primary );
+  border-radius: 2px;
+  content: '';
+  height: 4px;
+  position: absolute;
+  top: 3px;
+  width: 100%;
+}
+
+/*** Line ***/
+
+/*** Thumb ***/
+
+.pi-slider--thumb {
+  background-color: var( --border-color-primary );
+  border-radius: 6px;
+  cursor: grab;
+  height: 20px;
+  position: absolute;
+  top: 0;
+  width: 12px;
+}
+
+/*** Thumb ***/
+/***** Slider *****/
+
+
+
+/***** Switch *****/
+/*** Wrapper ***/
+
+.pi-switch {
+  /* XXX#6668 */
+  width: fit-content;
+}
+
+/*** Wrapper ***/
+
+/*** Options ***/
+
+.pi-switch--body[data-options-orientation="horizontal"] {
+  display:    flex;
+  column-gap: 24px;
+}
+
+/*** Options ***/
+
+/*** Option ***/
+
+.pi-switch--option {
+  align-items:    center;
+  display:        flex;
+  padding-bottom: 6px;
+  padding-top:    6px;
+}
+
+.pi-switch--option-track {
+  background-color: var( --fill-color-default );
+  margin-right:     6px;
+  padding:          8px 18px;
+}
+
+.pi-switch--option-label {
+  /* XXX#5049 */
+  text-align: left;
+}
+
+.pi-switch--option-helper {
+  color: var( --text-color-muted );
+
+  /* XXX#5049 */
+  text-align: left;
+}
+
+/*** Option ***/
+
+/*** Thumb ***/
+
+.pi-switch--option-track::before {
+  background-color: var( --text-color-default );
+  border-radius:    50%;
+  content:          '';
+  display:          block;
+  height:           12px;
+  left:             2px;
+  position:         absolute;
+  top:              2px;
+  transition:       transform .1s ease-out;
+  width:            12px;
+}
+
+.pi-switch--option[data-switched="true"] .pi-switch--option-track::before {
+  transform: translateX( 20px );
+}
+
+/*** Thumb ***/
+/***** Switch *****/
+
+
+
+/***** Text field *****/
+/*** Input container ***/
+
+/* The input container element contains the input and its accessories
+ * (adornments, placeholder, etc.) */
+.pi-text-field--input-container {
+  background-color: var( --fill-color-default );
+  display: flex;
+  justify-content: space-between;
+}
+
+/*** Input container ***/
+
+/*** Input ***/
+
+.pi-text-field--input-structure {
+  flex-grow: 1;
+}
+
+.pi-text-field--input-emphasize {
+  height: 100%;
+  width: 100%;
+}
+
+.pi-text-field--input {
+  color:   var( --text-color-default );
+  height:  100%;
+  padding: 6px 0;
+  width:   100%;
+
+  /* The font-weight property doesn't inherited in input elements by default. */
+  font-weight: inherit;
+}
+
+.pi-text-field--input[type="date"] {
+  cursor: text;
+}
+
+textarea.pi-text-field--input {
+  overflow: hidden;
+  resize:   none;
+}
+
+/*** Input ***/
+
+/*** Adornments ***/
+
+.pi-text-field--adornments {
+  align-items: center;
+  display: flex;
+
+  /* XXX#0617 The text-field element has the same padding as the standard (12px) */
+  padding: 0 12px;
+}
+
+.pi-text-field--adornments-placeholder {
+  cursor: text;
+
+  /* XXX#0617 */
+  width: 12px;
+}
+
+.pi-text-field--adornment:not([data-icon-family]),
+.pi-text-field--adornment:not([data-icon-family]) {
+  font-weight: 500;
+  min-width: 24px;
+  text-align: center;
+
+  /* XXX#0617
+   * The label adornment's padding and the adornment wrapper's padding adds up.
+   * Therefore, the label adornments are 16px far from the edge, but this isn't
+   * a problem, because the icon adornments (with no padding) look the same! */
+  padding: 0 4px;
+}
+
+/*** Adornments ***/
+
+/*** Invalid content message ***/
+
+.pi-text-field--invalid-content-message {
+  color:          var( --text-color-warning );
+  font-size:      var( --font-size-xxs      );
+  font-weight:    var( --font-weight-medium );
+  letter-spacing: var( --letter-spacing-xxs );
+  line-height:    18px;
+  padding-top:    6px;
+}
+
+/*** Invalid content message ***/
+
+/*** Placeholder ***/
+
+.pi-text-field--placeholder {
+  color:       var( --text-color-highlight );
+  font-weight: 400;
+  left:        0;
+  max-width:   100%;
+  padding:     6px 0;
+  position:    absolute;
+  top:         0;
+}
+
+/*** Placeholder ***/
+
+/*** Surface ***/
+
+.pi-text-field--surface {
+  background-color: var( --fill-color-default );
+  left: 0;
+  overflow: hidden;
+  position: absolute;
+  width: 100%;
+  z-index: 9999;
+
+  /* Adding +6px to the surface Y axis offset makes the surface shadow not
+   * overlapping with the field border. */
+ -top: 36px;
+  top: 42px;
+}
+
+/*** Surface ***/
+
+/*** Number field ***/
+
+.pi-text-field--input::-webkit-outer-spin-button,
+.pi-text-field--input::-webkit-inner-spin-button {
+  /* Chrome, Safari, Edge, Opera */
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.pi-text-field--input[type="number"][type=number] {
+  /* Firefox */
+  -moz-appearance: textfield;
+}
+
+/*** Number field ***/
+/***** Text field *****/

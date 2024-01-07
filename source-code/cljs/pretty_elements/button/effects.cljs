@@ -22,8 +22,8 @@
   ; @param (?) %
   (fn [_ [_ button-id %]]
       (let [[_ {:keys [keypress on-click] :as button-props}] (reagent/arguments %)]
-           (when keypress {:fx [:pretty-elements.button/remove-keypress-event! button-id button-props]}
-                          {:fx [:pretty-elements.button/reg-keypress-event!    button-id button-props]}))))
+           (when keypress {:fx [:pretty-elements.button/dereg-keypress-event! button-id button-props]}
+                          {:fx [:pretty-elements.button/reg-keypress-event!   button-id button-props]}))))
 
 (r/reg-event-fx :pretty-elements.button/button-will-unmount
   ; @ignore
@@ -32,4 +32,4 @@
   ; @param (map) button-props
   ; {:keypress (map)(opt)}
   (fn [_ [_ button-id {:keys [keypress] :as button-props}]]
-      (if keypress {:fx [:pretty-elements.button/remove-keypress-event! button-id button-props]})))
+      (if keypress {:fx [:pretty-elements.button/dereg-keypress-event! button-id button-props]})))

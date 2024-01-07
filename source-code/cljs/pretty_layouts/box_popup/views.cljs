@@ -12,7 +12,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- box-popup-structure
+(defn- box-popup
   ; @ignore
   ;
   ; @param (keyword) popup-id
@@ -26,7 +26,7 @@
                     [:div {:class :pl-box-popup--content}
                           [metamorphic-content/compose content]]]]])
 
-(defn- box-popup
+(defn- box-popup-lifecycles
   ; @ignore
   ;
   ; @param (keyword) popup-id
@@ -38,7 +38,7 @@
                                                          (if on-mount     (r/dispatch on-mount)))
                        :component-will-unmount (fn [_ _] (if lock-scroll? (scroll-lock/remove-scroll-prohibition! popup-id))
                                                          (if on-unmount   (r/dispatch on-unmount)))
-                       :reagent-render         (fn [_ popup-props] [box-popup-structure popup-id popup-props])}))
+                       :reagent-render         (fn [_ popup-props] [box-popup popup-id popup-props])}))
 
 (defn layout
   ; @param (keyword)(opt) popup-id
@@ -83,4 +83,4 @@
    (fn [_ popup-props]
        (let [popup-props (pretty-presets/apply-preset                popup-props)
              popup-props (box-popup.prototypes/popup-props-prototype popup-props)]
-            [box-popup popup-id popup-props]))))
+            [box-popup-lifecycles popup-id popup-props]))))

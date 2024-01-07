@@ -4,7 +4,8 @@
               [pretty-build-kit.default-props :as default-props]
               [pretty-build-kit.attributes :as attributes]
               [pretty-build-kit.adaptive :as adaptive]
-              [pretty-build-kit.side-effects :as side-effects]))
+              [pretty-build-kit.side-effects :as side-effects]
+              [pretty-build-kit.effects]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
