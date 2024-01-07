@@ -9,7 +9,7 @@
 
 (defn input
   ; @info
-  ; XXX#0711 (source-code/cljs/pretty_elements/text_field/views.cljs)
+  ; XXX#0711 (source-code/cljs/pretty_inputs/text_field/views.cljs)
   ; The 'multiline-field' element is based on the 'text-field' element.
   ; For more information, check out the documentation of the 'text-field' element.
   ;
@@ -40,4 +40,4 @@
    ; @note (tutorials#parametering)
    (fn [_ field-props]
        (let [field-props (multiline-field.prototypes/field-props-prototype field-id field-props)]
-            [text-field.views/element field-id field-props]))))
+            [text-field.views/input field-id field-props]))))

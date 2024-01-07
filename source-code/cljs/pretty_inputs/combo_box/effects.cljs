@@ -51,7 +51,7 @@
       ; ... doesn't display any options, pressing the ESC button:
       ;     - fires the original ESC event of the text-field.
       ;
-      ; HACK#1450 (source-code/cljs/pretty_elements/combo_box/env.cljs)
+      ; HACK#1450 (source-code/cljs/pretty_inputs/combo_box/env.cljs)
       (if (combo-box.env/any-option-rendered? box-id box-props)
           {:fx-n [[:pretty-inputs.plain-field/hide-surface!             box-id]
                   [:pretty-inputs.combo-box/discard-option-highlighter! box-id]]}
@@ -65,7 +65,7 @@
   ; {:on-type-ended (Re-Frame metamorphic-event)(opt)
   ;  :option-value-f (function)}
   (fn [{:keys [db]} [_ box-id {:keys [on-type-ended option-value-f] :as box-props}]]
-      ; XXX#4146 (source-code/cljs/pretty_elements/multi_combo_box/effects.cljs)
+      ; XXX#4146 (source-code/cljs/pretty_inputs/multi_combo_box/effects.cljs)
       ; If the surface of the combo-box is visible ...
       ; ... and any option is highlighted, pressing the ENTER button ...
       ;     ... hides the surface,

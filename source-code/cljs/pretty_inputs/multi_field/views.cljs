@@ -25,8 +25,8 @@
         field-props (multi-field.prototypes/field-props-prototype group-id group-props field-dex)]
        [:div {:class :pi-multi-field--text-field :key field-key}
              (if (or initial-options options options-path)
-                 [combo-box.views/element  field-id field-props]
-                 [text-field.views/element field-id field-props])]))
+                 [combo-box.views/input  field-id field-props]
+                 [text-field.views/input field-id field-props])]))
 
 (defn- multi-field
   ; @ignore
@@ -41,7 +41,7 @@
 
 (defn input
   ; @info
-  ; XXX#0711 (source-code/cljs/pretty_elements/text_field/views.cljs)
+  ; XXX#0711 (source-code/cljs/pretty_inputs/text_field/views.cljs)
   ; The 'multi-field' element is based on the 'text-field' or the 'combo-box' element.
   ; For more information, check out the documentation of the 'text-field' or the 'combo-box' element.
   ;

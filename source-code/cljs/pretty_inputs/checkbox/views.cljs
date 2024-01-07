@@ -82,8 +82,10 @@
   ;  :indent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :initial-options (vector)(opt)
-  ;  :initial-value (boolean)(opt)
+  ;  :initial-value (*)(opt)
   ;  :marker-color (keyword or string)(opt)
+  ;  :on-change (function or Re-Frame metamorphic-event)(opt)
+  ;   Takes the checked/unchecked option's value as parameter.
   ;  :on-checked (function or Re-Frame metamorphic-event)(opt)
   ;   Takes the checked option's value as parameter.
   ;  :on-unchecked (function or Re-Frame metamorphic-event)(opt)
@@ -104,6 +106,7 @@
   ;  :preset (keyword)(opt)
   ;  :projected-value (*)(opt)
   ;  :style (map)(opt)
+  ;  :value (*)(opt)
   ;  :value-path (Re-Frame path vector)(opt)}
   ;
   ; @usage

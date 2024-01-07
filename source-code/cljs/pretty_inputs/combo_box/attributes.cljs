@@ -17,7 +17,7 @@
   ; @return (map)
   ; {}
   [box-id box-props option-dex option]
-  ; BUG#2105 (source-code/cljs/pretty_elements/text_field/attributes.cljs)
+  ; BUG#2105 (source-code/cljs/pretty_inputs/text_field/attributes.cljs)
   {:class         :pi-combo-box--option
    :on-mouse-down #(.preventDefault %)
    :on-mouse-up   #(r/dispatch [:pretty-inputs.combo-box/select-option! box-id box-props option])
@@ -34,7 +34,7 @@
   ; {}
   [box-id box-props]
   ; Why the :data-options-rendered attribute is added?
-  ; HACK#1450 (source-code/cljs/pretty_elements/combo_box/env.cljs)
+  ; HACK#1450 (source-code/cljs/pretty_inputs/combo_box/env.cljs)
   (let [options (combo-box.env/get-rendered-options box-id box-props)]
        {:class :pi-combo-box--options
         :data-options-rendered (-> options empty? not)

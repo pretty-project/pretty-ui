@@ -12,7 +12,7 @@
   ; @param (keyword) box-id
   ; @param (map) box-props
   [box-id box-props]
-  ; XXX#4156 (source-code/cljs/pretty_elements/combo_box/effects.cljs)
+  ; XXX#4156 (source-code/cljs/pretty_inputs/combo_box/effects.cljs)
   (let [on-down-props  {:key-code 40  :on-keydown #(r/dispatch [:pretty-inputs.combo-box/DOWN-pressed        box-id box-props]) :required? true :prevent-default? true}
         on-up-props    {:key-code 38  :on-keydown #(r/dispatch [:pretty-inputs.combo-box/UP-pressed          box-id box-props]) :required? true :prevent-default? true}
         on-esc-props   {:key-code 27  :on-keydown #(r/dispatch [:pretty-inputs.combo-box/ESC-pressed         box-id box-props]) :required? true}
@@ -30,7 +30,7 @@
   ; @param (keyword) box-id
   ; @param (map) box-props
   [_ _]
-  ; XXX#4156 (source-code/cljs/pretty_elements/combo_box/effects.cljs)
+  ; XXX#4156 (source-code/cljs/pretty_inputs/combo_box/effects.cljs)
   (keypress-handler/dereg-keypress-event! :pretty-inputs.text-field/DOWN)
   (keypress-handler/dereg-keypress-event! :pretty-inputs.text-field/UP)
   (keypress-handler/dereg-keypress-event! :pretty-inputs.text-field/ESC)

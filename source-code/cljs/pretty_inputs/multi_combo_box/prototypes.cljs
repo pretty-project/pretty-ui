@@ -58,8 +58,8 @@
   ;  :option-value-f (function)
   ;  :options-path (Re-Frame path vector)}
   [box-id box-props]
-  ; XXX#5067 (source-code/cljs/pretty_elements/combo_box/prototypes.cljs)
-  ; XXX#5068 (source-code/cljs/pretty_elements/text_field/prototypes.cljs)
+  ; XXX#5067 (source-code/cljs/pretty_inputs/combo_box/prototypes.cljs)
+  ; XXX#5068 (source-code/cljs/pretty_inputs/text_field/prototypes.cljs)
   ; XXX#5061
   ; The value-path of the multi-combo-box element is where the selected values
   ; stored in the application state.

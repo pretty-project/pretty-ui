@@ -22,10 +22,6 @@
   ;  :chips-path (Re-Frame path vector)(opt)
   ;  :placeholder (metamorphic-content)(opt)}
   [group-id {:keys [chips chips-path placeholder] :as group-props}]
-  ; XXX#2781 (source-code/cljs/pretty_elements/input/env.cljs)
-  ; Like the optionable inputs, the 'chip-group' element has multiple chip sources:
-  ; A) The ':chips' property
-  ; B) The ':chips-path' property (the application state)
   (let [chips (or chips @(r/subscribe [:get-item chips-path]))]
        (if (vector/nonempty? chips)
 

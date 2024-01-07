@@ -22,5 +22,5 @@
           :min-lines 1}
          (-> field-props)
          {:multiline? true
-          ; XXX#6782 (source-code/cljs/pretty_elements/text_field/prototypes.cljs)
+          ; XXX#6782 (source-code/cljs/pretty_inputs/text_field/prototypes.cljs)
           :autofill-name (random/generate-keyword)}))

@@ -41,6 +41,7 @@
               [pretty-inputs.switch.subs]
               [pretty-inputs.text-field.effects]
               [pretty-inputs.text-field.side-effects]
+              [pretty-inputs.checkbox.views        :as checkbox.views]
               [pretty-inputs.chip-group.views      :as chip-group.views]
               [pretty-inputs.color-selector.views  :as color-selector.views]
               [pretty-inputs.combo-box.views       :as combo-box.views]

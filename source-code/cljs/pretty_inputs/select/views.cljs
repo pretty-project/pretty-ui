@@ -14,7 +14,7 @@
               [pretty-layouts.api                :as pretty-layouts]
               [re-frame.api                      :as r]
               [reagent.api                       :as reagent]))
- 
+
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -28,10 +28,10 @@
   [select-id {:keys [extendable? option-field-placeholder] :as select-props}]
   (if extendable? (let [adornment-on-click [:pretty-inputs.select/add-option! select-id select-props]
                         adornment-props    {:icon :add :on-click adornment-on-click :title :add!}]
-                       [text-field.views/element :pretty-inputs.select/option-field
-                                                 {:end-adornments [adornment-props]
-                                                  :indent         {:bottom :xs :vertical :xs}
-                                                  :placeholder    option-field-placeholder}])))
+                       [text-field.views/input :pretty-inputs.select/option-field
+                                               {:end-adornments [adornment-props]
+                                                :indent         {:bottom :xs :vertical :xs}
+                                                :placeholder    option-field-placeholder}])))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

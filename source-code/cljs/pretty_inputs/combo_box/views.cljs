@@ -57,7 +57,7 @@
   ; @param (map) box-props
   [box-id box-props]
   (let [box-props (assoc-in box-props [:surface :content] [combo-box-surface-content box-id box-props])]
-       [text-field.views/element box-id box-props]))
+       [text-field.views/input box-id box-props]))
 
 (defn- combo-box-lifecycles
   ; @ignore
@@ -70,7 +70,7 @@
                        :reagent-render      (fn [_ box-props] [combo-box box-id box-props])}))
 
 (defn input
-  ; XXX#0711 (source-code/cljs/pretty_elements/text_field/views.cljs)
+  ; XXX#0711 (source-code/cljs/pretty_inputs/text_field/views.cljs)
   ; The 'combo-box' element is based on the 'text-field' element.
   ; For more information, check out the documentation of the 'text-field' element.
   ;

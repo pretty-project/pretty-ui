@@ -17,7 +17,7 @@
   ; @param (map) box-props
   ; {}
   (fn [{:keys [db]} [_ box-id box-props]]
-      ; XXX#4146 (source-code/cljs/pretty_elements/combo_box/effects.cljs)
+      ; XXX#4146 (source-code/cljs/pretty_inputs/combo_box/effects.cljs)
       (let [field-id    (multi-combo-box.utils/box-id->field-id           box-id)
             field-props (multi-combo-box.prototypes/field-props-prototype box-id box-props)]
            (if (plain-field.env/surface-visible? field-id)

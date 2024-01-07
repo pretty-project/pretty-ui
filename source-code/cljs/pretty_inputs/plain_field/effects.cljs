@@ -5,7 +5,7 @@
               [pretty-inputs.plain-field.events :as plain-field.events]
               [re-frame.api                       :as r :refer [r]]
               [pretty-build-kit.api]))
-              
+
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -59,7 +59,7 @@
   ; @param (map) field-props
   ; {:on-type-ended (function or Re-Frame metamorphic-event)(opt)}
   (fn [{:keys [db]} [_ field-id {:keys [on-type-ended] :as field-props}]]
-      ; BUG#6071 (source-code/cljs/pretty_elements/plain_field/side_effects.cljs)
+      ; BUG#6071 (source-code/cljs/pretty_inputs/plain_field/side_effects.cljs)
       ;
       ; If the field is not being focused anymore when this effect is dispatched
       ; (it's being dispatched with a delay) ...

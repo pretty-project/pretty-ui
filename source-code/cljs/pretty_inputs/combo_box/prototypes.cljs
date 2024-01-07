@@ -38,7 +38,7 @@
 
 
 
-  ; XXX#5068 (source-code/cljs/pretty_elements/text_field/prototypes.cljs)
+  ; XXX#5068 (source-code/cljs/pretty_inputs/text_field/prototypes.cljs)
   ; XXX#5067
   ; The 'field-content-f' and 'field-value-f' properties are belong to the
   ; 'text-field' element, but they have to be in the prototype of the 'combo-box'

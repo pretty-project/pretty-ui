@@ -1,8 +1,8 @@
 
-(ns pretty-elements.checkbox.attributes
+(ns pretty-inputs.checkbox.attributes
     (:require [dom.api        :as dom]
               [pretty-build-kit.api :as pretty-build-kit]
-              [re-frame.api   :as r]))
+              [pretty-inputs.input.env :as input.env]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -17,7 +17,7 @@
   ; @return (map)
   ; {}
   [_ _ _]
-  {:class               :pe-checkbox--option-helper
+  {:class               :pi-checkbox--option-helper
    :data-font-size      :xs
    :data-letter-spacing :auto
    :data-line-height    :auto})
@@ -33,7 +33,7 @@
   ; @return (map)
   ; {}
   [_ {:keys [font-size]} _]
-  (-> {:class               :pe-checkbox--option-label
+  (-> {:class               :pi-checkbox--option-label
        :data-font-size      font-size
        :data-font-weight    :medium
        :data-letter-spacing :auto
@@ -49,7 +49,7 @@
   ; @return (map)
   ; {}
   [_ checkbox-props _]
-  (-> {:class            :pe-checkbox--option-button
+  (-> {:class            :pi-checkbox--option-button
        :data-icon-family :material-symbols-outlined}
       (pretty-build-kit/border-attributes checkbox-props)))
 
@@ -65,14 +65,14 @@
   ; {:class (keyword or keywords in vector)
   ;  :data-checked (boolean)
   ;  :disabled (boolean)}
-  [checkbox-id {:keys [disabled?] :as checkbox-props} option]
-  (let [option-checked? @(r/subscribe [:pretty-elements.checkbox/option-checked? checkbox-id checkbox-props option])
-        on-check-event  #(r/dispatch  [:pretty-elements.checkbox/toggle-option!  checkbox-id checkbox-props option])]
-       (-> {:class        :pe-checkbox--option
+  [checkbox-id {:keys [disabled? on-change] :as checkbox-props} option]
+  (let [option-checked? (input.env/option-checked? checkbox-id checkbox-props option)
+        on-click        #(pretty-build-kit/dispatch-event-handler! on-change option)]
+       (-> {:class        :pi-checkbox--option
             :data-checked option-checked?
             :disabled     disabled?}
            (pretty-build-kit/effect-attributes checkbox-props)
-           (pretty-build-kit/mouse-event-attributes {:on-click    on-check-event
+           (pretty-build-kit/mouse-event-attributes {:on-click    on-click
                                                      :on-mouse-up dom/blur-active-element!}))))
 
 ;; ----------------------------------------------------------------------------
@@ -92,7 +92,7 @@
   ;  :data-selectable (keyword)
   ;  :style (map)}
   [_ {:keys [options-orientation style] :as checkbox-props}]
-  (-> {:class                    :pe-checkbox--body
+  (-> {:class                    :pi-checkbox--body
        :data-options-orientation options-orientation
        :data-selectable          false
        :style                    style}
@@ -110,7 +110,7 @@
   ; @return (map)
   ; {:class (keyword or keywords in vector)}
   [_ checkbox-props]
-  (-> {:class :pe-checkbox}
+  (-> {:class :pi-checkbox}
       (pretty-build-kit/class-attributes   checkbox-props)
       (pretty-build-kit/outdent-attributes checkbox-props)
       (pretty-build-kit/state-attributes   checkbox-props)))

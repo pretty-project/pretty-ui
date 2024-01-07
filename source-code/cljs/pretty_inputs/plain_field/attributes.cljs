@@ -84,7 +84,7 @@
   ;  :on-mouse-down (function)}
   [field-id {:keys [surface]}]
   ; @note (pretty-inputs.button.attributes#4460)
-  ; BUG#2105 (source-code/cljs/pretty_elements/text_field/attributes.cljs)
+  ; BUG#2105 (source-code/cljs/pretty_inputs/text_field/attributes.cljs)
   (-> {:class                 :pi-plain-field--surface
        :data-box-shadow-color :default
        :id                    (hiccup/value field-id "surface")

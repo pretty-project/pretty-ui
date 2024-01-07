@@ -27,6 +27,7 @@
   ; {}
   ; @param (*) option
   (fn [{:keys [db]} [_ checkbox-id {:keys [on-checked on-unchecked option-value-f] :as checkbox-props} option]]
+      (println option)
       (let [option-value (option-value-f option)]
            {:db       (r checkbox.events/toggle-option! db checkbox-id checkbox-props option)
             :fx       [:pretty-inputs.input/mark-input-as-visited! checkbox-id]

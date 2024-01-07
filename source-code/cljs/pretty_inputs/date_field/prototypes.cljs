@@ -16,6 +16,6 @@
   ; {:autofill-name (keyword)
   ;  :type (keyword)}
   [_ field-props]
-  ; XXX#6782 (source-code/cljs/pretty_elements/text-field/prototypes.cljs)
+  ; XXX#6782 (source-code/cljs/pretty_inputs/text-field/prototypes.cljs)
   (merge field-props {:autofill-name (random/generate-keyword)
                       :type          :date}))

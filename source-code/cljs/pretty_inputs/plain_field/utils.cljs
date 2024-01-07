@@ -23,7 +23,7 @@
   ; {:field-content-f (function)
   ;  :value-path (Re-Frame path vector)}
   [field-id {:keys [field-content-f value-path]}]
-  ; HACK#9910 (source-code/cljs/pretty_elements/plain_field/views.cljs)
+  ; HACK#9910 (source-code/cljs/pretty_inputs/plain_field/views.cljs)
   (let [stored-value  @(r/subscribe [:get-item value-path])
         stored-content (field-content-f stored-value)]
        (plain-field.side-effects/set-field-content! field-id stored-content)))
@@ -39,7 +39,7 @@
   ; @param (keyword) field-id
   ; @param (?) %
   [field-id %]
-  ; HACK#9910 (source-code/cljs/pretty_elements/plain_field/views.cljs)
+  ; HACK#9910 (source-code/cljs/pretty_inputs/plain_field/views.cljs)
   ; When the stored value (in the application state) gets updated, checks
   ; whether if it's different from the field content.
   ; If it's different, updates the field content with the content derived from
@@ -55,7 +55,7 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   [field-id _]
-  ; HACK#9910 (source-code/cljs/pretty_elements/plain_field/views.cljs)
+  ; HACK#9910 (source-code/cljs/pretty_inputs/plain_field/views.cljs)
   ;
   ; When the field is unmounted, its content and output have to be removed from the state.
   ; Otherwise, the next time when the field remounts, its previous content and output would affect it.

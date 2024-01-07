@@ -60,7 +60,7 @@
   ; @return (map)
   ; {}
   [_ field-props]
-  ; HACK#9760 (source-code/cljs/pretty_elements/plain_field/utils.cljs)
+  ; HACK#9760 (source-code/cljs/pretty_inputs/plain_field/utils.cljs)
   (-> {:class               :pi-text-field--placeholder
        :data-font-size      :xs
        :data-letter-spacing :auto
@@ -160,7 +160,7 @@
   [field-id {:keys [autofill-name date-from date-to disabled? max-length type] :as field-props}]
   ; The {:type :date} fields range could be set by the :min and :max properties.
   ;
-  ; HACK#9760 (source-code/cljs/pretty_elements/plain_field/utils.cljs)
+  ; HACK#9760 (source-code/cljs/pretty_inputs/plain_field/utils.cljs)
   ;
   ; BUG#6782
   ; - https://stackoverflow.com/questions/12374442/chrome-ignores-autocomplete-off

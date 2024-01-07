@@ -24,7 +24,7 @@
           (if (vector/nonempty? chips)
               (let [group-id    (multi-combo-box.utils/box-id->group-id           box-id)
                     group-props (multi-combo-box.prototypes/group-props-prototype box-id box-props)]
-                   [chip-group.views/element group-id group-props]))))
+                   [chip-group.views/input group-id group-props]))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -56,7 +56,7 @@
 
 (defn input
   ; @info
-  ; XXX#0711 (source-code/cljs/pretty_elements/text_field/views.cljs)
+  ; XXX#0711 (source-code/cljs/pretty_inputs/text_field/views.cljs)
   ; The 'multi-combo-box' element is based on the 'text-field' element.
   ; For more information, check out the documentation of the 'text-field' element.
   ;

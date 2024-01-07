@@ -155,63 +155,58 @@
 
 
 
-; @tutorial Value paths of inputs
+; @tutorial Values and value paths of inputs
 ;
-; Pretty UI input elements and input components take the `:value-path` property which points
-; to the input value in the Re-Frame state.
+; Pretty UI inputs can take their actual value as ...
+; ... the provided ':value' parameter (as primary source),
+; ... or the value in the Re-Frame state where the provided ':value-path' parameter points to (as secondary source).
 ;
 ; @code
 ; (ns my-namespace
 ;     (:require [pretty-elements.api :as pretty-elements]))
 ;
-; [pretty-elements/text-field {:value-path [:my-value]}]
-; @---
-;
-; Input elements and components that take the `:value-path` property can generate
-; a value path in case of it isn't provided.
-;
-; In the following example the 'text-field' element uses a default value path:
-;
-; @code
-; (ns my-namespace
-;     (:require [pretty-elements.api :as pretty-elements]
-;               [re-frame.core :as r]))
-;
-; (defn my-ui
+; (defn my-text-field
 ;   []
-;   [:<> [pretty-elements/text-field :my-text-field {}]
-;        [:div "The field value in the Re-Frame state:"
-;              (r/subscribe [:get-item [:pretty-elements :element-handler/input-values :my-text-field]])]])
+;   [pretty-elements/text-field {:value-path [:my-value]}])
+;
+; (defn another-text-field
+;   []
+;   [pretty-elements/text-field {:value "My value"}])
 ; @---
+;
+; @note
+; In case of no ':value-path' parameter is provided, the input will use a default Re-Frame value path.
 
 
 
-; @tutorial Option paths of optionable inputs
-; ...
+; @tutorial Options and option paths of optionable inputs
+;
+; Pretty UI inputs can take their selectable options as ...
+; ... the provided ':options' parameter (as primary source),
+; ... or the value in the Re-Frame state where the provided ':options-path' parameter points to (as secondary source).
 
 
 
-; @tutorial Values of optionable inputs
+; @tutorial Output values of optionable inputs
 ;
 ; - If an optionable input ...
-;   ... got only one option to select, its output (in the Re-Frame state) is a single value.
-;   ... got more than one option to select, its output (in the Re-Frame state) is a vector of selected options.
+;   ... got only one option to select, its output is a single value.
+;   ... got more than one option to select, its output is a vector of selected options.
 ;
 ; @code Example
 ; (ns my-namespace
 ;   (:require [pretty-inputs.api :as pretty-inputs]
 ;             [re-frame.core     :as r]))
 ;
-; (defn my-ui
+; (defn my-checkbox
 ;   []
-;   [:<> [pretty-inputs/checkbox     {:options ["a" "b" "c"] :value-path [:my-value]}]
-;        [pretty-inputs/radio-button {:options "abc"         :value-path [:another-value]}]])
-;
-; (println @(r/subscribe [:get-item [:my-value]]))
+;   [pretty-inputs/checkbox {:options ["a" "b" "c"] :on-change println}])
 ; =>
-; [] ["a"], ["a" "b"], ["a", "c"], ["a", "b", "c"], ["b"], ["b" "c"], ["c"]
+; [], ["a"], ["a" "b"], ["a" "c"], ["a" "b" "c"], ["b"], ["b" "c"], ["c"]
 ;
-; (println @(r/subscribe [:get-item [:another-value]]))
+; (defn another-checkbox
+;   []
+;   [pretty-inputs/checkbox {:options "abc" :on-change println}])
 ; =>
 ; nil, "abc"
 ; @---
