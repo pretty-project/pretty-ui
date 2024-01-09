@@ -35,8 +35,8 @@
   ;
   ; @return (*)
   [input-id]
-  (let [get-value-f (get-in @state/FORM-INPUTS [input-id :get-value-f])]
-       (get-value-f)))
+  (if-let [get-input-value-f (get-in @state/FORM-INPUTS [input-id :get-input-value-f])]
+          (get-input-value-f)))
 
 (defn get-input-validators
   ; @description

@@ -2,7 +2,8 @@
 (ns pretty-inputs.checkbox.attributes
     (:require [dom.api        :as dom]
               [pretty-build-kit.api :as pretty-build-kit]
-              [pretty-inputs.input.env :as input.env]))
+              [pretty-inputs.core.env :as core.env]
+              [pretty-inputs.core.side-effects :as core.side-effects]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -58,22 +59,21 @@
   ;
   ; @param (keyword) checkbox-id
   ; @param (map) checkbox-props
-  ; {:disabled? (boolean)(opt)}
+  ; {}
   ; @param (*) option
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  :data-checked (boolean)
   ;  :disabled (boolean)}
-  [checkbox-id {:keys [disabled? on-change] :as checkbox-props} option]
-  (let [option-checked? (input.env/option-checked? checkbox-id checkbox-props option)
-        on-click        #(pretty-build-kit/dispatch-event-handler! on-change option)]
+  [checkbox-id {:keys [disabled?] :as checkbox-props} option]
+  (let [option-checked? (core.env/option-selected? checkbox-id checkbox-props option)
+        on-click-f #(core.side-effects/toggle-option! checkbox-id checkbox-props option)]
        (-> {:class        :pi-checkbox--option
             :data-checked option-checked?
             :disabled     disabled?}
            (pretty-build-kit/effect-attributes checkbox-props)
-           (pretty-build-kit/mouse-event-attributes {:on-click    on-click
-                                                     :on-mouse-up dom/blur-active-element!}))))
+           (pretty-build-kit/mouse-event-attributes {:on-click on-click-f :on-mouse-up dom/blur-active-element!}))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -91,12 +91,16 @@
   ;  :data-options-orientation (keyword)
   ;  :data-selectable (keyword)
   ;  :style (map)}
-  [_ {:keys [options-orientation style] :as checkbox-props}]
-  (-> {:class                    :pi-checkbox--body
-       :data-options-orientation options-orientation
-       :data-selectable          false
-       :style                    style}
-      (pretty-build-kit/indent-attributes checkbox-props)))
+  [checkbox-id {:keys [options-orientation style] :as checkbox-props}]
+  (let [on-blur-f  #(core.side-effects/input-left    checkbox-id checkbox-props)
+        on-focus-f #(core.side-effects/input-focused checkbox-id checkbox-props)]
+       (-> {:class                    :pi-checkbox--body
+            :data-options-orientation options-orientation
+            :data-selectable          false
+            :on-blur                  on-blur-f
+            :on-focus                 on-focus-f
+            :style                    style}
+           (pretty-build-kit/indent-attributes checkbox-props))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

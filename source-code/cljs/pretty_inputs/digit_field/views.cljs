@@ -2,7 +2,6 @@
 (ns pretty-inputs.digit-field.views
     (:require [dom.api                                :as dom]
               [fruits.css.api                         :as css]
-              [fruits.hiccup.api                      :as hiccup]
               [fruits.random.api                      :as random]
               [fruits.string.api                      :as string]
               [pretty-inputs.digit-field.attributes :as digit-field.attributes]
@@ -19,10 +18,9 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   [field-id field-props]
-  ; @note (pretty-inputs.button.attributes#4460)
   [:input {:class     :pi-digit-field--input
            :type      "text"
-           :id        (hiccup/value field-id "input")
+           :id :xxx
            :on-change #(let [v (dom/event->value %)]
                             (r/dispatch-sync [:set-item! (:value-path field-props) (str v)]))}])
 
@@ -33,7 +31,7 @@
   ; @param (map) field-props
   [field-id field-props]
   (reduce (fn [%1 %2] (conj %1 [:div {:class :pi-digit-field--cover--digit
-                                      :on-mouse-up #(dom/focus-element! (dom/get-element-by-id (hiccup/value field-id "input")))
+                                      :on-mouse-up #(dom/focus-element! (dom/get-element-by-id "xxx"))
                                       ; prevent selecting
                                       :on-mouse-down #(.preventDefault %)}
                                      (fruits.string.api/nth-character (:value field-props) %2)]))

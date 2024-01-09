@@ -1,30 +1,8 @@
 
 (ns pretty-elements.button.side-effects
-    (:require [dom.api              :as dom]
-              [fruits.hiccup.api    :as hiccup]
-              [keypress-handler.api :as keypress-handler]
-              [re-frame.api         :as r]))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn focus-button!
-  ; @ignore
-  ;
-  ; @param (keyword) button-id
-  [button-id]
-  (let [button-body-id (hiccup/value button-id "body")]
-       (if-let [button-body-element (dom/get-element-by-id button-body-id)]
-               (dom/focus-element! button-body-element))))
-
-(defn blur-button!
-  ; @ignore
-  ;
-  ; @param (keyword) button-id
-  [button-id]
-  (let [button-body-id (hiccup/value button-id "body")]
-       (if-let [button-body-element (dom/get-element-by-id button-body-id)]
-               (dom/blur-element! button-body-element))))
+    (:require [keypress-handler.api :as keypress-handler]
+              [re-frame.api         :as r]
+              [pretty-elements.core.side-effects :as core.side-effects]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -35,7 +13,7 @@
   ; @param (keyword) button-id
   ; @param (map) button-props
   [button-id _]
-  (focus-button! button-id))
+  (core.side-effects/focus-element! button-id))
 
 (defn key-released
   ; @ignore
@@ -44,7 +22,7 @@
   ; @param (map) button-props
   ; {:on-click (function)(opt)}
   [button-id {:keys [on-click]}]
-  (blur-button! button-id)
+  (core.side-effects/blur-element! button-id)
   (on-click))
 
 ;; ----------------------------------------------------------------------------

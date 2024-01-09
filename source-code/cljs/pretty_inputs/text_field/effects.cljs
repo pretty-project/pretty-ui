@@ -16,7 +16,7 @@
   ; @param (map) field-props
   (fn [_ [_ field-id field-props]]
       (let [get-value-f #(plain-field.env/get-field-content field-id)]
-           {:fx       [:pretty-forms/reg-form-input!                field-id field-props get-value-f]
+           {:fx       [:pretty-forms/reg-form-input!              field-id field-props get-value-f]
             :dispatch [:pretty-inputs.plain-field/field-did-mount field-id field-props]})))
 
 (r/reg-event-fx :pretty-inputs.text-field/field-will-unmount
@@ -25,7 +25,7 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   (fn [_ [_ field-id field-props]]
-      {:fx       [:pretty-forms/dereg-form-input!                 field-id field-props]
+      {:fx       [:pretty-forms/dereg-form-input!               field-id field-props]
        :dispatch [:pretty-inputs.plain-field/field-will-unmount field-id field-props]}))
 
 ;; ----------------------------------------------------------------------------

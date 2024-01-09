@@ -155,6 +155,6 @@
   ([button-id button-props]
    ; @note (tutorials#parametering)
    (fn [_ button-props]
-       (let [button-props (pretty-presets/apply-preset              button-props)
-             button-props (button.prototypes/button-props-prototype button-props)]
+       (let [button-props (pretty-presets/apply-preset                        button-props)
+             button-props (button.prototypes/button-props-prototype button-id button-props)]
             [button-lifecycles button-id button-props]))))

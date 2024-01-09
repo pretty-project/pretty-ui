@@ -1,7 +1,6 @@
 
 (ns pretty-elements.button.attributes
-    (:require [fruits.hiccup.api :as hiccup]
-              [pretty-build-kit.api    :as pretty-build-kit]))
+    (:require [pretty-build-kit.api    :as pretty-build-kit]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -51,33 +50,29 @@
   ;  :data-column-gap (keyword)
   ;  :data-selectable (boolean)
   ;  :disabled (boolean)
-  ;  :id (string)
   ;  :style (map)}
-  [button-id {:keys [disabled? gap horizontal-align style] :as button-props}]
-  ; @note (#4460)
-  ; Setting the ':id' attribute on the button body component makes it targetable for DOM actions (e.g., focus, blur, etc.).
-  (let [button-body-id (hiccup/value button-id "body")]
-       (-> {:class                     :pe-button--body
-            :data-column-gap           gap
-            :data-letter-spacing       :auto
-            :data-row-horizontal-align horizontal-align
-            :data-selectable           false
-            :disabled                  disabled?
-            :id                        button-body-id
-            :style                     style}
-           (pretty-build-kit/badge-attributes        button-props)
-           (pretty-build-kit/border-attributes       button-props)
-           (pretty-build-kit/color-attributes        button-props)
-           (pretty-build-kit/cursor-attributes       button-props)
-           (pretty-build-kit/effect-attributes       button-props)
-           (pretty-build-kit/element-size-attributes button-props)
-           (pretty-build-kit/font-attributes         button-props)
-           (pretty-build-kit/indent-attributes       button-props)
-           (pretty-build-kit/link-attributes         button-props)
-           (pretty-build-kit/marker-attributes       button-props)
-           (pretty-build-kit/mouse-event-attributes  button-props)
-           (pretty-build-kit/progress-attributes     button-props)
-           (pretty-build-kit/tooltip-attributes      button-props))))
+  [_ {:keys [disabled? gap horizontal-align style] :as button-props}]
+  (-> {:class                     :pe-button--body
+       :data-column-gap           gap
+       :data-letter-spacing       :auto
+       :data-row-horizontal-align horizontal-align
+       :data-selectable           false
+       :disabled                  disabled?
+       :style                     style}
+      (pretty-build-kit/badge-attributes        button-props)
+      (pretty-build-kit/border-attributes       button-props)
+      (pretty-build-kit/color-attributes        button-props)
+      (pretty-build-kit/cursor-attributes       button-props)
+      (pretty-build-kit/effect-attributes       button-props)
+      (pretty-build-kit/element-size-attributes button-props)
+      (pretty-build-kit/focus-attributes        button-props)
+      (pretty-build-kit/font-attributes         button-props)
+      (pretty-build-kit/indent-attributes       button-props)
+      (pretty-build-kit/link-attributes         button-props)
+      (pretty-build-kit/marker-attributes       button-props)
+      (pretty-build-kit/mouse-event-attributes  button-props)
+      (pretty-build-kit/progress-attributes     button-props)
+      (pretty-build-kit/tooltip-attributes      button-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

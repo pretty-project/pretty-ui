@@ -6,7 +6,7 @@
               [pretty-inputs.chip-group.attributes :as chip-group.attributes]
               [pretty-inputs.chip-group.prototypes :as chip-group.prototypes]
               [pretty-elements.api            :as pretty-elements]
-              [pretty-inputs.input.views         :as input.views]
+              [pretty-inputs.core.views         :as core.views]
               [pretty-presets.api                    :as pretty-presets]
               [re-frame.api                          :as r]))
 
@@ -43,7 +43,7 @@
   ; @param (map) group-props
   [group-id group-props]
   [:div (chip-group.attributes/chip-group-attributes group-id group-props)
-        [input.views/input-label                     group-id group-props]
+        [core.views/input-label                      group-id group-props]
         [:div (chip-group.attributes/chip-group-body-attributes group-id group-props)
               [chip-group-chips group-id group-props]]])
 

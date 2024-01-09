@@ -85,6 +85,7 @@
   (<-walk {:field-content-f return
            :field-value-f   return
            :font-size       :s
+           :focus-id        field-id
            :form-id         field-id
            :font-weight     :normal
            :line-height     :text-block

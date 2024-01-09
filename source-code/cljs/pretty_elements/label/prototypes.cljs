@@ -1,7 +1,6 @@
 
 (ns pretty-elements.label.prototypes
-    (:require [fruits.hiccup.api       :as hiccup]
-              [metamorphic-content.api :as metamorphic-content]
+    (:require [metamorphic-content.api :as metamorphic-content]
               [pretty-build-kit.api :as pretty-build-kit]))
 
 ;; ----------------------------------------------------------------------------
@@ -16,7 +15,6 @@
   ;  :icon (keyword)(opt)
   ;  :marker-color (keyword or string)
   ;  :text-color (keyword or string)(opt)
-  ;  :target-id (keyword)(opt)
   ;  :tooltip-content (metamorphic-content)(opt)}
   ;
   ; @return (map)
@@ -34,11 +32,10 @@
   ;  :marker-position (keyword)
   ;  :placeholder (metamorphic-content)
   ;  :selectable? (boolean)
-  ;  :target-id (string)
   ;  :text-color (keyword or string)
   ;  :tooltip-content (string)
   ;  :tooltip-position (keyword)}
-  [{:keys [border-color font-size icon marker-color target-id text-color tooltip-content] :as label-props}]
+  [{:keys [border-color font-size icon marker-color text-color tooltip-content] :as label-props}]
   ; BUG#9811
   ; - In some cases the content can be an empty string for a short while before it
   ;   gets its value (e.g., from a subscription or a HTTP request, etc.).
@@ -61,5 +58,4 @@
                               :icon-position :left})
          (if tooltip-content {:tooltip-position :right})
          (-> label-props)
-         (if target-id        {:target-id       (hiccup/value target-id "input")})
-         (if tooltip-content  {:tooltip-content (metamorphic-content/compose tooltip-content)})))
+         (if tooltip-content {:tooltip-content (metamorphic-content/compose tooltip-content)})))

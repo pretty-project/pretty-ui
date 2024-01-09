@@ -4,7 +4,7 @@
               [fruits.random.api                     :as random]
               [fruits.vector.api                     :as vector]
               [metamorphic-content.api               :as metamorphic-content]
-              [pretty-inputs.input.views         :as input.views]
+              [pretty-inputs.core.views         :as core.views]
               [pretty-forms.api :as pretty-forms]
               [pretty-inputs.plain-field.env       :as plain-field.env]
               [pretty-inputs.plain-field.views     :as plain-field.views]
@@ -99,7 +99,7 @@
   ;     (otherwise, somehow it covers the input, regardless their order)
   [:div (text-field.attributes/field-attributes field-id field-props)
         ; ...
-        [input.views/input-label field-id field-props]
+        [core.views/input-label field-id field-props]
         ; ...
         [:div (text-field.attributes/input-container-attributes field-id field-props)
               ; ...
@@ -122,7 +122,7 @@
                                     [metamorphic-content/compose surface]]))]
         ; ...
         (if-let [invalid-message (pretty-forms/get-input-invalid-message field-id)]
-                [:div {:class :pi-text-field--invalid-content-message :data-selectable false}
+                [:div {:class :pi-text-field--invalid-message :data-selectable false}
                       (metamorphic-content/compose invalid-message)])
         ; ...
         [plain-field.views/plain-field-synchronizer field-id field-props]])
@@ -208,28 +208,28 @@
   ;  :max-length (integer)(opt)
   ;  :modifier-f (function)(opt)
   ;  :on-blur (Re-Frame metamorphic-event)(opt)
-  ;   Takes the field content as parameter.
+  ;   Takes the actual value as parameter.
   ;  :on-changed (Re-Frame metamorphic-event)(opt)
-  ;   Takes the field content as parameter.
+  ;   Takes the actual value as parameter.
   ;   Applied BEFORE the application state gets updated with the actual value!
   ;   If you want to get the ACTUAL value from the application state, use the ':on-type-ended' event instead!
-  ;   Takes the field content as parameter.
+  ;   Takes the actual value as parameter.
   ;  :on-empty (Re-Frame metamorphic-event)(opt)
-  ;   Takes the field content as parameter.
+  ;   Takes the actual value as parameter.
   ;  :on-enter (Re-Frame metamorphic-event)(opt)
-  ;   Takes the field content as parameter.
+  ;   Takes the actual value as parameter.
   ;  :on-focus (Re-Frame metamorphic-event)(opt)
-  ;   Takes the field content as parameter.
+  ;   Takes the actual value as parameter.
   ;  :on-invalid (Re-Frame metamorphic-event)(opt)
-  ;   Takes the field content and the invalid message as parameters.
+  ;   Takes the actual value and the invalid message as parameters.
   ;  :on-mount (Re-Frame metamorphic-event)(opt)
-  ;   Takes the field content as parameter.
+  ;   Takes the actual value as parameter.
   ;  :on-type-ended (Re-Frame metamorphic-event)(opt)
-  ;   Takes the field content as parameter.
+  ;   Takes the actual value as parameter.
   ;  :on-unmount (Re-Frame metamorphic-event)(opt)
-  ;   Takes the field content as parameter.
+  ;   Takes the actual value as parameter.
   ;  :on-valid (Re-Frame metamorphic-event)(opt)
-  ;   Takes the field content as parameter.
+  ;   Takes the actual value as parameter.
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :placeholder (metamorphic-content)(opt)
@@ -250,11 +250,11 @@
   ;  :validate-when-change? (boolean)(opt)
   ;   Validates the value when it changes.
   ;  :validate-when-leave? (boolean)(opt)
-  ;   Validates the value and turns on the validation when the user leaves the field.
+  ;   Validates the value and turns on the autovalidation when the user leaves the input.
   ;  :validators (maps in vector)(opt)
-  ;  [{:f (function)
-  ;     Takes the actual value of the field as parameter.
-  ;    :invalid-message (metamorphic-content)(opt)}]
+  ;   [{:f (function)
+  ;      Takes the actual value as parameter.
+  ;     :invalid-message (metamorphic-content)(opt)}]
   ;  :value-path (Re-Frame path vector)(opt)
   ;  :width (keyword, px or string)(opt)}
   ;

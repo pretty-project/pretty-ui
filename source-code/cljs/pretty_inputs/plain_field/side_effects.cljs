@@ -4,7 +4,8 @@
               [fruits.hiccup.api                 :as hiccup]
               [keypress-handler.api              :as keypress-handler]
               [pretty-inputs.plain-field.state :as plain-field.state]
-              [re-frame.api                      :as r]))
+              [re-frame.api                      :as r]
+              [time.api :as time]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -70,9 +71,9 @@
   ;
   ; BUG#6071
   ; Ensure that you only display surfaces for focused fields!
-  ; E.g.: If an event applies the 'show-surface!' function and that event is fired
-  ;       by the :on-type-ended trigger, the user has enough time to leave the field,
-  ;       maybe steps into another field before the :on-type-ended trigger displays
+  ; E.g., If an event applies the 'show-surface!' function and that event is fired
+  ;       by the ':on-type-ended' trigger, the user has enough time to leave the field,
+  ;       or maybe steps into another field before the ':on-type-ended' trigger displays
   ;       the surface!
   (reset! plain-field.state/VISIBLE-SURFACE field-id))
 

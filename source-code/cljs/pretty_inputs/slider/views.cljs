@@ -1,7 +1,7 @@
 
 (ns pretty-inputs.slider.views
     (:require [fruits.random.api                 :as random]
-              [pretty-inputs.input.views     :as input.views]
+              [pretty-inputs.core.views     :as core.views]
               [pretty-inputs.slider.attributes :as slider.attributes]
               [pretty-inputs.slider.prototypes :as slider.prototypes]
               [pretty-presets.api                :as pretty-presets]
@@ -18,7 +18,7 @@
   ; @param (map) slider-props
   [slider-id slider-props]
   [:div (slider.attributes/slider-attributes slider-id slider-props)
-        [input.views/input-label             slider-id slider-props]
+        [core.views/input-label              slider-id slider-props]
         [:div (slider.attributes/slider-body-attributes slider-id slider-props)
               [:div {:class :pi-slider--track}]
               [:div (slider.attributes/slider-line-attributes            slider-id slider-props)]

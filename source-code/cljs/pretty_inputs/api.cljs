@@ -1,9 +1,6 @@
 
 (ns pretty-inputs.api
-    (:require [pretty-inputs.checkbox.effects]
-              [pretty-inputs.checkbox.events]
-              [pretty-inputs.checkbox.subs]
-              [pretty-inputs.chip-group.effects]
+    (:require [pretty-inputs.chip-group.effects]
               [pretty-inputs.chip-group.events]
               [pretty-inputs.color-selector.effects]
               [pretty-inputs.color-selector.events]

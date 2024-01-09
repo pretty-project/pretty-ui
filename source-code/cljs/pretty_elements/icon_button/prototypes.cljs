@@ -10,6 +10,7 @@
 (defn button-props-prototype
   ; @ignore
   ;
+  ; @param (keyword) button-id
   ; @param (map) button-props
   ; {:badge-content (metamorphic-content)(opt)
   ;  :badge-color (keyword or string)(opt
@@ -22,6 +23,7 @@
   ; @return (map)
   ; {:badge-color (keyword or string)
   ;  :badge-position (keyword)
+  ;  :focus-id (keyword)
   ;  :icon-family (keyword)
   ;  :icon-size (keyword, px or string)
   ;  :marker-position (keyword)
@@ -30,8 +32,9 @@
   ;  :progress-duration (ms)
   ;  :tooltip-content (string)
   ;  :tooltip-position (keyword)}
-  [{:keys [badge-content border-color marker-color on-click on-mouse-over progress tooltip-content] :as button-props}]
-  (merge {:icon-family :material-symbols-outlined
+  [button-id {:keys [badge-content border-color marker-color on-click on-mouse-over progress tooltip-content] :as button-props}]
+  (merge {:focus-id    button-id
+          :icon-family :material-symbols-outlined
           :icon-size   :m}
          (if badge-content   {:badge-color        :primary
                               :badge-position     :tr})

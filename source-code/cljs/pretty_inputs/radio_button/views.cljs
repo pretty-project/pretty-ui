@@ -2,8 +2,9 @@
 (ns pretty-inputs.radio-button.views
     (:require [fruits.hiccup.api                       :as hiccup]
               [fruits.random.api                       :as random]
+              [fruits.vector.api                       :as vector]
               [metamorphic-content.api                 :as metamorphic-content]
-              [pretty-inputs.input.views           :as input.views]
+              [pretty-inputs.core.views           :as core.views]
               [pretty-inputs.input.env               :as input.env]
               [pretty-inputs.radio-button.attributes :as radio-button.attributes]
               [pretty-inputs.radio-button.prototypes :as radio-button.prototypes]
@@ -39,13 +40,14 @@
   ; {:deselectable? (boolean)(opt)}
   [button-id {:keys [deselectable?] :as button-props}]
   [:div (radio-button.attributes/radio-button-attributes button-id button-props)
-        [input.views/input-label                         button-id button-props]
+        [core.views/input-label                          button-id button-props]
         (if deselectable? [:button (radio-button.attributes/clear-button-attributes button-id button-props)])
                                    ; [:div {:class :pi-radio-button--clear-button-label} (metamorphic-content/compose :delete!)]
         [:div (radio-button.attributes/radio-button-body-attributes button-id button-props)
               (let [options (input.env/get-input-options button-id button-props)]
                    (letfn [(f0 [option] [radio-button-option button-id button-props option])]
-                          (hiccup/put-with [:<>] options f0)))]])
+                          (if (vector/nonempty? options)
+                              (hiccup/put-with [:<>] options f0))))]])
 
 (defn- radio-button-lifecycles
   ; @ignore

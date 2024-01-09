@@ -3,7 +3,7 @@
     (:require [fruits.random.api                  :as random]
               [pretty-inputs.counter.attributes :as counter.attributes]
               [pretty-inputs.counter.prototypes :as counter.prototypes]
-              [pretty-inputs.input.views      :as input.views]
+              [pretty-inputs.core.views      :as core.views]
               [pretty-presets.api                 :as pretty-presets]
               [re-frame.api                       :as r]
               [reagent.api                        :as reagent]))
@@ -19,7 +19,7 @@
   ; {}
   [counter-id {:keys [resetable? value-path] :as counter-props}]
   [:div (counter.attributes/counter-attributes counter-id counter-props)
-        [input.views/input-label               counter-id counter-props]
+        [core.views/input-label                counter-id counter-props]
         [:div (counter.attributes/counter-body-attributes counter-id counter-props)
               [:button (counter.attributes/decrease-button-attributes counter-id counter-props)]
               (let [value @(r/subscribe [:get-item value-path])]

@@ -47,6 +47,7 @@
 (def progress-attributes         attributes/progress-attributes)
 (def tooltip-attributes          attributes/tooltip-attributes)
 (def mouse-event-attributes      attributes/mouse-event-attributes)
+(def focus-attributes            attributes/focus-attributes)
 
 ; @redirect (pretty-build-kit.default-props/*)
 (def DEFAULT-HEIGHT     default-props/DEFAULT-HEIGHT)

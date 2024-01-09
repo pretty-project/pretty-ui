@@ -29,6 +29,7 @@
 (defn button-props-prototype
   ; @ignore
   ;
+  ; @param (keyword) button-id
   ; @param (map) button-props
   ; {:badge-content (metamorphic-content)(opt)
   ;  :border-color (keyword or string)(opt)
@@ -47,6 +48,7 @@
   ;  :border-position (keyword)
   ;  :border-width (keyword, px or string)
   ;  :click-effect (keyword)
+  ;  :focus-id (keyword)
   ;  :font-size (keyword, px or string)
   ;  :font-weight (keyword or integer)
   ;  :horizontal-align (keyword)
@@ -63,10 +65,11 @@
   ;  :text-overflow (keyword)
   ;  :tooltip-content (string)
   ;  :tooltip-position (keyword)}
-  [{:keys [badge-content border-color font-size icon marker-color on-click on-mouse-over progress tooltip-content] :as button-props}]
+  [button-id {:keys [badge-content border-color font-size icon marker-color on-click on-mouse-over progress tooltip-content] :as button-props}]
   ; @note (#7861)
-  ; Badge content and tooltip content must be composed before they get passed to the Pretty CSS element attribute functions.
+  ; Badge metamorphic ontent and tooltip metamorphic content must be composed to string content before they get passed to any Pretty CSS element attribute function.
   (merge {:click-effect     :opacity
+          :focus-id         button-id
           :font-size        :s
           :font-weight      :medium
           :horizontal-align :center

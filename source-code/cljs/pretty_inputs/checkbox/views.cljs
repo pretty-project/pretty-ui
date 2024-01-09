@@ -3,12 +3,13 @@
     (:require [fruits.hiccup.api                   :as hiccup]
               [fruits.random.api                   :as random]
               [metamorphic-content.api             :as metamorphic-content]
+              [pretty-forms.api :as pretty-forms]
               [pretty-inputs.checkbox.attributes :as checkbox.attributes]
               [pretty-inputs.checkbox.prototypes :as checkbox.prototypes]
-              [pretty-inputs.input.views       :as input.views]
-              [pretty-inputs.input.env           :as input.env]
+              [pretty-inputs.core.env :as core.env]
+              [pretty-inputs.core.side-effects :as core.side-effects]
+              [pretty-inputs.core.views       :as core.views]
               [pretty-presets.api                  :as pretty-presets]
-              [re-frame.api                        :as r]
               [reagent.api                         :as reagent]))
 
 ;; ----------------------------------------------------------------------------
@@ -36,9 +37,10 @@
   ;
   ; @param (keyword) checkbox-id
   ; @param (map) checkbox-props
-  [checkbox-id checkbox-props]
+  ; {}
+  [checkbox-id {:keys [get-options-f] :as checkbox-props}]
   (letfn [(f0 [option] [checkbox-option checkbox-id checkbox-props option])]
-         (let [options (input.env/get-input-options checkbox-id checkbox-props)]
+         (let [options (core.env/get-input-options checkbox-id checkbox-props)]
               (hiccup/put-with [:<>] options f0))))
 
 (defn- checkbox
@@ -48,7 +50,11 @@
   ; @param (map) checkbox-props
   [checkbox-id checkbox-props]
   [:div (checkbox.attributes/checkbox-attributes checkbox-id checkbox-props)
-        [input.views/input-label                 checkbox-id checkbox-props]
+        [core.views/input-synchronizer checkbox-id checkbox-props]
+        [core.views/input-label        checkbox-id checkbox-props]
+        (if-let [invalid-message (pretty-forms/get-input-invalid-message checkbox-id)]
+                [:div {:class :pi-checkbox--invalid-message :data-selectable false}
+                      (metamorphic-content/compose invalid-message)])
         [:div (checkbox.attributes/checkbox-body-attributes checkbox-id checkbox-props)
               [checkbox-option-list                         checkbox-id checkbox-props]]])
 
@@ -59,8 +65,9 @@
   ; @param (map) checkbox-props
   [checkbox-id checkbox-props]
   ; @note (tutorials#parametering)
-  (reagent/lifecycles {:component-did-mount (fn [_ _] (r/dispatch [:pretty-inputs.checkbox/checkbox-did-mount checkbox-id checkbox-props]))
-                       :reagent-render      (fn [_ checkbox-props] [checkbox checkbox-id checkbox-props])}))
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (core.side-effects/input-did-mount    checkbox-id checkbox-props))
+                       :component-will-unmount (fn [_ _] (core.side-effects/input-will-unmount checkbox-id checkbox-props))
+                       :reagent-render         (fn [_ checkbox-props] [checkbox checkbox-id checkbox-props])}))
 
 (defn input
   ; @param (keyword)(opt) checkbox-id
@@ -77,37 +84,52 @@
   ;  :disabled? (boolean)(opt)
   ;  :font-size (keyword, px or string)(opt)
   ;   Default: :s
+  ;  :get-options-f (function)(opt)
+  ;   Must return the selectable options.
+  ;  :get-value-f (function)(opt)
+  ;   Must return the actual value.
   ;  :helper (metamorphic-content)(opt)
   ;  :hover-effect (keyword)(opt)
   ;  :indent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :initial-options (vector)(opt)
   ;  :initial-value (*)(opt)
   ;  :marker-color (keyword or string)(opt)
-  ;  :on-change (function or Re-Frame metamorphic-event)(opt)
-  ;   Takes the checked/unchecked option's value as parameter.
-  ;  :on-checked (function or Re-Frame metamorphic-event)(opt)
-  ;   Takes the checked option's value as parameter.
-  ;  :on-unchecked (function or Re-Frame metamorphic-event)(opt)
-  ;   Takes the unchecked option's value as parameter.
+  ;  :on-invalid-f (function)(opt)
+  ;   Takes the actual value and the invalid message as parameters.
+  ;  :on-mounted-f (function)(opt)
+  ;   Takes the actual value as parameter.
+  ;  :on-selected-f (function)(opt)
+  ;   Takes the actual value as parameter.
+  ;  :on-unmounted-f (function)(opt)
+  ;   Takes the actual value as parameter.
+  ;  :on-unselected-f (function)(opt)
+  ;   Takes the actual value as parameter.
+  ;  :on-valid-f (function)(opt)
+  ;   Takes the actual value as parameter.
   ;  :option-helper-f (function)(opt)
   ;  :option-label-f (function)(opt)
   ;   Default: return
   ;  :option-value-f (function)(opt)
   ;   Default: return
-  ;  :options (vector)(opt)
   ;  :options-orientation (keyword)(opt)
   ;   :horizontal, :vertical
   ;   Default: :vertical
-  ;  :options-path (Re-Frame path vector)(opt)
   ;  :label (metamorphic-content)(opt)
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :preset (keyword)(opt)
   ;  :projected-value (*)(opt)
+  ;  :set-value-f (function)(opt)
+  ;   Takes the actual value as parameter.
   ;  :style (map)(opt)
-  ;  :value (*)(opt)
-  ;  :value-path (Re-Frame path vector)(opt)}
+  ;  :validate-when-change? (boolean)(opt)
+  ;   Validates the value when it changes.
+  ;  :validate-when-leave? (boolean)(opt)
+  ;   Validates the value and turns on the autovalidation when the user leaves the input.
+  ;  :validators (maps in vector)(opt)
+  ;   [{:f (function)
+  ;      Takes the actual value as parameter.
+  ;     :invalid-message (metamorphic-content)(opt)}]}
   ;
   ; @usage
   ; [checkbox {...}]

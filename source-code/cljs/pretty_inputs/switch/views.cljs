@@ -2,9 +2,10 @@
 (ns pretty-inputs.switch.views
     (:require [fruits.hiccup.api                 :as hiccup]
               [fruits.random.api                 :as random]
+              [fruits.vector.api                 :as vector]
               [metamorphic-content.api           :as metamorphic-content]
               [pretty-build-kit.api                    :as pretty-build-kit]
-              [pretty-inputs.input.views     :as input.views]
+              [pretty-inputs.core.views     :as core.views]
               [pretty-inputs.input.env         :as input.env]
               [pretty-inputs.switch.attributes :as switch.attributes]
               [pretty-inputs.switch.prototypes :as switch.prototypes]
@@ -40,7 +41,8 @@
   [switch-id switch-props]
   (let [options (input.env/get-input-options switch-id switch-props)]
        (letfn [(f0 [option] [switch-option switch-id switch-props option])]
-              (hiccup/put-with [:<>] options f0))))
+              (if (vector/nonempty? options)
+                  (hiccup/put-with [:<>] options f0)))))
 
 (defn- switch
   ; @ignore
@@ -49,7 +51,7 @@
   ; @param (map) switch-props
   [switch-id switch-props]
   [:div (switch.attributes/switch-attributes switch-id switch-props)
-        [input.views/input-label             switch-id switch-props]
+        [core.views/input-label              switch-id switch-props]
         [:div (switch.attributes/switch-body-attributes switch-id switch-props)
               [switch-options                           switch-id switch-props]]])
 
@@ -85,7 +87,7 @@
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :info-text (metamorphic-content)(opt)
   ;  :initial-options (vector)(opt)
-  ;  :initial-value (boolean)(opt)
+  ;  :initial-value (*)(opt)
   ;  :label (metamorphic-content)(opt)
   ;  :marker-color (keyword or string)(opt)
   ;  :on-check (Re-Frame metamorphic-event)(opt)

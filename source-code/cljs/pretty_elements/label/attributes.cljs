@@ -4,7 +4,8 @@
               [metamorphic-content.api            :as metamorphic-content]
               [pretty-build-kit.api                     :as pretty-build-kit]
               [pretty-elements.label.side-effects :as label.side-effects]
-              [pretty-elements.label.utils        :as label.utils]))
+              [pretty-elements.label.utils        :as label.utils]
+              [pretty-elements.core.side-effects :as core.side-effects]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -61,14 +62,11 @@
   ;
   ; @param (keyword) label-id
   ; @param (map) label-props
-  ; {:target-id (keyword)}
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)
-  ;  :for (string)}
-  [_ {:keys [target-id] :as label-props}]
-  (-> {:class :pe-label--content
-       :for   target-id}
+  ; {:class (keyword or keywords in vector)}
+  [_ label-props]
+  (-> {:class :pe-label--content}
       (pretty-build-kit/text-attributes label-props)))
 
 ;; ----------------------------------------------------------------------------
@@ -83,10 +81,11 @@
   ;
   ; @return (map)
   ; {}
-  [_ {:keys [gap style] :as label-props}]
+  [_ {:keys [focus-id style] :as label-props}]
   (-> {:class               :pe-label--body
        :style               style
-       :data-letter-spacing :auto}
+       :data-letter-spacing :auto
+       :on-mouse-up #(if focus-id (core.side-effects/focus-element! focus-id))}
       (pretty-build-kit/border-attributes           label-props)
       (pretty-build-kit/color-attributes            label-props)
       (pretty-build-kit/font-attributes             label-props)

@@ -5,7 +5,7 @@
               [fruits.vector.api                 :as vector]
               [metamorphic-content.api           :as metamorphic-content]
               [pretty-elements.api      :as pretty-elements]
-              [pretty-inputs.input.views     :as input.views]
+              [pretty-inputs.core.views     :as core.views]
               [pretty-inputs.input.env         :as input.env]
               [pretty-inputs.select.attributes :as select.attributes]
               [pretty-inputs.select.env        :as select.env]
@@ -112,7 +112,7 @@
   (let [on-click     {:fx [:pretty-inputs.input/render-popup! select-id select-props]}
         button-label (select.env/select-button-label select-id select-props)]
        [:div (select.attributes/select-button-attributes select-id select-props)
-             [input.views/input-label                    select-id select-props]
+             [core.views/input-label                     select-id select-props]
              [pretty-elements/button select-id (assoc select-props :class         nil
                                                                    :gap           :auto
                                                                    :icon          :unfold_more

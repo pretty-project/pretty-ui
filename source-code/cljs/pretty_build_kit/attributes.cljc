@@ -3,7 +3,9 @@
     (:require [fruits.map.api :as map]
               [fruits.vector.api :as vector]
               [fruits.mixed.api :as mixed]
-              [pretty-build-kit.utils :as utils]))
+              [fruits.hiccup.api :as hiccup]
+              [pretty-build-kit.utils :as utils]
+              [pretty-build-kit.side-effects :as side-effects]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -899,7 +901,11 @@
 (defn mouse-event-attributes
   ; @param (map) element-attributes
   ; @param (map) element-props
-  ; {}
+  ; {:disabled? (boolean)(opt)
+  ;  :on-click (function)(opt)
+  ;  :on-mouse-down (function)(opt)
+  ;  :on-mouse-over (function)(opt)
+  ;  :on-mouse-up (function)(opt)}
   ;
   ; @usage
   ; (mouse-event-attributes {...} {:on-click (fn [e] ...)})
@@ -908,10 +914,33 @@
   ;  ...}
   ;
   ; @return (map)
-  ; {}
+  ; {:on-click (function)
+  ;  :on-mouse-down (function)
+  ;  :on-mouse-over (function)
+  ;  :on-mouse-up (function)}
   [element-attributes {:keys [disabled? on-click on-mouse-down on-mouse-over on-mouse-up]}]
   (if disabled? (map/merge-some element-attributes {})
                 (map/merge-some element-attributes {:on-click      on-click
                                                     :on-mouse-down on-mouse-down
                                                     :on-mouse-over on-mouse-over
                                                     :on-mouse-up   on-mouse-up})))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn focus-attributes
+  ; @param (map) element-attributes
+  ; @param (map) element-props
+  ; {:disabled? (boolean)(opt)
+  ;  :focus-id (keyword)(opt)}
+  ;
+  ; @usage
+  ; (focus-attributes {...} {:focus-id :my-element})
+  ; =>
+  ; {:data-focus-id :my-element}
+  ;
+  ; @return (map)
+  ; {:data-focus-id (keyword)}
+  [element-attributes {:keys [disabled? focus-id]}]
+  (if disabled? (map/merge-some element-attributes {})
+                (map/merge-some element-attributes {:data-focus-id (hiccup/value focus-id)})))

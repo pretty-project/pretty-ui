@@ -67,6 +67,6 @@
   ([toggle-id toggle-props]
    ; @note (tutorials#parametering)
    (fn [_ toggle-props]
-       (let [toggle-props (pretty-presets/apply-preset              toggle-props)
-             toggle-props (toggle.prototypes/toggle-props-prototype toggle-props)]
+       (let [toggle-props (pretty-presets/apply-preset                        toggle-props)
+             toggle-props (toggle.prototypes/toggle-props-prototype toggle-id toggle-props)]
             [toggle toggle-id toggle-props]))))

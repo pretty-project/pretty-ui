@@ -9,6 +9,18 @@
 
 /*** Wrapper ***/
 
+/*** Invalid message ***/
+
+.pi-checkbox--invalid-message {
+  color:          var( --text-color-warning );
+  font-size:      var( --font-size-xxs      );
+  font-weight:    var( --font-weight-medium );
+  letter-spacing: var( --letter-spacing-xxs );
+  line-height:    18px;
+}
+
+/*** Invalid message ***/
+
 /*** Options ***/
 
 .pi-checkbox--body[data-options-orientation="horizontal"] {
@@ -774,9 +786,9 @@ textarea.pi-text-field--input {
 
 /*** Adornments ***/
 
-/*** Invalid content message ***/
+/*** Invalid message ***/
 
-.pi-text-field--invalid-content-message {
+.pi-text-field--invalid-message {
   color:          var( --text-color-warning );
   font-size:      var( --font-size-xxs      );
   font-weight:    var( --font-weight-medium );
@@ -785,7 +797,7 @@ textarea.pi-text-field--input {
   padding-top:    6px;
 }
 
-/*** Invalid content message ***/
+/*** Invalid message ***/
 
 /*** Placeholder ***/
 

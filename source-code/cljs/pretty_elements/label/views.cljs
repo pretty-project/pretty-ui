@@ -64,9 +64,8 @@
   ; @param (map) label-props
   ; {:content (metamorphic-content)(opt)
   ;  :on-copy (boolean)(opt)
-  ;  :placeholder (metamorphic-content)(opt)
-  ;  :target-id (keyword)(opt)}
-  [label-id {:keys [content on-copy placeholder target-id] :as label-props}]
+  ;  :placeholder (metamorphic-content)(opt)}
+  [label-id {:keys [content on-copy placeholder] :as label-props}]
   ; https://css-tricks.com/html-inputs-and-labels-a-love-story/
   ; ... it is always the best idea to use an explicit label instead of an implicit label.
   ;
@@ -82,21 +81,11 @@
   ;    Therefore, it isn't capable to be applied with the '{:data-tooltip-content ...}' preset.
   ; 3. The '.pe-label--body' element always fits with its environment in width.
   ;    Therefore it's often too wide to be the sensor element.
-  ;
-  ; XXX#7039 Why the label element without a 'target-id' property shown in a DIV tag?
-  ; - A label element without a 'target-id' value doesn't use 'for' HTML attribute and
-  ;   it would violate the HTML rules:
-  ;   "A <label> isn't associated with a form field."
-  ;   "To fix this issue, nest the <input> in the <label> or provide a for attribute on the <label> that matches a form field id."
-  ; - Therefore, if no 'target-id' value provided (=> no 'for' attribute on the HTML element)
-  ;   it's better to use a DIV tag instead of using a LABEL tag.
   (if on-copy [:div (label.attributes/copyable-attributes label-id label-props)
-                    [(if target-id :label :div)
-                     (label.attributes/content-attributes label-id label-props)
-                     (metamorphic-content/compose content placeholder)]]
-              [:<>  [(if target-id :label :div)
-                     (label.attributes/content-attributes label-id label-props)
-                     (metamorphic-content/compose content placeholder)]]))
+                    [:div (label.attributes/content-attributes label-id label-props)
+                          (metamorphic-content/compose content placeholder)]]
+              [:<>  [:div (label.attributes/content-attributes label-id label-props)
+                          (metamorphic-content/compose content placeholder)]]))
 
 (defn- label-body
   ; @ignore
@@ -145,6 +134,8 @@
   ;  :fill-color (keyword or string)(opt)
   ;  :fill-pattern (keyword)(opt)
   ;   Default: :cover
+  ;  :focus-id (keyword)(opt)
+  ;   ID of a Pretty input that should be focused when the user clicks on the label.
   ;  :font-size (keyword, px or string)(opt)
   ;   Default: :s
   ;  :font-weight (keyword or integer)(opt)
@@ -182,8 +173,6 @@
   ;  :selectable? (boolean)(opt)
   ;   Default: false
   ;  :style (map)(opt)
-  ;  :target-id (keyword)(opt)
-  ;   The input element's ID, that you want to connect to the label with using the 'for' HTML attribute.
   ;  :text-color (keyword or string)(opt)
   ;   Default: :inherit
   ;  :text-direction (keyword)(opt)

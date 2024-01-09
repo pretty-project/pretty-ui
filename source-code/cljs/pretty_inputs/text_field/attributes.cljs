@@ -185,6 +185,7 @@
                                 :on-blur       (fn [_] (r/dispatch [:pretty-inputs.text-field/field-blurred field-id field-props]))
                                 :on-focus      (fn [_] (r/dispatch [:pretty-inputs.text-field/field-focused field-id field-props]))}))
       (pretty-build-kit/effect-attributes       field-props)
+      (pretty-build-kit/focus-attributes        field-props)
       (pretty-build-kit/element-size-attributes field-props)))
 
 ;; ----------------------------------------------------------------------------

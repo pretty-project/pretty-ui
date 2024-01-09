@@ -4,7 +4,7 @@
               [fruits.vector.api                          :as vector]
               [pretty-inputs.chip-group.views           :as chip-group.views]
               [pretty-inputs.combo-box.views            :as combo-box.views]
-              [pretty-inputs.input.views              :as input.views]
+              [pretty-inputs.core.views              :as core.views]
               [pretty-inputs.multi-combo-box.attributes :as multi-combo-box.attributes]
               [pretty-inputs.multi-combo-box.prototypes :as multi-combo-box.prototypes]
               [pretty-inputs.multi-combo-box.utils      :as multi-combo-box.utils]
@@ -50,7 +50,7 @@
   [box-id box-props]
   [:div (multi-combo-box.attributes/box-attributes box-id box-props)
         [:div (multi-combo-box.attributes/box-body-attributes box-id box-props)
-              [input.views/input-label                        box-id box-props]
+              [core.views/input-label                         box-id box-props]
               [multi-combo-box-chip-group                     box-id box-props]
               [multi-combo-box-field                          box-id box-props]]])
 

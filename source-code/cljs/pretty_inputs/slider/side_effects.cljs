@@ -40,11 +40,11 @@
        (swap! slider.state/THUMBS update-in [slider-id thumb-id] merge {:initial-mouse-x     initial-mouse-x
                                                                         :initial-translate-x initial-translate-x
                                                                         :thumb-sliding?      true})
-       (letfn [(sliding-f      [mouse-event] (slide!               mouse-event slider-id thumb-id))
-               (stop-sliding-f [mouse-event] (dom/prevent-default! mouse-event)
-                                             (stop-sliding!        mouse-event slider-id thumb-id)
+       (letfn [(sliding-f      [mouse-event] (slide!              mouse-event slider-id thumb-id))
+               (stop-sliding-f [mouse-event] (dom/prevent-default mouse-event)
+                                             (stop-sliding!       mouse-event slider-id thumb-id)
                                              (window/remove-event-listener! "mousemove" sliding-f)
                                              (window/remove-event-listener! "mouseup"   stop-sliding-f))]
-              (dom/prevent-default! mouse-event)
+              (dom/prevent-default mouse-event)
               (window/add-event-listener! "mousemove" sliding-f)
               (window/add-event-listener! "mouseup"   stop-sliding-f))))

@@ -28,31 +28,30 @@
   ;  :type (keyword)
   ;  :value (string)}
   [field-id {:keys [disabled? on-change-f] :as field-props}]
-  ; @note (pretty-inputs.button.attributes#4460)
+  ; @bug (#8806)
+  ; If the {:disabled? true} state of the 'plain-field' element set the disabled="true" attribute on the input DOM element ...
+  ; ... the input would lose its focus.
+  ; ... the 'on-blur' event wouldn't occur in some browsers. Therefore, ...
+  ;     ... the keypress handler would stay in type mode.
+  ;     ... the field would stay marked as focused.
+  ; ... after the {:disabled? true} state would end, the field wouldn't get back its focused state.
+  ; Therefore, the input DOM element shouldn't get the disabled="true" attribute!
   ;
-  ; BUG#8806
-  ; If the {:disabled? true} state of the plain-field element would set the
-  ; disabled="true" attribute on the input DOM element ...
-  ; ... the input loses its focus.
-  ; ... the on-blur event doesn't occur in some browsers.
-  ;     Therefore, the keypress handler stays in type mode and the field stays
-  ;     marked as focused.
-  ; ... after the {:disabled? true} state ends, the field doesn't get back
-  ;     its focused state.
-  ; Therefore, the input DOM element doesn't get the disabled="true" attribute!
+  ; @bug (#8809)
+  ; If the input has no ':on-change' property, the React would warn that the input stepped into an uncontrolled state.
+  ; Therefore, the input DOM element must keep its ':on-change' property in {:disabled? true} state as well!
   ;
-  ; BUG#8809
-  ; The React would warn that the input stepped into uncontrolled state
-  ; if it has no :on-change property. Therefore, the input DOM element must keep
-  ; its :on-change property in {:disabled? true} state!
-  ;
-  ; BUG#8811
-  ; In some cases the input element didn't fire the on-change function.
-  ; Therefore it had been replaced by the on-input function.
-  ; E.g.: When a text-field appeared on the UI with a content that was in the application
+
+
+  ; @bug (#8811)
+  ; In some cases the input element somehow didn't fire the 'on-change' function.
+  ; Therefore, it had been replaced with the 'on-input' function.
+  ; E.g., When a 'text-field' input appeared on the UI with a content that was in the application
   ;       state before the field did mount and the first interaction with the field
   ;       was a full selection (cmd + A) and a clear action (backspace), the on-change
   ;       function somehow didn't fire.
+
+
   (merge {:class               :pi-plain-field--input
           :data-autofill-style :none
           :type                :text
@@ -80,14 +79,11 @@
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  :data-box-shadow-color (keyword)
-  ;  :id (string)
   ;  :on-mouse-down (function)}
   [field-id {:keys [surface]}]
-  ; @note (pretty-inputs.button.attributes#4460)
   ; BUG#2105 (source-code/cljs/pretty_inputs/text_field/attributes.cljs)
   (-> {:class                 :pi-plain-field--surface
        :data-box-shadow-color :default
-       :id                    (hiccup/value field-id "surface")
        :on-mouse-down         #(.preventDefault %)}
       (pretty-build-kit/border-attributes surface)
       (pretty-build-kit/indent-attributes surface)))
