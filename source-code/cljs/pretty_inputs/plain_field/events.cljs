@@ -1,22 +1,8 @@
 
 (ns pretty-inputs.plain-field.events
     (:require [pretty-inputs.input.events :as input.events]
-              [pretty-inputs.input.utils  :as input.utils]
-              [re-frame.api                 :as r :refer [r]]
-              [re-frame.db.api              :as r.db]))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn use-initial-value!
-  ; @ignore
-  ;
-  ; @param (keyword) field-id
-  ; @param (map) field-props
-  ;
-  ; @return (map)
-  [db [_ field-id field-props]]
-  (r input.events/use-initial-value! db field-id field-props))
+              [re-frame.api               :as r :refer [r]]
+              [re-frame.db.api            :as r.db]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -56,9 +42,7 @@
   ; @return (map)
   [db [_ _ {:keys [field-value-f value-path]} field-content]]
   (let [field-value (field-value-f field-content)]
-       (if (input.utils/value-path->vector-item? value-path)
-           (r r.db/set-vector-item! db value-path field-value)
-           (r r.db/set-item!        db value-path field-value))))
+       (r r.db/set-item! db value-path field-value)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

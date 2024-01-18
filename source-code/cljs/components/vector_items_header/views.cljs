@@ -16,7 +16,7 @@
   ; @param (map) header-props
   ; {}
   [_ {:keys [initial-item on-change value-path] :as header-props}]
-  (let [add-event [:apply-item! value-path vector/conj-item initial-item]]
+  (let [add-event [:update-item! value-path vector/conj-item initial-item]]
        [pretty-elements/icon-button {:border-radius   {:all :xl}
                                      :color           :secondary
                                      :hover-color     :highlight

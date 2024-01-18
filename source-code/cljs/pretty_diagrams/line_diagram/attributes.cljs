@@ -1,9 +1,9 @@
 
 (ns pretty-diagrams.line-diagram.attributes
     (:require [fruits.css.api                     :as css]
-              [pretty-build-kit.api                     :as pretty-build-kit]
-              [pretty-diagrams.line-diagram.utils :as line-diagram.utils]
-              [metamorphic-content.api :as metamorphic-content]))
+              [metamorphic-content.api            :as metamorphic-content]
+              [pretty-build-kit.api               :as pretty-build-kit]
+              [pretty-diagrams.line-diagram.utils :as line-diagram.utils]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

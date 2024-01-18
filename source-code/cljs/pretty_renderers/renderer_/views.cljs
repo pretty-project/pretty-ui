@@ -16,7 +16,7 @@
   [renderer-id renderer-props]
   (let [content-order (-> @renderer.state/RENDERERS renderer-id :content-order)]
        (letfn [(f0 [content-id] [content-component renderer-id content-id])]
-              (if (vector/nonempty? content-order)
+              (if (vector/not-empty? content-order)
                   [:div {:id (-> renderer-id renderer.utils/renderer-id->dom-id hiccup/value)}
                         (hiccup/put-with [:<>] content-order f0)]))))
 

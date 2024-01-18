@@ -1,6 +1,6 @@
 
 (ns pretty-inputs.multiline-field.views
-    (:require [fruits.random.api                          :as random]
+    (:require [fruits.random.api                        :as random]
               [pretty-inputs.multiline-field.prototypes :as multiline-field.prototypes]
               [pretty-inputs.text-field.views           :as text-field.views]))
 

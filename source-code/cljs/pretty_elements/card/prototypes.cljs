@@ -1,8 +1,8 @@
 
 (ns pretty-elements.card.prototypes
-    (:require [metamorphic-content.api :as metamorphic-content]
-              [dom.api :as dom]
-              [pretty-build-kit.api :as pretty-build-kit]))
+    (:require [dom.api                 :as dom]
+              [metamorphic-content.api :as metamorphic-content]
+              [pretty-build-kit.api    :as pretty-build-kit]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

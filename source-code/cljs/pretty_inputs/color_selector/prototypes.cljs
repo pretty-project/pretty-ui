@@ -1,8 +1,8 @@
 
 (ns pretty-inputs.color-selector.prototypes
-    (:require [pretty-inputs.color-selector.config :as color-selector.config]
-              [pretty-inputs.input.utils           :as input.utils]
-              [pretty-build-kit.api :as pretty-build-kit]))
+    (:require [pretty-build-kit.api                :as pretty-build-kit]
+              [pretty-inputs.color-selector.config :as color-selector.config]
+              [pretty-inputs.input.utils           :as input.utils]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

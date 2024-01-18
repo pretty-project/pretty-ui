@@ -1,6 +1,6 @@
 
 (ns pretty-elements.content-swapper.attributes
-    (:require [pretty-build-kit.api                        :as pretty-build-kit]
+    (:require [pretty-build-kit.api                  :as pretty-build-kit]
               [pretty-elements.content-swapper.state :as content-swapper.state]))
 
 ;; ----------------------------------------------------------------------------

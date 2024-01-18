@@ -1,14 +1,14 @@
 
 (ns pretty-inputs.multi-combo-box.views
-    (:require [fruits.random.api                          :as random]
-              [fruits.vector.api                          :as vector]
+    (:require [fruits.random.api                        :as random]
+              [fruits.vector.api                        :as vector]
               [pretty-inputs.chip-group.views           :as chip-group.views]
               [pretty-inputs.combo-box.views            :as combo-box.views]
-              [pretty-inputs.core.views              :as core.views]
+              [pretty-inputs.core.views                 :as core.views]
               [pretty-inputs.multi-combo-box.attributes :as multi-combo-box.attributes]
               [pretty-inputs.multi-combo-box.prototypes :as multi-combo-box.prototypes]
               [pretty-inputs.multi-combo-box.utils      :as multi-combo-box.utils]
-              [re-frame.api                               :as r]))
+              [re-frame.api                             :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -21,7 +21,7 @@
   ; {:value-path (Re-Frame path vector)}
   [box-id {:keys [value-path] :as box-props}]
   (if-let [chips @(r/subscribe [:get-item value-path])]
-          (if (vector/nonempty? chips)
+          (if (vector/not-empty? chips)
               (let [group-id    (multi-combo-box.utils/box-id->group-id           box-id)
                     group-props (multi-combo-box.prototypes/group-props-prototype box-id box-props)]
                    [chip-group.views/input group-id group-props]))))

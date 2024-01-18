@@ -1,7 +1,6 @@
 
 (ns pretty-inputs.date-field.prototypes
-    (:require [fruits.random.api :as random]
-              [pretty-build-kit.api :as pretty-build-kit]))
+    (:require [pretty-build-kit.api :as pretty-build-kit]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -13,9 +12,6 @@
   ; @param (map) field-props
   ;
   ; @return (map)
-  ; {:autofill-name (keyword)
-  ;  :type (keyword)}
+  ; {:type (keyword)}
   [_ field-props]
-  ; XXX#6782 (source-code/cljs/pretty_inputs/text-field/prototypes.cljs)
-  (merge field-props {:autofill-name (random/generate-keyword)
-                      :type          :date}))
+  (merge field-props {:type :date}))

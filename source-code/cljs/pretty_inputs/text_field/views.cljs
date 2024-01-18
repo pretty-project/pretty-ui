@@ -1,19 +1,20 @@
 
 (ns pretty-inputs.text-field.views
-    (:require [fruits.hiccup.api                     :as hiccup]
-              [fruits.random.api                     :as random]
-              [fruits.vector.api                     :as vector]
-              [metamorphic-content.api               :as metamorphic-content]
-              [pretty-inputs.core.views         :as core.views]
-              [pretty-forms.api :as pretty-forms]
+    (:require [fruits.hiccup.api                   :as hiccup]
+              [fruits.random.api                   :as random]
+              [fruits.vector.api                   :as vector]
+              [metamorphic-content.api             :as metamorphic-content]
+              [pretty-forms.api                    :as pretty-forms]
+              [pretty-inputs.core.views            :as core.views]
+              [pretty-inputs.core.env :as core.env]
               [pretty-inputs.plain-field.env       :as plain-field.env]
               [pretty-inputs.plain-field.views     :as plain-field.views]
               [pretty-inputs.text-field.attributes :as text-field.attributes]
               [pretty-inputs.text-field.prototypes :as text-field.prototypes]
-              [pretty-presets.api                    :as pretty-presets]
-              [re-frame.api                          :as r]
-              [reagent.api                           :as reagent]
-              [time.api                              :as time]))
+              [pretty-presets.api                  :as pretty-presets]
+              [re-frame.api                        :as r]
+              [reagent.api                         :as reagent]
+              [time.api                            :as time]))
 
 ;; -- Field adornments components ---------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -65,7 +66,7 @@
   ; {:end-adornments (maps in vector)(opt)}
   [field-id {:keys [end-adornments] :as field-props}]
   (let [end-adornments (text-field.prototypes/end-adornments-prototype field-id field-props)]
-       (if (vector/nonempty? end-adornments)
+       (if (vector/not-empty? end-adornments)
            (letfn [(f0 [adornment-props] (let [adornment-props (pretty-presets/apply-preset adornment-props)]
                                               [field-adornment field-id field-props adornment-props]))]
                   (hiccup/put-with [:div {:class :pi-text-field--adornments}] end-adornments f0))
@@ -78,7 +79,7 @@
   ; @param (map) field-props
   ; {:start-adornments (maps in vector)(opt)}
   [field-id {:keys [start-adornments] :as field-props}]
-  (if (vector/nonempty? start-adornments)
+  (if (vector/not-empty? start-adornments)
       (letfn [(f0 [adornment-props] [field-adornment field-id field-props adornment-props])]
              (hiccup/put-with [:div {:class :pi-text-field--adornments}] start-adornments f0))
       [:div (text-field.attributes/field-adornments-placeholder-attributes field-id field-props)]))
@@ -107,7 +108,7 @@
               ; ...
               [:div {:class :pi-text-field--input-structure}
                     ; ...
-                    (if placeholder (if-let [field-empty? (plain-field.env/field-empty? field-id)]
+                    (if placeholder (if-let [field-empty? (core.env/input-empty? field-id field-props)]
                                             [:div (text-field.attributes/field-placeholder-attributes field-id field-props)
                                                   (metamorphic-content/compose placeholder)]))
                     ; ...
@@ -117,26 +118,15 @@
               ; ...
               [field-end-adornments field-id field-props]
               ; ...
-              (if surface (if (plain-field.env/surface-visible? field-id)
+              (if surface (if (plain-field.env/field-surface-visible? field-id field-props)
                               [:div (text-field.attributes/field-surface-attributes field-id field-props)
                                     [metamorphic-content/compose surface]]))]
         ; ...
         (if-let [invalid-message (pretty-forms/get-input-invalid-message field-id)]
                 [:div {:class :pi-text-field--invalid-message :data-selectable false}
-                      (metamorphic-content/compose invalid-message)])
+                      (metamorphic-content/compose invalid-message)])])
         ; ...
-        [plain-field.views/plain-field-synchronizer field-id field-props]])
-
-(defn- text-field-lifecycles
-  ; @ignore
-  ;
-  ; @param (keyword) field-id
-  ; @param (map) field-props
-  [field-id field-props]
-  ; @note (tutorials#parametering)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (r/dispatch [:pretty-inputs.text-field/field-did-mount    field-id field-props]))
-                       :component-will-unmount (fn [_ _] (r/dispatch [:pretty-inputs.text-field/field-will-unmount field-id field-props]))
-                       :reagent-render         (fn [_ field-props] [text-field field-id field-props])}))
+        ;[plain-field.views/plain-field-synchronizer field-id field-props]])
 
 (defn input
   ; @info
@@ -285,4 +275,4 @@
    (fn [_ field-props]
        (let [field-props (pretty-presets/apply-preset                          field-props)
              field-props (text-field.prototypes/field-props-prototype field-id field-props)]
-            [text-field-lifecycles field-id field-props]))))
+            [text-field field-id field-props]))))

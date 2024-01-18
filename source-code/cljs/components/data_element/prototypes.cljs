@@ -22,6 +22,6 @@
   ; állapotúnak az adat, ha vágólapra helyezhető a tartalma!
   (merge {:font-size :s}
          (-> element-props)
-         (cond (vector/nonempty? value) {:marked? false :value value}
-               (vector?          value) {:marked? false :value [nil]}
+         (cond (vector/not-empty? value) {:marked? false :value value}
+               (vector?           value) {:marked? false :value [nil]}
                :return {:value [value] :marked? (and marked? (-> value metamorphic-content/compose empty? not))})))

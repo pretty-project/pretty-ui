@@ -1,12 +1,12 @@
 
 (ns pretty-inputs.combo-box.env
-    (:require [dom.api                         :as dom]
-              [fruits.hiccup.api               :as hiccup]
-              [fruits.string.api               :as string]
-              [fruits.vector.api               :as vector]
+    (:require [dom.api                       :as dom]
+              [fruits.hiccup.api             :as hiccup]
+              [fruits.string.api             :as string]
+              [fruits.vector.api             :as vector]
               [pretty-inputs.combo-box.state :as combo-box.state]
               [pretty-inputs.input.env       :as input.env]
-              [pretty-inputs.plain-field.env :as plain-field.env]))
+              [pretty-inputs.core.env :as core.env]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -41,7 +41,7 @@
   ; @return (boolean)
   [box-id {:keys [option-label-f] :as box-props} option]
   ; XXX#0569
-  (let [field-content (plain-field.env/get-field-content box-id)
+  (let [field-content (core.env/get-input-displayed-value box-id box-props)
         option-label  (option-label-f option)]
        (and (string/not-matches-with? option-label field-content {:case-sensitive? false})
             (string/starts-with?      option-label field-content {:case-sensitive? false}))))

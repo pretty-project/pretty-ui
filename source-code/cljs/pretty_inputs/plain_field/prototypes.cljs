@@ -1,8 +1,8 @@
 
 (ns pretty-inputs.plain-field.prototypes
-    (:require [fruits.noop.api             :refer [return]]
-              [pretty-inputs.input.utils :as input.utils]
-              [pretty-build-kit.api :as pretty-build-kit]))
+    (:require [fruits.noop.api           :refer [return]]
+              [pretty-build-kit.api      :as pretty-build-kit]
+              [pretty-inputs.input.utils :as input.utils]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

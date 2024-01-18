@@ -1,7 +1,8 @@
 
 (ns pretty-inputs.combo-box.attributes
     (:require [pretty-inputs.combo-box.env :as combo-box.env]
-              [re-frame.api                  :as r]))
+              [re-frame.api                :as r]
+              [dom.api :as dom]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -17,9 +18,9 @@
   ; @return (map)
   ; {}
   [box-id box-props option-dex option]
-  ; BUG#2105 (source-code/cljs/pretty_inputs/text_field/attributes.cljs)
+  ; @bug (pretty-inputs.text-field.attributes#2105)
   {:class         :pi-combo-box--option
-   :on-mouse-down #(.preventDefault %)
+   :on-mouse-down dom/prevent-default
    :on-mouse-up   #(r/dispatch [:pretty-inputs.combo-box/select-option! box-id box-props option])
    ;:data-selected ...
    :data-highlighted (= option-dex (combo-box.env/get-highlighted-option-dex box-id))})

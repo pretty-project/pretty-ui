@@ -1,10 +1,9 @@
 
 (ns pretty-inputs.plain-field.attributes
-    (:require [fruits.hiccup.api                 :as hiccup]
-              [pretty-build-kit.api                    :as pretty-build-kit]
-              [pretty-inputs.plain-field.env   :as plain-field.env]
-              [pretty-inputs.plain-field.utils :as plain-field.utils]
-              [re-frame.api                      :as r]))
+    (:require [pretty-build-kit.api            :as pretty-build-kit]
+              [pretty-inputs.plain-field.side-effects :as plain-field.side-effects]
+              [pretty-inputs.core.env :as core.env]
+              [dom.api :as dom]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -14,57 +13,47 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ; {:disabled? (boolean)(opt)}
+  ; {}
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)
-  ;  :data-autofill-style (keyword)
-  ;  :data-caret-color (keyword)
-  ;  :id (string)
-  ;  :on-blur (function)
-  ;  :on-change (function)
-  ;  :on-focus (function)
-  ;  :tab-index (integer)
-  ;  :type (keyword)
-  ;  :value (string)}
-  [field-id {:keys [disabled? on-change-f] :as field-props}]
+  ; {}
+  [field-id {:keys [disabled?] :as field-props}]
   ; @bug (#8806)
-  ; If the {:disabled? true} state of the 'plain-field' element set the disabled="true" attribute on the input DOM element ...
+  ; If the '{:disabled? true}' state of the 'plain-field' element would set the 'disabled="true"' attribute on the input DOM element ...
   ; ... the input would lose its focus.
   ; ... the 'on-blur' event wouldn't occur in some browsers. Therefore, ...
   ;     ... the keypress handler would stay in type mode.
   ;     ... the field would stay marked as focused.
-  ; ... after the {:disabled? true} state would end, the field wouldn't get back its focused state.
-  ; Therefore, the input DOM element shouldn't get the disabled="true" attribute!
+  ; ... after the '{:disabled? true}' state would end, the field wouldn't get back its focused state.
+  ; Therefore, the input DOM element shouldn't get the 'disabled="true"' attribute!
   ;
   ; @bug (#8809)
   ; If the input has no ':on-change' property, the React would warn that the input stepped into an uncontrolled state.
-  ; Therefore, the input DOM element must keep its ':on-change' property in {:disabled? true} state as well!
-  ;
-
-
-  ; @bug (#8811)
-  ; In some cases the input element somehow didn't fire the 'on-change' function.
-  ; Therefore, it had been replaced with the 'on-input' function.
-  ; E.g., When a 'text-field' input appeared on the UI with a content that was in the application
-  ;       state before the field did mount and the first interaction with the field
-  ;       was a full selection (cmd + A) and a clear action (backspace), the on-change
-  ;       function somehow didn't fire.
-
-
-  (merge {:class               :pi-plain-field--input
-          :data-autofill-style :none
-          :type                :text
-          :id                  (hiccup/value field-id "input")
-          :value               (plain-field.env/get-field-content field-id)}
-         (if disabled? {:data-caret-color :hidden
-                        :tab-index        -1
-                        :on-change        (fn [_])}
-                       {:on-blur          (fn [_] (r/dispatch [:pretty-inputs.plain-field/field-blurred field-id field-props]))
-                        :on-focus         (fn [_] (r/dispatch [:pretty-inputs.plain-field/field-focused field-id field-props]))
-                       ;:on-change        (fn [%] (plain-field.utils/on-change-f field-id field-props %))
-                        :on-change        (fn [_])
-                        :on-input         (fn [%] (plain-field.utils/on-change-f field-id field-props %))})))
+  ; Therefore, the input DOM element must keep its ':on-change' property in '{:disabled? true}' state as well!
+  (let [field-content (core.env/get-input-internal-value field-id field-props)
+        on-blur-f   (fn [_] (plain-field.side-effects/field-left    field-id field-props))
+        on-focus-f  (fn [_] (plain-field.side-effects/field-focused field-id field-props))
+        on-input-f  (fn [%] (plain-field.side-effects/value-changed field-id field-props %))
+        on-change-f (fn [%] (plain-field.side-effects/value-changed field-id field-props %))
+        on-change-f (fn [_])]
+       (-> (if disabled? {:class               :pi-text-field--input
+                          :data-autofill-style :none
+                          :data-caret          :hidden
+                          :tab-index           -1
+                          :value               field-content
+                          :on-change           on-change-f}
+                         {:class               :pi-text-field--input
+                          :data-autofill-style :none
+                          :value               field-content
+                          :on-blur             on-blur-f
+                          :on-focus            on-focus-f
+                          :on-change           on-change-f
+                          :on-input            on-input-f})
+           (pretty-build-kit/autofill-attributes     field-props)
+           (pretty-build-kit/field-attributes        field-props)
+           (pretty-build-kit/effect-attributes       field-props)
+           (pretty-build-kit/focus-attributes        field-props)
+           (pretty-build-kit/element-size-attributes field-props))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -81,10 +70,10 @@
   ;  :data-box-shadow-color (keyword)
   ;  :on-mouse-down (function)}
   [field-id {:keys [surface]}]
-  ; BUG#2105 (source-code/cljs/pretty_inputs/text_field/attributes.cljs)
+  ; @bug (pretty-inputs.text-field.attributes#2105)
   (-> {:class                 :pi-plain-field--surface
        :data-box-shadow-color :default
-       :on-mouse-down         #(.preventDefault %)}
+       :on-mouse-down         dom/prevent-default}
       (pretty-build-kit/border-attributes surface)
       (pretty-build-kit/indent-attributes surface)))
 

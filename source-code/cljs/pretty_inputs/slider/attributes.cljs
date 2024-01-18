@@ -1,10 +1,10 @@
 
 (ns pretty-inputs.slider.attributes
-    (:require [fruits.css.api                      :as css]
-              [pretty-build-kit.api                      :as pretty-build-kit]
+    (:require [fruits.css.api                    :as css]
+              [pretty-build-kit.api              :as pretty-build-kit]
               [pretty-inputs.slider.side-effects :as slider.side-effects]
               [pretty-inputs.slider.state        :as slider.state]
-              [re-frame.api                        :as r]))
+              [re-frame.api                      :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

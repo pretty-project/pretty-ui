@@ -1,9 +1,8 @@
 
 (ns pretty-inputs.combo-box.events
     (:require [pretty-inputs.input.events :as input.events]
-              [pretty-inputs.input.utils  :as input.utils]
-              [re-frame.api                 :refer [r]]
-              [re-frame.db.api              :as r.db]))
+              [re-frame.api               :refer [r]]
+              [re-frame.db.api            :as r.db]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -33,6 +32,4 @@
   ; @return (map)
   [db [_ _ {:keys [option-value-f value-path]} option]]
   (let [option-value (option-value-f option)]
-       (if (input.utils/value-path->vector-item? value-path)
-           (r r.db/set-vector-item! db value-path option-value)
-           (r r.db/set-item!        db value-path option-value))))
+       (r r.db/set-item! db value-path option-value)))

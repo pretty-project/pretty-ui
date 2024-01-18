@@ -1,7 +1,7 @@
 
 (ns pretty-inputs.color-selector.effects
     (:require [pretty-inputs.color-selector.events :as color-selector.events]
-              [re-frame.api                          :as r :refer [r]]))
+              [re-frame.api                        :as r :refer [r]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

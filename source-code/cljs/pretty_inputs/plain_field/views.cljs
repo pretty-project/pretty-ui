@@ -1,57 +1,14 @@
 
 (ns pretty-inputs.plain-field.views
-    (:require [fruits.random.api                      :as random]
-              [metamorphic-content.api                :as metamorphic-content]
+    (:require [fruits.random.api                    :as random]
+              [metamorphic-content.api              :as metamorphic-content]
+              [pretty-inputs.core.side-effects :as core.side-effects]
               [pretty-inputs.plain-field.attributes :as plain-field.attributes]
               [pretty-inputs.plain-field.env        :as plain-field.env]
               [pretty-inputs.plain-field.prototypes :as plain-field.prototypes]
               [pretty-inputs.plain-field.utils      :as plain-field.utils]
-              [pretty-presets.api                     :as pretty-presets]
-              [re-frame.api                           :as r]
-              [reagent.api                            :as reagent]))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn- plain-field-synchronizer-debug
-  ; @ignore
-  ;
-  ; @param (keyword) field-id
-  ; @param (map) field-props
-  ; {:field-content-f (function)
-  ;  :value-path (Re-Frame path vector)}
-  [field-id {:keys [field-content-f value-path]}]
-  ; HACK#9910
-  (let [stored-value @(r/subscribe [:get-item value-path])]
-       [:div [:br] "field content:   " (plain-field.env/get-field-content field-id)
-             [:br] "field output:    " (plain-field.env/get-field-output  field-id)
-             [:br] "stored value:    " (str             stored-value)
-             [:br] "derived content: " (field-content-f stored-value)]))
-
-(defn- plain-field-synchronizer-sensor
-  ; @ignore
-  ;
-  ; @param (keyword) field-id
-  ; @param (map) field-props
-  ; @param (*) stored-value
-  [field-id field-props stored-value]
-  ; HACK#9910
-  (reagent/lifecycles {:component-will-unmount (fn [_ _ _] (plain-field.utils/synchronizer-will-unmount-f field-id field-props))
-                       :component-did-mount    (fn [_ _ _] (plain-field.utils/synchronizer-did-mount-f    field-id field-props))
-                       :component-did-update   (fn [%]     (plain-field.utils/synchronizer-did-update-f   field-id %))
-                      ;:reagent-render         (fn [_ _ _] [plain-field-synchronizer-debug                field-id field-props])
-                       :reagent-render         (fn [_ _ _])}))
-
-(defn- plain-field-synchronizer
-  ; @ignore
-  ;
-  ; @param (keyword) field-id
-  ; @param (map) field-props
-  ; {:value-path (Re-Frame path vector)}
-  [field-id {:keys [value-path] :as field-props}]
-  ; HACK#9910
-  (let [stored-value @(r/subscribe [:get-item value-path])]
-       [plain-field-synchronizer-sensor field-id field-props stored-value]))
+              [pretty-presets.api                   :as pretty-presets]
+              [reagent.api                          :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -68,11 +25,11 @@
         [:div (plain-field.attributes/field-body-attributes field-id field-props)
               [:input (plain-field.attributes/field-input-attributes field-id field-props)]]
         ; ...
-        (and surface (plain-field.env/surface-visible? field-id)
+        (and surface (plain-field.env/field-surface-visible? field-id field-props)
                      [:div (plain-field.attributes/field-surface-attributes field-id field-props)
-                           [metamorphic-content/compose (:content surface) (:placeholder surface)]])
+                           [metamorphic-content/compose (:content surface) (:placeholder surface)]])])
         ; HACK#9910
-        [plain-field-synchronizer field-id field-props]])
+        ;[plain-field-synchronizer field-id field-props]])
 
 (defn- plain-field-lifecycles
   ; @ignore
@@ -81,8 +38,8 @@
   ; @param (map) field-props
   [field-id field-props]
   ; @note (tutorials#parametering)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (r/dispatch [:pretty-inputs.plain-field/field-did-mount    field-id field-props]))
-                       :component-will-unmount (fn [_ _] (r/dispatch [:pretty-inputs.plain-field/field-will-unmount field-id field-props]))
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (core.side-effects/input-did-mount    field-id field-props))
+                       :component-will-unmount (fn [_ _] (core.side-effects/input-will-unmount field-id field-props))
                        :reagent-render         (fn [_ field-props] [plain-field field-id field-props])}))
 
 (defn input
@@ -113,13 +70,13 @@
   ;   Takes the 'field-id', the 'field-props' and the change event as parameters.
   ;  :on-changed (function or Re-Frame metamorphic-event)(opt)
   ;   Applied BEFORE the application state gets updated with the actual value!
-  ;   If you want to get the ACTUAL value from the application state, use the ':on-type-ended' event instead!
+  ;   If you want to get the ACTUAL value from the application state, use the ':on-type-ended-f' function instead!
   ;   Takes the field content as parameter.
   ;  :on-focus (function or Re-Frame metamorphic-event)(opt)
   ;   Takes the field content as parameter.
   ;  :on-mount (function or Re-Frame metamorphic-event)(opt)
   ;   Takes the field content as parameter.
-  ;  :on-type-ended (function or Re-Frame metamorphic-event)(opt)
+  ;  :on-type-ended-f (function)(opt)
   ;   Takes the field content as parameter.
   ;  :on-unmount (function or Re-Frame metamorphic-event)(opt)
   ;   Takes the field content as parameter.

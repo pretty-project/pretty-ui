@@ -1,11 +1,11 @@
 
 (ns pretty-inputs.text-field.prototypes
-    (:require [fruits.loop.api                :refer [<-walk]]
-              [fruits.noop.api                :refer [return]]
-              [fruits.vector.api              :as vector]
+    (:require [fruits.loop.api              :refer [<-walk]]
+              [fruits.noop.api              :refer [return]]
+              [fruits.vector.api            :as vector]
+              [pretty-build-kit.api         :as pretty-build-kit]
               [pretty-inputs.input.utils    :as input.utils]
-              [pretty-inputs.text-field.env :as text-field.env]
-              [pretty-build-kit.api :as pretty-build-kit]))
+              [pretty-inputs.text-field.env :as text-field.env]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

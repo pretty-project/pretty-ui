@@ -1,15 +1,15 @@
 
 (ns pretty-inputs.combo-box.views
-    (:require [fruits.hiccup.api                    :as hiccup]
-              [fruits.loop.api                      :refer [reduce-indexed]]
-              [fruits.random.api                    :as random]
-              [metamorphic-content.api              :as metamorphic-content]
+    (:require [fruits.hiccup.api                  :as hiccup]
+              [fruits.loop.api                    :refer [reduce-indexed]]
+              [fruits.random.api                  :as random]
+              [metamorphic-content.api            :as metamorphic-content]
               [pretty-inputs.combo-box.attributes :as combo-box.attributes]
               [pretty-inputs.combo-box.env        :as combo-box.env]
               [pretty-inputs.combo-box.prototypes :as combo-box.prototypes]
               [pretty-inputs.text-field.views     :as text-field.views]
-              [re-frame.api                         :as r]
-              [reagent.api                          :as reagent]))
+              [re-frame.api                       :as r]
+              [reagent.api                        :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

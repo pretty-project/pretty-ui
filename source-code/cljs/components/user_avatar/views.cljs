@@ -20,7 +20,7 @@
   ; {:colors (strings in vector)
   ;  :size (px)}
   [avatar-id {:keys [colors size] :as avatar-props}]
-  (let [view-box (svg/view-box size size)]
+  (let [view-box (svg/view-box-dimensions size size)]
        [:svg {:class :c-user-avatar--colors :view-box view-box :style {:width (css/px size) :height (css/px size)}}
              (letfn [(f0 [colors dex color]
                          (conj colors [:circle (user-avatar.attributes/avatar-color-attributes avatar-id avatar-props dex color)]))]
@@ -38,9 +38,9 @@
   [avatar-id {:keys [colors icon icon-family initials] :as avatar-props}]
   [:div (user-avatar.attributes/avatar-attributes avatar-id avatar-props)
         [:div (user-avatar.attributes/avatar-body-attributes avatar-id avatar-props)
-              (if (string/nonempty? initials) [:div {:class :c-user-avatar--initials :data-selectable false} initials]
-                                              [:div {:class :c-user-avatar--icon :data-icon-family icon-family :data-icon-size :m} icon])
-              (if (vector/nonempty? colors)   [user-avatar-colors avatar-id avatar-props])]])
+              (if (string/not-empty? initials) [:div {:class :c-user-avatar--initials :data-selectable false} initials]
+                                               [:div {:class :c-user-avatar--icon :data-icon-family icon-family :data-icon-size :m} icon])
+              (if (vector/not-empty? colors)   [user-avatar-colors avatar-id avatar-props])]])
 
 (defn component
   ; @info

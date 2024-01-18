@@ -1,7 +1,7 @@
 
 (ns components.input-table.helpers
-    (:require [fruits.hiccup.api :as hiccup]
-              [pretty-build-kit.api    :as pretty-build-kit]))
+    (:require [fruits.hiccup.api    :as hiccup]
+              [pretty-build-kit.api :as pretty-build-kit]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

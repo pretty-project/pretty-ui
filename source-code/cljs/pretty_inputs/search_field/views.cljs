@@ -1,6 +1,6 @@
 
 (ns pretty-inputs.search-field.views
-    (:require [fruits.random.api                       :as random]
+    (:require [fruits.random.api                     :as random]
               [pretty-inputs.search-field.prototypes :as search-field.prototypes]
               [pretty-inputs.text-field.views        :as text-field.views]))
 

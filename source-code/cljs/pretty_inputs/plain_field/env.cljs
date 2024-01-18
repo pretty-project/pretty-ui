@@ -1,74 +1,16 @@
 
 (ns pretty-inputs.plain-field.env
-    (:require [pretty-inputs.plain-field.config :as plain-field.config]
-              [pretty-inputs.plain-field.state  :as plain-field.state]
-              [time.api                           :as time]))
+    (:require [pretty-inputs.core.env :as core.env]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn get-field-content
+(defn field-surface-visible?
   ; @ignore
   ;
   ; @param (keyword) field-id
-  ;
-  ; @return (string)
-  [field-id]
-  ; HACK#9910
-  (get @plain-field.state/FIELD-CONTENTS field-id))
-
-(defn get-field-output
-  ; @ignore
-  ;
-  ; @param (keyword) field-id
-  ;
-  ; @return (string)
-  [field-id]
-  ; HACK#9910
-  (get @plain-field.state/FIELD-OUTPUTS field-id))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn field-empty?
-  ; @ignore
-  ;
-  ; @param (keyword) field-id
+  ; @param (map) field-props
   ;
   ; @return (boolean)
-  [field-id]
-  (let [field-content (get-field-content field-id)]
-       (empty? field-content)))
-
-(defn field-filled?
-  ; @ignore
-  ;
-  ; @param (keyword) field-id
-  ;
-  ; @return (boolean)
-  [field-id]
-  (let [field-content (get-field-content field-id)]
-       (-> field-content empty? not)))
-
-(defn surface-visible?
-  ; @ignore
-  ;
-  ; @param (keyword) field-id
-  ;
-  ; @return (boolean)
-  [field-id]
-  (= field-id @plain-field.state/VISIBLE-SURFACE))
-
-(defn type-ended?
-  ; @ignore
-  ;
-  ; @description
-  ; Typing only considered as ended if at least X ms elapsed after the last key pressed.
-  ;
-  ; @param (keyword) field-id
-  ;
-  ; @return (boolean)
-  [field-id]
-  (let [timestamp  (time/elapsed)
-        changed-at (get-in @plain-field.state/FIELD-STATES [field-id :changed-at])]
-       (> timestamp (+ changed-at plain-field.config/TYPE-ENDED-AFTER))))
+  [field-id _]
+  (core.env/get-input-state field-id :surface-visible?))

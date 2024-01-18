@@ -1,6 +1,6 @@
 
 (ns pretty-layouts.box-popup.attributes
-    (:require [pretty-build-kit.api                        :as pretty-build-kit]
+    (:require [pretty-build-kit.api                  :as pretty-build-kit]
               [pretty-layouts.plain-popup.attributes :as plain-popup.attributes]))
 
 ;; ----------------------------------------------------------------------------

@@ -1,8 +1,8 @@
 
 (ns pretty-inputs.input.events
-    (:require [fruits.map.api :refer [dissoc-in]]
+    (:require [fruits.map.api           :refer [dissoc-in]]
               [pretty-inputs.input.subs :as input.subs]
-              [re-frame.api :refer [r]]))
+              [re-frame.api             :refer [r]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -2,7 +2,7 @@
 (ns pretty-diagrams.circle-diagram.attributes
     (:require [fruits.css.api                        :as css]
               [fruits.math.api                       :as math]
-              [pretty-build-kit.api                        :as pretty-build-kit]
+              [pretty-build-kit.api                  :as pretty-build-kit]
               [pretty-diagrams.circle-diagram.config :as circle-diagram.config]))
 
 ;; ----------------------------------------------------------------------------

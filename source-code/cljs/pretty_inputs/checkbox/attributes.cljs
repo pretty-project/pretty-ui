@@ -1,8 +1,8 @@
 
 (ns pretty-inputs.checkbox.attributes
-    (:require [dom.api        :as dom]
-              [pretty-build-kit.api :as pretty-build-kit]
-              [pretty-inputs.core.env :as core.env]
+    (:require [dom.api                         :as dom]
+              [pretty-build-kit.api            :as pretty-build-kit]
+              [pretty-inputs.core.env          :as core.env]
               [pretty-inputs.core.side-effects :as core.side-effects]))
 
 ;; ----------------------------------------------------------------------------
@@ -68,7 +68,7 @@
   ;  :disabled (boolean)}
   [checkbox-id {:keys [disabled?] :as checkbox-props} option]
   (let [option-checked? (core.env/option-selected? checkbox-id checkbox-props option)
-        on-click-f #(core.side-effects/toggle-option! checkbox-id checkbox-props option)]
+        on-click-f      (fn [_] (core.side-effects/toggle-option! checkbox-id checkbox-props option))]
        (-> {:class        :pi-checkbox--option
             :data-checked option-checked?
             :disabled     disabled?}
@@ -92,8 +92,8 @@
   ;  :data-selectable (keyword)
   ;  :style (map)}
   [checkbox-id {:keys [options-orientation style] :as checkbox-props}]
-  (let [on-blur-f  #(core.side-effects/input-left    checkbox-id checkbox-props)
-        on-focus-f #(core.side-effects/input-focused checkbox-id checkbox-props)]
+  (let [on-blur-f  (fn [_] (core.side-effects/input-left    checkbox-id checkbox-props))
+        on-focus-f (fn [_] (core.side-effects/input-focused checkbox-id checkbox-props))]
        (-> {:class                    :pi-checkbox--body
             :data-options-orientation options-orientation
             :data-selectable          false

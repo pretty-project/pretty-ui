@@ -1,8 +1,8 @@
 
 (ns pretty-forms.side-effects
-    (:require [pretty-forms.env   :as env]
-              [pretty-forms.state :as state]
-              [fruits.vector.api :as vector]))
+    (:require [fruits.vector.api  :as vector]
+              [pretty-forms.env   :as env]
+              [pretty-forms.state :as state]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

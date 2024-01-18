@@ -1,6 +1,6 @@
 
 (ns pretty-elements.dropdown-menu.attributes
-    (:require [pretty-build-kit.api                      :as pretty-build-kit]
+    (:require [pretty-build-kit.api                :as pretty-build-kit]
               [pretty-elements.dropdown-menu.state :as dropdown-menu.state]))
 
 ;; ----------------------------------------------------------------------------

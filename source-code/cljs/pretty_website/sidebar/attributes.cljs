@@ -1,6 +1,6 @@
 
 (ns pretty-website.sidebar.attributes
-    (:require [pretty-build-kit.api :as pretty-build-kit]
+    (:require [pretty-build-kit.api                :as pretty-build-kit]
               [pretty-website.sidebar.side-effects :as sidebar.side-effects]))
 
 ;; ----------------------------------------------------------------------------

@@ -53,7 +53,7 @@
   ; @return (boolean)
   [db [_ renderer-id]]
   (let [rendered-element-order (r get-rendered-element-order db renderer-id)]
-       (vector/nonempty? rendered-element-order)))
+       (vector/not-empty? rendered-element-order)))
 
 (defn any-element-invisible?
   ; @param (keyword) renderer-id
@@ -61,7 +61,7 @@
   ; @return (boolean)
   [db [_ renderer-id]]
   (let [invisible-element-ids (r get-invisible-element-ids db renderer-id)]
-       (vector/nonempty? invisible-element-ids)))
+       (vector/not-empty? invisible-element-ids)))
 
 (defn any-element-visible?
   ; @param (keyword) renderer-id
@@ -69,7 +69,7 @@
   ; @return (boolean)
   [db [_ renderer-id]]
   (let [visible-element-order (r get-visible-element-order db renderer-id)]
-       (vector/nonempty? visible-element-order)))
+       (vector/not-empty? visible-element-order)))
 
 (defn no-visible-elements?
   ; @param (keyword) renderer-id

@@ -1,8 +1,8 @@
 
 (ns pretty-forms.env
-    (:require [pretty-forms.state :as state]
-              [fruits.vector.api :as vector]
-              [fruits.map.api :as map]))
+    (:require [fruits.map.api     :as map]
+              [fruits.vector.api  :as vector]
+              [pretty-forms.state :as state]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

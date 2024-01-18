@@ -1,16 +1,16 @@
 
 (ns pretty-inputs.radio-button.views
-    (:require [fruits.hiccup.api                       :as hiccup]
-              [fruits.random.api                       :as random]
-              [fruits.vector.api                       :as vector]
-              [metamorphic-content.api                 :as metamorphic-content]
-              [pretty-inputs.core.views           :as core.views]
+    (:require [fruits.hiccup.api                     :as hiccup]
+              [fruits.random.api                     :as random]
+              [fruits.vector.api                     :as vector]
+              [metamorphic-content.api               :as metamorphic-content]
+              [pretty-inputs.core.views              :as core.views]
               [pretty-inputs.input.env               :as input.env]
               [pretty-inputs.radio-button.attributes :as radio-button.attributes]
               [pretty-inputs.radio-button.prototypes :as radio-button.prototypes]
-              [pretty-presets.api                      :as pretty-presets]
-              [re-frame.api                            :as r]
-              [reagent.api                             :as reagent]))
+              [pretty-presets.api                    :as pretty-presets]
+              [re-frame.api                          :as r]
+              [reagent.api                           :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -46,7 +46,7 @@
         [:div (radio-button.attributes/radio-button-body-attributes button-id button-props)
               (let [options (input.env/get-input-options button-id button-props)]
                    (letfn [(f0 [option] [radio-button-option button-id button-props option])]
-                          (if (vector/nonempty? options)
+                          (if (vector/not-empty? options)
                               (hiccup/put-with [:<>] options f0))))]])
 
 (defn- radio-button-lifecycles

@@ -1,7 +1,7 @@
 
 (ns pretty-inputs.password-field.side-effects
     (:require [pretty-inputs.password-field.state :as password-field.state]
-              [re-frame.api                         :as r]))
+              [re-frame.api                       :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

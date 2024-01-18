@@ -19,7 +19,7 @@
   ; @return (map)
   [db [_ _ {:keys [option-value-f value-path]} selected-option]]
   (let [option-value (option-value-f selected-option)]
-       (r r.db/apply-item! db value-path vector/conj-item-once option-value)))
+       (r r.db/update-item! db value-path vector/conj-item-once option-value)))
 
 (defn use-field-content!
   ; @ignore
@@ -33,4 +33,4 @@
   ; @return (map)
   [db [_ _ {:keys [field-value-f value-path]} field-content]]
   (let [field-value (field-value-f field-content)]
-       (r r.db/apply-item! db value-path vector/conj-item-once field-value)))
+       (r r.db/update-item! db value-path vector/conj-item-once field-value)))

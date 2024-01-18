@@ -1,7 +1,7 @@
 
 (ns pretty-website.language-selector.attributes
-    (:require [app-dictionary.api :as app-dictionary]
-              [dom.api        :as dom]
+    (:require [app-dictionary.api   :as app-dictionary]
+              [dom.api              :as dom]
               [pretty-build-kit.api :as pretty-build-kit]))
 
 ;; ----------------------------------------------------------------------------

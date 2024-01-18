@@ -1,7 +1,7 @@
 
 (ns pretty-inputs.input.side-effects
     (:require [pretty-inputs.input.state :as input.state]
-              [re-frame.api                :as r]))
+              [re-frame.api              :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

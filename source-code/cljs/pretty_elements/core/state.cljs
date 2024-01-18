@@ -1,11 +1,12 @@
 
-(ns pretty-inputs.plain-field.config)
+(ns pretty-elements.core.state
+    (:require [reagent.api :refer [ratom]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 ; @ignore
 ;
-; @constant (ms)
-; How much time has to elapse after the last key is pressed to consider the typing as ended.
-(def TYPE-ENDED-AFTER 450)
+; @atom (map)
+; {:my-element (map)}
+(defonce ELEMENT-STATE (ratom {}))

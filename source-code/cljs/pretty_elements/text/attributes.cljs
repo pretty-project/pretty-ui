@@ -1,7 +1,7 @@
 
 (ns pretty-elements.text.attributes
     (:require [fruits.css.api                   :as css]
-              [pretty-build-kit.api                   :as pretty-build-kit]
+              [pretty-build-kit.api             :as pretty-build-kit]
               [pretty-elements.label.attributes :as label.attributes]))
 
 ;; ----------------------------------------------------------------------------

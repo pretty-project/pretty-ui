@@ -1,14 +1,14 @@
 
 (ns pretty-inputs.multi-field.views
-    (:require [fruits.hiccup.api                      :as hiccup]
-              [fruits.loop.api                        :refer [reduce-indexed]]
-              [fruits.random.api                      :as random]
+    (:require [fruits.hiccup.api                    :as hiccup]
+              [fruits.loop.api                      :refer [reduce-indexed]]
+              [fruits.random.api                    :as random]
               [pretty-inputs.combo-box.views        :as combo-box.views]
               [pretty-inputs.multi-field.attributes :as multi-field.attributes]
               [pretty-inputs.multi-field.prototypes :as multi-field.prototypes]
               [pretty-inputs.multi-field.utils      :as multi-field.utils]
               [pretty-inputs.text-field.views       :as text-field.views]
-              [re-frame.api                           :as r]))
+              [re-frame.api                         :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

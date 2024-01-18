@@ -1,8 +1,8 @@
 
 (ns pretty-diagrams.line-diagram.prototypes
     (:require [fruits.math.api                    :as math]
-              [pretty-diagrams.line-diagram.utils :as line-diagram.utils]
-              [pretty-build-kit.api :as pretty-build-kit]))
+              [pretty-build-kit.api               :as pretty-build-kit]
+              [pretty-diagrams.line-diagram.utils :as line-diagram.utils]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

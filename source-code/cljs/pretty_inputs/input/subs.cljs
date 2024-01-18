@@ -46,7 +46,7 @@
        (and (-> input-stored-value seqable?)
             (-> input-stored-value empty?))))
 
-(defn input-nonempty?
+(defn input-not-empty?
   ; @ignore
   ;
   ; @param (keyword) input-id

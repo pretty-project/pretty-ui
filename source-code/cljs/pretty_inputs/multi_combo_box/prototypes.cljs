@@ -1,10 +1,10 @@
 
 (ns pretty-inputs.multi-combo-box.prototypes
-    (:require [fruits.loop.api                       :refer [<-walk]]
-              [fruits.noop.api                       :refer [return]]
+    (:require [fruits.loop.api                     :refer [<-walk]]
+              [fruits.noop.api                     :refer [return]]
+              [pretty-build-kit.api                :as pretty-build-kit]
               [pretty-inputs.input.utils           :as input.utils]
-              [pretty-inputs.multi-combo-box.utils :as multi-combo-box.utils]
-              [pretty-build-kit.api :as pretty-build-kit]))
+              [pretty-inputs.multi-combo-box.utils :as multi-combo-box.utils]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

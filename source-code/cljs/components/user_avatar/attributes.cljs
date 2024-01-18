@@ -1,8 +1,8 @@
 
 (ns components.user-avatar.attributes
-    (:require [fruits.css.api  :as css]
-              [fruits.math.api :as math]
-              [pretty-build-kit.api  :as pretty-build-kit]))
+    (:require [fruits.css.api       :as css]
+              [fruits.math.api      :as math]
+              [pretty-build-kit.api :as pretty-build-kit]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

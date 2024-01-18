@@ -17,4 +17,4 @@
   ;
   ; @return (map)
   [db [_ _ {:keys [chips-path]} chip-dex]]
-  (r r.db/apply-item! db chips-path vector/remove-nth-item chip-dex))
+  (r r.db/update-item! db chips-path vector/remove-nth-item chip-dex))

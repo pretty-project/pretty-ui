@@ -1,14 +1,14 @@
 
 (ns pretty-inputs.chip-group.views
-    (:require [fruits.random.api                     :as random]
-              [fruits.vector.api                     :as vector]
-              [metamorphic-content.api               :as metamorphic-content]
+    (:require [fruits.random.api                   :as random]
+              [fruits.vector.api                   :as vector]
+              [metamorphic-content.api             :as metamorphic-content]
+              [pretty-elements.api                 :as pretty-elements]
               [pretty-inputs.chip-group.attributes :as chip-group.attributes]
               [pretty-inputs.chip-group.prototypes :as chip-group.prototypes]
-              [pretty-elements.api            :as pretty-elements]
-              [pretty-inputs.core.views         :as core.views]
-              [pretty-presets.api                    :as pretty-presets]
-              [re-frame.api                          :as r]))
+              [pretty-inputs.core.views            :as core.views]
+              [pretty-presets.api                  :as pretty-presets]
+              [re-frame.api                        :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -23,7 +23,7 @@
   ;  :placeholder (metamorphic-content)(opt)}
   [group-id {:keys [chips chips-path placeholder] :as group-props}]
   (let [chips (or chips @(r/subscribe [:get-item chips-path]))]
-       (if (vector/nonempty? chips)
+       (if (vector/not-empty? chips)
 
            ; Iterates over the 'chips' vector if it's nonempty.
            ; Every item in the vector displayed on a chip with the 'chip-label-f' function applied on the item.

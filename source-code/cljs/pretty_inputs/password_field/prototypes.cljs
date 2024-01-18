@@ -1,9 +1,9 @@
 
 (ns pretty-inputs.password-field.prototypes
-    (:require [fruits.vector.api                  :as vector]
+    (:require [fruits.vector.api                :as vector]
+              [pretty-build-kit.api             :as pretty-build-kit]
               [pretty-inputs.password-field.env :as password-field.env]
-              [pretty-inputs.plain-field.env    :as plain-field.env]
-              [pretty-build-kit.api :as pretty-build-kit]))
+              [pretty-inputs.core.env :as core.env]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -36,7 +36,7 @@
   ;  :placeholder (metamorphic-content)
   ;  :type (keyword)}
   [field-id {:keys [end-adornments] :as field-props}]
-  (let [field-empty?      (plain-field.env/field-empty?         field-id)
+  (let [field-empty?      (core.env/input-empty?                field-id field-props)
         password-visible? (password-field.env/password-visible? field-id)]
        (merge {:label       :password
                :placeholder "••••••••"}

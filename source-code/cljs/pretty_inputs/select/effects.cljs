@@ -1,12 +1,12 @@
 
 (ns pretty-inputs.select.effects
-    (:require [pretty-inputs.input.env             :as input.env]
-              [pretty-inputs.plain-field.env       :as plain-field.env]
+    (:require [pretty-build-kit.api]
+              [pretty-inputs.input.env             :as input.env]
+              [pretty-inputs.core.env       :as core.env]
               [pretty-inputs.select.config         :as select.config]
               [pretty-inputs.select.events         :as select.events]
               [pretty-inputs.text-field.prototypes :as text-field.prototypes]
-              [re-frame.api                          :as r :refer [r]]
-              [pretty-build-kit.api]))
+              [re-frame.api                        :as r :refer [r]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -96,10 +96,10 @@
   ; @param (map) select-props
   ; {:add-option-f (function)}
   (fn [{:keys [db]} [_ select-id {:keys [add-option-f] :as select-props}]]
-      (if-let [option-field-filled? (plain-field.env/field-filled? :pretty-inputs.select/option-field)]
+      (if-let [option-field-filled? (core.env/input-not-empty? :pretty-inputs.select/option-field {})]
               (let [field-id      :pretty-inputs.select/option-field
                     field-props   (text-field.prototypes/field-props-prototype field-id {})
-                    field-content (plain-field.env/get-field-content           field-id)
+                    field-content (core.env/get-input-displayed-value          field-id field-props)
                     option        (add-option-f field-content)]
                    {:db       (r select.events/add-option! db select-id select-props option)
                     :dispatch [:pretty-inputs.text-field/empty-field! field-id field-props]}))))

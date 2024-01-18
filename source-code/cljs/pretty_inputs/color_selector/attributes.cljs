@@ -1,9 +1,9 @@
 
 (ns pretty-inputs.color-selector.attributes
-    (:require [dom.api           :as dom]
-              [fruits.vector.api :as vector]
-              [pretty-build-kit.api    :as pretty-build-kit]
-              [re-frame.api      :as r]))
+    (:require [dom.api              :as dom]
+              [fruits.vector.api    :as vector]
+              [pretty-build-kit.api :as pretty-build-kit]
+              [re-frame.api         :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

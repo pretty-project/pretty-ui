@@ -1,8 +1,8 @@
 
 (ns pretty-elements.button.side-effects
-    (:require [keypress-handler.api :as keypress-handler]
-              [re-frame.api         :as r]
-              [pretty-elements.core.side-effects :as core.side-effects]))
+    (:require [keypress-handler.api              :as keypress-handler]
+              [pretty-elements.core.side-effects :as core.side-effects]
+              [re-frame.api                      :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

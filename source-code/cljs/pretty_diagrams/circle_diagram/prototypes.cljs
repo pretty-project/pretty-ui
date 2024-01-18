@@ -1,7 +1,7 @@
 
 (ns pretty-diagrams.circle-diagram.prototypes
-    (:require [pretty-diagrams.circle-diagram.utils :as circle-diagram.utils]
-              [pretty-build-kit.api :as pretty-build-kit]))
+    (:require [pretty-build-kit.api                 :as pretty-build-kit]
+              [pretty-diagrams.circle-diagram.utils :as circle-diagram.utils]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

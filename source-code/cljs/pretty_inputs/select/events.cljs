@@ -1,8 +1,8 @@
 
 (ns pretty-inputs.select.events
-    (:require [fruits.vector.api            :as vector]
+    (:require [fruits.vector.api          :as vector]
               [pretty-inputs.input.events :as input.events]
-              [re-frame.api                 :refer [r]]))
+              [re-frame.api               :refer [r]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

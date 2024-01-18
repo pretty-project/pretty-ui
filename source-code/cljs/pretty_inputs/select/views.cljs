@@ -1,19 +1,19 @@
 
 (ns pretty-inputs.select.views
-    (:require [fruits.hiccup.api                 :as hiccup]
-              [fruits.random.api                 :as random]
-              [fruits.vector.api                 :as vector]
-              [metamorphic-content.api           :as metamorphic-content]
-              [pretty-elements.api      :as pretty-elements]
-              [pretty-inputs.core.views     :as core.views]
+    (:require [fruits.hiccup.api               :as hiccup]
+              [fruits.random.api               :as random]
+              [fruits.vector.api               :as vector]
+              [metamorphic-content.api         :as metamorphic-content]
+              [pretty-elements.api             :as pretty-elements]
+              [pretty-inputs.core.views        :as core.views]
               [pretty-inputs.input.env         :as input.env]
               [pretty-inputs.select.attributes :as select.attributes]
               [pretty-inputs.select.env        :as select.env]
               [pretty-inputs.select.prototypes :as select.prototypes]
               [pretty-inputs.text-field.views  :as text-field.views]
-              [pretty-layouts.api                :as pretty-layouts]
-              [re-frame.api                      :as r]
-              [reagent.api                       :as reagent]))
+              [pretty-layouts.api              :as pretty-layouts]
+              [re-frame.api                    :as r]
+              [reagent.api                     :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -57,7 +57,7 @@
   [select-id {:keys [options-placeholder] :as select-props}]
   (let [options (input.env/get-input-options select-id select-props)]
        [:div {:class :pi-select--option-list :data-selectable false}
-             (if (vector/nonempty? options)
+             (if (vector/not-empty? options)
                  [select-option-list-items select-id select-props]
                  [:div (select.attributes/select-options-placeholder-attributes select-id select-props)
                        (metamorphic-content/compose options-placeholder)])]))

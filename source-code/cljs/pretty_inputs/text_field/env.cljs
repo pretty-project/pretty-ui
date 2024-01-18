@@ -1,8 +1,8 @@
 
 (ns pretty-inputs.text-field.env
-    (:require [fruits.string.api               :as string]
-              [pretty-inputs.plain-field.env :as plain-field.env]
-              [pretty-build-kit.api :as pretty-build-kit]))
+    (:require [fruits.string.api             :as string]
+              [pretty-build-kit.api          :as pretty-build-kit]
+              [pretty-inputs.core.env :as core.env]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -20,7 +20,7 @@
   ;  :tooltip (metamorphic-content)}
   [field-id field-props]
   ; XXX#5100 (source-code/cljs/pretty_inputs/text_field/prototypes.cljs)
-  {:disabled?       (plain-field.env/field-empty? field-id)
+  {:disabled?       (core.env/input-empty? field-id field-props)
    :icon            :close
    :on-click        [:pretty-inputs.text-field/empty-field! field-id field-props]
    :tooltip-content :empty-field!})
@@ -36,8 +36,8 @@
   ; {:multiline? (boolean)(opt)}
   ;
   ; @return (integer)
-  [field-id {:keys [multiline?]}]
-  (let [field-content (plain-field.env/get-field-content field-id)]
+  [field-id {:keys [multiline?] :as field-props}]
+  (let [field-content (core.env/get-input-displayed-value field-id field-props)]
        (if multiline? (let [line-count (-> field-content string/line-count inc)]
                            ; BUG#1481
                            ; Google Chrome Version 89.0.4389.114

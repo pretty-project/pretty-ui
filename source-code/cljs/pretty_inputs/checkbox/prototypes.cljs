@@ -1,6 +1,6 @@
 
 (ns pretty-inputs.checkbox.prototypes
-    (:require [fruits.noop.api :refer [return]]
+    (:require [fruits.noop.api      :refer [return]]
               [pretty-build-kit.api :as pretty-build-kit]))
 
 ;; ----------------------------------------------------------------------------

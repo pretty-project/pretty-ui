@@ -2,8 +2,8 @@
 (ns pretty-inputs.counter.events
     (:require [pretty-inputs.counter.subs :as counter.subs]
               [pretty-inputs.input.events :as input.events]
-              [re-frame.api                 :refer [r]]
-              [re-frame.db.api              :as r.db]))
+              [re-frame.api               :refer [r]]
+              [re-frame.db.api            :as r.db]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -31,7 +31,7 @@
   ; @return (map)
   [db [_ counter-id {:keys [value-path] :as counter-props}]]
   (if (r counter.subs/value-decreasable? db counter-id counter-props)
-      (r r.db/apply-item!                db value-path dec)
+      (r r.db/update-item!               db value-path dec)
       (->                                db)))
 
 (defn increase-value!
@@ -44,5 +44,5 @@
   ; @return (map)
   [db [_ counter-id {:keys [value-path] :as counter-props}]]
   (if (r counter.subs/value-increasable? db counter-id counter-props)
-      (r r.db/apply-item!                db value-path inc)
+      (r r.db/update-item!               db value-path inc)
       (->                                db)))

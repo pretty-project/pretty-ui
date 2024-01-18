@@ -1,16 +1,16 @@
 
 (ns pretty-inputs.checkbox.views
-    (:require [fruits.hiccup.api                   :as hiccup]
-              [fruits.random.api                   :as random]
-              [metamorphic-content.api             :as metamorphic-content]
-              [pretty-forms.api :as pretty-forms]
+    (:require [fruits.hiccup.api                 :as hiccup]
+              [fruits.random.api                 :as random]
+              [metamorphic-content.api           :as metamorphic-content]
+              [pretty-forms.api                  :as pretty-forms]
               [pretty-inputs.checkbox.attributes :as checkbox.attributes]
               [pretty-inputs.checkbox.prototypes :as checkbox.prototypes]
-              [pretty-inputs.core.env :as core.env]
-              [pretty-inputs.core.side-effects :as core.side-effects]
-              [pretty-inputs.core.views       :as core.views]
-              [pretty-presets.api                  :as pretty-presets]
-              [reagent.api                         :as reagent]))
+              [pretty-inputs.core.env            :as core.env]
+              [pretty-inputs.core.side-effects   :as core.side-effects]
+              [pretty-inputs.core.views          :as core.views]
+              [pretty-presets.api                :as pretty-presets]
+              [reagent.api                       :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -37,8 +37,7 @@
   ;
   ; @param (keyword) checkbox-id
   ; @param (map) checkbox-props
-  ; {}
-  [checkbox-id {:keys [get-options-f] :as checkbox-props}]
+  [checkbox-id checkbox-props]
   (letfn [(f0 [option] [checkbox-option checkbox-id checkbox-props option])]
          (let [options (core.env/get-input-options checkbox-id checkbox-props)]
               (hiccup/put-with [:<>] options f0))))
@@ -96,11 +95,11 @@
   ;  :marker-color (keyword or string)(opt)
   ;  :on-invalid-f (function)(opt)
   ;   Takes the actual value and the invalid message as parameters.
-  ;  :on-mounted-f (function)(opt)
+  ;  :on-mount-f (function)(opt)
   ;   Takes the actual value as parameter.
   ;  :on-selected-f (function)(opt)
   ;   Takes the actual value as parameter.
-  ;  :on-unmounted-f (function)(opt)
+  ;  :on-unmount-f (function)(opt)
   ;   Takes the actual value as parameter.
   ;  :on-unselected-f (function)(opt)
   ;   Takes the actual value as parameter.

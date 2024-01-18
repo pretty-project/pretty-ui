@@ -73,7 +73,7 @@
         data-order-key (renderer.helpers/data-key renderer-id :data-order)]
        (as-> db % (r update-render-log! % renderer-id  element-id :rendered-at)
                   (r r.db/set-item!     % [:x.ui data-items-key element-id] element-props)
-                  (r r.db/apply-item!   % [:x.ui data-order-key] vector/move-item-to-last element-id))))
+                  (r r.db/update-item!  % [:x.ui data-order-key] vector/move-item-to-last element-id))))
 
 (defn remove-element!
   ; WARNING! NON-PUBLIC! DO NOT USE!

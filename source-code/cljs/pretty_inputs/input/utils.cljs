@@ -21,22 +21,3 @@
   ; @return (vector)
   [input-id]
   [:pretty-inputs :input-handler/input-values input-id])
-
-(defn value-path->vector-item?
-  ; @ignore
-  ;
-  ; @param (vector) value-path
-  ;
-  ; @usage
-  ; (value-path->vector-item? [:my-value])
-  ; =>
-  ; false
-  ;
-  ; @usage
-  ; (value-path->vector-item? [:my-value 2])
-  ; =>
-  ; true
-  ;
-  ; @return (boolean)
-  [value-path]
-  (-> value-path last integer?))

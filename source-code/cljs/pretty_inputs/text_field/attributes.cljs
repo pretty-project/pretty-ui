@@ -1,13 +1,13 @@
 
 (ns pretty-inputs.text-field.attributes
-    (:require [dom.api                                :as dom]
-              [fruits.random.api                      :as random]
-              [metamorphic-content.api                :as metamorphic-content]
-              [pretty-build-kit.api                         :as pretty-build-kit]
+    (:require [dom.api                              :as dom]
+              [fruits.random.api                    :as random]
+              [metamorphic-content.api              :as metamorphic-content]
+              [pretty-build-kit.api                 :as pretty-build-kit]
               [pretty-inputs.input.env              :as input.env]
               [pretty-inputs.plain-field.attributes :as plain-field.attributes]
               [pretty-inputs.text-field.env         :as text-field.env]
-              [re-frame.api                           :as r]))
+              [re-frame.api                         :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -26,18 +26,17 @@
   ; @return (map)
   ; {}
   [field-id field-props {:keys [disabled? on-click tab-indexed? tooltip-content] :as adornment-props}]
-  ; BUG#2105
-  ; An on-mouse-down event fired anywhere out of the input could trigger the
-  ; on-blur event of the field. Therefore, the surface would dissapears unless
-  ; if the on-mouse-down event prevented.
+  ; @bug (#2105)
+  ; An 'on-mouse-down' event fired anywhere out of the input could trigger the
+  ; 'on-blur' event of the field. Therefore, the surface would dissapear unless
+  ; the 'on-mouse-down' event is prevented.
   ;
-  ; If the user clicks on a field accessory (adornment, surface, placeholder, etc.)
-  ; the field has get the focus!
+  ; If the user clicks on any field accessory (adornment, surface, placeholder, etc.) the field must get focused!
   (-> {:class                 :pi-text-field--adornment
        :data-selectable       false
        :data-tooltip-content  (metamorphic-content/compose tooltip-content)
        :data-tooltip-position :left
-       :on-mouse-down (fn [e] (.preventDefault e)
+       :on-mouse-down (fn [e] (dom/prevent-default e)
                               (when (input.env/input-focused? field-id)
                                     (r/dispatch-fx [:pretty-inputs.plain-field/focus-field! field-id])))}
       (merge (if disabled?        {:disabled   "1" :data-disabled true :data-cursor :default})
@@ -60,7 +59,6 @@
   ; @return (map)
   ; {}
   [_ field-props]
-  ; HACK#9760 (source-code/cljs/pretty_inputs/plain_field/utils.cljs)
   (-> {:class               :pi-text-field--placeholder
        :data-font-size      :xs
        :data-letter-spacing :auto
@@ -140,53 +138,10 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ; {:autofill-name (keyword)(opt)
-  ;  :date-from (string)(opt)
-  ;  :date-to (string)(opt)
-  ;  :disabled? (boolean)(opt)
-  ;  :max-length (integer)(opt)
-  ;  :type (keyword)(opt)
-  ;   :email, :number, :password, :tel, :text}
   ;
   ; @return (map)
-  ; {:auto-complete (keyword)
-  ;  :max (string)
-  ;  :max-length (integer)
-  ;  :min (string)
-  ;  :name (keyword)
-  ;  :on-blur (function)
-  ;  :on-focus (function)
-  ;  :type (keyword)}
-  [field-id {:keys [autofill-name date-from date-to disabled? max-length type] :as field-props}]
-  ; The {:type :date} fields range could be set by the :min and :max properties.
-  ;
-  ; HACK#9760 (source-code/cljs/pretty_inputs/plain_field/utils.cljs)
-  ;
-  ; BUG#6782
-  ; - https://stackoverflow.com/questions/12374442/chrome-ignores-autocomplete-off
-  ; - The "ignore autocomplete='off' (Autofill)" flag is set to enabled by default in chrome.
-  ;   chrome://flags/#ignore-autocomplete-off-autofill
-  ; - The Chrome browser ...
-  ;   ... ignores the {:autocomplete "off"} setting,
-  ;   ... ignores the {:autocomplete "new-*"} setting,
-  ;   ... acknowledges the {:name ...} value.
-  ; - By using randomly generated ':auto-complete' and ':name' values, the browser cannot
-  ;   suggest values to the field.
-  ; - If you want the browser to suggest values for the field, pass an understandable value
-  ;   for the ':autofill-name' property (e.g., :phone-number)!
-  (-> (plain-field.attributes/field-input-attributes field-id field-props)
-      (merge {:class      :pi-text-field--input
-              :max-length max-length
-              :type       type}
-             (if-not disabled? {:min           date-from
-                                :max           date-to
-                                :auto-complete (or autofill-name (random/generate-keyword))
-                                :name          (or autofill-name (random/generate-keyword))
-                                :on-blur       (fn [_] (r/dispatch [:pretty-inputs.text-field/field-blurred field-id field-props]))
-                                :on-focus      (fn [_] (r/dispatch [:pretty-inputs.text-field/field-focused field-id field-props]))}))
-      (pretty-build-kit/effect-attributes       field-props)
-      (pretty-build-kit/focus-attributes        field-props)
-      (pretty-build-kit/element-size-attributes field-props)))
+  [field-id field-props]
+  (plain-field.attributes/field-input-attributes field-id field-props))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

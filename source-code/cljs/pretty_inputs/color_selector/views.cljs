@@ -1,15 +1,15 @@
 
 (ns pretty-inputs.color-selector.views
-    (:require [fruits.random.api                         :as random]
-              [metamorphic-content.api                   :as metamorphic-content]
-              [pretty-elements.api              :as pretty-elements]
+    (:require [fruits.random.api                       :as random]
+              [metamorphic-content.api                 :as metamorphic-content]
+              [pretty-elements.api                     :as pretty-elements]
               [pretty-inputs.color-selector.attributes :as color-selector.attributes]
               [pretty-inputs.color-selector.prototypes :as color-selector.prototypes]
               [pretty-inputs.input.env                 :as input.env]
-              [pretty-layouts.api                        :as pretty-layouts]
-              [pretty-presets.api                        :as pretty-presets]
-              [re-frame.api                              :as r]
-              [reagent.api                               :as reagent]))
+              [pretty-layouts.api                      :as pretty-layouts]
+              [pretty-presets.api                      :as pretty-presets]
+              [re-frame.api                            :as r]
+              [reagent.api                             :as reagent]))
  
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -1,12 +1,12 @@
 
 (ns pretty-inputs.slider.views
-    (:require [fruits.random.api                 :as random]
-              [pretty-inputs.core.views     :as core.views]
+    (:require [fruits.random.api               :as random]
+              [pretty-inputs.core.views        :as core.views]
               [pretty-inputs.slider.attributes :as slider.attributes]
               [pretty-inputs.slider.prototypes :as slider.prototypes]
-              [pretty-presets.api                :as pretty-presets]
-              [re-frame.api                      :as r]
-              [reagent.api                       :as reagent]))
+              [pretty-presets.api              :as pretty-presets]
+              [re-frame.api                    :as r]
+              [reagent.api                     :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

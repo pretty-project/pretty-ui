@@ -1,7 +1,7 @@
 
 (ns pretty-elements.expandable.attributes
     (:require [dom.api                                 :as dom]
-              [pretty-build-kit.api                          :as pretty-build-kit]
+              [pretty-build-kit.api                    :as pretty-build-kit]
               [pretty-elements.expandable.side-effects :as expandable.side-effects]))
 
 ;; ----------------------------------------------------------------------------

@@ -1,8 +1,8 @@
 
 (ns pretty-inputs.multi-field.events
-    (:require [fruits.vector.api                :as vector]
+    (:require [fruits.vector.api              :as vector]
               [pretty-inputs.multi-field.subs :as multi-field.subs]
-              [re-frame.api                     :refer [r]]))
+              [re-frame.api                   :refer [r]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -18,7 +18,7 @@
   ; @return (map)
   [db [_ group-id {:keys [value-path]} field-dex]]
   (let [group-value (get-in db value-path)]
-       (if (vector/nonempty? group-value)
+       (if (vector/not-empty? group-value)
            (update-in db value-path vector/insert-item (inc field-dex) nil)
            (assoc-in  db value-path [nil nil]))))
 

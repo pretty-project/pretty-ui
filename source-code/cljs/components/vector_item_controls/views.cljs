@@ -20,7 +20,7 @@
   ;  :tooltip-position (keyword)
   ;  :value-path (Re-Frame path vector)}
   [_ {:keys [disabled? item-dex on-change tooltip-position value-path]}]
-  (let [duplicate-event [:apply-item! value-path vector/duplicate-nth-item item-dex]]
+  (let [duplicate-event [:update-item! value-path vector/duplicate-nth-item item-dex]]
        [pretty-elements/icon-button {:border-radius    {:all :s}
                                      :disabled?        disabled?
                                      :hover-color      :highlight
@@ -40,7 +40,7 @@
   ;  :tooltip-position (keyword)
   ;  :value-path (Re-Frame path vector)}
   [_ {:keys [disabled? item-dex on-change tooltip-position value-path]}]
-  (let [remove-event [:apply-item! value-path vector/remove-nth-item item-dex]]
+  (let [remove-event [:update-item! value-path vector/remove-nth-item item-dex]]
        [pretty-elements/icon-button {:border-radius    {:all :s}
                                      :disabled?        disabled?
                                      :hover-color      :highlight
@@ -60,8 +60,8 @@
   ;  :tooltip-position (keyword)
   ;  :value-path (Re-Frame path vector)}
   [_ {:keys [disabled? item-dex on-change tooltip-position value-path]}]
-  (let [move-event    [:apply-item! value-path vector/move-nth-item-fwd item-dex]
-        single-item? @(r/subscribe [:get-applied-item value-path vector/count? 1])]
+  (let [move-event    [:update-item! value-path vector/move-nth-item-fwd item-dex]
+        single-item? @(r/subscribe [:get-updated-item value-path vector/count? 1])]
        [pretty-elements/icon-button {:border-radius    {:all :s}
                                      :disabled?        (or disabled? single-item?)
                                      :hover-color      :highlight
@@ -81,8 +81,8 @@
   ;  :tooltip-position (keyword)
   ;  :value-path (Re-Frame path vector)}
   [_ {:keys [disabled? item-dex on-change tooltip-position value-path]}]
-  (let [move-event [:apply-item! value-path vector/move-nth-item-bwd item-dex]
-        single-item? @(r/subscribe [:get-applied-item value-path vector/count? 1])]
+  (let [move-event [:update-item! value-path vector/move-nth-item-bwd item-dex]
+        single-item? @(r/subscribe [:get-updated-item value-path vector/count? 1])]
        [pretty-elements/icon-button {:border-radius    {:all :s}
                                      :disabled?        (or disabled? single-item?)
                                      :hover-color      :highlight

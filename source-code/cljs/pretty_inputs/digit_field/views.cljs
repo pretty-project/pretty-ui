@@ -1,13 +1,13 @@
 
 (ns pretty-inputs.digit-field.views
-    (:require [dom.api                                :as dom]
-              [fruits.css.api                         :as css]
-              [fruits.random.api                      :as random]
-              [fruits.string.api                      :as string]
+    (:require [dom.api                              :as dom]
+              [fruits.css.api                       :as css]
+              [fruits.random.api                    :as random]
+              [fruits.string.api                    :as string]
               [pretty-inputs.digit-field.attributes :as digit-field.attributes]
               [pretty-inputs.digit-field.prototypes :as digit-field.prototypes]
               [pretty-inputs.digit-field.utils      :as digit-field.utils]
-              [re-frame.api                           :as r]))
+              [re-frame.api                         :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

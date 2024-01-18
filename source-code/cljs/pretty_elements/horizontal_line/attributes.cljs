@@ -1,6 +1,6 @@
 
 (ns pretty-elements.horizontal-line.attributes
-    (:require [fruits.css.api :as css]
+    (:require [fruits.css.api       :as css]
               [pretty-build-kit.api :as pretty-build-kit]))
 
 ;; ----------------------------------------------------------------------------

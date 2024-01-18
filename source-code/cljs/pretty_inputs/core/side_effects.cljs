@@ -1,10 +1,21 @@
 
 (ns pretty-inputs.core.side-effects
-    (:require [pretty-inputs.core.state :as core.state]
-              [pretty-inputs.core.env :as core.env]
-              [fruits.vector.api :as vector]
-              [fruits.mixed.api :as mixed]
-              [pretty-forms.api :as pretty-forms]))
+    (:require [fruits.mixed.api         :as mixed]
+              [fruits.vector.api        :as vector]
+              [pretty-forms.api         :as pretty-forms]
+              [pretty-inputs.core.env   :as core.env]
+              [pretty-elements.core.side-effects]
+              [time.api :as time]))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @redirect (pretty-elements.core.side-effects/*)
+(def focus-input!            pretty-elements.core.side-effects/focus-element!)
+(def blur-input!             pretty-elements.core.side-effects/blur-element!)
+(def update-all-input-state! pretty-elements.core.side-effects/update-all-element-state!)
+(def update-input-state!     pretty-elements.core.side-effects/update-element-state!)
+(def clear-input-state!      pretty-elements.core.side-effects/clear-element-state!)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -13,22 +24,26 @@
   ; @ignore
   ;
   ; @param (keyword) input-id
-  [input-id]
-  (reset! core.state/FOCUSED-INPUT input-id))
+  ; @param (keyword) input-props
+  [input-id _]
+  (update-all-input-state! dissoc :focused?)
+  (update-input-state! input-id assoc :focused? true))
 
 (defn unmark-input-as-focused!
   ; @ignore
   ;
   ; @param (keyword) input-id
-  [_]
-  (reset! core.state/FOCUSED-INPUT nil))
+  ; @param (keyword) input-props
+  [input-id _]
+  (update-input-state! input-id dissoc :focused?))
 
 (defn mark-input-as-changed!
   ; @ignore
   ;
   ; @param (keyword) input-id
-  [input-id]
-  (swap! core.state/CHANGED-INPUTS assoc input-id true))
+  ; @param (keyword) input-props
+  [input-id _]
+  (update-input-state! input-id assoc :changed? true))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -40,7 +55,7 @@
   ; @param (map) input-props
   ; @param (*) value
   [input-id input-props value]
-  (swap! core.state/INPUT-INTERNAL-VALUES assoc input-id value))
+  (update-input-state! input-id assoc :internal-value value))
 
 (defn set-input-external-value!
   ; @ignore
@@ -76,6 +91,15 @@
         (-> (set-input-internal-value!         input-id input-props initial-value))
         (-> (set-input-external-value!         input-id input-props initial-value))))
 
+(defn clear-input-value!
+  ; @ignore
+  ;
+  ; @param (keyword) input-id
+  ; @param (map) input-props
+  [input-id input-props]
+  (set-input-internal-value! input-id input-props nil)
+  (set-input-external-value! input-id input-props nil))
+
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -85,13 +109,17 @@
   ; @param (keyword) input-id
   ; @param (map) input-props
   ; {}
-  [input-id {:keys [on-mounted-f] :as input-props}]
+  [input-id {:keys [autofocus? on-mount-f] :as input-props}]
+  ; The autofocus has to be delayed; otherwise, if the input is a field the caret might shown up at the beginning
+  ; of the content (instead of at its end).
+  (letfn [(f0 [] (focus-input! input-id))]
+         (if autofocus? (time/set-timeout! f0 50)))
   (let [provided-get-value-f #(core.env/get-input-displayed-value input-id input-props)]
        (pretty-forms/reg-form-input! input-id input-props provided-get-value-f)
        (init-input-internal-value!   input-id input-props)
        (use-input-initial-value!     input-id input-props))
   (let [input-displayed-value (core.env/get-input-displayed-value input-id input-props)]
-       (if on-mounted-f (on-mounted-f input-displayed-value))))
+       (if on-mount-f (on-mount-f input-displayed-value))))
 
 (defn input-will-unmount
   ; @ignore
@@ -99,10 +127,11 @@
   ; @param (keyword) input-id
   ; @param (map) input-props
   ; {}
-  [input-id {:keys [on-unmounted-f] :as input-props}]
+  [input-id {:keys [autoclear? on-unmount-f] :as input-props}]
   (pretty-forms/dereg-form-input! input-id)
   (let [input-displayed-value (core.env/get-input-displayed-value input-id input-props)]
-       (if on-unmounted-f (on-unmounted-f input-displayed-value))))
+       (if on-unmount-f (on-unmount-f input-displayed-value)))
+  (if autoclear? (clear-input-value! input-id input-props)))
 
 (defn input-focused
   ; @ignore
@@ -110,10 +139,10 @@
   ; @param (keyword) input-id
   ; @param (map) input-props
   ; {}
-  [input-id {:keys [on-focused-f] :as input-props}]
-  (mark-input-as-focused! input-id)
+  [input-id {:keys [on-focus-f] :as input-props}]
+  (mark-input-as-focused! input-id input-props)
   (let [input-displayed-value (core.env/get-input-displayed-value input-id input-props)]
-       (if on-focused-f (on-focused-f input-displayed-value))))
+       (if on-focus-f (on-focus-f input-displayed-value))))
 
 (defn input-left
   ; @ignore
@@ -121,11 +150,11 @@
   ; @param (keyword) input-id
   ; @param (map) input-props
   ; {}
-  [input-id {:keys [on-blurred-f] :as input-props}]
-  (unmark-input-as-focused! input-id)
+  [input-id {:keys [on-blur-f] :as input-props}]
+  (unmark-input-as-focused! input-id input-props)
   (pretty-forms/input-left  input-id input-props)
   (let [input-displayed-value (core.env/get-input-displayed-value input-id input-props)]
-       (if on-blurred-f (on-blurred-f input-displayed-value))))
+       (if on-blur-f (on-blur-f input-displayed-value))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -142,13 +171,13 @@
       (let [input-updated-value nil]
            (set-input-internal-value!  input-id input-props input-updated-value)
            (set-input-external-value!  input-id input-props input-updated-value)
-           (mark-input-as-changed!     input-id)
+           (mark-input-as-changed!     input-id input-props)
            (pretty-forms/input-changed input-id input-props)
            (if on-unselected-f (on-unselected-f input-updated-value)))
       (let [input-updated-value (option-value-f option)]
            (set-input-internal-value!  input-id input-props input-updated-value)
            (set-input-external-value!  input-id input-props input-updated-value)
-           (mark-input-as-changed!     input-id)
+           (mark-input-as-changed!     input-id input-props)
            (pretty-forms/input-changed input-id input-props)
            (if on-selected-f (on-selected-f input-updated-value)))))
 
@@ -166,7 +195,7 @@
             input-updated-value   (-> input-displayed-value mixed/to-vector (vector/remove-item option-value))]
            (set-input-internal-value!  input-id input-props input-updated-value)
            (set-input-external-value!  input-id input-props input-updated-value)
-           (mark-input-as-changed!     input-id)
+           (mark-input-as-changed!     input-id input-props)
            (pretty-forms/input-changed input-id input-props)
            (if on-unselected-f (on-unselected-f input-updated-value)))
       (let [option-value          (option-value-f option)
@@ -174,7 +203,7 @@
             input-updated-value   (-> input-displayed-value mixed/to-vector (vector/conj-item option-value))]
            (set-input-internal-value!  input-id input-props input-updated-value)
            (set-input-external-value!  input-id input-props input-updated-value)
-           (mark-input-as-changed!     input-id)
+           (mark-input-as-changed!     input-id input-props)
            (pretty-forms/input-changed input-id input-props)
            (if on-selected-f (on-selected-f input-updated-value)))))
 
@@ -193,27 +222,28 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn render-popup!
-  ; @ignore
-  ;
-  ; @param (keyword) input-id
-  ; @param (map) input-props
-  [input-id _]
-  (mark-input-as-focused! input-id)
-  (reset! core.state/RENDERED-POPUP input-id))
-
-(defn update-popup!
+(defn render-input-popup!
   ; @ignore
   ;
   ; @param (keyword) input-id
   ; @param (map) input-props
   [input-id input-props]
-  (render-popup! input-id input-props))
+  (mark-input-as-focused! input-id input-props)
+  (update-all-input-state! dissoc :popup-rendered?)
+  (update-input-state! input-id assoc :popup-rendered? true))
 
-(defn close-popup!
+(defn update-input-popup!
   ; @ignore
   ;
   ; @param (keyword) input-id
   ; @param (map) input-props
-  [_ _]
-  (reset! core.state/RENDERED-POPUP nil))
+  [input-id input-props]
+  (render-input-popup! input-id input-props))
+
+(defn close-input-popup!
+  ; @ignore
+  ;
+  ; @param (keyword) input-id
+  ; @param (map) input-props
+  [input-id _]
+  (update-input-state! input-id dissoc :popup-rendered?))

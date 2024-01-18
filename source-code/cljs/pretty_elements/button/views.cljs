@@ -1,12 +1,12 @@
 
 (ns pretty-elements.button.views
     (:require [fruits.random.api                 :as random]
+              [metamorphic-content.api           :as metamorphic-content]
               [pretty-elements.button.attributes :as button.attributes]
               [pretty-elements.button.prototypes :as button.prototypes]
               [pretty-presets.api                :as pretty-presets]
               [re-frame.api                      :as r]
-              [reagent.api                       :as reagent]
-              [metamorphic-content.api :as metamorphic-content]))
+              [reagent.api                       :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

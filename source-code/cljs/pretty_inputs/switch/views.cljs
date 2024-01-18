@@ -1,17 +1,17 @@
 
 (ns pretty-inputs.switch.views
-    (:require [fruits.hiccup.api                 :as hiccup]
-              [fruits.random.api                 :as random]
-              [fruits.vector.api                 :as vector]
-              [metamorphic-content.api           :as metamorphic-content]
-              [pretty-build-kit.api                    :as pretty-build-kit]
-              [pretty-inputs.core.views     :as core.views]
+    (:require [fruits.hiccup.api               :as hiccup]
+              [fruits.random.api               :as random]
+              [fruits.vector.api               :as vector]
+              [metamorphic-content.api         :as metamorphic-content]
+              [pretty-build-kit.api            :as pretty-build-kit]
+              [pretty-inputs.core.views        :as core.views]
               [pretty-inputs.input.env         :as input.env]
               [pretty-inputs.switch.attributes :as switch.attributes]
               [pretty-inputs.switch.prototypes :as switch.prototypes]
-              [pretty-presets.api                :as pretty-presets]
-              [re-frame.api                      :as r]
-              [reagent.api                       :as reagent]))
+              [pretty-presets.api              :as pretty-presets]
+              [re-frame.api                    :as r]
+              [reagent.api                     :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -41,7 +41,7 @@
   [switch-id switch-props]
   (let [options (input.env/get-input-options switch-id switch-props)]
        (letfn [(f0 [option] [switch-option switch-id switch-props option])]
-              (if (vector/nonempty? options)
+              (if (vector/not-empty? options)
                   (hiccup/put-with [:<>] options f0)))))
 
 (defn- switch

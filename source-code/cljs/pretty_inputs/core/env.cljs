@@ -1,8 +1,14 @@
 
 (ns pretty-inputs.core.env
-    (:require [pretty-inputs.core.state :as core.state]
-              [fruits.vector.api :as vector]
-              [fruits.mixed.api :as mixed]))
+    (:require [fruits.mixed.api         :as mixed]
+              [fruits.vector.api        :as vector]
+              [pretty-elements.core.env]))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @redirect (pretty-elements.core.env/*)
+(def get-input-state pretty-elements.core.env/get-element-state)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -10,20 +16,44 @@
 (defn input-focused?
   ; @ignore
   ;
+  ; @param (map) input-props
   ; @param (keyword) input-id
   ;
   ; @return (boolean)
-  [input-id]
-  (= input-id @core.state/FOCUSED-INPUT))
+  [input-id _]
+  (get-input-state input-id :focused?))
 
 (defn input-changed?
   ; @ignore
   ;
   ; @param (keyword) input-id
+  ; @param (map) input-props
   ;
   ; @return (boolean)
-  [input-id]
-  (-> @core.state/CHANGED-INPUTS input-id))
+  [input-id _]
+  (get-input-state input-id :changed?))
+
+(defn input-empty?
+  ; @ignore
+  ;
+  ; @param (keyword) input-id
+  ; @param (map) input-props
+  ;
+  ; @return (boolean)
+  [input-id _]
+  (let [internal-value (get-input-state input-id :internal-value)]
+       (and (seqable? internal-value)
+            (empty?   internal-value))))
+
+(defn input-not-empty?
+  ; @ignore
+  ;
+  ; @param (keyword) input-id
+  ; @param (map) input-props
+  ;
+  ; @return (boolean)
+  [input-id input-props]
+  (-> (input-empty? input-id input-props) not))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -48,7 +78,7 @@
   ;
   ; @return (*)
   [input-id _]
-  (get @core.state/INPUT-INTERNAL-VALUES input-id))
+  (get-input-state input-id :internal-value))
 
 (defn get-input-external-value
   ; @ignore
@@ -72,7 +102,7 @@
   [input-id {:keys [projected-value] :as input-props}]
   (if-let [input-internal-value (get-input-internal-value input-id input-props)]
           (-> input-internal-value)
-          (if-not (input-changed? input-id)
+          (if-not (input-changed? input-id input-props)
                   (-> projected-value))))
 
 ;; ----------------------------------------------------------------------------
@@ -127,7 +157,8 @@
   ; @ignore
   ;
   ; @param (keyword) input-id
+  ; @param (map) input-props
   ;
   ; @return (boolean)
-  [input-id]
-  (= input-id @core.state/RENDERED-POPUP))
+  [input-id _]
+  (get-input-state input-id :popup-rendered?))

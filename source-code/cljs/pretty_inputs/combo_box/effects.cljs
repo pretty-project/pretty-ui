@@ -3,7 +3,7 @@
     (:require [pretty-inputs.combo-box.env    :as combo-box.env]
               [pretty-inputs.combo-box.events :as combo-box.events]
               [pretty-inputs.plain-field.env  :as plain-field.env]
-              [re-frame.api                     :as r :refer [r]]))
+              [re-frame.api                   :as r :refer [r]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -79,7 +79,7 @@
       ; If the surface of the combo-box isn't visible ...
       ; ... pressing the ENTER button ...
       ;     ... fires the original ENTER event of the text-field.
-      (if (plain-field.env/surface-visible? box-id)
+      (if (plain-field.env/field-surface-visible? box-id box-props)
           (if-let [highlighted-option (combo-box.env/get-highlighted-option box-id box-props)]
                   {:dispatch [:pretty-inputs.combo-box/select-option!  box-id box-props highlighted-option]}
                   {:fx       [:pretty-inputs.plain-field/hide-surface! box-id]})

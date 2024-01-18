@@ -1,6 +1,6 @@
 
 (ns pretty-website.scroll-icon.attributes
-    (:require [pretty-build-kit.api                   :as pretty-build-kit]
+    (:require [pretty-build-kit.api             :as pretty-build-kit]
               [pretty-website.scroll-icon.state :as scroll-icon.state]))
 
 ;; ----------------------------------------------------------------------------

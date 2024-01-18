@@ -4,7 +4,7 @@
               [components.compact-list-header.prototypes :as compact-list-header.prototypes]
               [fruits.random.api                         :as random]
               [pretty-elements.api                       :as pretty-elements]
-              [pretty-inputs.api :as pretty-inputs]))
+              [pretty-inputs.api                         :as pretty-inputs]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

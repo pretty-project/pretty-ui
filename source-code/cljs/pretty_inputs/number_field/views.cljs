@@ -1,6 +1,6 @@
 
 (ns pretty-inputs.number-field.views
-    (:require [fruits.random.api                       :as random]
+    (:require [fruits.random.api                     :as random]
               [pretty-inputs.number-field.prototypes :as number-field.prototypes]
               [pretty-inputs.text-field.views        :as text-field.views]))
 

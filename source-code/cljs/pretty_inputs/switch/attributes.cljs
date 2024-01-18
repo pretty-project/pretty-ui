@@ -1,8 +1,8 @@
 
 (ns pretty-inputs.switch.attributes
-    (:require [dom.api        :as dom]
+    (:require [dom.api              :as dom]
               [pretty-build-kit.api :as pretty-build-kit]
-              [re-frame.api   :as r]))
+              [re-frame.api         :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

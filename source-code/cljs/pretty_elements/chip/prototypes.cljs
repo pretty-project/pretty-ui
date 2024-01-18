@@ -1,8 +1,8 @@
 
 (ns pretty-elements.chip.prototypes
-    (:require [pretty-build-kit.api :as pretty-build-kit]
-              [dom.api :as dom]
-              [metamorphic-content.api :as metamorphic-content]))
+    (:require [dom.api                 :as dom]
+              [metamorphic-content.api :as metamorphic-content]
+              [pretty-build-kit.api    :as pretty-build-kit]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
