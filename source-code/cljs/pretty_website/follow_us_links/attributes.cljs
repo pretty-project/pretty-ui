@@ -21,7 +21,7 @@
   ; {}
   [_ _ [provider link]]
   {:class  [:pw-follow-us-links--link :fab (follow-us-links.utils/provider->fa-icon-class provider)]
-   :href   (href/https-address link)
+   :href   (href/https-uri link)
    :target "_blank"})
 
 ;; ----------------------------------------------------------------------------
