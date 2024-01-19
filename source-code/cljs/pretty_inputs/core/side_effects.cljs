@@ -1,11 +1,11 @@
 
 (ns pretty-inputs.core.side-effects
-    (:require [fruits.mixed.api         :as mixed]
-              [fruits.vector.api        :as vector]
-              [pretty-forms.api         :as pretty-forms]
-              [pretty-inputs.core.env   :as core.env]
-              [pretty-elements.core.side-effects]
-              [time.api :as time]))
+    (:require [pretty-elements.core.side-effects]
+              [fruits.mixed.api       :as mixed]
+              [fruits.vector.api      :as vector]
+              [pretty-forms.api       :as pretty-forms]
+              [pretty-inputs.core.env :as core.env]
+              [time.api               :as time]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

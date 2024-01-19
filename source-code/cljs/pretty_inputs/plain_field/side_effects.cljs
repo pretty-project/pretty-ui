@@ -1,16 +1,16 @@
 
 (ns pretty-inputs.plain-field.side-effects
-    (:require [dom.api                         :as dom]
-              [fruits.hiccup.api               :as hiccup]
-              [keypress-handler.api            :as keypress-handler]
+    (:require [activity-listener.api            :as activity-listener]
+              [dom.api                          :as dom]
+              [fruits.hiccup.api                :as hiccup]
+              [keypress-handler.api             :as keypress-handler]
+              [keypress-handler.api             :as keypress-handler]
+              [pretty-inputs.core.env           :as core.env]
+              [pretty-inputs.core.side-effects  :as core.side-effects]
               [pretty-inputs.plain-field.config :as plain-field.config]
-              [pretty-inputs.plain-field.state :as plain-field.state]
-              [pretty-inputs.core.env :as core.env]
-              [pretty-inputs.core.side-effects :as core.side-effects]
-              [pretty-inputs.plain-field.utils :as plain-field.utils]
-              [time.api                        :as time]
-              [activity-listener.api :as activity-listener]
-              [keypress-handler.api :as keypress-handler]))
+              [pretty-inputs.plain-field.state  :as plain-field.state]
+              [pretty-inputs.plain-field.utils  :as plain-field.utils]
+              [time.api                         :as time]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

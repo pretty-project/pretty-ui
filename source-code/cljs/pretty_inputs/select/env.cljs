@@ -1,9 +1,9 @@
 
 (ns pretty-inputs.select.env
-    (:require [fruits.string.api             :as string]
-              [metamorphic-content.api       :as metamorphic-content]
-              [pretty-inputs.core.env :as core.env]
-              [re-frame.api                  :as r]))
+    (:require [fruits.string.api       :as string]
+              [metamorphic-content.api :as metamorphic-content]
+              [pretty-inputs.core.env  :as core.env]
+              [re-frame.api            :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

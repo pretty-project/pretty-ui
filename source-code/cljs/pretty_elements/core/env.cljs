@@ -1,7 +1,7 @@
 
 (ns pretty-elements.core.env
-    (:require [pretty-elements.core.state :as core.state]
-              [fruits.vector.api :as vector]))
+    (:require [fruits.vector.api          :as vector]
+              [pretty-elements.core.state :as core.state]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

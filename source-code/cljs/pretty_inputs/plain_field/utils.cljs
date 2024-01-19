@@ -1,6 +1,6 @@
 
 (ns pretty-inputs.plain-field.utils
-    (:require [dom.api :as dom]
+    (:require [dom.api           :as dom]
               [fruits.string.api :as string]))
 
 ;; ----------------------------------------------------------------------------

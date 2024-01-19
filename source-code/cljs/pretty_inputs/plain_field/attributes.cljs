@@ -1,9 +1,9 @@
 
 (ns pretty-inputs.plain-field.attributes
-    (:require [pretty-build-kit.api            :as pretty-build-kit]
-              [pretty-inputs.plain-field.side-effects :as plain-field.side-effects]
-              [pretty-inputs.core.env :as core.env]
-              [dom.api :as dom]))
+    (:require [dom.api                                :as dom]
+              [pretty-build-kit.api                   :as pretty-build-kit]
+              [pretty-inputs.core.env                 :as core.env]
+              [pretty-inputs.plain-field.side-effects :as plain-field.side-effects]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

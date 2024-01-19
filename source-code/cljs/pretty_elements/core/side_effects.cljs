@@ -1,8 +1,8 @@
 
 (ns pretty-elements.core.side-effects
-    (:require [dom.api           :as dom]
-              [fruits.hiccup.api :as hiccup]
-              [fruits.map.api :as map]
+    (:require [dom.api                    :as dom]
+              [fruits.hiccup.api          :as hiccup]
+              [fruits.map.api             :as map]
               [pretty-elements.core.state :as core.state]))
 
 ;; ----------------------------------------------------------------------------

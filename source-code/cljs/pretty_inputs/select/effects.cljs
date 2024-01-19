@@ -1,8 +1,8 @@
 
 (ns pretty-inputs.select.effects
     (:require [pretty-build-kit.api]
+              [pretty-inputs.core.env              :as core.env]
               [pretty-inputs.input.env             :as input.env]
-              [pretty-inputs.core.env       :as core.env]
               [pretty-inputs.select.config         :as select.config]
               [pretty-inputs.select.events         :as select.events]
               [pretty-inputs.text-field.prototypes :as text-field.prototypes]

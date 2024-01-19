@@ -5,8 +5,8 @@
               [fruits.string.api             :as string]
               [fruits.vector.api             :as vector]
               [pretty-inputs.combo-box.state :as combo-box.state]
-              [pretty-inputs.input.env       :as input.env]
-              [pretty-inputs.core.env :as core.env]))
+              [pretty-inputs.core.env        :as core.env]
+              [pretty-inputs.input.env       :as input.env]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

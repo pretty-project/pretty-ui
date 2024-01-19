@@ -2,7 +2,7 @@
 (ns pretty-inputs.plain-field.views
     (:require [fruits.random.api                    :as random]
               [metamorphic-content.api              :as metamorphic-content]
-              [pretty-inputs.core.side-effects :as core.side-effects]
+              [pretty-inputs.core.side-effects      :as core.side-effects]
               [pretty-inputs.plain-field.attributes :as plain-field.attributes]
               [pretty-inputs.plain-field.env        :as plain-field.env]
               [pretty-inputs.plain-field.prototypes :as plain-field.prototypes]

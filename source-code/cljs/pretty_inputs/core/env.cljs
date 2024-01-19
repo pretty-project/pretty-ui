@@ -1,8 +1,8 @@
 
 (ns pretty-inputs.core.env
-    (:require [fruits.mixed.api         :as mixed]
-              [fruits.vector.api        :as vector]
-              [pretty-elements.core.env]))
+    (:require [pretty-elements.core.env]
+              [fruits.mixed.api  :as mixed]
+              [fruits.vector.api :as vector]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

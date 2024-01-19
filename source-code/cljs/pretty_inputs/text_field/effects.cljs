@@ -2,7 +2,7 @@
 (ns pretty-inputs.text-field.effects
     (:require [pretty-build-kit.api]
               [pretty-forms.api]
-              [pretty-inputs.core.env    :as core.env]
+              [pretty-inputs.core.env           :as core.env]
               [pretty-inputs.plain-field.events :as plain-field.events]
               [re-frame.api                     :as r :refer [r]]))
 

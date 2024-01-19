@@ -1,8 +1,8 @@
 
 (ns pretty-inputs.combo-box.attributes
-    (:require [pretty-inputs.combo-box.env :as combo-box.env]
-              [re-frame.api                :as r]
-              [dom.api :as dom]))
+    (:require [dom.api                     :as dom]
+              [pretty-inputs.combo-box.env :as combo-box.env]
+              [re-frame.api                :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

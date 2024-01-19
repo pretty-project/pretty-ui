@@ -1,11 +1,11 @@
 
 (ns pretty-inputs.multi-combo-box.effects
     (:require [pretty-inputs.combo-box.env              :as combo-box.env]
+              [pretty-inputs.core.env                   :as core.env]
               [pretty-inputs.multi-combo-box.events     :as multi-combo-box.events]
               [pretty-inputs.multi-combo-box.prototypes :as multi-combo-box.prototypes]
               [pretty-inputs.multi-combo-box.utils      :as multi-combo-box.utils]
               [pretty-inputs.plain-field.env            :as plain-field.env]
-              [pretty-inputs.core.env            :as core.env]
               [re-frame.api                             :as r :refer [r]]))
 
 ;; ----------------------------------------------------------------------------
