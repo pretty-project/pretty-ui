@@ -29,7 +29,7 @@
   ; Rc: (Do + Di) / 2        = 29px
   ; CIRCUM: 2Rc * Pi         = 185.35
   (let [radius-center    (dec (/ size 2))
-        circum           (math/circum radius-center)
+        circum           (math/radius->circum radius-center)
         percent          (/ 100 (count colors))
         percent-result   (math/percent-result circum        percent)
         percent-rem      (math/percent-result circum (- 100 percent))

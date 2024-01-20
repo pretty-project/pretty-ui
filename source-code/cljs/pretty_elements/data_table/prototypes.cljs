@@ -32,7 +32,7 @@
   ; {:template (string)
   ;  :width (keyword, px or string)}
   [{:keys [cells] :as column-props}]
-  (merge {:template (css/repeat- (count cells) (css/fr 1))
+  (merge {:template (css/repeat (count cells) (css/fr 1))
           :width :s}
          (-> column-props)))
 
@@ -46,9 +46,8 @@
   ;  :template (string)}
   [{:keys [cells] :as row-props}]
   (merge {:height :s
-          :template (css/repeat- (count cells) (css/fr 1))}
+          :template (css/repeat (count cells) (css/fr 1))}
          (-> row-props)))
-
 
 (defn table-props-prototype
   ; @ignore
