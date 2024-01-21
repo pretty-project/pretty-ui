@@ -7,14 +7,13 @@
               [pretty-forms.api                    :as pretty-forms]
               [pretty-inputs.core.env              :as core.env]
               [pretty-inputs.core.views            :as core.views]
-              [pretty-inputs.plain-field.env       :as plain-field.env]
-              [pretty-inputs.plain-field.views     :as plain-field.views]
+              [pretty-inputs.text-field.env       :as text-field.env]
               [pretty-inputs.text-field.attributes :as text-field.attributes]
               [pretty-inputs.text-field.prototypes :as text-field.prototypes]
               [pretty-presets.api                  :as pretty-presets]
               [reagent.api                         :as reagent]
               [time.api                            :as time]
-              [activity-listener.api :as activity-listener]))
+              [countdown-timer.api :as countdown-timer]))
 
 ;; -- Field adornments components ---------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -33,7 +32,7 @@
   ; - The adornment icon must be in a separate I tag, otherwise the icon related data attributes would affect on the tooltip properties.
   (let [adornment-id (random/generate-keyword)]
        (fn [_ _ {:keys [icon label on-click-f] :as adornment-props}]
-           (let [time-left       (activity-listener/time-left adornment-id)
+           (let [time-left       (countdown-timer/time-left adornment-id)
                  adornment-props (text-field.prototypes/adornment-props-prototype adornment-id adornment-props)]
                 [(cond time-left :div on-click-f :button :else :div)
                  (cond time-left (text-field.attributes/countdown-adornment-attributes adornment-id adornment-props)
@@ -95,7 +94,7 @@
                           [(if multiline? :textarea :input)
                            (text-field.attributes/field-input-attributes field-id field-props)]]]
               [field-end-adornments field-id field-props]
-              (if surface (if (plain-field.env/field-surface-visible? field-id field-props)
+              (if surface (if (text-field.env/field-surface-visible? field-id field-props)
                               [:div (text-field.attributes/field-surface-attributes field-id field-props)
                                     [metamorphic-content/compose surface]]))]
         (if-let [invalid-message (pretty-forms/get-input-invalid-message field-id)]

@@ -54,7 +54,7 @@
   ; @param (keyword) input-id
   ; @param (map) input-props
   ; @param (*) value
-  [input-id input-props value]
+  [input-id _ value]
   (update-input-state! input-id assoc :internal-value value))
 
 (defn set-input-external-value!

@@ -6,7 +6,7 @@
               [pretty-inputs.input.utils    :as input.utils]
               [pretty-inputs.text-field.adornments :as text-field.adornments]
               [metamorphic-content.api :as metamorphic-content]
-              [activity-listener.api :as activity-listener]))
+              [countdown-timer.api :as countdown-timer]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -38,7 +38,7 @@
          (if tooltip-content {:tooltip-position :left})
          (-> adornment-props)
          (if tooltip-content {:tooltip-content (metamorphic-content/compose tooltip-content)})
-         (if timeout {:on-click-f #(activity-listener/start-countdown! adornment-id {:step 1000 :timeout timeout :on-start-f on-click-f})})))
+         (if timeout {:on-click-f #(countdown-timer/start-countdown! adornment-id {:step 1000 :timeout timeout :on-start-f on-click-f})})))
 
 (defn end-adornments-prototype
   ; @ignore
