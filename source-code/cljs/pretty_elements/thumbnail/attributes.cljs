@@ -14,22 +14,20 @@
   ;
   ; @return (map)
   ; {}
-  [_ {:keys [background-size disabled? style] :as thumbnail-props}]
+  [_ {:keys [background-size disabled?] :as thumbnail-props}]
   (-> (if disabled? {:class                :pe-thumbnail--body
                      :disabled             true
-                     :data-background-size background-size
-                     :data-selectable      false
-                     :style                style}
+                     :data-background-size background-size}
                     {:class                :pe-thumbnail--body
-                     :data-background-size background-size
-                     :data-selectable      false
-                     :style                style})
+                     :data-background-size background-size})
       (pretty-build-kit/border-attributes         thumbnail-props)
       (pretty-build-kit/effect-attributes         thumbnail-props)
       (pretty-build-kit/indent-attributes         thumbnail-props)
       (pretty-build-kit/link-attributes           thumbnail-props)
       (pretty-build-kit/mouse-event-attributes    thumbnail-props)
-      (pretty-build-kit/thumbnail-size-attributes thumbnail-props)))
+      (pretty-build-kit/style-attributes          thumbnail-props)
+      (pretty-build-kit/thumbnail-size-attributes thumbnail-props)
+      (pretty-build-kit/unselectable-attributes   thumbnail-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

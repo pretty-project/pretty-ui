@@ -10,15 +10,14 @@
   ;
   ; @param (keyword) list-id
   ; @param (map) list-props
-  ; {:style (map)(opt)}
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)
-  ;  :style (map)}
-  [_ {:keys [style] :as list-props}]
-  (-> {:class :c-vector-item-list--body
-       :style style}
-      (pretty-build-kit/indent-attributes list-props)))
+  ; {:class (keyword or keywords in vector)}
+  [_ list-props]
+  (-> {:class :c-vector-item-list--body}
+      (pretty-build-kit/indent-attributes list-props)
+      (pretty-build-kit/style-attributes  list-props)))
+
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

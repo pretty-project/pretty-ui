@@ -52,11 +52,6 @@
   ; @important
   ; This function is incomplete and may not behave as expected.
   ;
-  ; @description
-  ; The 'digit-field' element writes its actual value into the Re-Frame state
-  ; delayed after the user stopped typing or without a delay when the user
-  ; leaves the field!
-  ;
   ; @param (keyword)(opt) field-id
   ; @param (map) field-props
   ; {:digit-count (integer)

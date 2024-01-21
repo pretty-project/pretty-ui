@@ -86,12 +86,11 @@
   ;         Default: :text-block
   ;        :placeholder (metamorphic-content)(opt)
   ;        :preset (keyword)(opt)
-  ;        :selectable? (boolean)(opt)
-  ;         Default: true
   ;        :text-color (keyword or string)(opt)
   ;         Default: :inherit
   ;        :text-overflow (keyword)(opt)
   ;         Default: :ellipsis
+  ;        :text-selectable? (boolean)(opt)
   ;        :text-transform (keyword)(opt)
   ;        :tooltip-content (metamorphic-content)(opt)
   ;        :tooltip-position (keyword)(opt)}]

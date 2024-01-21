@@ -25,7 +25,7 @@
   ; {}
   [row-dex {:keys [label]}]
   {:outdent (if (zero? row-dex) {:top :xxs :right :xs} {:top :xs :right :xs})
-   :content label :color :muted :selectable? true
+   :content label :color :muted :text-selectable? true
    :style {:min-width "120px" :background-color "var(--fill-color-highlight)"
            :padding "6px 12px" :border-radius "var(--border-radius-s)"}})
 
@@ -51,7 +51,7 @@
   ; {}
   [row-dex {:keys [link]}]
   {:outdent (if (zero? row-dex) {:top :xxs :right :xs} {:top :xs :right :xs})
-   :content link :color :muted :selectable? true :copyable? true :marked? true
+   :content link :color :muted :text-selectable? true :copyable? true :marked? true
    :style {:min-width "200px" :background-color "var(--fill-color-highlight)"
            :padding "6px 12px" :border-radius "var(--border-radius-s)"}})
 
@@ -86,8 +86,7 @@
   ; @param (map) table-props
   ; {:label (metamorphic-content)}
   [_ {:keys [label]}]
-  (if label [:div.c-menu-table--label [pretty-elements/label {:content     label
-                                                              :selectable? false}]]))
+  (if label [:div.c-menu-table--label [pretty-elements/label {:content label}]]))
 
 (defn- menu-table-body
   ; @param (keyword) table-id

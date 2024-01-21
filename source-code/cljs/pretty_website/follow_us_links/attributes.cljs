@@ -12,7 +12,6 @@
   ;
   ; @param (keyword) links-id
   ; @param (map) links-props
-  ; {:style (map)(opt)}
   ; @param (vector) link-props
   ; [(keyword) provider
   ;  (string) link]
@@ -32,15 +31,13 @@
   ;
   ; @param (keyword) links-id
   ; @param (map) links-props
-  ; {:style (map)(opt)}
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)
-  ;  :style (map)}
-  [_ {:keys [style] :as links-props}]
-  (-> {:class :pw-follow-us-links--body
-       :style style}
-      (pretty-build-kit/indent-attributes links-props)))
+  ; {:class (keyword or keywords in vector)}
+  [_ links-props]
+  (-> {:class :pw-follow-us-links--body}
+      (pretty-build-kit/indent-attributes links-props)
+      (pretty-build-kit/style-attributes  links-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

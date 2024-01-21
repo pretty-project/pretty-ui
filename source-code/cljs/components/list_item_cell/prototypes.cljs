@@ -16,5 +16,5 @@
   ; @return (map)
   [cell-props]
   (merge {:indent {:vertical :xs}
-          :selectable? true}
+          :text-selectable? true}
          (-> cell-props)))

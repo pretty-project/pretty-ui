@@ -31,13 +31,14 @@
   ; @return (map)
   ; {}
   [expandable-id {:keys [disabled?]}]
-  (if disabled? {:class             :pe-expandable--header
-                 :disabled          true}
-                {:class             :pe-expandable--header
-                 :data-click-effect :opacity
-                 :data-selectable   false
-                 :on-click    #(expandable.side-effects/toggle! expandable-id)
-                 :on-mouse-up #(dom/blur-active-element!)}))
+  (let [on-click-f #(expandable.side-effects/toggle! expandable-id)]
+       (if disabled? {:class                :pe-expandable--header
+                      :disabled             true}
+                     {:class                :pe-expandable--header
+                      :data-click-effect    :opacity
+                      :data-text-selectable false
+                      :on-click             on-click-f
+                      :on-mouse-up          dom/blur-active-element!})))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -47,15 +48,13 @@
   ;
   ; @param (keyword) expandable-id
   ; @param (map) expandable-props
-  ; {:style (map)(opt)}
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)
-  ;  :style (map)}
-  [_ {:keys [style] :as expandable-props}]
-  (-> {:class :pe-expandable--body
-       :style style}
-      (pretty-build-kit/indent-attributes expandable-props)))
+  ; {:class (keyword or keywords in vector)}
+  [_ expandable-props]
+  (-> {:class :pe-expandable--body}
+      (pretty-build-kit/indent-attributes expandable-props)
+      (pretty-build-kit/style-attributes  expandable-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

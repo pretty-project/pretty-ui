@@ -10,15 +10,13 @@
   ;
   ; @param (keyword) box-id
   ; @param (map) box-props
-  ; {:style (map)(opt)}
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)
-  ;  :style (map)}
-  [_ {:keys [style] :as box-props}]
-  (-> {:class :pi-multi-combo-box--body
-       :style style}
-      (pretty-build-kit/indent-attributes box-props)))
+  ; {:class (keyword or keywords in vector)}
+  [_ box-props]
+  (-> {:class :pi-multi-combo-box--body}
+      (pretty-build-kit/indent-attributes box-props)
+      (pretty-build-kit/style-attributes  box-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

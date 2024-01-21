@@ -40,16 +40,12 @@
                     (hiccup/put-with-indexed [:<>] group-value f0)))])
 
 (defn input
-  ; @info
-  ; XXX#0711 (source-code/cljs/pretty_inputs/text_field/views.cljs)
-  ; The 'multi-field' element is based on the 'text-field' or the 'combo-box' element.
-  ; For more information, check out the documentation of the 'text-field' or the 'combo-box' element.
+  ; @note
+  ; For more information, check out the documentation of the ['text-field'](#text-field) and ['combo-box'](#combo-box) inputs.
   ;
   ; @description
-  ; - The 'multi-field' element writes its actual value into the Re-Frame state delayed, after
-  ;   the user stopped typing or without a delay when the user leaves the field!
-  ; - In case of using the ':initial-options', ':options' or the ':options-path' properties, the 'multi-field'
-  ;   element implements the 'combo-box' element. Otherwise, it implements the 'text-field' element.
+  ; In case of using the ':initial-options', ':options' or the ':options-path' properties, the 'multi-field'
+  ; element implements the 'combo-box' element. Otherwise, it implements the 'text-field' element.
   ;
   ; @param (keyword)(opt) group-id
   ; @param (map) group-props

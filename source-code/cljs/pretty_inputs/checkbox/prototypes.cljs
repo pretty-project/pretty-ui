@@ -19,14 +19,14 @@
   ;  :font-size (keyword, px or string)
   ;  :option-label-f (function)
   ;  :option-value-f (function)
-  ;  :options-orientation (keyword)}
+  ;  :orientation (keyword)}
   [checkbox-id checkbox-props]
-  (merge {:border-color        :default
-          :border-position     :all
-          :border-width        :xs
-          :click-effect        :opacity
-          :font-size           :s
-          :option-label-f      return
-          :option-value-f      return
-          :options-orientation :vertical}
+  (merge {:border-color    :default
+          :border-position :all
+          :border-width    :xs
+          :click-effect    :opacity
+          :font-size       :s
+          :option-label-f  return
+          :option-value-f  return
+          :orientation     :vertical}
          (-> checkbox-props)))

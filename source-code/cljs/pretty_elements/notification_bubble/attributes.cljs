@@ -10,15 +10,12 @@
   ;
   ; @param (keyword) bubble-id
   ; @param (map) bubble-props
-  ; {:style (map)(opt)}
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
-  ;  :data-letter-spacing (keyword)
-  ;  :style (map)}
-  [_ {:keys [style] :as bubble-props}]
+  ;  :data-letter-spacing (keyword)}
+  [_ bubble-props]
   (-> {:class               :pe-notification-bubble--content
-       :style               style
        :data-letter-spacing :auto}
       (pretty-build-kit/font-attributes   bubble-props)
       (pretty-build-kit/indent-attributes bubble-props)))
@@ -31,19 +28,18 @@
   ;
   ; @param (keyword) bubble-id
   ; @param (map) bubble-props
-  ; {:selectable? (boolean)}
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)
-  ;  :data-selectable (boolean)}
-  [_ {:keys [selectable?] :as bubble-props}]
-  (-> {:class           :pe-notification-bubble--body
-       :data-selectable selectable?}
+  ; {:class (keyword or keywords in vector)}
+  [_ bubble-props]
+  (-> {:class :pe-notification-bubble--body}
       (pretty-build-kit/border-attributes           bubble-props)
       (pretty-build-kit/color-attributes            bubble-props)
       (pretty-build-kit/element-max-size-attributes bubble-props)
       (pretty-build-kit/element-min-size-attributes bubble-props)
-      (pretty-build-kit/element-size-attributes     bubble-props)))
+      (pretty-build-kit/element-size-attributes     bubble-props)
+      (pretty-build-kit/style-attributes            bubble-props)
+      (pretty-build-kit/unselectable-attributes     bubble-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

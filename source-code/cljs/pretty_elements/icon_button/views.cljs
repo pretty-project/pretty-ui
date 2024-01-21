@@ -25,7 +25,7 @@
         [(cond href :a on-click-f :button :else :div)
          (icon-button.attributes/button-body-attributes button-id button-props)
          [:i (icon-button.attributes/button-icon-attributes button-id button-props) icon]]
-        (if label [:div {:class :pe-icon-button--label :data-selectable false}
+        (if label [:div {:class :pe-icon-button--label :data-text-selectable false}
                         (metamorphic-content/compose label)])])
 
 (defn- icon-button-lifecycles

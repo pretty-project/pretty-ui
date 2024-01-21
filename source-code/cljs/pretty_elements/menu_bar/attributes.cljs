@@ -87,11 +87,10 @@
   ;
   ; @return (map)
   ; {}
-  [_ {:keys [orientation]}]
-  (merge {:class :pe-menu-bar--menu-items}
-         (case orientation :horizontal {:data-orientation :horizontal
-                                        :data-scroll-axis :x}
-                                       {:data-orientation :vertical})))
+  [_ {:keys [orientation] :as bar-props}]
+  (-> {:class :pe-menu-bar--menu-items
+       :data-scroll-axis (case orientation :horizontal :x nil)}
+      (pretty-build-kit/orientation-attributes bar-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -101,17 +100,14 @@
   ;
   ; @param (keyword) bar-id
   ; @param (map) bar-props
-  ; {:style (map)(opt)}
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)
-  ;  :data-selectable (boolean)
-  ;  :style (map)}
-  [_ {:keys [style] :as bar-props}]
-  (-> {:class           :pe-menu-bar--body
-       :data-selectable false
-       :style           style}
-      (pretty-build-kit/indent-attributes bar-props)))
+  ; {:class (keyword or keywords in vector)}
+  [_ bar-props]
+  (-> {:class :pe-menu-bar--body}
+      (pretty-build-kit/indent-attributes       bar-props)
+      (pretty-build-kit/style-attributes        bar-props)
+      (pretty-build-kit/unselectable-attributes bar-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

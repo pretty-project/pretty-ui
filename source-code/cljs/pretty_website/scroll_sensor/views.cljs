@@ -1,8 +1,8 @@
 
 (ns pretty-website.scroll-sensor.views
-    (:require [fruits.hiccup.api                         :as hiccup]
-              [fruits.random.api                         :as random]
+    (:require [fruits.random.api                         :as random]
               [pretty-presets.api                        :as pretty-presets]
+              [pretty-website.scroll-sensor.attributes :as scroll-sensor.attributes]
               [pretty-website.scroll-sensor.side-effects :as scroll-sensor.side-effects]
               [reagent.api                               :as reagent]))
 
@@ -14,13 +14,11 @@
   ;
   ; @param (keyword) sensor-id
   ; @param (map) sensor-props
-  ; {:callback-f (function)
-  ;  :style (map)(opt)}
-  [sensor-id {:keys [callback-f style]}]
+  ; {:callback-f (function)}
+  [sensor-id {:keys [callback-f] :as sensor-props}]
   ; @note (tutorials#parametering)
   (reagent/lifecycles {:component-did-mount (fn [_ _] (scroll-sensor.side-effects/sensor-did-mount-f sensor-id callback-f))
-                       :reagent-render      (fn [_ _]
-                                                [:div {:class :pw-scroll-sensor :id (hiccup/value sensor-id) :style style}])}))
+                       :reagent-render      (fn [_ _] [:div (scroll-sensor.attributes/sensor-attributes sensor-id sensor-props)])}))
 
 (defn component
   ; @param (keyword)(opt) sensor-id

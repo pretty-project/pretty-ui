@@ -27,14 +27,13 @@
 (defn table-body-attributes
   ; @param (keyword) table-id
   ; @param (map) table-props
-  ; {}
   ;
   ; @return (map)
-  ; {}
-  [_ {:keys [style] :as table-props}]
-  (-> {:style style}
+  [_ table-props]
+  (-> {}
       (pretty-build-kit/border-attributes table-props)
-      (pretty-build-kit/indent-attributes table-props)))
+      (pretty-build-kit/indent-attributes table-props)
+      (pretty-build-kit/style-attributes  table-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

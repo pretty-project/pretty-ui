@@ -14,8 +14,7 @@
   ; {}
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)
-  ;  :style (map)}
+  ; {:class (keyword or keywords in vector)}
   [_ _ {:keys [template]}]
   {:class :pe-data-table--column
    :style {:grid-template-rows template}})
@@ -59,15 +58,13 @@
   ;
   ; @param (keyword) table-id
   ; @param (map) table-props
-  ; {:style (map)(opt)}
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)
-  ;  :style (map)}
-  [_ {:keys [style] :as table-props}]
-  (-> {:class :pe-data-table--body
-       :style style}
-      (pretty-build-kit/indent-attributes table-props)))
+  ; {:class (keyword or keywords in vector)}
+  [_ table-props]
+  (-> {:class :pe-data-table--body}
+      (pretty-build-kit/indent-attributes table-props)
+      (pretty-build-kit/style-attributes  table-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

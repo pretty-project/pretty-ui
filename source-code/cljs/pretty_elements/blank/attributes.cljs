@@ -10,18 +10,16 @@
   ;
   ; @param (keyword) blank-id
   ; @param (map) blank-props
-  ; {:style (map)(opt)}
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)
-  ;  :style (map)}
-  [_ {:keys [style] :as blank-props}]
-  (-> {:class :pe-blank--body
-       :style style}
+  ; {:class (keyword or keywords in vector)}
+  [_ blank-props]
+  (-> {:class :pe-blank--body}
       (pretty-build-kit/border-attributes       blank-props)
       (pretty-build-kit/color-attributes        blank-props)
       (pretty-build-kit/element-size-attributes blank-props)
-      (pretty-build-kit/indent-attributes       blank-props)))
+      (pretty-build-kit/indent-attributes       blank-props)
+      (pretty-build-kit/style-attributes        blank-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -26,11 +26,11 @@
                                                   :sha     "cd26a62d706d192195c5bd4e39ab2c9e8e60f4e9"}
          org.clojure/clojurescript               {:mvn/version "1.10.891"}
          pretty-project/pretty-css               {:git/url "https://github.com/pretty-project/pretty-css"
-                                                  :sha     "5faa26a200bf154fbc20ddb3bbba66a0283685b8"}
+                                                  :sha     "5b380035eedf41e9f06c52a705c0f4c70bb2c59e"}
          pretty-project/pretty-icons             {:git/url "https://github.com/pretty-project/pretty-icons"
-                                                  :sha     "5faa26a200bf154fbc20ddb3bbba66a0283685b8"}
+                                                  :sha     "5b380035eedf41e9f06c52a705c0f4c70bb2c59e"}
          pretty-project/pretty-normalizer        {:git/url "https://github.com/pretty-project/pretty-normalizer"
-                                                  :sha     "5faa26a200bf154fbc20ddb3bbba66a0283685b8"}}}
+                                                  :sha     "5b380035eedf41e9f06c52a705c0f4c70bb2c59e"}}}
 
 
 ; + state-synchronizer

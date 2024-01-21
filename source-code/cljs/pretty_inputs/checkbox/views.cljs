@@ -52,7 +52,7 @@
         [core.views/input-synchronizer checkbox-id checkbox-props]
         [core.views/input-label        checkbox-id checkbox-props]
         (if-let [invalid-message (pretty-forms/get-input-invalid-message checkbox-id)]
-                [:div {:class :pi-checkbox--invalid-message :data-selectable false}
+                [:div {:class :pi-checkbox--invalid-message :data-text-selectable false}
                       (metamorphic-content/compose invalid-message)])
         [:div (checkbox.attributes/checkbox-body-attributes checkbox-id checkbox-props)
               [checkbox-option-list                         checkbox-id checkbox-props]]])
@@ -84,9 +84,7 @@
   ;  :font-size (keyword, px or string)(opt)
   ;   Default: :s
   ;  :get-options-f (function)(opt)
-  ;   Must return the selectable options.
   ;  :get-value-f (function)(opt)
-  ;   Must return the actual value.
   ;  :helper (metamorphic-content)(opt)
   ;  :hover-effect (keyword)(opt)
   ;  :indent (map)(opt)
@@ -94,40 +92,26 @@
   ;  :initial-value (*)(opt)
   ;  :marker-color (keyword or string)(opt)
   ;  :on-invalid-f (function)(opt)
-  ;   Takes the actual value and the invalid message as parameters.
   ;  :on-mount-f (function)(opt)
-  ;   Takes the actual value as parameter.
   ;  :on-selected-f (function)(opt)
-  ;   Takes the actual value as parameter.
   ;  :on-unmount-f (function)(opt)
-  ;   Takes the actual value as parameter.
   ;  :on-unselected-f (function)(opt)
-  ;   Takes the actual value as parameter.
   ;  :on-valid-f (function)(opt)
-  ;   Takes the actual value as parameter.
   ;  :option-helper-f (function)(opt)
   ;  :option-label-f (function)(opt)
-  ;   Default: return
   ;  :option-value-f (function)(opt)
-  ;   Default: return
-  ;  :options-orientation (keyword)(opt)
-  ;   :horizontal, :vertical
-  ;   Default: :vertical
+  ;  :orientation (keyword)(opt)
   ;  :label (metamorphic-content)(opt)
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :preset (keyword)(opt)
   ;  :projected-value (*)(opt)
   ;  :set-value-f (function)(opt)
-  ;   Takes the actual value as parameter.
   ;  :style (map)(opt)
   ;  :validate-when-change? (boolean)(opt)
-  ;   Validates the value when it changes.
   ;  :validate-when-leave? (boolean)(opt)
-  ;   Validates the value and turns on the autovalidation when the user leaves the input.
   ;  :validators (maps in vector)(opt)
   ;   [{:f (function)
-  ;      Takes the actual value as parameter.
   ;     :invalid-message (metamorphic-content)(opt)}]}
   ;
   ; @usage

@@ -11,11 +11,12 @@
   ;
   ; @param (keyword) sidebar-id
   ; @param (map) sidebar-props
-  ; {:style (map)(opt)}
+  ; {:cover-color (keyword)(opt)}
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
-  ;  :style (map)}
+  ;  :data-fill-color (keyword)
+  ;  :on-click (function)}
   [sidebar-id {:keys [cover-color]}]
   {:class           :pw-sidebar--cover
    :data-fill-color cover-color
@@ -29,19 +30,17 @@
   ;
   ; @param (keyword) sidebar-id
   ; @param (map) sidebar-props
-  ; {:style (map)(opt)}
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
-  ;  :data-scroll-axis (keyword)
-  ;  :style (map)}
-  [_ {:keys [style] :as sidebar-props}]
+  ;  :data-scroll-axis (keyword)}
+  [_ sidebar-props]
   (-> {:class            :pw-sidebar--body
-       :data-scroll-axis :y
-       :style            style}
+       :data-scroll-axis :y}
       (pretty-build-kit/border-attributes sidebar-props)
       (pretty-build-kit/color-attributes  sidebar-props)
-      (pretty-build-kit/indent-attributes sidebar-props)))
+      (pretty-build-kit/indent-attributes sidebar-props)
+      (pretty-build-kit/style-attributes  sidebar-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

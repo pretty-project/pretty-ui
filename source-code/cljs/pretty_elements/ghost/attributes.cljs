@@ -10,19 +10,17 @@
   ;
   ; @param (keyword) ghost-id
   ; @param (map) ghost-props
-  ; {:style (map)(opt)}
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)
-  ;  :style (map)}
-  [_ {:keys [style] :as ghost-props}]
-  (-> {:class :pe-ghost--body
-       :style style}
+  ; {:class (keyword or keywords in vector)}
+  [_ ghost-props]
+  (-> {:class :pe-ghost--body}
       (pretty-build-kit/border-attributes ghost-props)
       (pretty-build-kit/indent-attributes ghost-props)
+      (pretty-build-kit/style-attributes  ghost-props)
       ; The ghost element uses ...
-      ; ... block height profiles
-      ; ... element width profiles
+      ; ... block height profiles,
+      ; ... element width profiles.
       (pretty-build-kit/block-size-attributes   (dissoc ghost-props :width))
       (pretty-build-kit/element-size-attributes (dissoc ghost-props :height))))
 

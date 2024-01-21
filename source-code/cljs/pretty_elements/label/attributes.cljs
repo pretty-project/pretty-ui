@@ -19,18 +19,19 @@
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  :data-click-effect (keyword)
-  ;  :data-selectable (boolean)
   ;  :data-icon-family (keyword)
+  ;  :data-text-selectable (boolean)
   ;  :on-click (function)
   ;  :on-mouse-up (function)}
   [label-id _]
-  {:class             :pe-label--info-text-button
-   :data-click-effect :opacity
-   :data-selectable   false
-   :data-icon-family  :material-symbols-outlined
-   :data-icon-size    :xs
-   :on-click    #(label.side-effects/toggle-info-text-visibility! label-id)
-   :on-mouse-up #(dom/blur-active-element!)})
+  (let [on-click-f #(label.side-effects/toggle-info-text-visibility! label-id)]
+       {:class                :pe-label--info-text-button
+        :data-click-effect    :opacity
+        :data-icon-family     :material-symbols-outlined
+        :data-icon-size       :xs
+        :data-text-selectable false
+        :on-click             on-click-f
+        :on-mouse-up          dom/blur-active-element!}))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -67,7 +68,8 @@
   ; {:class (keyword or keywords in vector)}
   [_ label-props]
   (-> {:class :pe-label--content}
-      (pretty-build-kit/text-attributes label-props)))
+      (pretty-build-kit/text-attributes         label-props)
+      (pretty-build-kit/unselectable-attributes label-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -81,9 +83,8 @@
   ;
   ; @return (map)
   ; {}
-  [_ {:keys [focus-id style] :as label-props}]
+  [_ {:keys [focus-id] :as label-props}]
   (-> {:class               :pe-label--body
-       :style               style
        :data-letter-spacing :auto
        :on-mouse-up #(if focus-id (core.side-effects/focus-element! focus-id))}
       (pretty-build-kit/border-attributes           label-props)
@@ -94,7 +95,7 @@
       (pretty-build-kit/indent-attributes           label-props)
       (pretty-build-kit/marker-attributes           label-props)
       (pretty-build-kit/row-attributes              label-props)
-      (pretty-build-kit/text-attributes             label-props)
+      (pretty-build-kit/style-attributes            label-props)
       (pretty-build-kit/tooltip-attributes          label-props)))
 
 ;; ----------------------------------------------------------------------------

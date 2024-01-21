@@ -30,18 +30,16 @@
   ;
   ; @param (keyword) sidebar-id
   ; @param (map) sidebar-props
-  ; {:style (map)(opt)}
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)
-  ;  :style (map)}
-  [_ {:keys [style] :as sidebar-props}]
-  (-> {:class :pl-sidebar--body
-       :style style}
+  ; {:class (keyword or keywords in vector)}
+  [_ sidebar-props]
+  (-> {:class :pl-sidebar--body}
       (pretty-build-kit/border-attributes           sidebar-props)
       (pretty-build-kit/color-attributes            sidebar-props)
       (pretty-build-kit/element-min-size-attributes sidebar-props)
-      (pretty-build-kit/indent-attributes           sidebar-props)))
+      (pretty-build-kit/indent-attributes           sidebar-props)
+      (pretty-build-kit/style-attributes            sidebar-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -65,6 +65,7 @@
   ; {}
   ; @param (*) value
   [_ {:keys [set-value-f]} value]
+  (println "set ext:" value)
   (if set-value-f (set-value-f value)))
 
 ;; ----------------------------------------------------------------------------
@@ -90,53 +91,6 @@
   (when (-> (core.env/get-input-external-value input-id input-props) nil?)
         (-> (set-input-internal-value!         input-id input-props initial-value))
         (-> (set-input-external-value!         input-id input-props initial-value))))
-
-(defn clear-input-value!
-  ; @ignore
-  ;
-  ; @param (keyword) input-id
-  ; @param (map) input-props
-  [input-id input-props]
-  (set-input-internal-value! input-id input-props nil)
-  (set-input-external-value! input-id input-props nil))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn ENTER-pressed
-  ; @ignore
-  ;
-  ; @param (keyword) input-id
-  ; @param (map) input-props
-  ; {}
-  [input-id {:keys [on-enter-f] :as input-props}]
-  (let [input-displayed-value (core.env/get-input-displayed-value input-id input-props)]
-       (if on-enter-f (on-enter-f input-displayed-value))))
-
-(defn ESC-pressed
-  ; @ignore
-  ;
-  ; @param (keyword) input-id
-  ; @param (map) input-props
-  ; {}
-  [input-id {:keys [emptiable? on-escape-f] :as input-props}]
-  (let [input-displayed-value (core.env/get-input-displayed-value input-id input-props)]
-       (if emptiable?  (clear-input-value! input-id input-props))
-       (if on-escape-f (on-escape-f input-displayed-value))))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn empty-input!
-  ; @ignore
-  ;
-  ; @param (keyword) input-id
-  ; @param (map) input-props
-  ; {}
-  [input-id {:keys [on-empty-f] :as input-props}]
-  (if-not (core.env/input-empty? input-id input-props)
-          (clear-input-value!    input-id input-props)
-          (if on-empty-f (on-empty-f nil))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -165,11 +119,11 @@
   ; @param (keyword) input-id
   ; @param (map) input-props
   ; {}
-  [input-id {:keys [autoclear? on-unmount-f] :as input-props}]
-  (pretty-forms/dereg-form-input! input-id)
+  [input-id {:keys [on-unmount-f] :as input-props}]
   (let [input-displayed-value (core.env/get-input-displayed-value input-id input-props)]
        (if on-unmount-f (on-unmount-f input-displayed-value)))
-  (if autoclear? (clear-input-value! input-id input-props)))
+  (pretty-forms/dereg-form-input! input-id)
+  (clear-input-state!             input-id))
 
 (defn input-focused
   ; @ignore
@@ -202,11 +156,25 @@
   ; {}
   ; @param (*) value
   [input-id {:keys [on-changed-f] :as input-props} value]
-  (mark-input-as-changed!     input-id input-props)
-  (pretty-forms/input-changed input-id input-props)
   (set-input-internal-value!  input-id input-props value)
   (set-input-external-value!  input-id input-props value)
+  (mark-input-as-changed!     input-id input-props)
+  (pretty-forms/input-changed input-id input-props)
   (if on-changed-f (on-changed-f value)))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn empty-input!
+  ; @ignore
+  ;
+  ; @param (keyword) input-id
+  ; @param (map) input-props
+  ; {}
+  [input-id {:keys [on-empty-f] :as input-props}]
+  (when-not (core.env/input-empty? input-id input-props)
+            (input-value-changed   input-id input-props nil)
+            (if on-empty-f (on-empty-f nil))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -258,6 +226,30 @@
   (if (vector/count-min? options 2)
       (toggle-multi-option!  input-id input-props option)
       (toggle-single-option! input-id input-props option)))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn ENTER-pressed
+  ; @ignore
+  ;
+  ; @param (keyword) input-id
+  ; @param (map) input-props
+  ; {}
+  [input-id {:keys [on-enter-f] :as input-props}]
+  (let [input-displayed-value (core.env/get-input-displayed-value input-id input-props)]
+       (if on-enter-f (on-enter-f input-displayed-value))))
+
+(defn ESC-pressed
+  ; @ignore
+  ;
+  ; @param (keyword) input-id
+  ; @param (map) input-props
+  ; {}
+  [input-id {:keys [emptiable? on-escape-f] :as input-props}]
+  (let [input-displayed-value (core.env/get-input-displayed-value input-id input-props)]
+       (if emptiable?  (empty-input! input-id input-props))
+       (if on-escape-f (on-escape-f input-displayed-value))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

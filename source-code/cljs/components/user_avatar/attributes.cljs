@@ -52,17 +52,18 @@
   ;
   ; @param (keyword) avatar-id
   ; @param (map) avatar-props
-  ; {:size (px)
-  ;  :style (map)(opt)}
+  ; {:size (px)}
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  :style (map)}
-  [_ {:keys [size style] :as avatar-props}]
+  [_ {:keys [size] :as avatar-props}]
   (-> {:class :c-user-avatar--body
-       :style (merge style {:height (css/px size)
-                            :width  (css/px size)})}
-      (pretty-build-kit/indent-attributes avatar-props)))
+       :style {:height (css/px size)
+               :width  (css/px size)}}
+      (pretty-build-kit/indent-attributes avatar-props)
+      (pretty-build-kit/style-attributes  avatar-props)))
+
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

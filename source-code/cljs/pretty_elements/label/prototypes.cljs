@@ -31,7 +31,6 @@
   ;  :line-height (keyword, px or string)
   ;  :marker-position (keyword)
   ;  :placeholder (metamorphic-content)
-  ;  :selectable? (boolean)
   ;  :text-color (keyword or string)
   ;  :tooltip-content (string)
   ;  :tooltip-position (keyword)}
@@ -45,11 +44,10 @@
   ; - Solution:
   ;   In case of the placeholder is also an empty string, the "\u00A0" white
   ;   character provides the consistent height for the element until the content gets its value.
-  (merge {:font-size        :s
-          :font-weight      :medium
-          :line-height      :text-block
-          :placeholder      "\u00A0"
-          :selectable?      false}
+  (merge {:font-size   :s
+          :font-weight :medium
+          :line-height :text-block
+          :placeholder "\u00A0"}
          (if border-color    {:border-position :all
                               :border-width    :xxs})
          (if marker-color    {:marker-position :tr})

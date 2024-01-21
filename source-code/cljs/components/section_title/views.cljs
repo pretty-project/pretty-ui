@@ -20,10 +20,8 @@
                         [pretty-elements/label title-id title-props]])
 
 (defn component
-  ; @info
-  ; XXX#0439 (source-code/cljs/pretty_elements/label/views.cljs)
-  ; The 'section-title' component is based on the 'label' element.
-  ; For more information, check out the documentation of the 'label' element.
+  ; @note
+  ; For more information, check out the documentation of the ['label'](/pretty-ui/cljs/pretty-elements/api.html#label) element.
   ;
   ; @param (keyword)(opt) title-id
   ; @param (map) title-props

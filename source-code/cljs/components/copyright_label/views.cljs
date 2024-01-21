@@ -16,7 +16,7 @@
   (let [server-year    @(r/subscribe [:x.core/get-server-year])]
         ;copyright-label (x.app-details/copyright-label server-year)]
        [:div.c-copyright-label {:data-color :muted
-                                :data-selectable false}
+                                :data-text-selectable false}
         [:a.c-copyright-label--anchor {:data-font-weight :medium
                                        :data-font-size :xxs
                                        :data-letter-spacing :auto

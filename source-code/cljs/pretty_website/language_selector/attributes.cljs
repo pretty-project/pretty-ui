@@ -17,18 +17,19 @@
   ; @return (map)
   ; {}
   [_ selector-props language]
-  (let [selected? (= language @app-dictionary/SELECTED-LANGUAGE)]
-       (-> {:class               :pw-language-selector--language-button
-            :data-click-effect   :opacity
-            :data-font-weight    (if selected? :semi-bold :normal)
-            :data-hover-effect   :opacity
-            :data-letter-spacing :auto
-            :data-line-height    :auto
-            :data-selectable     false
-            :data-selected       selected?
-            :on-click            #(app-dictionary/select-language! language)
-            :on-mouse-up         #(dom/blur-active-element!)}
-           (pretty-build-kit/font-attributes selector-props))))
+  (let [selected? (= language @app-dictionary/SELECTED-LANGUAGE)
+        on-click-f #(app-dictionary/select-language! language)]
+       (-> {:class                :pw-language-selector--language-button
+            :data-click-effect    :opacity
+            :data-font-weight     (if selected? :semi-bold :normal)
+            :data-hover-effect    :opacity
+            :data-letter-spacing  :auto
+            :data-line-height     :auto
+            :data-selected        selected?
+            :on-click             on-click-f
+            :on-mouse-up          dom/blur-active-element!}
+           (pretty-build-kit/font-attributes         selector-props)
+           (pretty-build-kit/unselectable-attributes selector-props))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -38,16 +39,14 @@
   ;
   ; @param (keyword) selector-id
   ; @param (map) selector-props
-  ; {:style (map)(opt)}
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)
-  ;  :style (map)}
-  [_ {:keys [style] :as selector-props}]
-  (-> {:class :pw-language-selector--body
-       :style style}
+  ; {:class (keyword or keywords in vector)}
+  [_ selector-props]
+  (-> {:class :pw-language-selector--body}
       (pretty-build-kit/indent-attributes selector-props)
-      (pretty-build-kit/row-attributes    selector-props)))
+      (pretty-build-kit/row-attributes    selector-props)
+      (pretty-build-kit/style-attributes  selector-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

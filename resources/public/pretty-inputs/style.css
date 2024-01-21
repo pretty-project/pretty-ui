@@ -23,8 +23,7 @@
 
 /*** Options ***/
 
-.pi-checkbox--body[data-options-orientation="horizontal"] {
-  display:    flex;
+.pi-checkbox--body[data-orientation="horizontal"] {
   column-gap: 24px;
 }
 
@@ -413,8 +412,7 @@
 
 /*** Options ***/
 
-.pi-radio-button--body[data-options-orientation="horizontal"] {
-  display:    flex;
+.pi-radio-button--body[data-orientation="horizontal"] {
   column-gap: 24px;
 }
 
@@ -649,8 +647,7 @@
 
 /*** Options ***/
 
-.pi-switch--body[data-options-orientation="horizontal"] {
-  display:    flex;
+.pi-switch--body[data-orientation="horizontal"] {
   column-gap: 24px;
 }
 
@@ -826,7 +823,10 @@ textarea.pi-text-field--input {
   /* Adding +6px to the surface Y axis offset makes the surface shadow not
    * overlapping with the field border. */
  -top: 36px;
-  top: 42px;
+ -top: 42px;
+
+  /* The surface got a relatively positioned wrapper element ... */
+  top: 0;
 }
 
 /*** Surface ***/

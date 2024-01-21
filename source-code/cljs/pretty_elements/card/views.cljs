@@ -25,10 +25,6 @@
          [metamorphic-content/compose content placeholder]]])
 
 (defn element
-  ; @info
-  ; XXX#3240
-  ; Some other items based on the 'card' element and their documentations link here.
-  ;
   ; @param (keyword)(opt) card-id
   ; @param (map) card-props
   ; {:badge-color (keyword or string)(opt)

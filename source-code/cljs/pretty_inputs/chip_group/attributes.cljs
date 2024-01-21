@@ -27,15 +27,13 @@
   ;
   ; @param (keyword) group-id
   ; @param (map) group-props
-  ; {:style (map)(opt)}
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)
-  ;  :style (map)}
-  [_ {:keys [style] :as group-props}]
-  (-> {:class :pi-chip-group--body
-       :style style}
-      (pretty-build-kit/indent-attributes group-props)))
+  ; {:class (keyword or keywords in vector)}
+  [_ group-props]
+  (-> {:class :pi-chip-group--body}
+      (pretty-build-kit/indent-attributes group-props)
+      (pretty-build-kit/style-attributes  group-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

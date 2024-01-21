@@ -12,23 +12,21 @@
   ;
   ; @param (keyword) image-id
   ; @param (map) image-props
-  ; {:src (string)
-  ;  :style (map)(opt)}
+  ; {:src (string)}
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  :on-error (function)
   ;  :ref (function)
-  ;  :src (string)
-  ;  :style (map)}
-  [image-id {:keys [src style] :as image-props}]
+  ;  :src (string)}
+  [image-id {:keys [src] :as image-props}]
   (-> {:class    :pe-image--body
        :on-error (image.utils/on-error-f image-id)
        :ref      (react/set-reference-f  image-id)
-       :style    style
-       :src      src}
+       :src      (-> src)}
       (pretty-build-kit/element-size-attributes image-props)
-      (pretty-build-kit/indent-attributes       image-props)))
+      (pretty-build-kit/indent-attributes       image-props)
+      (pretty-build-kit/style-attributes        image-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

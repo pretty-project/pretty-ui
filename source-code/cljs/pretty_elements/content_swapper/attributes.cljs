@@ -11,17 +11,15 @@
   ;
   ; @param (keyword) swapper-id
   ; @param (map) swapper-props
-  ; {:style (map)(opt)}
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
-  ;  :data-animation-direction (keyword)
-  ;  :style (map)}
-  [swapper-id {:keys [style] :as swapper-props}]
+  ;  :data-animation-direction (keyword)}
+  [swapper-id swapper-props]
   (-> {:class                    :pe-content-swapper--body
-       :data-animation-direction (-> @content-swapper.state/SWAPPERS swapper-id :animation-direction)
-       :style                    style}
-      (pretty-build-kit/indent-attributes swapper-props)))
+       :data-animation-direction (-> @content-swapper.state/SWAPPERS swapper-id :animation-direction)}
+      (pretty-build-kit/indent-attributes swapper-props)
+      (pretty-build-kit/style-attributes  swapper-props)))
 
 (defn swapper-attributes
   ; @ignore

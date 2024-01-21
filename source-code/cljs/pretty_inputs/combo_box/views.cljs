@@ -70,14 +70,8 @@
                        :reagent-render      (fn [_ box-props] [combo-box box-id box-props])}))
 
 (defn input
-  ; XXX#0711 (source-code/cljs/pretty_inputs/text_field/views.cljs)
-  ; The 'combo-box' element is based on the 'text-field' element.
-  ; For more information, check out the documentation of the 'text-field' element.
-  ;
-  ; @description
-  ; The 'combo-box' element writes its actual value into the Re-Frame state
-  ; delayed after the user stopped typing or without a delay when the user
-  ; leaves the field!
+  ; @note
+  ; For more information, check out the documentation of the ['text-field'](#text-field) input.
   ;
   ; @param (keyword)(opt) box-id
   ; @param (map) box-props

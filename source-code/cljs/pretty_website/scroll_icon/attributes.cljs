@@ -26,15 +26,15 @@
   ;
   ; @param (keyword) icon-id
   ; @param (map) icon-props
-  ; {:color (string)
-  ;  :style (map)(opt)}
+  ; {:color (string)}
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  :style (map)}
-  [_ {:keys [color style] :as icon-props}]
-  {:class :pw-scroll-icon--body
-   :style (assoc style "--icon-color" color)})
+  [_ {:keys [color] :as icon-props}]
+  (-> {:class :pw-scroll-icon--body
+       :style {"--icon-color" color}}
+      (pretty-build-kit/style-attributes icon-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

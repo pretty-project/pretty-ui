@@ -10,15 +10,13 @@
   ;
   ; @param (keyword) stepper-id
   ; @param (map) stepper-props
-  ; {:style (map)(opt)}
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)
-  ;  :style (map)}
-  [_ {:keys [style] :as stepper-props}]
-  (-> {:class :pe-stepper--body
-       :style style}
-      (pretty-build-kit/indent-attributes stepper-props)))
+  ; {:class (keyword or keywords in vector)}
+  [_ stepper-props]
+  (-> {:class :pe-stepper--body}
+      (pretty-build-kit/indent-attributes stepper-props)
+      (pretty-build-kit/style-attributes  stepper-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

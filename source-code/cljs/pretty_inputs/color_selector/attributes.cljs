@@ -54,15 +54,13 @@
   ;
   ; @param (keyword) selector-id
   ; @param (map) selector-props
-  ; {:style (map)(opt)}
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)
-  ;  :style (map)}
-  [_ {:keys [style] :as selector-props}]
-  (-> {:class :pi-color-selector--options-body
-       :style style}
-      (pretty-build-kit/indent-attributes selector-props)))
+  ; {:class (keyword or keywords in vector)}
+  [_ selector-props]
+  (-> {:class :pi-color-selector--options-body}
+      (pretty-build-kit/indent-attributes selector-props)
+      (pretty-build-kit/style-attributes  selector-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

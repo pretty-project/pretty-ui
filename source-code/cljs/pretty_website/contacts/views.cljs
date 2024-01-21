@@ -71,8 +71,7 @@
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)}
   ;  :preset (keyword)(opt)
-  ;  :style (map)(opt)
-  ;   Inline style map applied on the component body element.}
+  ;  :style (map)(opt)}
   ;
   ; @usage
   ; [contacts {...}]

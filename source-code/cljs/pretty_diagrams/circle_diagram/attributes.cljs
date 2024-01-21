@@ -70,15 +70,13 @@
   ;
   ; @param (keyword) diagram-id
   ; @param (map) diagram-props
-  ; {:style (map)(opt)}
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)
-  ;  :style (map)}
-  [_ {:keys [style] :as diagram-props}]
-  (-> {:class :pd-circle-diagram--body
-       :style style}
-      (pretty-build-kit/indent-attributes diagram-props)))
+  ; {:class (keyword or keywords in vector)}
+  [_ diagram-props]
+  (-> {:class :pd-circle-diagram--body}
+      (pretty-build-kit/indent-attributes diagram-props)
+      (pretty-build-kit/style-attributes  diagram-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

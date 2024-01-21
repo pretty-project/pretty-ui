@@ -69,16 +69,14 @@
   ;
   ; @param (keyword) slider-id
   ; @param (map) slider-props
-  ; {:style (map)(opt)}
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)
-  ;  :style (map)}
-  [_ {:keys [style] :as slider-props}]
-  (-> {:class :pi-slider--body
-       :style style}
+  ; {:class (keyword or keywords in vector)}
+  [_ slider-props]
+  (-> {:class :pi-slider--body}
       (pretty-build-kit/element-size-attributes slider-props)
-      (pretty-build-kit/indent-attributes       slider-props)))
+      (pretty-build-kit/indent-attributes       slider-props)
+      (pretty-build-kit/style-attributes        slider-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

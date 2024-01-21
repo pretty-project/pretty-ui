@@ -10,16 +10,15 @@
   ;
   ; @param (keyword) icon-id
   ; @param (map) icon-props
-  ; {}
   ;
   ; @return (map)
   ; {}
-  [icon-id {:keys [style] :as icon-props}]
-  (-> {:class           :pe-icon--body
-       :data-selectable false
-       :style           style}
-      (pretty-build-kit/icon-attributes   icon-props)
-      (pretty-build-kit/indent-attributes icon-props)))
+  [icon-id icon-props]
+  (-> {:class :pe-icon--body}
+      (pretty-build-kit/icon-attributes         icon-props)
+      (pretty-build-kit/indent-attributes       icon-props)
+      (pretty-build-kit/style-attributes        icon-props)
+      (pretty-build-kit/unselectable-attributes icon-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -31,6 +30,7 @@
   ; @param (map) icon-props
   ;
   ; @return (map)
+  ; {}
   [_ icon-props]
   (-> {:class :pe-icon}
       (pretty-build-kit/class-attributes   icon-props)

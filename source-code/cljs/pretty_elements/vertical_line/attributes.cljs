@@ -15,12 +15,13 @@
   ;
   ; @return (map)
   ; {}
-  [line-id {:keys [strength style] :as line-props}]
+  [line-id {:keys [strength] :as line-props}]
   (-> {:class :pe-vertical-line--body
-       :style (merge style {:width (css/px strength)})}
+       :style {:width (css/px strength)}}
       (pretty-build-kit/color-attributes        line-props)
       (pretty-build-kit/element-size-attributes line-props)
-      (pretty-build-kit/indent-attributes       line-props)))
+      (pretty-build-kit/indent-attributes       line-props)
+      (pretty-build-kit/style-attributes        line-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

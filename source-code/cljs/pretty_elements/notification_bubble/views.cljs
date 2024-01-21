@@ -47,10 +47,6 @@
               [notification-bubble-primary-button   bubble-id bubble-props]]])
 
 (defn element
-  ; @info
-  ; XXX#0731
-  ; Some other items based on the 'notification-bubble' element and their documentations link here.
-  ;
   ; @param (keyword) bubble-id
   ; @param (map) bubble-props
   ; {:border-color (keyword or string)(opt)
@@ -87,11 +83,10 @@
   ;   {:layout (keyword)
   ;     :button, :icon-button
   ;     Default: :icon-button}
-  ;  :selectable? (boolean)(opt)
-  ;   Default: false
   ;  :style (map)(opt)
   ;  :text-color (keyword or string)(opt)
   ;   Default: :default
+  ;  :text-selectable? (boolean)(opt)
   ;  :width (keyword, px or string)(opt)}
   ;
   ; @usage

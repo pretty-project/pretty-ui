@@ -6,6 +6,7 @@
               [metamorphic-content.api             :as metamorphic-content]
               [pretty-forms.api                    :as pretty-forms]
               [pretty-inputs.core.env              :as core.env]
+              [pretty-inputs.core.side-effects :as core.side-effects]
               [pretty-inputs.core.views            :as core.views]
               [pretty-inputs.text-field.env       :as text-field.env]
               [pretty-inputs.text-field.attributes :as text-field.attributes]
@@ -77,10 +78,14 @@
   ; @param (map) field-props
   ; {}
   [field-id {:keys [multiline? placeholder surface] :as field-props}]
-  ; The placeholder element has an absolute position. Therefore, ...
-  ; ... it must be placed within the same ancestor element as the input element!
-  ; ... but it cannot be in the very same parent element as the input element!
-  ;     (otherwise, somehow it covers the input, regardless their order)
+  ; - The placeholder element has an absolute position. Therefore, ...
+  ;   ... it must be placed within the same ancestor element as the input element!
+  ;   ... but it cannot be in the very same parent element as the input element
+  ;       (otherwise, somehow it covers the input, regardless their order)!
+  ; - The surface element is placed outside of the input container, otherwise
+  ;   it would be misplaced in case the text-field has indent (applied on the input container).
+  ; - The surface element has a relatively positioned wrapper element, otherwise
+  ;   it wouldn't shrink (in terms of width) in case the text-field has outdent.
   [:div (text-field.attributes/field-attributes field-id field-props)
         [core.views/input-synchronizer field-id field-props]
         [core.views/input-label        field-id field-props]
@@ -93,31 +98,30 @@
                     [:div (text-field.attributes/input-emphasize-attributes field-id field-props)
                           [(if multiline? :textarea :input)
                            (text-field.attributes/field-input-attributes field-id field-props)]]]
-              [field-end-adornments field-id field-props]
-              (if surface (if (text-field.env/field-surface-visible? field-id field-props)
+              [field-end-adornments field-id field-props]]
+        (if surface (if (text-field.env/field-surface-visible? field-id field-props)
+                        [:div {:class :pi-text-field--surface-wrapper}
                               [:div (text-field.attributes/field-surface-attributes field-id field-props)
-                                    [metamorphic-content/compose surface]]))]
+                                    [metamorphic-content/compose surface]]]))
         (if-let [invalid-message (pretty-forms/get-input-invalid-message field-id)]
-                [:div {:class :pi-text-field--invalid-message :data-selectable false}
+                [:div {:class :pi-text-field--invalid-message :data-text-selectable false}
                       (metamorphic-content/compose invalid-message)])])
 
+(defn- text-field-lifecycles
+  ; @ignore
+  ;
+  ; @param (keyword) field-id
+  ; @param (map) field-props
+  [field-id field-props]
+  ; @note (tutorials#parametering)
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (core.side-effects/input-did-mount    field-id field-props))
+                       :component-will-unmount (fn [_ _] (core.side-effects/input-will-unmount field-id field-props))
+                       :reagent-render         (fn [_ field-props] [text-field field-id field-props])}))
+
 (defn input
-  ; @info
-  ; XXX#0711
-  ; Some other items based on the 'text-field' element and their documentations link here.
-  ;
-  ; @description
-  ; The 'text-field' element writes its actual value into the Re-Frame state delayed,
-  ; only when the user stopped typing or without a delay when the user leaves the field!
-  ;
   ; @param (keyword)(opt) field-id
   ; @param (map) field-props
-  ; {:autoclear? (boolean)(opt)
-  ;   Removes the value stored in the application state (on the value-path)
-  ;   when the element unmounts.
-  ;  :autofill-name (keyword)(opt)
-  ;   Helps the browser on what values to be suggested.
-  ;   Leave empty if you don't want autosuggestions.
+  ; {:autofill-name (keyword)(opt)
   ;  :autofocus? (boolean)(opt)
   ;  :border-color (keyword or string)(opt)
   ;  :border-position (keyword)(opt)
@@ -134,7 +138,6 @@
   ;     :hover-effect (keyword)(opt)
   ;     :icon (keyword)
   ;     :icon-family (keyword)(opt)
-  ;      Default: :material-symbols-outlined
   ;     :label (string)(opt)
   ;     :on-click-f (function)(opt)
   ;     :preset (keyword)(opt)
@@ -142,14 +145,12 @@
   ;     :text-color (keyword or string)(opt)
   ;      Default: :default
   ;     :timeout (ms)(opt)
-  ;      Disables the adornment for a specific interval after the on-click-f event gets fired.
   ;     :tooltip-content (metamorphic-content)(opt)}]
   ;  :font-size (keyword, px or string)(opt)
   ;   Default: :s
   ;  :font-weight (keyword or integer)(opt)
   ;   Default: :normal
   ;  :form-id (keyword)(opt)
-  ;   Different inputs sharing the same form ID can be validated at the same time.
   ;  :get-value-f (function)(opt)
   ;  :height (keyword, px or string)(opt)
   ;  :helper (metamorphic-content)(opt)
@@ -181,7 +182,6 @@
   ;  :reveal-effect (keyword)(opt)
   ;  :set-value-f (function)(opt)
   ;  :start-adornments (maps in vector)(opt)
-  ;   Same as the ':end-adornments' property.
   ;  :style (map)(opt)
   ;  :surface (map)(opt)
   ;   {:border-radius (map)(opt)
@@ -193,12 +193,9 @@
   ;   :email, :number, :password, :tel, :text
   ;   Default: :text
   ;  :validate-when-change? (boolean)(opt)
-  ;   Validates the value when it changes.
   ;  :validate-when-leave? (boolean)(opt)
-  ;   Validates the value and turns on the autovalidation when the user leaves the input.
   ;  :validators (maps in vector)(opt)
   ;   [{:f (function)
-  ;      Takes the actual value as parameter.
   ;     :invalid-message (metamorphic-content)(opt)}]
   ;  :width (keyword, px or string)(opt)}
   ;
@@ -229,4 +226,4 @@
    (fn [_ field-props]
        (let [field-props (pretty-presets/apply-preset                          field-props)
              field-props (text-field.prototypes/field-props-prototype field-id field-props)]
-            [text-field field-id field-props]))))
+            [text-field-lifecycles field-id field-props]))))

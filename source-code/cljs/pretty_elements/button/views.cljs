@@ -48,10 +48,6 @@
                        :reagent-render         (fn [_ button-props] [button button-id button-props])}))
 
 (defn element
-  ; @info
-  ; XXX#0714
-  ; Some other items based on the 'button' element and their documentations link here.
-  ;
   ; @bug (#9912)
   ; If the keypress key-code is 13 (ENTER) the on-click-f function fires multiple times during the key is pressed!
   ; This phenomenon caused by:

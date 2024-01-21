@@ -21,8 +21,7 @@
   ; {}
   [input-id input-props]
   [state-synchronizer/sensor input-id {:autoclear? true
-                                       ;:get-monitor-value-f #(core.env/get-input-internal-value           :a {})
-                                       :get  (fn [])
-                                       ;:get-trigger-value-f #(core.env/get-input-external-value           input-id input-props)
-                                       ;:set-primary-state-f #(core.side-effects/set-input-internal-value! input-id input-props %)
-                                       :debug? true}])
+                                       :get-monitor-value-f #(core.env/get-input-internal-value           input-id input-props)
+                                       :get-trigger-value-f #(core.env/get-input-external-value           input-id input-props)
+                                       :set-primary-state-f #(core.side-effects/set-input-internal-value! input-id input-props %)
+                                       :debug? false}])

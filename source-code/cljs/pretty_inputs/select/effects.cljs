@@ -66,15 +66,13 @@
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
-  ; {:autoclear? (boolean)(opt)
-  ;  :on-select (function or Re-Frame metamorphic-event)(opt)
+  ; {:on-select (function or Re-Frame metamorphic-event)(opt)
   ;  :option-value-f (function)}
   ; @param (*) option
-  (fn [{:keys [db]} [_ select-id {:keys [autoclear? on-select option-value-f] :as select-props} option]]
+  (fn [{:keys [db]} [_ select-id {:keys [on-select option-value-f] :as select-props} option]]
       (let [option-value (option-value-f option)]
            {:db             (r select.events/select-option! db select-id select-props option)
             :dispatch-later [               {:ms select.config/CLOSE-POPUP-DELAY     :fx       [:pretty-inputs.input/close-popup!  select-id select-props]}
-                             (if autoclear? {:ms select.config/AUTOCLEAR-VALUE-DELAY :dispatch [:pretty-inputs.select/clear-value! select-id select-props]})
                              (if on-select  {:ms select.config/ON-SELECT-DELAY       :dispatch [:pretty-build-kit/dispatch-event-handler! on-select option-value]})]})))
 
 (r/reg-event-fx :pretty-inputs.select/clear-value!

@@ -14,10 +14,8 @@
         [pretty-elements/icon icon-id icon-props]])
 
 (defn component
-  ; @info
-  ; XXX#0709 (source-code/cljs/pretty_elements/icon/views.cljs)
-  ; The 'list-item-icon' component is based on the 'icon' element.
-  ; For more information, check out the documentation of the 'icon' element.
+  ; @note
+  ; For more information, check out the documentation of the ['icon'](/pretty-ui/cljs/pretty-elements/api.html#icon) element.
   ;
   ; @param (keyword)(opt) icon-id
   ; @param (map) icon-props

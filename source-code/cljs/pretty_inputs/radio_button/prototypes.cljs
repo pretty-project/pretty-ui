@@ -22,19 +22,19 @@
   ;  :font-size (keyword, px or string)
   ;  :option-label-f (function)
   ;  :option-value-f (function)
-  ;  :options-orientation (keyword)
+  ;  :orientation (keyword)
   ;  :options-path (Re-Frame path vector)
   ;  :value-path (Re-Frame path vector)}
   [button-id button-props]
-  (merge {:border-color        :default
-          :border-position     :all
-          :border-radius       {:all :m}
-          :border-width        :xs
-          :click-effect        :opacity
-          :font-size           :s
-          :options-orientation :vertical
-          :options-path        (input.utils/default-options-path button-id)
-          :value-path          (input.utils/default-value-path   button-id)
-          :option-label-f      return
-          :option-value-f      return}
+  (merge {:border-color    :default
+          :border-position :all
+          :border-radius   {:all :m}
+          :border-width    :xs
+          :click-effect    :opacity
+          :font-size       :s
+          :orientation     :vertical
+          :options-path    (input.utils/default-options-path button-id)
+          :value-path      (input.utils/default-value-path   button-id)
+          :option-label-f  return
+          :option-value-f  return}
          (-> button-props)))

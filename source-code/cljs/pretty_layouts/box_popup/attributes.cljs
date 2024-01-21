@@ -23,16 +23,15 @@
   ;
   ; @param (keyword) popup-id
   ; @param (map) popup-props
-  ; {:style (map)(opt)}
   ;
   ; @return (map)
   ; {}
-  [_ {:keys [style] :as popup-props}]
-  (-> {:class :pl-box-popup--structure
-       :style style}
+  [_ popup-props]
+  (-> {:class :pl-box-popup--structure}
       (pretty-build-kit/border-attributes popup-props)
       (pretty-build-kit/color-attributes  popup-props)
-      (pretty-build-kit/indent-attributes popup-props)))
+      (pretty-build-kit/indent-attributes popup-props)
+      (pretty-build-kit/style-attributes  popup-props)))
 
 (defn popup-wrapper-attributes
   ; @ignore

@@ -14,13 +14,10 @@
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  :data-click-effect (keyword)
-  ;  :data-selectable (boolean)
-  ;  :data-text-overflow (keyword)
-  ;  :disabled (boolean)}
+  ;  :data-text-overflow (keyword)}
   [_ toggle-props]
   (-> {:class              :pe-toggle--body
        :data-click-effect  :opacity
-       :data-selectable    false
        :data-text-overflow :hidden}
       (pretty-build-kit/border-attributes       toggle-props)
       (pretty-build-kit/color-attributes        toggle-props)
@@ -29,7 +26,8 @@
       (pretty-build-kit/focus-attributes        toggle-props)
       (pretty-build-kit/indent-attributes       toggle-props)
       (pretty-build-kit/link-attributes         toggle-props)
-      (pretty-build-kit/mouse-event-attributes  toggle-props)))
+      (pretty-build-kit/mouse-event-attributes  toggle-props)
+      (pretty-build-kit/unselectable-attributes toggle-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -45,10 +45,8 @@
                        [color-picker-value picker-id picker-props]))]])
 
 (defn component
-  ; @info
-  ; XXX#0709 (source-code/cljs/pretty_elements/color_selector/views.cljs)
-  ; The 'color-picker' component is based on the 'color-selector' element.
-  ; For more information, check out the documentation of the 'color-selector' element.
+  ; @note
+  ; For more information, check out the documentation of the ['color-selector'](/pretty-ui/cljs/pretty-inputs/api.html#color-selector) input.
   ;
   ; @param (keyword) picker-id
   ; @param (map) picker-props

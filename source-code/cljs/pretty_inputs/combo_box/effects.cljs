@@ -2,7 +2,7 @@
 (ns pretty-inputs.combo-box.effects
     (:require [pretty-inputs.combo-box.env    :as combo-box.env]
               [pretty-inputs.combo-box.events :as combo-box.events]
-              [pretty-inputs.plain-field.env  :as plain-field.env]
+              [pretty-inputs.text-field.env  :as text-field.env]
               [re-frame.api                   :as r :refer [r]]))
 
 ;; ----------------------------------------------------------------------------
@@ -26,7 +26,7 @@
   ; @param (keyword) box-id
   ; @param (map) box-props
   (fn [_ [_ box-id box-props]]
-      {:fx-n [[:pretty-inputs.plain-field/show-surface!        box-id]
+      {:fx-n [[:pretty-inputs.text-field/show-surface!        box-id]
               [:pretty-inputs.combo-box/highlight-next-option! box-id box-props]]}))
 
 (r/reg-event-fx :pretty-inputs.combo-box/UP-pressed
@@ -35,7 +35,7 @@
   ; @param (keyword) box-id
   ; @param (map) box-props
   (fn [_ [_ box-id box-props]]
-      {:fx-n [[:pretty-inputs.plain-field/show-surface!        box-id]
+      {:fx-n [[:pretty-inputs.text-field/show-surface!        box-id]
               [:pretty-inputs.combo-box/highlight-prev-option! box-id box-props]]}))
 
 (r/reg-event-fx :pretty-inputs.combo-box/ESC-pressed
@@ -53,7 +53,7 @@
       ;
       ; HACK#1450 (source-code/cljs/pretty_inputs/combo_box/env.cljs)
       (if (combo-box.env/any-option-rendered? box-id box-props)
-          {:fx-n [[:pretty-inputs.plain-field/hide-surface!             box-id]
+          {:fx-n [[:pretty-inputs.text-field/hide-surface!             box-id]
                   [:pretty-inputs.combo-box/discard-option-highlighter! box-id]]}
           [:pretty-inputs.text-field/ESC-pressed box-id box-props])))
 
@@ -79,10 +79,10 @@
       ; If the surface of the combo-box isn't visible ...
       ; ... pressing the ENTER button ...
       ;     ... fires the original ENTER event of the text-field.
-      (if (plain-field.env/field-surface-visible? box-id box-props)
+      (if (text-field.env/field-surface-visible? box-id box-props)
           (if-let [highlighted-option (combo-box.env/get-highlighted-option box-id box-props)]
                   {:dispatch [:pretty-inputs.combo-box/select-option!  box-id box-props highlighted-option]}
-                  {:fx       [:pretty-inputs.plain-field/hide-surface! box-id]})
+                  {:fx       [:pretty-inputs.text-field/hide-surface! box-id]})
           [:pretty-inputs.text-field/ENTER-pressed box-id box-props])))
 
 ;; ----------------------------------------------------------------------------
@@ -107,7 +107,7 @@
       ; ... uses the highlighted option as field content,
       ; ... dispatches the :on-type-ended event.
       {:db   (r combo-box.events/select-option! db box-id box-props option)
-       :fx-n [[:pretty-inputs.plain-field/hide-surface!             box-id]
+       :fx-n [[:pretty-inputs.text-field/hide-surface!             box-id]
               [:pretty-inputs.combo-box/discard-option-highlighter! box-id]
               [:pretty-inputs.combo-box/use-selected-option!        box-id box-props option]]
        :dispatch (if on-type-ended (let [option-value (option-value-f option)]

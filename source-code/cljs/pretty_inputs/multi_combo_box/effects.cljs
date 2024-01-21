@@ -5,7 +5,7 @@
               [pretty-inputs.multi-combo-box.events     :as multi-combo-box.events]
               [pretty-inputs.multi-combo-box.prototypes :as multi-combo-box.prototypes]
               [pretty-inputs.multi-combo-box.utils      :as multi-combo-box.utils]
-              [pretty-inputs.plain-field.env            :as plain-field.env]
+              [pretty-inputs.text-field.env            :as text-field.env]
               [re-frame.api                             :as r :refer [r]]))
 
 ;; ----------------------------------------------------------------------------
@@ -21,12 +21,12 @@
       ; XXX#4146 (source-code/cljs/pretty_inputs/combo_box/effects.cljs)
       (let [field-id    (multi-combo-box.utils/box-id->field-id           box-id)
             field-props (multi-combo-box.prototypes/field-props-prototype box-id box-props)]
-           (if (plain-field.env/field-surface-visible? field-id field-props)
+           (if (text-field.env/field-surface-visible? field-id field-props)
                (if-let [highlighted-option (combo-box.env/get-highlighted-option field-id field-props)]
                        [:pretty-inputs.multi-combo-box/use-option! box-id box-props highlighted-option]
                        (if (core.env/input-empty? field-id field-props)
-                           {:fx       [:pretty-inputs.plain-field/hide-surface! field-id]}
-                           {:fx       [:pretty-inputs.plain-field/hide-surface! field-id]
+                           {:fx       [:pretty-inputs.text-field/hide-surface! field-id]}
+                           {:fx       [:pretty-inputs.text-field/hide-surface! field-id]
                             :dispatch [:pretty-inputs.multi-combo-box/use-field-content! box-id box-props]}))
                (if (core.env/input-not-empty? field-id field-props)
                    [:pretty-inputs.multi-combo-box/use-field-content! box-id box-props])))))
@@ -67,7 +67,7 @@
       (let [field-id    (multi-combo-box.utils/box-id->field-id           box-id)
             field-props (multi-combo-box.prototypes/field-props-prototype box-id box-props)]
            {:db   (r multi-combo-box.events/use-option! db box-id box-props option)
-            :fx-n [[:pretty-inputs.plain-field/hide-surface!             field-id]
+            :fx-n [[:pretty-inputs.text-field/hide-surface!             field-id]
                    [:pretty-inputs.combo-box/discard-option-highlighter! field-id field-props]]})))
 
 ;; ----------------------------------------------------------------------------

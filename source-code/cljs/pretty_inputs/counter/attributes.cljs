@@ -87,17 +87,14 @@
   ;
   ; @param (keyword) counter-id
   ; @param (map) counter-props
-  ; {:style (map)(opt)}
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)
-  ;  :data-selectable (boolean)
-  ;  :style (map)}
-  [_ {:keys [style] :as counter-props}]
-  (-> {:class           :pi-counter--body
-       :data-selectable false
-       :style           style}
-      (pretty-build-kit/indent-attributes counter-props)))
+  ; {:class (keyword or keywords in vector)}
+  [_ counter-props]
+  (-> {:class :pi-counter--body}
+      (pretty-build-kit/indent-attributes       counter-props)
+      (pretty-build-kit/style-attributes        counter-props)
+      (pretty-build-kit/unselectable-attributes counter-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

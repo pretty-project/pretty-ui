@@ -8,10 +8,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn component
-  ; @info
-  ; XXX#0439 (source-code/cljs/pretty_elements/label/views.cljs)
-  ; The 'side-menu-label' component is based on the 'label' element.
-  ; For more information, check out the documentation of the 'label' element.
+  ; @note
+  ; For more information, check out the documentation of the ['label'](/pretty-ui/cljs/pretty-elements/api.html#label) element.
   ;
   ; @param (keyword)(opt) label-id
   ; @param (map) label-props

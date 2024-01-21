@@ -19,10 +19,6 @@
         [:i (icon.attributes/icon-body-attributes icon-id icon-props) icon]])
 
 (defn element
-  ; @info
-  ; XXX#0709
-  ; Some other items based on the 'icon' element and their documentations link here.
-  ;
   ; @param (keyword)(opt) icon-id
   ; @param (map) icon-props
   ; {:class (keyword or keywords in vector)(opt)

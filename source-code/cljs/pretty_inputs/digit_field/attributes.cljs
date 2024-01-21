@@ -10,15 +10,13 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ; {:style (map)(opt)}
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)
-  ;  :style (map)}
-  [_ {:keys [style] :as field-props}]
-  (-> {:class :pi-digit-field--body
-       :style style}
-      (pretty-build-kit/indent-attributes field-props)))
+  ; {:class (keyword or keywords in vector)}
+  [_ field-props]
+  (-> {:class :pi-digit-field--body}
+      (pretty-build-kit/indent-attributes field-props)
+      (pretty-build-kit/style-attributes  field-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -8,13 +8,12 @@
 (defn table-body-attributes
   ; @param (keyword) table-id
   ; @param (map) table-props
-  ; {:style (map)(opt)}
   ;
   ; @return (map)
-  ; {:style (map)}
-  [_ {:keys [style] :as table-props}]
-  (-> {:style style}
-      (pretty-build-kit/indent-attributes table-props)))
+  [_ table-props]
+  (-> {}
+      (pretty-build-kit/indent-attributes table-props)
+      (pretty-build-kit/style-attributes  table-props)))
 
 (defn table-attributes
   ; @param (keyword) table-id

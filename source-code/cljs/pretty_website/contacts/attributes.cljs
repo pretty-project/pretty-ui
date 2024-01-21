@@ -107,15 +107,13 @@
   ;
   ; @param (keyword) contacts-id
   ; @param (map) contacts-props
-  ; {:style (map)(opt)}
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)
-  ;  :style (map)}
-  [_ {:keys [style] :as contacts-props}]
-  (-> {:class :pw-contacts--body
-       :style style}
-      (pretty-build-kit/indent-attributes contacts-props)))
+  ; {:class (keyword or keywords in vector)}
+  [_ contacts-props]
+  (-> {:class :pw-contacts--body}
+      (pretty-build-kit/indent-attributes contacts-props)
+      (pretty-build-kit/style-attributes  contacts-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

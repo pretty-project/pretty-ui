@@ -56,7 +56,7 @@
   ; {}
   [select-id {:keys [options-placeholder] :as select-props}]
   (let [options (input.env/get-input-options select-id select-props)]
-       [:div {:class :pi-select--option-list :data-selectable false}
+       [:div {:class :pi-select--option-list :data-text-selectable false}
              (if (vector/not-empty? options)
                  [select-option-list-items select-id select-props]
                  [:div (select.attributes/select-options-placeholder-attributes select-id select-props)
@@ -81,7 +81,7 @@
   ; {:popup (map)(opt)
   ;   {:label (metamorphic-content)(opt)}}
   [select-id {{:keys [label]} :popup :as select-props}]
-  [:div {:class :pi-select--options--header :data-selectable false}
+  [:div {:class :pi-select--options--header :data-text-selectable false}
         [:div (select.attributes/select-options-label-attributes select-id select-props)
               (metamorphic-content/compose label)]
         [option-field select-id select-props]])
@@ -171,18 +171,13 @@
        [select-options select-id select-props]])
 
 (defn input
-  ; @info
-  ; XXX#0714 (source-code/cljs/pretty_elements/button/views.cljs)
-  ; The 'select' element is based on the 'button' element.
-  ; For more information, check out the documentation of the 'button' element.
+  ; @note
+  ; For more information, check out the documentation of the ['button'](/pretty-ui/cljs/pretty-elements/api.html#button) element.
   ;
   ; @param (keyword)(opt) select-id
   ; @param (map) select-props
   ; {:add-option-f (function)(opt)
   ;   Default: return
-  ;  :autoclear? (boolean)(opt)
-  ;   Removes the value stored in the application state (on the value-path)
-  ;   when the element unmounts.
   ;  :extendable? (boolean)(opt)
   ;  :helper (metamorphic-content)(opt)
   ;  :info-text (metamorphic-content)(opt)

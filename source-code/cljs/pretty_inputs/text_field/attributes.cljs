@@ -31,7 +31,7 @@
   [adornment-id adornment-props]
   ; @bug (#2105)
   ; An 'on-mouse-down' event fired anywhere outside the input triggers the 'on-blur' event of the field
-  ; that would cause the dissapearing of the surface unless the 'on-mouse-down' default event is prevented.
+  ; that would cause the dissapearing of the surface, unless the default 'on-mouse-down' event is prevented.
   (-> {:class         :pi-text-field--adornment
        :on-mouse-down dom/prevent-default}
       (pretty-build-kit/color-attributes        adornment-props)
@@ -67,12 +67,12 @@
   ; @return (map)
   ; {}
   [_ field-props]
-  (-> {:class               :pi-text-field--placeholder
-       :data-font-size      :xs
-       :data-letter-spacing :auto
-       :data-line-height    :text-block
-       :data-selectable     false
-       :data-text-overflow  :hidden}
+  (-> {:class                :pi-text-field--placeholder
+       :data-font-size       :xs
+       :data-letter-spacing  :auto
+       :data-line-height     :text-block
+       :data-text-overflow   :hidden
+       :data-text-selectable false}
       (pretty-build-kit/effect-attributes field-props)))
 
 ;; ----------------------------------------------------------------------------
@@ -97,18 +97,17 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ; {}
   ;
   ; @return (map)
   ; {}
-  [_ {:keys [style] :as field-props}]
+  [_ field-props]
   (-> {:class               :pi-text-field--input-container
-       :data-letter-spacing :auto
-       :style               style}
+       :data-letter-spacing :auto}
       (pretty-build-kit/border-attributes field-props)
       (pretty-build-kit/font-attributes   field-props)
       (pretty-build-kit/indent-attributes field-props)
-      (pretty-build-kit/marker-attributes field-props)))
+      (pretty-build-kit/marker-attributes field-props)
+      (pretty-build-kit/style-attributes  field-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -141,7 +140,9 @@
        :data-box-shadow-color :default
        :on-mouse-down         dom/prevent-default}
       (pretty-build-kit/border-attributes surface)
-      (pretty-build-kit/indent-attributes surface)))
+      (pretty-build-kit/indent-attributes surface)
+      ; The field surface inherits the font settings of the field as its default.
+      (pretty-build-kit/font-attributes field-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -190,8 +191,8 @@
            (pretty-build-kit/autofill-attributes     field-props)
            (pretty-build-kit/field-attributes        field-props)
            (pretty-build-kit/effect-attributes       field-props)
-           (pretty-build-kit/focus-attributes        field-props)
-           (pretty-build-kit/element-size-attributes field-props))))
+           (pretty-build-kit/element-size-attributes field-props)
+           (pretty-build-kit/focus-attributes        field-props))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

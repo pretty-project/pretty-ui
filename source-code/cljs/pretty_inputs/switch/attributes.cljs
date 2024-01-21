@@ -82,20 +82,15 @@
   ;
   ; @param (keyword) switch-id
   ; @param (map) switch-props
-  ; {:options-orientation (keyword)
-  ;  :style (map)(opt)}
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)
-  ;  :data-options-orientation (keyword)
-  ;  :data-selectable (boolean)
-  ;  :style (map)}
-  [switch-id {:keys [options-orientation style] :as switch-props}]
-  (-> {:class                    :pi-switch--body
-       :data-options-orientation options-orientation
-       :data-selectable          false
-       :style                    style}
-      (pretty-build-kit/indent-attributes switch-props)))
+  ; {:class (keyword or keywords in vector)}
+  [switch-id switch-props]
+  (-> {:class :pi-switch--body}
+      (pretty-build-kit/indent-attributes       switch-props)
+      (pretty-build-kit/orientation-attributes  switch-props)
+      (pretty-build-kit/style-attributes        switch-props)
+      (pretty-build-kit/unselectable-attributes switch-props)))
 
 (defn switch-attributes
   ; @ignore

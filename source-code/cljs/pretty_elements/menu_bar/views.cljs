@@ -50,10 +50,6 @@
                            (hiccup/put-with [:<>] menu-items f0)])]])
 
 (defn element
-  ; @info
-  ; XXX#0713
-  ; Some other items based on the 'menu-bar' element and their documentations link here.
-  ;
   ; @description
   ; You can set the default menu item properties by using the ':item-default'
   ; property or you can specify the properties for each menu item separately.

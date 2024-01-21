@@ -10,15 +10,15 @@
   ;
   ; @param (keyword) diagram-id
   ; @param (map) diagram-props
-  ; {:style (map)(opt)}
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  :style (map)}
-  [_ {:keys [style] :as diagram-props}]
+  [_ diagram-props]
   (-> {:class :pd-point-diagram--body
-       :style (merge style {:width "500px" :height "300px"})} ; TEMP
-      (pretty-build-kit/indent-attributes diagram-props)))
+       :style {:width "500px" :height "300px"}} ; TEMP
+      (pretty-build-kit/indent-attributes diagram-props)
+      (pretty-build-kit/style-attributes  diagram-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

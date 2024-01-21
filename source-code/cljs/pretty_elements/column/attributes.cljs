@@ -10,20 +10,19 @@
   ;
   ; @param (keyword) column-id
   ; @param (map) column-props
-  ; {}
   ;
   ; @return (map)
   ; {}
-  [_ {:keys [style] :as column-props}]
-  (-> {:class :pe-column--body
-       :style style}
+  [_ column-props]
+  (-> {:class :pe-column--body}
       (pretty-build-kit/border-attributes           column-props)
       (pretty-build-kit/color-attributes            column-props)
       (pretty-build-kit/column-attributes           column-props)
       (pretty-build-kit/element-max-size-attributes column-props)
       (pretty-build-kit/element-min-size-attributes column-props)
       (pretty-build-kit/element-size-attributes     column-props)
-      (pretty-build-kit/indent-attributes           column-props)))
+      (pretty-build-kit/indent-attributes           column-props)
+      (pretty-build-kit/style-attributes            column-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -77,8 +77,8 @@
   ; @param (map) input-props
   ;
   ; @return (*)
-  [input-id _])
-  ;(get-input-state input-id :internal-value))
+  [input-id _]
+  (get-input-state input-id :internal-value))
 
 (defn get-input-external-value
   ; @ignore

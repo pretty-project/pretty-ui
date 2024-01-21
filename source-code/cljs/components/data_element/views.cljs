@@ -24,8 +24,7 @@
                                     :helper           helper
                                     :horizontal-align :left
                                     :info-text        info-text
-                                    :marked?          marked?
-                                    :selectable?      false}]))
+                                    :marked?          marked?}]))
 
 (defn- data-element-value
   ; @param (keyword) element-id
@@ -36,14 +35,14 @@
   ;  :placeholder (metamorphic-content)(opt)}
   ; @param (metamorphic-content) value
   [_ {:keys [copyable? disabled? font-size placeholder]} value]
-  [pretty-elements/text {:copyable?   copyable?
-                         :color       :muted
-                         :content     value
-                         :disabled?   disabled?
-                         :font-size   font-size
-                         :line-height :text-block
-                         :placeholder placeholder
-                         :selectable? true}])
+  [pretty-elements/text {:copyable?        copyable?
+                         :color            :muted
+                         :content          value
+                         :disabled?        disabled?
+                         :font-size        font-size
+                         :line-height      :text-block
+                         :placeholder      placeholder
+                         :text-selectable? true}])
 
 (defn- data-element-values
   ; @param (keyword) element-id

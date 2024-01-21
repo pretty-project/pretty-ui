@@ -9,10 +9,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn component
-  ; @info
-  ; XXX#0714 (source-code/cljs/pretty_elements/button/views.cljs)
-  ; The 'content-swapper-button' component is based on the 'button' element.
-  ; For more information, check out the documentation of the 'button' element.
+  ; @note
+  ; For more information, check out the documentation of the ['button'](/pretty-ui/cljs/pretty-elements/api.html#button) element.
   ;
   ; @param (keyword)(opt) button-id
   ; @param (map) button-props

@@ -73,7 +73,7 @@
             :data-checked option-checked?
             :disabled     disabled?}
            (pretty-build-kit/effect-attributes checkbox-props)
-           (pretty-build-kit/mouse-event-attributes {:on-click on-click-f :on-mouse-up dom/blur-active-element!}))))
+           (pretty-build-kit/mouse-event-attributes {:on-click-f on-click-f :on-mouse-up-f dom/blur-active-element!}))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -83,24 +83,21 @@
   ;
   ; @param (keyword) checkbox-id
   ; @param (map) checkbox-props
-  ; {:options-orientation (keyword)(opt)
-  ;  :style (map)(opt)}
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
-  ;  :data-options-orientation (keyword)
-  ;  :data-selectable (keyword)
-  ;  :style (map)}
-  [checkbox-id {:keys [options-orientation style] :as checkbox-props}]
+  ;  :on-blur (function)
+  ;  :on-focus (function)}
+  [checkbox-id checkbox-props]
   (let [on-blur-f  (fn [_] (core.side-effects/input-left    checkbox-id checkbox-props))
         on-focus-f (fn [_] (core.side-effects/input-focused checkbox-id checkbox-props))]
-       (-> {:class                    :pi-checkbox--body
-            :data-options-orientation options-orientation
-            :data-selectable          false
-            :on-blur                  on-blur-f
-            :on-focus                 on-focus-f
-            :style                    style}
-           (pretty-build-kit/indent-attributes checkbox-props))))
+       (-> {:class    :pi-checkbox--body
+            :on-blur  on-blur-f
+            :on-focus on-focus-f}
+           (pretty-build-kit/indent-attributes       checkbox-props)
+           (pretty-build-kit/orientation-attributes  checkbox-props)
+           (pretty-build-kit/unselectable-attributes checkbox-props)
+           (pretty-build-kit/style-attributes        checkbox-props))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

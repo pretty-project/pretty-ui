@@ -19,7 +19,6 @@
               [pretty-inputs.multi-field.effects]
               [pretty-inputs.multi-field.events]
               [pretty-inputs.multi-field.subs]
-              [pretty-inputs.plain-field.side-effects]
               [pretty-inputs.radio-button.effects]
               [pretty-inputs.radio-button.events]
               [pretty-inputs.radio-button.subs]
@@ -44,7 +43,6 @@
               [pretty-inputs.multiline-field.views :as multiline-field.views]
               [pretty-inputs.number-field.views    :as number-field.views]
               [pretty-inputs.password-field.views  :as password-field.views]
-              [pretty-inputs.plain-field.views     :as plain-field.views]
               [pretty-inputs.radio-button.views    :as radio-button.views]
               [pretty-inputs.search-field.views    :as search-field.views]
               [pretty-inputs.select.views          :as select.views]
@@ -68,7 +66,6 @@
 (def multiline-field multiline-field.views/input)
 (def number-field    number-field.views/input)
 (def password-field  password-field.views/input)
-(def plain-field     plain-field.views/input)
 (def radio-button    radio-button.views/input)
 (def search-field    search-field.views/input)
 (def select          select.views/input)

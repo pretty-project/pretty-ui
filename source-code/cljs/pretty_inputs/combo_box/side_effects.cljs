@@ -4,7 +4,7 @@
               [keypress-handler.api                   :as keypress-handler]
               [pretty-inputs.combo-box.env            :as combo-box.env]
               [pretty-inputs.combo-box.state          :as combo-box.state]
-              [pretty-inputs.plain-field.side-effects :as plain-field.side-effects]
+              [pretty-inputs.text-field.side-effects :as text-field.side-effects]
               [re-frame.api                           :as r]))
 
 ;; ----------------------------------------------------------------------------
@@ -51,7 +51,7 @@
   ; @param (*) selected-option
   [box-id {:keys [option-label-f] :as box-props} selected-option]
   (let [option-label (option-label-f selected-option)]))
-       ;(plain-field.side-effects/set-field-content! box-id option-label)))
+       ;(text-field.side-effects/set-field-content! box-id option-label)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

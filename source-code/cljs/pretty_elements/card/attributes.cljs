@@ -15,10 +15,9 @@
   ;
   ; @return (map)
   ; {}
-  [card-id {:keys [disabled? style] :as card-props}]
+  [card-id {:keys [disabled?] :as card-props}]
   (-> {:class    :pe-card--body
-       :disabled disabled?
-       :style    style}
+       :disabled disabled?}
       (pretty-build-kit/badge-attributes            card-props)
       (pretty-build-kit/border-attributes           card-props)
       (pretty-build-kit/color-attributes            card-props)
@@ -30,7 +29,8 @@
       (pretty-build-kit/element-size-attributes     card-props)
       (pretty-build-kit/indent-attributes           card-props)
       (pretty-build-kit/link-attributes             card-props)
-      (pretty-build-kit/mouse-event-attributes      card-props)))
+      (pretty-build-kit/mouse-event-attributes      card-props)
+      (pretty-build-kit/style-attributes            card-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

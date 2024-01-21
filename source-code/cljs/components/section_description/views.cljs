@@ -8,10 +8,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn component
-  ; @info
-  ; XXX#0439 (source-code/cljs/pretty_elements/label/views.cljs)
-  ; The 'section-description' component is based on the 'label' element.
-  ; For more information, check out the documentation of the 'label' element.
+  ; @note
+  ; For more information, check out the documentation of the ['label'](/pretty-ui/cljs/pretty-elements/api.html#label) element.
   ;
   ; @param (keyword)(opt) description-id
   ; @param (map) description-props
@@ -33,7 +31,7 @@
    [component (random/generate-keyword) description-props])
 
   ([description-id description-props]
-   ; @note (tutorials#parametering)  
+   ; @note (tutorials#parametering)
    (fn [_ description-props]
        (let [description-props (section-description.prototypes/description-props-prototype description-props)]
             [pretty-elements/label description-id description-props]))))

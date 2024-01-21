@@ -8,17 +8,16 @@
 (defn header-body-attributes
   ; @param (keyword) header-id
   ; @param (map) header-props
-  ; {:style (map)(opt)}
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)
-  ;  :style (map)}
-  [_ {:keys [style] :as header-props}]
-  (-> {:class :c-compact-list-header--body
-       :style style}
+  ; {:class (keyword or keywords in vector)}
+  [_ header-props]
+  (-> {:class :c-compact-list-header--body}
       (pretty-build-kit/border-attributes header-props)
       (pretty-build-kit/color-attributes  header-props)
-      (pretty-build-kit/indent-attributes header-props)))
+      (pretty-build-kit/indent-attributes header-props)
+      (pretty-build-kit/style-attributes  header-props)))
+
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

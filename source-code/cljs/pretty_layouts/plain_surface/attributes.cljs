@@ -10,15 +10,13 @@
   ;
   ; @param (keyword) surface-id
   ; @param (map) surface-props
-  ; {:content-orientation (keyword)
-  ;  :style (map)(opt)}
+  ; {:content-orientation (keyword)}
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
-  ;  :data-content-orientation (keyword)
-  ;  :style (map)}
-  [_ {:keys [content-orientation style] :as surface-props}]
+  ;  :data-content-orientation (keyword)}
+  [_ {:keys [content-orientation] :as surface-props}]
   (-> {:class            :pl-plain-surface--body
-       :data-orientation content-orientation
-       :style            style}
-      (pretty-build-kit/color-attributes surface-props)))
+       :data-orientation content-orientation}
+      (pretty-build-kit/color-attributes surface-props)
+      (pretty-build-kit/style-attributes surface-props)))

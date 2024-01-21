@@ -10,19 +10,16 @@
   ;
   ; @param (keyword) separator-id
   ; @param (map) separator-props
-  ; {:style (map)(opt)}
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)
-  ;  :data-selectable (boolean)
-  ;  :style (map)}
-  [_ {:keys [style] :as separator-props}]
-  (-> {:class           :pe-horizontal-separator--body
-       :data-selectable false
-       :style           style}
+  ; {:class (keyword or keywords in vector)}
+  [_ separator-props]
+  (-> {:class :pe-horizontal-separator--body}
       (pretty-build-kit/color-attributes        separator-props)
       (pretty-build-kit/indent-attributes       separator-props)
-      (pretty-build-kit/element-size-attributes separator-props)))
+      (pretty-build-kit/element-size-attributes separator-props)
+      (pretty-build-kit/style-attributes        separator-props)
+      (pretty-build-kit/unselectable-attributes separator-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

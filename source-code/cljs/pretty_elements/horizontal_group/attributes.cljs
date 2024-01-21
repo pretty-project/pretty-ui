@@ -10,16 +10,14 @@
   ;
   ; @param (keyword) group-id
   ; @param (map) group-props
-  ; {:style (map)(opt)}
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)
-  ;  :style (map)}
-  [_ {:keys [style] :as group-props}]
-  (-> {:class :pe-horizontal-group--body
-       :style style}
+  ; {:class (keyword or keywords in vector)}
+  [_ group-props]
+  (-> {:class :pe-horizontal-group--body}
       (pretty-build-kit/indent-attributes       group-props)
-      (pretty-build-kit/element-size-attributes group-props)))
+      (pretty-build-kit/element-size-attributes group-props)
+      (pretty-build-kit/style-attributes        group-props)))
 
 (defn group-attributes
   ; @ignore

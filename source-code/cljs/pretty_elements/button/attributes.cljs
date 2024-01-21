@@ -42,23 +42,20 @@
   ; @param (map) button-props
   ; {:disabled? (boolean)(opt)
   ;  :gap (keyword, px or string)(opt)
-  ;  :horizontal-align (keyword)
-  ;  :style (map)(opt)}
+  ;  :horizontal-align (keyword)}
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  :data-column-gap (keyword)
-  ;  :data-selectable (boolean)
-  ;  :disabled (boolean)
-  ;  :style (map)}
-  [_ {:keys [disabled? gap horizontal-align style] :as button-props}]
+  ;  :data-letter-spacing (keyword)
+  ;  :data-row-horizontal-align (keyword)
+  ;  :disabled (boolean)}
+  [_ {:keys [disabled? gap horizontal-align] :as button-props}]
   (-> {:class                     :pe-button--body
        :data-column-gap           gap
        :data-letter-spacing       :auto
        :data-row-horizontal-align horizontal-align
-       :data-selectable           false
-       :disabled                  disabled?
-       :style                     style}
+       :disabled                  disabled?}
       (pretty-build-kit/badge-attributes        button-props)
       (pretty-build-kit/border-attributes       button-props)
       (pretty-build-kit/color-attributes        button-props)
@@ -72,7 +69,9 @@
       (pretty-build-kit/marker-attributes       button-props)
       (pretty-build-kit/mouse-event-attributes  button-props)
       (pretty-build-kit/progress-attributes     button-props)
-      (pretty-build-kit/tooltip-attributes      button-props)))
+      (pretty-build-kit/style-attributes        button-props)
+      (pretty-build-kit/tooltip-attributes      button-props)
+      (pretty-build-kit/unselectable-attributes button-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

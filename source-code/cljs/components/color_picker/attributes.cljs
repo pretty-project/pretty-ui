@@ -15,13 +15,13 @@
   ; @return (map)
   ; {}
   [picker-id {:keys [disabled? on-select value-path]}]
-  {:class               :c-color-picker--placeholder
-   :data-color          :default
-   :data-font-size      :xs
-   :data-font-weight    :medium
-   :data-letter-spacing :auto
-   :data-line-height    :text-block
-   :data-selectable     false})
+  {:class                :c-color-picker--placeholder
+   :data-color           :default
+   :data-font-size       :xs
+   :data-font-weight     :medium
+   :data-letter-spacing  :auto
+   :data-line-height     :text-block
+   :data-text-selectable false})
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -50,22 +50,20 @@
   ; {:color-stamp (map)
   ;   {:gap (keyword, px or string)(opt)}
   ;  :on-select (Re-Frame metamorphic-event)(opt)
-  ;  :style (map)(opt)
   ;  :value-path (Re-Frame path vector)}
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)
-  ;  :style (map)}
-  [picker-id {{:keys [gap]} :color-stamp :keys [on-select style value-path] :as picker-props}]
+  ; {:class (keyword or keywords in vector)}
+  [picker-id {{:keys [gap]} :color-stamp :keys [on-select value-path] :as picker-props}]
   (let [selector-props {:on-select on-select :value-path value-path}
         on-click       [:pretty-elements.color-selector/render-selector! picker-id selector-props]]
        (-> {:class           :c-color-picker--body
             :data-column-gap gap
             :on-click        #(r/dispatch on-click)
-            :on-mouse-up     #(dom/blur-active-element!)
-            :style           style}
+            :on-mouse-up     #(dom/blur-active-element!)}
            (pretty-build-kit/effect-attributes picker-props)
-           (pretty-build-kit/indent-attributes picker-props))))
+           (pretty-build-kit/indent-attributes picker-props)
+           (pretty-build-kit/style-attributes  picker-props))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

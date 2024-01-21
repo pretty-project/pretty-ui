@@ -10,20 +10,19 @@
   ;
   ; @param (keyword) header-id
   ; @param (map) header-props
-  ; {:horizontal-align (keyword)
-  ;  :style (map)(opt)}
+  ; {:horizontal-align (keyword)}
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  :data-row-horizontal-align (keyword)
-  ;  :data-orientation (keyword)
-  ;  :style (map)}
-  [_ {:keys [horizontal-align style] :as header-props}]
+  ;  :data-orientation (keyword)}
+  [_ {:keys [horizontal-align] :as header-props}]
   (-> {:class                     :c-vector-items-header--body
        :data-orientation          :horizontal
-       :data-row-horizontal-align horizontal-align
-       :style                     style}
-      (pretty-build-kit/indent-attributes header-props)))
+       :data-row-horizontal-align horizontal-align}
+      (pretty-build-kit/indent-attributes header-props)
+      (pretty-build-kit/style-attributes  header-props)))
+
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

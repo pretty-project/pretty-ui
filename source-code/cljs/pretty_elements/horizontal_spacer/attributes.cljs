@@ -10,14 +10,12 @@
   ;
   ; @param (keyword) spacer-id
   ; @param (map) spacer-props
-  ; {:style (map)(opt)}
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
-  ;  :style (map)}
-  [_ {:keys [style] :as spacer-props}]
-  (-> {:class :pe-horizontal-spacer
-       :style style}
+  [_ spacer-props]
+  (-> {:class :pe-horizontal-spacer}
       (pretty-build-kit/block-size-attributes spacer-props)
       (pretty-build-kit/class-attributes      spacer-props)
-      (pretty-build-kit/state-attributes      spacer-props)))
+      (pretty-build-kit/state-attributes      spacer-props)
+      (pretty-build-kit/style-attributes      spacer-props)))

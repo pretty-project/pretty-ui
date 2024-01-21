@@ -27,14 +27,8 @@
                                   [metamorphic-content/compose surface-content]]])]])
 
 (defn element
-  ; @info
-  ; XXX#0715
-  ; Some other items based on the 'dropdown-menu' component and their documentations link here.
-  ;
-  ; @info
-  ; XXX#0713 (source-code/cljs/pretty_elements/menu_bar/views.cljs)
-  ; The 'dropdown-menu' element is based on the 'menu-bar' element.
-  ; For more information, check out the documentation of the 'menu-bar' element.
+  ; @note
+  ; For more information, check out the documentation of the ['menu-bar'](/pretty-ui/cljs/pretty-elements/api.html#menu-bar) element.
   ;
   ; @param (keyword)(opt) menu-id
   ; @param (map) menu-props

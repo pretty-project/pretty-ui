@@ -707,6 +707,17 @@
 ;
 ;
 ;
+; @title :orientation
+;
+; @code Usage
+; [pretty-elements/menu-bar {:orientation (keyword)}]
+; [pretty-elements/menu-bar {:orientation :horizontal}]
+;
+; @code Predefined values
+; :horizontal, :vertical
+;
+;
+;
 ; @title :outdent
 ;
 ; @code Usage

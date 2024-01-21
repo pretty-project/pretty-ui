@@ -61,22 +61,19 @@
   ;
   ; @param (keyword) chip-id
   ; @param (map) chip-props
-  ; {:style (map)(opt)}
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)
-  ;  :data-selectable (boolean)
-  ;  :style (map)}
-  [chip-id {:keys [style] :as chip-props}]
-  (-> {:class             :pe-chip--body
-       :data-selectable   false
-       :style             style}
+  ; {:class (keyword or keywords in vector)}
+  [chip-id chip-props]
+  (-> {:class :pe-chip--body}
       (pretty-build-kit/border-attributes           chip-props)
       (pretty-build-kit/color-attributes            chip-props)
       (pretty-build-kit/effect-attributes           chip-props)
       (pretty-build-kit/element-min-size-attributes chip-props)
       (pretty-build-kit/element-size-attributes     chip-props)
-      (pretty-build-kit/indent-attributes           chip-props)))
+      (pretty-build-kit/indent-attributes           chip-props)
+      (pretty-build-kit/style-attributes            chip-props)
+      (pretty-build-kit/unselectable-attributes     chip-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

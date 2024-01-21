@@ -51,16 +51,14 @@
   ;
   ; @param (keyword) diagram-id
   ; @param (map) diagram-props
-  ; {:style (map)(opt)}
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)
-  ;  :style (map)}
-  [_ {:keys [style] :as diagram-props}]
-  (-> {:class :pd-line-diagram--body
-       :style style}
+  ; {:class (keyword or keywords in vector)}
+  [_ diagram-props]
+  (-> {:class :pd-line-diagram--body}
       (pretty-build-kit/indent-attributes       diagram-props)
-      (pretty-build-kit/element-size-attributes diagram-props)))
+      (pretty-build-kit/element-size-attributes diagram-props)
+      (pretty-build-kit/style-attributes        diagram-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

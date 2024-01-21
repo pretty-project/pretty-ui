@@ -98,9 +98,7 @@
   ;  :option-value-f (function)(opt)
   ;   Default: return
   ;  :options (vector)(opt)
-  ;  :options-orientation (keyword)(opt)
-  ;   :horizontal, :vertical
-  ;   Default: :vertical
+  ;  :orientation (keyword)(opt)
   ;  :options-path (Re-Frame path vector)(opt)
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}

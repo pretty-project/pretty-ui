@@ -1,6 +1,7 @@
 
 (ns pretty-layouts.plain-popup.attributes
-    (:require [re-frame.api :as r]))
+    (:require [re-frame.api :as r]
+              [pretty-build-kit.api :as pretty-build-kit]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -28,6 +29,6 @@
   ;
   ; @return (map)
   ; {}
-  [_ {:keys [style]}]
-  {:class :pl-plain-popup
-   :style style})
+  [_ popup-props]
+  (-> {:class :pl-plain-popup}
+      (pretty-build-kit/style-attributes popup-props)))

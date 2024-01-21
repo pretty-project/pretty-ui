@@ -117,10 +117,6 @@
         [label-helper                      label-id label-props]])
 
 (defn element
-  ; @info
-  ; XXX#0721
-  ; Some other items based on the 'label' element and their documentations link here.
-  ;
   ; @param (keyword)(opt) label-id
   ; @param (map) label-props
   ; {:border-color (keyword or string)(opt)
@@ -170,8 +166,6 @@
   ;  :placeholder (metamorphic-content)(opt)
   ;   Default: "\u00A0"
   ;  :preset (keyword)(opt)
-  ;  :selectable? (boolean)(opt)
-  ;   Default: false
   ;  :style (map)(opt)
   ;  :text-color (keyword or string)(opt)
   ;   Default: :inherit
@@ -179,6 +173,7 @@
   ;   :normal, :reversed
   ;   Default :normal
   ;  :text-overflow (keyword)(opt)
+  ;  :text-selectable? (boolean)(opt)
   ;  :text-transform (keyword)(opt)
   ;  :tooltip-content (metamorphic-content)(opt)
   ;  :tooltip-position (keyword)(opt)

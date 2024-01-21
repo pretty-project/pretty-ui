@@ -10,7 +10,7 @@
               [pretty-presets.api                      :as pretty-presets]
               [re-frame.api                            :as r]
               [reagent.api                             :as reagent]))
- 
+
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -54,7 +54,7 @@
   ; {:popup (map)(opt)
   ;   {:label (metamorphic-content)(opt)}}
   [selector-id {{:keys [label]} :popup :as selector-props}]
-  [:div {:class :pi-color-selector--options--header :data-selectable false}
+  [:div {:class :pi-color-selector--options--header :data-text-selectable false}
         (if label [:div (color-selector.attributes/color-selector-options-label-attributes selector-id selector-props)
                         (metamorphic-content/compose label)])])
 
@@ -86,14 +86,8 @@
        [color-selector-options selector-id selector-props]])
 
 (defn input
-  ; @info
-  ; XXX#0714 (source-code/cljs/pretty_elements/button/views.cljs)
-  ; The 'color-selector' element is based on the 'button' element.
-  ; For more information, check out the documentation of the 'button' element.
-  ;
-  ; @info
-  ; XXX#0709
-  ; Some other items based on the 'color-selector' element and their documentations link here.
+  ; @note
+  ; For more information, check out the documentation of the ['button'](/pretty-ui/cljs/pretty-elements/api.html#button) element.
   ;
   ; @param (keyword)(opt) selector-id
   ; @param (map) selector-props

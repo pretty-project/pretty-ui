@@ -12,9 +12,4 @@
 ; @ignore
 ;
 ; @constant (ms)
-(def AUTOCLEAR-VALUE-DELAY 500)
-
-; @ignore
-;
-; @constant (ms)
 (def ON-SELECT-DELAY 350)

@@ -16,14 +16,12 @@
   ;  :font-weight (keyword or integer)
   ;  :line-height (keyword, px or string)
   ;  :placeholder (metamorphic-content)
-  ;  :selectable? (boolean)
   ;  :text-overflow (keyword)}
   [text-props]
   ; BUG#9811 (source-code/cljs/pretty_elements/label/views.cljs)
-  (merge {:font-size        :s
-          :font-weight      :normal
-          :line-height      :text-block
-          :placeholder      "\u00A0"
-          :selectable?      true
-          :text-overflow    :wrap}
+  (merge {:font-size     :s
+          :font-weight   :normal
+          :line-height   :text-block
+          :placeholder   "\u00A0"
+          :text-overflow :wrap}
          (-> text-props)))

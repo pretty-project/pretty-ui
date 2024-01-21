@@ -64,17 +64,16 @@
   ;  :placeholder (metamorphic-content)(opt)
   ;   Default: "\u00A0"
   ;  :preset (keyword)(opt)
-  ;  :selectable? (boolean)(opt)
-  ;   Default: true
   ;  :style (map)(opt)
+  ;  :text-align (keyword)(opt)
   ;  :text-color (keyword or string)(opt)
   ;   Default: :default
   ;  :text-direction (keyword)(opt)
   ;   :normal, :reversed
   ;   Default :normal
-  ;  :text-align (keyword)(opt)
   ;  :text-overflow (keyword)(opt)
   ;   Default: :wrap
+  ;  :text-selectable? (boolean)(opt)
   ;  :vertical-align (keyword)(opt)
   ;  :width (keyword, px or string)(opt)}
   ;

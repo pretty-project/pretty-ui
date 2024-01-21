@@ -104,16 +104,15 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  ; {}
   ;
   ; @return (map)
   ; {}
-  [_ {:keys [options-orientation style] :as button-props}]
-  (-> {:class                    :pi-radio-button--body
-       :data-options-orientation options-orientation
-       :data-selectable          false
-       :style                    style}
-      (pretty-build-kit/indent-attributes button-props)))
+  [_ button-props]
+  (-> {:class :pi-radio-button--body}
+      (pretty-build-kit/indent-attributes       button-props)
+      (pretty-build-kit/orientation-attributes  button-props)
+      (pretty-build-kit/style-attributes        button-props)
+      (pretty-build-kit/unselectable-attributes button-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

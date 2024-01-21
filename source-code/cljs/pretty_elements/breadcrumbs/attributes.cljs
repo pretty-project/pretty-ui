@@ -18,7 +18,6 @@
   ;  :data-font-weight (keyword)
   ;  :data-letter-spacing (keyword)
   ;  :data-line-height (keyword)
-  ;  :data-selectable (boolean)
   ;  :data-text-overflow (keyword)}
   [_ _ {:keys [disabled?] :as crumb-props}]
   (-> {:class               :pe-breadcrumbs--crumb
@@ -26,14 +25,14 @@
        :data-font-weight    :semi-bold
        :data-letter-spacing :auto
        :data-line-height    :text-block
-       :data-selectable     false
        :data-text-overflow  :ellipsis
        :disabled            disabled?}
-      (pretty-build-kit/color-attributes  crumb-props)
-      (pretty-build-kit/cursor-attributes crumb-props)
-      (pretty-build-kit/effect-attributes crumb-props)
-      (pretty-build-kit/link-attributes   crumb-props)
-      (pretty-build-kit/state-attributes  crumb-props)))
+      (pretty-build-kit/color-attributes        crumb-props)
+      (pretty-build-kit/cursor-attributes       crumb-props)
+      (pretty-build-kit/effect-attributes       crumb-props)
+      (pretty-build-kit/link-attributes         crumb-props)
+      (pretty-build-kit/state-attributes        crumb-props)
+      (pretty-build-kit/unselectable-attributes crumb-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -43,19 +42,17 @@
   ;
   ; @param (keyword) breadcrumbs-id
   ; @param (map) breadcrumbs-props
-  ; {:style (map)(opt)}
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  :data-column-gap (keyword)
-  ;  :data-scroll-axis (boolean)
-  ;  :style (map)}
-  [_ {:keys [style] :as breadcrumbs-props}]
+  ;  :data-scroll-axis (boolean)}
+  [_ breadcrumbs-props]
   (-> {:class            :pe-breadcrumbs--body
        :data-column-gap  :xs
-       :data-scroll-axis :x
-       :style            style}
-      (pretty-build-kit/indent-attributes breadcrumbs-props)))
+       :data-scroll-axis :x}
+      (pretty-build-kit/indent-attributes breadcrumbs-props)
+      (pretty-build-kit/style-attributes  breadcrumbs-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
