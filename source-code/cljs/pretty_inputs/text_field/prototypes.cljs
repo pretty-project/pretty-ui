@@ -1,11 +1,12 @@
 
 (ns pretty-inputs.text-field.prototypes
     (:require [fruits.loop.api              :refer [<-walk]]
-              [fruits.noop.api              :refer [return]]
               [fruits.vector.api            :as vector]
               [pretty-build-kit.api         :as pretty-build-kit]
               [pretty-inputs.input.utils    :as input.utils]
-              [pretty-inputs.text-field.env :as text-field.env]))
+              [pretty-inputs.text-field.adornments :as text-field.adornments]
+              [metamorphic-content.api :as metamorphic-content]
+              [activity-listener.api :as activity-listener]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -13,29 +14,31 @@
 (defn adornment-props-prototype
   ; @ignore
   ;
-  ; @param (map) field-props
+  ; @param (keyword) adornment-id
   ; @param (map) adornment-props
   ; {:icon (keyword)(opt)
   ;  :label (metamorphic-content)(opt)
-  ;  :on-click (function or Re-Frame metamorphic-event)(opt)}
+  ;  :on-click-f (function)(opt)
+  ;  :tooltip-content (metamorphic-content)(opt)}
   ;
   ; @return (map)
   ; {:click-effect (keyword)
   ;  :icon-family (keyword)
-  ;  :tab-indexed? (boolean)
-  ;  :text-color (keyword or string)}
-  [field-props {:keys [icon label on-click timeout] :as adornment-props}]
-  (merge (if icon     {:icon-family    :material-symbols-outlined
-                       :icon-size      :s})
-         (if label    {:font-size      :xxs
-                       :letter-spacing :auto
-                       :line-height    :text-block})
-         (if on-click {:click-effect   :opacity})
-         {:tab-indexed? true
-          :text-color   :default}
+  ;  :text-color (keyword or string)
+  ;  :tooltip-content (string)
+  ;  :tooltip-position (keyword)}
+  [adornment-id {:keys [icon label on-click-f timeout tooltip-content] :as adornment-props}]
+  (merge {:text-color :default}
+         (if icon       {:icon-family    :material-symbols-outlined
+                         :icon-size      :s})
+         (if label      {:font-size      :xxs
+                         :letter-spacing :auto
+                         :line-height    :text-block})
+         (if on-click-f      {:click-effect   :opacity})
+         (if tooltip-content {:tooltip-position :left})
          (-> adornment-props)
-         ; Inherits the reveal effect from the field-props into the adornment-props
-         (select-keys field-props [:reveal-effect])))
+         (if tooltip-content {:tooltip-content (metamorphic-content/compose tooltip-content)})
+         (if timeout {:on-click-f #(activity-listener/start-countdown! adornment-id {:step 1000 :timeout timeout :on-start-f on-click-f})})))
 
 (defn end-adornments-prototype
   ; @ignore
@@ -47,16 +50,12 @@
   ;
   ; @return (maps in vector)
   [field-id {:keys [emptiable? end-adornments] :as field-props}]
-  ; XXX#5100
-  ; The 'empty-field-adornment-props' map value changes every time when the field
-  ; content get change from an empty string to a nonempty string (or vica versa),
-  ; because it contains the ':disabled?' value that depends on whether the field
-  ; content is an empty string.
-  ; Therefore, every component that calls this 'end-adornments-prototype' function
-  ; rerenders when the field value changes between empty and nonempty strings.
-  (if emptiable? (let [empty-field-adornment-props (text-field.env/empty-field-adornment-props field-id field-props)]
-                      (vector/conj-item end-adornments empty-field-adornment-props))
+  (if emptiable? (let [empty-field-adornment (text-field.adornments/empty-field-adornment field-id field-props)]
+                      (vector/conj-item end-adornments empty-field-adornment))
                  (-> end-adornments)))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn field-props-prototype
   ; @ignore
@@ -69,8 +68,6 @@
   ; @return (map)
   ; {:border-position (keyword)
   ;  :border-width (keyword, px or string)
-  ;  :field-content-f (function)
-  ;  :field-value-f (function)
   ;  :font-size (keyword, px or string)
   ;  :font-weight (keyword or integer)
   ;  :form-id (keyword)
@@ -82,9 +79,7 @@
   ; XXX#5068
   ; By using the '<-walk' function the ':on-blur', ':on-type-ended' and ':on-focus'
   ; events take the 'field-props' map AFTER it gets merged with the default values!
-  (<-walk {:field-content-f return
-           :field-value-f   return
-           :font-size       :s
+  (<-walk {:font-size       :s
            :focus-id        field-id
            :form-id         field-id
            :font-weight     :normal

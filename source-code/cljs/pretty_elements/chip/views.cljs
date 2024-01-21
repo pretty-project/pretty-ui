@@ -15,9 +15,9 @@
   ; @param (keyword) chip-id
   ; @param (map) chip-props
   ; {}
-  [chip-id {:keys [content href icon icon-family on-click placeholder primary-button] :as chip-props}]
+  [chip-id {:keys [content href icon icon-family on-click-f placeholder primary-button] :as chip-props}]
   [:div (chip.attributes/chip-attributes chip-id chip-props)
-        [(cond href :a on-click :button :else :div)
+        [(cond href :a on-click-f :button :else :div)
          (chip.attributes/chip-body-attributes chip-id chip-props)
          (if-let [{:keys [icon icon-family]} primary-button]
                  [:button (chip.attributes/primary-button-attributes chip-id chip-props)
@@ -35,7 +35,7 @@
   ;   {:all, :tl, :tr, :br, :bl (keyword, px or string)(opt)}
   ;  :class (keyword or keywords in vector)(opt)
   ;  :click-effect (keyword)(opt)
-  ;   Default: :opacity
+  ;   Default: :opacity (if 'on-click-f' is provided)
   ;  :content (metamorphic-content)(opt)
   ;  :content-value-f (function)(opt)
   ;   Default: return
@@ -53,8 +53,10 @@
   ;  :indent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :min-width (keyword, px or string)(opt)
-  ;  :on-click (function or Re-Frame metamorphic-event)(opt)
+  ;  :on-click-f (function)(opt)
   ;   TODO Makes the chip clickable
+  ;  :on-mouse-over-f (function)(opt)
+  ;  :on-right-click-f (function)(opt)
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :placeholder (metamorphic-content)(opt)
@@ -64,9 +66,9 @@
   ;     Default: :opacity
   ;    :hover-effect (keyword)(opt)
   ;    :icon (keyword)
-  ;    :icon-family (keyword)(opt)
+  ;    :icon-family-f (keyword)(opt)
   ;     Default: :material-symbols-outlined
-  ;    :on-click (function or Re-Frame metamorphic-event)}
+  ;    :on-click-f (function)}
   ;  :style (map)(opt)
   ;  :target (keyword)(opt)
   ;   Makes the chip clickable

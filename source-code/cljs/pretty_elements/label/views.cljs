@@ -163,7 +163,7 @@
   ;  :marker-position (keyword)(opt)
   ;  :min-height (keyword, px or string)(opt)
   ;  :min-width (keyword, px or string)(opt)
-  ;  :on-copy (Re-Frame metamorphic-event)(opt)
+  ;  :on-copy-f (function)(opt)
   ;   Takes the label content as parameter.
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}

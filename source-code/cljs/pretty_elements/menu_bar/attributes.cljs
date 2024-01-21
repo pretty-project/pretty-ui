@@ -1,7 +1,6 @@
 
 (ns pretty-elements.menu-bar.attributes
-    (:require [dom.api              :as dom]
-              [pretty-build-kit.api :as pretty-build-kit]))
+    (:require [pretty-build-kit.api :as pretty-build-kit]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -45,35 +44,23 @@
   ; @param (keyword) bar-id
   ; @param (map) bar-props
   ; @param (map) item-props
-  ; {:active? (boolean)(opt)
-  ;  :disabled? (boolean)(opt)
-  ;  :hover-effect (keyword)(opt)
-  ;  :on-click (function or Re-Frame metamorphic-event)(opt)
-  ;  :on-mouse-over (function or Re-Frame metamorphic-event)(opt)}
+  ; {:disabled? (boolean)(opt)}
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
-  ;  :data-click-effect (keyword)
-  ;  :data-disabled (boolean)
-  ;  :on-click (function)
-  ;  :on-mouse-over (function)
-  ;  :on-mouse-up (function)}
-  [_ _ {:keys [active? disabled? hover-effect on-click on-mouse-over] :as item-props}]
-  (-> (if disabled? (cond-> {:class             :pe-menu-bar--menu-item-body
-                             :data-disabled     true
-                             :on-mouse-up       #(dom/blur-active-element!)})
-                    (cond-> {:class             :pe-menu-bar--menu-item-body
-                             :data-click-effect :opacity
-                             :data-hover-effect hover-effect
-                             :on-mouse-up       #(dom/blur-active-element!)}
-                            (some? on-click)      (assoc :on-click      #(pretty-build-kit/dispatch-event-handler! on-click))
-                            (some? on-mouse-over) (assoc :on-mouse-over #(pretty-build-kit/dispatch-event-handler! on-mouse-over))))
-      (pretty-build-kit/badge-attributes  item-props)
-      (pretty-build-kit/border-attributes item-props)
-      (pretty-build-kit/color-attributes  item-props)
-      (pretty-build-kit/indent-attributes item-props)
-      (pretty-build-kit/link-attributes   item-props)
-      (pretty-build-kit/marker-attributes item-props)))
+  ;  :data-disabled (boolean)}
+  [_ _ {:keys [disabled?] :as item-props}]
+  (-> (if disabled? (cond-> {:class         :pe-menu-bar--menu-item-body
+                             :data-disabled true})
+                    (cond-> {:class         :pe-menu-bar--menu-item-body}))
+      (pretty-build-kit/badge-attributes       item-props)
+      (pretty-build-kit/border-attributes      item-props)
+      (pretty-build-kit/color-attributes       item-props)
+      (pretty-build-kit/effect-attributes      item-props)
+      (pretty-build-kit/indent-attributes      item-props)
+      (pretty-build-kit/mouse-event-attributes item-props)
+      (pretty-build-kit/link-attributes        item-props)
+      (pretty-build-kit/marker-attributes      item-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

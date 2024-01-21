@@ -29,7 +29,7 @@
    :data-selectable   false
    :data-icon-family  :material-symbols-outlined
    :data-icon-size    :xs
-   :on-click    #(label.side-effects/toggle-info-text-visiblity! label-id)
+   :on-click    #(label.side-effects/toggle-info-text-visibility! label-id)
    :on-mouse-up #(dom/blur-active-element!)})
 
 ;; ----------------------------------------------------------------------------

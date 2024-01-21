@@ -50,8 +50,8 @@
   ; {:option-label-f (function)}
   ; @param (*) selected-option
   [box-id {:keys [option-label-f] :as box-props} selected-option]
-  (let [option-label (option-label-f selected-option)]
-       (plain-field.side-effects/set-field-content! box-id option-label)))
+  (let [option-label (option-label-f selected-option)]))
+       ;(plain-field.side-effects/set-field-content! box-id option-label)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -69,10 +69,10 @@
   ; field keypress events.
   ;
   ; The UP and DOWN keypress events has similar names (for sake of consistency).
-  (let [on-down-props  {:key-code 40 :on-keydown #(r/dispatch [:pretty-inputs.combo-box/DOWN-pressed  box-id box-props]) :required? true :prevent-default? true}
-        on-up-props    {:key-code 38 :on-keydown #(r/dispatch [:pretty-inputs.combo-box/UP-pressed    box-id box-props]) :required? true :prevent-default? true}
-        on-esc-props   {:key-code 27 :on-keydown #(r/dispatch [:pretty-inputs.combo-box/ESC-pressed   box-id box-props]) :required? true}
-        on-enter-props {:key-code 13 :on-keydown #(r/dispatch [:pretty-inputs.combo-box/ENTER-pressed box-id box-props]) :required? true}]
+  (let [on-down-props  {:key-code 40 :on-keydown-f #(r/dispatch [:pretty-inputs.combo-box/DOWN-pressed  box-id box-props]) :required? true :prevent-default? true}
+        on-up-props    {:key-code 38 :on-keydown-f #(r/dispatch [:pretty-inputs.combo-box/UP-pressed    box-id box-props]) :required? true :prevent-default? true}
+        on-esc-props   {:key-code 27 :on-keydown-f #(r/dispatch [:pretty-inputs.combo-box/ESC-pressed   box-id box-props]) :required? true}
+        on-enter-props {:key-code 13 :on-keydown-f #(r/dispatch [:pretty-inputs.combo-box/ENTER-pressed box-id box-props]) :required? true}]
        (keypress-handler/reg-keypress-event! :pretty-inputs.text-field/DOWN   on-down-props)
        (keypress-handler/reg-keypress-event! :pretty-inputs.text-field/UP       on-up-props)
        (keypress-handler/reg-keypress-event! :pretty-inputs.text-field/ESC     on-esc-props)

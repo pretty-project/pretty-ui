@@ -17,17 +17,17 @@
   ; @param (keyword) text-id
   ; @param (map) text-props
   ; {:content (metamorphic-content)(opt)
-  ;  :on-copy (Re-Frame metamorphic-event)(opt)
+  ;  :on-copy-f (function)(opt)
   ;  :placeholder (metamorphic-content)(opt)}
-  [text-id {:keys [content on-copy placeholder] :as text-props}]
+  [text-id {:keys [content on-copy-f placeholder] :as text-props}]
   [:div (text.attributes/text-attributes text-id text-props)
         [element.views/element-label     text-id text-props]
         [:div (text.attributes/text-body-attributes text-id text-props)
-              (if on-copy [:div (text.attributes/copyable-attributes text-id text-props)
-                                [:div (text.attributes/content-attributes text-id text-props)
-                                      (hiccup/parse-newlines [:<> (metamorphic-content/compose content placeholder)])]]
-                          [:<>  [:div (text.attributes/content-attributes text-id text-props)
-                                      (hiccup/parse-newlines [:<> (metamorphic-content/compose content placeholder)])]])]])
+              (if on-copy-f [:div (text.attributes/copyable-attributes text-id text-props)
+                                  [:div (text.attributes/content-attributes text-id text-props)
+                                        (hiccup/parse-newlines [:<> (metamorphic-content/compose content placeholder)])]]
+                            [:<>  [:div (text.attributes/content-attributes text-id text-props)
+                                        (hiccup/parse-newlines [:<> (metamorphic-content/compose content placeholder)])]])]])
 
 (defn element
   ; @param (keyword)(opt) text-id
@@ -57,7 +57,7 @@
   ;  :max-lines (integer)(opt)
   ;  :min-height (keyword, px or string)(opt)
   ;  :min-width (keyword, px or string)(opt)
-  ;  :on-copy (Re-Frame metamorphic-event)(opt)
+  ;  :on-copy-f (function)(opt)
   ;   Takes the text content as parameter.
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}

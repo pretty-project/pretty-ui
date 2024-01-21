@@ -2,8 +2,8 @@
 (ns pretty-inputs.password-field.views
     (:require [fruits.random.api                       :as random]
               [pretty-inputs.password-field.prototypes :as password-field.prototypes]
+              [pretty-inputs.password-field.side-effects :as password-field.side-effects]
               [pretty-inputs.text-field.views          :as text-field.views]
-              [re-frame.api                            :as r]
               [reagent.api                             :as reagent]))
 
 ;; ----------------------------------------------------------------------------
@@ -16,7 +16,7 @@
   ; @param (map) field-props
   [field-id field-props]
   ; @note (tutorials#parametering)
-  (reagent/lifecycles {:component-will-unmount (fn [_ _] (r/dispatch [:pretty-inputs.password-field/field-will-unmount field-id field-props]))
+  (reagent/lifecycles {:component-will-unmount (fn [_ _] (password-field.side-effects/field-will-unmount field-id field-props))
                        :reagent-render         (fn [_ field-props] [text-field.views/input field-id field-props])}))
 
 (defn input

@@ -14,25 +14,27 @@
   ; @param (map) button-props
   ; {:badge-content (metamorphic-content)(opt)
   ;  :badge-color (keyword or string)(opt
+  ;  :href (string)(opt)
   ;  :marker-color (keyword or string)(opt)
-  ;  :on-click (function or Re-Frame metamorphic-event)(opt)
-  ;  :on-mouse-over (function or Re-Frame metamorphic-event)(opt)
+  ;  :on-click-f (function)(opt)
   ;  :progress (percent)(opt)
   ;  :tooltip-content (metamorphic-content)(opt)}
   ;
   ; @return (map)
   ; {:badge-color (keyword or string)
   ;  :badge-position (keyword)
+  ;  :click-effect (keyword)
   ;  :focus-id (keyword)
   ;  :icon-family (keyword)
   ;  :icon-size (keyword, px or string)
   ;  :marker-position (keyword)
+  ;  :on-mouse-up-f (function)
   ;  :progress-color (keyword or string)
   ;  :progress-direction (keyword)
   ;  :progress-duration (ms)
   ;  :tooltip-content (string)
   ;  :tooltip-position (keyword)}
-  [button-id {:keys [badge-content border-color marker-color on-click on-mouse-over progress tooltip-content] :as button-props}]
+  [button-id {:keys [badge-content border-color href marker-color on-click-f progress tooltip-content] :as button-props}]
   (merge {:focus-id    button-id
           :icon-family :material-symbols-outlined
           :icon-size   :m}
@@ -45,8 +47,9 @@
                               :progress-direction :ltr
                               :progress-duration  250})
          (if tooltip-content {:tooltip-position   :right})
+         (if href            {:click-effect :opacity})
+         (if on-click-f      {:click-effect :opacity})
          (-> button-props)
          (if tooltip-content {:tooltip-content (metamorphic-content/compose tooltip-content)})
-         (if on-mouse-over   {:on-mouse-over   #(pretty-build-kit/dispatch-event-handler! on-mouse-over)})
-         (if on-click        {:on-click        #(pretty-build-kit/dispatch-event-handler! on-click)
-                              :on-mouse-up     #(dom/blur-active-element!)})))
+         (if href            {:on-mouse-up-f dom/blur-active-element!})
+         (if on-click-f      {:on-mouse-up-f dom/blur-active-element!})))

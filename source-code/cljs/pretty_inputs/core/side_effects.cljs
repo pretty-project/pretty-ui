@@ -103,6 +103,44 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn ENTER-pressed
+  ; @ignore
+  ;
+  ; @param (keyword) input-id
+  ; @param (map) input-props
+  ; {}
+  [input-id {:keys [on-enter-f] :as input-props}]
+  (let [input-displayed-value (core.env/get-input-displayed-value input-id input-props)]
+       (if on-enter-f (on-enter-f input-displayed-value))))
+
+(defn ESC-pressed
+  ; @ignore
+  ;
+  ; @param (keyword) input-id
+  ; @param (map) input-props
+  ; {}
+  [input-id {:keys [emptiable? on-escape-f] :as input-props}]
+  (let [input-displayed-value (core.env/get-input-displayed-value input-id input-props)]
+       (if emptiable?  (clear-input-value! input-id input-props))
+       (if on-escape-f (on-escape-f input-displayed-value))))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn empty-input!
+  ; @ignore
+  ;
+  ; @param (keyword) input-id
+  ; @param (map) input-props
+  ; {}
+  [input-id {:keys [on-empty-f] :as input-props}]
+  (if-not (core.env/input-empty? input-id input-props)
+          (clear-input-value!    input-id input-props)
+          (if on-empty-f (on-empty-f nil))))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn input-did-mount
   ; @ignore
   ;
@@ -156,6 +194,20 @@
   (let [input-displayed-value (core.env/get-input-displayed-value input-id input-props)]
        (if on-blur-f (on-blur-f input-displayed-value))))
 
+(defn input-value-changed
+  ; @ignore
+  ;
+  ; @param (keyword) input-id
+  ; @param (map) input-props
+  ; {}
+  ; @param (*) value
+  [input-id {:keys [on-changed-f] :as input-props} value]
+  (mark-input-as-changed!     input-id input-props)
+  (pretty-forms/input-changed input-id input-props)
+  (set-input-internal-value!  input-id input-props value)
+  (set-input-external-value!  input-id input-props value)
+  (if on-changed-f (on-changed-f value)))
+
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -169,16 +221,10 @@
   [input-id {:keys [on-selected-f on-unselected-f option-value-f] :as input-props} option]
   (if (core.env/single-option-selected? input-id input-props option)
       (let [input-updated-value nil]
-           (set-input-internal-value!  input-id input-props input-updated-value)
-           (set-input-external-value!  input-id input-props input-updated-value)
-           (mark-input-as-changed!     input-id input-props)
-           (pretty-forms/input-changed input-id input-props)
+           (input-value-changed input-id input-props input-updated-value)
            (if on-unselected-f (on-unselected-f input-updated-value)))
       (let [input-updated-value (option-value-f option)]
-           (set-input-internal-value!  input-id input-props input-updated-value)
-           (set-input-external-value!  input-id input-props input-updated-value)
-           (mark-input-as-changed!     input-id input-props)
-           (pretty-forms/input-changed input-id input-props)
+           (input-value-changed input-id input-props input-updated-value)
            (if on-selected-f (on-selected-f input-updated-value)))))
 
 (defn toggle-multi-option!
@@ -193,18 +239,12 @@
       (let [option-value          (option-value-f option)
             input-displayed-value (core.env/get-input-displayed-value input-id input-props)
             input-updated-value   (-> input-displayed-value mixed/to-vector (vector/remove-item option-value))]
-           (set-input-internal-value!  input-id input-props input-updated-value)
-           (set-input-external-value!  input-id input-props input-updated-value)
-           (mark-input-as-changed!     input-id input-props)
-           (pretty-forms/input-changed input-id input-props)
+           (input-value-changed input-id input-props input-updated-value)
            (if on-unselected-f (on-unselected-f input-updated-value)))
       (let [option-value          (option-value-f option)
             input-displayed-value (core.env/get-input-displayed-value input-id input-props)
             input-updated-value   (-> input-displayed-value mixed/to-vector (vector/conj-item option-value))]
-           (set-input-internal-value!  input-id input-props input-updated-value)
-           (set-input-external-value!  input-id input-props input-updated-value)
-           (mark-input-as-changed!     input-id input-props)
-           (pretty-forms/input-changed input-id input-props)
+           (input-value-changed input-id input-props input-updated-value)
            (if on-selected-f (on-selected-f input-updated-value)))))
 
 (defn toggle-option!

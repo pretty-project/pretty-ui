@@ -1,6 +1,7 @@
 
 (ns pretty-elements.toggle.prototypes
-    (:require [pretty-build-kit.api :as pretty-build-kit]))
+    (:require [pretty-build-kit.api :as pretty-build-kit]
+              [dom.api :as dom]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -10,17 +11,24 @@
   ;
   ; @param (keyword) toggle-id
   ; @param (map) toggle-props
-  ; {:border-color (keyword or string)(opt)}
-  ;  :marker-color (keyword or string)(opt)}
+  ; {:border-color (keyword or string)(opt)
+  ;  :href (string)(opt)
+  ;  :marker-color (keyword or string)(opt)
+  ;  :on-click-f (function)(opt)}
   ;
   ; @return (map)
   ; {:border-position (keyword)
   ;  :border-width (keyword, px or string)
+  ;  :click-effect (keyword)
   ;  :focus-id (keyword)
   ;  :marker-position (keyword)}
-  [toggle-id {:keys [border-color marker-color] :as toggle-props}]
+  [toggle-id {:keys [border-color href marker-color on-click-f] :as toggle-props}]
   (merge {:focus-id toggle-id}
          (if marker-color {:marker-position :tr})
          (if border-color {:border-position :all
                            :border-width    :xxs})
-         (-> toggle-props)))
+         (if href         {:click-effect :opacity})
+         (if on-click-f   {:click-effect :opacity})
+         (-> toggle-props)
+         (if href       {:on-mouse-up dom/blur-active-element!})
+         (if on-click-f {:on-mouse-up dom/blur-active-element!})))

@@ -21,7 +21,7 @@
   ; @param (keyword) button-id
   ; @param (?) %
   (fn [_ [_ button-id %]]
-      (let [[_ {:keys [keypress on-click] :as button-props}] (reagent/arguments %)]
+      (let [[_ {:keys [keypress] :as button-props}] (reagent/arguments %)]
            (when keypress {:fx [:pretty-elements.button/dereg-keypress-event! button-id button-props]}
                           {:fx [:pretty-elements.button/reg-keypress-event!   button-id button-props]}))))
 

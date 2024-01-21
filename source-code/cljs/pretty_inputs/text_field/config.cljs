@@ -1,11 +1,11 @@
 
-(ns pretty-inputs.password-field.state
-    (:require [reagent.api :refer [ratom]]))
+(ns pretty-inputs.text-field.config)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 ; @ignore
 ;
-; @atom (map)
-(defonce PASSWORD-VISIBILITY (ratom {}))
+; @constant (ms)
+; How much time has to elapse after the last key is pressed to consider the typing as ended.
+(def TYPE-ENDED-AFTER 450)

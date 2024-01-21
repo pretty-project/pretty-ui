@@ -30,7 +30,7 @@
   ; @bug (#8809)
   ; If the input has no ':on-change' property, the React would warn that the input stepped into an uncontrolled state.
   ; Therefore, the input DOM element must keep its ':on-change' property in '{:disabled? true}' state as well!
-  (let [field-content (core.env/get-input-internal-value field-id field-props)
+  (let [field-content (core.env/get-input-displayed-value field-id field-props)
         on-blur-f   (fn [_] (plain-field.side-effects/field-left    field-id field-props))
         on-focus-f  (fn [_] (plain-field.side-effects/field-focused field-id field-props))
         on-input-f  (fn [%] (plain-field.side-effects/value-changed field-id field-props %))

@@ -1,5 +1,5 @@
 
-(ns pretty-inputs.plain-field.utils
+(ns pretty-inputs.text-field.utils
     (:require [dom.api           :as dom]
               [fruits.string.api :as string]))
 

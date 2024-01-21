@@ -16,11 +16,11 @@
   ; @param (map) card-props
   ; {:content (metamorphic-content)(opt)
   ;  :href (string)(opt)
-  ;  :on-click (function)(opt)
+  ;  :on-click-f (function)(opt)
   ;  :placeholder (metamorphic-content)(opt)}
-  [card-id {:keys [content href on-click placeholder] :as card-props}]
+  [card-id {:keys [content href on-click-f placeholder] :as card-props}]
   [:div (card.attributes/card-attributes card-id card-props)
-        [(cond href :a on-click :button :else :div)
+        [(cond href :a on-click-f :button :else :div)
          (card.attributes/card-body-attributes card-id card-props)
          [metamorphic-content/compose content placeholder]]])
 
@@ -43,7 +43,7 @@
   ;  :border-width (keyword, px or string)(opt)
   ;  :class (keyword or keywords in vector)(opt)
   ;  :click-effect (keyword)(opt)
-  ;   Default: :opacity (if 'href' or 'on-click' is provided)
+  ;   Default: :opacity (if 'href' or 'on-click-f' is provided)
   ;  :content (metamorphic-content)(opt)
   ;  :cursor (keyword or string)(opt)
   ;  :disabled? (boolean)(opt)
@@ -63,7 +63,9 @@
   ;  :max-width (keyword, px or string)(opt)
   ;  :min-height (keyword, px or string)(opt)
   ;  :min-width (keyword, px or string)(opt)
-  ;  :on-click (function or Re-Frame metamorphic-event)(opt)
+  ;  :on-click-f (function)(opt)
+  ;  :on-mouse-over-f (function)(opt)
+  ;  :on-right-click-f (function)(opt)
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :placeholder (metamorphic-content)(opt)

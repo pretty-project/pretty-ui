@@ -17,12 +17,12 @@
   ; @param (map) thumbnail-props
   ; {:background-size (keyword)
   ;  :href (string)(opt)
-  ;  :on-click (function or Re-Frame metamorphic-event)(opt)
+  ;  :on-click-f (function)(opt)
   ;  :uri (string)(opt)}
-  [thumbnail-id {:keys [background-size href on-click uri] :as thumbnail-props}]
+  [thumbnail-id {:keys [background-size href on-click-f uri] :as thumbnail-props}]
   [:div (thumbnail.attributes/thumbnail-attributes thumbnail-id thumbnail-props)
         [element.views/element-label thumbnail-id thumbnail-props]
-        [(cond href :a on-click :button :else :div)
+        [(cond href :a on-click-f :button :else :div)
          (thumbnail.attributes/thumbnail-body-attributes thumbnail-id thumbnail-props)
          [:i   {:class :pe-thumbnail--icon :data-icon-family :material-symbols-outlined :data-icon-size :s} :image]
          [:div {:class :pe-thumbnail--image :style {:background-image (css/url uri) :background-size background-size}}]]])
@@ -53,7 +53,9 @@
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :info-text (metamorphic-content)(opt)
   ;  :label (metamorphic-content)(opt)
-  ;  :on-click (function or Re-Frame metamorphic-event)(opt)
+  ;  :on-click-f (function)(opt)
+  ;  :on-mouse-over-f (function)(opt)
+  ;  :on-right-click-f (function)(opt)
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :preset (keyword)(opt)

@@ -1,6 +1,6 @@
 
 (ns pretty-inputs.password-field.env
-    (:require [pretty-inputs.password-field.state :as password-field.state]))
+    (:require [pretty-inputs.core.env :as core.env]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -9,7 +9,8 @@
   ; @ignore
   ;
   ; @param (keyword) field-id
+  ; @param (map) field-props
   ;
   ; @return (boolean)
-  [field-id]
-  (get @password-field.state/PASSWORD-VISIBILITY field-id))
+  [field-id _]
+  (core.env/get-input-state field-id :password-visible?))

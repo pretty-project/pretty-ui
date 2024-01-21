@@ -20,10 +20,10 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  ; {:on-click (function)(opt)}
-  [button-id {:keys [on-click]}]
+  ; {:on-click-f (function)(opt)}
+  [button-id {:keys [on-click-f]}]
   (core.side-effects/blur-element! button-id)
-  (on-click))
+  (on-click-f))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -37,11 +37,11 @@
   ;   {:key-code (integer)
   ;    :required? (boolean)(opt)}}
   [button-id {:keys [keypress] :as button-props}]
-  (keypress-handler/reg-keypress-event! button-id {:exclusive? (:exclusive? keypress)
-                                                   :key-code   (:key-code   keypress)
-                                                   :required?  (:required?  keypress)
-                                                   :on-keydown (fn [_] (key-pressed  button-id button-props))
-                                                   :on-keyup   (fn [_] (key-released button-id button-props))
+  (keypress-handler/reg-keypress-event! button-id {:exclusive?   (:exclusive? keypress)
+                                                   :key-code     (:key-code   keypress)
+                                                   :required?    (:required?  keypress)
+                                                   :on-keydown-f (fn [_] (key-pressed  button-id button-props))
+                                                   :on-keyup-f   (fn [_] (key-released button-id button-props))
                                                    :prevent-default? true}))
 
 (defn dereg-keypress-event!

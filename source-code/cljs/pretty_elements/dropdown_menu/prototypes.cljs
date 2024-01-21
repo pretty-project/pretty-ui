@@ -15,13 +15,8 @@
   ; @param (map) menu-props
   ; {:menu-items (maps in vector)}
   [menu-id {:keys [item-default menu-items]}]
-  (letfn [; XXX#1239
-          ; The :on-mouse-over property of items in menu-bar element takes metamorphic-events.
-          ; If the f0 function returned the reseted value (by the reset! function),
-          ; the on-mouse-over handler would try to dispatch it as a metamorphic-event.
-          ; Therefore, the f0 function returns a nil to avoid that.
-          (f0 [dex %] (swap! dropdown-menu.state/MENUS assoc-in [menu-id :active-dex] dex)
-                      (-> nil))
+  (letfn [; ...
+          (f0 [dex %] (swap! dropdown-menu.state/MENUS assoc-in [menu-id :active-dex] dex))
 
           ; If an item's index matches the active index, sets the hover color
           ; of the item as its fill color to makes the item looks like an active one.
@@ -31,11 +26,11 @@
                           (or (:hover-color %)
                               (:hover-color item-default))))
 
-          ; Sets the f0 function as an on-mouse-over event on every item.
-          ; By the f0 function, the items can set their index as the active index
+          ; Sets the f0 function as the 'on-mouse-over-f' function on every item.
+          ; By the f0 function, the items can set their indexes as the active index
           ; and the dropdown content can displays the active item's content by index.
-          (f2 [dex %] (assoc % :on-mouse-over #(f0 dex %)
-                               :fill-color     (f1 dex %)))]
+          (f2 [dex %] (assoc % :on-mouse-over-f #(f0 dex %)
+                               :fill-color       (f1 dex %)))]
 
          ; Iterates over the menu items, applies these functions on them and returns
          ; the updated menu items vector.

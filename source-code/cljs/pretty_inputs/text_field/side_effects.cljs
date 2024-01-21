@@ -1,13 +1,14 @@
 
-(ns pretty-inputs.plain-field.side-effects
+(ns pretty-inputs.text-field.side-effects
     (:require [activity-listener.api            :as activity-listener]
               [dom.api                          :as dom]
               [fruits.hiccup.api                :as hiccup]
               [keypress-handler.api             :as keypress-handler]
               [pretty-inputs.core.env           :as core.env]
               [pretty-inputs.core.side-effects  :as core.side-effects]
-              [pretty-inputs.plain-field.config :as plain-field.config]
-              [pretty-inputs.plain-field.utils  :as plain-field.utils]
+              [pretty-inputs.text-field.env :as text-field.env]
+              [pretty-inputs.text-field.config :as text-field.config]
+              [pretty-inputs.text-field.utils  :as text-field.utils]
               [time.api                         :as time]))
 
 ;; ----------------------------------------------------------------------------
@@ -101,9 +102,9 @@
   ;   ... the 'on-type-ended-f' function is getting applied.
   ; - This function doesn't take the field's content as its argument, because
   ;   the field's content might changed during the delay.
-  (when (activity-listener/idle-time-elapsed? field-id plain-field.config/TYPE-ENDED-AFTER)
+  (when (activity-listener/idle-time-elapsed? field-id text-field.config/TYPE-ENDED-AFTER)
         (show-field-surface! field-id field-props)
-        (let [field-content (core.env/get-input-displayed-value field-id field-props)]
+        (let [field-content (text-field.env/get-field-content field-id field-props)]
              (if on-type-ended-f (on-type-ended-f field-content)))))
 
 (defn value-changed
@@ -113,8 +114,8 @@
   ; @param (map) field-props
   ; @param (DOM-event) event
   [field-id field-props event]
-  (let [field-content (plain-field.utils/on-change-event->field-content field-id field-props event)]
+  (let [field-content (text-field.utils/on-change-event->field-content field-id field-props event)]
        (core.side-effects/input-value-changed field-id field-props field-content)
        (activity-listener/reg-last-activity!  field-id)
        (letfn [(f0 [] (type-ended field-id field-props))]
-              (time/set-timeout! f0 plain-field.config/TYPE-ENDED-AFTER))))
+              (time/set-timeout! f0 text-field.config/TYPE-ENDED-AFTER))))

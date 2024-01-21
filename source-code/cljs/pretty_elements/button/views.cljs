@@ -20,11 +20,11 @@
   ;  :href (string)(opt)
   ;  :icon (keyword)(opt)
   ;  :icon-position (keyword)(opt)
-  ;  :on-click (function)(opt)
+  ;  :on-click-f (function)(opt)
   ;  :placeholder (metamorphic-content)(opt)}
-  [button-id {:keys [content href icon icon-position on-click placeholder] :as button-props}]
+  [button-id {:keys [content href icon icon-position on-click-f placeholder] :as button-props}]
   [:div (button.attributes/button-attributes button-id button-props)
-        [(cond href :a on-click :button :else :button)
+        [(cond href :a on-click-f :button :else :button)
          (button.attributes/button-body-attributes button-id button-props)
          (case icon-position :left  [:<> (if   icon        [:i   (button.attributes/button-icon-attributes    button-id button-props) icon])
                                          (cond content     [:div (button.attributes/button-content-attributes button-id button-props) [metamorphic-content/compose content]]
@@ -53,13 +53,13 @@
   ; Some other items based on the 'button' element and their documentations link here.
   ;
   ; @bug (#9912)
-  ; If the keypress key-code is 13 (ENTER) the on-click event fires multiple times during the key is pressed!
+  ; If the keypress key-code is 13 (ENTER) the on-click-f function fires multiple times during the key is pressed!
   ; This phenomenon caused by:
   ; 1. The keydown event focuses the button via the 'button.side-effects/key-pressed' function.
-  ; 2. One of the default actions of the 13 (ENTER) key is to fire the on-click
-  ;    function on a focused button element. Therefore, the 'on-click' function
+  ; 2. One of the default actions of the 13 (ENTER) key is to fire the element's on-click
+  ;    function on a focused button element. Therefore, the 'on-click-f' function
   ;    fires repeatedly during the 13 (ENTER) key is pressed.
-  ; In case of using any other key than the 13 (ENTER) the 'on-click' function fires only by
+  ; In case of using any other key than the 13 (ENTER) the 'on-click-f' function fires only by
   ; the 'button.side-effects/key-released' function.
   ;
   ; @param (keyword)(opt) button-id
@@ -76,7 +76,7 @@
   ;  :border-width (keyword, px or string)(opt)
   ;  :class (keyword or keywords in vector)(opt)
   ;  :click-effect (keyword)(opt)
-  ;   Default: :opacity
+  ;   Default: :opacity (if 'href' of 'on-click-f' is provided)
   ;  :content (metamorphic-content)(opt)
   ;  :cursor (keyword or string)(opt)
   ;   Default: :pointer
@@ -119,8 +119,9 @@
   ;   Default: :text-block
   ;  :marker-color (keyword or string)(opt)
   ;  :marker-position (keyword)(opt)
-  ;  :on-click (function or Re-Frame metamorphic-event)(opt)
-  ;  :on-mouse-over (function or Re-Frame metamorphic-event)(opt)
+  ;  :on-click-f (function)(opt)
+  ;  :on-mouse-over-f (function)(opt)
+  ;  :on-right-click-f (function)(opt)
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :placeholder (metamorphic-content)(opt)
@@ -148,7 +149,7 @@
   ; [button :my-button {...}]
   ;
   ; @usage
-  ; [button {:keypress {:key-code 13} :on-click [:my-event]}]
+  ; [button {:keypress {:key-code 13} :on-click-f (fn [_] (println "ENTER pressed"))}]
   ([button-props]
    [element (random/generate-keyword) button-props])
 

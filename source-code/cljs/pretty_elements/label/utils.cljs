@@ -1,6 +1,5 @@
 
-(ns pretty-elements.label.utils
-    (:require [re-frame.api :as r]))
+(ns pretty-elements.label.utils)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -12,8 +11,9 @@
   ; @param (map) label-props
   ; {:content (metamorphic-content)(opt)
   ;  :content-value-f (function)
-  ;  :on-copy (Re-Frame metamorphic-event)}
+  ;  :on-copy-f (function)}
   ;
   ; @return (function)
-  [_ {:keys [content content-value-f on-copy]}]
-  (fn [_] (r/dispatch (r/metamorphic-event<-params on-copy (content-value-f content)))))
+  [_ {:keys [content content-value-f on-copy-f]}]
+  (fn [_] (let [label-content (content-value-f content)]
+               (on-copy-f label-content))))

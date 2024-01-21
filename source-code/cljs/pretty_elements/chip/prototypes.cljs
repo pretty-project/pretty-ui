@@ -30,6 +30,7 @@
   ;
   ; @param (map) chip-props
   ; {:icon (keyword)(opt)
+  ;  :on-click-f (function)(opt)
   ;  :primary-button (map)(opt)}
   ;
   ; @return (map)
@@ -38,8 +39,9 @@
   ;  :primary-button (map)
   ;   {:icon-family (keyword)}
   ;  :text-color (keyword or string)}
-  [{:keys [icon primary-button] :as chip-props}]
+  [{:keys [icon on-click-f primary-button] :as chip-props}]
   (merge {:text-color :default}
-         (if icon           {:icon-family :material-symbols-outlined})
+         (if icon           {:icon-family  :material-symbols-outlined})
+         (if on-click-f     {:click-effect :opacity})
          (-> chip-props)
          (if primary-button {:primary-button (merge {:icon-family :material-symbols-outlined} primary-button)})))

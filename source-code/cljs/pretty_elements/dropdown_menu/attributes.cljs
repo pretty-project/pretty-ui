@@ -67,7 +67,7 @@
   ;   event through bubbling.
   ; - Moving the cursor over the menu bar could cause flickering by firing the on-mouse-out
   ;   events of the inner child elements.
-  ; - Using the stopPropagation function is not a solution because in case of the mouse
+  ; - Using the stopPropagation function is not a solution because in case the mouse
   ;   leaves the dropdown-menu directly from the menu-bar (no padding around the menu-bar)
   ;   means the dropdown-menu on-mouse-out doesn't fire at all.
   ; - https://www.geeksforgeeks.org/how-to-disable-mouseout-events-triggered-by-child-elements

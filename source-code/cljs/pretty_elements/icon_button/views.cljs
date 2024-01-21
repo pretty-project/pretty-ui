@@ -16,11 +16,13 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  ; {:icon (keyword)
+  ; {:href (string)(opt)
+  ;  :icon (keyword)
+  ;  :on-click-f (function)(opt)
   ;  :label (metamorphic-content)(opt)}
-  [button-id {:keys [href icon on-click label] :as button-props}]
+  [button-id {:keys [href icon on-click-f label] :as button-props}]
   [:div (icon-button.attributes/button-attributes button-id button-props)
-        [(cond href :a on-click :button :else :div)
+        [(cond href :a on-click-f :button :else :div)
          (icon-button.attributes/button-body-attributes button-id button-props)
          [:i (icon-button.attributes/button-icon-attributes button-id button-props) icon]]
         (if label [:div {:class :pe-icon-button--label :data-selectable false}
@@ -55,6 +57,8 @@
   ;   {:all, :tl, :tr, :br, :bl (keyword, px or string)(opt)}
   ;  :border-width (keyword, px or string)(opt)
   ;  :class (keyword or keywords in vector)(opt)
+  ;  :click-effect (keyword)(opt)
+  ;   Default: :opacity (if 'href' of 'on-click-f' is provided)
   ;  :cursor (keyword or string)(opt)
   ;   Default: :pointer
   ;  :disabled? (boolean)(opt)
@@ -84,8 +88,9 @@
   ;  :label (metamorphic-content)(opt)
   ;  :marker-color (keyword or string)(opt)
   ;  :marker-position (keyword)(opt)
-  ;  :on-click (function or Re-Frame metamorphic-event)(opt)
-  ;  :on-mouse-over (function or Re-Frame metamorphic-event)(opt)
+  ;  :on-click-f (function)(opt)
+  ;  :on-mouse-over-f (function)(opt)
+  ;  :on-right-click-f (function)(opt)
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :preset (keyword)(opt)
@@ -109,7 +114,7 @@
   ; [icon-button :my-button {...}]
   ;
   ; @usage
-  ; [icon-button {:keypress {:key-code 13} :on-click [:my-event]}]
+  ; [icon-button {:keypress {:key-code 13} :on-click-f (fn [_] (println "ENTER pressed"))}]
   ([button-props]
    [element (random/generate-keyword) button-props])
 

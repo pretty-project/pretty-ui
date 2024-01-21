@@ -12,8 +12,8 @@
   ; @param (keyword) select-id
   ; @param (map) select-props
   [select-id select-props]
-  (let [on-escape-props {:key-code 27 :required? true :on-keyup #(r/dispatch [:pretty-inputs.select/ESC-pressed   select-id select-props])}
-        on-enter-props  {:key-code 13 :required? true :on-keyup #(r/dispatch [:pretty-inputs.select/ENTER-pressed select-id select-props])}]
+  (let [on-escape-props {:key-code 27 :required? true :on-keyup-f #(r/dispatch [:pretty-inputs.select/ESC-pressed   select-id select-props])}
+        on-enter-props  {:key-code 13 :required? true :on-keyup-f #(r/dispatch [:pretty-inputs.select/ENTER-pressed select-id select-props])}]
        (keypress-handler/reg-keypress-event! :pretty-inputs.select/ESC   on-escape-props)
        (keypress-handler/reg-keypress-event! :pretty-inputs.select/ENTER on-enter-props)))
 
