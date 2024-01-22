@@ -1,8 +1,100 @@
 
 (ns pretty-inputs.select.prototypes
-    (:require [fruits.noop.api           :refer [return]]
-              [pretty-build-kit.api      :as pretty-build-kit]
-              [pretty-inputs.input.utils :as input.utils]))
+    (:require [fruits.noop.api :refer [none return]]
+              [pretty-build-kit.api :as pretty-build-kit]
+              [pretty-inputs.select.env :as select.env]
+              [pretty-inputs.core.side-effects :as core.side-effects]
+              [pretty-inputs.select.side-effects :as select.side-effects]
+              [fruits.vector.api :as vector]))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn select-button-props-prototype
+  ; @ignore
+  ;
+  ; @param (keyword) select-id
+  ; @param (map) select-props
+  ;
+  ; @return (map)
+  ; {}
+  [select-id {:keys [button] :as select-props}]
+  (let [on-click-f (fn [_] (core.side-effects/render-input-popup! select-id select-props))
+        label      (select.env/select-button-label select-id select-props)]
+       (merge button {:gap           :auto
+                      :icon          :unfold_more
+                      :icon-position :right
+                      :label         label
+                      :on-click-f    on-click-f})))
+
+(defn icon-button-props-prototype
+  ; @ignore
+  ;
+  ; @param (keyword) select-id
+  ; @param (map) select-props
+  ;
+  ; @return (map)
+  ; {}
+  [select-id {:keys [button] :as select-props}]
+  (let [on-click-f (fn [_] (core.side-effects/render-input-popup! select-id select-props))]
+       (merge button {:on-click-f on-click-f})))
+
+(defn button-props-prototype
+  ; @ignore
+  ;
+  ; @param (keyword) select-id
+  ; @param (map) select-props
+  ;
+  ; @return (map)
+  ; {}
+  [select-id {:keys [button] :as select-props}]
+  (let [on-click-f (fn [_] (core.side-effects/render-input-popup! select-id select-props))]
+       (merge button {:on-click-f on-click-f})))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn field-props-prototype
+  ; @ignore
+  ;
+  ; @param (keyword) select-id
+  ; @param (map) select-props
+  ; {}
+  ;
+  ; @return (map)
+  ; {}
+  [select-id {:keys [option-field] {:keys [end-adornments]} :option-field :as select-props}]
+  (let [add-option-f         (fn [%] (select.side-effects/add-option! select-id select-props %))
+        add-option-adornment {:icon :add :on-click-f add-option-f}
+        end-adornments       (vector/conj-item end-adornments add-option-adornment)]
+       (merge {:autofocus?      true
+               :border-color    :highlight
+               :border-position :bottom
+               :border-width    :xxs
+               :outdent         {:bottom :xs :vertical :xs}
+               :placeholder     "..."}
+              (-> option-field)
+              {:end-adornments end-adornments
+               :on-enter-f     add-option-f})))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn popup-props-prototype
+  ; @ignore
+  ;
+  ; @param (keyword) select-id
+  ; @param (map) select-props
+  ; {}
+  ;
+  ; @return (map)
+  ; {}
+  [select-id {:keys [popup] :as select-props}]
+  (let [on-cover-f (fn [_] (core.side-effects/close-input-popup! select-id select-props))]
+       (merge {:cover-color :black
+               :fill-color  :default}
+              (-> popup)
+              {:on-cover-f on-cover-f})))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -10,34 +102,26 @@
 (defn select-props-prototype
   ; @ignore
   ;
-  ; @param (keyword) select-id
   ; @param (map) select-props
-  ; {:border-color (keyword or string)(opt)
-  ;  :popup (map)(opt)}
+  ; {:border-color (keyword or string)(opt)}
   ;
   ; @return (map)
-  ; {:add-option-f (function)
-  ;  :border-position (keyword)
+  ; {:border-position (keyword)
   ;  :border-width (keyword, px or string)
-  ;  :option-field-placeholder (metamorphic-content)
+  ;  :max-selection (integer)
   ;  :layout (keyword)
   ;  :option-label-f (function)
   ;  :option-value-f (function)
-  ;  :options-placeholder (metamorphic-content)
-  ;  :popup (map)
-  ;   {:cover-color (keyword or string)
-  ;    :fill-color (keyword or string)}
-  ;  :value-path (Re-Frame path vector)}
-  [select-id {:keys [border-color popup] :as select-props}]
-  (merge {:add-option-f             return
-          :option-field-placeholder :add!
-          :option-label-f           return
-          :option-value-f           return
-          :layout                   :select-button
-          :options-placeholder      :no-options
-          :options-path             (input.utils/default-options-path select-id)
-          :value-path               (input.utils/default-value-path   select-id)}
-         (if border-color {:border-position :all
-                           :border-width    :xxs})
-         (-> select-props)
-         {:popup (merge {:cover-color :black :fill-color :default} popup)}))
+  ;  :orientation (keyword)}
+  [{:keys [border-color] :as select-props}]
+  (merge {:click-effect    :opacity
+          :font-size       :s
+          :hover-effect    :opacity
+          :max-selection   1
+          :option-helper-f none
+          :option-label-f  return
+          :option-value-f  return
+          :layout          :select-button
+          :orientation     :vertical}
+         (if border-color {:border-position :all :border-width :xxs})
+         (-> select-props)))

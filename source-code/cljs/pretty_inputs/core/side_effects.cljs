@@ -5,7 +5,9 @@
               [fruits.vector.api      :as vector]
               [pretty-forms.api       :as pretty-forms]
               [pretty-inputs.core.env :as core.env]
-              [time.api               :as time]))
+              [pretty-inputs.core.config :as core.config]
+              [time.api               :as time]
+              [keypress-handler.api :as keypress-handler]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -179,64 +181,90 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn pick-option!
+(defn close-input-popup!
   ; @ignore
   ;
-  ; @note
-  ; Output of option picking is always a single option.
+  ; @param (keyword) input-id
+  ; @param (map) input-props
+  [input-id _]
+  (update-input-state! input-id dissoc :popup-rendered?)
+  (keypress-handler/dereg-keypress-event! :pretty-inputs.input-popup/ESC))
+
+(defn render-input-popup!
+  ; @ignore
+  ;
+  ; @param (keyword) input-id
+  ; @param (map) input-props
+  [input-id input-props]
+  (mark-input-as-focused! input-id input-props)
+  (update-all-input-state! dissoc :popup-rendered?)
+  (update-input-state! input-id assoc :popup-rendered? true)
+  (let [close-input-popup-f (fn [] (close-input-popup! input-id input-props))
+        on-escape-props     {:key-code 27 :required? true :exclusive? true :on-keyup-f close-input-popup-f}]
+       (keypress-handler/reg-keypress-event! :pretty-inputs.input-popup/ESC on-escape-props)))
+
+(defn update-input-popup!
+  ; @ignore
+  ;
+  ; @param (keyword) input-id
+  ; @param (map) input-props
+  [input-id input-props]
+  (render-input-popup! input-id input-props))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn pick-option!
+  ; @ignore
   ;
   ; @param (keyword) input-id
   ; @param (map) input-props
   ; {}
   ; @param (*) option
   [input-id {:keys [on-selected-f on-unselected-f option-value-f] :as input-props} option]
-  (if (core.env/option-picked? input-id input-props option)
-      (let [input-updated-value nil]
-           (input-value-changed input-id input-props input-updated-value)
-           (if on-unselected-f (on-unselected-f input-updated-value)))
-      (let [input-updated-value (option-value-f option)]
-           (input-value-changed input-id input-props input-updated-value)
-           (if on-selected-f (on-selected-f input-updated-value)))))
+  (letfn [(f0 [] (close-input-popup! input-id input-props))]
+         ; If the input displays its options on a popup element, and only one option can be selected at a time,
+         ; it always closes the popup after the user selected an option.
+         (time/set-timeout! f0 core.config/CLOSE-POPUP-AFTER))
+  (let [option-value (option-value-f option)]
+       (cond (core.env/option-picked? input-id input-props option)
+             (let [input-updated-value (-> nil)]
+                  (input-value-changed input-id input-props input-updated-value)
+                  (if on-unselected-f (on-unselected-f input-updated-value)))
+             (core.env/max-selection-not-reached? input-id input-props)
+             (let [input-updated-value (-> option-value)]
+                  (input-value-changed input-id input-props input-updated-value)
+                  (if on-selected-f (on-selected-f input-updated-value))))))
 
 (defn toggle-option!
   ; @ignore
   ;
-  ; @note
-  ; Output of option toggling is a vector of currently toggled options.
-  ;
   ; @param (keyword) input-id
   ; @param (map) input-props
   ; {}
   ; @param (*) option
   [input-id {:keys [on-selected-f on-unselected-f option-value-f] :as input-props} option]
-  (if (core.env/option-toggled? input-id input-props option)
-      (let [option-value          (option-value-f option)
-            input-displayed-value (core.env/get-input-displayed-value input-id input-props)
-            input-updated-value   (-> input-displayed-value mixed/to-vector (vector/remove-item option-value))]
-           (input-value-changed input-id input-props input-updated-value)
-           (if on-unselected-f (on-unselected-f input-updated-value)))
-      (let [option-value          (option-value-f option)
-            input-displayed-value (core.env/get-input-displayed-value input-id input-props)
-            input-updated-value   (-> input-displayed-value mixed/to-vector (vector/conj-item option-value))]
-           (input-value-changed input-id input-props input-updated-value)
-           (if on-selected-f (on-selected-f input-updated-value)))))
+  (let [option-value          (option-value-f option)
+        input-displayed-value (core.env/get-input-displayed-value input-id input-props)]
+       (cond (core.env/option-toggled? input-id input-props option)
+             (let [input-updated-value (-> input-displayed-value mixed/to-vector (vector/remove-item option-value))]
+                  (input-value-changed input-id input-props input-updated-value)
+                  (if on-unselected-f (on-unselected-f input-updated-value)))
+             (core.env/max-selection-not-reached? input-id input-props)
+             (let [input-updated-value (-> input-displayed-value mixed/to-vector (vector/conj-item option-value))]
+                  (input-value-changed input-id input-props input-updated-value)
+                  (if on-selected-f (on-selected-f input-updated-value))))))
 
 (defn select-option!
   ; @ignore
   ;
-  ; @note
-  ; Output of option selecting depends on the number of available options.
-  ; If only one option is available for the input, the selecting will pick/unpick that single option.
-  ; If multiple options are available for the input, the selecting will toggle/untoggle options in the output vector.
-  ;
   ; @param (keyword) input-id
   ; @param (map) input-props
-  ; {}
   ; @param (*) option
-  [input-id {:keys [options] :as input-props} option]
-  (if (vector/count-min? options 2)
-      (toggle-option! input-id input-props option)
-      (pick-option!   input-id input-props option)))
+  [input-id input-props option]
+  (if (core.env/multiple-option-selectable? input-id input-props)
+      (toggle-option!                       input-id input-props option)
+      (pick-option!                         input-id input-props option)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -261,32 +289,3 @@
   (let [input-displayed-value (core.env/get-input-displayed-value input-id input-props)]
        (if emptiable?  (empty-input! input-id input-props))
        (if on-escape-f (on-escape-f input-displayed-value))))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn render-input-popup!
-  ; @ignore
-  ;
-  ; @param (keyword) input-id
-  ; @param (map) input-props
-  [input-id input-props]
-  (mark-input-as-focused! input-id input-props)
-  (update-all-input-state! dissoc :popup-rendered?)
-  (update-input-state! input-id assoc :popup-rendered? true))
-
-(defn update-input-popup!
-  ; @ignore
-  ;
-  ; @param (keyword) input-id
-  ; @param (map) input-props
-  [input-id input-props]
-  (render-input-popup! input-id input-props))
-
-(defn close-input-popup!
-  ; @ignore
-  ;
-  ; @param (keyword) input-id
-  ; @param (map) input-props
-  [input-id _]
-  (update-input-state! input-id dissoc :popup-rendered?))

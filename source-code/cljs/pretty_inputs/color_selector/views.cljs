@@ -5,10 +5,10 @@
               [pretty-elements.api                     :as pretty-elements]
               [pretty-inputs.color-selector.attributes :as color-selector.attributes]
               [pretty-inputs.color-selector.prototypes :as color-selector.prototypes]
+              [pretty-inputs.core.side-effects :as core.side-effects]
               [pretty-inputs.input.env                 :as input.env]
               [pretty-layouts.api                      :as pretty-layouts]
               [pretty-presets.api                      :as pretty-presets]
-              [re-frame.api                            :as r]
               [reagent.api                             :as reagent]))
 
 ;; ----------------------------------------------------------------------------
@@ -36,17 +36,17 @@
         (letfn [(f0 [option-list option] (conj option-list [color-selector-option selector-id selector-props option]))]
                (reduce f0 [:<>] options))])
 
-(defn- color-selector-options-body
+(defn- color-selector-popup-body
   ; @ignore
   ;
   ; @param (keyword) selector-id
   ; @param (map) selector-props
   [selector-id selector-props]
   ; @note (tutorials#parametering)
-  (reagent/lifecycles {:component-did-mount (fn [_ _] (r/dispatch [:pretty-inputs.color-selector/options-did-mount selector-id selector-props]))
+  (reagent/lifecycles {:component-did-mount (fn [_ _]); (r/dispatch [:pretty-inputs.color-selector/options-did-mount selector-id selector-props]))
                        :reagent-render      (fn [_ selector-props] [color-selector-option-list selector-id selector-props])}))
 
-(defn- color-selector-options-header
+(defn- color-selector-popup-header
   ; @ignore
   ;
   ; @param (keyword) selector-id
@@ -54,11 +54,11 @@
   ; {:popup (map)(opt)
   ;   {:label (metamorphic-content)(opt)}}
   [selector-id {{:keys [label]} :popup :as selector-props}]
-  [:div {:class :pi-color-selector--options--header :data-text-selectable false}
+  [:div {:class :pi-color-selector--popup--header :data-text-selectable false}
         (if label [:div (color-selector.attributes/color-selector-options-label-attributes selector-id selector-props)
                         (metamorphic-content/compose label)])])
 
-(defn color-selector-options
+(defn color-selector-popup
   ; @ignore
   ;
   ; @param (keyword) selector-id
@@ -66,10 +66,10 @@
   ; {:popup (map)(opt)}
   [selector-id {:keys [popup] :as selector-props}]
   (if (input.env/popup-rendered? selector-id)
-      [:div {:class :pi-color-selector--options}
-            [pretty-layouts/struct-popup :pretty-inputs.color-selector/options
-                                         (assoc popup :body     [color-selector-options-body   selector-id selector-props]
-                                                      :header   [color-selector-options-header selector-id selector-props]
+      [:div {:class :pi-color-selector--popup}
+            [pretty-layouts/struct-popup :pretty-inputs.color-selector/popup
+                                         (assoc popup :body     [color-selector-popup-body   selector-id selector-props]
+                                                      :header   [color-selector-popup-header selector-id selector-props]
                                                       :on-cover {:fx [:pretty-inputs.input/close-popup! selector-id selector-props]})]]))
 
 ;; ----------------------------------------------------------------------------
@@ -83,7 +83,18 @@
   [selector-id selector-props]
   [:<> (let [on-click {:fx [:pretty-inputs.input/render-popup! selector-id selector-props]}]
             [pretty-elements/button selector-id (assoc selector-props :on-click on-click)])
-       [color-selector-options selector-id selector-props]])
+       [color-selector-option-list selector-id selector-props]])
+
+(defn- color-selector-lifecycles
+  ; @ignore
+  ;
+  ; @param (keyword) selector-id
+  ; @param (map) selector-props
+  [selector-id selector-props]
+  ; @note (tutorials#parametering)
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (core.side-effects/input-did-mount    selector-id selector-props))
+                       :component-will-unmount (fn [_ _] (core.side-effects/input-will-unmount selector-id selector-props))
+                       :reagent-render         (fn [_ selector-props] [color-selector selector-id selector-props])}))
 
 (defn input
   ; @note
@@ -91,38 +102,29 @@
   ;
   ; @param (keyword)(opt) selector-id
   ; @param (map) selector-props
-  ; {:class (keyword or keywords in vector)(opt)
-  ;  :indent (map)(opt)
-  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :on-select (Re-Frame metamorphic-event)(opt)
-  ;  :options (strings in vector)(opt)
-  ;  :options-label (metamorphic-content)(opt)
-  ;  :options-path (Re-Frame path vector)(opt)
-  ;  :outdent (map)(opt)
-  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
+  ; {:get-options-f (function)(opt)
+  ;  :get-value-f (function)(opt)
+  ;  :helper (metamorphic-content)(opt)
+  ;  :initial-value (*)(opt)
+  ;  :label (metamorphic-content)(opt)
+  ;  :on-empty-f (function)(opt)
+  ;  :on-invalid-f (function)(opt)
+  ;  :on-mount-f (function)(opt)
+  ;  :on-selected-f (function)(opt)
+  ;  :on-unmount-f (function)(opt)
+  ;  :on-unselected-f (function)(opt)
+  ;  :on-valid-f (function)(opt)
+  ;  :option-helper-f (function)(opt)
+  ;  :option-label-f (function)(opt)
+  ;  :option-value-f (function)(opt)
   ;  :popup (map)(opt)
-  ;   {:border-color (keyword or string)(opt)
-  ;    :border-position (keyword)(opt)
-  ;    :border-radius (map)(opt)
-  ;     {:all, :tl, :tr, :br, :bl (keyword, px or string)(opt)}
-  ;    :border-width (keyword, px or string)(opt)
-  ;    :click-effect (keyword)(opt)
-  ;     Default: :opacity
-  ;    :cover-color (keyword or string)(opt)
-  ;     Default: :black
-  ;    :fill-color (keyword or string)(opt)
-  ;     Default: :default
-  ;    :fill-pattern (keyword)(opt)
-  ;     Default: :cover
-  ;    :hover-effect (keyword)(opt)
-  ;    :indent (map)(opt)
-  ;    :label (metamorphic-content)(opt)
-  ;    :min-width (keyword, px or string)(opt)
-  ;    :outdent (map)(opt)
-  ;    :preset (keyword)(opt)}
-  ;  :preset (keyword)(opt)
-  ;  :style (map)(opt)
-  ;  :value-path (Re-Frame path vector)(opt)}
+  ;  :projected-value (*)(opt)
+  ;  :set-value-f (function)(opt)
+  ;  :validate-when-change? (boolean)(opt)
+  ;  :validate-when-leave? (boolean)(opt)
+  ;  :validators (maps in vector)(opt)
+  ;   [{:f (function)
+  ;     :invalid-message (metamorphic-content)(opt)}]}
   ;
   ; @usage
   ; [color-selector {...}]
@@ -135,6 +137,6 @@
   ([selector-id selector-props]
    ; @note (tutorials#parametering)
    (fn [_ selector-props]
-       (let [selector-props (pretty-presets/apply-preset                                    selector-props)
-             selector-props (color-selector.prototypes/selector-props-prototype selector-id selector-props)]
-            [color-selector selector-id selector-props]))))
+       (let [selector-props (pretty-presets/apply-preset                        selector-props)
+             selector-props (color-selector.prototypes/selector-props-prototype selector-props)]
+            [color-selector-lifecycles selector-id selector-props]))))

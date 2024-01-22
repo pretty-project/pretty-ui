@@ -78,7 +78,6 @@
   ;  :disabled? (boolean)(opt)
   ;  :fill-color (keyword or string)(opt)
   ;  :fill-pattern (keyword)(opt)
-  ;   Default: :cover
   ;  :font-size (keyword, px or string)(opt)
   ;   Default: :s
   ;  :font-weight (keyword or integer)(opt)

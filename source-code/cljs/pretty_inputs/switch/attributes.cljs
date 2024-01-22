@@ -9,6 +9,24 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn switch-placeholder-attributes
+  ; @ignore
+  ;
+  ; @param (keyword) switch-id
+  ; @param (map) switch-props
+  ;
+  ; @return (map)
+  ; {}
+  [_ _]
+  {:class               :pi-switch--placeholder
+   :data-font-size      :s
+   :data-letter-spacing :auto
+   :data-line-height    :text-block
+   :data-text-color     :highlight})
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn switch-option-helper-attributes
   ; @ignore
   ;
@@ -21,7 +39,8 @@
   {:class               :pi-switch--option-helper
    :data-font-size      :xs
    :data-letter-spacing :auto
-   :data-line-height    :auto})
+   :data-line-height    :auto
+   :data-text-color     :muted})
 
 (defn switch-option-label-attributes
   ; @ignore
@@ -40,21 +59,33 @@
    :data-letter-spacing :auto
    :data-line-height    :text-block})
 
+(defn switch-option-thumb-attributes
+  ; @ignore
+  ;
+  ; @param (keyword) switch-id
+  ; @param (map) switch-props
+  ; @param (*) option
+  ;
+  ; @return (map)
+  ; {}
+  [_ switch-props _]
+  (-> {:class :pi-switch--option-thumb}
+      (pretty-build-kit/adaptive-border-attributes switch-props 0.75)))
+
 (defn switch-option-track-attributes
   ; @ignore
   ;
   ; @param (keyword) switch-id
   ; @param (map) switch-props
-  ; {:border-radius (map)
-  ;   {:all (keyword)(opt)}}
   ; @param (*) option
   ;
   ; @return (map)
   ; {}
-  [_ {{:keys [all]} :border-radius :as switch-props} _]
-  (-> {:class :pi-switch--option-track
-       :style {"--adaptive-border-radius" (pretty-build-kit/adaptive-border-radius all 0.75)}}
-      (pretty-build-kit/border-attributes switch-props)))
+  [switch-id switch-props option]
+  (let [option-color (core.env/get-option-color switch-id switch-props option)]
+       (-> {:class :pi-switch--option-track}
+           (pretty-build-kit/border-attributes switch-props)
+           (pretty-build-kit/color-attributes {:fill-color option-color}))))
 
 (defn switch-option-attributes
   ; @ignore

@@ -12,7 +12,8 @@
               [pretty-inputs.core.env            :as core.env]
               [pretty-inputs.core.side-effects   :as core.side-effects]
               [pretty-inputs.core.views          :as core.views]
-              [reagent.api                     :as reagent]))
+              [reagent.api                     :as reagent]
+              [fruits.vector.api :as vector]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -27,7 +28,8 @@
   ; @param (*) option
   [switch-id {:keys [option-helper-f option-label-f] :as switch-props} option]
   [:button (switch.attributes/switch-option-attributes switch-id switch-props option)
-           [:div (switch.attributes/switch-option-track-attributes switch-id switch-props option)]
+           [:div (switch.attributes/switch-option-track-attributes switch-id switch-props option)
+                 [:div (switch.attributes/switch-option-thumb-attributes switch-id switch-props option)]]
            [:div {:class :pi-switch--option-content}
                  (if-some [option-label (-> option option-label-f)]
                           [:div (switch.attributes/switch-option-label-attributes switch-id switch-props option)
@@ -41,10 +43,13 @@
   ;
   ; @param (keyword) switch-id
   ; @param (map) switch-props
-  [switch-id switch-props]
+  ; {:placeholder (metamorphic-content)(opt)}
+  [switch-id {:keys [placeholder] :as switch-props}]
   (letfn [(f0 [option] [switch-option switch-id switch-props option])]
          (let [options (core.env/get-input-options switch-id switch-props)]
-              (hiccup/put-with [:<>] options f0))))
+              (cond (-> options vector/not-empty?) (hiccup/put-with [:<>] options f0)
+                    (-> placeholder) [:div (switch.attributes/switch-placeholder-attributes switch-id switch-props)
+                                           (metamorphic-content/compose placeholder)]))))
 
 (defn- switch
   ; @ignore
@@ -97,6 +102,8 @@
   ;  :initial-value (*)(opt)
   ;  :label (metamorphic-content)(opt)
   ;  :marker-color (keyword or string)(opt)
+  ;  :max-selection (integer)(opt)
+  ;  :on-changed-f (function)(opt)
   ;  :on-empty-f (function)(opt)
   ;  :on-invalid-f (function)(opt)
   ;  :on-mount-f (function)(opt)
@@ -104,12 +111,14 @@
   ;  :on-unmount-f (function)(opt)
   ;  :on-unselected-f (function)(opt)
   ;  :on-valid-f (function)(opt)
+  ;  :option-color-f (function)(opt)
   ;  :option-helper-f (function)(opt)
   ;  :option-label-f (function)(opt)
   ;  :option-value-f (function)(opt)
   ;  :orientation (keyword)(opt)
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
+  ;  :placeholder (metamorphic-content)(opt)
   ;  :preset (keyword)(opt)
   ;  :projected-value (*)(opt)
   ;  :set-value-f (function)(opt)
@@ -125,12 +134,6 @@
   ;
   ; @usage
   ; [switch :my-switch {...}]
-  ;
-  ; @usage
-  ; [switch :my-switch {:initial-value "Option #1"
-  ;                     :get-options-f #(-> ["Option #1" "Option #2"])
-  ;                     :get-value-f   #(deref  my-atom)
-  ;                     :set-value-f   #(reset! my-atom %)}]
   ([switch-props]
    [input (random/generate-keyword) switch-props])
 

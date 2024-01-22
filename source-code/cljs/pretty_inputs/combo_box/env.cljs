@@ -30,22 +30,6 @@
   (let [highlighted-option-dex (get-highlighted-option-dex box-id)]
        (some? highlighted-option-dex)))
 
-(defn render-option?
-  ; @ignore
-  ;
-  ; @param (keyword) box-id
-  ; @param (map) box-props
-  ; {:option-label-f (function)(opt)}
-  ; @param (*) option
-  ;
-  ; @return (boolean)
-  [box-id {:keys [option-label-f] :as box-props} option]
-  ; XXX#0569
-  (let [field-content (core.env/get-input-displayed-value box-id box-props)
-        option-label  (option-label-f option)]
-       (and (string/not-matches-with? option-label field-content {:case-sensitive? false})
-            (string/starts-with?      option-label field-content {:case-sensitive? false}))))
-
 (defn get-rendered-options
   ; @ignore
   ;
@@ -55,7 +39,7 @@
   ; @return (vector)
   [box-id box-props]
   (let [options (input.env/get-input-options box-id box-props)]
-       (letfn [(f0 [options option] (if (render-option? box-id box-props option)
+       (letfn [(f0 [options option] (if (core.env/render-option? box-id box-props option)
                                         (conj options option)
                                         (->   options)))]
               (reduce f0 [] options))))

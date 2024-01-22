@@ -8,6 +8,24 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn checkbox-placeholder-attributes
+  ; @ignore
+  ;
+  ; @param (keyword) checkbox-id
+  ; @param (map) checkbox-props
+  ;
+  ; @return (map)
+  ; {}
+  [_ _]
+  {:class               :pi-checkbox--placeholder
+   :data-font-size      :s
+   :data-letter-spacing :auto
+   :data-line-height    :text-block
+   :data-text-color     :highlight})
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn checkbox-option-helper-attributes
   ; @ignore
   ;
@@ -21,7 +39,8 @@
   {:class               :pi-checkbox--option-helper
    :data-font-size      :xs
    :data-letter-spacing :auto
-   :data-line-height    :auto})
+   :data-line-height    :auto
+   :data-text-color     :muted})
 
 (defn checkbox-option-label-attributes
   ; @ignore
@@ -49,10 +68,24 @@
   ;
   ; @return (map)
   ; {}
-  [_ checkbox-props _]
-  (-> {:class            :pi-checkbox--option-button
-       :data-icon-family :material-symbols-outlined}
-      (pretty-build-kit/border-attributes checkbox-props)))
+  [checkbox-id checkbox-props option]
+  (let [option-color (core.env/get-option-color checkbox-id checkbox-props option)]
+       (-> {:class :pi-checkbox--option-button}
+           (pretty-build-kit/border-attributes checkbox-props)
+           (pretty-build-kit/color-attributes {:fill-color option-color}))))
+
+(defn checkbox-option-checkmark-attributes
+  ; @ignore
+  ;
+  ; @param (keyword) checkbox-id
+  ; @param (map) checkbox-props
+  ; @param (*) option
+  ;
+  ; @return (map)
+  ; {}
+  [_ _ _]
+  {:class            :pi-checkbox--option-checkmark
+   :data-icon-family :material-symbols-outlined})
 
 (defn checkbox-option-attributes
   ; @ignore

@@ -2,7 +2,10 @@
 (ns pretty-inputs.core.env
     (:require [pretty-elements.core.env]
               [fruits.mixed.api  :as mixed]
-              [fruits.vector.api :as vector]))
+              [fruits.vector.api :as vector]
+              [fruits.string.api :as string]
+              [metamorphic-content.api :as metamorphic-content]
+              [pretty-inputs.core.utils :as core.utils]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -108,11 +111,59 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn option-picked?
+(defn render-option?
   ; @ignore
   ;
-  ; @note
-  ; Output of option picking is always a single option.
+  ; @description
+  ; Returns TRUE if ...
+  ; ... the input has a text-field as a subitem,
+  ; ... the label of the given option starts with the content of the text-field.
+  ;
+  ; @param (keyword) input-id
+  ; @param (map) input-props
+  ; {:option-label-f (function)(opt)}
+  ; @param (*) option
+  ;
+  ; @return (boolean)
+  [input-id {:keys [option-label-f] :as input-props} option]
+  (let [field-id      (core.utils/input-id->subitem-id input-id :text-field)
+        field-content (get-input-displayed-value field-id {})
+        option-label  (-> option option-label-f metamorphic-content/compose)]
+       (and ; (string/not-matches-with? option-label field-content {:case-sensitive? false}) ; <- Deprecated, due to the select input's behaviour.
+            (string/starts-with? option-label field-content {:case-sensitive? false}))))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn multiple-option-selectable?
+  ; @ignore
+  ;
+  ; @param (keyword) input-id
+  ; @param (map) input-props
+  ; {}
+  ;
+  ; @return (boolean)
+  [input-id {:keys [max-selection] :as input-props}]
+  (let [input-options (get-input-options input-id input-props)]
+       (and (vector/count-min? input-options 2)
+            (or (-> max-selection integer? not)
+                (-> max-selection (> 1))))))
+
+(defn max-selection-not-reached?
+  ; @ignore
+  ;
+  ; @param (keyword) input-id
+  ; @param (map) input-props
+  ; {}
+  ;
+  ; @return (boolean)
+  [input-id {:keys [max-selection] :as input-props}]
+  (let [input-displayed-value (get-input-displayed-value input-id input-props)]
+       (or (-> input-displayed-value vector? not)
+           (-> input-displayed-value count (not= max-selection)))))
+
+(defn option-picked?
+  ; @ignore
   ;
   ; @param (keyword) input-id
   ; @param (map) input-props
@@ -128,9 +179,6 @@
 (defn option-toggled?
   ; @ignore
   ;
-  ; @note
-  ; Output of option toggling is a vector of currently toggled options.
-  ;
   ; @param (keyword) input-id
   ; @param (map) input-props
   ; {}
@@ -145,26 +193,32 @@
 (defn option-selected?
   ; @ignore
   ;
-  ; @note
-  ; Output of option selecting depends on the number of available options.
-  ; If only one option is available for the input, the selecting will pick/unpick that single option.
-  ; If multiple options are available for the input, the selecting will toggle/untoggle options in the output vector.
-  ;
   ; @param (keyword) input-id
   ; @param (map) input-props
-  ; {}
   ; @param (*) option
   ;
   ; @return (boolean)
-  [input-id {:keys [options] :as input-props} option]
-  (if (vector/count-min? options 2)
-      (option-toggled? input-id input-props option)
-      (option-picked?  input-id input-props option)))
+  [input-id input-props option]
+  (if (multiple-option-selectable? input-id input-props)
+      (option-toggled?             input-id input-props option)
+      (option-picked?              input-id input-props option)))
+
+(defn get-option-color
+  ; @ignore
+  ;
+  ; @param (keyword) input-id
+  ; @param (map) input-props
+  ; @param (*) option
+  ;
+  ; @return (keyword or string)
+  [_ {:keys [option-color-f]} option]
+  (if option-color-f (-> option option-color-f)
+                     (-> :default)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn popup-rendered?
+(defn input-popup-rendered?
   ; @ignore
   ;
   ; @param (keyword) input-id

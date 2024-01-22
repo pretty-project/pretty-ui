@@ -16,6 +16,17 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn- chip-group-chip
+  ; @ignore
+  ;
+  ; @param (keyword) group-id
+  ; @param (map) group-props
+  ; @param (integer) chip-dex
+  ; @param (*) chip-value
+  [group-id group-props chip-dex chip-value]
+  (let [chip-props (chip-group.prototypes/chip-props-prototype group-id group-props chip-dex chip-value)]
+       [pretty-elements/chip chip-props]))
+
 (defn- chip-group-chip-list
   ; @ignore
   ;
@@ -23,13 +34,11 @@
   ; @param (map) group-props
   ; {:placeholder (metamorphic-content)(opt)}
   [group-id {:keys [placeholder] :as group-props}]
-  (let [chips (core.env/get-input-displayed-value group-id group-props)]
-       (if (vector/not-empty? chips)
-           (letfn [(f0 [chip-dex %] (let [chip-props (chip-group.prototypes/chip-props-prototype group-id group-props chip-dex %)]
-                                         [pretty-elements/chip chip-props]))]
-                  (hiccup/put-with-indexed [:<>] chips f0))
-           (if placeholder [:div (chip-group.attributes/chip-group-placeholder-attributes group-id group-props)
-                                 (metamorphic-content/compose placeholder)]))))
+  (letfn [(f0 [chip-dex chip-value] [chip-group-chip group-id group-props chip-dex chip-value])]
+         (let [chips (core.env/get-input-displayed-value group-id group-props)]
+              (cond (-> chips vector/not-empty?) (hiccup/put-with-indexed [:<>] chips f0)
+                    (-> placeholder) [:div (chip-group.attributes/chip-group-placeholder-attributes group-id group-props)
+                                           (metamorphic-content/compose placeholder)]))))
 
 (defn- chip-group
   ; @ignore
@@ -59,7 +68,7 @@
   ; {:class (keyword or keywords in vector)(opt)
   ;  :chip (map)(opt)
   ;  :chip-label-f (function)(opt)
-  ;  :chips-deletable? (boolean)(opt)
+  ;  :chips-unselectable? (boolean)(opt)
   ;  :get-value-f (function)(opt)
   ;  :helper (metamorphic-content)(opt)
   ;  :indent (map)(opt)
@@ -67,9 +76,11 @@
   ;  :info-text (metamorphic-content)(opt)
   ;  :initial-value (vector)(opt)
   ;  :label (metamorphic-content)(opt)
+  ;  :on-changed-f (function)(opt)
   ;  :on-empty-f (function)(opt)
   ;  :on-mount-f (function)(opt)
   ;  :on-unmount-f (function)(opt)
+  ;  :on-unselected-f (function)(opt)
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :placeholder (metamorphic-content)(opt)
@@ -83,14 +94,6 @@
   ;
   ; @usage
   ; [chip-group :my-chip-group {...}]
-  ;
-  ; @usage
-  ; [chip-group :my-chip-group {:chip {:fill-color :primary :indent {:all :xs} ...}
-  ;                             :chip-label-f  :label
-  ;                             :placeholder   "No chips displayed"
-  ;                             :initial-value [{:label "Chip #1"} {:label "Chip #2"}]
-  ;                             :get-value-f   #(deref  my-atom)
-  ;                             :set-value-f   #(reset! my-atom %)}]
   ([group-props]
    [input (random/generate-keyword) group-props])
 

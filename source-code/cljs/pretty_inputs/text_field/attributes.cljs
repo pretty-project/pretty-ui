@@ -42,23 +42,6 @@
   {:class :pi-text-field--input-emphasize
    :style {:height (text-field.env/get-field-auto-height field-id field-props)}})
 
-(defn input-container-attributes
-  ; @ignore
-  ;
-  ; @param (keyword) field-id
-  ; @param (map) field-props
-  ;
-  ; @return (map)
-  ; {}
-  [_ field-props]
-  (-> {:class               :pi-text-field--input-container
-       :data-letter-spacing :auto}
-      (pretty-build-kit/border-attributes field-props)
-      (pretty-build-kit/font-attributes   field-props)
-      (pretty-build-kit/indent-attributes field-props)
-      (pretty-build-kit/marker-attributes field-props)
-      (pretty-build-kit/style-attributes  field-props)))
-
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -158,6 +141,27 @@
            (pretty-build-kit/effect-attributes       field-props)
            (pretty-build-kit/element-size-attributes field-props)
            (pretty-build-kit/focus-attributes        field-props))))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn field-body-attributes
+  ; @ignore
+  ;
+  ; @param (keyword) field-id
+  ; @param (map) field-props
+  ;
+  ; @return (map)
+  ; {}
+  [_ field-props]
+  (-> {:class               :pi-text-field--body
+       :data-letter-spacing :auto}
+      (pretty-build-kit/border-attributes field-props)
+      (pretty-build-kit/color-attributes  field-props)
+      (pretty-build-kit/font-attributes   field-props)
+      (pretty-build-kit/indent-attributes field-props)
+      (pretty-build-kit/marker-attributes field-props)
+      (pretty-build-kit/style-attributes  field-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

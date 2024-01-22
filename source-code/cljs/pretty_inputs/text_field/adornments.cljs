@@ -18,7 +18,9 @@
   ;  :on-click-f (function)
   ;  :tooltip (metamorphic-content)}
   [field-id field-props]
-  {:disabled?       (core.env/input-empty?          field-id field-props)
-   :on-click-f     #(core.side-effects/empty-input! field-id field-props)
-   :icon            :close
-   :tooltip-content :empty-field!})
+  (let [input-empty? (core.env/input-empty? field-id field-props)
+        on-click-f   (fn [] (core.side-effects/empty-input! field-id field-props))]
+       {:disabled?       input-empty?
+        :on-click-f      on-click-f
+        :icon            :close
+        :tooltip-content :empty-field!}))

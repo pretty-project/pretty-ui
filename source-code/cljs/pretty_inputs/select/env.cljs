@@ -8,25 +8,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn render-option?
-  ; @ignore
-  ;
-  ; @param (keyword) select-id
-  ; @param (map) select-props
-  ; {:option-label-f (function)(opt)}
-  ; @param (*) option
-  ;
-  ; @return (boolean)
-  [select-id {:keys [option-label-f] :as select-props} option]
-  ; XXX#0569 (source-code/cljs/pretty_inputs/combo_box/env.cljs)
-  (let [field-content (core.env/get-input-displayed-value :pretty-inputs.select/option-field {})
-        option-label  (-> option option-label-f metamorphic-content/compose)]
-       (and (string/not-matches-with? option-label field-content {:case-sensitive? false})
-            (string/starts-with?      option-label field-content {:case-sensitive? false}))))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (defn select-button-label
   ; @ignore
   ;

@@ -4,7 +4,7 @@
               [fruits.noop.api                     :refer [return]]
               [pretty-build-kit.api                :as pretty-build-kit]
               [pretty-inputs.input.utils           :as input.utils]
-              [pretty-inputs.multi-combo-box.utils :as multi-combo-box.utils]))
+              [pretty-inputs.core.utils :as core.utils]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -20,7 +20,7 @@
   [box-id box-props]
   ; XXX#5061
   ; XXX#5062
-  (let [field-id    (multi-combo-box.utils/box-id->field-id box-id)
+  (let [field-id    (core.utils/input-id->subitem-id box-id :text-field)
         field-props (dissoc box-props :class :helper :indent :label :outdent :style :value-path)]
        (merge {:value-path (input.utils/default-value-path field-id)}
               (-> field-props))))

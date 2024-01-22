@@ -7,20 +7,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn select-will-mount
-  ; @ignore
-  ;
-  ; @param (keyword) select-id
-  ; @param (map) select-props
-  ;
-  ; @return (map)
-  [db [_ select-id select-props]]
-  (as-> db % (r input.events/use-initial-value!   % select-id select-props)
-             (r input.events/use-initial-options! % select-id select-props)))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (defn select-option!
   ; @ignore
   ;

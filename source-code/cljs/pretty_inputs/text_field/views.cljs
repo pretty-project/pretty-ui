@@ -37,10 +37,11 @@
   ; @param (map) field-props
   ; {:start-adornments (maps in vector)(opt)}
   [field-id {:keys [start-adornments] :as field-props}]
-  (if (vector/not-empty? start-adornments)
-      [:div (text-field.attributes/field-adornments-attributes field-id field-props)
-            [pretty-elements/adornment-group {:adornments start-adornments}]]
-      [:div (text-field.attributes/field-adornments-placeholder-attributes field-id field-props)]))
+  (let [start-adornments (text-field.prototypes/start-adornments-prototype field-id field-props)]
+       (if (vector/not-empty? start-adornments)
+           [:div (text-field.attributes/field-adornments-attributes field-id field-props)
+                 [pretty-elements/adornment-group {:adornments start-adornments}]]
+           [:div (text-field.attributes/field-adornments-placeholder-attributes field-id field-props)])))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -64,7 +65,7 @@
         [core.views/input-synchronizer field-id field-props]
         [core.views/input-label        field-id field-props]
         [pretty-forms/invalid-message  field-id field-props]
-        [:div (text-field.attributes/input-container-attributes field-id field-props)
+        [:div (text-field.attributes/field-body-attributes field-id field-props)
               [field-start-adornments field-id field-props]
               [:div {:class :pi-text-field--input-structure}
                     (if placeholder (if-let [field-empty? (core.env/input-empty? field-id field-props)]
@@ -104,6 +105,8 @@
   ;  :disabled? (boolean)(opt)
   ;  :emptiable? (boolean)(opt)
   ;  :end-adornments (maps in vector)(opt)
+  ;  :fill-color (keyword or string)(opt)
+  ;  :fill-pattern (keyword)(opt)
   ;  :font-size (keyword, px or string)(opt)
   ;   Default: :s
   ;  :font-weight (keyword or integer)(opt)
@@ -112,6 +115,7 @@
   ;  :get-value-f (function)(opt)
   ;  :height (keyword, px or string)(opt)
   ;  :helper (metamorphic-content)(opt)
+  ;  :hover-color (keyword or string)(opt)
   ;  :indent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :info-text (metamorphic-content)(opt)
@@ -162,20 +166,6 @@
   ;
   ; @usage
   ; [text-field :my-text-field {...}]
-  ;
-  ; @usage
-  ; (defn my-surface [field-id])
-  ; [text-field {:surface #'my-surface}]
-  ;
-  ; @usage
-  ; (defn my-surface [field-id])
-  ; [text-field {:surface {:content #'my-surface}}]
-  ;
-  ; @usage
-  ; [text-field {:modifier-f clojure.string/lower-case}]
-  ;
-  ; @usage
-  ; [text-field {:validators []}]
   ([field-props]
    [input (random/generate-keyword) field-props])
 

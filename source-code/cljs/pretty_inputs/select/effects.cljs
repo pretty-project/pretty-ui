@@ -11,56 +11,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx :pretty-inputs.select/select-button-did-mount
-  ; @ignore
-  ;
-  ; @param (keyword) select-id
-  ; @param (map) select-props
-  ; {:initial-options (vector)(opt)
-  ;  :initial-value (*)(opt)}
-  (fn [{:keys [db]} [_ select-id {:keys [initial-options initial-value] :as select-props}]]
-      (if (or initial-options initial-value)
-          {:db (r select.events/select-will-mount db select-id select-props)})))
-
-(r/reg-event-fx :pretty-inputs.select/select-options-did-mount
-  ; @ignore
-  ;
-  ; @param (keyword) select-id
-  ; @param (map) select-props
-  (fn [_ [_ select-id select-props]]
-      {:fx [:pretty-inputs.select/reg-keypress-events! select-id select-props]}))
-
-(r/reg-event-fx :pretty-inputs.select/select-options-will-unmount
-  ; @ignore
-  ;
-  ; @param (keyword) select-id
-  ; @param (map) select-props
-  (fn [_ [_ select-id select-props]]
-      {:fx [:pretty-inputs.select/dereg-keypress-events! select-id select-props]}))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(r/reg-event-fx :pretty-inputs.select/ESC-pressed
-  ; @ignore
-  ;
-  ; @param (keyword) select-id
-  ; @param (map) select-props
-  (fn [_ [_ select-id select-props]]
-      {:fx [:pretty-inputs.select/close-options! select-id select-props]}))
-
-(r/reg-event-fx :pretty-inputs.select/ENTER-pressed
-  ; @ignore
-  ;
-  ; @param (keyword) select-id
-  ; @param (map) select-props
-  (fn [_ [_ select-id select-props]]
-      (if-let [option-field-focused? (input.env/input-focused? :pretty-inputs.select/option-field)]
-              [:pretty-inputs.select/add-option! select-id select-props])))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (r/reg-event-fx :pretty-inputs.select/select-option!
   ; @ignore
   ;

@@ -21,14 +21,22 @@
 
 .pi-checkbox--option {
   display:        flex;
+  gap:            8px;
   padding-bottom: 6px;
   padding-top:    6px;
 }
 
 .pi-checkbox--option-button {
-  background-color: var( --fill-color-default );
-  margin-right:     8px;
-  margin-top:       2px;
+  height: 20px;
+  margin: 2px 0;
+  width:  20px;
+}
+
+.pi-checkbox--option-checkmark {
+  animation-name:     opacity-0-1;
+  animation-duration: .1s;
+  font-size:          16px;
+  line-height:        16px;
 }
 
 .pi-checkbox--option-label {
@@ -37,29 +45,11 @@
 }
 
 .pi-checkbox--option-helper {
-  color: var( --text-color-muted );
-
   /* XXX#5049 */
   text-align: left;
 }
 
 /*** Option ***/
-
-/*** Marker ***/
-
-.pi-checkbox--option-button::after {
-  content: '';
-  font-size:   16px;
-  height:      16px;
-  line-height: 16px;
-  width:       16px;
-}
-
-.pi-checkbox--option[data-checked="true"] .pi-checkbox--option-button::after {
-  content: 'done';
-}
-
-/*** Marker ***/
 /***** Checkbox *****/
 
 
@@ -83,26 +73,22 @@
 }
 
 /*** Body ***/
-
-/*** Placeholder ***/
-
-.pi-chip-group--placeholder {
-  color: var( --text-color-highlight );
-}
-
-/*** Placeholder ***/
 /***** Chip-group *****/
 
 
 
 /***** Color-selector *****/
-/*** Color-selector options ***/
+/*** Popup ***/
 
-.pi-color-selector--options {
+.pi-color-selector--popup {
   /* XXX#0610
-   * Makes the popup above other contents */
-    z-index: 9999;
+   * Displays the popup above other contents */
+  z-index: 9999;
 }
+
+/*** Popup ***/
+
+/*** Option list ***/
 
 .pi-color-selector--options--label {
   display: flex;
@@ -119,9 +105,9 @@
   padding:         12px;
 }
 
-/*** Color-selector options ***/
+/*** Option list ***/
 
-/*** Color-selector option ***/
+/*** Option ***/
 
 .pi-color-selector--option[data-collected="true"]::after {
   align-items: center;
@@ -147,7 +133,7 @@
   width: 48px;
 }
 
-/*** Color-selector option ***/
+/*** Option ***/
 /***** Color-selector *****/
 
 
@@ -375,8 +361,26 @@
 
 .pi-radio-button--option {
   display:        flex;
+  gap:            8px;
   padding-bottom: 6px;
   padding-top:    6px;
+}
+
+.pi-radio-button--option-button {
+  margin:  2px 0;
+  padding: 8px;
+}
+
+.pi-radio-button--option-thumb {
+  animation-name:     opacity-0-1;
+  animation-duration: .1s;
+  background-color:   var( --text-color-default );
+  display:            block;
+  height:             8px;
+  left:               4px;
+  position:           absolute;
+  top:                4px;
+  width:              8px;
 }
 
 .pi-radio-button--option-label {
@@ -387,93 +391,54 @@
 }
 
 .pi-radio-button--option-helper {
-  color: var( --text-color-muted );
-
   /* XXX#5049 */
   text-align: left;
 }
 
 /*** Option ***/
-
-/*** Option button ***/
-
-.pi-radio-button--option-button {
-  background-color: var( --fill-color-default );
-  margin-bottom:    2px;
-  margin-right:     8px;
-  margin-top:       2px;
-  padding:          8px;
-}
-
-/*** Option button ***/
-
-/*** Option marker ***/
-
-.pi-radio-button--option[data-selected="true"]
-.pi-radio-button--option-button::before {
-  animation-name:     opacity-0-1;
-  animation-duration: .1s;
-  background-color:   var( --text-color-default     );
-  border-radius:      var( --adaptive-border-radius );
-  content:            '';
-  display:            block;
-  height:             8px;
-  left:               4px;
-  position:           absolute;
-  top:                4px;
-  width:              8px;
-}
-
-/*** Option marker ***/
 /***** Radio button *****/
 
 
 
 /***** Select *****/
-/*** Select button element ***/
+/*** Wrapper ***/
 
-.pi-select-button {
+.pi-select {
   /* XXX#6668 */
   width: fit-content;
 }
 
-/*** Select button element ***/
+/*** Wrapper ***/
 
-/*** Select button body ***/
+/*** Popup ***/
 
-.pi-select-button .pe-button--body {
-  -justify-content: space-between;
-}
-
-.pi-select-button .pe-button--content {
-  -margin-left: 12px;
-}
-
-.pi-select-button .pe-button--icon {
-  -margin-right: 12px;
-}
-
-/*** Select button body ***/
-
-/*** Options ***/
-
-.pi-select--options {
+.pi-select--popup {
   /* XXX#0610 */
   z-index: 9999;
 }
 
-.pi-select--option-list {
-  display: flex;
+.pi-select--popup-body {
+  align-items:    center;
+  display:        flex;
   flex-direction: column;
 
   /* XXX#6661 */
   padding-bottom: 12px;
 }
 
-.pi-select--options-placeholder {
-  align-self: center;
-  color:      var( --text-color-highlight );
-  padding:    0 36px;
+/*** Popup ***/
+
+/*** Options ***/
+
+.pi-select--options-label {
+  display: flex;
+  justify-content: center;
+
+  /* XXX#6661
+   * The height of this label without content is 12px (horizontal padding x 2).
+   * That's the same height as the bottom padding of the option list.
+   * Therefore, in case of no label provided, the top and bottom spacings have the same height. */
+  padding: 6px 12px;
 }
 
 /*** Options ***/
@@ -486,42 +451,32 @@
   width:   100%;
 }
 
-.pi-select--option:hover,
-.pi-select--option[data-selected="true"]:hover {
-  background-color: var( --hover-color-highlight );
+.pi-select--option-checkmark {
+  font-size:   16px;
+  left:        10px;
+  line-height: 16px;
+  position:    absolute;
+  top:         calc(50% - 8px);
+  width:       16px;
 }
 
-.pi-select--option[data-selected="true"] {
-  background-color: var( --fill-color-highlight );
+.pi-select--option-content {
+  /* XXX#5043
+   * In case the option has no label and no helper. */
+  min-height: 12px;
 }
 
-.pi-select--option[data-selected="true"]::before {
-  background-color: var( --text-color-primary );
-  border-radius:    50%;
-  content:          '';
-  height:           6px;
-  left:             16px;
-  position:         absolute;
-  top:              16px;
-  width:            6px;
+.pi-select--option-label {
+  /* XXX#5049 */
+  text-align: left;
+}
+
+.pi-select--option-helper {
+  /* XXX#5049 */
+  text-align: left;
 }
 
 /*** Option ***/
-
-/*** Header ***/
-
-.pi-select--options--label {
-  display: flex;
-  justify-content: center;
-
-  /* XXX#6661
-   * The height of this label without content is 12px (horizontal padding x 2),
-   * that's the same as the bottom padding of the option list.
-   * Therefore, in case of no label defined, the top and bottom spacings are the same. */
-  padding: 6px 12px;
-}
-
-/*** Header ***/
 /***** Select *****/
 
 
@@ -611,36 +566,17 @@
 .pi-switch--option {
   align-items:    center;
   display:        flex;
+  gap:            8px;
   padding-bottom: 6px;
   padding-top:    6px;
 }
 
 .pi-switch--option-track {
-  background-color: var( --fill-color-default );
-  margin-right:     6px;
-  padding:          8px 18px;
+  padding: 8px 18px;
 }
 
-.pi-switch--option-label {
-  /* XXX#5049 */
-  text-align: left;
-}
-
-.pi-switch--option-helper {
-  color: var( --text-color-muted );
-
-  /* XXX#5049 */
-  text-align: left;
-}
-
-/*** Option ***/
-
-/*** Thumb ***/
-
-.pi-switch--option-track::before {
-  background-color: var( --text-color-default     );
-  border-radius:    var( --adaptive-border-radius );
-  content:          '';
+.pi-switch--option-thumb {
+  background-color: var( --text-color-default );
   display:          block;
   height:           12px;
   left:             2px;
@@ -650,27 +586,34 @@
   width:            12px;
 }
 
-.pi-switch--option[data-switched="true"] .pi-switch--option-track::before {
+.pi-switch--option[data-switched="true"] .pi-switch--option-thumb {
   transform: translateX( 20px );
 }
 
-/*** Thumb ***/
+.pi-switch--option-label {
+  /* XXX#5049 */
+  text-align: left;
+}
+
+.pi-switch--option-helper {
+  /* XXX#5049 */
+  text-align: left;
+}
+
+/*** Option ***/
 /***** Switch *****/
 
 
 
 /***** Text field *****/
-/*** Input container ***/
+/*** Body ***/
 
-/* The input container element contains the input and its accessories
- * (adornments, placeholder, etc.) */
-.pi-text-field--input-container {
-  background-color: var( --fill-color-default );
+.pi-text-field--body {
   display: flex;
   justify-content: space-between;
 }
 
-/*** Input container ***/
+/*** Body ***/
 
 /*** Input ***/
 

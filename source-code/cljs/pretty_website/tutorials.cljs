@@ -718,6 +718,38 @@
 ;
 ;
 ;
+; @title :option-color-f
+;
+; @code Usage
+; [pretty-inputs/select {:option-color-f (function)}]
+; [pretty-inputs/select {:option-color-f :color :get-options-f (fn [] [{:color "red" :label "Option #1"}])}]
+;
+;
+;
+; @title :option-helper-f
+;
+; @code Usage
+; [pretty-inputs/select {:option-helper-f (function)}]
+; [pretty-inputs/select {:option-helper-f :helper :get-options-f (fn [] [{:helper "Lorem Ipsum" :label "Option #1"}])}]
+;
+;
+;
+; @title :option-label-f
+;
+; @code Usage
+; [pretty-inputs/select {:option-label-f (function)}]
+; [pretty-inputs/select {:option-label-f :label :get-options-f (fn [] [{:label "Option #1"}])}]
+;
+;
+;
+; @title :option-value-f
+;
+; @code Usage
+; [pretty-inputs/select {:option-value-f (function)}]
+; [pretty-inputs/select {:option-value-f :value :get-options-f (fn [] [{:label "Option #1" :value "#1"}])}]
+;
+;
+;
 ; @title :orientation
 ;
 ; @code Usage

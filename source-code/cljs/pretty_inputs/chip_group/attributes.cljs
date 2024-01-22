@@ -17,7 +17,8 @@
   {:class               :pi-chip-group--placeholder
    :data-font-size      :s
    :data-letter-spacing :auto
-   :data-line-height    :text-block})
+   :data-line-height    :text-block
+   :data-text-color     :highlight})
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

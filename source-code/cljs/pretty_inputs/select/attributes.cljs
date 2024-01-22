@@ -2,59 +2,13 @@
 (ns pretty-inputs.select.attributes
     (:require [dom.api              :as dom]
               [pretty-build-kit.api :as pretty-build-kit]
-              [re-frame.api         :as r]))
+              [pretty-inputs.core.env :as core.env]
+              [pretty-inputs.core.side-effects :as core.side-effects]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn select-option-attributes
-  ; @ignore
-  ;
-  ; @param (keyword) select-id
-  ; @param (map) select-props
-  ; {:option-value-f (function)
-  ;  :value-path (Re-Frame path vector)}
-  ; @param (*) option
-  ;
-  ; @return (map)
-  ; {:class (keyword or keywords in vector)
-  ;  :data-click-effect (keyword)
-  ;  :data-font-size (keyword)
-  ;  :data-font-weight (keyword)
-  ;  :data-letter-spacing (keyword)
-  ;  :data-selected (boolean)
-  ;  :on-click (function)
-  ;  :on-mouse-up (function)}
-  [select-id {:keys [option-value-f value-path] :as select-props} option]
-  (let [selected-value  @(r/subscribe [:get-item value-path])
-        option-value     (option-value-f option)
-        option-selected? (= selected-value option-value)
-        on-click         [:pretty-inputs.select/select-option! select-id select-props option]]
-       {:class               :pi-select--option
-        :data-click-effect   :opacity
-        :data-font-size      :s
-        :data-font-weight    (if option-selected? :semi-bold :medium)
-        :data-letter-spacing :auto
-        :data-line-height    :text-block
-        :data-selected       option-selected?
-        :on-click            #(r/dispatch on-click)
-        :on-mouse-up         #(dom/blur-active-element!)}))
-
-(defn select-options-label-attributes
-  ; @ignore
-  ;
-  ; @param (keyword) select-id
-  ; @param (map) select-props
-  ; {}
-  [_ {:keys [options-label]}]
-  (if options-label {:class            :pi-select--options--label
-                     :data-font-size   :s
-                     :data-font-weight :medium
-                     :data-line-height :text-block}
-                    {:class            :pi-select--options--label
-                     :data-placeholder true}))
-
-(defn select-options-placeholder-attributes
+(defn select-placeholder-attributes
   ; @ignore
   ;
   ; @param (keyword) select-id
@@ -63,16 +17,102 @@
   ; @return (map)
   ; {}
   [_ _]
-  {:class               :pi-select--options-placeholder
+  {:class               :pi-select--placeholder
    :data-font-size      :s
-   :data-font-weight    :medium
    :data-letter-spacing :auto
-   :data-line-height    :text-block})
+   :data-line-height    :text-block
+   :data-text-color     :highlight})
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn select-button-attributes
+(defn select-option-helper-attributes
+  ; @ignore
+  ;
+  ; @param (keyword) select-id
+  ; @param (map) select-props
+  ; @param (*) option
+  ;
+  ; @return (map)
+  ; {}
+  [_ _ _]
+  {:class               :pi-select--option-helper
+   :data-font-size      :xs
+   :data-letter-spacing :auto
+   :data-line-height    :auto
+   :data-text-color     :muted})
+
+(defn select-option-label-attributes
+  ; @ignore
+  ;
+  ; @param (keyword) select-id
+  ; @param (map) select-props
+  ; {}
+  ; @param (*) option
+  ;
+  ; @return (map)
+  ; {}
+  [select-id {:keys [font-size] :as select-props} option]
+  (let [option-selected? (core.env/option-selected? select-id select-props option)]
+       {:class               :pi-select--option-label
+        :data-font-size      font-size
+        :data-font-weight    (if option-selected? :semi-bold :medium)
+        :data-letter-spacing :auto
+        :data-line-height    :text-block}))
+
+(defn select-option-checkmark-attributes
+  ; @ignore
+  ;
+  ; @param (keyword) select-id
+  ; @param (map) select-props
+  ; @param (*) option
+  ;
+  ; @return (map)
+  ; {}
+  [_ _ _]
+  {:class            :pi-select--option-checkmark
+   :data-icon-family :material-symbols-outlined})
+
+(defn select-option-attributes
+  ; @ignore
+  ;
+  ; @param (keyword) select-id
+  ; @param (map) select-props
+  ; {:disabled? (boolean)(opt)}
+  ; @param (*) option
+  ;
+  ; @return (map)
+  ; {}
+  [select-id {:keys [disabled?] :as select-props} option]
+  (let [option-selected? (core.env/option-selected? select-id select-props option)
+        option-color     (core.env/get-option-color select-id select-props option)
+        on-click-f       (fn [_] (core.side-effects/select-option! select-id select-props option))]
+       (-> {:class         :pi-select--option
+            :data-selected option-selected?
+            :disabled      disabled?}
+           (pretty-build-kit/effect-attributes select-props)
+           (pretty-build-kit/color-attributes       {:fill-color option-color})
+           (pretty-build-kit/mouse-event-attributes {:on-click-f on-click-f :on-mouse-up-f dom/blur-active-element!}))))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn select-options-label-attributes
+  ; @ignore
+  ;
+  ; @param (keyword) select-id
+  ; @param (map) select-props
+  ; {}
+  [_ _]
+  {:class            :pi-select--options-label
+   :data-font-size   :s
+   :data-font-weight :medium
+   :data-line-height :text-block})
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn select-body-attributes
   ; @ignore
   ;
   ; @param (keyword) select-id
@@ -81,8 +121,24 @@
   ; @return (map)
   ; {}
   [_ select-props]
-  (-> {:class :pi-select-button}
+  (-> {:class :pi-select--body}
+      (pretty-build-kit/indent-attributes       select-props)
+      (pretty-build-kit/style-attributes        select-props)
+      (pretty-build-kit/unselectable-attributes select-props)))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn select-attributes
+  ; @ignore
+  ;
+  ; @param (keyword) select-id
+  ; @param (map) select-props
+  ;
+  ; @return (map)
+  ; {}
+  [_ select-props]
+  (-> {:class :pi-select}
       (pretty-build-kit/class-attributes   select-props)
-      (pretty-build-kit/effect-attributes  select-props)
       (pretty-build-kit/outdent-attributes select-props)
       (pretty-build-kit/state-attributes   select-props)))

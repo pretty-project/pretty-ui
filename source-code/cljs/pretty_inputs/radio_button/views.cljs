@@ -11,7 +11,8 @@
               [pretty-inputs.core.views          :as core.views]
               [pretty-presets.api :as pretty-presets]
               [pretty-forms.api :as pretty-forms]
-              [reagent.api                           :as reagent]))
+              [reagent.api :as reagent]
+              [fruits.vector.api :as vector]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -26,7 +27,9 @@
   ; @param (*) option
   [button-id {:keys [option-helper-f option-label-f] :as button-props} option]
   [:button (radio-button.attributes/radio-button-option-attributes button-id button-props option)
-           [:div (radio-button.attributes/radio-button-option-button-attributes button-id button-props option)]
+           [:div (radio-button.attributes/radio-button-option-button-attributes button-id button-props option)
+                 (if-let [option-selected? (core.env/option-selected? button-id button-props option)]
+                         [:div (radio-button.attributes/radio-button-option-thumb-attributes button-id button-props option)])]
            [:div {:class :pi-radio-button--option-content}
                  (if-some [option-label (-> option option-label-f)]
                           [:div (radio-button.attributes/radio-button-option-label-attributes button-id button-props option)
@@ -40,10 +43,13 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  [button-id button-props]
+  ; {:placeholder (metamorphic-content)(opt)}
+  [button-id {:keys [placeholder] :as button-props}]
   (letfn [(f0 [option] [radio-button-option button-id button-props option])]
          (let [options (core.env/get-input-options button-id button-props)]
-              (hiccup/put-with [:<>] options f0))))
+              (cond (-> options vector/not-empty?) (hiccup/put-with [:<>] options f0)
+                    (-> placeholder) [:div (radio-button.attributes/radio-button-placeholder-attributes button-id button-props)
+                                           (metamorphic-content/compose placeholder)]))))
 
 (defn- radio-button
   ; @ignore
@@ -95,6 +101,8 @@
   ;  :initial-value (*)(opt)
   ;  :label (metamorphic-content)
   ;  :marker-color (keyword or string)(opt)
+  ;  :max-selection (integer)(opt)
+  ;  :on-changed-f (function)(opt)
   ;  :on-empty-f (function)(opt)
   ;  :on-invalid-f (function)(opt)
   ;  :on-mount-f (function)(opt)
@@ -102,12 +110,14 @@
   ;  :on-unmount-f (function)(opt)
   ;  :on-unselected-f (function)(opt)
   ;  :on-valid-f (function)(opt)
+  ;  :option-color-f (function)(opt)
   ;  :option-helper-f (function)(opt)
   ;  :option-label-f (function)(opt)
   ;  :option-value-f (function)(opt)
   ;  :orientation (keyword)(opt)
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
+  ;  :placeholder (metamorphic-content)(opt)
   ;  :preset (keyword)(opt)
   ;  :projected-value (*)(opt)
   ;  :set-value-f (function)(opt)
@@ -123,18 +133,12 @@
   ;
   ; @usage
   ; [radio-button :my-radio-button {...}]
-  ;
-  ; @usage
-  ; [radio-button :my-radio-button {:initial-value "Option #1"
-  ;                                 :get-options-f #(-> ["Option #1" "Option #2"])
-  ;                                 :get-value-f   #(deref  my-atom)
-  ;                                 :set-value-f   #(reset! my-atom %)}]
   ([button-props]
    [input (random/generate-keyword) button-props])
 
   ([button-id button-props]
    ; @note (tutorials#parametering)
    (fn [_ button-props]
-       (let [button-props (pretty-presets/apply-preset                              button-props)
-             button-props (radio-button.prototypes/button-props-prototype button-id button-props)]
+       (let [button-props (pretty-presets/apply-preset                    button-props)
+             button-props (radio-button.prototypes/button-props-prototype button-props)]
             [radio-button-lifecycles button-id button-props]))))

@@ -1,42 +1,17 @@
 
-(ns pretty-inputs.select.side-effects
-    (:require [keypress-handler.api :as keypress-handler]
-              [re-frame.api         :as r]))
+(ns pretty-inputs.select.side-effects)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn reg-keypress-events!
+(defn add-option!
   ; @ignore
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
-  [select-id select-props]
-  (let [on-escape-props {:key-code 27 :required? true :on-keyup-f #(r/dispatch [:pretty-inputs.select/ESC-pressed   select-id select-props])}
-        on-enter-props  {:key-code 13 :required? true :on-keyup-f #(r/dispatch [:pretty-inputs.select/ENTER-pressed select-id select-props])}]
-       (keypress-handler/reg-keypress-event! :pretty-inputs.select/ESC   on-escape-props)
-       (keypress-handler/reg-keypress-event! :pretty-inputs.select/ENTER on-enter-props)))
-
-(defn dereg-keypress-events!
-  ; @ignore
-  ;
-  ; @param (keyword) select-id
-  ; @param (map) select-props
-  [_ _]
-  (keypress-handler/dereg-keypress-event! :pretty-inputs.select/ESC)
-  (keypress-handler/dereg-keypress-event! :pretty-inputs.select/ENTER))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; @ignore
-;
-; @param (keyword) select-id
-; @param (map) select-props
-(r/reg-fx :pretty-inputs.select/reg-keypress-events! reg-keypress-events!)
-
-; @ignore
-;
-; @param (keyword) select-id
-; @param (map) select-props
-(r/reg-fx :pretty-inputs.select/dereg-keypress-events! dereg-keypress-events!)
+  ; @param (string) field-content
+  [select-id {:keys [add-option-f]} field-content]
+  ; Pressing the ENTER key while the field is focused fires the 'on-enter-f' function
+  ; that calls this ('add-option!') function
+  (if (-> field-content empty? not)
+      (if add-option-f (add-option-f field-content))))

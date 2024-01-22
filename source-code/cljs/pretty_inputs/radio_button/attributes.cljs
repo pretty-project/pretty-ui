@@ -10,6 +10,24 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn radio-button-placeholder-attributes
+  ; @ignore
+  ;
+  ; @param (keyword) button-id
+  ; @param (map) button-props
+  ;
+  ; @return (map)
+  ; {}
+  [_ _]
+  {:class               :pi-radio-button--placeholder
+   :data-font-size      :s
+   :data-letter-spacing :auto
+   :data-line-height    :text-block
+   :data-text-color     :highlight})
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn radio-button-option-helper-attributes
   ; @ignore
   ;
@@ -23,7 +41,8 @@
   {:class               :pi-radio-button--option-helper
    :data-font-size      :xs
    :data-letter-spacing :auto
-   :data-line-height    :auto})
+   :data-line-height    :auto
+   :data-text-color     :muted})
 
 (defn radio-button-option-label-attributes
   ; @ignore
@@ -42,20 +61,33 @@
    :data-letter-spacing :auto
    :data-line-height    :text-block})
 
+(defn radio-button-option-thumb-attributes
+  ; @ignore
+  ;
+  ; @param (keyword) button-id
+  ; @param (map) button-props
+  ; @param (*) option
+  ;
+  ; @return (map)
+  ; {}
+  [_ button-props _]
+  (-> {:class :pi-radio-button--option-thumb}
+      (pretty-build-kit/adaptive-border-attributes button-props 0.3)))
+
 (defn radio-button-option-button-attributes
   ; @ignore
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  ; {}
   ; @param (*) option
   ;
   ; @return (map)
   ; {}
-  [_ {{:keys [all]} :border-radius :as button-props} _]
-  (-> {:class :pi-radio-button--option-button
-       :style {"--adaptive-border-radius" (pretty-build-kit/adaptive-border-radius all 0.3)}}
-      (pretty-build-kit/border-attributes button-props)))
+  [button-id button-props option]
+  (let [option-color (core.env/get-option-color button-id button-props option)]
+       (-> {:class :pi-radio-button--option-button}
+           (pretty-build-kit/border-attributes button-props)
+           (pretty-build-kit/color-attributes {:fill-color option-color}))))
 
 (defn radio-button-option-attributes
   ; @ignore
@@ -68,10 +100,10 @@
   ; @return (map)
   ; {}
   [button-id {:keys [disabled?] :as button-props} option]
-  (let [option-picked? (core.env/option-picked? button-id button-props option)
-        on-click-f     (fn [_] (core.side-effects/pick-option! button-id button-props option))]
+  (let [option-selected? (core.env/option-selected? button-id button-props option)
+        on-click-f       (fn [_] (core.side-effects/select-option! button-id button-props option))]
        (-> {:class         :pi-radio-button--option
-            :data-selected option-picked?
+            :data-selected option-selected?
             :disabled      disabled?}
            (pretty-build-kit/effect-attributes button-props)
            (pretty-build-kit/mouse-event-attributes {:on-click-f on-click-f :on-mouse-up-f dom/blur-active-element!}))))

@@ -10,7 +10,8 @@
               [pretty-inputs.core.views          :as core.views]
               [pretty-presets.api                :as pretty-presets]
               [reagent.api                       :as reagent]
-              [metamorphic-content.api :as metamorphic-content]))
+              [metamorphic-content.api :as metamorphic-content]
+              [fruits.vector.api :as vector]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -25,7 +26,9 @@
   ; @param (*) option
   [checkbox-id {:keys [option-helper-f option-label-f] :as checkbox-props} option]
   [:button (checkbox.attributes/checkbox-option-attributes checkbox-id checkbox-props option)
-           [:div (checkbox.attributes/checkbox-option-button-attributes checkbox-id checkbox-props option)]
+           [:div (checkbox.attributes/checkbox-option-button-attributes checkbox-id checkbox-props option)
+                 (if-let [option-selected? (core.env/option-selected? checkbox-id checkbox-props option)]
+                         [:div (checkbox.attributes/checkbox-option-checkmark-attributes checkbox-id checkbox-props option) :done])]
            [:div {:class :pi-checkbox--option-content}
                  (if-some [option-label (-> option option-label-f)]
                           [:div (checkbox.attributes/checkbox-option-label-attributes checkbox-id checkbox-props option)
@@ -39,10 +42,13 @@
   ;
   ; @param (keyword) checkbox-id
   ; @param (map) checkbox-props
-  [checkbox-id checkbox-props]
+  ; {:placeholder (metamorphic-content)(opt)}
+  [checkbox-id {:keys [placeholder] :as checkbox-props}]
   (letfn [(f0 [option] [checkbox-option checkbox-id checkbox-props option])]
          (let [options (core.env/get-input-options checkbox-id checkbox-props)]
-              (hiccup/put-with [:<>] options f0))))
+              (cond (-> options vector/not-empty?) (hiccup/put-with [:<>] options f0)
+                    (-> placeholder) [:div (checkbox.attributes/checkbox-placeholder-attributes checkbox-id checkbox-props)
+                                           (metamorphic-content/compose placeholder)]))))
 
 (defn- checkbox
   ; @ignore
@@ -86,12 +92,15 @@
   ;  :get-options-f (function)(opt)
   ;  :get-value-f (function)(opt)
   ;  :helper (metamorphic-content)(opt)
+  ;  :info-text (metamorphic-content)(opt)
   ;  :hover-effect (keyword)(opt)
   ;  :indent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :initial-value (*)(opt)
   ;  :label (metamorphic-content)(opt)
   ;  :marker-color (keyword or string)(opt)
+  ;  :max-selection (integer)(opt)
+  ;  :on-changed-f (function)(opt)
   ;  :on-empty-f (function)(opt)
   ;  :on-invalid-f (function)(opt)
   ;  :on-mount-f (function)(opt)
@@ -99,12 +108,14 @@
   ;  :on-unmount-f (function)(opt)
   ;  :on-unselected-f (function)(opt)
   ;  :on-valid-f (function)(opt)
+  ;  :option-color-f (function)(opt)
   ;  :option-helper-f (function)(opt)
   ;  :option-label-f (function)(opt)
   ;  :option-value-f (function)(opt)
   ;  :orientation (keyword)(opt)
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
+  ;  :placeholder (metamorphic-content)(opt)
   ;  :preset (keyword)(opt)
   ;  :projected-value (*)(opt)
   ;  :set-value-f (function)(opt)
@@ -120,12 +131,6 @@
   ;
   ; @usage
   ; [checkbox :my-checkbox {...}]
-  ;
-  ; @usage
-  ; [checkbox :my-checkbox {:initial-value "Option #1"
-  ;                         :get-options-f #(-> ["Option #1" "Option #2"])
-  ;                         :get-value-f   #(deref  my-atom)
-  ;                         :set-value-f   #(reset! my-atom %)}]
   ([checkbox-props]
    [input (random/generate-keyword) checkbox-props])
 

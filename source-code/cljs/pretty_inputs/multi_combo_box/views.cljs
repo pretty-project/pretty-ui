@@ -7,8 +7,8 @@
               [pretty-inputs.core.views                 :as core.views]
               [pretty-inputs.multi-combo-box.attributes :as multi-combo-box.attributes]
               [pretty-inputs.multi-combo-box.prototypes :as multi-combo-box.prototypes]
-              [pretty-inputs.multi-combo-box.utils      :as multi-combo-box.utils]
-              [re-frame.api                             :as r]))
+              [re-frame.api                             :as r]
+              [pretty-inputs.core.utils :as core.utils]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -22,7 +22,7 @@
   [box-id {:keys [value-path] :as box-props}]
   (if-let [chips @(r/subscribe [:get-item value-path])]
           (if (vector/not-empty? chips)
-              (let [group-id    (multi-combo-box.utils/box-id->group-id           box-id)
+              (let [group-id    (core.utils/input-id->subitem-id                  box-id :chip-group)
                     group-props (multi-combo-box.prototypes/group-props-prototype box-id box-props)]
                    [chip-group.views/input group-id group-props]))))
 
@@ -35,7 +35,7 @@
   ; @param (keyword) box-id
   ; @param (map) box-props
   [box-id box-props]
-  (let [field-id    (multi-combo-box.utils/box-id->field-id           box-id)
+  (let [field-id    (core.utils/input-id->subitem-id                  box-id :text-field)
         field-props (multi-combo-box.prototypes/field-props-prototype box-id box-props)]
        [combo-box.views/combo-box field-id field-props]))
 

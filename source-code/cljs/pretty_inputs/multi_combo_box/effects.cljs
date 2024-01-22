@@ -4,9 +4,9 @@
               [pretty-inputs.core.env                   :as core.env]
               [pretty-inputs.multi-combo-box.events     :as multi-combo-box.events]
               [pretty-inputs.multi-combo-box.prototypes :as multi-combo-box.prototypes]
-              [pretty-inputs.multi-combo-box.utils      :as multi-combo-box.utils]
               [pretty-inputs.text-field.env            :as text-field.env]
-              [re-frame.api                             :as r :refer [r]]))
+              [re-frame.api                             :as r :refer [r]]
+              [pretty-inputs.core.utils :as core.utils]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -19,7 +19,7 @@
   ; {}
   (fn [{:keys [db]} [_ box-id box-props]]
       ; XXX#4146 (source-code/cljs/pretty_inputs/combo_box/effects.cljs)
-      (let [field-id    (multi-combo-box.utils/box-id->field-id           box-id)
+      (let [field-id    (core.utils/input-id->subitem-id                  box-id :text-field)
             field-props (multi-combo-box.prototypes/field-props-prototype box-id box-props)]
            (if (text-field.env/field-surface-visible? field-id field-props)
                (if-let [highlighted-option (combo-box.env/get-highlighted-option field-id field-props)]
@@ -37,7 +37,7 @@
   ; @param (keyword) box-id
   ; @param (map) box-props
   (fn [{:keys [db]} [_ box-id box-props]]
-      (let [field-id    (multi-combo-box.utils/box-id->field-id           box-id)
+      (let [field-id    (core.utils/input-id->subitem-id                  box-id :text-field)
             field-props (multi-combo-box.prototypes/field-props-prototype box-id box-props)]
            (if (core.env/input-not-empty? field-id field-props)
                [:pretty-inputs.multi-combo-box/use-field-content! box-id box-props]))))
@@ -51,7 +51,7 @@
   ; @param (keyword) box-id
   ; @param (map) box-props
   (fn [{:keys [db]} [_ box-id box-props]]
-      (let [field-id      (multi-combo-box.utils/box-id->field-id           box-id)
+      (let [field-id      (core.utils/input-id->subitem-id                  box-id :text-field)
             field-props   (multi-combo-box.prototypes/field-props-prototype box-id box-props)
             field-content (core.env/get-input-displayed-value               field-id field-props)]
            {:db       (r multi-combo-box.events/use-field-content! db box-id box-props field-content)
@@ -64,7 +64,7 @@
   ; @param (map) box-props
   ; @param (*) option
   (fn [{:keys [db]} [_ box-id box-props option]]
-      (let [field-id    (multi-combo-box.utils/box-id->field-id           box-id)
+      (let [field-id    (core.utils/input-id->subitem-id                  box-id :text-field)
             field-props (multi-combo-box.prototypes/field-props-prototype box-id box-props)]
            {:db   (r multi-combo-box.events/use-option! db box-id box-props option)
             :fx-n [[:pretty-inputs.text-field/hide-surface!             field-id]
@@ -79,7 +79,7 @@
   ; @param (keyword) box-id
   ; @param (map) box-props
   (fn [{:keys [db]} [_ box-id _]]
-      (let [field-id (multi-combo-box.utils/box-id->field-id box-id)]
+      (let [field-id (core.utils/input-id->subitem-id box-id :text-field)]
            {:fx [:pretty-inputs.combo-box/discard-option-highlighter! field-id]})))
 
 (r/reg-event-fx :pretty-inputs.multi-combo-box/field-focused
@@ -103,7 +103,7 @@
       ; Különben a felhasználó azt feltételezné, hogy kitölött egy mezőt és ha nem
       ; adódik hozzá az értékek vektorához a mező tartalma, akkor az adat elveszne.
       ; Szóval ez most egy UX teszt.
-      (let [field-id    (multi-combo-box.utils/box-id->field-id           box-id)
+      (let [field-id    (core.utils/input-id->subitem-id                  box-id :text-field)
             field-props (multi-combo-box.prototypes/field-props-prototype box-id box-props)]
            (if (core.env/input-empty? field-id field-props)
                {:fx       [:pretty-inputs.multi-combo-box/dereg-keypress-events! box-id box-props]}
