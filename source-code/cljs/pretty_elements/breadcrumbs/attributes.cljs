@@ -30,7 +30,7 @@
       (pretty-build-kit/color-attributes        crumb-props)
       (pretty-build-kit/cursor-attributes       crumb-props)
       (pretty-build-kit/effect-attributes       crumb-props)
-      (pretty-build-kit/link-attributes         crumb-props)
+      (pretty-build-kit/href-attributes         crumb-props)
       (pretty-build-kit/state-attributes        crumb-props)
       (pretty-build-kit/unselectable-attributes crumb-props)))
 

@@ -1,6 +1,6 @@
 
 (ns pretty-inputs.radio-button.prototypes
-    (:require [fruits.noop.api           :refer [return]]
+    (:require [fruits.noop.api           :refer [none return]]
               [pretty-build-kit.api      :as pretty-build-kit]
               [pretty-inputs.input.utils :as input.utils]))
 
@@ -20,6 +20,7 @@
   ;  :border-width (keyword, px or string)
   ;  :click-effect (keyword)
   ;  :font-size (keyword, px or string)
+  ;  :option-helper-f (function)
   ;  :option-label-f (function)
   ;  :option-value-f (function)
   ;  :orientation (keyword)
@@ -32,9 +33,10 @@
           :border-width    :xs
           :click-effect    :opacity
           :font-size       :s
-          :orientation     :vertical
           :options-path    (input.utils/default-options-path button-id)
           :value-path      (input.utils/default-value-path   button-id)
+          :option-helper-f none
           :option-label-f  return
-          :option-value-f  return}
+          :option-value-f  return
+          :orientation     :vertical}
          (-> button-props)))

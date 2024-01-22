@@ -1,4 +1,22 @@
 
+/*** Adornment-group ***/
+
+.pe-adornment-group--adornments {
+  align-items: center;
+  display: flex;
+}
+
+.pe-adornment-group--adornment-label {
+  font-weight: 500;
+  min-width:   24px;
+  text-align:  center;
+  padding:     0 4px;
+}
+
+/*** Adornment-group ***/
+
+
+
 /***** Blank *****/
 /*** Body ***/
 
@@ -85,55 +103,10 @@
 
 .pe-chip--body {
   display: flex;
+  gap:     4px;
 }
 
 /*** Body ***/
-
-/*** Content ***/
-
-.pe-chip--content {
-  padding-right: 6px;
-}
-
-/*** Content ***/
-
-/*** Icon ***/
-
-.pe-chip--icon-placeholder {
-  height: 24px;
-  width: 6px;
-}
-
-/*** Icon ***/
-
-/*** Button ***/
-
-.pe-chip--primary-button {
-  background-color: rgba( 255, 255, 255, .65 );
-  border-radius:    var( --adaptive-border-radius );
-  color:            var( --text-color-default     );
-  height:           20px;
-  left:             2px;
-  position:         absolute;
-  top:              2px;
-  width:            20px;
-}
-
-.pe-chip--primary-button-icon {
-  align-items:     center;
-  display:         flex;
-  flex-direction:  column;
-  font-size:       12px;
-  justify-content: center;
-  line-height:     20px;
-}
-
-.pe-chip--primary-button-spacer {
-  height: 24px;
-  width:  24px;
-}
-
-/*** Button ***/
 /***** Chip *****/
 
 

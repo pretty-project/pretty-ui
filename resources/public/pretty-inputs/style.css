@@ -9,18 +9,6 @@
 
 /*** Wrapper ***/
 
-/*** Invalid message ***/
-
-.pi-checkbox--invalid-message {
-  color:          var( --text-color-warning );
-  font-size:      var( --font-size-xxs      );
-  font-weight:    var( --font-weight-medium );
-  letter-spacing: var( --letter-spacing-xxs );
-  line-height:    18px;
-}
-
-/*** Invalid message ***/
-
 /*** Options ***/
 
 .pi-checkbox--body[data-orientation="horizontal"] {
@@ -86,23 +74,23 @@
 
 /*** Wrapper ***/
 
-/*** Chip-group chips ***/
+/*** Body ***/
 
-.pi-chip-group--chips {
+.pi-chip-group--body {
   display:   flex;
   flex-wrap: wrap;
   gap:       12px;
 }
 
-/*** Chip-group chips ***/
+/*** Body ***/
 
-/*** Chip-group no-chips label ***/
+/*** Placeholder ***/
 
-.pi-chip-group--chips-placeholder {
+.pi-chip-group--placeholder {
   color: var( --text-color-highlight );
 }
 
-/*** Chip-group no-chips label ***/
+/*** Placeholder ***/
 /***** Chip-group *****/
 
 
@@ -374,41 +362,6 @@
 }
 
 /*** Wrapper ***/
-
-/*** Clear button ***/
-
-.pi-radio-button--clear-button {
-  background-color: var( --fill-color-default );
-  border-color:     var( --text-color-default );
-  margin-bottom:    6px;
-  margin-top:       6px;
-  padding:          8px;
-}
-
-.pi-radio-button--clear-button::before,
-.pi-radio-button--clear-button::after {
-  background-color: var( --text-color-default );
-  border-radius:    1px;
-  content:          '';
-  position:         absolute;
-  transform:        rotateZ( -45deg );
-}
-
-.pi-radio-button--clear-button::before {
-  height: 2px;
-  left:   4px;
-  top:    7px;
-  width:  8px;
-}
-
-.pi-radio-button--clear-button::after {
-  height: 8px;
-  left:   7px;
-  top:    4px;
-  width:  2px;
-}
-
-/*** Clear button ***/
 
 /*** Options ***/
 
@@ -685,8 +638,8 @@
 /*** Thumb ***/
 
 .pi-switch--option-track::before {
-  background-color: var( --text-color-default );
-  border-radius:    50%;
+  background-color: var( --text-color-default     );
+  border-radius:    var( --adaptive-border-radius );
   content:          '';
   display:          block;
   height:           12px;
@@ -754,47 +707,15 @@ textarea.pi-text-field--input {
 /*** Adornments ***/
 
 .pi-text-field--adornments {
-  align-items: center;
-  display: flex;
-
-  /* XXX#0617 The text-field element has the same padding as the standard (12px) */
   padding: 0 12px;
 }
 
 .pi-text-field--adornments-placeholder {
   cursor: text;
-
-  /* XXX#0617 */
   width: 12px;
 }
 
-.pi-text-field--adornment:not([data-icon-family]),
-.pi-text-field--adornment:not([data-icon-family]) {
-  font-weight: 500;
-  min-width: 24px;
-  text-align: center;
-
-  /* XXX#0617
-   * The label adornment's padding and the adornment wrapper's padding adds up.
-   * Therefore, the label adornments are 16px far from the edge, but this isn't
-   * a problem, because the icon adornments (with no padding) look the same! */
-  padding: 0 4px;
-}
-
 /*** Adornments ***/
-
-/*** Invalid message ***/
-
-.pi-text-field--invalid-message {
-  color:          var( --text-color-warning );
-  font-size:      var( --font-size-xxs      );
-  font-weight:    var( --font-weight-medium );
-  letter-spacing: var( --letter-spacing-xxs );
-  line-height:    18px;
-  padding-top:    6px;
-}
-
-/*** Invalid message ***/
 
 /*** Placeholder ***/
 

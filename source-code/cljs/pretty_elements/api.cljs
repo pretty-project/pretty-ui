@@ -4,6 +4,7 @@
               [pretty-elements.button.side-effects]
               [pretty-elements.content-swapper.effects]
               [pretty-elements.content-swapper.side-effects]
+              [pretty-elements.adornment-group.views      :as adornment-group.views]
               [pretty-elements.blank.views                :as blank.views]
               [pretty-elements.breadcrumbs.views          :as breadcrumbs.views]
               [pretty-elements.button.views               :as button.views]
@@ -13,7 +14,6 @@
               [pretty-elements.content-swapper.views      :as content-swapper.views]
               [pretty-elements.data-table.views           :as data-table.views]
               [pretty-elements.dropdown-menu.views        :as dropdown-menu.views]
-              [pretty-elements.element.views              :as element.views]
               [pretty-elements.expandable.views           :as expandable.views]
               [pretty-elements.ghost.views                :as ghost.views]
               [pretty-elements.horizontal-group.views     :as horizontal-group.views]
@@ -39,6 +39,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; @redirect (*/element)
+(def adornment-group      adornment-group.views/element)
 (def breadcrumbs          breadcrumbs.views/element)
 (def blank                blank.views/element)
 (def button               button.views/element)
@@ -48,7 +49,6 @@
 (def content-swapper      content-swapper.views/element)
 (def data-table           data-table.views/element)
 (def dropdown-menu        dropdown-menu.views/element)
-(def element-label        element.views/element-label)
 (def expandable           expandable.views/element)
 (def ghost                ghost.views/element)
 (def horizontal-group     horizontal-group.views/element)

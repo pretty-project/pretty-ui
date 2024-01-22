@@ -58,7 +58,7 @@
   ;  :border-width (keyword, px or string)(opt)
   ;  :class (keyword or keywords in vector)(opt)
   ;  :click-effect (keyword)(opt)
-  ;   Default: :opacity (if 'href' of 'on-click-f' is provided)
+  ;   Default: :opacity (if 'href-uri' of 'on-click-f' is provided)
   ;  :cursor (keyword or string)(opt)
   ;   Default: :pointer
   ;  :disabled? (boolean)(opt)
@@ -67,7 +67,8 @@
   ;   Default: :cover
   ;  :hover-color (keyword or string)(opt)
   ;  :hover-effect (keyword)(opt)
-  ;  :href (string)(opt)
+  ;  :href-target (keyword)(opt)
+  ;  :href-uri (string)(opt)
   ;  :icon (keyword)
   ;  :icon-color (keyword or string)(opt)
   ;   Default: :inherit
@@ -102,8 +103,6 @@
   ;  :progress-duration (ms)(opt)
   ;   Default: 250
   ;  :style (map)(opt)
-  ;  :target (keyword)(opt)
-  ;   :blank, :self
   ;  :tooltip-content (metamorphic-content)(opt)
   ;  :tooltip-position (keyword)(opt)}
   ;

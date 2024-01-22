@@ -100,16 +100,19 @@
   ;
   ; @return (*)
   [input-id {:keys [projected-value] :as input-props}]
-  (if-let [input-internal-value (get-input-internal-value input-id input-props)]
-          (-> input-internal-value)
-          (if-not (input-changed? input-id input-props)
-                  (-> projected-value))))
+  (if-some [input-internal-value (get-input-internal-value input-id input-props)]
+           (-> input-internal-value)
+           (if-not (input-changed? input-id input-props)
+                   (-> projected-value))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn single-option-selected?
+(defn option-picked?
   ; @ignore
+  ;
+  ; @note
+  ; Output of option picking is always a single option.
   ;
   ; @param (keyword) input-id
   ; @param (map) input-props
@@ -122,8 +125,11 @@
         input-displayed-value (get-input-displayed-value input-id input-props)]
        (= input-displayed-value option-value)))
 
-(defn multi-option-selected?
+(defn option-toggled?
   ; @ignore
+  ;
+  ; @note
+  ; Output of option toggling is a vector of currently toggled options.
   ;
   ; @param (keyword) input-id
   ; @param (map) input-props
@@ -139,6 +145,11 @@
 (defn option-selected?
   ; @ignore
   ;
+  ; @note
+  ; Output of option selecting depends on the number of available options.
+  ; If only one option is available for the input, the selecting will pick/unpick that single option.
+  ; If multiple options are available for the input, the selecting will toggle/untoggle options in the output vector.
+  ;
   ; @param (keyword) input-id
   ; @param (map) input-props
   ; {}
@@ -147,8 +158,8 @@
   ; @return (boolean)
   [input-id {:keys [options] :as input-props} option]
   (if (vector/count-min? options 2)
-      (multi-option-selected?  input-id input-props option)
-      (single-option-selected? input-id input-props option)))
+      (option-toggled? input-id input-props option)
+      (option-picked?  input-id input-props option)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

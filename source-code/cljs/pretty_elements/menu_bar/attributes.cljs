@@ -59,7 +59,7 @@
       (pretty-build-kit/effect-attributes      item-props)
       (pretty-build-kit/indent-attributes      item-props)
       (pretty-build-kit/mouse-event-attributes item-props)
-      (pretty-build-kit/link-attributes        item-props)
+      (pretty-build-kit/href-attributes        item-props)
       (pretty-build-kit/marker-attributes      item-props)))
 
 ;; ----------------------------------------------------------------------------

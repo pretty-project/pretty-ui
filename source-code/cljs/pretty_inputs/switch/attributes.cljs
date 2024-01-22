@@ -2,7 +2,9 @@
 (ns pretty-inputs.switch.attributes
     (:require [dom.api              :as dom]
               [pretty-build-kit.api :as pretty-build-kit]
-              [re-frame.api         :as r]))
+              [re-frame.api         :as r]
+              [pretty-inputs.core.env :as core.env]
+              [pretty-inputs.core.side-effects :as core.side-effects]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -12,10 +14,10 @@
   ;
   ; @param (keyword) switch-id
   ; @param (map) switch-props
-  ; {:font-size (keyword, px or string)}
+  ; @param (*) option
   ;
   ; @return (map)
-  [_ _]
+  [_ _ _]
   {:class               :pi-switch--option-helper
    :data-font-size      :xs
    :data-letter-spacing :auto
@@ -27,10 +29,11 @@
   ; @param (keyword) switch-id
   ; @param (map) switch-props
   ; {:font-size (keyword, px or string)}
+  ; @param (*) option
   ;
   ; @return (map)
   ; {}
-  [_ {:keys [font-size]}]
+  [_ {:keys [font-size]} _]
   {:class               :pi-switch--option-label
    :data-font-size      font-size
    :data-font-weight    :medium
@@ -44,10 +47,11 @@
   ; @param (map) switch-props
   ; {:border-radius (map)
   ;   {:all (keyword)(opt)}}
+  ; @param (*) option
   ;
   ; @return (map)
   ; {}
-  [_ {{:keys [all]} :border-radius :as switch-props}]
+  [_ {{:keys [all]} :border-radius :as switch-props} _]
   (-> {:class :pi-switch--option-track
        :style {"--adaptive-border-radius" (pretty-build-kit/adaptive-border-radius all 0.75)}}
       (pretty-build-kit/border-attributes switch-props)))
@@ -64,15 +68,14 @@
   ; {:class (keyword or keywords in vector)
   ;  :data-switched (boolean)
   ;  :disabled (boolean)}
-  [switch-id {:keys [border-radius disabled?] :as switch-props} option]
-  (let [option-switched? @(r/subscribe [:pretty-inputs.switch/option-switched? switch-id switch-props option])
-        on-switch-event  #(r/dispatch  [:pretty-inputs.switch/toggle-option!   switch-id switch-props option])]
+  [switch-id {:keys [disabled?] :as switch-props} option]
+  (let [option-selected? (core.env/option-selected? switch-id switch-props option)
+        on-click-f       (fn [_] (core.side-effects/select-option! switch-id switch-props option))]
        (-> {:class         :pi-switch--option
-            :data-switched option-switched?
+            :data-switched option-selected?
             :disabled      disabled?}
            (pretty-build-kit/effect-attributes switch-props)
-           (pretty-build-kit/mouse-event-attributes {:on-click    on-switch-event
-                                                     :on-mouse-up dom/blur-active-element!}))))
+           (pretty-build-kit/mouse-event-attributes {:on-click-f on-click-f :on-mouse-up-f dom/blur-active-element!}))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -86,11 +89,15 @@
   ; @return (map)
   ; {:class (keyword or keywords in vector)}
   [switch-id switch-props]
-  (-> {:class :pi-switch--body}
-      (pretty-build-kit/indent-attributes       switch-props)
-      (pretty-build-kit/orientation-attributes  switch-props)
-      (pretty-build-kit/style-attributes        switch-props)
-      (pretty-build-kit/unselectable-attributes switch-props)))
+  (let [on-blur-f  (fn [_] (core.side-effects/input-left    switch-id switch-props))
+        on-focus-f (fn [_] (core.side-effects/input-focused switch-id switch-props))]
+       (-> {:class :pi-switch--body
+            :on-blur  on-blur-f
+            :on-focus on-focus-f}
+           (pretty-build-kit/indent-attributes       switch-props)
+           (pretty-build-kit/orientation-attributes  switch-props)
+           (pretty-build-kit/style-attributes        switch-props)
+           (pretty-build-kit/unselectable-attributes switch-props))))
 
 (defn switch-attributes
   ; @ignore

@@ -5,7 +5,6 @@
               [fruits.svg.api                            :as svg]
               [pretty-diagrams.circle-diagram.attributes :as circle-diagram.attributes]
               [pretty-diagrams.circle-diagram.prototypes :as circle-diagram.prototypes]
-              [pretty-diagrams.diagram.views             :as diagram.views]
               [pretty-presets.api                        :as pretty-presets]))
 
 ;; ----------------------------------------------------------------------------
@@ -31,7 +30,6 @@
   [diagram-id {:keys [diameter] :as diagram-props}]
   ; Without the SVG container element, the indent property of the body element would shrink the SVG element.
   [:div (circle-diagram.attributes/diagram-attributes diagram-id diagram-props)
-        [diagram.views/diagram-label                  diagram-id diagram-props]
         [:div (circle-diagram.attributes/diagram-body-attributes diagram-id diagram-props)
               [:div (circle-diagram.attributes/diagram-svg-container-attributes diagram-id diagram-props)
                     [:svg (svg/wrapper-attributes {:height diameter :width diameter})
@@ -43,11 +41,8 @@
   ; {:class (keyword or keywords in vector)(opt)
   ;  :diameter (px)(opt)
   ;   Default: 48
-  ;  :helper (metamorphic-content)(opt)
   ;  :indent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :info-text (metamorphic-content)(opt)
-  ;  :label (metamorphic-content)(opt)
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :preset (keyword)(opt)

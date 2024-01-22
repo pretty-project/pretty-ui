@@ -490,11 +490,22 @@
 ;
 ;
 ;
-; @title :href
+; @title :href-target
 ;
 ; @code Usage
-; [pretty-elements/button {:href (string)}]
-; [pretty-elements/button {:href "https://..."}]
+; [pretty-elements/text {:href-target (keyword)}]
+; [pretty-elements/text {:href-target :blank :href-uri "https://..."}]
+;
+; @code Predefined values
+; :blank, :self
+;
+;
+;
+; @title :href-uri
+;
+; @code Usage
+; [pretty-elements/button {:href-uri (string)}]
+; [pretty-elements/button {:href-uri "https://..."}]
 ;
 ;
 ;
@@ -808,17 +819,6 @@
 ;
 ;
 ;
-; @title :target
-;
-; @code Usage
-; [pretty-elements/text {:target (keyword)}]
-; [pretty-elements/text {:target :blank :href "https://..."}]
-;
-; @code Predefined values
-; :blank, :self
-;
-;
-;
 ; @title :text-align
 ;
 ; @code Usage
@@ -856,6 +856,14 @@
 ;
 ;
 ;
+; @title :text-selectable?
+;
+; @code Usage
+; [pretty-elements/text {:text-selectable? (boolean)}]
+; [pretty-elements/text {:text-selectable? false}]
+;
+;
+;
 ; @title :text-transform
 ;
 ; @code Usage
@@ -864,6 +872,14 @@
 ;
 ; @code Predefined values
 ; :capitalize, :lowercase, :uppercase
+;
+;
+;
+; @title :timeout
+;
+; @code Usage
+; [pretty-elements/button {:timeout (ms)}]
+; [pretty-elements/button {:on-click (fn [] (println '...')) :timeout 5000}]
 ;
 ;
 ;

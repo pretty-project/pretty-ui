@@ -16,24 +16,24 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  ; {:content (metamorphic-content)(opt)
-  ;  :href (string)(opt)
+  ; {:href-uri (string)(opt)
   ;  :icon (keyword)(opt)
   ;  :icon-position (keyword)(opt)
+  ;  :label (metamorphic-content)(opt)
   ;  :on-click-f (function)(opt)
   ;  :placeholder (metamorphic-content)(opt)}
-  [button-id {:keys [content href icon icon-position on-click-f placeholder] :as button-props}]
+  [button-id {:keys [href-uri icon icon-position label on-click-f placeholder] :as button-props}]
   [:div (button.attributes/button-attributes button-id button-props)
-        [(cond href :a on-click-f :button :else :button)
+        [(cond href-uri :a on-click-f :button :else :button)
          (button.attributes/button-body-attributes button-id button-props)
-         (case icon-position :left  [:<> (if   icon        [:i   (button.attributes/button-icon-attributes    button-id button-props) icon])
-                                         (cond content     [:div (button.attributes/button-content-attributes button-id button-props) [metamorphic-content/compose content]]
-                                               placeholder [:div (button.attributes/button-content-attributes button-id button-props) [metamorphic-content/compose placeholder]])]
-                             :right [:<> (cond content     [:div (button.attributes/button-content-attributes button-id button-props) [metamorphic-content/compose content]]
-                                               placeholder [:div (button.attributes/button-content-attributes button-id button-props) [metamorphic-content/compose placeholder]])
-                                         (if   icon        [:i   (button.attributes/button-icon-attributes    button-id button-props) icon])]
-                                    [:<> (cond content     [:div (button.attributes/button-content-attributes button-id button-props) [metamorphic-content/compose content]]
-                                               placeholder [:div (button.attributes/button-content-attributes button-id button-props) [metamorphic-content/compose placeholder]])])]])
+         (case icon-position :left  [:<> (if   icon        [:i   (button.attributes/button-icon-attributes  button-id button-props) icon])
+                                         (cond label       [:div (button.attributes/button-label-attributes button-id button-props) [metamorphic-content/compose label]]
+                                               placeholder [:div (button.attributes/button-label-attributes button-id button-props) [metamorphic-content/compose placeholder]])]
+                             :right [:<> (cond label       [:div (button.attributes/button-label-attributes button-id button-props) [metamorphic-content/compose label]]
+                                               placeholder [:div (button.attributes/button-label-attributes button-id button-props) [metamorphic-content/compose placeholder]])
+                                         (if   icon        [:i   (button.attributes/button-icon-attributes  button-id button-props) icon])]
+                                    [:<> (cond label       [:div (button.attributes/button-label-attributes button-id button-props) [metamorphic-content/compose label]]
+                                               placeholder [:div (button.attributes/button-label-attributes button-id button-props) [metamorphic-content/compose placeholder]])])]])
 
 (defn button-lifecycles
   ; @ignore
@@ -72,8 +72,7 @@
   ;  :border-width (keyword, px or string)(opt)
   ;  :class (keyword or keywords in vector)(opt)
   ;  :click-effect (keyword)(opt)
-  ;   Default: :opacity (if 'href' of 'on-click-f' is provided)
-  ;  :content (metamorphic-content)(opt)
+  ;   Default: :opacity (if 'href-uri' of 'on-click-f' is provided)
   ;  :cursor (keyword or string)(opt)
   ;   Default: :pointer
   ;  :disabled? (boolean)(opt)
@@ -91,7 +90,8 @@
   ;   Default: :center
   ;  :hover-color (keyword or string)(opt)
   ;  :hover-effect (keyword)(opt)
-  ;  :href (string)(opt)
+  ;  :href-target (keyword)(opt)
+  ;  :href-uri (string)(opt)
   ;  :icon (keyword)(opt)
   ;  :icon-color (keyword or string)(opt)
   ;   Default: :inherit
@@ -111,6 +111,7 @@
   ;    :required? (boolean)(opt)
   ;     Only required keypress events remain active during a text-field is in focused state.
   ;     Default: false}
+  ;  :label (metamorphic-content)(opt)
   ;  :line-height (keyword, px or string)(opt)
   ;   Default: :text-block
   ;  :marker-color (keyword or string)(opt)

@@ -23,7 +23,7 @@
       (pretty-build-kit/border-attributes         thumbnail-props)
       (pretty-build-kit/effect-attributes         thumbnail-props)
       (pretty-build-kit/indent-attributes         thumbnail-props)
-      (pretty-build-kit/link-attributes           thumbnail-props)
+      (pretty-build-kit/href-attributes           thumbnail-props)
       (pretty-build-kit/mouse-event-attributes    thumbnail-props)
       (pretty-build-kit/style-attributes          thumbnail-props)
       (pretty-build-kit/thumbnail-size-attributes thumbnail-props)

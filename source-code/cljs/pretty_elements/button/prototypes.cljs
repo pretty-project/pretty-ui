@@ -32,7 +32,7 @@
   ; {:badge-content (metamorphic-content)(opt)
   ;  :border-color (keyword or string)(opt)
   ;  :font-size (keyword, px or string)(opt)
-  ;  :href (string)(opt)
+  ;  :href-uri (string)(opt)
   ;  :icon (keyword)(opt)
   ;  :marker-color (keyword or string)(opt)
   ;  :on-click-f (function)(opt)
@@ -61,7 +61,7 @@
   ;  :text-overflow (keyword)
   ;  :tooltip-content (string)
   ;  :tooltip-position (keyword)}
-  [button-id {:keys [badge-content border-color font-size href icon marker-color on-click-f progress tooltip-content] :as button-props}]
+  [button-id {:keys [badge-content border-color font-size href-uri icon marker-color on-click-f progress tooltip-content] :as button-props}]
   ; @note (#7861)
   ; Badge metamorphic ontent and tooltip metamorphic content must be composed to string content before they get passed to any Pretty CSS element attribute function.
   (merge {:focus-id         button-id
@@ -82,10 +82,10 @@
                               :progress-direction :ltr
                               :progress-duration  250})
          (if tooltip-content {:tooltip-position   :right})
-         (if href            {:click-effect       :opacity})
+         (if href-uri        {:click-effect       :opacity})
          (if on-click-f      {:click-effect       :opacity})
          (-> button-props)
          (if badge-content   {:badge-content   (metamorphic-content/compose badge-content)})
          (if tooltip-content {:tooltip-content (metamorphic-content/compose tooltip-content)})
-         (if href            {:on-mouse-up-f dom/blur-active-element!})
+         (if href-uri        {:on-mouse-up-f dom/blur-active-element!})
          (if on-click-f      {:on-mouse-up-f dom/blur-active-element!})))

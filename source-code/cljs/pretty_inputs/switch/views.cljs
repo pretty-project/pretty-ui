@@ -2,15 +2,16 @@
 (ns pretty-inputs.switch.views
     (:require [fruits.hiccup.api               :as hiccup]
               [fruits.random.api               :as random]
-              [fruits.vector.api               :as vector]
               [metamorphic-content.api         :as metamorphic-content]
               [pretty-build-kit.api            :as pretty-build-kit]
-              [pretty-inputs.core.views        :as core.views]
               [pretty-inputs.input.env         :as input.env]
               [pretty-inputs.switch.attributes :as switch.attributes]
               [pretty-inputs.switch.prototypes :as switch.prototypes]
               [pretty-presets.api              :as pretty-presets]
-              [re-frame.api                    :as r]
+              [pretty-forms.api :as pretty-forms]
+              [pretty-inputs.core.env            :as core.env]
+              [pretty-inputs.core.side-effects   :as core.side-effects]
+              [pretty-inputs.core.views          :as core.views]
               [reagent.api                     :as reagent]))
 
 ;; ----------------------------------------------------------------------------
@@ -21,28 +22,29 @@
   ;
   ; @param (keyword) switch-id
   ; @param (map) switch-props
-  ; {:option-helper-f (function)(opt)
+  ; {:option-helper-f (function)
   ;  :option-label-f (function)}
   ; @param (*) option
   [switch-id {:keys [option-helper-f option-label-f] :as switch-props} option]
   [:button (switch.attributes/switch-option-attributes switch-id switch-props option)
-           [:div (switch.attributes/switch-option-track-attributes switch-id switch-props)]
-           [:div {:class :pi-switch--option-content :data-click-target :opacity}
-                 (if option-label-f  [:div (switch.attributes/switch-option-label-attributes switch-id switch-props)
-                                           (-> option option-label-f metamorphic-content/compose)])
-                 (if option-helper-f [:div (switch.attributes/switch-option-helper-attributes switch-id switch-props)
-                                           (-> option option-helper-f metamorphic-content/compose)])]])
+           [:div (switch.attributes/switch-option-track-attributes switch-id switch-props option)]
+           [:div {:class :pi-switch--option-content}
+                 (if-some [option-label (-> option option-label-f)]
+                          [:div (switch.attributes/switch-option-label-attributes switch-id switch-props option)
+                                [metamorphic-content/compose option-label]])
+                 (if-some [option-helper (-> option option-helper-f)]
+                          [:div (switch.attributes/switch-option-helper-attributes switch-id switch-props option)
+                                [metamorphic-content/compose option-helper]])]])
 
-(defn- switch-options
+(defn- switch-option-list
   ; @ignore
   ;
   ; @param (keyword) switch-id
   ; @param (map) switch-props
   [switch-id switch-props]
-  (let [options (input.env/get-input-options switch-id switch-props)]
-       (letfn [(f0 [option] [switch-option switch-id switch-props option])]
-              (if (vector/not-empty? options)
-                  (hiccup/put-with [:<>] options f0)))))
+  (letfn [(f0 [option] [switch-option switch-id switch-props option])]
+         (let [options (core.env/get-input-options switch-id switch-props)]
+              (hiccup/put-with [:<>] options f0))))
 
 (defn- switch
   ; @ignore
@@ -51,9 +53,11 @@
   ; @param (map) switch-props
   [switch-id switch-props]
   [:div (switch.attributes/switch-attributes switch-id switch-props)
+        [core.views/input-synchronizer       switch-id switch-props]
         [core.views/input-label              switch-id switch-props]
+        [pretty-forms/invalid-message        switch-id switch-props]
         [:div (switch.attributes/switch-body-attributes switch-id switch-props)
-              [switch-options                           switch-id switch-props]]])
+              [switch-option-list                       switch-id switch-props]]])
 
 (defn- switch-lifecycles
   ; @ignore
@@ -62,8 +66,9 @@
   ; @param (map) switch-props
   [switch-id switch-props]
   ; @note (tutorials#parametering)
-  (reagent/lifecycles {:component-did-mount (fn [_ _] (r/dispatch [:pretty-inputs.switch/switch-did-mount switch-id switch-props]))
-                       :reagent-render      (fn [_ switch-props] [switch switch-id switch-props])}))
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (core.side-effects/input-did-mount    switch-id switch-props))
+                       :component-will-unmount (fn [_ _] (core.side-effects/input-will-unmount switch-id switch-props))
+                       :reagent-render         (fn [_ switch-props] [switch switch-id switch-props])}))
 
 (defn input
   ; @param (keyword)(opt) switch-id
@@ -81,6 +86,8 @@
   ;  :disabled? (boolean)(opt)
   ;  :font-size (keyword, px or string)(opt)
   ;   Default: :s
+  ;  :get-options-f (function)(opt)
+  ;  :get-value-f (function)(opt)
   ;  :helper (metamorphic-content)(opt)
   ;  :hover-effect (keyword)(opt)
   ;  :indent (map)(opt)
@@ -90,28 +97,40 @@
   ;  :initial-value (*)(opt)
   ;  :label (metamorphic-content)(opt)
   ;  :marker-color (keyword or string)(opt)
-  ;  :on-check (Re-Frame metamorphic-event)(opt)
-  ;  :on-uncheck (Re-Frame metamorphic-event)(opt)
+  ;  :on-empty-f (function)(opt)
+  ;  :on-invalid-f (function)(opt)
+  ;  :on-mount-f (function)(opt)
+  ;  :on-selected-f (function)(opt)
+  ;  :on-unmount-f (function)(opt)
+  ;  :on-unselected-f (function)(opt)
+  ;  :on-valid-f (function)(opt)
   ;  :option-helper-f (function)(opt)
   ;  :option-label-f (function)(opt)
-  ;   Default: return
   ;  :option-value-f (function)(opt)
-  ;   Default: return
-  ;  :options (vector)(opt)
   ;  :orientation (keyword)(opt)
-  ;  :options-path (Re-Frame path vector)(opt)
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :preset (keyword)(opt)
   ;  :projected-value (*)(opt)
+  ;  :set-value-f (function)(opt)
   ;  :style (map)(opt)
-  ;  :value-path (Re-Frame path vector)(opt)}
+  ;  :validate-when-change? (boolean)(opt)
+  ;  :validate-when-leave? (boolean)(opt)
+  ;  :validators (maps in vector)(opt)
+  ;   [{:f (function)
+  ;     :invalid-message (metamorphic-content)(opt)}]}
   ;
   ; @usage
   ; [switch {...}]
   ;
   ; @usage
   ; [switch :my-switch {...}]
+  ;
+  ; @usage
+  ; [switch :my-switch {:initial-value "Option #1"
+  ;                     :get-options-f #(-> ["Option #1" "Option #2"])
+  ;                     :get-value-f   #(deref  my-atom)
+  ;                     :set-value-f   #(reset! my-atom %)}]
   ([switch-props]
    [input (random/generate-keyword) switch-props])
 

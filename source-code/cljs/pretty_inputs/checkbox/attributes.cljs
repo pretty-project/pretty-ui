@@ -67,10 +67,10 @@
   ;  :data-checked (boolean)
   ;  :disabled (boolean)}
   [checkbox-id {:keys [disabled?] :as checkbox-props} option]
-  (let [option-checked? (core.env/option-selected? checkbox-id checkbox-props option)
-        on-click-f      (fn [_] (core.side-effects/toggle-option! checkbox-id checkbox-props option))]
+  (let [option-selected? (core.env/option-selected? checkbox-id checkbox-props option)
+        on-click-f       (fn [_] (core.side-effects/select-option! checkbox-id checkbox-props option))]
        (-> {:class        :pi-checkbox--option
-            :data-checked option-checked?
+            :data-checked option-selected?
             :disabled     disabled?}
            (pretty-build-kit/effect-attributes checkbox-props)
            (pretty-build-kit/mouse-event-attributes {:on-click-f on-click-f :on-mouse-up-f dom/blur-active-element!}))))

@@ -20,7 +20,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn button-content-attributes
+(defn button-label-attributes
   ; @ignore
   ;
   ; @param (keyword) button-id
@@ -29,7 +29,7 @@
   ; @return (map)
   ; {:class (keyword or keywords in vector)}
   [_ button-props]
-  (-> {:class :pe-button--content}
+  (-> {:class :pe-button--label}
       (pretty-build-kit/text-attributes button-props)))
 
 ;; ----------------------------------------------------------------------------
@@ -65,7 +65,7 @@
       (pretty-build-kit/focus-attributes        button-props)
       (pretty-build-kit/font-attributes         button-props)
       (pretty-build-kit/indent-attributes       button-props)
-      (pretty-build-kit/link-attributes         button-props)
+      (pretty-build-kit/href-attributes         button-props)
       (pretty-build-kit/marker-attributes       button-props)
       (pretty-build-kit/mouse-event-attributes  button-props)
       (pretty-build-kit/progress-attributes     button-props)

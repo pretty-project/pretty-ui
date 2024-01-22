@@ -1,9 +1,9 @@
 
 (ns pretty-inputs.text-field.views
-    (:require [fruits.hiccup.api                   :as hiccup]
-              [fruits.random.api                   :as random]
+    (:require [fruits.random.api                   :as random]
               [fruits.vector.api                   :as vector]
               [metamorphic-content.api             :as metamorphic-content]
+              [pretty-elements.api :as pretty-elements]
               [pretty-forms.api                    :as pretty-forms]
               [pretty-inputs.core.env              :as core.env]
               [pretty-inputs.core.side-effects :as core.side-effects]
@@ -12,35 +12,10 @@
               [pretty-inputs.text-field.attributes :as text-field.attributes]
               [pretty-inputs.text-field.prototypes :as text-field.prototypes]
               [pretty-presets.api                  :as pretty-presets]
-              [reagent.api                         :as reagent]
-              [time.api                            :as time]
-              [countdown-timer.api :as countdown-timer]))
+              [reagent.api                         :as reagent]))
 
-;; -- Field adornments components ---------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(defn field-adornment
-  ; @ignore
-  ;
-  ; @param (keyword) field-id
-  ; @param (map) field-props
-  ; @param (map) adornment-props
-  ; {:icon (keyword)(opt)
-  ;  :label (string)(opt)
-  ;  :on-click-f (function)(opt)}
-  [field-id field-props adornment-props]
-  ; - The render function ensures that the 'adornment-id' doesn't change even if the given parameters were updated.
-  ; - The adornment icon must be in a separate I tag, otherwise the icon related data attributes would affect on the tooltip properties.
-  (let [adornment-id (random/generate-keyword)]
-       (fn [_ _ {:keys [icon label on-click-f] :as adornment-props}]
-           (let [time-left       (countdown-timer/time-left adornment-id)
-                 adornment-props (text-field.prototypes/adornment-props-prototype adornment-id adornment-props)]
-                [(cond time-left :div on-click-f :button :else :div)
-                 (cond time-left (text-field.attributes/countdown-adornment-attributes adornment-id adornment-props)
-                       :default  (text-field.attributes/adornment-attributes           adornment-id adornment-props))
-                 (cond time-left [:span (-> time-left time/ms->s (str "s"))]
-                       icon      [:i    (text-field.attributes/adornment-icon-attributes adornment-id adornment-props) icon]
-                       label     [:span (-> label metamorphic-content/compose)])]))))
+;; ----------------------------------------------------------------------------
 
 (defn field-end-adornments
   ; @ignore
@@ -51,9 +26,8 @@
   [field-id {:keys [end-adornments] :as field-props}]
   (let [end-adornments (text-field.prototypes/end-adornments-prototype field-id field-props)]
        (if (vector/not-empty? end-adornments)
-           (letfn [(f0 [adornment-props] (let [adornment-props (pretty-presets/apply-preset adornment-props)]
-                                              [field-adornment field-id field-props adornment-props]))]
-                  (hiccup/put-with [:div {:class :pi-text-field--adornments}] end-adornments f0))
+           [:div (text-field.attributes/field-adornments-attributes field-id field-props)
+                 [pretty-elements/adornment-group {:adornments end-adornments}]]
            [:div (text-field.attributes/field-adornments-placeholder-attributes field-id field-props)])))
 
 (defn field-start-adornments
@@ -64,8 +38,8 @@
   ; {:start-adornments (maps in vector)(opt)}
   [field-id {:keys [start-adornments] :as field-props}]
   (if (vector/not-empty? start-adornments)
-      (letfn [(f0 [adornment-props] [field-adornment field-id field-props adornment-props])]
-             (hiccup/put-with [:div {:class :pi-text-field--adornments}] start-adornments f0))
+      [:div (text-field.attributes/field-adornments-attributes field-id field-props)
+            [pretty-elements/adornment-group {:adornments start-adornments}]]
       [:div (text-field.attributes/field-adornments-placeholder-attributes field-id field-props)]))
 
 ;; ----------------------------------------------------------------------------
@@ -89,6 +63,7 @@
   [:div (text-field.attributes/field-attributes field-id field-props)
         [core.views/input-synchronizer field-id field-props]
         [core.views/input-label        field-id field-props]
+        [pretty-forms/invalid-message  field-id field-props]
         [:div (text-field.attributes/input-container-attributes field-id field-props)
               [field-start-adornments field-id field-props]
               [:div {:class :pi-text-field--input-structure}
@@ -102,10 +77,7 @@
         (if surface (if (text-field.env/field-surface-visible? field-id field-props)
                         [:div {:class :pi-text-field--surface-wrapper}
                               [:div (text-field.attributes/field-surface-attributes field-id field-props)
-                                    [metamorphic-content/compose surface]]]))
-        (if-let [invalid-message (pretty-forms/get-input-invalid-message field-id)]
-                [:div {:class :pi-text-field--invalid-message :data-text-selectable false}
-                      (metamorphic-content/compose invalid-message)])])
+                                    [metamorphic-content/compose surface]]]))])
 
 (defn- text-field-lifecycles
   ; @ignore
@@ -132,20 +104,6 @@
   ;  :disabled? (boolean)(opt)
   ;  :emptiable? (boolean)(opt)
   ;  :end-adornments (maps in vector)(opt)
-  ;   [{:click-effect (keyword)(opt)
-  ;      Default: :opacity
-  ;     :disabled? (boolean)(opt)
-  ;     :hover-effect (keyword)(opt)
-  ;     :icon (keyword)
-  ;     :icon-family (keyword)(opt)
-  ;     :label (string)(opt)
-  ;     :on-click-f (function)(opt)
-  ;     :preset (keyword)(opt)
-  ;     :tab-disabled? (boolean)(opt)
-  ;     :text-color (keyword or string)(opt)
-  ;      Default: :default
-  ;     :timeout (ms)(opt)
-  ;     :tooltip-content (metamorphic-content)(opt)}]
   ;  :font-size (keyword, px or string)(opt)
   ;   Default: :s
   ;  :font-weight (keyword or integer)(opt)

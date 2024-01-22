@@ -14,7 +14,7 @@
   ; @return (map)
   ; {}
   [_ _]
-  {:class               :pi-chip-group--chips-placeholder
+  {:class               :pi-chip-group--placeholder
    :data-font-size      :s
    :data-letter-spacing :auto
    :data-line-height    :text-block})

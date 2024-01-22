@@ -67,7 +67,7 @@
   ;     {:all, :tl, :tr, :br, :bl (keyword, px or string)(opt)}
   ;    :border-width (keyword, px or string)(opt)
   ;    :click-effect (keyword)(opt)
-  ;     Default: :opacity (if 'href' or 'on-click-f' is provided)
+  ;     Default: :opacity (if 'href-uri' or 'on-click-f' is provided)
   ;    :fill-color (keyword or string)(opt)
   ;    :fill-pattern (keyword)(opt)
   ;     Default: :cover
@@ -99,15 +99,14 @@
   ;      Default: :primary
   ;     :badge-content (metamorphic-content)(opt)
   ;     :disabled? (boolean)(opt)
-  ;     :href (string)(opt)
+  ;     :href-target (keyword)(opt)
+  ;     :href-uri (string)(opt)
   ;     :icon (keyword)(opt)
   ;     :label (metamorphic-content)(opt)
   ;     :on-click-f (function)(opt)
   ;     :on-mouse-over-f (function)(opt)
   ;     :on-right-click-f (function)(opt)
-  ;     :preset (keyword)(opt)
-  ;     :target (keyword)(opt)
-  ;      :blank, :self}]
+  ;     :preset (keyword)(opt)}]
   ;  :orientation (keyword)(opt)
   ;   :horizontal, :vertical
   ;   Default: :horizontal

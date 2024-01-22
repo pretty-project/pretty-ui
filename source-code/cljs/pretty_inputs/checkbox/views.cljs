@@ -2,7 +2,6 @@
 (ns pretty-inputs.checkbox.views
     (:require [fruits.hiccup.api                 :as hiccup]
               [fruits.random.api                 :as random]
-              [metamorphic-content.api           :as metamorphic-content]
               [pretty-forms.api                  :as pretty-forms]
               [pretty-inputs.checkbox.attributes :as checkbox.attributes]
               [pretty-inputs.checkbox.prototypes :as checkbox.prototypes]
@@ -10,7 +9,8 @@
               [pretty-inputs.core.side-effects   :as core.side-effects]
               [pretty-inputs.core.views          :as core.views]
               [pretty-presets.api                :as pretty-presets]
-              [reagent.api                       :as reagent]))
+              [reagent.api                       :as reagent]
+              [metamorphic-content.api :as metamorphic-content]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -27,10 +27,12 @@
   [:button (checkbox.attributes/checkbox-option-attributes checkbox-id checkbox-props option)
            [:div (checkbox.attributes/checkbox-option-button-attributes checkbox-id checkbox-props option)]
            [:div {:class :pi-checkbox--option-content}
-                 [:div (checkbox.attributes/checkbox-option-label-attributes checkbox-id checkbox-props option)
-                       (-> option option-label-f metamorphic-content/compose)]
-                 (if option-helper-f [:div (checkbox.attributes/checkbox-option-helper-attributes checkbox-id checkbox-props option)
-                                           (-> option option-helper-f metamorphic-content/compose)])]])
+                 (if-some [option-label (-> option option-label-f)]
+                          [:div (checkbox.attributes/checkbox-option-label-attributes checkbox-id checkbox-props option)
+                                [metamorphic-content/compose option-label]])
+                 (if-some [option-helper (-> option option-helper-f)]
+                          [:div (checkbox.attributes/checkbox-option-helper-attributes checkbox-id checkbox-props option)
+                                [metamorphic-content/compose option-helper]])]])
 
 (defn- checkbox-option-list
   ; @ignore
@@ -49,11 +51,9 @@
   ; @param (map) checkbox-props
   [checkbox-id checkbox-props]
   [:div (checkbox.attributes/checkbox-attributes checkbox-id checkbox-props)
-        [core.views/input-synchronizer checkbox-id checkbox-props]
-        [core.views/input-label        checkbox-id checkbox-props]
-        (if-let [invalid-message (pretty-forms/get-input-invalid-message checkbox-id)]
-                [:div {:class :pi-checkbox--invalid-message :data-text-selectable false}
-                      (metamorphic-content/compose invalid-message)])
+        [core.views/input-synchronizer           checkbox-id checkbox-props]
+        [core.views/input-label                  checkbox-id checkbox-props]
+        [pretty-forms/invalid-message            checkbox-id checkbox-props]
         [:div (checkbox.attributes/checkbox-body-attributes checkbox-id checkbox-props)
               [checkbox-option-list                         checkbox-id checkbox-props]]])
 
@@ -90,7 +90,9 @@
   ;  :indent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :initial-value (*)(opt)
+  ;  :label (metamorphic-content)(opt)
   ;  :marker-color (keyword or string)(opt)
+  ;  :on-empty-f (function)(opt)
   ;  :on-invalid-f (function)(opt)
   ;  :on-mount-f (function)(opt)
   ;  :on-selected-f (function)(opt)
@@ -101,7 +103,6 @@
   ;  :option-label-f (function)(opt)
   ;  :option-value-f (function)(opt)
   ;  :orientation (keyword)(opt)
-  ;  :label (metamorphic-content)(opt)
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :preset (keyword)(opt)
@@ -119,6 +120,12 @@
   ;
   ; @usage
   ; [checkbox :my-checkbox {...}]
+  ;
+  ; @usage
+  ; [checkbox :my-checkbox {:initial-value "Option #1"
+  ;                         :get-options-f #(-> ["Option #1" "Option #2"])
+  ;                         :get-value-f   #(deref  my-atom)
+  ;                         :set-value-f   #(reset! my-atom %)}]
   ([checkbox-props]
    [input (random/generate-keyword) checkbox-props])
 

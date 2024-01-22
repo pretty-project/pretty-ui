@@ -8,56 +8,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn adornment-icon-attributes
-  ; @ignore
-  ;
-  ; @param (keyword) adornment-id
-  ; @param (map) adornment-props
-  ;
-  ; @return (map)
-  ; {}
-  [adornment-id adornment-props]
-  (-> {:class :pi-text-field--adornment-icon}
-      (pretty-build-kit/icon-attributes adornment-props)))
-
-(defn adornment-attributes
-  ; @ignore
-  ;
-  ; @param (keyword) adornment-id
-  ; @param (map) adornment-props
-  ;
-  ; @return (map)
-  ; {}
-  [adornment-id adornment-props]
-  ; @bug (#2105)
-  ; An 'on-mouse-down' event fired anywhere outside the input triggers the 'on-blur' event of the field
-  ; that would cause the dissapearing of the surface, unless the default 'on-mouse-down' event is prevented.
-  (-> {:class         :pi-text-field--adornment
-       :on-mouse-down dom/prevent-default}
-      (pretty-build-kit/color-attributes        adornment-props)
-      (pretty-build-kit/cursor-attributes       adornment-props)
-      (pretty-build-kit/effect-attributes       adornment-props)
-      (pretty-build-kit/font-attributes         adornment-props)
-      (pretty-build-kit/mouse-event-attributes  adornment-props)
-      (pretty-build-kit/state-attributes        adornment-props)
-      (pretty-build-kit/tab-attributes          adornment-props)
-      (pretty-build-kit/tooltip-attributes      adornment-props)
-      (pretty-build-kit/unselectable-attributes adornment-props)))
-
-(defn countdown-adornment-attributes
-  ; @ignore
-  ;
-  ; @param (keyword) adornment-id
-  ; @param (map) adornment-props
-  ;
-  ; @return (map)
-  [adornment-id adornment-props]
-  (adornment-attributes adornment-id (-> adornment-props (dissoc :click-effect :hover-effect :icon-family :icon-size :on-click-f)
-                                                         (assoc  :text-color :highlight))))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (defn field-placeholder-attributes
   ; @ignore
   ;
@@ -111,6 +61,21 @@
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+(defn field-adornments-attributes
+  ; @ignore
+  ;
+  ; @param (keyword) field-id
+  ; @param (map) field-props
+  ;
+  ; @return (map)
+  ; {}
+  [field-id field-props]
+  ; @bug (#2105)
+  ; An 'on-mouse-down' event fired anywhere outside the input triggers the 'on-blur' event of the field
+  ; that would cause the dissapearing of the surface, unless the default 'on-mouse-down' event is prevented.
+  {:class         :pi-text-field--adornments
+   :on-mouse-down dom/prevent-default})
 
 (defn field-adornments-placeholder-attributes
   ; @ignore

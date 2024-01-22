@@ -3,30 +3,9 @@
     (:require [dom.api                 :as dom]
               [metamorphic-content.api :as metamorphic-content]
               [pretty-build-kit.api    :as pretty-build-kit]
-              [re-frame.api            :as r]))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn clear-button-attributes
-  ; @ignore
-  ;
-  ; @param (keyword) button-id
-  ; @param (map) button-props
-  ;
-  ; @return (map)
-  ; {}
-  [button-id button-props]
-  (-> (if-let [any-option-selected? @(r/subscribe [:pretty-inputs.radio-button/any-option-selected? button-id button-props])]
-              {:class             :pi-radio-button--clear-button
-               :data-click-effect :opacity
-               :on-click          #(r/dispatch [:pretty-inputs.radio-button/clear-value! button-id button-props])
-               :on-mouse-up       #(dom/blur-active-element!)
-               :title             (metamorphic-content/compose :uncheck-selected!)}
-              {:class             :pi-radio-button--clear-button
-               :data-disabled     true
-               :disabled          true})
-      (pretty-build-kit/border-attributes button-props)))
+              [re-frame.api            :as r]
+              [pretty-inputs.core.env :as core.env]
+              [pretty-inputs.core.side-effects :as core.side-effects]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -36,11 +15,11 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  ; {}
+  ; @param (*) option
   ;
   ; @return (map)
   ; {}
-  [_ _]
+  [_ _ _]
   {:class               :pi-radio-button--option-helper
    :data-font-size      :xs
    :data-letter-spacing :auto
@@ -52,10 +31,11 @@
   ; @param (keyword) button-id
   ; @param (map) button-props
   ; {}
+  ; @param (*) option
   ;
   ; @return (map)
   ; {}
-  [_ {:keys [font-size]}]
+  [_ {:keys [font-size]} _]
   {:class               :pi-radio-button--option-label
    :data-font-size      font-size
    :data-font-weight    :medium
@@ -68,10 +48,11 @@
   ; @param (keyword) button-id
   ; @param (map) button-props
   ; {}
+  ; @param (*) option
   ;
   ; @return (map)
   ; {}
-  [_ {{:keys [all]} :border-radius :as button-props}]
+  [_ {{:keys [all]} :border-radius :as button-props} _]
   (-> {:class :pi-radio-button--option-button
        :style {"--adaptive-border-radius" (pretty-build-kit/adaptive-border-radius all 0.3)}}
       (pretty-build-kit/border-attributes button-props)))
@@ -87,14 +68,13 @@
   ; @return (map)
   ; {}
   [button-id {:keys [disabled?] :as button-props} option]
-  (let [option-selected? @(r/subscribe [:pretty-inputs.radio-button/option-selected? button-id button-props option])
-        on-select-event  #(r/dispatch  [:pretty-inputs.radio-button/select-option!   button-id button-props option])]
+  (let [option-picked? (core.env/option-picked? button-id button-props option)
+        on-click-f     (fn [_] (core.side-effects/pick-option! button-id button-props option))]
        (-> {:class         :pi-radio-button--option
-            :data-selected option-selected?
+            :data-selected option-picked?
             :disabled      disabled?}
            (pretty-build-kit/effect-attributes button-props)
-           (pretty-build-kit/mouse-event-attributes {:on-click    on-select-event
-                                                     :on-mouse-up dom/blur-active-element!}))))
+           (pretty-build-kit/mouse-event-attributes {:on-click-f on-click-f :on-mouse-up-f dom/blur-active-element!}))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -107,12 +87,16 @@
   ;
   ; @return (map)
   ; {}
-  [_ button-props]
-  (-> {:class :pi-radio-button--body}
-      (pretty-build-kit/indent-attributes       button-props)
-      (pretty-build-kit/orientation-attributes  button-props)
-      (pretty-build-kit/style-attributes        button-props)
-      (pretty-build-kit/unselectable-attributes button-props)))
+  [button-id button-props]
+  (let [on-blur-f  (fn [_] (core.side-effects/input-left    button-id button-props))
+        on-focus-f (fn [_] (core.side-effects/input-focused button-id button-props))]
+       (-> {:class :pi-radio-button--body
+            :on-blur  on-blur-f
+            :on-focus on-focus-f}
+           (pretty-build-kit/indent-attributes       button-props)
+           (pretty-build-kit/orientation-attributes  button-props)
+           (pretty-build-kit/style-attributes        button-props)
+           (pretty-build-kit/unselectable-attributes button-props))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

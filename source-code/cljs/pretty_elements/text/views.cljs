@@ -3,7 +3,6 @@
     (:require [fruits.hiccup.api               :as hiccup]
               [fruits.random.api               :as random]
               [metamorphic-content.api         :as metamorphic-content]
-              [pretty-elements.element.views   :as element.views]
               [pretty-elements.text.attributes :as text.attributes]
               [pretty-elements.text.prototypes :as text.prototypes]
               [pretty-presets.api              :as pretty-presets]))
@@ -21,7 +20,6 @@
   ;  :placeholder (metamorphic-content)(opt)}
   [text-id {:keys [content on-copy-f placeholder] :as text-props}]
   [:div (text.attributes/text-attributes text-id text-props)
-        [element.views/element-label     text-id text-props]
         [:div (text.attributes/text-body-attributes text-id text-props)
               (if on-copy-f [:div (text.attributes/copyable-attributes text-id text-props)
                                   [:div (text.attributes/content-attributes text-id text-props)
@@ -51,7 +49,6 @@
   ;  :indent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :info-text (metamorphic-content)(opt)
-  ;  :label (metamorphic-content)(opt)
   ;  :line-height (keyword, px or string)(opt)
   ;   Default: :text-block
   ;  :max-lines (integer)(opt)

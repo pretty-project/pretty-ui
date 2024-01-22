@@ -5,7 +5,6 @@
               [metamorphic-content.api               :as metamorphic-content]
               [pretty-elements.data-table.attributes :as data-table.attributes]
               [pretty-elements.data-table.prototypes :as data-table.prototypes]
-              [pretty-elements.element.views         :as element.views]
               [pretty-presets.api                    :as pretty-presets]))
 
 ;; ----------------------------------------------------------------------------
@@ -63,7 +62,6 @@
   ; {}
   [table-id {:keys [columns rows] :as table-props}]
   [:div (data-table.attributes/table-attributes table-id table-props)
-        [element.views/element-label            table-id table-props]
         [:div (data-table.attributes/table-body-attributes table-id table-props)
               (cond columns (letfn [(f0 [column-props] [data-table-column table-id table-props column-props])] (hiccup/put-with [:<>] columns f0))
                     rows    (letfn [(f0 [row-props]    [data-table-row    table-id table-props row-props])]    (hiccup/put-with [:<>] rows    f0)))]])
@@ -102,7 +100,6 @@
   ;  :disabled? (boolean)(opt)
   ;  :indent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :label (metamorphic-content)(opt)
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :preset (keyword)(opt)

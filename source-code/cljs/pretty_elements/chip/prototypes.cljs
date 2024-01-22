@@ -29,19 +29,15 @@
   ; @ignore
   ;
   ; @param (map) chip-props
-  ; {:icon (keyword)(opt)
-  ;  :on-click-f (function)(opt)
-  ;  :primary-button (map)(opt)}
+  ; {:href-uri (string)
+  ;  :on-click-f (function)(opt)}
   ;
   ; @return (map)
-  ; {:border-radius (map)
-  ;  :icon-family (keyword)
-  ;  :primary-button (map)
-  ;   {:icon-family (keyword)}
-  ;  :text-color (keyword or string)}
-  [{:keys [icon on-click-f primary-button] :as chip-props}]
+  ; {:text-color (keyword or string)}
+  [{:keys [href-uri on-click-f] :as chip-props}]
   (merge {:text-color :default}
-         (if icon           {:icon-family  :material-symbols-outlined})
-         (if on-click-f     {:click-effect :opacity})
+         (if href-uri   {:click-effect :opacity})
+         (if on-click-f {:click-effect :opacity})
          (-> chip-props)
-         (if primary-button {:primary-button (merge {:icon-family :material-symbols-outlined} primary-button)})))
+         (if href-uri   {:on-mouse-up-f dom/blur-active-element!})
+         (if on-click-f {:on-mouse-up-f dom/blur-active-element!})))

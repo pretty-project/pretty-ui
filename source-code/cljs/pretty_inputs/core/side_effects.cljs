@@ -65,7 +65,6 @@
   ; {}
   ; @param (*) value
   [_ {:keys [set-value-f]} value]
-  (println "set ext:" value)
   (if set-value-f (set-value-f value)))
 
 ;; ----------------------------------------------------------------------------
@@ -155,12 +154,14 @@
   ; @param (map) input-props
   ; {}
   ; @param (*) value
-  [input-id {:keys [on-changed-f] :as input-props} value]
+  [input-id {:keys [on-changed-f on-empty-f] :as input-props} value]
   (set-input-internal-value!  input-id input-props value)
   (set-input-external-value!  input-id input-props value)
   (mark-input-as-changed!     input-id input-props)
   (pretty-forms/input-changed input-id input-props)
-  (if on-changed-f (on-changed-f value)))
+  (if on-changed-f (on-changed-f value))
+  (if on-empty-f   (if (core.env/input-empty? input-id input-props)
+                       (on-empty-f nil))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -173,21 +174,23 @@
   ; {}
   [input-id {:keys [on-empty-f] :as input-props}]
   (when-not (core.env/input-empty? input-id input-props)
-            (input-value-changed   input-id input-props nil)
-            (if on-empty-f (on-empty-f nil))))
+            (input-value-changed   input-id input-props nil)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn toggle-single-option!
+(defn pick-option!
   ; @ignore
+  ;
+  ; @note
+  ; Output of option picking is always a single option.
   ;
   ; @param (keyword) input-id
   ; @param (map) input-props
   ; {}
   ; @param (*) option
   [input-id {:keys [on-selected-f on-unselected-f option-value-f] :as input-props} option]
-  (if (core.env/single-option-selected? input-id input-props option)
+  (if (core.env/option-picked? input-id input-props option)
       (let [input-updated-value nil]
            (input-value-changed input-id input-props input-updated-value)
            (if on-unselected-f (on-unselected-f input-updated-value)))
@@ -195,15 +198,18 @@
            (input-value-changed input-id input-props input-updated-value)
            (if on-selected-f (on-selected-f input-updated-value)))))
 
-(defn toggle-multi-option!
+(defn toggle-option!
   ; @ignore
+  ;
+  ; @note
+  ; Output of option toggling is a vector of currently toggled options.
   ;
   ; @param (keyword) input-id
   ; @param (map) input-props
   ; {}
   ; @param (*) option
   [input-id {:keys [on-selected-f on-unselected-f option-value-f] :as input-props} option]
-  (if (core.env/multi-option-selected? input-id input-props option)
+  (if (core.env/option-toggled? input-id input-props option)
       (let [option-value          (option-value-f option)
             input-displayed-value (core.env/get-input-displayed-value input-id input-props)
             input-updated-value   (-> input-displayed-value mixed/to-vector (vector/remove-item option-value))]
@@ -215,8 +221,13 @@
            (input-value-changed input-id input-props input-updated-value)
            (if on-selected-f (on-selected-f input-updated-value)))))
 
-(defn toggle-option!
+(defn select-option!
   ; @ignore
+  ;
+  ; @note
+  ; Output of option selecting depends on the number of available options.
+  ; If only one option is available for the input, the selecting will pick/unpick that single option.
+  ; If multiple options are available for the input, the selecting will toggle/untoggle options in the output vector.
   ;
   ; @param (keyword) input-id
   ; @param (map) input-props
@@ -224,8 +235,8 @@
   ; @param (*) option
   [input-id {:keys [options] :as input-props} option]
   (if (vector/count-min? options 2)
-      (toggle-multi-option!  input-id input-props option)
-      (toggle-single-option! input-id input-props option)))
+      (toggle-option! input-id input-props option)
+      (pick-option!   input-id input-props option)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

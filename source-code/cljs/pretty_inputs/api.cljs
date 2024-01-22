@@ -1,8 +1,6 @@
 
 (ns pretty-inputs.api
-    (:require [pretty-inputs.chip-group.effects]
-              [pretty-inputs.chip-group.events]
-              [pretty-inputs.color-selector.effects]
+    (:require [pretty-inputs.color-selector.effects]
               [pretty-inputs.color-selector.events]
               [pretty-inputs.combo-box.effects]
               [pretty-inputs.combo-box.events]

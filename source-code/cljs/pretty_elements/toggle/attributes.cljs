@@ -25,7 +25,7 @@
       (pretty-build-kit/element-size-attributes toggle-props)
       (pretty-build-kit/focus-attributes        toggle-props)
       (pretty-build-kit/indent-attributes       toggle-props)
-      (pretty-build-kit/link-attributes         toggle-props)
+      (pretty-build-kit/href-attributes         toggle-props)
       (pretty-build-kit/mouse-event-attributes  toggle-props)
       (pretty-build-kit/unselectable-attributes toggle-props)))
 

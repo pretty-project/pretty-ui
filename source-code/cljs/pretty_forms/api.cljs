@@ -2,7 +2,8 @@
 (ns pretty-forms.api
     (:require [pretty-forms.env          :as env]
               [pretty-forms.side-effects :as side-effects]
-              [pretty-forms.state        :as state]))
+              [pretty-forms.state        :as state]
+              [pretty-forms.views        :as views]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -27,3 +28,6 @@
 ; @redirect (pretty-forms.state/*)
 (def FORM-INPUTS state/FORM-INPUTS)
 (def FORM-ERRORS state/FORM-ERRORS)
+
+; @redirect (pretty-forms.views/*)
+(def invalid-message views/invalid-message)
