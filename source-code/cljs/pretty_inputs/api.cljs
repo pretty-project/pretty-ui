@@ -1,8 +1,6 @@
 
 (ns pretty-inputs.api
-    (:require [pretty-inputs.color-selector.effects]
-              [pretty-inputs.color-selector.events]
-              [pretty-inputs.combo-box.effects]
+    (:require [pretty-inputs.combo-box.effects]
               [pretty-inputs.combo-box.events]
               [pretty-inputs.combo-box.side-effects]
               [pretty-inputs.counter.effects]
@@ -17,16 +15,11 @@
               [pretty-inputs.multi-field.effects]
               [pretty-inputs.multi-field.events]
               [pretty-inputs.multi-field.subs]
-              [pretty-inputs.select.effects]
-              [pretty-inputs.select.events]
-              [pretty-inputs.select.side-effects]
-              [pretty-inputs.select.subs]
               [pretty-inputs.slider.effects]
               [pretty-inputs.slider.events]
               [pretty-inputs.slider.subs]
               [pretty-inputs.checkbox.views        :as checkbox.views]
               [pretty-inputs.chip-group.views      :as chip-group.views]
-              [pretty-inputs.color-selector.views  :as color-selector.views]
               [pretty-inputs.combo-box.views       :as combo-box.views]
               [pretty-inputs.counter.views         :as counter.views]
               [pretty-inputs.date-field.views      :as date-field.views]
@@ -49,7 +42,6 @@
 ; @redirect (*/input)
 (def checkbox        checkbox.views/input)
 (def chip-group      chip-group.views/input)
-(def color-selector  color-selector.views/input)
 (def combo-box       combo-box.views/input)
 (def counter         counter.views/input)
 (def date-field      date-field.views/input)

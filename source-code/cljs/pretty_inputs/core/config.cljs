@@ -7,4 +7,4 @@
 ; @ignore
 ;
 ; @constant (ms)
-(def CLOSE-POPUP-AFTER 450)
+(def CLOSE-POPUP-AFTER 350)

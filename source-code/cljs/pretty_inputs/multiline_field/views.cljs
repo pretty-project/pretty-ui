@@ -33,5 +33,5 @@
   ([field-id field-props]
    ; @note (tutorials#parametering)
    (fn [_ field-props]
-       (let [field-props (multiline-field.prototypes/field-props-prototype field-id field-props)]
+       (let [field-props (multiline-field.prototypes/field-props-prototype field-props)]
             [text-field.views/input field-id field-props]))))

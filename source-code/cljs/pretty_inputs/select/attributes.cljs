@@ -78,18 +78,20 @@
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
-  ; {:disabled? (boolean)(opt)}
+  ; {:disabled? (boolean)(opt)
+  ;  :option-color-f (function)(opt)}
   ; @param (*) option
   ;
   ; @return (map)
   ; {}
-  [select-id {:keys [disabled?] :as select-props} option]
+  [select-id {:keys [disabled? option-color-f] :as select-props} option]
   (let [option-selected? (core.env/option-selected? select-id select-props option)
         option-color     (core.env/get-option-color select-id select-props option)
         on-click-f       (fn [_] (core.side-effects/select-option! select-id select-props option))]
        (-> {:class         :pi-select--option
             :data-selected option-selected?
             :disabled      disabled?}
+           (merge (if-not option-color-f {:data-hover-color :highlight}))
            (pretty-build-kit/effect-attributes select-props)
            (pretty-build-kit/color-attributes       {:fill-color option-color})
            (pretty-build-kit/mouse-event-attributes {:on-click-f on-click-f :on-mouse-up-f dom/blur-active-element!}))))

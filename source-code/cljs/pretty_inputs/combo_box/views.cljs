@@ -59,16 +59,6 @@
   (let [box-props (assoc-in box-props [:surface :content] [combo-box-surface-content box-id box-props])]
        [text-field.views/input box-id box-props]))
 
-(defn- combo-box-lifecycles
-  ; @ignore
-  ;
-  ; @param (keyword) box-id
-  ; @param (map) box-props
-  [box-id box-props]
-  ; @note (tutorials#parametering)
-  (reagent/lifecycles {:component-did-mount (fn [_ _] (r/dispatch [:pretty-inputs.combo-box/box-did-mount box-id box-props]))
-                       :reagent-render      (fn [_ box-props] [combo-box box-id box-props])}))
-
 (defn input
   ; @note
   ; For more information, check out the documentation of the ['text-field'](#text-field) input.
@@ -80,6 +70,7 @@
   ;  :field-value-f (function)(opt)
   ;   Default: return
   ;  :initial-options (vector)(opt)
+  ;  :max-selection (integer)(opt)
   ;  :on-select (Re-Frame metamorphic-event)(opt)
   ;  :option-component (Reagent component symbol)(opt)
   ;   Default: pretty-inputs.combo-box.views/default-option-component
@@ -102,4 +93,4 @@
    ; @note (tutorials#parametering)
    (fn [_ box-props]
        (let [box-props (combo-box.prototypes/box-props-prototype box-id box-props)]
-            [combo-box-lifecycles box-id box-props]))))
+            [combo-box box-id box-props]))))

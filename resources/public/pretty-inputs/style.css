@@ -77,67 +77,6 @@
 
 
 
-/***** Color-selector *****/
-/*** Popup ***/
-
-.pi-color-selector--popup {
-  /* XXX#0610
-   * Displays the popup above other contents */
-  z-index: 9999;
-}
-
-/*** Popup ***/
-
-/*** Option list ***/
-
-.pi-color-selector--options--label {
-  display: flex;
-  justify-content: center;
-
-  /* XXX#6661 */
-  padding: 6px 12px;
-}
-
-.pi-color-selector--options-body {
-  column-gap:      12px;
-  display:         flex;
-  justify-content: center;
-  padding:         12px;
-}
-
-/*** Option list ***/
-
-/*** Option ***/
-
-.pi-color-selector--option[data-collected="true"]::after {
-  align-items: center;
-  background-color: var( --fill-color-default );
-  border-radius: 12px;
-  color: var( --text-color-default );
-  content: 'check';
-  display: flex;
-  font-size: var( --icon-size-xs );
-  font-weight: 600;
-  height: 20px;
-  justify-content: center;
-  left: 14px;
-  line-height: 20px;
-  position: absolute;
-  top: 14px;
-  width: 20px;
-}
-
-.pi-color-selector--option--color {
-  border-radius: var( --border-radius-m );
-  height: 48px;
-  width: 48px;
-}
-
-/*** Option ***/
-/***** Color-selector *****/
-
-
-
 /***** Combo-box *****/
 /*** Combo-box options ***/
 
@@ -650,7 +589,7 @@ textarea.pi-text-field--input {
 /*** Adornments ***/
 
 .pi-text-field--adornments {
-  padding: 0 12px;
+  padding: 6 12px;
 }
 
 .pi-text-field--adornments-placeholder {

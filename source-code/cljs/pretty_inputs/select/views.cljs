@@ -15,7 +15,6 @@
               [pretty-presets.api              :as pretty-presets]
               [pretty-layouts.api              :as pretty-layouts]
               [pretty-forms.api :as pretty-forms]
-              [re-frame.api                    :as r]
               [reagent.api                     :as reagent]
               [pretty-inputs.core.utils :as core.utils]))
 

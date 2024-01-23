@@ -8,18 +8,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx :pretty-inputs.combo-box/box-did-mount
-  ; @ignore
-  ;
-  ; @param (keyword) box-id
-  ; @param (map) box-props
-  ; {:initial-options (vector)(opt)}
-  (fn [{:keys [db]} [_ box-id {:keys [initial-options] :as box-props}]]
-      (if initial-options {:db (r combo-box.events/box-did-mount db box-id box-props)})))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (r/reg-event-fx :pretty-inputs.combo-box/DOWN-pressed
   ; @ignore
   ;

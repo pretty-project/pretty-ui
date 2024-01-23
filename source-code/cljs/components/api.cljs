@@ -2,7 +2,6 @@
 (ns components.api
     (:require [components.consent-dialog.effects]
               [components.context-menu.effects]
-              [components.color-picker.views             :as color-picker.views]
               [components.compact-list-header.views      :as compact-list-header.views]
               [components.content-swapper-button.views   :as content-swapper-button.views]
               [components.content-swapper-header.views   :as content-swapper-header.views]
@@ -45,7 +44,6 @@
 ;; ----------------------------------------------------------------------------
 
 ; @redirect (*/component)
-(def color-picker             color-picker.views/component)
 (def compact-list-header      compact-list-header.views/component)
 (def content-swapper-button   content-swapper-button.views/component)
 (def content-swapper-header   content-swapper-header.views/component)

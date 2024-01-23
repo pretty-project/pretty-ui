@@ -3,7 +3,8 @@
     (:require [dom.api                              :as dom]
               [pretty-build-kit.api                 :as pretty-build-kit]
               [pretty-inputs.text-field.side-effects :as text-field.side-effects]
-              [pretty-inputs.text-field.env         :as text-field.env]))
+              [pretty-inputs.core.side-effects :as core.side-effects]
+              [pretty-inputs.text-field.env :as text-field.env]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -70,8 +71,10 @@
   ; {}
   [field-id field-props]
   ; @bug (#2105)
-  {:class         :pi-text-field--adornments-placeholder
-   :on-mouse-down dom/prevent-default})
+  (let [on-mouse-up-f #(core.side-effects/focus-input! field-id field-props)]
+       {:class         :pi-text-field--adornments-placeholder
+        :on-mouse-down dom/prevent-default
+        :on-mouse-up   on-mouse-up-f}))
 
 (defn field-surface-attributes
   ; @ignore

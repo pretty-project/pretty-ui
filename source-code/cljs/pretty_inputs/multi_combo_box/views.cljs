@@ -66,6 +66,7 @@
   ;  :field-value-f (function)(opt)
   ;   Default: return
   ;  :initial-options (vector)(opt)
+  ;  :max-selection (integer)(opt)
   ;  :on-select (Re-Frame metamorphic-event)(opt)
   ;  :option-label-f (function)(opt)
   ;   Default: return

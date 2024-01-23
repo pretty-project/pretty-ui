@@ -162,6 +162,17 @@
        (or (-> input-displayed-value vector? not)
            (-> input-displayed-value count (not= max-selection)))))
 
+(defn get-picked-option
+  ; @ignore
+  ;
+  ; @param (keyword) input-id
+  ; @param (map) input-props
+  ;
+  ; @return (metamorphic-content)
+  [input-id input-props]
+  (if-not (multiple-option-selectable? input-id input-props)
+          (get-input-displayed-value   input-id input-props)))
+
 (defn option-picked?
   ; @ignore
   ;
