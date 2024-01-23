@@ -4,14 +4,12 @@
               [fruits.random.api               :as random]
               [metamorphic-content.api         :as metamorphic-content]
               [pretty-build-kit.api            :as pretty-build-kit]
-              [pretty-inputs.input.env         :as input.env]
               [pretty-inputs.switch.attributes :as switch.attributes]
               [pretty-inputs.switch.prototypes :as switch.prototypes]
               [pretty-presets.api              :as pretty-presets]
               [pretty-forms.api :as pretty-forms]
-              [pretty-inputs.core.env            :as core.env]
-              [pretty-inputs.core.side-effects   :as core.side-effects]
-              [pretty-inputs.core.views          :as core.views]
+              [pretty-engine.api :as pretty-engine]
+              [pretty-elements.api :as pretty-elements]
               [reagent.api                     :as reagent]
               [fruits.vector.api :as vector]))
 
@@ -46,7 +44,7 @@
   ; {:placeholder (metamorphic-content)(opt)}
   [switch-id {:keys [placeholder] :as switch-props}]
   (letfn [(f0 [option] [switch-option switch-id switch-props option])]
-         (let [options (core.env/get-input-options switch-id switch-props)]
+         (let [options (pretty-engine/get-input-options switch-id switch-props)]
               (cond (-> options vector/not-empty?) (hiccup/put-with [:<>] options f0)
                     (-> placeholder) [:div (switch.attributes/switch-placeholder-attributes switch-id switch-props)
                                            (metamorphic-content/compose placeholder)]))))
@@ -58,9 +56,10 @@
   ; @param (map) switch-props
   [switch-id switch-props]
   [:div (switch.attributes/switch-attributes switch-id switch-props)
-        [core.views/input-synchronizer       switch-id switch-props]
-        [core.views/input-label              switch-id switch-props]
-        [pretty-forms/invalid-message        switch-id switch-props]
+        (if-let [label-props (pretty-engine/input-label-props switch-id switch-props)]
+                [pretty-elements/label label-props])
+        [pretty-forms/invalid-message     switch-id switch-props]
+        [pretty-engine/input-synchronizer switch-id switch-props]
         [:div (switch.attributes/switch-body-attributes switch-id switch-props)
               [switch-option-list                       switch-id switch-props]]])
 
@@ -71,8 +70,8 @@
   ; @param (map) switch-props
   [switch-id switch-props]
   ; @note (tutorials#parametering)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (core.side-effects/input-did-mount    switch-id switch-props))
-                       :component-will-unmount (fn [_ _] (core.side-effects/input-will-unmount switch-id switch-props))
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-engine/input-did-mount    switch-id switch-props))
+                       :component-will-unmount (fn [_ _] (pretty-engine/input-will-unmount switch-id switch-props))
                        :reagent-render         (fn [_ switch-props] [switch switch-id switch-props])}))
 
 (defn input

@@ -3,7 +3,7 @@
     (:require [dom.api                            :as dom]
               [metamorphic-content.api            :as metamorphic-content]
               [pretty-build-kit.api               :as pretty-build-kit]
-              [pretty-elements.core.side-effects  :as core.side-effects]
+              [pretty-engine.api :as pretty-engine]
               [pretty-elements.label.side-effects :as label.side-effects]
               [pretty-elements.label.utils        :as label.utils]))
 
@@ -86,7 +86,7 @@
   [_ {:keys [focus-id] :as label-props}]
   (-> {:class               :pe-label--body
        :data-letter-spacing :auto
-       :on-mouse-up #(if focus-id (core.side-effects/focus-element! focus-id))}
+       :on-mouse-up #(if focus-id (pretty-engine/focus-element! focus-id))}
       (pretty-build-kit/border-attributes           label-props)
       (pretty-build-kit/color-attributes            label-props)
       (pretty-build-kit/font-attributes             label-props)

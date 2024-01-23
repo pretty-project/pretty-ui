@@ -2,8 +2,7 @@
 (ns pretty-inputs.text-field.env
     (:require [fruits.string.api      :as string]
               [pretty-build-kit.api   :as pretty-build-kit]
-              [pretty-inputs.core.env :as core.env]
-              [pretty-inputs.core.side-effects :as core.side-effects]))
+              [pretty-engine.api :as pretty-engine]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -16,7 +15,7 @@
   ;
   ; @return (boolean)
   [field-id _]
-  (core.env/get-input-state field-id :surface-visible?))
+  (pretty-engine/get-input-state field-id :surface-visible?))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -32,7 +31,7 @@
   ; @bug (#5160)
   ; In case the field external value gets updated to NIL, the input DOM element wouldn't react to the change,
   ; unless its ':value' property gets an empty string instead of NIL.
-  (let [input-displayed-value (core.env/get-input-displayed-value field-id field-props)]
+  (let [input-displayed-value (pretty-engine/get-input-displayed-value field-id field-props)]
        (str input-displayed-value)))
 
 ;; ----------------------------------------------------------------------------
@@ -45,7 +44,7 @@
   ;
   ; @return (ms)
   [adornment-id]
-  (core.env/get-input-state adornment-id :timeout-left))
+  (pretty-engine/get-input-state adornment-id :timeout-left))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

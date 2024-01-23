@@ -4,8 +4,7 @@
               [metamorphic-content.api :as metamorphic-content]
               [pretty-build-kit.api    :as pretty-build-kit]
               [re-frame.api            :as r]
-              [pretty-inputs.core.env :as core.env]
-              [pretty-inputs.core.side-effects :as core.side-effects]))
+              [pretty-engine.api :as pretty-engine]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -84,7 +83,7 @@
   ; @return (map)
   ; {}
   [button-id button-props option]
-  (let [option-color (core.env/get-option-color button-id button-props option)]
+  (let [option-color (pretty-engine/get-input-option-color button-id button-props option)]
        (-> {:class :pi-radio-button--option-button}
            (pretty-build-kit/border-attributes button-props)
            (pretty-build-kit/color-attributes {:fill-color option-color}))))
@@ -100,8 +99,8 @@
   ; @return (map)
   ; {}
   [button-id {:keys [disabled?] :as button-props} option]
-  (let [option-selected? (core.env/option-selected? button-id button-props option)
-        on-click-f       (fn [_] (core.side-effects/select-option! button-id button-props option))]
+  (let [option-selected? (pretty-engine/input-option-selected? button-id button-props option)
+        on-click-f       (fn [_] (pretty-engine/select-input-option! button-id button-props option))]
        (-> {:class         :pi-radio-button--option
             :data-selected option-selected?
             :disabled      disabled?}
@@ -120,8 +119,8 @@
   ; @return (map)
   ; {}
   [button-id button-props]
-  (let [on-blur-f  (fn [_] (core.side-effects/input-left    button-id button-props))
-        on-focus-f (fn [_] (core.side-effects/input-focused button-id button-props))]
+  (let [on-blur-f  (fn [_] (pretty-engine/input-left    button-id button-props))
+        on-focus-f (fn [_] (pretty-engine/input-focused button-id button-props))]
        (-> {:class :pi-radio-button--body
             :on-blur  on-blur-f
             :on-focus on-focus-f}

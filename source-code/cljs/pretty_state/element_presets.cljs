@@ -1,12 +1,12 @@
 
 (ns pretty-state.element-presets
-    (:require [pretty-presets.api :as p]
+    (:require [pretty-presets.api :as pretty-presets]
               [re-frame.extra.api :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(p/reg-preset! :pretty-state/clickable-element
+(pretty-presets/reg-preset! :pretty-state/clickable-element
   ; @ignore
   ;
   ; @param (map) element-props

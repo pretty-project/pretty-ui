@@ -2,8 +2,7 @@
 (ns pretty-inputs.combo-box.prototypes
     (:require [fruits.loop.api           :refer [<-walk]]
               [fruits.noop.api           :refer [return]]
-              [pretty-build-kit.api      :as pretty-build-kit]
-              [pretty-inputs.input.utils :as input.utils]))
+              [pretty-build-kit.api      :as pretty-build-kit]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -29,8 +28,6 @@
   [box-id {:keys [on-blur on-changed on-focus] :as box-props}]
   (<-walk box-props
           (fn [%] (pretty-build-kit/default-values % {:field-content-f return :field-value-f return :option-label-f return :option-value-f return}))
-          (fn [%] (pretty-build-kit/default-values % {:options-path (input.utils/default-options-path box-id)
-                                                      :value-path   (input.utils/default-value-path   box-id)}))
           (fn [%] (pretty-build-kit/forced-values  % {:on-blur      {:dispatch-n [on-blur    [:pretty-inputs.combo-box/field-blurred box-id %]]}
                                                       :on-changed   {:dispatch-n [on-changed [:pretty-inputs.combo-box/field-changed box-id %]]}
                                                       :on-focus     {:dispatch-n [on-focus   [:pretty-inputs.combo-box/field-focused box-id %]]}})))
@@ -53,9 +50,7 @@
   (<-walk {:field-content-f return
            :field-value-f   return
            :option-label-f  return
-           :option-value-f  return
-           :options-path    (input.utils/default-options-path box-id)
-           :value-path      (input.utils/default-value-path   box-id)}
+           :option-value-f  return}
           (fn [%] (merge % box-props))
           (fn [%] (merge % {:on-blur    {:dispatch-n [on-blur    [:pretty-inputs.combo-box/field-blurred box-id %]]}
                             :on-changed {:dispatch-n [on-changed [:pretty-inputs.combo-box/field-changed box-id %]]}

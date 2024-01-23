@@ -5,9 +5,7 @@
               [fruits.vector.api               :as vector]
               [metamorphic-content.api         :as metamorphic-content]
               [pretty-elements.api             :as pretty-elements]
-              [pretty-inputs.core.side-effects :as core.side-effects]
-              [pretty-inputs.core.views        :as core.views]
-              [pretty-inputs.core.env :as core.env]
+              [pretty-engine.api :as pretty-engine]
               [pretty-inputs.select.attributes :as select.attributes]
               [pretty-inputs.select.env        :as select.env]
               [pretty-inputs.select.prototypes :as select.prototypes]
@@ -15,8 +13,7 @@
               [pretty-presets.api              :as pretty-presets]
               [pretty-layouts.api              :as pretty-layouts]
               [pretty-forms.api :as pretty-forms]
-              [reagent.api                     :as reagent]
-              [pretty-inputs.core.utils :as core.utils]))
+              [reagent.api                     :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -30,7 +27,7 @@
   ; The option field  ...
   ; ... filters the selectable options.
   ; ... optionally provide an "Add" button as end adornment to add new options.
-  (let [field-id    (core.utils/input-id->subitem-id         select-id :text-field)
+  (let [field-id    (pretty-engine/input-id->subitem-id      select-id :text-field)
         field-props (select.prototypes/field-props-prototype select-id select-props)]
        [text-field.views/input field-id field-props]))
 
@@ -45,10 +42,10 @@
   ; {}
   ; @param (*) option
   [select-id {:keys [option-helper-f option-label-f] :as select-props} option]
-  (if (core.env/render-option? select-id select-props option)
+  (if (pretty-engine/render-input-option? select-id select-props option)
       [:button (select.attributes/select-option-attributes select-id select-props option)
-               (if-let [option-selected? (core.env/option-selected? select-id select-props option)]
-                       [:div (select.attributes/select-option-checkmark-attributes select-id select-props option) :done])
+               (if (pretty-engine/input-option-selected? select-id select-props option)
+                   [:div (select.attributes/select-option-checkmark-attributes select-id select-props option) :done])
                [:div {:class :pi-select--option-content}
                      (if-some [option-label (-> option option-label-f)]
                               [:div (select.attributes/select-option-label-attributes select-id select-props option)
@@ -65,7 +62,7 @@
   ; {}
   [select-id {:keys [placeholder] :as select-props}]
   (letfn [(f0 [option] [select-option select-id select-props option])]
-         (let [options (core.env/get-input-options select-id select-props)]
+         (let [options (pretty-engine/get-input-options select-id select-props)]
               (cond (-> options vector/not-empty?) (hiccup/put-with [:<>] options f0)
                     (-> placeholder) [:div (select.attributes/select-placeholder-attributes select-id select-props)
                                            (metamorphic-content/compose placeholder)]))))
@@ -99,11 +96,11 @@
   ; @param (map) select-props
   ; {:popup (map)(opt)}
   [select-id {:keys [popup] :as select-props}]
-  (let [popup-id    (core.utils/input-id->subitem-id         select-id :popup)
+  (let [popup-id    (pretty-engine/input-id->subitem-id      select-id :popup)
         popup-props (select.prototypes/popup-props-prototype select-id select-props)
         popup-props (assoc popup-props :body   [select-popup-body   select-id select-props]
                                        :header [select-popup-header select-id select-props])]
-       (if (core.env/input-popup-rendered? select-id select-props)
+       (if (pretty-engine/input-popup-rendered? select-id select-props)
            [:div {:class :pi-select--popup}
                  [pretty-layouts/struct-popup popup-id popup-props]])))
 
@@ -116,7 +113,7 @@
   ; @param (keyword) select-id
   ; @param (map) select-props
   [select-id select-props]
-  (let [button-id    (core.utils/input-id->subitem-id                 select-id :button)
+  (let [button-id    (pretty-engine/input-id->subitem-id              select-id :button)
         button-props (select.prototypes/select-button-props-prototype select-id select-props)]
        [pretty-elements/button button-id button-props]))
 
@@ -126,7 +123,7 @@
   ; @param (keyword) select-id
   ; @param (map) select-props
   [select-id select-props]
-  (let [button-id    (core.utils/input-id->subitem-id               select-id :button)
+  (let [button-id    (pretty-engine/input-id->subitem-id            select-id :button)
         button-props (select.prototypes/icon-button-props-prototype select-id select-props)]
        [pretty-elements/icon-button button-id button-props]))
 
@@ -136,7 +133,7 @@
   ; @param (keyword) select-id
   ; @param (map) select-props
   [select-id select-props]
-  (let [button-id    (core.utils/input-id->subitem-id          select-id :button)
+  (let [button-id    (pretty-engine/input-id->subitem-id       select-id :button)
         button-props (select.prototypes/button-props-prototype select-id select-props)]
        [pretty-elements/button button-id button-props]))
 
@@ -151,9 +148,10 @@
   ; {:layout (keyword)}
   [select-id {:keys [layout] :as select-props}]
   [:div (select.attributes/select-attributes select-id select-props)
-        [core.views/input-synchronizer       select-id select-props]
-        [core.views/input-label              select-id select-props]
-        [pretty-forms/invalid-message        select-id select-props]
+        (if-let [label-props (pretty-engine/input-label-props select-id select-props)]
+                [pretty-elements/label label-props])
+        [pretty-forms/invalid-message     select-id select-props]
+        [pretty-engine/input-synchronizer select-id select-props]
         [:div (select.attributes/select-body-attributes select-id select-props)
               (case layout :button        [button-layout        select-id select-props]
                            :icon-button   [icon-button-layout   select-id select-props]
@@ -168,8 +166,8 @@
   ; @param (map) select-props
   [select-id select-props]
   ; @note (tutorials#parametering)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (core.side-effects/input-did-mount    select-id select-props))
-                       :component-will-unmount (fn [_ _] (core.side-effects/input-will-unmount select-id select-props))
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-engine/input-did-mount    select-id select-props))
+                       :component-will-unmount (fn [_ _] (pretty-engine/input-will-unmount select-id select-props))
                        :reagent-render         (fn [_ select-props] [select select-id select-props])}))
 
 (defn input

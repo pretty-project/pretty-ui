@@ -1,7 +1,6 @@
 
 (ns pretty-inputs.chip-group.side-effects
-    (:require [pretty-inputs.core.env :as core.env]
-              [pretty-inputs.core.side-effects :as core.side-effects]
+    (:require [pretty-engine.api :as pretty-engine]
               [fruits.vector.api :as vector]))
 
 ;; ----------------------------------------------------------------------------
@@ -17,6 +16,6 @@
   ;
   ; @return (map)
   [group-id group-props chip-dex _]
-  (let [chips (core.env/get-input-displayed-value group-id group-props)
+  (let [chips (pretty-engine/get-input-displayed-value group-id group-props)
         chips (vector/remove-nth-item chips chip-dex)]
-       (core.side-effects/input-value-changed group-id group-props chips)))
+       (pretty-engine/input-value-changed group-id group-props chips)))

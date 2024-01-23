@@ -3,7 +3,7 @@
     (:require [fruits.loop.api              :refer [<-walk]]
               [fruits.vector.api            :as vector]
               [pretty-build-kit.api         :as pretty-build-kit]
-              [pretty-inputs.core.env :as core.env]
+              [pretty-engine.api :as pretty-engine]
               [pretty-inputs.text-field.adornments :as text-field.adornments]))
 
 ;; ----------------------------------------------------------------------------
@@ -20,7 +20,7 @@
   ; @return (maps)
   [field-id field-props {:keys [on-click-f] :as adornment-props}]
   ; Provides the actual field content to each adornment's 'on-click-f' function as a parameter.
-  (letfn [(f0 [] (-> field-id (core.env/get-input-displayed-value field-props) on-click-f))]
+  (letfn [(f0 [] (-> field-id (pretty-engine/get-input-displayed-value field-props) on-click-f))]
          (if on-click-f (-> adornment-props (assoc :on-click-f f0))
                         (-> adornment-props))))
 

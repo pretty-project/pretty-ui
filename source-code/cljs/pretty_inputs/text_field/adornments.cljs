@@ -1,7 +1,6 @@
 
 (ns pretty-inputs.text-field.adornments
-    (:require [pretty-inputs.core.env :as core.env]
-              [pretty-inputs.core.side-effects :as core.side-effects]))
+    (:require [pretty-engine.api :as pretty-engine]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -18,8 +17,8 @@
   ;  :on-click-f (function)
   ;  :tooltip (metamorphic-content)}
   [field-id field-props]
-  (let [input-empty? (core.env/input-empty? field-id field-props)
-        on-click-f   (fn [] (core.side-effects/empty-input! field-id field-props))]
+  (let [input-empty? (pretty-engine/input-empty? field-id field-props)
+        on-click-f   (fn [] (pretty-engine/empty-input! field-id field-props))]
        {:disabled?       input-empty?
         :on-click-f      on-click-f
         :icon            :close

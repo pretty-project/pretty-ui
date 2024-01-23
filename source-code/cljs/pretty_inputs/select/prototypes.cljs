@@ -3,7 +3,7 @@
     (:require [fruits.noop.api :refer [none return]]
               [pretty-build-kit.api :as pretty-build-kit]
               [pretty-inputs.select.env :as select.env]
-              [pretty-inputs.core.side-effects :as core.side-effects]
+              [pretty-engine.api :as pretty-engine]
               [pretty-inputs.select.side-effects :as select.side-effects]
               [fruits.vector.api :as vector]))
 
@@ -19,7 +19,7 @@
   ; @return (map)
   ; {}
   [select-id {:keys [button] :as select-props}]
-  (let [on-click-f (fn [_] (core.side-effects/render-input-popup! select-id select-props))
+  (let [on-click-f (fn [_] (pretty-engine/render-input-popup! select-id select-props))
         label      (select.env/select-button-label select-id select-props)]
        (merge button {:gap           :auto
                       :icon          :unfold_more
@@ -36,7 +36,7 @@
   ; @return (map)
   ; {}
   [select-id {:keys [button] :as select-props}]
-  (let [on-click-f (fn [_] (core.side-effects/render-input-popup! select-id select-props))]
+  (let [on-click-f (fn [_] (pretty-engine/render-input-popup! select-id select-props))]
        (merge button {:on-click-f on-click-f})))
 
 (defn button-props-prototype
@@ -48,7 +48,7 @@
   ; @return (map)
   ; {}
   [select-id {:keys [button] :as select-props}]
-  (let [on-click-f (fn [_] (core.side-effects/render-input-popup! select-id select-props))]
+  (let [on-click-f (fn [_] (pretty-engine/render-input-popup! select-id select-props))]
        (merge button {:on-click-f on-click-f})))
 
 ;; ----------------------------------------------------------------------------
@@ -90,7 +90,7 @@
   ; @return (map)
   ; {}
   [select-id {:keys [popup] :as select-props}]
-  (let [on-cover-f (fn [_] (core.side-effects/close-input-popup! select-id select-props))]
+  (let [on-cover-f (fn [_] (pretty-engine/close-input-popup! select-id select-props))]
        (merge {:cover-color :black
                :fill-color  :default}
               (-> popup)

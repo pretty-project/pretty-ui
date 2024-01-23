@@ -1,8 +1,8 @@
 
 (ns pretty-elements.button.side-effects
-    (:require [keypress-handler.api              :as keypress-handler]
-              [pretty-elements.core.side-effects :as core.side-effects]
-              [re-frame.api                      :as r]))
+    (:require [keypress-handler.api :as keypress-handler]
+              [pretty-engine.api :as pretty-engine]
+              [re-frame.api :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -13,7 +13,7 @@
   ; @param (keyword) button-id
   ; @param (map) button-props
   [button-id _]
-  (core.side-effects/focus-element! button-id))
+  (pretty-engine/focus-element! button-id))
 
 (defn key-released
   ; @ignore
@@ -22,7 +22,7 @@
   ; @param (map) button-props
   ; {:on-click-f (function)(opt)}
   [button-id {:keys [on-click-f]}]
-  (core.side-effects/blur-element! button-id)
+  (pretty-engine/blur-element! button-id)
   (on-click-f))
 
 ;; ----------------------------------------------------------------------------

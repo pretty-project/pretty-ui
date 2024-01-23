@@ -4,8 +4,7 @@
               [dom.api                          :as dom]
               [fruits.hiccup.api                :as hiccup]
               [keypress-handler.api             :as keypress-handler]
-              [pretty-inputs.core.env           :as core.env]
-              [pretty-inputs.core.side-effects  :as core.side-effects]
+              [pretty-engine.api :as pretty-engine]
               [pretty-inputs.text-field.env :as text-field.env]
               [pretty-inputs.text-field.config :as text-field.config]
               [pretty-inputs.text-field.utils  :as text-field.utils]
@@ -25,9 +24,9 @@
   ; - Ensures that the field is focused, otherwise the surface will not shown.
   ;   E.g., When the 'type-ended' function (what is applied with a delay) calls
   ;         this function ('show-field-surface!'), the user had enough time to leave the field.
-  (when (core.env/input-focused? field-id field-props)
-        (core.side-effects/update-all-input-state! dissoc :surface-visible?)
-        (core.side-effects/update-input-state! field-id assoc :surface-visible? true)))
+  (when (pretty-engine/input-focused? field-id field-props)
+        (pretty-engine/update-all-input-state! dissoc :surface-visible?)
+        (pretty-engine/update-input-state! field-id assoc :surface-visible? true)))
 
 (defn hide-field-surface!
   ; @ignore
@@ -35,7 +34,7 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   [field-id _]
-  (core.side-effects/update-input-state! field-id dissoc :surface-visible?))
+  (pretty-engine/update-input-state! field-id dissoc :surface-visible?))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -46,8 +45,8 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   [field-id field-props]
-  (let [on-enter-props {:key-code 13 :on-keydown-f #(core.side-effects/ENTER-pressed field-id field-props) :required? true}
-        on-esc-props   {:key-code 27 :on-keydown-f #(core.side-effects/ESC-pressed   field-id field-props) :required? true}]
+  (let [on-enter-props {:key-code 13 :on-keydown-f #(pretty-engine/input-ENTER-pressed field-id field-props) :required? true}
+        on-esc-props   {:key-code 27 :on-keydown-f #(pretty-engine/input-ESC-pressed   field-id field-props) :required? true}]
        (keypress-handler/reg-keypress-event! :pretty-inputs.text-field/ENTER on-enter-props)
        (keypress-handler/reg-keypress-event! :pretty-inputs.text-field/ESC     on-esc-props)))
 
@@ -73,9 +72,9 @@
        (if-let [target-element (dom/get-element-by-attribute "data-focus-id" focus-id)]
                (dom/select-content! target-element))) ; <- Experimental solution.
   (keypress-handler/set-type-mode!)
-  (core.side-effects/input-focused field-id field-props)
-  (show-field-surface!             field-id field-props)
-  (reg-keypress-events!            field-id field-props))
+  (pretty-engine/input-focused field-id field-props)
+  (show-field-surface!         field-id field-props)
+  (reg-keypress-events!        field-id field-props))
 
 (defn field-left
   ; @ignore
@@ -84,9 +83,9 @@
   ; @param (map) field-props
   [field-id field-props]
   (keypress-handler/quit-type-mode!)
-  (core.side-effects/input-left field-id field-props)
-  (hide-field-surface!          field-id field-props)
-  (dereg-keypress-events!       field-id field-props))
+  (pretty-engine/input-left field-id field-props)
+  (hide-field-surface!      field-id field-props)
+  (dereg-keypress-events!   field-id field-props))
 
 (defn type-ended
   ; @ignore
@@ -115,7 +114,7 @@
   ; @param (DOM-event) event
   [field-id field-props event]
   (let [field-content (text-field.utils/on-change-event->field-content field-id field-props event)]
-       (core.side-effects/input-value-changed field-id field-props field-content)
+       (pretty-engine/input-value-changed field-id field-props field-content)
        (activity-listener/reg-last-activity!  field-id)
        (letfn [(f0 [] (type-ended field-id field-props))]
               (time/set-timeout! f0 text-field.config/TYPE-ENDED-AFTER))))

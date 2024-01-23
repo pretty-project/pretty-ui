@@ -1,6 +1,6 @@
 
 (ns pretty-inputs.combo-box.events
-    (:require [pretty-inputs.input.events :as input.events]
+    (:require ;[pretty-inputs.input.events :as input.events]
               [re-frame.api               :refer [r]]
               [re-frame.db.api            :as r.db]))
 
@@ -14,8 +14,8 @@
   ; @param (map) box-props
   ;
   ; @return (map)
-  [db [_ box-id box-props]]
-  (r input.events/use-initial-options! db box-id box-props))
+  [db [_ box-id box-props]])
+  ;(r input.events/use-initial-options! db box-id box-props))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

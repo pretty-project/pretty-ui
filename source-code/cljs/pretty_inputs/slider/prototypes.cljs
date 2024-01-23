@@ -1,7 +1,6 @@
 
 (ns pretty-inputs.slider.prototypes
-    (:require [pretty-build-kit.api      :as pretty-build-kit]
-              [pretty-inputs.input.utils :as input.utils]))
+    (:require [pretty-build-kit.api :as pretty-build-kit]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -20,6 +19,5 @@
   [slider-id slider-props]
   (merge {:max-value     100
           :min-value     0
-          :initial-value [0 100]
-          :value-path    (input.utils/default-value-path slider-id)}
+          :initial-value [0 100]}
          (-> slider-props)))

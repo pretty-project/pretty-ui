@@ -1,6 +1,6 @@
 
 (ns pretty-inputs.password-field.side-effects
-    (:require [pretty-inputs.core.side-effects :as core.side-effects]))
+    (:require [pretty-engine.api :as pretty-engine]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -15,7 +15,7 @@
   ; When a password field unmounts it's important to reset its visibility state;
   ; otherwise, newly mounted password fields would remember their previous instance's state,
   ; and it's strongly not recommended to mount a password field with a visible content!
-  (core.side-effects/update-input-state! field-id dissoc :password-visible?))
+  (pretty-engine/update-input-state! field-id dissoc :password-visible?))
 
 (defn toggle-password-visibility!
   ; @ignore
@@ -23,7 +23,7 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   [field-id _]
-  (core.side-effects/update-input-state! field-id update :password-visible? not))
+  (pretty-engine/update-input-state! field-id update :password-visible? not))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

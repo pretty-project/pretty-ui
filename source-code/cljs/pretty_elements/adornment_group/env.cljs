@@ -1,6 +1,6 @@
 
 (ns pretty-elements.adornment-group.env
-    (:require [pretty-elements.core.env :as core.env]))
+    (:require [pretty-engine.api :as pretty-engine]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -12,4 +12,4 @@
   ;
   ; @return (ms)
   [adornment-id]
-  (core.env/get-element-state adornment-id :timeout-left))
+  (pretty-engine/get-element-state adornment-id :timeout-left))

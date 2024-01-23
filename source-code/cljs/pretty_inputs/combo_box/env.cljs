@@ -5,8 +5,7 @@
               [fruits.string.api             :as string]
               [fruits.vector.api             :as vector]
               [pretty-inputs.combo-box.state :as combo-box.state]
-              [pretty-inputs.core.env        :as core.env]
-              [pretty-inputs.input.env       :as input.env]))
+              [pretty-engine.api :as pretty-engine]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -38,8 +37,8 @@
   ;
   ; @return (vector)
   [box-id box-props]
-  (let [options (input.env/get-input-options box-id box-props)]
-       (letfn [(f0 [options option] (if (core.env/render-option? box-id box-props option)
+  (let [options (pretty-engine/get-input-options box-id box-props)]
+       (letfn [(f0 [options option] (if (pretty-engine/render-input-option? box-id box-props option)
                                         (conj options option)
                                         (->   options)))]
               (reduce f0 [] options))))

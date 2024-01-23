@@ -1,7 +1,6 @@
 
 (ns pretty-inputs.counter.prototypes
-    (:require [pretty-build-kit.api      :as pretty-build-kit]
-              [pretty-inputs.input.utils :as input.utils]))
+    (:require [pretty-build-kit.api      :as pretty-build-kit]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -26,6 +25,5 @@
           :border-radius   {:all :m}
           :border-width    :xs
           :font-size       :s
-          :initial-value   0
-          :value-path      (input.utils/default-value-path counter-id)}
+          :initial-value   0}
          (-> counter-props)))

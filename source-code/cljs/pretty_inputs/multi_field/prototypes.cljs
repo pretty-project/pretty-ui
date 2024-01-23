@@ -1,7 +1,6 @@
 
 (ns pretty-inputs.multi-field.prototypes
     (:require [pretty-build-kit.api            :as pretty-build-kit]
-              [pretty-inputs.input.utils       :as input.utils]
               [pretty-inputs.multi-field.env   :as multi-field.env]
               [pretty-inputs.multi-field.utils :as multi-field.utils]))
 
@@ -18,8 +17,8 @@
   ; {:max-input-count (integer)
   ;  :value-path (Re-Frame path vector)}
   [group-id group-props]
-  (merge {:max-input-count 8
-          :value-path (input.utils/default-value-path group-id)}
+  (merge {:max-input-count 8}
+          ;:value-path (input.utils/default-value-path group-id)}
          (-> group-props)))
 
 ;; ----------------------------------------------------------------------------

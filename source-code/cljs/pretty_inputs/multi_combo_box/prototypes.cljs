@@ -1,10 +1,9 @@
 
 (ns pretty-inputs.multi-combo-box.prototypes
-    (:require [fruits.loop.api                     :refer [<-walk]]
-              [fruits.noop.api                     :refer [return]]
-              [pretty-build-kit.api                :as pretty-build-kit]
-              [pretty-inputs.input.utils           :as input.utils]
-              [pretty-inputs.core.utils :as core.utils]))
+    (:require [fruits.loop.api :refer [<-walk]]
+              [fruits.noop.api :refer [return]]
+              [pretty-build-kit.api :as pretty-build-kit]
+              [pretty-engine.api :as pretty-engine]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -20,10 +19,10 @@
   [box-id box-props]
   ; XXX#5061
   ; XXX#5062
-  (let [field-id    (core.utils/input-id->subitem-id box-id :text-field)
-        field-props (dissoc box-props :class :helper :indent :label :outdent :style :value-path)]
-       (merge {:value-path (input.utils/default-value-path field-id)}
-              (-> field-props))))
+  (let [field-id    (pretty-engine/input-id->subitem-id box-id :text-field)
+        field-props (dissoc box-props :class :helper :indent :label :outdent :style :value-path)]))
+       ;(merge {:value-path (input.utils/default-value-path field-id)}
+        ;      (-> field-props)]))
 
 (defn group-props-prototype
   ; @ignore
@@ -75,9 +74,7 @@
   ; to the combo-box.
   (<-walk {:field-value-f  return
            :option-label-f return
-           :option-value-f return
-           :options-path   (input.utils/default-options-path box-id)
-           :value-path     (input.utils/default-value-path   box-id)}
+           :option-value-f return}
           (fn [%] (merge % box-props))
           (fn [%] (merge % {:on-blur    [:pretty-inputs.multi-combo-box/field-blurred box-id %]
                             :on-changed [:pretty-inputs.multi-combo-box/field-changed box-id %]

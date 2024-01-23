@@ -1,7 +1,7 @@
 
 (ns pretty-inputs.counter.events
     (:require [pretty-inputs.counter.subs :as counter.subs]
-              [pretty-inputs.input.events :as input.events]
+              ;[pretty-inputs.input.events :as input.events]
               [re-frame.api               :refer [r]]
               [re-frame.db.api            :as r.db]))
 
@@ -15,8 +15,8 @@
   ; @param (map) counter-props
   ;
   ; @return (map)
-  [db [_ counter-id counter-props]]
-  (r input.events/use-initial-value! db counter-id counter-props))
+  [db [_ counter-id counter-props]])
+  ;(r input.events/use-initial-value! db counter-id counter-props))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

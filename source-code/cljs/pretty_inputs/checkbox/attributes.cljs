@@ -1,9 +1,8 @@
 
 (ns pretty-inputs.checkbox.attributes
-    (:require [dom.api                         :as dom]
-              [pretty-build-kit.api            :as pretty-build-kit]
-              [pretty-inputs.core.env          :as core.env]
-              [pretty-inputs.core.side-effects :as core.side-effects]))
+    (:require [dom.api :as dom]
+              [pretty-build-kit.api :as pretty-build-kit]
+              [pretty-engine.api :as pretty-engine]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -69,7 +68,7 @@
   ; @return (map)
   ; {}
   [checkbox-id checkbox-props option]
-  (let [option-color (core.env/get-option-color checkbox-id checkbox-props option)]
+  (let [option-color (pretty-engine/get-input-option-color checkbox-id checkbox-props option)]
        (-> {:class :pi-checkbox--option-button}
            (pretty-build-kit/border-attributes checkbox-props)
            (pretty-build-kit/color-attributes {:fill-color option-color}))))
@@ -100,8 +99,8 @@
   ;  :data-checked (boolean)
   ;  :disabled (boolean)}
   [checkbox-id {:keys [disabled?] :as checkbox-props} option]
-  (let [option-selected? (core.env/option-selected? checkbox-id checkbox-props option)
-        on-click-f       (fn [_] (core.side-effects/select-option! checkbox-id checkbox-props option))]
+  (let [option-selected? (pretty-engine/input-option-selected? checkbox-id checkbox-props option)
+        on-click-f       (fn [_] (pretty-engine/select-input-option! checkbox-id checkbox-props option))]
        (-> {:class        :pi-checkbox--option
             :data-checked option-selected?
             :disabled     disabled?}
@@ -122,8 +121,8 @@
   ;  :on-blur (function)
   ;  :on-focus (function)}
   [checkbox-id checkbox-props]
-  (let [on-blur-f  (fn [_] (core.side-effects/input-left    checkbox-id checkbox-props))
-        on-focus-f (fn [_] (core.side-effects/input-focused checkbox-id checkbox-props))]
+  (let [on-blur-f  (fn [_] (pretty-engine/input-left    checkbox-id checkbox-props))
+        on-focus-f (fn [_] (pretty-engine/input-focused checkbox-id checkbox-props))]
        (-> {:class    :pi-checkbox--body
             :on-blur  on-blur-f
             :on-focus on-focus-f}
