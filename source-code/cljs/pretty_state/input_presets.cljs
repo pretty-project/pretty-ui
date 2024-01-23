@@ -1,8 +1,8 @@
 
 (ns pretty-state.input-presets
-    (:require [pretty-presets.api :as pretty-presets]
-              [re-frame.extra.api :as r]
-              [fruits.vector.api :as vector]))
+    (:require [fruits.vector.api  :as vector]
+              [pretty-presets.api :as pretty-presets]
+              [re-frame.extra.api :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

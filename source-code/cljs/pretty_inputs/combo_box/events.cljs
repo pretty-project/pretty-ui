@@ -1,8 +1,8 @@
 
 (ns pretty-inputs.combo-box.events
     (:require ;[pretty-inputs.input.events :as input.events]
-              [re-frame.api               :refer [r]]
-              [re-frame.db.api            :as r.db]))
+              [re-frame.api    :refer [r]]
+              [re-frame.db.api :as r.db]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

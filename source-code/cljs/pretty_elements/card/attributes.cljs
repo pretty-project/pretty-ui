@@ -30,7 +30,8 @@
       (pretty-build-kit/indent-attributes           card-props)
       (pretty-build-kit/href-attributes             card-props)
       (pretty-build-kit/mouse-event-attributes      card-props)
-      (pretty-build-kit/style-attributes            card-props)))
+      (pretty-build-kit/style-attributes            card-props)
+      (pretty-build-kit/tab-attributes              card-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -1,6 +1,6 @@
 
 (ns pretty-inputs.password-field.adornments
-    (:require [pretty-inputs.password-field.env :as password-field.env]
+    (:require [pretty-inputs.password-field.env          :as password-field.env]
               [pretty-inputs.password-field.side-effects :as password-field.side-effects]))
 
 ;; ----------------------------------------------------------------------------

@@ -13,11 +13,11 @@
   ; @param (map) box-props
   [box-id box-props]
   ; XXX#4156 (source-code/cljs/pretty_inputs/combo_box/effects.cljs)
-  (let [on-down-props  {:key-code 40  :on-keydown-f #(r/dispatch [:pretty-inputs.combo-box/DOWN-pressed        box-id box-props]) :required? true :prevent-default? true}
-        on-up-props    {:key-code 38  :on-keydown-f #(r/dispatch [:pretty-inputs.combo-box/UP-pressed          box-id box-props]) :required? true :prevent-default? true}
-        on-esc-props   {:key-code 27  :on-keydown-f #(r/dispatch [:pretty-inputs.combo-box/ESC-pressed         box-id box-props]) :required? true}
-        on-enter-props {:key-code 13  :on-keydown-f #(r/dispatch [:pretty-inputs.multi-combo-box/ENTER-pressed box-id box-props]) :required? true}
-        on-comma-props {:key-code 188 :on-keydown-f #(r/dispatch [:pretty-inputs.multi-combo-box/COMMA-pressed box-id box-props]) :required? true :prevent-default? true}]
+  (let [on-down-props  {:key-code 40  :on-keydown-f #(r/dispatch [:pretty-inputs.combo-box/DOWN-pressed        box-id box-props]) :in-type-mode? true :prevent-default? true}
+        on-up-props    {:key-code 38  :on-keydown-f #(r/dispatch [:pretty-inputs.combo-box/UP-pressed          box-id box-props]) :in-type-mode? true :prevent-default? true}
+        on-esc-props   {:key-code 27  :on-keydown-f #(r/dispatch [:pretty-inputs.combo-box/ESC-pressed         box-id box-props]) :in-type-mode? true}
+        on-enter-props {:key-code 13  :on-keydown-f #(r/dispatch [:pretty-inputs.multi-combo-box/ENTER-pressed box-id box-props]) :in-type-mode? true}
+        on-comma-props {:key-code 188 :on-keydown-f #(r/dispatch [:pretty-inputs.multi-combo-box/COMMA-pressed box-id box-props]) :in-type-mode? true :prevent-default? true}]
        (keypress-handler/reg-keypress-event! :pretty-inputs.text-field/DOWN   on-down-props)
        (keypress-handler/reg-keypress-event! :pretty-inputs.text-field/UP       on-up-props)
        (keypress-handler/reg-keypress-event! :pretty-inputs.text-field/ESC     on-esc-props)

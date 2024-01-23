@@ -1,11 +1,11 @@
 
 (ns pretty-engine.input.lifecycles.side-effects
-    (:require [pretty-forms.api :as pretty-forms]
-              [pretty-engine.input.value.env :as input.value.env]
-              [pretty-engine.input.value.side-effects :as input.value.side-effects]
+    (:require [pretty-engine.input.focus.side-effects :as input.focus.side-effects]
               [pretty-engine.input.state.side-effects :as input.state.side-effects]
-              [pretty-engine.input.focus.side-effects :as input.focus.side-effects]
-              [time.api :as time]))
+              [pretty-engine.input.value.env          :as input.value.env]
+              [pretty-engine.input.value.side-effects :as input.value.side-effects]
+              [pretty-forms.api                       :as pretty-forms]
+              [time.api                               :as time]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

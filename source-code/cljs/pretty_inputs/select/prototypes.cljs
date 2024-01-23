@@ -1,11 +1,11 @@
 
 (ns pretty-inputs.select.prototypes
-    (:require [fruits.noop.api :refer [none return]]
-              [pretty-build-kit.api :as pretty-build-kit]
-              [pretty-inputs.select.env :as select.env]
-              [pretty-engine.api :as pretty-engine]
-              [pretty-inputs.select.side-effects :as select.side-effects]
-              [fruits.vector.api :as vector]))
+    (:require [fruits.noop.api                   :refer [none return]]
+              [fruits.vector.api                 :as vector]
+              [pretty-build-kit.api              :as pretty-build-kit]
+              [pretty-engine.api                 :as pretty-engine]
+              [pretty-inputs.select.env          :as select.env]
+              [pretty-inputs.select.side-effects :as select.side-effects]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

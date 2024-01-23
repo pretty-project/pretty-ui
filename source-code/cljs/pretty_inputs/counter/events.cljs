@@ -1,7 +1,7 @@
 
 (ns pretty-inputs.counter.events
-    (:require [pretty-inputs.counter.subs :as counter.subs]
-              ;[pretty-inputs.input.events :as input.events]
+    (:require ;[pretty-inputs.input.events :as input.events]
+              [pretty-inputs.counter.subs :as counter.subs]
               [re-frame.api               :refer [r]]
               [re-frame.db.api            :as r.db]))
 

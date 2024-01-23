@@ -2,7 +2,7 @@
 (ns pretty-inputs.select.attributes
     (:require [dom.api              :as dom]
               [pretty-build-kit.api :as pretty-build-kit]
-              [pretty-engine.api :as pretty-engine]))
+              [pretty-engine.api    :as pretty-engine]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

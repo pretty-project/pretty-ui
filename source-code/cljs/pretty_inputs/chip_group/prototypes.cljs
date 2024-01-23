@@ -1,9 +1,9 @@
 
 (ns pretty-inputs.chip-group.prototypes
-    (:require [pretty-build-kit.api :as pretty-build-kit]
-              [fruits.vector.api :as vector]
-              [pretty-inputs.chip-group.adornments :as chip-group.adornments]
-              [fruits.noop.api :refer [return]]))
+    (:require [fruits.noop.api                     :refer [return]]
+              [fruits.vector.api                   :as vector]
+              [pretty-build-kit.api                :as pretty-build-kit]
+              [pretty-inputs.chip-group.adornments :as chip-group.adornments]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -4,7 +4,6 @@
               [metamorphic-content.api :as metamorphic-content]
               [pretty-build-kit.api    :as pretty-build-kit]))
 
-
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -18,7 +17,7 @@
           :badge/default          (pretty-build-kit/default-value-group {:badge-content nil :badge-color :primary :badge-position :tr})
           :border/default         (pretty-build-kit/default-value-group {:border-color :primary :border-position :all :border-width :xxs})
           :icon/default           (pretty-build-kit/default-value-group {:icon nil :icon-color :primary :icon-position :left :icon-size (or font-size :s)})
-          :progress/default       (pretty-build-kit/default-value-group {:progress nil :progress-color :muted :progress-direction :ltr :progress-duration  250})
+          :progress/default       (pretty-build-kit/default-value-group {:progress nil :progress-color :muted :progress-direction :ltr :progress-duration 250})
           :tooltip/default        (pretty-build-kit/default-value-group {:tooltip-content nil :tooltip-position :right})
           :badge-content/update   (pretty-build-kit/value-update-fns    {:badge-content   metamorphic-content/compose})
           :tooltip-content/update (pretty-build-kit/value-update-fns    {:tooltip-content metamorphic-content/compose})
@@ -69,6 +68,7 @@
           :font-weight      :medium
           :horizontal-align :center
           :line-height      :text-block
+          :letter-spacing   :auto
           :text-overflow    :hidden}
          (if badge-content   {:badge-color        :primary
                               :badge-position     :tr})

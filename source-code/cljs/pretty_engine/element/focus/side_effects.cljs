@@ -1,26 +1,24 @@
 
 (ns pretty-engine.element.focus.side-effects
-    (:require [dom.api :as dom]
-              [fruits.hiccup.api :as hiccup]
+    (:require [dom.api                                  :as dom]
+              [fruits.hiccup.api                        :as hiccup]
               [pretty-engine.element.state.side-effects :as element.state.side-effects]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn focus-element!
-  ; @ignore
-  ;
   ; @param (keyword) element-id
-  [element-id]
+  ; @param (keyword) element-props
+  [element-id _]
   (let [focus-id (hiccup/value element-id)]
        (if-let [target-element (dom/get-element-by-attribute "data-focus-id" focus-id)]
                (dom/focus-element! target-element))))
 
 (defn blur-element!
-  ; @ignore
-  ;
   ; @param (keyword) element-id
-  [element-id]
+  ; @param (keyword) element-props
+  [element-id _]
   (let [focus-id (hiccup/value element-id)]
        (if-let [target-element (dom/get-element-by-attribute "data-focus-id" focus-id)]
                (dom/blur-element! target-element))))
@@ -29,8 +27,6 @@
 ;; ----------------------------------------------------------------------------
 
 (defn mark-element-as-focused!
-  ; @ignore
-  ;
   ; @param (keyword) element-id
   ; @param (keyword) element-props
   [element-id _]
@@ -38,8 +34,6 @@
   (element.state.side-effects/update-element-state! element-id assoc :focused? true))
 
 (defn unmark-element-as-focused!
-  ; @ignore
-  ;
   ; @param (keyword) element-id
   ; @param (keyword) element-props
   [element-id _]
@@ -49,8 +43,6 @@
 ;; ----------------------------------------------------------------------------
 
 (defn element-focused
-  ; @ignore
-  ;
   ; @param (keyword) element-id
   ; @param (map) element-props
   ; {}
@@ -59,8 +51,6 @@
   (if on-focus-f (on-focus-f)))
 
 (defn element-left
-  ; @ignore
-  ;
   ; @param (keyword) element-id
   ; @param (map) element-props
   ; {}

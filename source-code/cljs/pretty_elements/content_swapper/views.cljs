@@ -21,21 +21,21 @@
   [swapper-id swapper-props]
   [:div (content-swapper.attributes/swapper-attributes swapper-id swapper-props)
         [:div (content-swapper.attributes/swapper-body-attributes swapper-id swapper-props)
-              (let [page-pool   (-> @content-swapper.state/SWAPPERS swapper-id :page-pool)
-                    active-page (-> @content-swapper.state/SWAPPERS swapper-id :active-page)]
-                   (letfn [(f0 [dex {:keys [id page]}] [react/mount-animation {:mounted? (= id active-page)}
-                                                                              [:div {:class :pe-content-swapper--page}
-                                                                                    [metamorphic-content/compose page]]])]
-                          (hiccup/put-with-indexed [:<>] page-pool f0)))]])
+              (let [content-pool   (-> @content-swapper.state/SWAPPERS swapper-id :content-pool)
+                    active-content (-> @content-swapper.state/SWAPPERS swapper-id :active-content)]
+                   (letfn [(f0 [dex {:keys [id content]}] [react/mount-animation {:mounted? (= id active-content)}
+                                                                                 [:div {:class :pe-content-swapper--content}
+                                                                                       [metamorphic-content/compose content]]])]
+                          (hiccup/put-with-indexed [:<>] content-pool f0)))]])
 
 (defn- content-swapper-lifecycles
   ; @ignore
   ;
   ; @param (keyword) swapper-id
   ; @param (map) swapper-props
-  ; {:initial-page (metamorphic-content)}
-  [swapper-id {:keys [initial-page] :as swapper-props}]
-  (let [initial-state {:page-pool [{:id :initial-page :page initial-page}] :active-page :initial-page}]
+  ; {:initial-content (metamorphic-content)}
+  [swapper-id {:keys [initial-content] :as swapper-props}]
+  (let [initial-state {:content-pool [{:id :initial-content :content initial-content}] :active-content :initial-content}]
        ; @note (tutorials#parametering)
        (reagent/lifecycles {:component-did-mount    (fn [_ _] (swap! content-swapper.state/SWAPPERS update swapper-id merge initial-state))
                             :component-will-unmount (fn [_ _] (swap! content-swapper.state/SWAPPERS dissoc swapper-id))
@@ -44,17 +44,17 @@
 (defn element
   ; @important
   ; XXX#0517
-  ; The 'content-swapper' element's pages have absolute positioning.
+  ; The 'content-swapper' element's content has absolute positioning.
   ; Therefore, the 'content-swapper' element and its body are stretched to their
-  ; parents in order to clear space for the pages because they are not doing it
-  ; for themeself (because their absolute positioning).
+  ; parents in order to clear space for the content because it is not doing it
+  ; for itself (because its absolute positioning).
   ;
   ; @param (keyword)(opt) swapper-id
   ; @param (map) swapper-props
   ; {:class (keyword or keywords in vector)(opt)
   ;  :indent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :initial-page (metamorphic-content)
+  ;  :initial-content (metamorphic-content)
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :preset (keyword)(opt)

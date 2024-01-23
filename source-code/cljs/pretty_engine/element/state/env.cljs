@@ -1,6 +1,6 @@
 
 (ns pretty-engine.element.state.env
-    (:require [fruits.vector.api :as vector]
+    (:require [fruits.vector.api        :as vector]
               [pretty-engine.core.state :as core.state]))
 
 ;; ----------------------------------------------------------------------------

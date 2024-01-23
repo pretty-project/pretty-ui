@@ -1,8 +1,8 @@
 
 (ns pretty-inputs.combo-box.prototypes
-    (:require [fruits.loop.api           :refer [<-walk]]
-              [fruits.noop.api           :refer [return]]
-              [pretty-build-kit.api      :as pretty-build-kit]))
+    (:require [fruits.loop.api      :refer [<-walk]]
+              [fruits.noop.api      :refer [return]]
+              [pretty-build-kit.api :as pretty-build-kit]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -1,8 +1,8 @@
 
 (ns pretty-engine.input.popup.side-effects
-    (:require [pretty-engine.input.state.side-effects :as input.state.side-effects]
+    (:require [keypress-handler.api                   :as keypress-handler]
               [pretty-engine.input.focus.side-effects :as input.focus.side-effects]
-              [keypress-handler.api :as keypress-handler]))
+              [pretty-engine.input.state.side-effects :as input.state.side-effects]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -26,7 +26,7 @@
   (input.state.side-effects/update-all-input-state! dissoc :popup-rendered?)
   (input.state.side-effects/update-input-state! input-id assoc :popup-rendered? true)
   (let [close-input-popup-f (fn [] (close-input-popup! input-id input-props))
-        on-escape-props     {:key-code 27 :required? true :exclusive? true :on-keyup-f close-input-popup-f}]
+        on-escape-props     {:key-code 27 :in-type-mode? true :exclusive? true :on-keyup-f close-input-popup-f}]
        (keypress-handler/reg-keypress-event! :pretty-inputs.input-popup/ESC on-escape-props)))
 
 (defn update-input-popup!

@@ -1,14 +1,14 @@
 
 (ns pretty-inputs.text-field.side-effects
-    (:require [activity-listener.api            :as activity-listener]
-              [dom.api                          :as dom]
-              [fruits.hiccup.api                :as hiccup]
-              [keypress-handler.api             :as keypress-handler]
-              [pretty-engine.api :as pretty-engine]
-              [pretty-inputs.text-field.env :as text-field.env]
+    (:require [activity-listener.api           :as activity-listener]
+              [dom.api                         :as dom]
+              [fruits.hiccup.api               :as hiccup]
+              [keypress-handler.api            :as keypress-handler]
+              [pretty-engine.api               :as pretty-engine]
               [pretty-inputs.text-field.config :as text-field.config]
+              [pretty-inputs.text-field.env    :as text-field.env]
               [pretty-inputs.text-field.utils  :as text-field.utils]
-              [time.api                         :as time]))
+              [time.api                        :as time]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -45,8 +45,8 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   [field-id field-props]
-  (let [on-enter-props {:key-code 13 :on-keydown-f #(pretty-engine/input-ENTER-pressed field-id field-props) :required? true}
-        on-esc-props   {:key-code 27 :on-keydown-f #(pretty-engine/input-ESC-pressed   field-id field-props) :required? true}]
+  (let [on-enter-props {:key-code 13 :on-keydown-f #(pretty-engine/input-ENTER-pressed field-id field-props) :in-type-mode? true}
+        on-esc-props   {:key-code 27 :on-keydown-f #(pretty-engine/input-ESC-pressed   field-id field-props) :in-type-mode? true}]
        (keypress-handler/reg-keypress-event! :pretty-inputs.text-field/ENTER on-enter-props)
        (keypress-handler/reg-keypress-event! :pretty-inputs.text-field/ESC     on-esc-props)))
 

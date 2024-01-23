@@ -1,12 +1,12 @@
 
 (ns pretty-elements.chip.views
-    (:require [fruits.random.api               :as random]
-              [metamorphic-content.api         :as metamorphic-content]
-              [pretty-elements.chip.attributes :as chip.attributes]
-              [pretty-elements.chip.prototypes :as chip.prototypes]
+    (:require [fruits.random.api                     :as random]
+              [fruits.vector.api                     :as vector]
+              [metamorphic-content.api               :as metamorphic-content]
               [pretty-elements.adornment-group.views :as adornment-group.views]
-              [pretty-presets.api              :as pretty-presets]
-              [fruits.vector.api :as vector]))
+              [pretty-elements.chip.attributes       :as chip.attributes]
+              [pretty-elements.chip.prototypes       :as chip.prototypes]
+              [pretty-presets.api                    :as pretty-presets]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -22,12 +22,10 @@
         [(cond href-uri :a on-click-f :button :else :div)
          (chip.attributes/chip-body-attributes chip-id chip-props)
          (if (vector/not-empty? start-adornments)
-             [:div {:class :pe-chip--adornments}
-                   [adornment-group.views/element {:adornments start-adornments}]])
+             [adornment-group.views/element {:adornments start-adornments}])
          [:div (chip.attributes/chip-label-attributes chip-id chip-props) [metamorphic-content/compose label placeholder]]
          (if (vector/not-empty? end-adornments)
-             [:div {:class :pe-chip--adornments}
-                   [adornment-group.views/element {:adornments end-adornments}]])]])
+             [adornment-group.views/element {:adornments end-adornments}])]])
 
 (defn element
   ; @param (keyword)(opt) chip-id

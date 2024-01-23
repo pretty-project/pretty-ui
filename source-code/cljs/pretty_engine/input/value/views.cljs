@@ -2,7 +2,7 @@
 (ns pretty-engine.input.value.views
     (:require [pretty-engine.input.value.env          :as input.value.env]
               [pretty-engine.input.value.side-effects :as input.value.side-effects]
-              [state-synchronizer.api :as state-synchronizer]))
+              [state-synchronizer.api                 :as state-synchronizer]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

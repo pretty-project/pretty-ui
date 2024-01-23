@@ -1,6 +1,6 @@
 
 (ns pretty-inputs.switch.prototypes
-    (:require [fruits.noop.api :refer [none return]]
+    (:require [fruits.noop.api      :refer [none return]]
               [pretty-build-kit.api :as pretty-build-kit]))
 
 ;; ----------------------------------------------------------------------------

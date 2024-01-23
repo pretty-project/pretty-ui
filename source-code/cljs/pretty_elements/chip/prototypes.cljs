@@ -21,8 +21,6 @@
           :tooltip/default        (pretty-build-kit/default-value-group {:tooltip-content nil :tooltip-position :right})
           :badge-content/update   (pretty-build-kit/value-update-fns    {:badge-content   metamorphic-content/compose})
           :tooltip-content/update (pretty-build-kit/value-update-fns    {:tooltip-content metamorphic-content/compose})
-          :on-mouse-over/wrap     (pretty-build-kit/value-wrap-fns      {:on-mouse-over   pretty-build-kit/dispatch-event-handler!})
-          :on-click/wrap          (pretty-build-kit/value-wrap-fns      {:on-click        pretty-build-kit/dispatch-event-handler!})
           (-> on-click)           (pretty-build-kit/forced-values       {:on-mouse-up     dom/blur-active-element!})))
 
 (defn chip-props-prototype

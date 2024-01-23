@@ -1,10 +1,10 @@
 
 (ns pretty-inputs.text-field.attributes
-    (:require [dom.api                              :as dom]
-              [pretty-build-kit.api                 :as pretty-build-kit]
-              [pretty-inputs.text-field.side-effects :as text-field.side-effects]
-              [pretty-engine.api :as pretty-engine]
-              [pretty-inputs.text-field.env :as text-field.env]))
+    (:require [dom.api                               :as dom]
+              [pretty-build-kit.api                  :as pretty-build-kit]
+              [pretty-engine.api                     :as pretty-engine]
+              [pretty-inputs.text-field.env          :as text-field.env]
+              [pretty-inputs.text-field.side-effects :as text-field.side-effects]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

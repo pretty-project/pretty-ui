@@ -1,46 +1,47 @@
 
 (ns pretty-engine.api
-    (:require [pretty-engine.diagram.focus.env :as diagram.focus.env]
-              [pretty-engine.diagram.focus.side-effects :as diagram.focus.side-effects]
-              [pretty-engine.diagram.keypress.side-effects :as diagram.keypress.side-effects]
+    (:require [pretty-engine.diagram.focus.env               :as diagram.focus.env]
+              [pretty-engine.diagram.focus.side-effects      :as diagram.focus.side-effects]
               [pretty-engine.diagram.lifecycles.side-effects :as diagram.lifecycles.side-effects]
-              [pretty-engine.diagram.state.env :as diagram.state.env]
-              [pretty-engine.diagram.state.side-effects :as diagram.state.side-effects]
-              [pretty-engine.diagram.utils :as diagram.utils]
-              [pretty-engine.element.focus.env :as element.focus.env]
-              [pretty-engine.element.focus.side-effects :as element.focus.side-effects]
-              [pretty-engine.element.keypress.side-effects :as element.keypress.side-effects]
+              [pretty-engine.diagram.state.env               :as diagram.state.env]
+              [pretty-engine.diagram.state.side-effects      :as diagram.state.side-effects]
+              [pretty-engine.diagram.utils                   :as diagram.utils]
+              [pretty-engine.element.focus.env               :as element.focus.env]
+              [pretty-engine.element.focus.side-effects      :as element.focus.side-effects]
+              [pretty-engine.element.keypress.side-effects   :as element.keypress.side-effects]
               [pretty-engine.element.lifecycles.side-effects :as element.lifecycles.side-effects]
-              [pretty-engine.element.state.env :as element.state.env]
-              [pretty-engine.element.state.side-effects :as element.state.side-effects]
-              [pretty-engine.element.surface.env :as element.surface.env]
-              [pretty-engine.element.surface.side-effects :as element.surface.side-effects]
-              [pretty-engine.element.utils :as element.utils]
-              [pretty-engine.input.focus.env :as input.focus.env]
-              [pretty-engine.input.focus.side-effects :as input.focus.side-effects]
-              [pretty-engine.input.keypress.side-effects :as input.keypress.side-effects]
-              [pretty-engine.input.lifecycles.side-effects :as input.lifecycles.side-effects]
-              [pretty-engine.input.options.env :as input.options.env]
-              [pretty-engine.input.options.side-effects :as input.options.side-effects]
-              [pretty-engine.input.popup.config :as input.popup.config]
-              [pretty-engine.input.popup.env :as input.popup.env]
-              [pretty-engine.input.popup.side-effects :as input.popup.side-effects]
-              [pretty-engine.input.state.env :as input.state.env]
-              [pretty-engine.input.state.side-effects :as input.state.side-effects]
-              [pretty-engine.input.surface.env :as input.surface.env]
-              [pretty-engine.input.surface.side-effects :as input.surface.side-effects]
-              [pretty-engine.input.value.env :as input.value.env]
-              [pretty-engine.input.value.side-effects :as input.value.side-effects]
-              [pretty-engine.input.value.views :as input.value.views]
-              [pretty-engine.input.props :as input.props]
-              [pretty-engine.input.utils :as input.utils]
-              [pretty-engine.layout.focus.env :as layout.focus.env]
-              [pretty-engine.layout.focus.side-effects :as layout.focus.side-effects]
-              [pretty-engine.layout.keypress.side-effects :as layout.keypress.side-effects]
-              [pretty-engine.layout.lifecycles.side-effects :as layout.lifecycles.side-effects]
-              [pretty-engine.layout.state.env :as layout.state.env]
-              [pretty-engine.layout.state.side-effects :as layout.state.side-effects]
-              [pretty-engine.layout.utils :as layout.utils]))
+              [pretty-engine.element.state.env               :as element.state.env]
+              [pretty-engine.element.state.side-effects      :as element.state.side-effects]
+              [pretty-engine.element.surface.env             :as element.surface.env]
+              [pretty-engine.element.surface.side-effects    :as element.surface.side-effects]
+              [pretty-engine.element.timeout.env :as element.timeout.env]
+              [pretty-engine.element.timeout.props :as element.timeout.props]
+              [pretty-engine.element.utils                   :as element.utils]
+              [pretty-engine.input.focus.env                 :as input.focus.env]
+              [pretty-engine.input.focus.side-effects        :as input.focus.side-effects]
+              [pretty-engine.input.keypress.side-effects     :as input.keypress.side-effects]
+              [pretty-engine.input.label.props :as input.label.props]
+              [pretty-engine.input.lifecycles.side-effects   :as input.lifecycles.side-effects]
+              [pretty-engine.input.options.env               :as input.options.env]
+              [pretty-engine.input.options.side-effects      :as input.options.side-effects]
+              [pretty-engine.input.popup.config              :as input.popup.config]
+              [pretty-engine.input.popup.env                 :as input.popup.env]
+              [pretty-engine.input.popup.side-effects        :as input.popup.side-effects]
+              [pretty-engine.input.state.env                 :as input.state.env]
+              [pretty-engine.input.state.side-effects        :as input.state.side-effects]
+              [pretty-engine.input.surface.env               :as input.surface.env]
+              [pretty-engine.input.surface.side-effects      :as input.surface.side-effects]
+              [pretty-engine.input.utils                     :as input.utils]
+              [pretty-engine.input.value.env                 :as input.value.env]
+              [pretty-engine.input.value.side-effects        :as input.value.side-effects]
+              [pretty-engine.input.value.views               :as input.value.views]
+              [pretty-engine.layout.focus.env                :as layout.focus.env]
+              [pretty-engine.layout.focus.side-effects       :as layout.focus.side-effects]
+              [pretty-engine.layout.keypress.side-effects    :as layout.keypress.side-effects]
+              [pretty-engine.layout.lifecycles.side-effects  :as layout.lifecycles.side-effects]
+              [pretty-engine.layout.state.env                :as layout.state.env]
+              [pretty-engine.layout.state.side-effects       :as layout.state.side-effects]
+              [pretty-engine.layout.utils                    :as layout.utils]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -55,10 +56,6 @@
 (def unmark-diagram-as-focused! diagram.focus.side-effects/unmark-diagram-as-focused!)
 (def diagram-focused            diagram.focus.side-effects/diagram-focused)
 (def diagram-left               diagram.focus.side-effects/diagram-left)
-
-; @redirect (pretty-engine.diagram.keypress.side-effects/*)
-(def diagram-ENTER-pressed diagram.keypress.side-effects/diagram-ENTER-pressed)
-(def diagram-ESC-pressed   diagram.keypress.side-effects/diagram-ESC-pressed)
 
 ; @redirect (pretty-engine.diagram.lifecycles.side-effects/*)
 (def diagram-did-mount    diagram.lifecycles.side-effects/diagram-did-mount)
@@ -87,11 +84,14 @@
 (def element-left               element.focus.side-effects/element-left)
 
 ; @redirect (pretty-engine.element.keypress.side-effects/*)
-(def element-ENTER-pressed element.keypress.side-effects/element-ENTER-pressed)
-(def element-ESC-pressed   element.keypress.side-effects/element-ESC-pressed)
+(def element-key-pressed            element.keypress.side-effects/element-key-pressed)
+(def element-key-released           element.keypress.side-effects/element-key-released)
+(def reg-element-keypress-events!   element.keypress.side-effects/reg-element-keypress-events!)
+(def dereg-element-keypress-events! element.keypress.side-effects/dereg-element-keypress-events!)
 
 ; @redirect (pretty-engine.element.lifecycles.side-effects/*)
 (def element-did-mount    element.lifecycles.side-effects/element-did-mount)
+(def element-did-update   element.lifecycles.side-effects/element-did-update)
 (def element-will-unmount element.lifecycles.side-effects/element-will-unmount)
 
 ; @redirect (pretty-engine.element.state.env/*)
@@ -109,6 +109,12 @@
 (def hide-element-surface! element.surface.side-effects/hide-element-surface!)
 (def show-element-surface! element.surface.side-effects/show-element-surface!)
 
+; @redirect (pretty-engine.element.timeout.env/*)
+(def get-element-timeout-left element.timeout.env/get-element-timeout-left)
+
+; @redirect (pretty-engine.element.timeout.props/*)
+(def element-timeout-props element.timeout.props/element-timeout-props)
+
 ; @redirect (pretty-engine.element.utils/*)
 (def element-id->subitem-id element.utils/element-id->subitem-id)
 
@@ -124,8 +130,10 @@
 (def input-left               input.focus.side-effects/input-left)
 
 ; @redirect (pretty-engine.input.keypress.side-effects/*)
-(def input-ENTER-pressed input.keypress.side-effects/input-ENTER-pressed)
-(def input-ESC-pressed   input.keypress.side-effects/input-ESC-pressed)
+(def input-ENTER-pressed          input.keypress.side-effects/input-ENTER-pressed)
+(def input-ESC-pressed            input.keypress.side-effects/input-ESC-pressed)
+(def reg-input-keypress-events!   input.keypress.side-effects/reg-input-keypress-events!)
+(def dereg-input-keypress-events! input.keypress.side-effects/dereg-input-keypress-events!)
 
 ; @redirect (pretty-engine.input.lifecycles.side-effects/*)
 (def input-did-mount    input.lifecycles.side-effects/input-did-mount)
@@ -193,8 +201,8 @@
 ; @redirect (pretty-engine.input.value.views/*)
 (def input-synchronizer input.value.views/input-synchronizer)
 
-; @redirect (pretty-engine.input.props/*)
-(def input-label-props input.props/input-label-props)
+; @redirect (pretty-engine.input.label.props/*)
+(def input-label-props input.label.props/input-label-props)
 
 ; @redirect (pretty-engine.input.utils/*)
 (def input-id->subitem-id input.utils/input-id->subitem-id)
@@ -211,8 +219,10 @@
 (def layout-left               layout.focus.side-effects/layout-left)
 
 ; @redirect (pretty-engine.layout.keypress.side-effects/*)
-(def layout-ENTER-pressed layout.keypress.side-effects/layout-ENTER-pressed)
-(def layout-ESC-pressed   layout.keypress.side-effects/layout-ESC-pressed)
+(def layout-ENTER-pressed          layout.keypress.side-effects/layout-ENTER-pressed)
+(def layout-ESC-pressed            layout.keypress.side-effects/layout-ESC-pressed)
+(def reg-layout-keypress-events!   layout.keypress.side-effects/reg-layout-keypress-events!)
+(def dereg-layout-keypress-events! layout.keypress.side-effects/dereg-layout-keypress-events!)
 
 ; @redirect (pretty-engine.layout.lifecycles.side-effects/*)
 (def layout-did-mount    layout.lifecycles.side-effects/layout-did-mount)

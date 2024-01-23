@@ -2,7 +2,7 @@
 (ns pretty-website.scroll-sensor.views
     (:require [fruits.random.api                         :as random]
               [pretty-presets.api                        :as pretty-presets]
-              [pretty-website.scroll-sensor.attributes :as scroll-sensor.attributes]
+              [pretty-website.scroll-sensor.attributes   :as scroll-sensor.attributes]
               [pretty-website.scroll-sensor.side-effects :as scroll-sensor.side-effects]
               [reagent.api                               :as reagent]))
 

@@ -1,12 +1,12 @@
 
 (ns pretty-inputs.counter.views
     (:require [fruits.random.api                :as random]
-              [pretty-engine.api :as pretty-engine]
+              [pretty-elements.api              :as pretty-elements]
+              [pretty-engine.api                :as pretty-engine]
+              [pretty-forms.api                 :as pretty-forms]
               [pretty-inputs.counter.attributes :as counter.attributes]
               [pretty-inputs.counter.prototypes :as counter.prototypes]
-              [pretty-presets.api :as pretty-presets]
-              [pretty-forms.api :as pretty-forms]
-              [pretty-elements.api :as pretty-elements]
+              [pretty-presets.api               :as pretty-presets]
               [re-frame.api                     :as r]
               [reagent.api                      :as reagent]))
 

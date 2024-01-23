@@ -1,19 +1,28 @@
 
-/*** Adornment-group ***/
+/*** Adornment ***/
+/*** Label ***/
 
-.pe-adornment-group--adornments {
+.pe-adornment--label {
+  min-width:  24px;
+  text-align: center;
+  padding:    0 4px;
+}
+
+/*** Label ***/
+/*** Adornment ***/
+
+
+
+/***** Adornment-group *****/
+/*** Adornment list ***/
+
+.pe-adornment-group--body {
   align-items: center;
   display: flex;
 }
 
-.pe-adornment-group--adornment-label {
-  font-weight: 500;
-  min-width:   24px;
-  text-align:  center;
-  padding:     0 4px;
-}
-
-/*** Adornment-group ***/
+/*** Adornment list ***/
+/***** Adornment-group *****/
 
 
 
@@ -108,63 +117,6 @@
 
 /*** Body ***/
 /***** Chip *****/
-
-
-
-/***** Color-selector *****/
-/*** Color-selector options ***/
-
-.pe-color-selector--options {
-  /* XXX#0610
-   * Makes the popup above other contents */
-    z-index: 9999;
-}
-
-.pe-color-selector--options--label {
-  display: flex;
-  justify-content: center;
-
-  /* XXX#6661 */
-  padding: 6px 12px;
-}
-
-.pe-color-selector--options-body {
-  column-gap:      12px;
-  display:         flex;
-  justify-content: center;
-  padding:         12px;
-}
-
-/*** Color-selector options ***/
-
-/*** Color-selector option ***/
-
-.pe-color-selector--option[data-collected="true"]::after {
-  align-items: center;
-  background-color: var( --fill-color-default );
-  border-radius: 12px;
-  color: var( --text-color-default );
-  content: 'check';
-  display: flex;
-  font-size: var( --icon-size-xs );
-  font-weight: 600;
-  height: 20px;
-  justify-content: center;
-  left: 14px;
-  line-height: 20px;
-  position: absolute;
-  top: 14px;
-  width: 20px;
-}
-
-.pe-color-selector--option--color {
-  border-radius: var( --border-radius-m );
-  height: 48px;
-  width: 48px;
-}
-
-/*** Color-selector option ***/
-/***** Color-selector *****/
 
 
 

@@ -1,7 +1,7 @@
 
 (ns pretty-forms.views
-    (:require [pretty-forms.env :as env]
-              [metamorphic-content.api :as metamorphic-content]))
+    (:require [metamorphic-content.api :as metamorphic-content]
+              [pretty-forms.env        :as env]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

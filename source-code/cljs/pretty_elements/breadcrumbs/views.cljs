@@ -16,14 +16,14 @@
   ; @param (keyword) breadcrumbs-id
   ; @param (map) breadcrumbs-props
   ; @param (map) crumb-props
-  ; {:content (metamorphic-content)(opt)
-  ;  :href (string)(opt)
+  ; {:href-uri (string)(opt)
+  ;  :label (metamorphic-content)(opt)
   ;  :on-click-f (function)(opt)
   ;  :placeholder (metamorphic-content)(opt)}}
-  [breadcrumbs-id breadcrumbs-props {:keys [content href on-click-f placeholder] :as crumb-props}]
-  [(cond href :a on-click-f :button :else :div)
+  [breadcrumbs-id breadcrumbs-props {:keys [href-uri label on-click-f placeholder] :as crumb-props}]
+  [(cond href-uri :a on-click-f :button :else :div)
    (breadcrumbs.attributes/crumb-attributes breadcrumbs-id breadcrumbs-props crumb-props)
-   [metamorphic-content/compose content placeholder]])
+   [metamorphic-content/compose label placeholder]])
 
 (defn- breadcrumbs-crumb-list
   ; @ignore
@@ -61,8 +61,7 @@
   ; {:class (keyword or keywords in vector)(opt)
   ;  :crumbs (maps in vector)
   ;   [{:click-effect (keyword)(opt)
-  ;      Default: :opacity (if 'href-uri' or 'on-click-f' is provided)
-  ;     :content (metamorphic-content)(opt)
+  ;     :label (metamorphic-content)(opt)
   ;     :disabled? (boolean)(opt)
   ;     :href-target (keyword)(opt)
   ;     :href-uri (string)(opt)
@@ -72,7 +71,6 @@
   ;     :preset (keyword)(opt)}]
   ;  :disabled? (boolean)(opt)
   ;  :font-size (keyword, px or string)(opt)
-  ;   Default: :s
   ;  :indent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :outdent (map)(opt)

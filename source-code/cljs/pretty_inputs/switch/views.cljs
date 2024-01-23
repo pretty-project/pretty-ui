@@ -2,16 +2,16 @@
 (ns pretty-inputs.switch.views
     (:require [fruits.hiccup.api               :as hiccup]
               [fruits.random.api               :as random]
+              [fruits.vector.api               :as vector]
               [metamorphic-content.api         :as metamorphic-content]
               [pretty-build-kit.api            :as pretty-build-kit]
+              [pretty-elements.api             :as pretty-elements]
+              [pretty-engine.api               :as pretty-engine]
+              [pretty-forms.api                :as pretty-forms]
               [pretty-inputs.switch.attributes :as switch.attributes]
               [pretty-inputs.switch.prototypes :as switch.prototypes]
               [pretty-presets.api              :as pretty-presets]
-              [pretty-forms.api :as pretty-forms]
-              [pretty-engine.api :as pretty-engine]
-              [pretty-elements.api :as pretty-elements]
-              [reagent.api                     :as reagent]
-              [fruits.vector.api :as vector]))
+              [reagent.api                     :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

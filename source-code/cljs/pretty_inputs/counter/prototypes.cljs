@@ -1,6 +1,6 @@
 
 (ns pretty-inputs.counter.prototypes
-    (:require [pretty-build-kit.api      :as pretty-build-kit]))
+    (:require [pretty-build-kit.api :as pretty-build-kit]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

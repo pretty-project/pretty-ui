@@ -6,8 +6,6 @@
 ;; ----------------------------------------------------------------------------
 
 (defn element-focused?
-  ; @ignore
-  ;
   ; @param (map) element-props
   ; @param (keyword) element-id
   ;

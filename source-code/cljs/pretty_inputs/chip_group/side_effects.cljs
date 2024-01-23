@@ -1,7 +1,7 @@
 
 (ns pretty-inputs.chip-group.side-effects
-    (:require [pretty-engine.api :as pretty-engine]
-              [fruits.vector.api :as vector]))
+    (:require [fruits.vector.api :as vector]
+              [pretty-engine.api :as pretty-engine]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

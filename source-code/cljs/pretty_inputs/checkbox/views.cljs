@@ -2,15 +2,15 @@
 (ns pretty-inputs.checkbox.views
     (:require [fruits.hiccup.api                 :as hiccup]
               [fruits.random.api                 :as random]
+              [fruits.vector.api                 :as vector]
+              [metamorphic-content.api           :as metamorphic-content]
+              [pretty-elements.api               :as pretty-elements]
+              [pretty-engine.api                 :as pretty-engine]
               [pretty-forms.api                  :as pretty-forms]
               [pretty-inputs.checkbox.attributes :as checkbox.attributes]
               [pretty-inputs.checkbox.prototypes :as checkbox.prototypes]
-              [pretty-engine.api :as pretty-engine]
               [pretty-presets.api                :as pretty-presets]
-              [pretty-elements.api :as pretty-elements]
-              [reagent.api                       :as reagent]
-              [metamorphic-content.api :as metamorphic-content]
-              [fruits.vector.api :as vector]))
+              [reagent.api                       :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

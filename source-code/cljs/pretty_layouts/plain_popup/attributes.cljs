@@ -1,7 +1,7 @@
 
 (ns pretty-layouts.plain-popup.attributes
-    (:require [re-frame.api :as r]
-              [pretty-build-kit.api :as pretty-build-kit]))
+    (:require [pretty-build-kit.api :as pretty-build-kit]
+              [re-frame.api         :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

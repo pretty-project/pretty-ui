@@ -8,12 +8,11 @@
 ; @ignore
 ;
 ; @atom (map)
-; {:my-swapper {:active-page (keyword)
+; {:my-swapper {:active-content (keyword)
 ;               :animation-direction (keyword)
 ;                :bwd, :fwd
-;               :page-pool (maps in vector)
-;                Contains the newly mounted page and the currently unmounting page.
+;               :content-pool (maps in vector)
+;                Contains the newly mounted content and the currently unmounting content.
 ;                [{:id (keyword)
-;                  :page (metamorphic-content)}]}}
+;                  :content (metamorphic-content)}]}}
 (defonce SWAPPERS (ratom {}))
- 

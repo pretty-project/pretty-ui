@@ -1,15 +1,15 @@
 
 (ns pretty-inputs.chip-group.views
-    (:require [fruits.random.api                   :as random]
+    (:require [fruits.hiccup.api                   :as hiccup]
+              [fruits.random.api                   :as random]
               [fruits.vector.api                   :as vector]
-              [fruits.hiccup.api                   :as hiccup]
               [metamorphic-content.api             :as metamorphic-content]
               [pretty-elements.api                 :as pretty-elements]
+              [pretty-engine.api                   :as pretty-engine]
               [pretty-inputs.chip-group.attributes :as chip-group.attributes]
               [pretty-inputs.chip-group.prototypes :as chip-group.prototypes]
-              [pretty-engine.api :as pretty-engine]
-              [pretty-presets.api :as pretty-presets]
-              [reagent.api :as reagent]))
+              [pretty-presets.api                  :as pretty-presets]
+              [reagent.api                         :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

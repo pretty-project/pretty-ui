@@ -1,11 +1,11 @@
 
 (ns pretty-inputs.combo-box.side-effects
-    (:require [fruits.seqable.api                     :as seqable]
-              [keypress-handler.api                   :as keypress-handler]
-              [pretty-inputs.combo-box.env            :as combo-box.env]
-              [pretty-inputs.combo-box.state          :as combo-box.state]
+    (:require [fruits.seqable.api                    :as seqable]
+              [keypress-handler.api                  :as keypress-handler]
+              [pretty-inputs.combo-box.env           :as combo-box.env]
+              [pretty-inputs.combo-box.state         :as combo-box.state]
               [pretty-inputs.text-field.side-effects :as text-field.side-effects]
-              [re-frame.api                           :as r]))
+              [re-frame.api                          :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -69,10 +69,10 @@
   ; field keypress events.
   ;
   ; The UP and DOWN keypress events has similar names (for sake of consistency).
-  (let [on-down-props  {:key-code 40 :on-keydown-f #(r/dispatch [:pretty-inputs.combo-box/DOWN-pressed  box-id box-props]) :required? true :prevent-default? true}
-        on-up-props    {:key-code 38 :on-keydown-f #(r/dispatch [:pretty-inputs.combo-box/UP-pressed    box-id box-props]) :required? true :prevent-default? true}
-        on-esc-props   {:key-code 27 :on-keydown-f #(r/dispatch [:pretty-inputs.combo-box/ESC-pressed   box-id box-props]) :required? true}
-        on-enter-props {:key-code 13 :on-keydown-f #(r/dispatch [:pretty-inputs.combo-box/ENTER-pressed box-id box-props]) :required? true}]
+  (let [on-down-props  {:key-code 40 :on-keydown-f #(r/dispatch [:pretty-inputs.combo-box/DOWN-pressed  box-id box-props]) :in-type-mode? true :prevent-default? true}
+        on-up-props    {:key-code 38 :on-keydown-f #(r/dispatch [:pretty-inputs.combo-box/UP-pressed    box-id box-props]) :in-type-mode? true :prevent-default? true}
+        on-esc-props   {:key-code 27 :on-keydown-f #(r/dispatch [:pretty-inputs.combo-box/ESC-pressed   box-id box-props]) :in-type-mode? true}
+        on-enter-props {:key-code 13 :on-keydown-f #(r/dispatch [:pretty-inputs.combo-box/ENTER-pressed box-id box-props]) :in-type-mode? true}]
        (keypress-handler/reg-keypress-event! :pretty-inputs.text-field/DOWN   on-down-props)
        (keypress-handler/reg-keypress-event! :pretty-inputs.text-field/UP       on-up-props)
        (keypress-handler/reg-keypress-event! :pretty-inputs.text-field/ESC     on-esc-props)

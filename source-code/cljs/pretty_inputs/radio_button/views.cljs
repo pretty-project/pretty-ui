@@ -2,15 +2,15 @@
 (ns pretty-inputs.radio-button.views
     (:require [fruits.hiccup.api                     :as hiccup]
               [fruits.random.api                     :as random]
+              [fruits.vector.api                     :as vector]
               [metamorphic-content.api               :as metamorphic-content]
+              [pretty-elements.api                   :as pretty-elements]
+              [pretty-engine.api                     :as pretty-engine]
+              [pretty-forms.api                      :as pretty-forms]
               [pretty-inputs.radio-button.attributes :as radio-button.attributes]
               [pretty-inputs.radio-button.prototypes :as radio-button.prototypes]
-              [pretty-engine.api :as pretty-engine]
-              [pretty-presets.api :as pretty-presets]
-              [pretty-elements.api :as pretty-elements]
-              [pretty-forms.api :as pretty-forms]
-              [reagent.api :as reagent]
-              [fruits.vector.api :as vector]))
+              [pretty-presets.api                    :as pretty-presets]
+              [reagent.api                           :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

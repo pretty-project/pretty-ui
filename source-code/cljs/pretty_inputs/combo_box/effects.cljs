@@ -2,7 +2,7 @@
 (ns pretty-inputs.combo-box.effects
     (:require [pretty-inputs.combo-box.env    :as combo-box.env]
               [pretty-inputs.combo-box.events :as combo-box.events]
-              [pretty-inputs.text-field.env  :as text-field.env]
+              [pretty-inputs.text-field.env   :as text-field.env]
               [re-frame.api                   :as r :refer [r]]))
 
 ;; ----------------------------------------------------------------------------

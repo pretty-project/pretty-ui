@@ -1,7 +1,7 @@
 
 (ns pretty-inputs.slider.views
     (:require [fruits.random.api               :as random]
-              [pretty-engine.api :as pretty-engine]
+              [pretty-engine.api               :as pretty-engine]
               [pretty-inputs.slider.attributes :as slider.attributes]
               [pretty-inputs.slider.prototypes :as slider.prototypes]
               [pretty-presets.api              :as pretty-presets]

@@ -35,9 +35,9 @@
   ; @param (map) button-props
   [button-id button-props]
   ; @note (tutorials#parametering)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (r/dispatch [:pretty-elements.button/button-did-mount    button-id button-props]))
-                       :component-will-unmount (fn [_ _] (r/dispatch [:pretty-elements.button/button-will-unmount button-id button-props]))
-                       :component-did-update   (fn [%]   (r/dispatch [:pretty-elements.button/button-did-update   button-id %]))
+  (reagent/lifecycles {:component-did-mount    (fn [_ _]) ;(r/dispatch [:pretty-elements.button/button-did-mount    button-id button-props]))
+                       :component-will-unmount (fn [_ _]) ;(r/dispatch [:pretty-elements.button/button-will-unmount button-id button-props]))
+                       :component-did-update   (fn [%])   ;(r/dispatch [:pretty-elements.button/button-did-update   button-id %]))
                        :reagent-render         (fn [_ button-props] [icon-button button-id button-props])}))
 
 (defn element
@@ -83,8 +83,8 @@
   ;     Exclusive keypress events temporarly disable every other previously registered keypress events.
   ;     Default: false
   ;    :key-code (integer)
-  ;    :required? (boolean)(opt)
-  ;     Only required keypress events remain active during a text-field is in focused state.
+  ;    :in-type-mode? (boolean)(opt)
+  ;     Only in-type-mode keypress events remain active while a text-field is in focused state.
   ;     Default: false}
   ;  :label (metamorphic-content)(opt)
   ;  :marker-color (keyword or string)(opt)

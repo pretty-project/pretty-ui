@@ -1,10 +1,10 @@
 
 (ns pretty-inputs.password-field.views
-    (:require [fruits.random.api                       :as random]
-              [pretty-inputs.password-field.prototypes :as password-field.prototypes]
+    (:require [fruits.random.api                         :as random]
+              [pretty-inputs.password-field.prototypes   :as password-field.prototypes]
               [pretty-inputs.password-field.side-effects :as password-field.side-effects]
-              [pretty-inputs.text-field.views          :as text-field.views]
-              [reagent.api                             :as reagent]))
+              [pretty-inputs.text-field.views            :as text-field.views]
+              [reagent.api                               :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -1,9 +1,6 @@
 
 (ns pretty-elements.api
-    (:require [pretty-elements.button.effects]
-              [pretty-elements.button.side-effects]
-              [pretty-elements.content-swapper.effects]
-              [pretty-elements.content-swapper.side-effects]
+    (:require [pretty-elements.adornment.views            :as adornment.views]
               [pretty-elements.adornment-group.views      :as adornment-group.views]
               [pretty-elements.blank.views                :as blank.views]
               [pretty-elements.breadcrumbs.views          :as breadcrumbs.views]
@@ -39,6 +36,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; @redirect (*/element)
+(def adornment            adornment.views/element)
 (def adornment-group      adornment-group.views/element)
 (def breadcrumbs          breadcrumbs.views/element)
 (def blank                blank.views/element)
