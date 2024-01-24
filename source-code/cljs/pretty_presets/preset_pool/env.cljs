@@ -10,7 +10,7 @@
   ; @ignore
   ;
   ; @param (keyword)(opt) item-id
-  ; @param (map) item-props
+  ; @param (map) element-props
   ; {:preset (keyword)(opt)}
   ;
   ; @usage
@@ -27,19 +27,19 @@
   ;  :preset      :my-preset}
   ;
   ; @return (map)
-  ([item-props]
-   (apply-preset nil item-props))
-   
-  ([_ {:keys [preset] :as item-props}]
-   ; 1. Takes the ':preset' property (if any) from the 'item-props' property map
+  ([element-props]
+   (apply-preset nil element-props))
+
+  ([_ {:keys [preset] :as element-props}]
+   ; 1. Takes the ':preset' property (if any) from the 'element-props' property map
    ; 2. Looks up a preset function / preset map in the preset pool atom,
-   ;    registered with the key that was derived from the 'item-props' map (1. step).
-   ; 3. Dissociates the ':preset' key from the 'item-props' map in order to avoid
+   ;    registered with the key that was derived from the 'element-props' map (1. step).
+   ; 3. Dissociates the ':preset' key from the 'element-props' map in order to avoid
    ;    infinite loops, because after the preset is applied this function runs itself
-   ;    recursivelly to check whether the applied preset has associated another preset ID to the 'item-props'.
+   ;    recursivelly to check whether the applied preset has associated another preset ID to the 'element-props'.
    (if-let [preset (get @preset-pool.state/PRESETS preset)]
-           (cond-> item-props :avoiding-infinite-loops (dissoc :preset)
-                              (-> preset fn?)          (preset)
-                              (-> preset map?)         (map/reversed-merge preset)
-                              :recursive-applying      (apply-preset))
-           (-> item-props))))
+           (cond-> element-props :avoiding-infinite-loops (dissoc :preset)
+                                 (-> preset fn?)          (preset)
+                                 (-> preset map?)         (map/reversed-merge preset)
+                                 :recursive-applying      (apply-preset))
+           (-> element-props))))

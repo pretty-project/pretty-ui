@@ -85,7 +85,9 @@
          (if href-uri        {:click-effect       :opacity})
          (if on-click-f      {:click-effect       :opacity})
          (-> button-props)
+         {:label (metamorphic-content/compose label placeholder)}
          (if badge-content   {:badge-content   (metamorphic-content/compose badge-content)})
          (if tooltip-content {:tooltip-content (metamorphic-content/compose tooltip-content)})
+
          (if href-uri        {:on-mouse-up-f dom/blur-active-element!})
          (if on-click-f      {:on-mouse-up-f dom/blur-active-element!})))

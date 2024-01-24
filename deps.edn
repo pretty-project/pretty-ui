@@ -1,11 +1,7 @@
 
 {:paths ["plugins/cljs" "resources" "source-code/cljs"]
- :deps  {bithandshake/cljc-app-dictionary        {:git/url "https://github.com/bithandshake/cljc-app-dictionary"
-                                                  :sha     "67e309050a9bd60b1ea9538138817eec7ca194aa"}
-         bithandshake/cljc-fruits                {:git/url "https://github.com/bithandshake/cljc-fruits"
+ :deps  {bithandshake/cljc-fruits                {:git/url "https://github.com/bithandshake/cljc-fruits"
                                                   :sha     "40c0f6ef93848779460b4d4fe92c929c6f3ff5fd"}
-         bithandshake/cljc-metamorphic-content   {:git/url "https://github.com/bithandshake/cljc-metamorphic-content"
-                                                  :sha     "67e309050a9bd60b1ea9538138817eec7ca194aa"}
          bithandshake/cljc-time                  {:git/url "https://github.com/bithandshake/cljc-time"
                                                   :sha     "ad87299352f8515626a25b7c9aa297d0b034c121"}
          bithandshake/cljs-auto-title            {:git/url "https://github.com/bithandshake/cljs-auto-title"
@@ -23,6 +19,10 @@
          bithandshake/re-frame-api               {:git/url "https://github.com/bithandshake/re-frame-api"
                                                   :sha     "67e309050a9bd60b1ea9538138817eec7ca194aa"}
          bithandshake/reagent-api                {:git/url "https://github.com/bithandshake/reagent-api"
+                                                  :sha     "67e309050a9bd60b1ea9538138817eec7ca194aa"}
+         mt-app-kit/cljc-app-dictionary          {:git/url "https://github.com/mt-app-kit/cljc-app-dictionary"
+                                                  :sha     "67e309050a9bd60b1ea9538138817eec7ca194aa"}
+         mt-app-kit/cljc-metamorphic-content     {:git/url "https://github.com/mt-app-kit/cljc-metamorphic-content"
                                                   :sha     "67e309050a9bd60b1ea9538138817eec7ca194aa"}
          org.clojure/clojurescript               {:mvn/version "1.10.891"}
          pretty-project/pretty-css               {:git/url "https://github.com/pretty-project/pretty-css"

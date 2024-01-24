@@ -149,7 +149,7 @@
 
 ; @tutorial Content types
 ;
-; Pretty UI items can display [metamorphic contents](https://github.com/bithandshake/cljc-metamorphic-content).
+; Pretty UI items can display [metamorphic contents](https://github.com/mt-app-kit/cljc-metamorphic-content).
 ; Metamorphic contents can be various types such as strings, hiccups, [Reagent](https://github.com/reagent-project/reagent) components,
 ; [app dictionary](https://github.com/mt-app-kit/cljc-app-dictionary) terms, etc.
 
