@@ -1,6 +1,6 @@
 
 (ns pretty-elements.vertical-spacer.prototypes
-    (:require [pretty-build-kit.api :as pretty-build-kit]))
+    (:require [pretty-css.api :as pretty-css]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

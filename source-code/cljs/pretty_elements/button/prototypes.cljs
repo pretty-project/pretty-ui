@@ -2,7 +2,7 @@
 (ns pretty-elements.button.prototypes
     (:require [dom.api                 :as dom]
               [metamorphic-content.api :as metamorphic-content]
-              [pretty-build-kit.api    :as pretty-build-kit]))
+              [pretty-defaults.api :as pretty-defaults]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -10,18 +10,18 @@
 (defn element-props-prototype
   [{:keys [font-size on-click-f] :as button-props}]
   (cond-> button-props
-          :effects/default        (pretty-build-kit/default-values      {:click-effect :opacity})
-          :derive-fns/default     (pretty-build-kit/default-values      {})
-          :text/default           (pretty-build-kit/default-values      {:font-size :s :font-weight :medium :line-height :text-block :text-overflow :hidden})
-          :layout/default         (pretty-build-kit/default-values      {:horizontal-align :center})
-          :badge/default          (pretty-build-kit/default-value-group {:badge-content nil :badge-color :primary :badge-position :tr})
-          :border/default         (pretty-build-kit/default-value-group {:border-color :primary :border-position :all :border-width :xxs})
-          :icon/default           (pretty-build-kit/default-value-group {:icon nil :icon-color :primary :icon-position :left :icon-size (or font-size :s)})
-          :progress/default       (pretty-build-kit/default-value-group {:progress nil :progress-color :muted :progress-direction :ltr :progress-duration 250})
-          :tooltip/default        (pretty-build-kit/default-value-group {:tooltip-content nil :tooltip-position :right})
-          :badge-content/update   (pretty-build-kit/value-update-fns    {:badge-content   metamorphic-content/compose})
-          :tooltip-content/update (pretty-build-kit/value-update-fns    {:tooltip-content metamorphic-content/compose})
-          (-> on-click-f)         (pretty-build-kit/forced-values       {:on-mouse-up-f   dom/blur-active-element!})))
+          :effects/default        (pretty-defaults/use-default-values      {:click-effect :opacity})
+          :derive-fns/default     (pretty-defaults/use-default-values      {})
+          :text/default           (pretty-defaults/use-default-values      {:font-size :s :font-weight :medium :line-height :text-block :text-overflow :hidden})
+          :layout/default         (pretty-defaults/use-default-values      {:horizontal-align :center})
+          :badge/default          (pretty-defaults/use-default-value-group {:badge-content nil :badge-color :primary :badge-position :tr})
+          :border/default         (pretty-defaults/use-default-value-group {:border-color :primary :border-position :all :border-width :xxs})
+          :icon/default           (pretty-defaults/use-default-value-group {:icon nil :icon-color :primary :icon-position :left :icon-size (or font-size :s)})
+          :progress/default       (pretty-defaults/use-default-value-group {:progress nil :progress-color :muted :progress-direction :ltr :progress-duration 250})
+          :tooltip/default        (pretty-defaults/use-default-value-group {:tooltip-content nil :tooltip-position :right})
+          :badge-content/update   (pretty-defaults/value-update-fns    {:badge-content   metamorphic-content/compose})
+          :tooltip-content/update (pretty-defaults/value-update-fns    {:tooltip-content metamorphic-content/compose})
+          (-> on-click-f)         (pretty-defaults/force-values       {:on-mouse-up-f   dom/blur-active-element!})))
 
 (defn button-props-prototype
   ; @ignore
@@ -85,7 +85,7 @@
          (if href-uri        {:click-effect       :opacity})
          (if on-click-f      {:click-effect       :opacity})
          (-> button-props)
-         {:label (metamorphic-content/compose label placeholder)}
+         ;{:label (metamorphic-content/compose label placeholder)}
          (if badge-content   {:badge-content   (metamorphic-content/compose badge-content)})
          (if tooltip-content {:tooltip-content (metamorphic-content/compose tooltip-content)})
 

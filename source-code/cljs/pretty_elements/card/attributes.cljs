@@ -1,7 +1,7 @@
 
 (ns pretty-elements.card.attributes
     (:require [dom.api              :as dom]
-              [pretty-build-kit.api :as pretty-build-kit]))
+              [pretty-css.api :as pretty-css]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -18,20 +18,20 @@
   [card-id {:keys [disabled?] :as card-props}]
   (-> {:class    :pe-card--body
        :disabled disabled?}
-      (pretty-build-kit/badge-attributes            card-props)
-      (pretty-build-kit/border-attributes           card-props)
-      (pretty-build-kit/color-attributes            card-props)
-      (pretty-build-kit/column-attributes           card-props)
-      (pretty-build-kit/cursor-attributes           card-props)
-      (pretty-build-kit/effect-attributes           card-props)
-      (pretty-build-kit/element-max-size-attributes card-props)
-      (pretty-build-kit/element-min-size-attributes card-props)
-      (pretty-build-kit/element-size-attributes     card-props)
-      (pretty-build-kit/indent-attributes           card-props)
-      (pretty-build-kit/href-attributes             card-props)
-      (pretty-build-kit/mouse-event-attributes      card-props)
-      (pretty-build-kit/style-attributes            card-props)
-      (pretty-build-kit/tab-attributes              card-props)))
+      (pretty-css/badge-attributes            card-props)
+      (pretty-css/border-attributes           card-props)
+      (pretty-css/color-attributes            card-props)
+      (pretty-css/column-attributes           card-props)
+      (pretty-css/cursor-attributes           card-props)
+      (pretty-css/effect-attributes           card-props)
+      (pretty-css/element-max-size-attributes card-props)
+      (pretty-css/element-min-size-attributes card-props)
+      (pretty-css/element-size-attributes     card-props)
+      (pretty-css/indent-attributes           card-props)
+      (pretty-css/href-attributes             card-props)
+      (pretty-css/mouse-event-attributes      card-props)
+      (pretty-css/style-attributes            card-props)
+      (pretty-css/tab-attributes              card-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -46,7 +46,7 @@
   ; {:class (keyword or keywords in vector)}
   [_ card-props]
   (-> {:class :pe-card}
-      (pretty-build-kit/class-attributes        card-props)
-      (pretty-build-kit/outdent-attributes      card-props)
-      (pretty-build-kit/state-attributes        card-props)
-      (pretty-build-kit/wrapper-size-attributes card-props)))
+      (pretty-css/class-attributes        card-props)
+      (pretty-css/outdent-attributes      card-props)
+      (pretty-css/state-attributes        card-props)
+      (pretty-css/wrapper-size-attributes card-props)))

@@ -1,7 +1,7 @@
 
 (ns pretty-inputs.text-field.env
     (:require [fruits.string.api    :as string]
-              [pretty-build-kit.api :as pretty-build-kit]
+              [pretty-css.api :as pretty-css]
               [pretty-engine.api    :as pretty-engine]))
 
 ;; ----------------------------------------------------------------------------
@@ -101,4 +101,4 @@
   [field-id {:keys [font-size line-height] :as field-props}]
   (let [field-line-count (get-field-line-count field-id field-props)
         horizontal-indent 12]
-       (pretty-build-kit/adaptive-text-height font-size line-height field-line-count horizontal-indent)))
+       (pretty-css/adaptive-text-height font-size line-height field-line-count horizontal-indent)))

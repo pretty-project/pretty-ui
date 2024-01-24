@@ -1,10 +1,19 @@
 
 /*** Adornment ***/
+/*** Wrapper ***/
+
+.pe-adornment {
+  /* XXX#6668 */
+  width: fit-content;
+}
+
+/*** Wrapper ***/
+
 /*** Label ***/
 
 .pe-adornment--label {
   min-width:  24px;
-  text-align: center;
+ -text-align: center;
   padding:    0 4px;
 }
 

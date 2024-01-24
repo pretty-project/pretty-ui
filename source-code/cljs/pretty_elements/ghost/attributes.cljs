@@ -1,6 +1,6 @@
 
 (ns pretty-elements.ghost.attributes
-    (:require [pretty-build-kit.api :as pretty-build-kit]))
+    (:require [pretty-css.api :as pretty-css]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -15,14 +15,14 @@
   ; {:class (keyword or keywords in vector)}
   [_ ghost-props]
   (-> {:class :pe-ghost--body}
-      (pretty-build-kit/border-attributes ghost-props)
-      (pretty-build-kit/indent-attributes ghost-props)
-      (pretty-build-kit/style-attributes  ghost-props)
+      (pretty-css/border-attributes ghost-props)
+      (pretty-css/indent-attributes ghost-props)
+      (pretty-css/style-attributes  ghost-props)
       ; The ghost element uses ...
       ; ... block height profiles,
       ; ... element width profiles.
-      (pretty-build-kit/block-size-attributes   (dissoc ghost-props :width))
-      (pretty-build-kit/element-size-attributes (dissoc ghost-props :height))))
+      (pretty-css/block-size-attributes   (dissoc ghost-props :width))
+      (pretty-css/element-size-attributes (dissoc ghost-props :height))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -37,7 +37,7 @@
   ; {:class (keyword or keywords in vector)}
   [_ ghost-props]
   (-> {:class :pe-ghost}
-      (pretty-build-kit/class-attributes        ghost-props)
-      (pretty-build-kit/outdent-attributes      ghost-props)
-      (pretty-build-kit/state-attributes        ghost-props)
-      (pretty-build-kit/wrapper-size-attributes ghost-props)))
+      (pretty-css/class-attributes        ghost-props)
+      (pretty-css/outdent-attributes      ghost-props)
+      (pretty-css/state-attributes        ghost-props)
+      (pretty-css/wrapper-size-attributes ghost-props)))

@@ -1,7 +1,7 @@
 
 (ns pretty-inputs.password-field.prototypes
     (:require [fruits.vector.api                       :as vector]
-              [pretty-build-kit.api                    :as pretty-build-kit]
+              [pretty-css.api :as pretty-css]
               [pretty-inputs.password-field.adornments :as password-field.adornments]
               [pretty-inputs.password-field.env        :as password-field.env]))
 

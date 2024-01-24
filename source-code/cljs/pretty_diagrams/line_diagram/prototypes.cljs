@@ -1,7 +1,7 @@
 
 (ns pretty-diagrams.line-diagram.prototypes
-    (:require [fruits.math.api                    :as math]
-              [pretty-build-kit.api               :as pretty-build-kit]
+    (:require [fruits.math.api :as math]
+              [pretty-defaults.api :as pretty-defaults]
               [pretty-diagrams.line-diagram.utils :as line-diagram.utils]))
 
 ;; ----------------------------------------------------------------------------
@@ -15,7 +15,7 @@
   ; @return (map)
   ; {:color (keyword or string)}
   [section-props]
-  (-> section-props (pretty-build-kit/default-values {:color :primary})))
+  (-> section-props (pretty-defaults/use-default-values {:color :primary})))
 
 (defn diagram-props-prototype
   ; @ignore

@@ -1,7 +1,7 @@
 
 (ns pretty-inputs.select.attributes
     (:require [dom.api              :as dom]
-              [pretty-build-kit.api :as pretty-build-kit]
+              [pretty-css.api :as pretty-css]
               [pretty-engine.api    :as pretty-engine]))
 
 ;; ----------------------------------------------------------------------------
@@ -53,11 +53,12 @@
   ; {}
   [select-id {:keys [font-size] :as select-props} option]
   (let [option-selected? (pretty-engine/input-option-selected? select-id select-props option)]
-       {:class               :pi-select--option-label
-        :data-font-size      font-size
-        :data-font-weight    (if option-selected? :semi-bold :medium)
-        :data-letter-spacing :auto
-        :data-line-height    :text-block}))
+       (-> {:class               :pi-select--option-label
+            :data-font-size      font-size
+            :data-font-weight    (if option-selected? :semi-bold :medium)
+            :data-letter-spacing :auto
+            :data-line-height    :text-block}
+         (pretty-css/unselectable-text-attributes select-props))))
 
 (defn select-option-checkmark-attributes
   ; @ignore
@@ -91,9 +92,9 @@
             :data-selected option-selected?
             :disabled      disabled?}
            (merge (if-not option-color-f {:data-hover-color :highlight}))
-           (pretty-build-kit/effect-attributes select-props)
-           (pretty-build-kit/color-attributes       {:fill-color option-color})
-           (pretty-build-kit/mouse-event-attributes {:on-click-f on-click-f :on-mouse-up-f dom/blur-active-element!}))))
+           (pretty-css/effect-attributes select-props)
+           (pretty-css/color-attributes       {:fill-color option-color})
+           (pretty-css/mouse-event-attributes {:on-click-f on-click-f :on-mouse-up-f dom/blur-active-element!}))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -110,6 +111,8 @@
    :data-font-weight :medium
    :data-line-height :text-block})
 
+   ; nem kell ra unselectable?
+
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -123,9 +126,8 @@
   ; {}
   [_ select-props]
   (-> {:class :pi-select--body}
-      (pretty-build-kit/indent-attributes       select-props)
-      (pretty-build-kit/style-attributes        select-props)
-      (pretty-build-kit/unselectable-attributes select-props)))
+      (pretty-css/indent-attributes select-props)
+      (pretty-css/style-attributes  select-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -140,6 +142,6 @@
   ; {}
   [_ select-props]
   (-> {:class :pi-select}
-      (pretty-build-kit/class-attributes   select-props)
-      (pretty-build-kit/outdent-attributes select-props)
-      (pretty-build-kit/state-attributes   select-props)))
+      (pretty-css/class-attributes   select-props)
+      (pretty-css/outdent-attributes select-props)
+      (pretty-css/state-attributes   select-props)))

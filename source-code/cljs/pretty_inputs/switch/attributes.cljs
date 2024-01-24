@@ -1,7 +1,7 @@
 
 (ns pretty-inputs.switch.attributes
     (:require [dom.api              :as dom]
-              [pretty-build-kit.api :as pretty-build-kit]
+              [pretty-css.api :as pretty-css]
               [pretty-engine.api    :as pretty-engine]
               [re-frame.api         :as r]))
 
@@ -51,12 +51,13 @@
   ;
   ; @return (map)
   ; {}
-  [_ {:keys [font-size]} _]
-  {:class               :pi-switch--option-label
-   :data-font-size      font-size
-   :data-font-weight    :medium
-   :data-letter-spacing :auto
-   :data-line-height    :text-block})
+  [_ {:keys [font-size] :as switch-props} _]
+  (-> {:class               :pi-switch--option-label
+       :data-font-size      font-size
+       :data-font-weight    :medium
+       :data-letter-spacing :auto
+       :data-line-height    :text-block}
+      (pretty-css/unselectable-text-attributes switch-props)))
 
 (defn switch-option-thumb-attributes
   ; @ignore
@@ -69,7 +70,7 @@
   ; {}
   [_ switch-props _]
   (-> {:class :pi-switch--option-thumb}
-      (pretty-build-kit/adaptive-border-attributes switch-props 0.75)))
+      (pretty-css/adaptive-border-attributes switch-props 0.75)))
 
 (defn switch-option-track-attributes
   ; @ignore
@@ -83,8 +84,8 @@
   [switch-id switch-props option]
   (let [option-color (pretty-engine/get-input-option-color switch-id switch-props option)]
        (-> {:class :pi-switch--option-track}
-           (pretty-build-kit/border-attributes switch-props)
-           (pretty-build-kit/color-attributes {:fill-color option-color}))))
+           (pretty-css/border-attributes switch-props)
+           (pretty-css/color-attributes {:fill-color option-color}))))
 
 (defn switch-option-attributes
   ; @ignore
@@ -104,8 +105,8 @@
        (-> {:class         :pi-switch--option
             :data-switched option-selected?
             :disabled      disabled?}
-           (pretty-build-kit/effect-attributes switch-props)
-           (pretty-build-kit/mouse-event-attributes {:on-click-f on-click-f :on-mouse-up-f dom/blur-active-element!}))))
+           (pretty-css/effect-attributes switch-props)
+           (pretty-css/mouse-event-attributes {:on-click-f on-click-f :on-mouse-up-f dom/blur-active-element!}))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -124,10 +125,9 @@
        (-> {:class :pi-switch--body
             :on-blur  on-blur-f
             :on-focus on-focus-f}
-           (pretty-build-kit/indent-attributes       switch-props)
-           (pretty-build-kit/orientation-attributes  switch-props)
-           (pretty-build-kit/style-attributes        switch-props)
-           (pretty-build-kit/unselectable-attributes switch-props))))
+           (pretty-css/indent-attributes      switch-props)
+           (pretty-css/orientation-attributes switch-props)
+           (pretty-css/style-attributes       switch-props))))
 
 (defn switch-attributes
   ; @ignore
@@ -139,6 +139,6 @@
   ; {}
   [_ switch-props]
   (-> {:class :pi-switch}
-      (pretty-build-kit/class-attributes   switch-props)
-      (pretty-build-kit/outdent-attributes switch-props)
-      (pretty-build-kit/state-attributes   switch-props)))
+      (pretty-css/class-attributes   switch-props)
+      (pretty-css/outdent-attributes switch-props)
+      (pretty-css/state-attributes   switch-props)))

@@ -1,6 +1,6 @@
 
 (ns pretty-elements.breadcrumbs.attributes
-    (:require [pretty-build-kit.api :as pretty-build-kit]))
+    (:require [pretty-css.api :as pretty-css]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -27,12 +27,12 @@
        :data-line-height    :text-block
        :data-text-overflow  :ellipsis
        :disabled            disabled?}
-      (pretty-build-kit/color-attributes        crumb-props)
-      (pretty-build-kit/cursor-attributes       crumb-props)
-      (pretty-build-kit/effect-attributes       crumb-props)
-      (pretty-build-kit/href-attributes         crumb-props)
-      (pretty-build-kit/state-attributes        crumb-props)
-      (pretty-build-kit/unselectable-attributes crumb-props)))
+      (pretty-css/color-attributes             crumb-props)
+      (pretty-css/cursor-attributes            crumb-props)
+      (pretty-css/effect-attributes            crumb-props)
+      (pretty-css/href-attributes              crumb-props)
+      (pretty-css/state-attributes             crumb-props)
+      (pretty-css/unselectable-text-attributes crumb-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -51,8 +51,8 @@
   (-> {:class            :pe-breadcrumbs--body
        :data-column-gap  :xs
        :data-scroll-axis :x}
-      (pretty-build-kit/indent-attributes breadcrumbs-props)
-      (pretty-build-kit/style-attributes  breadcrumbs-props)))
+      (pretty-css/indent-attributes breadcrumbs-props)
+      (pretty-css/style-attributes  breadcrumbs-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -67,6 +67,6 @@
   ; {:class (keyword or keywords in vector)}
   [_ breadcrumbs-props]
   (-> {:class :pe-breadcrumbs}
-      (pretty-build-kit/class-attributes   breadcrumbs-props)
-      (pretty-build-kit/outdent-attributes breadcrumbs-props)
-      (pretty-build-kit/state-attributes   breadcrumbs-props)))
+      (pretty-css/class-attributes   breadcrumbs-props)
+      (pretty-css/outdent-attributes breadcrumbs-props)
+      (pretty-css/state-attributes   breadcrumbs-props)))

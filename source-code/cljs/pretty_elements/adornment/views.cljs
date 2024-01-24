@@ -1,7 +1,6 @@
 
 (ns pretty-elements.adornment.views
     (:require [fruits.random.api :as random]
-              [metamorphic-content.api :as metamorphic-content]
               [pretty-elements.adornment.attributes :as adornment.attributes]
               [pretty-elements.adornment.prototypes :as adornment.prototypes]
               [pretty-presets.api :as pretty-presets]
@@ -25,8 +24,8 @@
   [:div (adornment.attributes/adornment-attributes adornment-id adornment-props)
         [(cond href-uri :a on-click-f :button :else :div)
          (adornment.attributes/adornment-body-attributes adornment-id adornment-props)
-         (cond label [:div (adornment.attributes/adornment-label-attributes adornment-id adornment-props) (-> label metamorphic-content/compose)]
-               icon  [:i   (adornment.attributes/adornment-icon-attributes  adornment-id adornment-props) (-> icon)])]])
+         (cond label [:div (adornment.attributes/adornment-label-attributes adornment-id adornment-props) label]
+               icon  [:i   (adornment.attributes/adornment-icon-attributes  adornment-id adornment-props) icon])]])
 
 (defn adornment-lifecycles
   ; @ignore

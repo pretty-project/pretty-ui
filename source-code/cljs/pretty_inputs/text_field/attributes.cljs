@@ -1,7 +1,7 @@
 
 (ns pretty-inputs.text-field.attributes
     (:require [dom.api                               :as dom]
-              [pretty-build-kit.api                  :as pretty-build-kit]
+              [pretty-css.api :as pretty-css]
               [pretty-engine.api                     :as pretty-engine]
               [pretty-inputs.text-field.env          :as text-field.env]
               [pretty-inputs.text-field.side-effects :as text-field.side-effects]))
@@ -24,7 +24,7 @@
        :data-line-height     :text-block
        :data-text-overflow   :hidden
        :data-text-selectable false}
-      (pretty-build-kit/effect-attributes field-props)))
+      (pretty-css/effect-attributes field-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -90,10 +90,10 @@
   (-> {:class                 :pi-text-field--surface
        :data-box-shadow-color :default
        :on-mouse-down         dom/prevent-default}
-      (pretty-build-kit/border-attributes surface)
-      (pretty-build-kit/indent-attributes surface)
+      (pretty-css/border-attributes surface)
+      (pretty-css/indent-attributes surface)
       ; The field surface inherits the font settings of the field as its default.
-      (pretty-build-kit/font-attributes field-props)))
+      (pretty-css/font-attributes field-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -139,11 +139,11 @@
                           :on-focus            on-focus-f
                           :on-change           on-change-f
                           :on-input            on-input-f})
-           (pretty-build-kit/autofill-attributes     field-props)
-           (pretty-build-kit/field-attributes        field-props)
-           (pretty-build-kit/effect-attributes       field-props)
-           (pretty-build-kit/element-size-attributes field-props)
-           (pretty-build-kit/focus-attributes        field-props))))
+           (pretty-css/autofill-attributes     field-props)
+           (pretty-css/field-attributes        field-props)
+           (pretty-css/effect-attributes       field-props)
+           (pretty-css/element-size-attributes field-props)
+           (pretty-css/focus-attributes        field-props))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -159,12 +159,12 @@
   [_ field-props]
   (-> {:class               :pi-text-field--body
        :data-letter-spacing :auto}
-      (pretty-build-kit/border-attributes field-props)
-      (pretty-build-kit/color-attributes  field-props)
-      (pretty-build-kit/font-attributes   field-props)
-      (pretty-build-kit/indent-attributes field-props)
-      (pretty-build-kit/marker-attributes field-props)
-      (pretty-build-kit/style-attributes  field-props)))
+      (pretty-css/border-attributes field-props)
+      (pretty-css/color-attributes  field-props)
+      (pretty-css/font-attributes   field-props)
+      (pretty-css/indent-attributes field-props)
+      (pretty-css/marker-attributes field-props)
+      (pretty-css/style-attributes  field-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -181,7 +181,7 @@
   [_ {:keys [disabled?] :as field-props}]
   (-> {:class        :pi-text-field
        :data-covered disabled?}
-      (pretty-build-kit/class-attributes        field-props)
-      (pretty-build-kit/outdent-attributes      field-props)
-      (pretty-build-kit/state-attributes        field-props)
-      (pretty-build-kit/wrapper-size-attributes field-props)))
+      (pretty-css/class-attributes        field-props)
+      (pretty-css/outdent-attributes      field-props)
+      (pretty-css/state-attributes        field-props)
+      (pretty-css/wrapper-size-attributes field-props)))

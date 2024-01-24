@@ -1,6 +1,6 @@
 
 (ns pretty-diagrams.circle-diagram.prototypes
-    (:require [pretty-build-kit.api                 :as pretty-build-kit]
+    (:require [pretty-defaults.api :as pretty-defaults]
               [pretty-diagrams.circle-diagram.utils :as circle-diagram.utils]))
 
 ;; ----------------------------------------------------------------------------
@@ -14,7 +14,7 @@
   ; @return (map)
   ; {:color (keyword or string)}
   [section-props]
-  (-> section-props (pretty-build-kit/default-values {:color :primary})))
+  (-> section-props (pretty-defaults/use-default-values {:color :primary})))
 
 (defn diagram-props-prototype
   ; @ignore
@@ -26,5 +26,5 @@
   ;  :strength (px)}
   [diagram-props]
   ; @note (pretty-diagrams.circle-diagram.utils#1218)
-  (-> diagram-props (pretty-build-kit/default-values {:diameter 48 :strength 2})
+  (-> diagram-props (pretty-defaults/use-default-values {:diameter 48 :strength 2})
                     (circle-diagram.utils/diagram-props<-total-value)))

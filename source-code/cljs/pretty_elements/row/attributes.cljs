@@ -1,6 +1,6 @@
 
 (ns pretty-elements.row.attributes
-    (:require [pretty-build-kit.api :as pretty-build-kit]))
+    (:require [pretty-css.api :as pretty-css]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -15,14 +15,14 @@
   ; {:class (keyword or keywords in vector)}
   [_ row-props]
   (-> {:class :pe-row--body}
-      (pretty-build-kit/border-attributes           row-props)
-      (pretty-build-kit/color-attributes            row-props)
-      (pretty-build-kit/indent-attributes           row-props)
-      (pretty-build-kit/element-max-size-attributes row-props)
-      (pretty-build-kit/element-min-size-attributes row-props)
-      (pretty-build-kit/element-size-attributes     row-props)
-      (pretty-build-kit/row-attributes              row-props)
-      (pretty-build-kit/style-attributes            row-props)))
+      (pretty-css/border-attributes           row-props)
+      (pretty-css/color-attributes            row-props)
+      (pretty-css/indent-attributes           row-props)
+      (pretty-css/element-max-size-attributes row-props)
+      (pretty-css/element-min-size-attributes row-props)
+      (pretty-css/element-size-attributes     row-props)
+      (pretty-css/row-attributes              row-props)
+      (pretty-css/style-attributes            row-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -37,7 +37,7 @@
   ; {}
   [_ row-props]
   (-> {:class :pe-row}
-      (pretty-build-kit/class-attributes        row-props)
-      (pretty-build-kit/outdent-attributes      row-props)
-      (pretty-build-kit/state-attributes        row-props)
-      (pretty-build-kit/wrapper-size-attributes row-props)))
+      (pretty-css/class-attributes        row-props)
+      (pretty-css/outdent-attributes      row-props)
+      (pretty-css/state-attributes        row-props)
+      (pretty-css/wrapper-size-attributes row-props)))

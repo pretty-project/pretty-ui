@@ -1,6 +1,6 @@
 
 (ns pretty-elements.toggle.attributes
-    (:require [pretty-build-kit.api :as pretty-build-kit]))
+    (:require [pretty-css.api :as pretty-css]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -19,15 +19,15 @@
   (-> {:class              :pe-toggle--body
        :data-click-effect  :opacity
        :data-text-overflow :hidden}
-      (pretty-build-kit/border-attributes       toggle-props)
-      (pretty-build-kit/color-attributes        toggle-props)
-      (pretty-build-kit/cursor-attributes       toggle-props)
-      (pretty-build-kit/element-size-attributes toggle-props)
-      (pretty-build-kit/focus-attributes        toggle-props)
-      (pretty-build-kit/indent-attributes       toggle-props)
-      (pretty-build-kit/href-attributes         toggle-props)
-      (pretty-build-kit/mouse-event-attributes  toggle-props)
-      (pretty-build-kit/unselectable-attributes toggle-props)))
+      (pretty-css/border-attributes            toggle-props)
+      (pretty-css/color-attributes             toggle-props)
+      (pretty-css/cursor-attributes            toggle-props)
+      (pretty-css/element-size-attributes      toggle-props)
+      (pretty-css/focus-attributes             toggle-props)
+      (pretty-css/indent-attributes            toggle-props)
+      (pretty-css/href-attributes              toggle-props)
+      (pretty-css/mouse-event-attributes       toggle-props)
+      (pretty-css/unselectable-text-attributes toggle-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -42,7 +42,7 @@
   ; {:class (keyword or keywords in vector)}
   [_ toggle-props]
   (-> {:class :pe-toggle}
-      (pretty-build-kit/class-attributes        toggle-props)
-      (pretty-build-kit/outdent-attributes      toggle-props)
-      (pretty-build-kit/state-attributes        toggle-props)
-      (pretty-build-kit/wrapper-size-attributes toggle-props)))
+      (pretty-css/class-attributes        toggle-props)
+      (pretty-css/outdent-attributes      toggle-props)
+      (pretty-css/state-attributes        toggle-props)
+      (pretty-css/wrapper-size-attributes toggle-props)))

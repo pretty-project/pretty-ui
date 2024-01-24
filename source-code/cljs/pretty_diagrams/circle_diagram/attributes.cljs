@@ -2,7 +2,7 @@
 (ns pretty-diagrams.circle-diagram.attributes
     (:require [fruits.css.api                        :as css]
               [fruits.math.api                       :as math]
-              [pretty-build-kit.api                  :as pretty-build-kit]
+              [pretty-css.api :as pretty-css]
               [pretty-diagrams.circle-diagram.config :as circle-diagram.config]))
 
 ;; ----------------------------------------------------------------------------
@@ -74,8 +74,8 @@
   ; {:class (keyword or keywords in vector)}
   [_ diagram-props]
   (-> {:class :pd-circle-diagram--body}
-      (pretty-build-kit/indent-attributes diagram-props)
-      (pretty-build-kit/style-attributes  diagram-props)))
+      (pretty-css/indent-attributes diagram-props)
+      (pretty-css/style-attributes  diagram-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -90,6 +90,6 @@
   ; {}
   [_ diagram-props]
   (-> {:class :pd-circle-diagram}
-      (pretty-build-kit/class-attributes   diagram-props)
-      (pretty-build-kit/outdent-attributes diagram-props)
-      (pretty-build-kit/state-attributes   diagram-props)))
+      (pretty-css/class-attributes   diagram-props)
+      (pretty-css/outdent-attributes diagram-props)
+      (pretty-css/state-attributes   diagram-props)))

@@ -1,7 +1,7 @@
 
 (ns pretty-elements.thumbnail.prototypes
     (:require [dom.api              :as dom]
-              [pretty-build-kit.api :as pretty-build-kit]))
+              [pretty-css.api :as pretty-css]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

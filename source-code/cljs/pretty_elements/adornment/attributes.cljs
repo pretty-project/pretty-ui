@@ -1,6 +1,6 @@
 
 (ns pretty-elements.adornment.attributes
-    (:require [pretty-build-kit.api :as pretty-build-kit]))
+    (:require [pretty-css.api :as pretty-css]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -15,7 +15,7 @@
   ; {}
   [adornment-id adornment-props]
   (-> {:class :pe-adornment--icon}
-      (pretty-build-kit/icon-attributes adornment-props)))
+      (pretty-css/icon-attributes adornment-props)))
 
 (defn adornment-label-attributes
   ; @ignore
@@ -27,8 +27,8 @@
   ; {}
   [_ adornment-props]
   (-> {:class :pe-adornment--label}
-      (pretty-build-kit/font-attributes adornment-props)
-      (pretty-build-kit/text-attributes adornment-props)))
+      (pretty-css/font-attributes              adornment-props)
+      (pretty-css/unselectable-text-attributes adornment-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -43,17 +43,16 @@
   ; {}
   [adornment-id adornment-props]
   (-> {:class :pe-adornment--body}
-      (pretty-build-kit/color-attributes        adornment-props)
-      (pretty-build-kit/control-attributes      adornment-props)
-      (pretty-build-kit/cursor-attributes       adornment-props)
-      (pretty-build-kit/effect-attributes       adornment-props)
-      (pretty-build-kit/focus-attributes        adornment-props)
-      (pretty-build-kit/href-attributes         adornment-props)
-      (pretty-build-kit/indent-attributes       adornment-props)
-      (pretty-build-kit/mouse-event-attributes  adornment-props)
-      (pretty-build-kit/style-attributes        adornment-props)
-      (pretty-build-kit/tab-attributes          adornment-props)
-      (pretty-build-kit/unselectable-attributes adornment-props)))
+      (pretty-css/color-attributes       adornment-props)
+      (pretty-css/control-attributes     adornment-props)
+      (pretty-css/cursor-attributes      adornment-props)
+      (pretty-css/effect-attributes      adornment-props)
+      (pretty-css/focus-attributes       adornment-props)
+      (pretty-css/href-attributes        adornment-props)
+      (pretty-css/indent-attributes      adornment-props)
+      (pretty-css/mouse-event-attributes adornment-props)
+      (pretty-css/style-attributes       adornment-props)
+      (pretty-css/tab-attributes         adornment-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -68,6 +67,6 @@
   ; {:class (keyword or keywords in vector)}
   [_ adornment-props]
   (-> {:class :pe-adornment}
-      (pretty-build-kit/class-attributes   adornment-props)
-      (pretty-build-kit/outdent-attributes adornment-props)
-      (pretty-build-kit/state-attributes   adornment-props)))
+      (pretty-css/class-attributes   adornment-props)
+      (pretty-css/outdent-attributes adornment-props)
+      (pretty-css/state-attributes   adornment-props)))

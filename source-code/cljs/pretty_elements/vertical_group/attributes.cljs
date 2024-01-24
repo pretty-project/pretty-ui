@@ -1,6 +1,6 @@
 
 (ns pretty-elements.vertical-group.attributes
-    (:require [pretty-build-kit.api :as pretty-build-kit]))
+    (:require [pretty-css.api :as pretty-css]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -15,9 +15,9 @@
   ; {:class (keyword or keywords in vector)}
   [_ group-props]
   (-> {:class :pe-vertical-group--body}
-      (pretty-build-kit/element-size-attributes group-props)
-      (pretty-build-kit/indent-attributes       group-props)
-      (pretty-build-kit/style-attributes        group-props)))
+      (pretty-css/element-size-attributes group-props)
+      (pretty-css/indent-attributes       group-props)
+      (pretty-css/style-attributes        group-props)))
 
 (defn group-attributes
   ; @ignore
@@ -29,7 +29,7 @@
   ; {}
   [_ group-props]
   (-> {:class :pe-vertical-group}
-      (pretty-build-kit/class-attributes        group-props)
-      (pretty-build-kit/outdent-attributes      group-props)
-      (pretty-build-kit/state-attributes        group-props)
-      (pretty-build-kit/wrapper-size-attributes group-props)))
+      (pretty-css/class-attributes        group-props)
+      (pretty-css/outdent-attributes      group-props)
+      (pretty-css/state-attributes        group-props)
+      (pretty-css/wrapper-size-attributes group-props)))

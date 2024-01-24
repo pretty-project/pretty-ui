@@ -1,6 +1,6 @@
 
 (ns pretty-inputs.multi-field.attributes
-    (:require [pretty-build-kit.api :as pretty-build-kit]))
+    (:require [pretty-css.api :as pretty-css]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -15,8 +15,8 @@
   ; {:class (keyword or keywords in vector)}
   [_ group-props]
   (-> {:class :pi-multi-field--body}
-      (pretty-build-kit/indent-attributes group-props)
-      (pretty-build-kit/style-attributes  group-props)))
+      (pretty-css/indent-attributes group-props)
+      (pretty-css/style-attributes  group-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -34,6 +34,6 @@
   ; Therefore, no need to the group reacts to it.
   (let [group-props (dissoc group-props :disabled?)]
        (-> {:class :pi-multi-field}
-           (pretty-build-kit/class-attributes   group-props)
-           (pretty-build-kit/outdent-attributes group-props)
-           (pretty-build-kit/state-attributes   group-props))))
+           (pretty-css/class-attributes   group-props)
+           (pretty-css/outdent-attributes group-props)
+           (pretty-css/state-attributes   group-props))))

@@ -1,6 +1,6 @@
 
 (ns pretty-website.scroll-icon.attributes
-    (:require [pretty-build-kit.api             :as pretty-build-kit]
+    (:require [pretty-css.api :as pretty-css]
               [pretty-website.scroll-icon.state :as scroll-icon.state]))
 
 ;; ----------------------------------------------------------------------------
@@ -34,7 +34,7 @@
   [_ {:keys [color] :as icon-props}]
   (-> {:class :pw-scroll-icon--body
        :style {"--icon-color" color}}
-      (pretty-build-kit/style-attributes icon-props)))
+      (pretty-css/style-attributes icon-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -51,6 +51,6 @@
   [icon-id icon-props]
   (-> {:class        :pw-scroll-icon
        :data-visible (icon-id @scroll-icon.state/ICON-VISIBLE?)}
-      (pretty-build-kit/class-attributes   icon-props)
-      (pretty-build-kit/outdent-attributes icon-props)
-      (pretty-build-kit/state-attributes   icon-props)))
+      (pretty-css/class-attributes   icon-props)
+      (pretty-css/outdent-attributes icon-props)
+      (pretty-css/state-attributes   icon-props)))

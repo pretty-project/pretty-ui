@@ -2,7 +2,7 @@
 (ns pretty-elements.menu-bar.prototypes
     (:require [dom.api                 :as dom]
               [metamorphic-content.api :as metamorphic-content]
-              [pretty-build-kit.api    :as pretty-build-kit]))
+              [pretty-css.api :as pretty-css]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -1,7 +1,7 @@
 
 (ns pretty-inputs.checkbox.attributes
     (:require [dom.api              :as dom]
-              [pretty-build-kit.api :as pretty-build-kit]
+              [pretty-css.api :as pretty-css]
               [pretty-engine.api    :as pretty-engine]))
 
 ;; ----------------------------------------------------------------------------
@@ -51,12 +51,13 @@
   ;
   ; @return (map)
   ; {}
-  [_ {:keys [font-size]} _]
+  [_ {:keys [font-size] :as checkbox-props} _]
   (-> {:class               :pi-checkbox--option-label
        :data-font-size      font-size
        :data-font-weight    :medium
        :data-letter-spacing :auto
-       :data-line-height    :text-block}))
+       :data-line-height    :text-block}
+      (pretty-css/unselectable-text-attributes checkbox-props)))
 
 (defn checkbox-option-button-attributes
   ; @ignore
@@ -70,8 +71,8 @@
   [checkbox-id checkbox-props option]
   (let [option-color (pretty-engine/get-input-option-color checkbox-id checkbox-props option)]
        (-> {:class :pi-checkbox--option-button}
-           (pretty-build-kit/border-attributes checkbox-props)
-           (pretty-build-kit/color-attributes {:fill-color option-color}))))
+           (pretty-css/border-attributes checkbox-props)
+           (pretty-css/color-attributes {:fill-color option-color}))))
 
 (defn checkbox-option-checkmark-attributes
   ; @ignore
@@ -104,8 +105,8 @@
        (-> {:class        :pi-checkbox--option
             :data-checked option-selected?
             :disabled     disabled?}
-           (pretty-build-kit/effect-attributes checkbox-props)
-           (pretty-build-kit/mouse-event-attributes {:on-click-f on-click-f :on-mouse-up-f dom/blur-active-element!}))))
+           (pretty-css/effect-attributes checkbox-props)
+           (pretty-css/mouse-event-attributes {:on-click-f on-click-f :on-mouse-up-f dom/blur-active-element!}))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -126,10 +127,9 @@
        (-> {:class    :pi-checkbox--body
             :on-blur  on-blur-f
             :on-focus on-focus-f}
-           (pretty-build-kit/indent-attributes       checkbox-props)
-           (pretty-build-kit/orientation-attributes  checkbox-props)
-           (pretty-build-kit/unselectable-attributes checkbox-props)
-           (pretty-build-kit/style-attributes        checkbox-props))))
+           (pretty-css/indent-attributes      checkbox-props)
+           (pretty-css/orientation-attributes checkbox-props)
+           (pretty-css/style-attributes       checkbox-props))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -144,6 +144,6 @@
   ; {:class (keyword or keywords in vector)}
   [_ checkbox-props]
   (-> {:class :pi-checkbox}
-      (pretty-build-kit/class-attributes   checkbox-props)
-      (pretty-build-kit/outdent-attributes checkbox-props)
-      (pretty-build-kit/state-attributes   checkbox-props)))
+      (pretty-css/class-attributes   checkbox-props)
+      (pretty-css/outdent-attributes checkbox-props)
+      (pretty-css/state-attributes   checkbox-props)))

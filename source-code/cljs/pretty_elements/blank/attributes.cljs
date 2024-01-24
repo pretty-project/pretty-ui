@@ -1,6 +1,6 @@
 
 (ns pretty-elements.blank.attributes
-    (:require [pretty-build-kit.api :as pretty-build-kit]))
+    (:require [pretty-css.api :as pretty-css]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -15,11 +15,11 @@
   ; {:class (keyword or keywords in vector)}
   [_ blank-props]
   (-> {:class :pe-blank--body}
-      (pretty-build-kit/border-attributes       blank-props)
-      (pretty-build-kit/color-attributes        blank-props)
-      (pretty-build-kit/element-size-attributes blank-props)
-      (pretty-build-kit/indent-attributes       blank-props)
-      (pretty-build-kit/style-attributes        blank-props)))
+      (pretty-css/border-attributes       blank-props)
+      (pretty-css/color-attributes        blank-props)
+      (pretty-css/element-size-attributes blank-props)
+      (pretty-css/indent-attributes       blank-props)
+      (pretty-css/style-attributes        blank-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -34,7 +34,7 @@
   ; {:class (keyword or keywords in vector)}
   [_ blank-props]
   (-> {:class :pe-blank}
-      (pretty-build-kit/class-attributes        blank-props)
-      (pretty-build-kit/outdent-attributes      blank-props)
-      (pretty-build-kit/state-attributes        blank-props)
-      (pretty-build-kit/wrapper-size-attributes blank-props)))
+      (pretty-css/class-attributes        blank-props)
+      (pretty-css/outdent-attributes      blank-props)
+      (pretty-css/state-attributes        blank-props)
+      (pretty-css/wrapper-size-attributes blank-props)))

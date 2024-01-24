@@ -1,6 +1,6 @@
 
 (ns pretty-elements.button.attributes
-    (:require [pretty-build-kit.api :as pretty-build-kit]))
+    (:require [pretty-css.api :as pretty-css]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -15,7 +15,7 @@
   ; {:class (keyword or keywords in vector)}
   [_ button-props]
   (-> {:class :pe-button--icon}
-      (pretty-build-kit/icon-attributes button-props)))
+      (pretty-css/icon-attributes button-props)))
 
 (defn button-label-attributes
   ; @ignore
@@ -27,8 +27,8 @@
   ; {:class (keyword or keywords in vector)}
   [_ button-props]
   (-> {:class :pe-button--label}
-      (pretty-build-kit/font-attributes button-props)
-      (pretty-build-kit/text-attributes button-props)))
+      (pretty-css/font-attributes              button-props)
+      (pretty-css/unselectable-text-attributes button-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -43,24 +43,23 @@
   ; {:class (keyword or keywords in vector)}
   [_ button-props]
   (-> {:class :pe-button--body}
-      (pretty-build-kit/badge-attributes        button-props)
-      (pretty-build-kit/border-attributes       button-props)
-      (pretty-build-kit/color-attributes        button-props)
-      (pretty-build-kit/control-attributes      button-props)
-      (pretty-build-kit/cursor-attributes       button-props)
-      (pretty-build-kit/effect-attributes       button-props)
-      (pretty-build-kit/element-size-attributes button-props)
-      (pretty-build-kit/focus-attributes        button-props)
-      (pretty-build-kit/href-attributes         button-props)
-      (pretty-build-kit/indent-attributes       button-props)
-      (pretty-build-kit/marker-attributes       button-props)
-      (pretty-build-kit/mouse-event-attributes  button-props)
-      (pretty-build-kit/progress-attributes     button-props)
-      (pretty-build-kit/row-attributes          button-props)
-      (pretty-build-kit/style-attributes        button-props)
-      (pretty-build-kit/tab-attributes          button-props)
-      (pretty-build-kit/tooltip-attributes      button-props)
-      (pretty-build-kit/unselectable-attributes button-props)))
+      (pretty-css/badge-attributes        button-props)
+      (pretty-css/border-attributes       button-props)
+      (pretty-css/color-attributes        button-props)
+      (pretty-css/control-attributes      button-props)
+      (pretty-css/cursor-attributes       button-props)
+      (pretty-css/effect-attributes       button-props)
+      (pretty-css/element-size-attributes button-props)
+      (pretty-css/focus-attributes        button-props)
+      (pretty-css/href-attributes         button-props)
+      (pretty-css/indent-attributes       button-props)
+      (pretty-css/marker-attributes       button-props)
+      (pretty-css/mouse-event-attributes  button-props)
+      (pretty-css/progress-attributes     button-props)
+      (pretty-css/row-attributes          button-props)
+      (pretty-css/style-attributes        button-props)
+      (pretty-css/tab-attributes          button-props)
+      (pretty-css/tooltip-attributes      button-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -75,7 +74,7 @@
   ; {:class (keyword or keywords in vector)}
   [_ button-props]
   (-> {:class :pe-button}
-      (pretty-build-kit/class-attributes        button-props)
-      (pretty-build-kit/outdent-attributes      button-props)
-      (pretty-build-kit/state-attributes        button-props)
-      (pretty-build-kit/wrapper-size-attributes button-props)))
+      (pretty-css/class-attributes        button-props)
+      (pretty-css/outdent-attributes      button-props)
+      (pretty-css/state-attributes        button-props)
+      (pretty-css/wrapper-size-attributes button-props)))

@@ -1,7 +1,7 @@
 
 (ns pretty-inputs.slider.attributes
     (:require [fruits.css.api                    :as css]
-              [pretty-build-kit.api              :as pretty-build-kit]
+              [pretty-css.api :as pretty-css]
               [pretty-inputs.slider.side-effects :as slider.side-effects]
               [pretty-inputs.slider.state        :as slider.state]
               [re-frame.api                      :as r]))
@@ -74,9 +74,9 @@
   ; {:class (keyword or keywords in vector)}
   [_ slider-props]
   (-> {:class :pi-slider--body}
-      (pretty-build-kit/element-size-attributes slider-props)
-      (pretty-build-kit/indent-attributes       slider-props)
-      (pretty-build-kit/style-attributes        slider-props)))
+      (pretty-css/element-size-attributes slider-props)
+      (pretty-css/indent-attributes       slider-props)
+      (pretty-css/style-attributes        slider-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -91,7 +91,7 @@
   ; {}
   [_ slider-props]
   (-> {:class :pi-slider}
-      (pretty-build-kit/class-attributes        slider-props)
-      (pretty-build-kit/outdent-attributes      slider-props)
-      (pretty-build-kit/state-attributes        slider-props)
-      (pretty-build-kit/wrapper-size-attributes slider-props)))
+      (pretty-css/class-attributes        slider-props)
+      (pretty-css/outdent-attributes      slider-props)
+      (pretty-css/state-attributes        slider-props)
+      (pretty-css/wrapper-size-attributes slider-props)))

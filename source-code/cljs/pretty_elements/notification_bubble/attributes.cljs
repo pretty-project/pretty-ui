@@ -1,6 +1,6 @@
 
 (ns pretty-elements.notification-bubble.attributes
-    (:require [pretty-build-kit.api :as pretty-build-kit]))
+    (:require [pretty-css.api :as pretty-css]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -17,8 +17,9 @@
   [_ bubble-props]
   (-> {:class               :pe-notification-bubble--content
        :data-letter-spacing :auto}
-      (pretty-build-kit/font-attributes   bubble-props)
-      (pretty-build-kit/indent-attributes bubble-props)))
+      (pretty-css/font-attributes              bubble-props)
+      (pretty-css/indent-attributes            bubble-props)
+      (pretty-css/unselectable-text-attributes bubble-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -33,13 +34,12 @@
   ; {:class (keyword or keywords in vector)}
   [_ bubble-props]
   (-> {:class :pe-notification-bubble--body}
-      (pretty-build-kit/border-attributes           bubble-props)
-      (pretty-build-kit/color-attributes            bubble-props)
-      (pretty-build-kit/element-max-size-attributes bubble-props)
-      (pretty-build-kit/element-min-size-attributes bubble-props)
-      (pretty-build-kit/element-size-attributes     bubble-props)
-      (pretty-build-kit/style-attributes            bubble-props)
-      (pretty-build-kit/unselectable-attributes     bubble-props)))
+      (pretty-css/border-attributes           bubble-props)
+      (pretty-css/color-attributes            bubble-props)
+      (pretty-css/element-max-size-attributes bubble-props)
+      (pretty-css/element-min-size-attributes bubble-props)
+      (pretty-css/element-size-attributes     bubble-props)
+      (pretty-css/style-attributes            bubble-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -54,7 +54,7 @@
   ; {:class (keyword or keywords in vector)}
   [_ bubble-props]
   (-> {:class :pe-notification-bubble}
-      (pretty-build-kit/class-attributes        bubble-props)
-      (pretty-build-kit/outdent-attributes      bubble-props)
-      (pretty-build-kit/state-attributes        bubble-props)
-      (pretty-build-kit/wrapper-size-attributes bubble-props)))
+      (pretty-css/class-attributes        bubble-props)
+      (pretty-css/outdent-attributes      bubble-props)
+      (pretty-css/state-attributes        bubble-props)
+      (pretty-css/wrapper-size-attributes bubble-props)))

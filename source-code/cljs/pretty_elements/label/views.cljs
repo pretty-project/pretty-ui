@@ -2,7 +2,7 @@
 (ns pretty-elements.label.views
     (:require [fruits.random.api                :as random]
               [metamorphic-content.api          :as metamorphic-content]
-              [pretty-build-kit.api             :as pretty-build-kit]
+              [pretty-css.api :as pretty-css]
               [pretty-elements.label.attributes :as label.attributes]
               [pretty-elements.label.env        :as label.env]
               [pretty-elements.label.prototypes :as label.prototypes]
@@ -55,7 +55,7 @@
   ; @param (map) label-props
   ; {:icon (keyword)}
   [_ {:keys [icon] :as label-props}]
-  (if icon [:i (pretty-build-kit/icon-attributes {:class :pe-label--icon} label-props) icon]))
+  (if icon [:i (pretty-css/icon-attributes {:class :pe-label--icon} label-props) icon]))
 
 (defn- label-content
   ; @ignore

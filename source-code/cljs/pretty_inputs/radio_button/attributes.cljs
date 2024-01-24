@@ -2,7 +2,7 @@
 (ns pretty-inputs.radio-button.attributes
     (:require [dom.api                 :as dom]
               [metamorphic-content.api :as metamorphic-content]
-              [pretty-build-kit.api    :as pretty-build-kit]
+              [pretty-css.api :as pretty-css]
               [pretty-engine.api       :as pretty-engine]
               [re-frame.api            :as r]))
 
@@ -53,12 +53,13 @@
   ;
   ; @return (map)
   ; {}
-  [_ {:keys [font-size]} _]
-  {:class               :pi-radio-button--option-label
-   :data-font-size      font-size
-   :data-font-weight    :medium
-   :data-letter-spacing :auto
-   :data-line-height    :text-block})
+  [_ {:keys [font-size] :as button-props} _]
+  (-> {:class               :pi-radio-button--option-label
+       :data-font-size      font-size
+       :data-font-weight    :medium
+       :data-letter-spacing :auto
+       :data-line-height    :text-block}
+      (pretty-css/unselectable-text-attributes button-props)))
 
 (defn radio-button-option-thumb-attributes
   ; @ignore
@@ -71,7 +72,7 @@
   ; {}
   [_ button-props _]
   (-> {:class :pi-radio-button--option-thumb}
-      (pretty-build-kit/adaptive-border-attributes button-props 0.3)))
+      (pretty-css/adaptive-border-attributes button-props 0.3)))
 
 (defn radio-button-option-button-attributes
   ; @ignore
@@ -85,8 +86,8 @@
   [button-id button-props option]
   (let [option-color (pretty-engine/get-input-option-color button-id button-props option)]
        (-> {:class :pi-radio-button--option-button}
-           (pretty-build-kit/border-attributes button-props)
-           (pretty-build-kit/color-attributes {:fill-color option-color}))))
+           (pretty-css/border-attributes button-props)
+           (pretty-css/color-attributes {:fill-color option-color}))))
 
 (defn radio-button-option-attributes
   ; @ignore
@@ -104,8 +105,8 @@
        (-> {:class         :pi-radio-button--option
             :data-selected option-selected?
             :disabled      disabled?}
-           (pretty-build-kit/effect-attributes button-props)
-           (pretty-build-kit/mouse-event-attributes {:on-click-f on-click-f :on-mouse-up-f dom/blur-active-element!}))))
+           (pretty-css/effect-attributes button-props)
+           (pretty-css/mouse-event-attributes {:on-click-f on-click-f :on-mouse-up-f dom/blur-active-element!}))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -124,10 +125,9 @@
        (-> {:class :pi-radio-button--body
             :on-blur  on-blur-f
             :on-focus on-focus-f}
-           (pretty-build-kit/indent-attributes       button-props)
-           (pretty-build-kit/orientation-attributes  button-props)
-           (pretty-build-kit/style-attributes        button-props)
-           (pretty-build-kit/unselectable-attributes button-props))))
+           (pretty-css/indent-attributes      button-props)
+           (pretty-css/orientation-attributes button-props)
+           (pretty-css/style-attributes       button-props))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -142,6 +142,6 @@
   ; {}
   [_ button-props]
   (-> {:class :pi-radio-button}
-      (pretty-build-kit/class-attributes   button-props)
-      (pretty-build-kit/outdent-attributes button-props)
-      (pretty-build-kit/state-attributes   button-props)))
+      (pretty-css/class-attributes   button-props)
+      (pretty-css/outdent-attributes button-props)
+      (pretty-css/state-attributes   button-props)))

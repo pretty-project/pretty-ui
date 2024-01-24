@@ -2,7 +2,7 @@
 (ns pretty-inputs.text-field.prototypes
     (:require [fruits.loop.api                     :refer [<-walk]]
               [fruits.vector.api                   :as vector]
-              [pretty-build-kit.api                :as pretty-build-kit]
+              [pretty-css.api :as pretty-css]
               [pretty-engine.api                   :as pretty-engine]
               [pretty-inputs.text-field.adornments :as text-field.adornments]))
 

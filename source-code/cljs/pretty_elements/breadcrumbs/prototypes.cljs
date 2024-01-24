@@ -1,7 +1,7 @@
 
 (ns pretty-elements.breadcrumbs.prototypes
     (:require [dom.api              :as dom]
-              [pretty-build-kit.api :as pretty-build-kit]))
+              [pretty-defaults.api :as pretty-defaults]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -10,13 +10,13 @@
   [_ {:keys [disabled?]} {:keys [href on-click-f] :as crumb-props}]
   ; ezek nem mind kell!
   (cond-> crumb-props
-          :inherit-state       (pretty-build-kit/default-values      {:disabled? disabled?})
-          :derive-fns/default  (pretty-build-kit/default-values      {})
-          :text/default        (pretty-build-kit/default-values      {:text-color :muted})
-          :border/default      (pretty-build-kit/default-value-group {:border-color :primary :border-position :all :border-width :xxs})
-          :icon/default        (pretty-build-kit/default-value-group {:icon :people :icon-color :primary :icon-position :right :icon-size :s})
-          (or href on-click-f) (pretty-build-kit/default-values      {:text-color :default :click-effect :opacity})
-          (or href on-click-f) (pretty-build-kit/forced-values       {:on-mouse-up dom/blur-active-element!})))
+          :inherit-state       (pretty-defaults/use-default-values      {:disabled? disabled?})
+          :derive-fns/default  (pretty-defaults/use-default-values      {})
+          :text/default        (pretty-defaults/use-default-values      {:text-color :muted})
+          :border/default      (pretty-defaults/use-default-value-group {:border-color :primary :border-position :all :border-width :xxs})
+          :icon/default        (pretty-defaults/use-default-value-group {:icon :people :icon-color :primary :icon-position :right :icon-size :s})
+          (or href on-click-f) (pretty-defaults/use-default-values      {:text-color :default :click-effect :opacity})
+          (or href on-click-f) (pretty-defaults/force-values       {:on-mouse-up dom/blur-active-element!})))
 
 
 

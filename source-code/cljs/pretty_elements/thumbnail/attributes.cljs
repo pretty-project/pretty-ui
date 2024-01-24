@@ -1,6 +1,6 @@
 
 (ns pretty-elements.thumbnail.attributes
-    (:require [pretty-build-kit.api :as pretty-build-kit]))
+    (:require [pretty-css.api :as pretty-css]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -20,14 +20,18 @@
                      :data-background-size background-size}
                     {:class                :pe-thumbnail--body
                      :data-background-size background-size})
-      (pretty-build-kit/border-attributes         thumbnail-props)
-      (pretty-build-kit/effect-attributes         thumbnail-props)
-      (pretty-build-kit/indent-attributes         thumbnail-props)
-      (pretty-build-kit/href-attributes           thumbnail-props)
-      (pretty-build-kit/mouse-event-attributes    thumbnail-props)
-      (pretty-build-kit/style-attributes          thumbnail-props)
-      (pretty-build-kit/thumbnail-size-attributes thumbnail-props)
-      (pretty-build-kit/unselectable-attributes   thumbnail-props)))
+      (pretty-css/border-attributes         thumbnail-props)
+      (pretty-css/effect-attributes         thumbnail-props)
+      (pretty-css/indent-attributes         thumbnail-props)
+      (pretty-css/href-attributes           thumbnail-props)
+      (pretty-css/mouse-event-attributes    thumbnail-props)
+      (pretty-css/style-attributes          thumbnail-props)
+      (pretty-css/thumbnail-size-attributes thumbnail-props)
+
+      ; i think this text attributes fn is only applied because of the text-selection property
+      ; so maybe find a solution for images to make the unselectable just as the icon-attributes fn
+      ; makes the icons unselectable.
+      (pretty-css/unselectable-text-attributes thumbnail-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -42,7 +46,7 @@
   ; {}
   [_ thumbnail-props]
   (-> {:class :pe-thumbnail}
-      (pretty-build-kit/class-attributes        thumbnail-props)
-      (pretty-build-kit/outdent-attributes      thumbnail-props)
-      (pretty-build-kit/state-attributes        thumbnail-props)
-      (pretty-build-kit/wrapper-size-attributes thumbnail-props)))
+      (pretty-css/class-attributes        thumbnail-props)
+      (pretty-css/outdent-attributes      thumbnail-props)
+      (pretty-css/state-attributes        thumbnail-props)
+      (pretty-css/wrapper-size-attributes thumbnail-props)))

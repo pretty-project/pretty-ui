@@ -2,7 +2,7 @@
 (ns pretty-website.language-selector.attributes
     (:require [app-dictionary.api   :as app-dictionary]
               [dom.api              :as dom]
-              [pretty-build-kit.api :as pretty-build-kit]))
+              [pretty-css.api :as pretty-css]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -28,8 +28,8 @@
             :data-selected        selected?
             :on-click             on-click-f
             :on-mouse-up          dom/blur-active-element!}
-           (pretty-build-kit/font-attributes         selector-props)
-           (pretty-build-kit/unselectable-attributes selector-props))))
+           (pretty-css/font-attributes              selector-props)
+           (pretty-css/unselectable-text-attributes selector-props))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -44,9 +44,9 @@
   ; {:class (keyword or keywords in vector)}
   [_ selector-props]
   (-> {:class :pw-language-selector--body}
-      (pretty-build-kit/indent-attributes selector-props)
-      (pretty-build-kit/row-attributes    selector-props)
-      (pretty-build-kit/style-attributes  selector-props)))
+      (pretty-css/indent-attributes selector-props)
+      (pretty-css/row-attributes    selector-props)
+      (pretty-css/style-attributes  selector-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -61,6 +61,6 @@
   ; {:class (keyword or keywords in vector)}
   [_ selector-props]
   (-> {:class :pw-language-selector}
-      (pretty-build-kit/class-attributes   selector-props)
-      (pretty-build-kit/state-attributes   selector-props)
-      (pretty-build-kit/outdent-attributes selector-props)))
+      (pretty-css/class-attributes   selector-props)
+      (pretty-css/state-attributes   selector-props)
+      (pretty-css/outdent-attributes selector-props)))

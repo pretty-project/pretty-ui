@@ -1,6 +1,6 @@
 
 (ns pretty-elements.vertical-spacer.attributes
-    (:require [pretty-build-kit.api :as pretty-build-kit]))
+    (:require [pretty-css.api :as pretty-css]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -15,7 +15,7 @@
   ; {:class (keyword or keywords in vector)}
   [_ spacer-props]
   (-> {:class :pe-vertical-spacer}
-      (pretty-build-kit/block-size-attributes spacer-props)
-      (pretty-build-kit/class-attributes      spacer-props)
-      (pretty-build-kit/state-attributes      spacer-props)
-      (pretty-build-kit/style-attributes      spacer-props)))
+      (pretty-css/block-size-attributes spacer-props)
+      (pretty-css/class-attributes      spacer-props)
+      (pretty-css/state-attributes      spacer-props)
+      (pretty-css/style-attributes      spacer-props)))
