@@ -5,7 +5,9 @@
               [fruits.svg.api                            :as svg]
               [pretty-diagrams.circle-diagram.attributes :as circle-diagram.attributes]
               [pretty-diagrams.circle-diagram.prototypes :as circle-diagram.prototypes]
-              [pretty-presets.api                        :as pretty-presets]))
+              [pretty-presets.api                        :as pretty-presets]
+              [pretty-engine.api :as pretty-engine]
+              [reagent.api :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

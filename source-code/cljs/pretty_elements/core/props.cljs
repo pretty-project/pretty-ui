@@ -116,7 +116,8 @@
   ; @return (map)
   ; {}
   [element-props & [default-props]]
-  (-> element-props (utils/use-default-value-group {:progress-color     :default
+  (-> element-props (utils/use-default-value-group {:progress           0
+                                                    :progress-color     :default
                                                     :progress-direction :ltr
                                                     :progress-duration  250}
                                                    (-> default-props))))
@@ -154,7 +155,7 @@
   ; {}
   [element-props & [default-props]]
   (-> element-props (utils/use-default-values {:font-size      :s
-                                               :font-weight    :medium
+                                               :font-weight    :medium ; <- lehet alapbol a :normal jobb lenne és a clickable-be átrakni, hogy :static marad normal és a többi medium vagy mind medium
                                                :line-height    :text-block
                                                :letter-spacing :auto}
                                               (-> default-props))))
@@ -171,10 +172,12 @@
   ; @return (map)
   ; {}
   [element-props & [default-props]]
-  (-> element-props (utils/use-default-values {}
+  (-> element-props (utils/use-default-values {:text-overflow :visible}
                                               (-> default-props))))
 
          ; text-overflow :ellipsis a button-re, label-re, menu-item-ekre
+         ; button-re ne legyen ellipsis -> csináljon magának helyet ha nem fér el
+         ; menu-items, breadcrumbs, stb pedig legyen scroll-x!
 
          ; text-color-t is jo lenne default beállítani :default-ra,
          ; vagy maradjon inherited?
@@ -234,7 +237,7 @@
   ; {}
   [element-props & [default-props]]
   (utils/use-default-values element-props {} default-props))
-  
+
 (defn clickable-props
   ; @ignore
   ;
@@ -293,7 +296,7 @@
   ; @ignore
   ;
   ; @description
-  ; Applies the default flex column properties on the given 'element-props' map.
+  ; Applies the default flex layout properties on the given 'element-props' map.
   ;
   ; @param (map) element-props
   ; @param (map)(opt) default-props
@@ -301,16 +304,17 @@
   ; @return (map)
   ; {}
   [element-props & [default-props]]
-  (-> element-props (utils/use-default-values {:vertical-align :top}
-                                              ;:horizontal-align :center
-                                              ;:wrap-items? ...
+  (-> element-props (utils/use-default-values {:horizontal-align :center
+                                               :orientation      :vertical
+                                               :overflow         :visible
+                                               :vertical-align   :top}
                                               (-> default-props))))
 
 (defn row-props
   ; @ignore
   ;
   ; @description
-  ; Applies the default flex row properties on the given 'element-props' map.
+  ; Applies the default flex layout properties on the given 'element-props' map.
   ;
   ; @param (map) element-props
   ; @param (map)(opt) default-props
@@ -318,16 +322,35 @@
   ; @return (map)
   ; {}
   [element-props & [default-props]]
-  (-> element-props (utils/use-default-values {:horizontal-align :center}
-                                              ;:vertical-align :center
-                                              ;:wrap-items? ...
+  (-> element-props (utils/use-default-values {:horizontal-align :center
+                                               :orientation      :horizontal
+                                               :overflow         :visible
+                                               :vertical-align   :center}
+                                              (-> default-props))))
+
+(defn flex-props
+  ; @ignore
+  ;
+  ; @description
+  ; Applies the default flex layout properties on the given 'element-props' map.
+  ;
+  ; @param (map) element-props
+  ; @param (map)(opt) default-props
+  ;
+  ; @return (map)
+  ; {}
+  [element-props & [default-props]]
+  ; A flex layout element can be '{:orientation :horizontal}' or '{:orientation :vertical}'.
+  (-> element-props (utils/use-default-values {:horizontal-align :center
+                                               :overflow         :visible
+                                               :vertical-align   :center}
                                               (-> default-props))))
 
 (defn grid-props
   ; @ignore
   ;
   ; @description
-  ; Applies the default grid properties on the given 'element-props' map.
+  ; Applies the default grid layout properties on the given 'element-props' map.
   ;
   ; @param (map) element-props
   ; @param (map)(opt) default-props
@@ -337,6 +360,9 @@
   [element-props & [default-props]]
   (-> element-props (utils/use-default-values {}
                                               (-> default-props))))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn size-props
   ; @ignore
@@ -350,6 +376,5 @@
   ; @return (map)
   ; {}
   [element-props & [default-props]]
-  (-> element-props (utils/use-default-values {:height :s
-                                               :width  :s}
+  (-> element-props (utils/use-default-values {}
                                               (-> default-props))))

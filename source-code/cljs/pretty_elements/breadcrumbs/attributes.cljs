@@ -5,38 +5,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn crumb-attributes
-  ; @param (keyword) breadcrumbs-id
-  ; @param (map) breadcrumbs-props
-  ; @param (map) crumb-props
-  ; {:disabled? (boolean)(opt)}
-  ;
-  ; @return (map)
-  ; {:class (keyword or keywords in vector)
-  ;  :disabled (boolean)
-  ;  :data-font-size (keyword)
-  ;  :data-font-weight (keyword)
-  ;  :data-letter-spacing (keyword)
-  ;  :data-line-height (keyword)
-  ;  :data-text-overflow (keyword)}
-  [_ _ {:keys [disabled?] :as crumb-props}]
-  (-> {:class               :pe-breadcrumbs--crumb
-       :data-font-size      :xs
-       :data-font-weight    :semi-bold
-       :data-letter-spacing :auto
-       :data-line-height    :text-block
-       :data-text-overflow  :ellipsis
-       :disabled            disabled?}
-      (pretty-css/color-attributes             crumb-props)
-      (pretty-css/cursor-attributes            crumb-props)
-      (pretty-css/effect-attributes            crumb-props)
-      (pretty-css/href-attributes              crumb-props)
-      (pretty-css/state-attributes             crumb-props)
-      (pretty-css/unselectable-text-attributes crumb-props)))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (defn breadcrumbs-body-attributes
   ; @ignore
   ;

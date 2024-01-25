@@ -20,4 +20,6 @@
                       (core.props/icon-props        {})
                       (core.props/label-props       {})
                       (core.props/mouse-event-props {})
+                      (core.props/progress-props    {})
+                      (core.props/size-props        {:min-width :m})
                       (core.props/tooltip-props     {})))

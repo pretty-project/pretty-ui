@@ -35,15 +35,14 @@
   ; {:class (keyword or keywords in vector)}
   [chip-id chip-props]
   (-> {:class :pe-chip--body}
-      (pretty-css/border-attributes           chip-props)
-      (pretty-css/color-attributes            chip-props)
-      (pretty-css/effect-attributes           chip-props)
-      (pretty-css/element-min-size-attributes chip-props)
-      (pretty-css/element-size-attributes     chip-props)
-      (pretty-css/href-attributes             chip-props)
-      (pretty-css/indent-attributes           chip-props)
-      (pretty-css/mouse-event-attributes      chip-props)
-      (pretty-css/style-attributes            chip-props)))
+      (pretty-css/border-attributes       chip-props)
+      (pretty-css/color-attributes        chip-props)
+      (pretty-css/effect-attributes       chip-props)
+      (pretty-css/element-size-attributes chip-props)
+      (pretty-css/href-attributes         chip-props)
+      (pretty-css/indent-attributes       chip-props)
+      (pretty-css/mouse-event-attributes  chip-props)
+      (pretty-css/style-attributes        chip-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

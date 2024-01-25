@@ -6,8 +6,6 @@
 ;; ----------------------------------------------------------------------------
 
 (defn input-changed?
-  ; @ignore
-  ;
   ; @param (keyword) input-id
   ; @param (map) input-props
   ;
@@ -16,8 +14,6 @@
   (input.state.env/get-input-state input-id :changed?))
 
 (defn input-empty?
-  ; @ignore
-  ;
   ; @param (keyword) input-id
   ; @param (map) input-props
   ;
@@ -28,8 +24,6 @@
             (empty?   internal-value))))
 
 (defn input-not-empty?
-  ; @ignore
-  ;
   ; @param (keyword) input-id
   ; @param (map) input-props
   ;
@@ -41,8 +35,6 @@
 ;; ----------------------------------------------------------------------------
 
 (defn get-input-internal-value
-  ; @ignore
-  ;
   ; @param (keyword) input-id
   ; @param (map) input-props
   ;
@@ -51,8 +43,6 @@
   (input.state.env/get-input-state input-id :internal-value))
 
 (defn get-input-external-value
-  ; @ignore
-  ;
   ; @param (keyword) input-id
   ; @param (map) input-props
   ; {}
@@ -62,8 +52,6 @@
   (if get-value-f (get-value-f)))
 
 (defn get-input-displayed-value
-  ; @ignore
-  ;
   ; @param (keyword) input-id
   ; @param (map) input-props
   ; {}

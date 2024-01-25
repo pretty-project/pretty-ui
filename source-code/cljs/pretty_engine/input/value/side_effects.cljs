@@ -8,8 +8,6 @@
 ;; ----------------------------------------------------------------------------
 
 (defn mark-input-as-changed!
-  ; @ignore
-  ;
   ; @param (keyword) input-id
   ; @param (keyword) input-props
   [input-id _]
@@ -19,8 +17,6 @@
 ;; ----------------------------------------------------------------------------
 
 (defn set-input-internal-value!
-  ; @ignore
-  ;
   ; @param (keyword) input-id
   ; @param (map) input-props
   ; @param (*) value
@@ -28,8 +24,6 @@
   (input.state.side-effects/update-input-state! input-id assoc :internal-value value))
 
 (defn set-input-external-value!
-  ; @ignore
-  ;
   ; @param (keyword) input-id
   ; @param (map) input-props
   ; {}
@@ -41,8 +35,6 @@
 ;; ----------------------------------------------------------------------------
 
 (defn init-input-internal-value!
-  ; @ignore
-  ;
   ; @param (keyword) input-id
   ; @param (map) input-props
   ; {}
@@ -51,8 +43,6 @@
           (set-input-internal-value! input-id input-props input-external-value)))
 
 (defn use-input-initial-value!
-  ; @ignore
-  ;
   ; @param (keyword) input-id
   ; @param (map) input-props
   ; {}
@@ -65,8 +55,6 @@
 ;; ----------------------------------------------------------------------------
 
 (defn input-value-changed
-  ; @ignore
-  ;
   ; @param (keyword) input-id
   ; @param (map) input-props
   ; {}
@@ -84,8 +72,6 @@
 ;; ----------------------------------------------------------------------------
 
 (defn empty-input!
-  ; @ignore
-  ;
   ; @param (keyword) input-id
   ; @param (map) input-props
   ; {}

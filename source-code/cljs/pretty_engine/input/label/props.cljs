@@ -5,8 +5,6 @@
 ;; ----------------------------------------------------------------------------
 
 (defn input-label-props
-  ; @ignore
-  ;
   ; @param (keyword) input-id
   ; @param (map) input-props
   ; {:helper (metamorphic-content)(opt)

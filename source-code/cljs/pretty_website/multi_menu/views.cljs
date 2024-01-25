@@ -6,7 +6,9 @@
               [pretty-website.multi-menu.attributes :as multi-menu.attributes]
               [pretty-website.multi-menu.prototypes :as multi-menu.prototypes]
               [pretty-website.sidebar.views         :as sidebar.views]
-              [window-observer.api                  :as window-observer]))
+              [window-observer.api                  :as window-observer]
+              [pretty-engine.api :as pretty-engine]
+              [reagent.api :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -35,11 +35,11 @@
   ; {:class (keyword or keywords in vector)}
   [_ sidebar-props]
   (-> {:class :pl-sidebar--body}
-      (pretty-css/border-attributes           sidebar-props)
-      (pretty-css/color-attributes            sidebar-props)
-      (pretty-css/element-min-size-attributes sidebar-props)
-      (pretty-css/indent-attributes           sidebar-props)
-      (pretty-css/style-attributes            sidebar-props)))
+      (pretty-css/border-attributes       sidebar-props)
+      (pretty-css/color-attributes        sidebar-props)
+      (pretty-css/element-size-attributes sidebar-props)
+      (pretty-css/indent-attributes       sidebar-props)
+      (pretty-css/style-attributes        sidebar-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

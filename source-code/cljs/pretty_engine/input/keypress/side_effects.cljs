@@ -8,8 +8,6 @@
 ;; ----------------------------------------------------------------------------
 
 (defn input-ENTER-pressed
-  ; @ignore
-  ;
   ; @param (keyword) input-id
   ; @param (map) input-props
   ; {}
@@ -21,8 +19,6 @@
        (if on-enter-f (on-enter-f input-displayed-value))))
 
 (defn input-ESC-pressed
-  ; @ignore
-  ;
   ; @param (keyword) input-id
   ; @param (map) input-props
   ; {}

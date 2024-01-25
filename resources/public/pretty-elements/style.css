@@ -3,8 +3,8 @@
 /*** Wrapper ***/
 
 .pe-adornment {
-  /* XXX#6668 */
-  width: fit-content;
+  /* XXX#6668 No need for the adornment element be wider than its content. */
+  -width: fit-content;
 }
 
 /*** Wrapper ***/
@@ -12,9 +12,9 @@
 /*** Label ***/
 
 .pe-adornment--label {
-  min-width:  24px;
- -text-align: center;
-  padding:    0 4px;
+  -min-width:  24px;
+ -text-align: center; /* Why was this here? */
+ -padding:    0 4px;  /* Use indent if you need space between label type adornments! */
 }
 
 /*** Label ***/
@@ -23,11 +23,20 @@
 
 
 /***** Adornment-group *****/
+/*** Wrapper ***/
+
+.pe-adornment-group {
+  /* XXX#6668 */
+  -width: fit-content;
+}
+
+/*** Wrapper ***/
+
 /*** Adornment list ***/
 
 .pe-adornment-group--body {
-  align-items: center;
-  display: flex;
+  -align-items: center; /* Adornments can have different heights! */
+  -display:     flex;
 }
 
 /*** Adornment list ***/
@@ -49,9 +58,8 @@
 /*** Wrapper ***/
 
 .pe-breadcrumbs {
-  /* XXX#6668
-   * No need to the breadcrumbs element be wider than its content. */
-  width: fit-content;
+  /* XXX#6669 The breadcrumbs body element is scrollable on its X axis. */
+  width: auto;
 }
 
 /*** Wrapper ***/
@@ -66,9 +74,13 @@
 
 /*** Crumb ***/
 
-.pe-breadcrumbs--crumb {
+.pe-breadcrumbs .pe-button {
   max-width: 160px;
 }
+
+/*** Crumb ***/
+
+/*** Separator ***/
 
 .pe-breadcrumbs--separator {
   align-items: center;
@@ -85,7 +97,7 @@
   width:            6px;
 }
 
-/*** Crumb ***/
+/*** Separator ***/
 /***** Breadcrumbs *****/
 
 
@@ -528,9 +540,8 @@
 /*** Wrapper ***/
 
 .pe-menu-bar {
-  /* DEPRECATED! It prevented the scrollability of the menu-bar. */
-  /* XXX#6668 */
-  -width: fit-content;
+  /* XXX#6669 */
+  width: auto;
 }
 
 /*** Wrapper ***/

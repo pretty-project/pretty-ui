@@ -6,8 +6,6 @@
 ;; ----------------------------------------------------------------------------
 
 (defn element-surface-rendered?
-  ; @ignore
-  ;
   ; @param (keyword) element-id
   ; @param (map) element-props
   ;

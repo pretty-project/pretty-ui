@@ -3,7 +3,9 @@
     (:require [fruits.random.api                        :as random]
               [pretty-diagrams.point-diagram.attributes :as point-diagram.attributes]
               [pretty-diagrams.point-diagram.prototypes :as point-diagram.prototypes]
-              [pretty-presets.api                       :as pretty-presets]))
+              [pretty-presets.api                       :as pretty-presets]
+              [pretty-engine.api :as pretty-engine]
+              [reagent.api :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

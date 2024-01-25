@@ -7,7 +7,9 @@
               [pretty-website.sidebar.attributes :as sidebar.attributes]
               [pretty-website.sidebar.prototypes :as sidebar.prototypes]
               [pretty-website.sidebar.state      :as sidebar.state]
-              [react.api                         :as react]))
+              [react.api                         :as react]
+              [pretty-engine.api :as pretty-engine]
+              [reagent.api :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

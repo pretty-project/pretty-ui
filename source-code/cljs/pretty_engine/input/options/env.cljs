@@ -11,8 +11,6 @@
 ;; ----------------------------------------------------------------------------
 
 (defn get-input-options
-  ; @ignore
-  ;
   ; @param (keyword) input-id
   ; @param (map) input-props
   ; {}
@@ -26,8 +24,6 @@
 ;; ----------------------------------------------------------------------------
 
 (defn render-input-option?
-  ; @ignore
-  ;
   ; @description
   ; Returns TRUE if ...
   ; ... the input has a text-field as a subitem,
@@ -50,8 +46,6 @@
 ;; ----------------------------------------------------------------------------
 
 (defn multiple-input-option-selectable?
-  ; @ignore
-  ;
   ; @param (keyword) input-id
   ; @param (map) input-props
   ; {}
@@ -65,8 +59,6 @@
                 (-> max-selection (< 0))))))
 
 (defn max-input-selection-not-reached?
-  ; @ignore
-  ;
   ; @param (keyword) input-id
   ; @param (map) input-props
   ; {}
@@ -78,8 +70,6 @@
            (-> input-displayed-value count (not= max-selection)))))
 
 (defn get-picked-input-option
-  ; @ignore
-  ;
   ; @param (keyword) input-id
   ; @param (map) input-props
   ;
@@ -89,8 +79,6 @@
           (input.value.env/get-input-displayed-value input-id input-props)))
 
 (defn input-option-picked?
-  ; @ignore
-  ;
   ; @param (keyword) input-id
   ; @param (map) input-props
   ; {}
@@ -103,8 +91,6 @@
        (= input-displayed-value option-value)))
 
 (defn input-option-toggled?
-  ; @ignore
-  ;
   ; @param (keyword) input-id
   ; @param (map) input-props
   ; {}
@@ -117,8 +103,6 @@
        (vector/contains-item? input-displayed-value option-value)))
 
 (defn input-option-selected?
-  ; @ignore
-  ;
   ; @param (keyword) input-id
   ; @param (map) input-props
   ; @param (*) option
@@ -130,8 +114,6 @@
       (input-option-picked?              input-id input-props option)))
 
 (defn get-input-option-color
-  ; @ignore
-  ;
   ; @param (keyword) input-id
   ; @param (map) input-props
   ; @param (*) option

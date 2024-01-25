@@ -59,15 +59,14 @@
                           :style               {:max-height height-calc}}
                          {:class               :pe-text--body
                           :data-letter-spacing :auto})
-           (pretty-css/border-attributes           text-props)
-           (pretty-css/color-attributes            text-props)
-           (pretty-css/column-attributes           text-props)
-           (pretty-css/element-min-size-attributes text-props)
-           (pretty-css/element-size-attributes     text-props)
-           (pretty-css/font-attributes             text-props)
-           (pretty-css/indent-attributes           text-props)
-           (pretty-css/selectable-text-attributes  text-props)
-           (pretty-css/style-attributes            text-props))))
+           (pretty-css/border-attributes          text-props)
+           (pretty-css/color-attributes           text-props)
+           (pretty-css/column-attributes          text-props)
+           (pretty-css/element-size-attributes    text-props)
+           (pretty-css/font-attributes            text-props)
+           (pretty-css/indent-attributes          text-props)
+           (pretty-css/selectable-text-attributes text-props)
+           (pretty-css/style-attributes           text-props))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

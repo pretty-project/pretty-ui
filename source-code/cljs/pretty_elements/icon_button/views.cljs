@@ -6,7 +6,8 @@
               [pretty-elements.icon-button.prototypes :as icon-button.prototypes]
               [pretty-presets.api                     :as pretty-presets]
               [re-frame.api                           :as r]
-              [reagent.api                            :as reagent]))
+              [pretty-engine.api :as pretty-engine]
+              [reagent.api :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -41,51 +42,33 @@
                        :reagent-render         (fn [_ button-props] [icon-button button-id button-props])}))
 
 (defn element
-  ; @bug (pretty-elements.button.views#9912)
-  ;
   ; @param (keyword)(opt) button-id
   ; @param (map) button-props
   ; {:badge-color (keyword or string)(opt)
-  ;   Default: :primary
   ;  :badge-content (metamorphic-content)(opt)
   ;  :badge-position (keyword)(opt)
-  ;   Default: :tr
   ;  :border-color (keyword or string)(opt)
   ;  :border-position (keyword)(opt)
-  ;   :all, :bottom, :top, :left, :right, :horizontal, :vertical
   ;  :border-radius (map)(opt)
   ;   {:all, :tl, :tr, :br, :bl (keyword, px or string)(opt)}
   ;  :border-width (keyword, px or string)(opt)
   ;  :class (keyword or keywords in vector)(opt)
   ;  :click-effect (keyword)(opt)
-  ;   Default: :opacity (if 'href-uri' of 'on-click-f' is provided)
   ;  :cursor (keyword or string)(opt)
-  ;   Default: :pointer
   ;  :disabled? (boolean)(opt)
   ;  :fill-color (keyword or string)(opt)
   ;  :fill-pattern (keyword)(opt)
-  ;   Default: :cover
   ;  :hover-color (keyword or string)(opt)
   ;  :hover-effect (keyword)(opt)
   ;  :href-target (keyword)(opt)
   ;  :href-uri (string)(opt)
   ;  :icon (keyword)
   ;  :icon-color (keyword or string)(opt)
-  ;   Default: :inherit
   ;  :icon-family (keyword)(opt)
-  ;   Default: :material-symbols-outlined
   ;  :icon-size (keyword, px or string)(opt)
-  ;   Default: :m
   ;  :indent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :keypress (map)(constant)(opt)
-  ;   {:exclusive? (boolean)(opt)
-  ;     Exclusive keypress events temporarly disable every other previously registered keypress events.
-  ;     Default: false
-  ;    :key-code (integer)
-  ;    :in-type-mode? (boolean)(opt)
-  ;     Only in-type-mode keypress events remain active while a text-field is in focused state.
-  ;     Default: false}
+  ;  :keypress (map)(opt)
   ;  :label (metamorphic-content)(opt)
   ;  :marker-color (keyword or string)(opt)
   ;  :marker-position (keyword)(opt)
@@ -111,9 +94,6 @@
   ;
   ; @usage
   ; [icon-button :my-button {...}]
-  ;
-  ; @usage
-  ; [icon-button {:keypress {:key-code 13} :on-click-f (fn [_] (println "ENTER pressed"))}]
   ([button-props]
    [element (random/generate-keyword) button-props])
 

@@ -6,8 +6,6 @@
 ;; ----------------------------------------------------------------------------
 
 (defn element-id->subitem-id
-  ; @ignore
-  ;
   ; @param (keyword) element-id
   ;
   ; @usage

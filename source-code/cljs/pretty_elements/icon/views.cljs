@@ -3,7 +3,9 @@
     (:require [fruits.random.api               :as random]
               [pretty-elements.icon.attributes :as icon.attributes]
               [pretty-elements.icon.prototypes :as icon.prototypes]
-              [pretty-presets.api              :as pretty-presets]))
+              [pretty-presets.api              :as pretty-presets]
+              [pretty-engine.api :as pretty-engine]
+              [reagent.api :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -8,7 +8,8 @@
               [pretty-presets.api                         :as pretty-presets]
               [re-frame.api                               :as r]
               [react.api                                  :as react]
-              [reagent.api                                :as reagent]))
+              [pretty-engine.api :as pretty-engine]
+              [reagent.api :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

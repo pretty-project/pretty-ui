@@ -4,7 +4,9 @@
               [fruits.random.api                       :as random]
               [pretty-diagrams.line-diagram.attributes :as line-diagram.attributes]
               [pretty-diagrams.line-diagram.prototypes :as line-diagram.prototypes]
-              [pretty-presets.api                      :as pretty-presets]))
+              [pretty-presets.api                      :as pretty-presets]
+              [pretty-engine.api :as pretty-engine]
+              [reagent.api :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -6,7 +6,9 @@
               [pretty-elements.adornment-group.views :as adornment-group.views]
               [pretty-elements.chip.attributes       :as chip.attributes]
               [pretty-elements.chip.prototypes       :as chip.prototypes]
-              [pretty-presets.api                    :as pretty-presets]))
+              [pretty-presets.api                    :as pretty-presets]
+              [pretty-engine.api :as pretty-engine]
+              [reagent.api :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

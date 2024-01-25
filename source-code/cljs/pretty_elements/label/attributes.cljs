@@ -86,16 +86,15 @@
   (-> {:class               :pe-label--body
        :data-letter-spacing :auto
        :on-mouse-up #(if focus-id (pretty-engine/focus-element! focus-id))}
-      (pretty-css/border-attributes           label-props)
-      (pretty-css/color-attributes            label-props)
-      (pretty-css/font-attributes             label-props)
-      (pretty-css/element-min-size-attributes label-props)
-      (pretty-css/element-size-attributes     label-props)
-      (pretty-css/indent-attributes           label-props)
-      (pretty-css/marker-attributes           label-props)
-      (pretty-css/row-attributes              label-props)
-      (pretty-css/style-attributes            label-props)
-      (pretty-css/tooltip-attributes          label-props)))
+      (pretty-css/border-attributes       label-props)
+      (pretty-css/color-attributes        label-props)
+      (pretty-css/font-attributes         label-props)
+      (pretty-css/element-size-attributes label-props)
+      (pretty-css/indent-attributes       label-props)
+      (pretty-css/marker-attributes       label-props)
+      (pretty-css/row-attributes          label-props)
+      (pretty-css/style-attributes        label-props)
+      (pretty-css/tooltip-attributes      label-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

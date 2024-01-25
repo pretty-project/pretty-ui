@@ -40,6 +40,23 @@
                        :reagent-render         (fn [_ adornment-props] [adornment adornment-id adornment-props])}))
 
 (defn element
+  ; @note
+  ; The 'adornment' element ...
+  ; ... implements the Pretty CSS block size profile.
+  ; ... implements the Pretty CSS colors xxx.
+  ; ... implements the Pretty CSS font xxx.
+  ; ... implements the Pretty CSS icon xxx.
+  ; ... implements the Pretty CSS text xxx.
+  ; ... can display a label (or its placeholder) OR an icon at a time.
+  ;
+  ; The difference between the 'adornment' and 'button' elements is that ...
+  ; ... the 'adornment' element implements the Pretty CSS BLOCK size profile,
+  ; ... the 'button' element implements the Pretty CSS ELEMENT size profile,
+  ; ... the 'adornment' element can display an icon OR a label at a time,
+  ; ... the 'button' element can display an icon AND a label at a time.
+  ; ... the 'adornment' element doesn't implement any Pretty CSS flex layout,
+  ; ... the 'button' element implements the Pretty CSS column and row flex layouts.
+  ;
   ; @param (keyword)(opt) adornment-id
   ; @param (map) adornment-props
   ; {:class (keyword or keywords in vector)(opt)
@@ -48,6 +65,7 @@
   ;  :disabled? (boolean)(opt)
   ;  :fill-color (keyword or string)(opt)
   ;  :fill-pattern (keyword)(opt)
+  ;  :height (keyword, px or string)(opt)
   ;  :hover-color (keyword or string)(opt)
   ;  :hover-effect (keyword)(opt)
   ;  :href-target (keyword)(opt)
@@ -58,20 +76,20 @@
   ;  :indent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :keypress (map)(opt)
-  ;   {:exclusive? (boolean)(opt)
-  ;     Exclusive keypress events temporarly disable every other previously registered keypress events.
-  ;     Default: false
-  ;    :key-code (integer)
-  ;    :in-type-mode? (boolean)(opt)
-  ;     Only in-type-mode keypress events remain active while a text-field is in focused state.
-  ;     Default: false}
   ;  :label (metamorphic-content)(opt)
+  ;  :max-height (keyword, px or string)(opt)
+  ;  :max-width (keyword, px or string)(opt)
+  ;  :min-height (keyword, px or string)(opt)
+  ;  :min-width (keyword, px or string)(opt)
   ;  :on-click-f (function)(opt)
   ;  :on-click-timeout (ms)(opt)
+  ;  :on-mount-f (function)(opt)
   ;  :on-mouse-over-f (function)(opt)
   ;  :on-right-click-f (function)(opt)
+  ;  :on-unmount-f (function)(opt)
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
+  ;  :placeholder (metamorphic-content)(opt)
   ;  :preset (keyword)(opt)
   ;  :progress (percent)(opt)
   ;  :progress-color (keyword or string)(opt)
@@ -83,7 +101,8 @@
   ;  :text-overflow (keyword)(opt)
   ;  :text-transform (keyword)(opt)
   ;  :tooltip-content (metamorphic-content)(opt)
-  ;  :tooltip-position (keyword)(opt)}
+  ;  :tooltip-position (keyword)(opt)
+  ;  :width (keyword, px or string)(opt)}
   ;
   ; @usage
   ; [adornment {...}]

@@ -12,7 +12,7 @@
   ; @param (map) adornment-props
   ;
   ; @return (map)
-  ; {}
+  ; {:class (keyword or keywords in vector)}
   [adornment-id adornment-props]
   (-> {:class :pe-adornment--icon}
       (pretty-css/icon-attributes adornment-props)))
@@ -24,7 +24,7 @@
   ; @param (map) adornment-props
   ;
   ; @return (map)
-  ; {}
+  ; {:class (keyword or keywords in vector)}
   [_ adornment-props]
   (-> {:class :pe-adornment--label}
       (pretty-css/font-attributes              adornment-props)
@@ -40,9 +40,10 @@
   ; @param (map) adornment-props
   ;
   ; @return (map)
-  ; {}
+  ; {:class (keyword or keywords in vector)}
   [adornment-id adornment-props]
   (-> {:class :pe-adornment--body}
+      (pretty-css/block-size-attributes  adornment-props)
       (pretty-css/color-attributes       adornment-props)
       (pretty-css/control-attributes     adornment-props)
       (pretty-css/cursor-attributes      adornment-props)
@@ -51,6 +52,7 @@
       (pretty-css/href-attributes        adornment-props)
       (pretty-css/indent-attributes      adornment-props)
       (pretty-css/mouse-event-attributes adornment-props)
+      (pretty-css/progress-attributes    adornment-props)
       (pretty-css/style-attributes       adornment-props)
       (pretty-css/tab-attributes         adornment-props)))
 

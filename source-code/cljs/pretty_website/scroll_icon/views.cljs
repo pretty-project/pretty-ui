@@ -4,7 +4,9 @@
               [pretty-presets.api                    :as pretty-presets]
               [pretty-website.scroll-icon.attributes :as scroll-icon.attributes]
               [pretty-website.scroll-icon.prototypes :as scroll-icon.prototypes]
-              [pretty-website.scroll-sensor.views    :as scroll-sensor.views]))
+              [pretty-website.scroll-sensor.views    :as scroll-sensor.views]
+              [pretty-engine.api :as pretty-engine]
+              [reagent.api :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

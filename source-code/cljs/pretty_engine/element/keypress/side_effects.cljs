@@ -39,11 +39,11 @@
   ; (reg-element-keypress-events! :my-element {:keypress {:key-code 13}
   ;                                            :on-click-f #(...)})
   [element-id {:keys [keypress] :as element-props}]
-  (let [on-key-id         (element.utils/element-id->subitem-id element-id :element-key-pressed)
-        on-key-pressed-f  (fn [_] (element-key-pressed  element-id element-props))
-        on-key-released-f (fn [_] (element-key-released element-id element-props))
-        on-key-props      (assoc keypress :on-keydown-f on-key-pressed-f :on-keyup-f on-key-released-f :prevent-default? true)]
-       (if keypress (keypress-handler/reg-keypress-event! on-key-id on-key-props))))
+  (if keypress (let [on-key-id         (element.utils/element-id->subitem-id element-id :element-key-pressed)
+                     on-key-pressed-f  (fn [_] (element-key-pressed  element-id element-props))
+                     on-key-released-f (fn [_] (element-key-released element-id element-props))
+                     on-key-props      (assoc keypress :on-keydown-f on-key-pressed-f :on-keyup-f on-key-released-f :prevent-default? true)]
+                    (keypress-handler/reg-keypress-event! on-key-id on-key-props))))
 
 (defn dereg-element-keypress-events!
   ; @param (keyword) element-id
@@ -54,5 +54,5 @@
   ; (dereg-element-keypress-events! :my-element {:keypress {:key-code 13}
   ;                                              :on-click-f #(...)})
   [element-id {:keys [keypress]}]
-  (let [on-key-id (element.utils/element-id->subitem-id element-id :element-key-pressed)]
-       (if keypress (keypress-handler/dereg-keypress-event! on-key-id))))
+  (if keypress (let [on-key-id (element.utils/element-id->subitem-id element-id :element-key-pressed)]
+                    (keypress-handler/dereg-keypress-event! on-key-id))))

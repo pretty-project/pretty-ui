@@ -4,7 +4,9 @@
               [fruits.random.api                           :as random]
               [pretty-elements.horizontal-group.attributes :as horizontal-group.attributes]
               [pretty-elements.horizontal-group.prototypes :as horizontal-group.prototypes]
-              [pretty-presets.api                          :as pretty-presets]))
+              [pretty-presets.api                          :as pretty-presets]
+              [pretty-engine.api :as pretty-engine]
+              [reagent.api :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -5,7 +5,9 @@
               [metamorphic-content.api             :as metamorphic-content]
               [pretty-elements.menu-bar.attributes :as menu-bar.attributes]
               [pretty-elements.menu-bar.prototypes :as menu-bar.prototypes]
-              [pretty-presets.api                  :as pretty-presets]))
+              [pretty-presets.api                  :as pretty-presets]
+              [pretty-engine.api :as pretty-engine]
+              [reagent.api :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

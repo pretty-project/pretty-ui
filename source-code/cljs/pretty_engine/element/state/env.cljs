@@ -7,8 +7,6 @@
 ;; ----------------------------------------------------------------------------
 
 (defn get-element-state
-  ; @ignore
-  ;
   ; @param (keyword) element-id
   ; @param (list of keyword) keys
   ;

@@ -13,8 +13,6 @@
 ;; ----------------------------------------------------------------------------
 
 (defn pick-input-option!
-  ; @ignore
-  ;
   ; @param (keyword) input-id
   ; @param (map) input-props
   ; {}
@@ -35,8 +33,6 @@
                   (if on-selected-f (on-selected-f input-updated-value))))))
 
 (defn toggle-input-option!
-  ; @ignore
-  ;
   ; @param (keyword) input-id
   ; @param (map) input-props
   ; {}
@@ -54,8 +50,6 @@
                   (if on-selected-f (on-selected-f input-updated-value))))))
 
 (defn select-input-option!
-  ; @ignore
-  ;
   ; @param (keyword) input-id
   ; @param (map) input-props
   ; @param (*) option

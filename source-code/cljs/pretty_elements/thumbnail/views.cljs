@@ -4,7 +4,9 @@
               [fruits.random.api                    :as random]
               [pretty-elements.thumbnail.attributes :as thumbnail.attributes]
               [pretty-elements.thumbnail.prototypes :as thumbnail.prototypes]
-              [pretty-presets.api                   :as pretty-presets]))
+              [pretty-presets.api                   :as pretty-presets]
+              [pretty-engine.api :as pretty-engine]
+              [reagent.api :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

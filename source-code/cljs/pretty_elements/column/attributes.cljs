@@ -15,14 +15,12 @@
   ; {}
   [_ column-props]
   (-> {:class :pe-column--body}
-      (pretty-css/border-attributes           column-props)
-      (pretty-css/color-attributes            column-props)
-      (pretty-css/column-attributes           column-props)
-      (pretty-css/element-max-size-attributes column-props)
-      (pretty-css/element-min-size-attributes column-props)
-      (pretty-css/element-size-attributes     column-props)
-      (pretty-css/indent-attributes           column-props)
-      (pretty-css/style-attributes            column-props)))
+      (pretty-css/border-attributes       column-props)
+      (pretty-css/color-attributes        column-props)
+      (pretty-css/column-attributes       column-props)
+      (pretty-css/element-size-attributes column-props)
+      (pretty-css/indent-attributes       column-props)
+      (pretty-css/style-attributes        column-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

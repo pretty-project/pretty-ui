@@ -43,9 +43,8 @@
   ; {}
   [_ popup-props]
   (-> {:class :pl-box-popup--wrapper}
-      (pretty-css/content-max-size-attributes popup-props)
-      (pretty-css/content-min-size-attributes popup-props)
-      (pretty-css/outdent-attributes          popup-props)))
+      (pretty-css/content-size-attributes popup-props)
+      (pretty-css/outdent-attributes      popup-props)))
 
 (defn popup-attributes
   ; @ignore

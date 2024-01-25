@@ -7,8 +7,6 @@
 ;; ----------------------------------------------------------------------------
 
 (defn update-all-element-state!
-  ; @ignore
-  ;
   ; @param (function) f
   ; @param (list of *) params
   ;
@@ -20,8 +18,6 @@
          (swap! core.state/STATE f0)))
 
 (defn update-element-state!
-  ; @ignore
-  ;
   ; @param (keyword) element-id
   ; @param (function) f
   ; @param (list of *) params
@@ -33,8 +29,6 @@
          (swap! core.state/STATE update element-id f0)))
 
 (defn clear-element-state!
-  ; @ignore
-  ;
   ; @param (keyword) element-id
   ;
   ; @usage

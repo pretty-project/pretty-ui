@@ -2,11 +2,12 @@
 (ns pretty-elements.adornment-group.views
     (:require [fruits.hiccup.api                          :as hiccup]
               [fruits.random.api                          :as random]
-              [fruits.vector.api                          :as vector]
               [pretty-elements.adornment-group.attributes :as adornment-group.attributes]
               [pretty-elements.adornment-group.prototypes :as adornment-group.prototypes]
               [pretty-elements.adornment.views :as adornment.views]
-              [pretty-presets.api                         :as pretty-presets]))
+              [pretty-engine.api :as pretty-engine]
+              [pretty-presets.api :as pretty-presets]
+              [reagent.api :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -20,9 +21,19 @@
   [group-id {:keys [adornments] :as group-props}]
   [:div (adornment-group.attributes/adornment-group-attributes group-id group-props)
         [:div (adornment-group.attributes/adornment-group-body-attributes group-id group-props)
-              (if (vector/not-empty? adornments)
-                  (letfn [(f0 [adornment-props] [adornment.views/element adornment-props])]
-                         (hiccup/put-with [:<>] adornments f0)))]])
+              (letfn [(f0 [adornment-props] [adornment.views/element adornment-props])]
+                     (hiccup/put-with [:<>] adornments f0))]])
+
+(defn adornment-group-lifecycles
+  ; @ignore
+  ;
+  ; @param (keyword) group-id
+  ; @param (map) group-props
+  [group-id group-props]
+  ; @note (tutorials#parametering)
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-engine/element-did-mount    group-id group-props))
+                       :component-will-unmount (fn [_ _] (pretty-engine/element-will-unmount group-id group-props))
+                       :reagent-render         (fn [_ group-props] [adornment-group group-id group-props])}))
 
 (defn element
   ; @param (keyword)(opt) group-id
@@ -30,12 +41,25 @@
   ; {:adornments (maps in vector)(opt)
   ;  :class (keyword or keywords in vector)(opt)
   ;  :disabled? (boolean)(opt)
+  ;  :gap (keyword, px or string)(opt)
+  ;  :height (keyword, px or string)(opt)
+  ;  :horizontal-align (keyword)(opt)
   ;  :indent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
+  ;  :max-height (keyword, px or string)(opt)
+  ;  :max-width (keyword, px or string)(opt)
+  ;  :min-height (keyword, px or string)(opt)
+  ;  :min-width (keyword, px or string)(opt)
+  ;  :on-mount-f (function)(opt)
+  ;  :on-unmount-f (function)(opt)
+  ;  :orientation (keyword)(opt)
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
+  ;  :overflow (keyword)(opt)
   ;  :preset (keyword)(opt)
-  ;  :style (map)(opt)}
+  ;  :style (map)(opt)
+  ;  :vertical-align (keyword)(opt)
+  ;  :width (keyword, px or string)(opt)}
   ;
   ; @usage
   ; [adornment-group {...}]
@@ -48,6 +72,6 @@
   ([group-id group-props]
    ; @note (tutorials#parametering)
    (fn [_ group-props]
-       (let [group-props (pretty-presets/apply-preset group-props)]
-             ; group-props (adornment-group.prototypes/group-props-prototype group-props)
-            [adornment-group group-id group-props]))))
+       (let [group-props (pretty-presets/apply-preset                      group-id group-props)
+             group-props (adornment-group.prototypes/group-props-prototype group-id group-props)]
+            [adornment-group-lifecycles group-id group-props]))))

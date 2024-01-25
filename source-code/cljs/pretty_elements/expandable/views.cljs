@@ -5,7 +5,9 @@
               [pretty-elements.expandable.attributes :as expandable.attributes]
               [pretty-elements.expandable.env        :as expandable.env]
               [pretty-elements.expandable.prototypes :as expandable.prototypes]
-              [pretty-presets.api                    :as pretty-presets]))
+              [pretty-presets.api                    :as pretty-presets]
+              [pretty-engine.api :as pretty-engine]
+              [reagent.api :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -5,7 +5,9 @@
               [metamorphic-content.api               :as metamorphic-content]
               [pretty-elements.data-table.attributes :as data-table.attributes]
               [pretty-elements.data-table.prototypes :as data-table.prototypes]
-              [pretty-presets.api                    :as pretty-presets]))
+              [pretty-presets.api                    :as pretty-presets]
+              [pretty-engine.api :as pretty-engine]
+              [reagent.api :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -12,11 +12,13 @@
   ; @param (map) group-props
   ;
   ; @return (map)
-  ; {}
+  ; {:class (keyword or keywords in vector)}
   [group-id group-props]
   (-> {:class :pe-adornment-group--body}
-      (pretty-css/indent-attributes group-props)
-      (pretty-css/style-attributes  group-props)))
+      (pretty-css/element-size-attributes group-props)
+      (pretty-css/indent-attributes       group-props)
+      (pretty-css/flex-attributes         group-props)
+      (pretty-css/style-attributes        group-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -31,6 +33,7 @@
   ; {:class (keyword or keywords in vector)}
   [_ group-props]
   (-> {:class :pe-adornment-group}
-      (pretty-css/class-attributes   group-props)
-      (pretty-css/outdent-attributes group-props)
-      (pretty-css/state-attributes   group-props)))
+      (pretty-css/class-attributes        group-props)
+      (pretty-css/outdent-attributes      group-props)
+      (pretty-css/state-attributes        group-props)
+      (pretty-css/wrapper-size-attributes group-props)))

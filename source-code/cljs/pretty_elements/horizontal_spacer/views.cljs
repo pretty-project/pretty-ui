@@ -3,7 +3,9 @@
     (:require [fruits.random.api                            :as random]
               [pretty-elements.horizontal-spacer.attributes :as horizontal-spacer.attributes]
               [pretty-elements.horizontal-spacer.prototypes :as horizontal-spacer.prototypes]
-              [pretty-presets.api                           :as pretty-presets]))
+              [pretty-presets.api                           :as pretty-presets]
+              [pretty-engine.api :as pretty-engine]
+              [reagent.api :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

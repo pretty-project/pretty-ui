@@ -7,6 +7,26 @@
 
 
 
+; material symbols outlined is the default icon family
+
+
+
+; @bug (#9912)
+; If the keypress key-code is 13 (ENTER) the on-click-f function fires multiple times during the key is pressed!
+; This phenomenon caused by:
+; 1. The keydown event focuses the button via the 'button.side-effects/key-pressed' function.
+; 2. One of the default actions of the 13 (ENTER) key is to fire the element's on-click
+;    function on a focused button element. Therefore, the 'on-click-f' function
+;    fires repeatedly during the 13 (ENTER) key is pressed.
+; In case of using any other key than the 13 (ENTER) the 'on-click-f' function fires only by
+; the 'button.side-effects/key-released' function.
+
+
+
+
+
+
+
 ; @tutorial First steps
 ;
 ; Implement the [pretty-project/pretty-css](https://github.com/pretty-project/pretty-css) library in your project.
@@ -233,6 +253,9 @@
 ;
 ; @title :badge-content
 ;
+; @note
+; Check out the [cljc-metamorphic-content](https://github.com/mt-app-kit/cljc-metamorphic-content) library.
+;
 ; @code Usage
 ; [pretty-elements/button {:badge-content (metamorphic-content)}]
 ; [pretty-elements/button {:badge-content "My string"}]
@@ -330,6 +353,9 @@
 ;
 ;
 ; @title :content
+;
+; @note
+; Check out the [cljc-metamorphic-content](https://github.com/mt-app-kit/cljc-metamorphic-content) library.
 ;
 ; @code Usage
 ; [pretty-elements/button {:content (metamorphic-content)}]
@@ -430,6 +456,10 @@
 ;
 ;
 ; @title :helper
+;
+; @note
+; Check out the [cljc-metamorphic-content](https://github.com/mt-app-kit/cljc-metamorphic-content) library.
+;
 ; @code Usage
 ; [pretty-elements/button {:content (metamorphic-content)}]
 ; [pretty-elements/button {:content "My string"}]
@@ -586,9 +616,12 @@
 ;
 ; @title :keypress
 ;
+; @note
+; Check out the [cljs-keypress-handler](https://github.com/mt-app-kit/cljs-keypress-handler) library.
+;
 ; @code Usage
 ; [pretty-elements/button {:keypress (map)}]
-; [pretty-elements/button {:keypress {:key-code 13} :on-click (fn [] ...)}]
+; [pretty-elements/button {:keypress {:key-code 13 ...} :on-click-f (fn [] ...)}]
 ;
 ;
 ;
@@ -621,6 +654,9 @@
 ;
 ;
 ; @title :marker-content
+;
+; @note
+; Check out the [cljc-metamorphic-content](https://github.com/mt-app-kit/cljc-metamorphic-content) library.
 ;
 ; @code Usage
 ; [pretty-elements/button {:marker-content (metamorphic-content)}]
@@ -776,14 +812,31 @@
 ;
 ;
 ;
+; @title :overflow
+;
+; @code Usage
+; [pretty-elements/row {:overflow (keyword)}]
+; [pretty-elements/row {:overflow :scroll}]
+;
+; @code Predefined values
+; :inherit, (is the :overflow really inheritable?)
+; :hidden, :scroll, :visible, :wrap
+;
+;
+;
 ; @title :placeholder
+;
+; @note
+; Check out the [cljc-metamorphic-content](https://github.com/mt-app-kit/cljc-metamorphic-content) library.
+;
+; Replaces the ':content' or ':label' values if not provided.
 ;
 ; @code Usage
 ; [pretty-elements/button {:placeholder (metamorphic-content)}]
 ; [pretty-elements/button {:placeholder "My string"            :content nil}]
 ; [pretty-elements/button {:placeholder :my-dictionary-term    :content nil}]
 ; [pretty-elements/button {:placeholder 123                    :content nil}]
-; [pretty-elements/button {:placeholder [:div "My hiccup"      :content nil]}]
+; [pretty-elements/button {:placeholder [:div "My hiccup"]     :content nil}]
 ; [pretty-elements/button {:placeholder #'my-reagent-component :content nil}]
 ;
 ;
@@ -883,8 +936,8 @@
 ; [pretty-elements/button {:text-overflow :ellipsis}]
 ;
 ; @code Predefined values
-; :inherit,
-; :ellipsis, :hidden, :wrap
+; :inherit, (is the :text-overflow really inheritable?)
+; :ellipsis, :hidden, :visible, :wrap
 ;
 ;
 ;
@@ -916,6 +969,9 @@
 ;
 ;
 ; @title :tooltip-content
+;
+; @note
+; Check out the [cljc-metamorphic-content](https://github.com/mt-app-kit/cljc-metamorphic-content) library.
 ;
 ; @code Usage
 ; [pretty-elements/button {:tooltip-content (metamorphic-content)}]

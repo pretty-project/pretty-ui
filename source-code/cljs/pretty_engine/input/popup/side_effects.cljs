@@ -8,8 +8,6 @@
 ;; ----------------------------------------------------------------------------
 
 (defn close-input-popup!
-  ; @ignore
-  ;
   ; @param (keyword) input-id
   ; @param (map) input-props
   [input-id _]
@@ -17,8 +15,6 @@
   (keypress-handler/dereg-keypress-event! :pretty-inputs.input-popup/ESC))
 
 (defn render-input-popup!
-  ; @ignore
-  ;
   ; @param (keyword) input-id
   ; @param (map) input-props
   [input-id input-props]
@@ -30,8 +26,6 @@
        (keypress-handler/reg-keypress-event! :pretty-inputs.input-popup/ESC on-escape-props)))
 
 (defn update-input-popup!
-  ; @ignore
-  ;
   ; @param (keyword) input-id
   ; @param (map) input-props
   [input-id input-props]

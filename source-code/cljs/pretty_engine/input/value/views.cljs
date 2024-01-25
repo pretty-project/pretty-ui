@@ -8,8 +8,6 @@
 ;; ----------------------------------------------------------------------------
 
 (defn input-synchronizer
-  ; @ignore
-  ;
   ; @param (keyword) input-id
   ; @param (map) input-props
   ; {}

@@ -2,7 +2,9 @@
 (ns pretty-elements.stepper.views
     (:require [fruits.random.api                  :as random]
               [pretty-elements.stepper.attributes :as stepper.attributes]
-              [pretty-elements.stepper.prototypes :as stepper.prototypes]))
+              [pretty-elements.stepper.prototypes :as stepper.prototypes]
+              [pretty-engine.api :as pretty-engine]
+              [reagent.api :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -33,7 +35,7 @@
    [element (random/generate-keyword) stepper-props])
 
   ([stepper-id stepper-props]
-   ; @note (tutorials#parametering)  
+   ; @note (tutorials#parametering)
    (fn [_ stepper-props]
        (let [] ; stepper-props (stepper.prototypes/stepper-props-prototype stepper-props)
             [stepper stepper-id stepper-props]))))

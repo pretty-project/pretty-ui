@@ -11,8 +11,6 @@
 ;; ----------------------------------------------------------------------------
 
 (defn input-did-mount
-  ; @ignore
-  ;
   ; @param (keyword) input-id
   ; @param (map) input-props
   ; {}
@@ -29,8 +27,6 @@
        (if on-mount-f (on-mount-f input-displayed-value))))
 
 (defn input-will-unmount
-  ; @ignore
-  ;
   ; @param (keyword) input-id
   ; @param (map) input-props
   ; {}

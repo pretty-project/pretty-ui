@@ -6,8 +6,6 @@
 ;; ----------------------------------------------------------------------------
 
 (defn input-popup-rendered?
-  ; @ignore
-  ;
   ; @param (keyword) input-id
   ; @param (map) input-props
   ;

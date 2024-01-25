@@ -4,7 +4,9 @@
               [metamorphic-content.api           :as metamorphic-content]
               [pretty-elements.column.attributes :as column.attributes]
               [pretty-elements.column.prototypes :as column.prototypes]
-              [pretty-presets.api                :as pretty-presets]))
+              [pretty-presets.api                :as pretty-presets]
+              [pretty-engine.api :as pretty-engine]
+              [reagent.api :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -46,13 +48,12 @@
   ;  :min-width (keyword, px or string)(opt)
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
+  ;  :overflow (keyword)(opt)
   ;  :placeholder (metamorphic-content)(opt)
   ;  :preset (keyword)(opt)
   ;  :style (map)(opt)
   ;  :vertical-align (keyword)(opt)
   ;   Default: :top
-  ;  :wrap-items? (boolean)(opt)
-  ;   Default: false
   ;  :width (keyword, px or string)(opt)}
   ;
   ; @usage

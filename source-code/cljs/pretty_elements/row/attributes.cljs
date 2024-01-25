@@ -15,14 +15,12 @@
   ; {:class (keyword or keywords in vector)}
   [_ row-props]
   (-> {:class :pe-row--body}
-      (pretty-css/border-attributes           row-props)
-      (pretty-css/color-attributes            row-props)
-      (pretty-css/indent-attributes           row-props)
-      (pretty-css/element-max-size-attributes row-props)
-      (pretty-css/element-min-size-attributes row-props)
-      (pretty-css/element-size-attributes     row-props)
-      (pretty-css/row-attributes              row-props)
-      (pretty-css/style-attributes            row-props)))
+      (pretty-css/border-attributes       row-props)
+      (pretty-css/color-attributes        row-props)
+      (pretty-css/indent-attributes       row-props)
+      (pretty-css/element-size-attributes row-props)
+      (pretty-css/row-attributes          row-props)
+      (pretty-css/style-attributes        row-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

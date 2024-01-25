@@ -18,8 +18,6 @@
 ;; ----------------------------------------------------------------------------
 
 (defn input-focused
-  ; @ignore
-  ;
   ; @param (keyword) input-id
   ; @param (map) input-props
   ; {}
@@ -30,8 +28,6 @@
        (if on-focus-f (on-focus-f input-displayed-value))))
 
 (defn input-left
-  ; @ignore
-  ;
   ; @param (keyword) input-id
   ; @param (map) input-props
   ; {}

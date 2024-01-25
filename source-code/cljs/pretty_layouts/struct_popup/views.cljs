@@ -8,7 +8,8 @@
               [pretty-layouts.struct-popup.utils      :as struct-popup.utils]
               [pretty-presets.api                     :as pretty-presets]
               [re-frame.api                           :as r]
-              [reagent.api                            :as reagent]
+              [pretty-engine.api :as pretty-engine]
+              [reagent.api :as reagent]
               [scroll-lock.api                        :as scroll-lock]))
 
 ;; ----------------------------------------------------------------------------

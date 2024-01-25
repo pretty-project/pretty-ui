@@ -8,8 +8,6 @@
 ;; ----------------------------------------------------------------------------
 
 (defn element-did-mount
-  ; @ignore
-  ;
   ; @param (keyword) element-id
   ; @param (map) element-props
   ; {}
@@ -18,7 +16,8 @@
   (if on-mount-f (on-mount-f)))
 
 (defn element-did-update
-  ; @ignore
+  ; @note
+  ; Use the 'element-did-update' lifecycle for elements that take the ':keypress' property.
   ;
   ; @param (keyword) element-id
   ; @param (map) element-props
@@ -31,8 +30,6 @@
        (element.keypress.side-effects/reg-element-keypress-events!   element-id element-props)))
 
 (defn element-will-unmount
-  ; @ignore
-  ;
   ; @param (keyword) element-id
   ; @param (map) element-props
   ; {}

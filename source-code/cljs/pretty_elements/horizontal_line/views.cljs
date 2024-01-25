@@ -3,7 +3,9 @@
     (:require [fruits.random.api                          :as random]
               [pretty-elements.horizontal-line.attributes :as horizontal-line.attributes]
               [pretty-elements.horizontal-line.prototypes :as horizontal-line.prototypes]
-              [pretty-presets.api                         :as pretty-presets]))
+              [pretty-presets.api                         :as pretty-presets]
+              [pretty-engine.api :as pretty-engine]
+              [reagent.api :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
