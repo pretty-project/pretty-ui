@@ -20,7 +20,6 @@
   ;  :label (string)(opt)
   ;  :on-click-f (function)(opt)}
   [adornment-id {:keys [href-uri icon label on-click-f] :as adornment-props}]
-  ; The adornment icon must be in a separate I tag, otherwise the icon related data attributes would affect on the tooltip properties.
   [:div (adornment.attributes/adornment-attributes adornment-id adornment-props)
         [(cond href-uri :a on-click-f :button :else :div)
          (adornment.attributes/adornment-body-attributes adornment-id adornment-props)
@@ -42,11 +41,12 @@
 (defn element
   ; @note
   ; The 'adornment' element ...
-  ; ... implements the Pretty CSS block size profile.
-  ; ... implements the Pretty CSS colors xxx.
-  ; ... implements the Pretty CSS font xxx.
-  ; ... implements the Pretty CSS icon xxx.
-  ; ... implements the Pretty CSS text xxx.
+  ; ... implements the [Pretty CSS block size profile](/pretty-css/cljs/pretty-css/layout/api.html).
+  ; ... implements the [Pretty CSS font attributes](xxx).
+  ; ... implements the [Pretty CSS icon attributes](xxx).
+  ; ... implements the [Pretty CSS progress attributes](xxx).
+  ; ... implements the [Pretty CSS text attributes](xxx).
+  ; ... implements the [Pretty CSS tooltip attributes](xxx).
   ; ... can display a label (or its placeholder) OR an icon at a time.
   ;
   ; The difference between the 'adornment' and 'button' elements is that ...

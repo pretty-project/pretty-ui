@@ -210,8 +210,8 @@
 ; @tutorial Output values of optionable inputs
 ;
 ; - If an optionable input ...
-;   ... got only one option to select, its output is a single value.
-;   ... got more than one option to select, its output is a vector of selected options.
+;   ... got a single option to select, its output is a single value.
+;   ... got multiple options to select, its output is a vector of selected options.
 ;
 ; @code Example
 ; (ns my-namespace
@@ -237,100 +237,7 @@
 ;
 ;
 ;
-; @title :badge-color
-;
-; @code Usage
-; [pretty-elements/button {:badge-color (keyword or string)}]
-; [pretty-elements/button {:badge-color :soft-blue}]
-; [pretty-elements/button {:badge-color "#888"}]
-;
-; @code Predefined values
-; :transparent,
-; :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning,
-; :black, :grey, :white, :hard-blue, :soft-blue, :hard-green, :khaki-green, :soft-green, :hard-purple, :soft-purple, :hard-red, soft-red
-;
-;
-;
-; @title :badge-content
-;
-; @note
-; Check out the [cljc-metamorphic-content](https://github.com/mt-app-kit/cljc-metamorphic-content) library.
-;
-; @code Usage
-; [pretty-elements/button {:badge-content (metamorphic-content)}]
-; [pretty-elements/button {:badge-content "My string"}]
-; [pretty-elements/button {:badge-content :my-dictionary-term}]
-; [pretty-elements/button {:badge-content 123}]
-;
-;
-;
-; @title :badge-position
-;
-; @code Usage
-; [pretty-elements/button {:badge-position (keyword)}]
-; [pretty-elements/button {:badge-position :tr}]
-;
-; @code Predefined values
-; :left, :right, :bottom, :top,
-; :tl, :tr, :br, :bl
-;
-;
-;
-; @title :border-color
-;
-; @code Usage
-; [pretty-elements/button {:border-color (keyword or string)}]
-; [pretty-elements/button {:border-color :soft-blue}]
-; [pretty-elements/button {:border-color "#888"}]
-;
-; @code Predefined values
-; :transparent,
-; :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning,
-; :black, :grey, :white, :hard-blue, :soft-blue, :hard-green, :khaki-green, :soft-green, :hard-purple, :soft-purple, :hard-red, soft-red
-;
-;
-;
-; @title :border-position
-;
-; @code Usage
-; [pretty-elements/button {:border-position (keyword)}]
-; [pretty-elements/button {:border-position :top}]
-;
-; @code Predefined values
-; :all,
-; :bottom, :left, :right, :top,
-; :horizontal, :vertical
-;
-;
-;
-; @title :border-radius
-;
-; @code Usage
-; [pretty-elements/button {:border-radius (map) {:all, :tl, :tr, :br, :bl (keyword, px or string)}}]
-; [pretty-elements/button {:border-radius {:all :xs}}]
-; [pretty-elements/button {:border-radius {:all :xs :tr :xxl}}]
-; [pretty-elements/button {:border-radius {:all 10}}]
-; [pretty-elements/button {:border-radius {:all "10px"}}]
-; [pretty-elements/button {:border-radius {:all "5%"}}]
-;
-; @code Predefined values
-; :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-;
-;
-;
-; @title :border-width
-;
-; @code Usage
-; [pretty-elements/button {:border-width (keyword, px or string)]
-; [pretty-elements/button {:border-width :xs]
-; [pretty-elements/button {:border-width 10]
-; [pretty-elements/button {:border-width "10px"]
-; [pretty-elements/button {:border-width "5%"]
-;
-; @code Predefined values
-; :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-;
-;
+
 ;
 ; @title :class
 ;
@@ -387,28 +294,7 @@
 ;
 ;
 ;
-; @title :fill-color
-;
-; @code Usage
-; [pretty-elements/button {:fill-color (keyword or string)}]
-; [pretty-elements/button {:fill-color :soft-blue}]
-; [pretty-elements/button {:fill-color "#888"}]
-;
-; @code Predefined values
-; :transparent,
-; :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning,
-; :black, :grey, :white, :hard-blue, :soft-blue, :hard-green, :khaki-green, :soft-green, :hard-purple, :soft-purple, :hard-red, soft-red
-;
-;
-;
-; @title :fill-pattern
-;
-; @code Usage
-; [pretty-elements/button {:fill-pattern (keyword)}]
-; [pretty-elements/button {:fill-pattern :striped}]
-;
-; @code Predefined values
-; :cover, :striped
+
 ;
 ;
 ;
@@ -495,17 +381,7 @@
 ;
 ;
 ;
-; @title :hover-color
-;
-; @code Usage
-; [pretty-elements/button {:hover-color (keyword or string)}]
-; [pretty-elements/button {:hover-color :soft-blue}]
-; [pretty-elements/button {:hover-color "#888"}]
-;
-; @code Predefined values
-; :transparent,
-; :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning,
-; :black, :grey, :white, :hard-blue, :soft-blue, :hard-green, :khaki-green, :soft-green, :hard-purple, :soft-purple, :hard-red, soft-red
+
 ;
 ;
 ;
@@ -640,41 +516,6 @@
 ;
 ;
 ;
-; @title :marker-color
-;
-; @code Usage
-; [pretty-elements/button {:marker-color (keyword or string)}]
-; [pretty-elements/button {:marker-color :soft-blue}]
-; [pretty-elements/button {:marker-color "#888"}]
-;
-; @code Predefined values
-; :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning,
-; :black, :grey, :white, :hard-blue, :soft-blue, :hard-green, :khaki-green, :soft-green, :hard-purple, :soft-purple, :hard-red, soft-red
-;
-;
-;
-; @title :marker-content
-;
-; @note
-; Check out the [cljc-metamorphic-content](https://github.com/mt-app-kit/cljc-metamorphic-content) library.
-;
-; @code Usage
-; [pretty-elements/button {:marker-content (metamorphic-content)}]
-; [pretty-elements/button {:marker-content "My string"}]
-; [pretty-elements/button {:marker-content :my-dictionary-term}]
-; [pretty-elements/button {:marker-content 123}]
-;
-;
-;
-; @title :marker-position
-;
-; @code Usage
-; [pretty-elements/button {:marker-position (keyword)}]
-; [pretty-elements/button {:marker-position :tr}]
-;
-; @code Predefined values
-; :left, :right, :bottom, :top,
-; :tl, :tr, :br, :bl
 ;
 ;
 ;
@@ -965,30 +806,6 @@
 ; @code Usage
 ; [pretty-elements/button {:timeout (ms)}]
 ; [pretty-elements/button {:on-click (fn [] (println '...')) :timeout 5000}]
-;
-;
-;
-; @title :tooltip-content
-;
-; @note
-; Check out the [cljc-metamorphic-content](https://github.com/mt-app-kit/cljc-metamorphic-content) library.
-;
-; @code Usage
-; [pretty-elements/button {:tooltip-content (metamorphic-content)}]
-; [pretty-elements/button {:tooltip-content "My string"}]
-; [pretty-elements/button {:tooltip-content :my-dictionary-term}]
-; [pretty-elements/button {:tooltip-content 123}]
-;
-;
-;
-; @title :tooltip-position
-;
-; @code Usage
-; [pretty-elements/button {:tooltip-position (keyword)}]
-; [pretty-elements/button {:tooltip-position :left}]
-;
-; @code Predefined values
-; :left, :right
 ;
 ;
 ;

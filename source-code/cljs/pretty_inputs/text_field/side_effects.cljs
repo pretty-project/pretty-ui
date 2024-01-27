@@ -71,7 +71,7 @@
   (let [focus-id (hiccup/value field-id)]
        (if-let [target-element (dom/get-element-by-attribute "data-focus-id" focus-id)]
                (dom/select-content! target-element))) ; <- Experimental solution.
-  (keypress-handler/set-type-mode!)
+  (keypress-handler/enable-type-mode!)
   (pretty-engine/input-focused field-id field-props)
   (show-field-surface!         field-id field-props)
   (reg-keypress-events!        field-id field-props))
@@ -82,7 +82,7 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   [field-id field-props]
-  (keypress-handler/quit-type-mode!)
+  (keypress-handler/disable-type-mode!)
   (pretty-engine/input-left field-id field-props)
   (hide-field-surface!      field-id field-props)
   (dereg-keypress-events!   field-id field-props))
