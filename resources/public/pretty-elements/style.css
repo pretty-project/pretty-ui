@@ -354,16 +354,6 @@
 
 
 /***** Ghost *****/
-/*** Body ***/
-
-.pe-ghost--body {
-  animation-iteration-count: infinite;
-  animation-duration:        2s;
-  animation-name:            opacity-1-05-1;
-  background-color:          var( --ghost-color );
-}
-
-/*** Body ***/
 /***** Ghost *****/
 
 

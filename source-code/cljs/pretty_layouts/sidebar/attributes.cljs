@@ -1,6 +1,8 @@
 
 (ns pretty-layouts.sidebar.attributes
-    (:require [pretty-css.api :as pretty-css]))
+    (:require [pretty-css.api :as pretty-css]
+              [pretty-css.appearance.api :as pretty-css.appearance]
+              [pretty-css.layout.api :as pretty-css.layout]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -20,7 +22,7 @@
   ; because, the sidebar might get a border-color value which is unwanted on
   ; the sensor!
   (-> {:class :pl-sidebar--sensor}
-      (pretty-css/color-attributes {:fill-color fill-color})))
+      (pretty-css.appearance/background-attributes {:fill-color fill-color})))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -35,11 +37,12 @@
   ; {:class (keyword or keywords in vector)}
   [_ sidebar-props]
   (-> {:class :pl-sidebar--body}
-      (pretty-css/border-attributes       sidebar-props)
-      (pretty-css/color-attributes        sidebar-props)
-      (pretty-css/element-size-attributes sidebar-props)
-      (pretty-css/indent-attributes       sidebar-props)
-      (pretty-css/style-attributes        sidebar-props)))
+      (pretty-css.appearance/background-attributes        sidebar-props)
+      (pretty-css.appearance/border-attributes       sidebar-props)
+      (pretty-css.layout/element-size-attributes sidebar-props)
+      (pretty-css.layout/indent-attributes       sidebar-props)
+      (pretty-css/style-attributes        sidebar-props)
+      (pretty-css/theme-attributes        sidebar-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -57,3 +60,5 @@
   [_ {:keys [position]}]
   {:class               :pl-sidebar
    :data-position-fixed (case position :left :tl :tr)})
+
+   ; + outdent?

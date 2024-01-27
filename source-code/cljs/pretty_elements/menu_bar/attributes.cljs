@@ -1,6 +1,9 @@
 
 (ns pretty-elements.menu-bar.attributes
-    (:require [pretty-css.api :as pretty-css]))
+    (:require [pretty-css.api :as pretty-css]
+              [pretty-css.appearance.api :as pretty-css.appearance]
+              [pretty-css.accessories.api :as pretty-css.accessories]
+              [pretty-css.layout.api :as pretty-css.layout]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -54,14 +57,14 @@
   (-> (if disabled? (cond-> {:class         :pe-menu-bar--menu-item-body
                              :data-disabled true})
                     (cond-> {:class         :pe-menu-bar--menu-item-body}))
-      (pretty-css/badge-attributes       item-props)
-      (pretty-css/border-attributes      item-props)
-      (pretty-css/color-attributes       item-props)
+      (pretty-css.accessories/badge-attributes       item-props)
+      (pretty-css.appearance/background-attributes       item-props)
+      (pretty-css.appearance/border-attributes      item-props)
       (pretty-css/effect-attributes      item-props)
-      (pretty-css/indent-attributes      item-props)
+      (pretty-css.layout/indent-attributes      item-props)
       (pretty-css/mouse-event-attributes item-props)
       (pretty-css/href-attributes        item-props)
-      (pretty-css/marker-attributes      item-props)))
+      (pretty-css.accessories/marker-attributes      item-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -77,7 +80,7 @@
   ; {}
   [_ _ item-props]
   (-> {:class :pe-menu-bar--menu-item}
-      (pretty-css/outdent-attributes item-props)))
+      (pretty-css.layout/outdent-attributes item-props)))
 
 (defn menu-bar-items-attributes
   ; @ignore
@@ -106,7 +109,7 @@
   ; {:class (keyword or keywords in vector)}
   [_ bar-props]
   (-> {:class :pe-menu-bar--body}
-      (pretty-css/indent-attributes bar-props)
+      (pretty-css.layout/indent-attributes bar-props)
       (pretty-css/style-attributes  bar-props)))
 
 ;; ----------------------------------------------------------------------------
@@ -124,4 +127,5 @@
   (-> {:class :pe-menu-bar}
       (pretty-css/class-attributes   bar-props)
       (pretty-css/outdent-attributes bar-props)
-      (pretty-css/state-attributes   bar-props)))
+      (pretty-css/state-attributes   bar-props)
+      (pretty-css/theme-attributes   bar-props)))

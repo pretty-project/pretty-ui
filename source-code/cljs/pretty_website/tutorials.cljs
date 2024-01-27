@@ -428,13 +428,12 @@
 ;
 ; @code Usage
 ; [pretty-elements/button {:icon-color (keyword or string)}]
-; [pretty-elements/button {:icon-color :soft-blue}]
+; [pretty-elements/button {:icon-color :primary}]
 ; [pretty-elements/button {:icon-color "#888"}]
 ;
 ; @code Predefined values
 ; :inherit,
-; :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning,
-; :black, :grey, :white, :hard-blue, :soft-blue, :hard-green, :khaki-green, :soft-green, :hard-purple, :soft-purple, :hard-red, soft-red
+; :default, :highlight, :invert, :muted, :primary, :secondary, :tertiary, :success, :warning,
 ;
 ;
 ;
@@ -475,18 +474,7 @@
 ;
 ;
 ;
-; @title :indent
-;
-; @code Usage
-; [pretty-elements/button {:indent (map) {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)}}]
-; [pretty-elements/button {:indent {:all :xs}}]
-; [pretty-elements/button {:indent {:all :xs :tr :xxl}}]
-; [pretty-elements/button {:indent {:all 10}}]
-; [pretty-elements/button {:indent {:all "10px"}}]
-; [pretty-elements/button {:indent {:all "5%"}}]
-;
-; @code Predefined values
-; :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+
 ;
 ;
 ;
@@ -638,18 +626,7 @@
 ;
 ;
 ;
-; @title :outdent
-;
-; @code Usage
-; [pretty-elements/button {:outdent (map) {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)}}]
-; [pretty-elements/button {:outdent {:all :xs}}]
-; [pretty-elements/button {:outdent {:all :xs :tr :xxl}}]
-; [pretty-elements/button {:outdent {:all 10}}]
-; [pretty-elements/button {:outdent {:all "10px"}}]
-; [pretty-elements/button {:outdent {:all "5%"}}]
-;
-; @code Predefined values
-; :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+
 ;
 ;
 ;
@@ -685,8 +662,8 @@
 ; @title :preset
 ;
 ; @code Usage
-; (pretty-presets/reg-preset! :my-preset   {:fill-color :soft-blue :width :xs})
-; (pretty-presets/reg-preset! :my-preset-f #(merge % {:fill-color :soft-blue :width :xs}))
+; (pretty-presets/reg-preset! :my-preset   {:fill-color :primary :width :xs})
+; (pretty-presets/reg-preset! :my-preset-f #(merge % {:fill-color :primary :width :xs}))
 ; [pretty-elements/button {:preset (keyword)}]
 ; [pretty-elements/button {:preset :my-preset}]
 ; [pretty-elements/button {:preset :my-preset-f}]
@@ -705,12 +682,11 @@
 ;
 ; @code Usage
 ; [pretty-elements/button {:progress-color (keyword or string)}]
-; [pretty-elements/button {:progress-color :soft-blue}]
+; [pretty-elements/button {:progress-color :primary}]
 ; [pretty-elements/button {:progress-color "#888"}]
 ;
 ; @code Predefined values
-; :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning,
-; :black, :grey, :white, :hard-blue, :soft-blue, :hard-green, :khaki-green, :soft-green, :hard-purple, :soft-purple, :hard-red, soft-red
+; :default, :highlight, :invert, :muted, :primary, :secondary, :tertiary, :success, :warning,
 ;
 ;
 ;
@@ -760,13 +736,12 @@
 ;
 ; @code Usage
 ; [pretty-elements/button {:text-color (keyword or string)}]
-; [pretty-elements/button {:text-color :soft-blue}]
+; [pretty-elements/button {:text-color :primary}]
 ; [pretty-elements/button {:text-color "#888"}]
 ;
 ; @code Predefined values
 ; :inherit,
-; :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning,
-; :black, :grey, :white, :hard-blue, :soft-blue, :hard-green, :khaki-green, :soft-green, :hard-purple, :soft-purple, :hard-red, soft-red
+; :default, :highlight, :invert, :muted, :primary, :secondary, :tertiary, :success, :warning,
 ;
 ;
 ;

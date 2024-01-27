@@ -1,7 +1,9 @@
 
 (ns pretty-elements.dropdown-menu.attributes
     (:require [pretty-css.api :as pretty-css]
-              [pretty-elements.dropdown-menu.state :as dropdown-menu.state]))
+              [pretty-elements.dropdown-menu.state :as dropdown-menu.state]
+              [pretty-css.appearance.api :as pretty-css.appearance]
+              [pretty-css.layout.api :as pretty-css.layout]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -17,9 +19,9 @@
   ; {:class (keyword or keywords in vector)}
   [_ {:keys [surface]}]
   (-> {:class :pe-dropdown-menu--surface-body}
-      (pretty-css/border-attributes surface)
-      (pretty-css/color-attributes  surface)
-      (pretty-css/indent-attributes surface)))
+      (pretty-css.appearance/background-attributes  surface)
+      (pretty-css.appearance/border-attributes surface)
+      (pretty-css.layout/indent-attributes surface)))
 
 (defn menu-surface-attributes
   ; @ignore
@@ -32,7 +34,7 @@
   ; {:class (keyword or keywords in vector)}
   [_ {:keys [surface]}]
   (-> {:class :pe-dropdown-menu--surface}
-      (pretty-css/outdent-attributes surface)))
+      (pretty-css.layout/outdent-attributes surface)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -47,7 +49,7 @@
   ; {:class (keyword or keywords in vector)}
   [_ menu-props]
   (-> {:class :pe-dropdown-menu--body}
-      (pretty-css/indent-attributes menu-props)
+      (pretty-css.layout/indent-attributes menu-props)
       (pretty-css/style-attributes  menu-props)))
 
 (defn menu-attributes

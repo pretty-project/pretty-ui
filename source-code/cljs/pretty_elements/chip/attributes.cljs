@@ -1,6 +1,8 @@
 
 (ns pretty-elements.chip.attributes
-    (:require [pretty-css.api :as pretty-css]))
+    (:require [pretty-css.api :as pretty-css]
+              [pretty-css.appearance.api :as pretty-css.appearance]
+              [pretty-css.layout.api :as pretty-css.layout]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -35,12 +37,12 @@
   ; {:class (keyword or keywords in vector)}
   [chip-id chip-props]
   (-> {:class :pe-chip--body}
-      (pretty-css/border-attributes       chip-props)
-      (pretty-css/color-attributes        chip-props)
+      (pretty-css.appearance/background-attributes chip-props)
+      (pretty-css.appearance/border-attributes     chip-props)
       (pretty-css/effect-attributes       chip-props)
-      (pretty-css/element-size-attributes chip-props)
+      (pretty-css.layout/element-size-attributes chip-props)
       (pretty-css/href-attributes         chip-props)
-      (pretty-css/indent-attributes       chip-props)
+      (pretty-css.layout/indent-attributes       chip-props)
       (pretty-css/mouse-event-attributes  chip-props)
       (pretty-css/style-attributes        chip-props)))
 
@@ -58,6 +60,7 @@
   [_ chip-props]
   (-> {:class :pe-chip}
       (pretty-css/class-attributes        chip-props)
-      (pretty-css/outdent-attributes      chip-props)
+      (pretty-css.layout/outdent-attributes      chip-props)
       (pretty-css/state-attributes        chip-props)
-      (pretty-css/wrapper-size-attributes chip-props)))
+      (pretty-css/theme-attributes        chip-props)
+      (pretty-css.layout/wrapper-size-attributes chip-props)))

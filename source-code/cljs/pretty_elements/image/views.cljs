@@ -45,7 +45,10 @@
   ;  :preset (keyword)(opt)
   ;  :src (string)(opt)
   ;  :style (map)(opt)
+  ;  :theme (keyword)(opt)
   ;  :width (keyword, px or string)(opt)}
+  ;
+  ; +fill-color, border ...
   ;
   ; @usage
   ; [image {...}]

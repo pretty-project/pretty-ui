@@ -1,6 +1,8 @@
 
 (ns pretty-elements.toggle.attributes
-    (:require [pretty-css.api :as pretty-css]))
+    (:require [pretty-css.api :as pretty-css]
+              [pretty-css.appearance.api :as pretty-css.appearance]
+              [pretty-css.layout.api :as pretty-css.layout]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -19,12 +21,12 @@
   (-> {:class              :pe-toggle--body
        :data-click-effect  :opacity
        :data-text-overflow :hidden}
-      (pretty-css/border-attributes            toggle-props)
-      (pretty-css/color-attributes             toggle-props)
+      (pretty-css.appearance/background-attributes             toggle-props)
+      (pretty-css.appearance/border-attributes            toggle-props)
       (pretty-css/cursor-attributes            toggle-props)
-      (pretty-css/element-size-attributes      toggle-props)
+      (pretty-css.layout/element-size-attributes      toggle-props)
       (pretty-css/focus-attributes             toggle-props)
-      (pretty-css/indent-attributes            toggle-props)
+      (pretty-css.layout/indent-attributes            toggle-props)
       (pretty-css/href-attributes              toggle-props)
       (pretty-css/mouse-event-attributes       toggle-props)
       (pretty-css/unselectable-text-attributes toggle-props)))
@@ -43,6 +45,7 @@
   [_ toggle-props]
   (-> {:class :pe-toggle}
       (pretty-css/class-attributes        toggle-props)
-      (pretty-css/outdent-attributes      toggle-props)
+      (pretty-css.layout/outdent-attributes      toggle-props)
       (pretty-css/state-attributes        toggle-props)
-      (pretty-css/wrapper-size-attributes toggle-props)))
+      (pretty-css/theme-attributes        toggle-props)
+      (pretty-css.layout/wrapper-size-attributes toggle-props)))

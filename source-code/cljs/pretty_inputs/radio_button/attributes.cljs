@@ -4,7 +4,9 @@
               [metamorphic-content.api :as metamorphic-content]
               [pretty-css.api :as pretty-css]
               [pretty-engine.api       :as pretty-engine]
-              [re-frame.api            :as r]))
+              [re-frame.api            :as r]
+              [pretty-css.appearance.api :as pretty-css.appearance]
+              [pretty-css.layout.api :as pretty-css.layout]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -72,7 +74,7 @@
   ; {}
   [_ button-props _]
   (-> {:class :pi-radio-button--option-thumb}
-      (pretty-css/adaptive-border-attributes button-props 0.3)))
+      (pretty-css.appearance/adaptive-border-attributes button-props 0.3)))
 
 (defn radio-button-option-button-attributes
   ; @ignore
@@ -86,8 +88,8 @@
   [button-id button-props option]
   (let [option-color (pretty-engine/get-input-option-color button-id button-props option)]
        (-> {:class :pi-radio-button--option-button}
-           (pretty-css/border-attributes button-props)
-           (pretty-css/color-attributes {:fill-color option-color}))))
+           (pretty-css.appearance/background-attributes {:fill-color option-color})
+           (pretty-css.appearance/border-attributes button-props))))
 
 (defn radio-button-option-attributes
   ; @ignore
@@ -125,7 +127,7 @@
        (-> {:class :pi-radio-button--body
             :on-blur  on-blur-f
             :on-focus on-focus-f}
-           (pretty-css/indent-attributes      button-props)
+           (pretty-css.layout/indent-attributes      button-props)
            (pretty-css/orientation-attributes button-props)
            (pretty-css/style-attributes       button-props))))
 
@@ -143,5 +145,6 @@
   [_ button-props]
   (-> {:class :pi-radio-button}
       (pretty-css/class-attributes   button-props)
-      (pretty-css/outdent-attributes button-props)
-      (pretty-css/state-attributes   button-props)))
+      (pretty-css.layout/outdent-attributes button-props)
+      (pretty-css/state-attributes   button-props)
+      (pretty-css/theme-attributes   button-props)))

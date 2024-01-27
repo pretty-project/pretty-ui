@@ -46,7 +46,8 @@
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :placeholder (metamorphic-content)(opt)
   ;  :preset (keyword)(opt)
-  ;  :style (map)(opt)}
+  ;  :style (map)(opt)
+  ;  :theme (keyword)(opt)}
   ;
   ; @usage
   ; [blank {...}]

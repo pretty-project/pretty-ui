@@ -2,7 +2,9 @@
 (ns pretty-inputs.checkbox.attributes
     (:require [dom.api              :as dom]
               [pretty-css.api :as pretty-css]
-              [pretty-engine.api    :as pretty-engine]))
+              [pretty-engine.api    :as pretty-engine]
+              [pretty-css.appearance.api :as pretty-css.appearance]
+              [pretty-css.layout.api :as pretty-css.layout]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -71,8 +73,8 @@
   [checkbox-id checkbox-props option]
   (let [option-color (pretty-engine/get-input-option-color checkbox-id checkbox-props option)]
        (-> {:class :pi-checkbox--option-button}
-           (pretty-css/border-attributes checkbox-props)
-           (pretty-css/color-attributes {:fill-color option-color}))))
+           (pretty-css.appearance/background-attributes {:fill-color option-color})
+           (pretty-css.appearance/border-attributes checkbox-props))))
 
 (defn checkbox-option-checkmark-attributes
   ; @ignore
@@ -127,7 +129,7 @@
        (-> {:class    :pi-checkbox--body
             :on-blur  on-blur-f
             :on-focus on-focus-f}
-           (pretty-css/indent-attributes      checkbox-props)
+           (pretty-css.layout/indent-attributes      checkbox-props)
            (pretty-css/orientation-attributes checkbox-props)
            (pretty-css/style-attributes       checkbox-props))))
 
@@ -145,5 +147,6 @@
   [_ checkbox-props]
   (-> {:class :pi-checkbox}
       (pretty-css/class-attributes   checkbox-props)
-      (pretty-css/outdent-attributes checkbox-props)
-      (pretty-css/state-attributes   checkbox-props)))
+      (pretty-css.layout/outdent-attributes checkbox-props)
+      (pretty-css/state-attributes   checkbox-props)
+      (pretty-css/theme-attributes   checkbox-props)))

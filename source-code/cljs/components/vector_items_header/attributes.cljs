@@ -1,6 +1,7 @@
 
 (ns components.vector-items-header.attributes
-    (:require [pretty-css.api :as pretty-css]))
+    (:require [pretty-css.api :as pretty-css]
+              [pretty-css.layout.api :as pretty-css.layout]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -20,7 +21,7 @@
   (-> {:class                     :c-vector-items-header--body
        :data-orientation          :horizontal
        :data-row-horizontal-align horizontal-align}
-      (pretty-css/indent-attributes header-props)
+      (pretty-css.layout/indent-attributes header-props)
       (pretty-css/style-attributes  header-props)))
 
 
@@ -38,5 +39,5 @@
   [_ header-props]
   (-> {:class :c-vector-items-header}
       (pretty-css/class-attributes   header-props)
-      (pretty-css/outdent-attributes header-props)
+      (pretty-css.layout/outdent-attributes header-props)
       (pretty-css/state-attributes   header-props)))

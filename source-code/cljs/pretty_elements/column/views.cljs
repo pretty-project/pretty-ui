@@ -52,6 +52,7 @@
   ;  :placeholder (metamorphic-content)(opt)
   ;  :preset (keyword)(opt)
   ;  :style (map)(opt)
+  ;  :theme (keyword)(opt)
   ;  :vertical-align (keyword)(opt)
   ;   Default: :top
   ;  :width (keyword, px or string)(opt)}

@@ -3,7 +3,9 @@
     (:require [dom.api              :as dom]
               [pretty-css.api :as pretty-css]
               [pretty-engine.api    :as pretty-engine]
-              [re-frame.api         :as r]))
+              [re-frame.api         :as r]
+              [pretty-css.appearance.api :as pretty-css.appearance]
+              [pretty-css.layout.api :as pretty-css.layout]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -70,7 +72,7 @@
   ; {}
   [_ switch-props _]
   (-> {:class :pi-switch--option-thumb}
-      (pretty-css/adaptive-border-attributes switch-props 0.75)))
+      (pretty-css.appearance/adaptive-border-attributes switch-props 0.75)))
 
 (defn switch-option-track-attributes
   ; @ignore
@@ -84,8 +86,8 @@
   [switch-id switch-props option]
   (let [option-color (pretty-engine/get-input-option-color switch-id switch-props option)]
        (-> {:class :pi-switch--option-track}
-           (pretty-css/border-attributes switch-props)
-           (pretty-css/color-attributes {:fill-color option-color}))))
+           (pretty-css.appearance/background-attributes {:fill-color option-color})
+           (pretty-css.appearance/border-attributes switch-props))))
 
 (defn switch-option-attributes
   ; @ignore
@@ -125,7 +127,7 @@
        (-> {:class :pi-switch--body
             :on-blur  on-blur-f
             :on-focus on-focus-f}
-           (pretty-css/indent-attributes      switch-props)
+           (pretty-css.layout/indent-attributes      switch-props)
            (pretty-css/orientation-attributes switch-props)
            (pretty-css/style-attributes       switch-props))))
 
@@ -140,5 +142,6 @@
   [_ switch-props]
   (-> {:class :pi-switch}
       (pretty-css/class-attributes   switch-props)
-      (pretty-css/outdent-attributes switch-props)
-      (pretty-css/state-attributes   switch-props)))
+      (pretty-css.layout/outdent-attributes switch-props)
+      (pretty-css/state-attributes   switch-props)
+      (pretty-css/theme-attributes   switch-props)))

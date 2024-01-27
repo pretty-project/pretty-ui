@@ -47,7 +47,8 @@
   ;  :on-mount (Re-Frame metamorphic-event)(opt)
   ;  :on-unmount (Re-Frame metamorphic-event)(opt)
   ;  :preset (keyword)(opt)
-  ;  :style (map)(opt)}
+  ;  :style (map)(opt)
+  ;  :theme (keyword)(opt)}
   ;
   ; @usage
   ; [plain-surface {...}]

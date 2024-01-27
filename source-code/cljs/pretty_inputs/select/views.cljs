@@ -208,6 +208,7 @@
   ;  :projected-value (*)(opt)
   ;  :reveal-effect (keyword)(opt)
   ;  :set-value-f (function)(opt)
+  ;  :theme (keyword)(opt)
   ;  :validate-when-change? (boolean)(opt)
   ;  :validate-when-leave? (boolean)(opt)
   ;  :validators (maps in vector)(opt)

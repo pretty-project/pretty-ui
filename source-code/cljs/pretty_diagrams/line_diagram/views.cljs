@@ -42,6 +42,7 @@
   ;    Default: 2
   ;    Min: 1
   ;    Max: 6
+  ;  :theme (keyword)(opt)
   ;  :total-value (integer)(opt)
   ;   Default: Sum of the section values
   ;  :width (keyword, px or string)(opt)

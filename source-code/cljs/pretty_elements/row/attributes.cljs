@@ -1,6 +1,8 @@
 
 (ns pretty-elements.row.attributes
-    (:require [pretty-css.api :as pretty-css]))
+    (:require [pretty-css.api :as pretty-css]
+              [pretty-css.appearance.api :as pretty-css.appearance]
+              [pretty-css.layout.api :as pretty-css.layout]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -15,10 +17,10 @@
   ; {:class (keyword or keywords in vector)}
   [_ row-props]
   (-> {:class :pe-row--body}
-      (pretty-css/border-attributes       row-props)
-      (pretty-css/color-attributes        row-props)
-      (pretty-css/indent-attributes       row-props)
-      (pretty-css/element-size-attributes row-props)
+      (pretty-css.appearance/background-attributes        row-props)
+      (pretty-css.appearance/border-attributes       row-props)
+      (pretty-css.layout/indent-attributes       row-props)
+      (pretty-css.layout/element-size-attributes row-props)
       (pretty-css/row-attributes          row-props)
       (pretty-css/style-attributes        row-props)))
 
@@ -36,6 +38,7 @@
   [_ row-props]
   (-> {:class :pe-row}
       (pretty-css/class-attributes        row-props)
-      (pretty-css/outdent-attributes      row-props)
+      (pretty-css.layout/outdent-attributes      row-props)
       (pretty-css/state-attributes        row-props)
-      (pretty-css/wrapper-size-attributes row-props)))
+      (pretty-css/theme-attributes        row-props)
+      (pretty-css.layout/wrapper-size-attributes row-props)))

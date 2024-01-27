@@ -114,7 +114,8 @@
   ;  :get-value-f (function)(opt)
   ;  :height (keyword, px or string)(opt)
   ;  :helper (metamorphic-content)(opt)
-  ;  :hover-color (keyword or string)(opt)
+  ;  :hover-color (keyword or string)(opt)      ??
+  ;  :hover-pattern (keyword)(opt)              ??
   ;  :indent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :info-text (metamorphic-content)(opt)
@@ -150,6 +151,7 @@
   ;    :content (metamorphic-content)(opt)
   ;    :indent (map)(opt)
   ;    :placeholder (metamorphic-content)(opt)}
+  ;  :theme (keyword)(opt)
   ;  :type (keyword)(opt)
   ;   :email, :number, :password, :tel, :text
   ;   Default: :text

@@ -33,8 +33,12 @@
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :preset (keyword)(opt)
   ;  :style (map)(opt)
+  ;  :theme (keyword)(opt)
   ;  :width (keyword, px or string)(opt)
   ;   Default: :s}
+  ;
+  ; + fill-color
+  ; + animation-attributes
   ;
   ; @usage
   ; [ghost {...}]

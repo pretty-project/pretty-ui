@@ -60,6 +60,7 @@
   ;  :preset (keyword)(opt)
   ;  :resetable? (boolean)(opt)
   ;  :style (map)(opt)
+  ;  :theme (keyword)(opt)
   ;  :value-path (Re-Frame path vector)(opt)
   ;  :width (keyword, px or string)(opt)}
   ;

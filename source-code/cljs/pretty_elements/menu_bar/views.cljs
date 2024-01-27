@@ -79,6 +79,7 @@
   ;     Default :medium
   ;    :hover-color (keyword or string)(opt)
   ;    :hover-effect (keyword)(opt)
+  ;    :hover-pattern (keyword)(opt)
   ;    :icon-color (keyword or string)(opt)
   ;     Default: :inherit
   ;    :icon-family (keyword)(opt)
@@ -115,7 +116,8 @@
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :preset (keyword)(opt)
-  ;  :style (map)(opt)}
+  ;  :style (map)(opt)
+  ;  :theme (keyword)(opt)}
   ;
   ; @usage
   ; [menu-bar {...}]

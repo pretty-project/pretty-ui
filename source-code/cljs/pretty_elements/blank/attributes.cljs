@@ -1,6 +1,7 @@
 
 (ns pretty-elements.blank.attributes
-    (:require [pretty-css.api :as pretty-css]))
+    (:require [pretty-css.api :as pretty-css]
+              [pretty-css.layout.api :as pretty-css.layout]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -15,7 +16,7 @@
   ; {:class (keyword or keywords in vector)}
   [_ blank-props]
   (-> {:class :pe-blank--body}
-      (pretty-css/indent-attributes blank-props)
+      (pretty-css.layout/indent-attributes blank-props)
       (pretty-css/style-attributes  blank-props)))
 
 ;; ----------------------------------------------------------------------------
@@ -32,5 +33,6 @@
   [_ blank-props]
   (-> {:class :pe-blank}
       (pretty-css/class-attributes   blank-props)
-      (pretty-css/outdent-attributes blank-props)
-      (pretty-css/state-attributes   blank-props)))
+      (pretty-css.layout/outdent-attributes blank-props)
+      (pretty-css/state-attributes   blank-props)
+      (pretty-css/theme-attributes   blank-props)))

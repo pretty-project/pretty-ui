@@ -3,7 +3,10 @@
     (:require [fruits.css.api                     :as css]
               [metamorphic-content.api            :as metamorphic-content]
               [pretty-css.api :as pretty-css]
-              [pretty-diagrams.line-diagram.utils :as line-diagram.utils]))
+              [pretty-diagrams.line-diagram.utils :as line-diagram.utils]
+              [pretty-css.accessories.api :as pretty-css.accessories]
+              [pretty-css.appearance.api :as pretty-css.appearance]
+              [pretty-css.layout.api :as pretty-css.layout]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -25,8 +28,8 @@
   (let [value-ratio (line-diagram.utils/section-props->value-ratio diagram-props section-props)]
        (-> {:class :pd-line-diagram--section
             :style {:width (css/percent value-ratio)}}
-           (pretty-css/badge-attributes {:badge-content label :badge-position :bl})
-           (pretty-css/color-attributes {:fill-color color}))))
+           (pretty-css.accessories/badge-attributes     {:badge-content label :badge-position :bl})
+           (pretty-css.appearance/background-attributes {:fill-color color}))))
 
 (defn diagram-sections-attributes
   ; @ignore
@@ -56,8 +59,8 @@
   ; {:class (keyword or keywords in vector)}
   [_ diagram-props]
   (-> {:class :pd-line-diagram--body}
-      (pretty-css/indent-attributes       diagram-props)
-      (pretty-css/element-size-attributes diagram-props)
+      (pretty-css.layout/indent-attributes       diagram-props)
+      (pretty-css.layout/element-size-attributes diagram-props)
       (pretty-css/style-attributes        diagram-props)))
 
 ;; ----------------------------------------------------------------------------
@@ -74,6 +77,7 @@
   [_ diagram-props]
   (-> {:class :pd-line-diagram}
       (pretty-css/class-attributes        diagram-props)
-      (pretty-css/outdent-attributes      diagram-props)
+      (pretty-css.layout/outdent-attributes      diagram-props)
       (pretty-css/state-attributes        diagram-props)
-      (pretty-css/wrapper-size-attributes diagram-props)))
+      (pretty-css/theme-attributes        diagram-props)
+      (pretty-css.layout/wrapper-size-attributes diagram-props)))

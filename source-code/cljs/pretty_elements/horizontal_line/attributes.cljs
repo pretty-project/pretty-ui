@@ -1,7 +1,9 @@
 
 (ns pretty-elements.horizontal-line.attributes
     (:require [fruits.css.api       :as css]
-              [pretty-css.api :as pretty-css]))
+              [pretty-css.api :as pretty-css]
+              [pretty-css.appearance.api :as pretty-css.appearance]
+              [pretty-css.layout.api :as pretty-css.layout]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -18,9 +20,9 @@
   [line-id {:keys [strength] :as line-props}]
   (-> {:class :pe-horizontal-line--body
        :style {:height (css/px strength)}}
-      (pretty-css/color-attributes        line-props)
-      (pretty-css/element-size-attributes line-props)
-      (pretty-css/indent-attributes       line-props)
+      (pretty-css.appearance/background-attributes        line-props)
+      (pretty-css.layout/element-size-attributes line-props)
+      (pretty-css.layout/indent-attributes       line-props)
       (pretty-css/style-attributes        line-props)))
 
 ;; ----------------------------------------------------------------------------
@@ -37,6 +39,7 @@
   [_ line-props]
   (-> {:class :pe-horizontal-line}
       (pretty-css/class-attributes        line-props)
-      (pretty-css/outdent-attributes      line-props)
+      (pretty-css.layout/outdent-attributes      line-props)
       (pretty-css/state-attributes        line-props)
-      (pretty-css/wrapper-size-attributes line-props)))
+      (pretty-css/theme-attributes        line-props)
+      (pretty-css.layout/wrapper-size-attributes line-props)))

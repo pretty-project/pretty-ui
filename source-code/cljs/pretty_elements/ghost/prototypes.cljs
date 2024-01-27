@@ -11,9 +11,18 @@
   ; @param (map) ghost-props
   ;
   ; @return (map)
-  ; {:height (keyword, px or string)
+  ; {:fill-color (keyword or string)
+  ;  :height (keyword, px or string)
   ;  :width (keyword, px or string)}
   [ghost-props]
-  (merge {:height :s
-          :width  :s}
+  (merge {
+
+          :animation-duration 2000
+          :animation-name     :opacity-1-05-1
+
+
+
+          :fill-color :highlight
+          :height     :s
+          :width      :s}
          (-> ghost-props)))

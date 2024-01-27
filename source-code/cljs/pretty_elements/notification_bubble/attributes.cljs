@@ -1,6 +1,8 @@
 
 (ns pretty-elements.notification-bubble.attributes
-    (:require [pretty-css.api :as pretty-css]))
+    (:require [pretty-css.api :as pretty-css]
+              [pretty-css.appearance.api :as pretty-css.appearance]
+              [pretty-css.layout.api :as pretty-css.layout]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -18,7 +20,7 @@
   (-> {:class               :pe-notification-bubble--content
        :data-letter-spacing :auto}
       (pretty-css/font-attributes              bubble-props)
-      (pretty-css/indent-attributes            bubble-props)
+      (pretty-css.layout/indent-attributes            bubble-props)
       (pretty-css/unselectable-text-attributes bubble-props)))
 
 ;; ----------------------------------------------------------------------------
@@ -34,9 +36,9 @@
   ; {:class (keyword or keywords in vector)}
   [_ bubble-props]
   (-> {:class :pe-notification-bubble--body}
-      (pretty-css/border-attributes       bubble-props)
-      (pretty-css/color-attributes        bubble-props)
-      (pretty-css/element-size-attributes bubble-props)
+      (pretty-css.appearance/background-attributes        bubble-props)
+      (pretty-css.appearance/border-attributes       bubble-props)
+      (pretty-css.layout/element-size-attributes bubble-props)
       (pretty-css/style-attributes        bubble-props)))
 
 ;; ----------------------------------------------------------------------------
@@ -53,6 +55,7 @@
   [_ bubble-props]
   (-> {:class :pe-notification-bubble}
       (pretty-css/class-attributes        bubble-props)
-      (pretty-css/outdent-attributes      bubble-props)
+      (pretty-css.layout/outdent-attributes      bubble-props)
       (pretty-css/state-attributes        bubble-props)
-      (pretty-css/wrapper-size-attributes bubble-props)))
+      (pretty-css/theme-attributes        bubble-props)
+      (pretty-css.layout/wrapper-size-attributes bubble-props)))

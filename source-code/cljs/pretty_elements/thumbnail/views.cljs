@@ -61,6 +61,7 @@
   ;  :style (map)(opt)
   ;  :target (keyword)(opt)
   ;   :blank, :self
+  ;  :theme (keyword)(opt)
   ;  :uri (string)(opt)
   ;  :width (keyword, px or string)(opt)
   ;   Default: :s}

@@ -43,7 +43,8 @@
   ;  :strength (px)(opt)
   ;    Default: 2
   ;    Min: 1
-  ;    Max: 6}
+  ;    Max: 6
+  ;  :theme (keyword)(opt)}
   ;
   ; @usage
   ; [point-diagram {...}]

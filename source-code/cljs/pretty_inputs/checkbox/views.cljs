@@ -120,6 +120,7 @@
   ;  :projected-value (*)(opt)
   ;  :set-value-f (function)(opt)
   ;  :style (map)(opt)
+  ;  :theme (keyword)(opt)
   ;  :validate-when-change? (boolean)(opt)
   ;  :validate-when-leave? (boolean)(opt)
   ;  :validators (maps in vector)(opt)

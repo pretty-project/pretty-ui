@@ -2,7 +2,8 @@
 (ns pretty-elements.expandable.attributes
     (:require [dom.api                                 :as dom]
               [pretty-css.api :as pretty-css]
-              [pretty-elements.expandable.side-effects :as expandable.side-effects]))
+              [pretty-elements.expandable.side-effects :as expandable.side-effects]
+              [pretty-css.layout.api :as pretty-css.layout]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -53,7 +54,7 @@
   ; {:class (keyword or keywords in vector)}
   [_ expandable-props]
   (-> {:class :pe-expandable--body}
-      (pretty-css/indent-attributes expandable-props)
+      (pretty-css.layout/indent-attributes expandable-props)
       (pretty-css/style-attributes  expandable-props)))
 
 ;; ----------------------------------------------------------------------------
@@ -70,5 +71,6 @@
   [_ expandable-props]
   (-> {:class :pe-expandable}
       (pretty-css/class-attributes   expandable-props)
-      (pretty-css/outdent-attributes expandable-props)
-      (pretty-css/state-attributes   expandable-props)))
+      (pretty-css.layout/outdent-attributes expandable-props)
+      (pretty-css/state-attributes   expandable-props)
+      (pretty-css/theme-attributes   expandable-props)))

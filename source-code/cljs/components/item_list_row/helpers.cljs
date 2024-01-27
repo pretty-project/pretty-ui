@@ -1,6 +1,8 @@
 
 (ns components.item-list-row.helpers
-    (:require [pretty-css.api :as pretty-css]))
+    (:require [pretty-css.api :as pretty-css]
+              [pretty-css.appearance.api :as pretty-css.appearance]
+              [pretty-css.accessories.api :as pretty-css.accessories]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -17,6 +19,6 @@
   [_ {:keys [disabled? drag-attributes template] :as row-props}]
   (-> (if drag-attributes (-> drag-attributes (update :style merge {:grid-template-columns template}))
                           {:style {:grid-template-columns template :opacity (if disabled? ".5")}})
-      (pretty-css/border-attributes row-props)
-      (pretty-css/color-attributes  row-props)
-      (pretty-css/marker-attributes row-props)))
+      (pretty-css.accessories/marker-attributes    row-props)
+      (pretty-css.appearance/background-attributes row-props)
+      (pretty-css.appearance/border-attributes     row-props)))

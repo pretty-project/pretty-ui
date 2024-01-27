@@ -51,6 +51,7 @@
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :preset (keyword)(opt)
   ;  :style (map)(opt)
+  ;  :theme (keyword)(opt)
   ;  :threshold (px)(opt)
   ;   Default: 0}
   ;

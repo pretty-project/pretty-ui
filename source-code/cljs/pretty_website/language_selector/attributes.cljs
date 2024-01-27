@@ -2,7 +2,8 @@
 (ns pretty-website.language-selector.attributes
     (:require [app-dictionary.api   :as app-dictionary]
               [dom.api              :as dom]
-              [pretty-css.api :as pretty-css]))
+              [pretty-css.api :as pretty-css]
+              [pretty-css.layout.api :as pretty-css.layout]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -44,7 +45,7 @@
   ; {:class (keyword or keywords in vector)}
   [_ selector-props]
   (-> {:class :pw-language-selector--body}
-      (pretty-css/indent-attributes selector-props)
+      (pretty-css.layout/indent-attributes selector-props)
       (pretty-css/row-attributes    selector-props)
       (pretty-css/style-attributes  selector-props)))
 
@@ -63,4 +64,5 @@
   (-> {:class :pw-language-selector}
       (pretty-css/class-attributes   selector-props)
       (pretty-css/state-attributes   selector-props)
-      (pretty-css/outdent-attributes selector-props)))
+      (pretty-css.layout/outdent-attributes selector-props)
+      (pretty-css/theme-attributes   selector-props)))

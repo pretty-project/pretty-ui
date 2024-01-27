@@ -58,7 +58,8 @@
   ;    Default: 2
   ;    Min: 1
   ;    Max: 6
-  ;  :style (map)(opt)}
+  ;  :style (map)(opt)
+  ;  :theme (keyword)(opt)}
   ;
   ; @usage
   ; [circle-diagram {...}]

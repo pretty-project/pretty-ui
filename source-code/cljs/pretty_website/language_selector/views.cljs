@@ -39,7 +39,8 @@
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :preset (keyword)(opt)
-  ;  :style (map)(opt)}
+  ;  :style (map)(opt)
+  ;  :theme (keyword)(opt)}
   ;
   ; @usage
   ; [language-selector {...}]

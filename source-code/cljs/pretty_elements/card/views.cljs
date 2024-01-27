@@ -51,6 +51,7 @@
   ;  :height (keyword, px or string)(opt)
   ;  :horizontal-align (keyword)(opt)
   ;  :hover-color (keyword or string)(opt)
+  ;  :hover-pattern (keyword)(opt)
   ;  :hover-effect (keyword)(opt)
   ;  :href-target (keyword)(opt)
   ;  :href-uri (string)(opt)
@@ -70,6 +71,7 @@
   ;  :placeholder (metamorphic-content)(opt)
   ;  :preset (keyword)(opt)
   ;  :style (map)(opt)
+  ;  :theme (keyword)(opt)
   ;  :width (keyword, px or string)(opt)}
   ;
   ; @usage

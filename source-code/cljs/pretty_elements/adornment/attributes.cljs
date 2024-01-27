@@ -1,6 +1,8 @@
 
 (ns pretty-elements.adornment.attributes
-    (:require [pretty-css.api :as pretty-css]))
+    (:require [pretty-css.api :as pretty-css]
+              [pretty-css.appearance.api :as pretty-css.appearance]
+              [pretty-css.layout.api :as pretty-css.layout]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -43,14 +45,14 @@
   ; {:class (keyword or keywords in vector)}
   [adornment-id adornment-props]
   (-> {:class :pe-adornment--body}
-      (pretty-css/block-size-attributes  adornment-props)
-      (pretty-css/color-attributes       adornment-props)
+      (pretty-css.layout/block-size-attributes  adornment-props)
+      (pretty-css.appearance/background-attributes adornment-props)
       (pretty-css/control-attributes     adornment-props)
       (pretty-css/cursor-attributes      adornment-props)
       (pretty-css/effect-attributes      adornment-props)
       (pretty-css/focus-attributes       adornment-props)
       (pretty-css/href-attributes        adornment-props)
-      (pretty-css/indent-attributes      adornment-props)
+      (pretty-css.layout/indent-attributes      adornment-props)
       (pretty-css/mouse-event-attributes adornment-props)
       (pretty-css/progress-attributes    adornment-props)
       (pretty-css/style-attributes       adornment-props)
@@ -70,5 +72,6 @@
   [_ adornment-props]
   (-> {:class :pe-adornment}
       (pretty-css/class-attributes   adornment-props)
-      (pretty-css/outdent-attributes adornment-props)
-      (pretty-css/state-attributes   adornment-props)))
+      (pretty-css.layout/outdent-attributes adornment-props)
+      (pretty-css/state-attributes   adornment-props)
+      (pretty-css/theme-attributes   adornment-props)))

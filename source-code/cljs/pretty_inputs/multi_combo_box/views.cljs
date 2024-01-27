@@ -74,7 +74,10 @@
   ;  :option-component (Reagent component symbol)(opt)
   ;   Default: pretty-inputs.combo-box.views/default-option-component
   ;  :options (vector)(opt)
-  ;  :options-path (Re-Frame path vector)(opt)}
+  ;  :options-path (Re-Frame path vector)(opt)
+  ;  :text-field (map)(opt)
+  ;  :theme (keyword)(opt)}
+  ;
   ;
   ; @usage
   ; [multi-combo-box {...}]

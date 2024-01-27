@@ -3,7 +3,9 @@
     (:require [fruits.css.api                        :as css]
               [fruits.math.api                       :as math]
               [pretty-css.api :as pretty-css]
-              [pretty-diagrams.circle-diagram.config :as circle-diagram.config]))
+              [pretty-css.svg.api :as pretty-css.svg]
+              [pretty-diagrams.circle-diagram.config :as circle-diagram.config]
+              [pretty-css.layout.api :as pretty-css.layout]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -34,12 +36,15 @@
         rotation-percent (math/percent total-value sum)
         rotation-angle   (math/percent->angle rotation-percent)
         rotation         (+ rotation-angle circle-diagram.config/ANGLE-CORRECTION)]
-       {:cx x :cy y :r r
-        :class :pd-circle-diagram--section
-        :data-stroke-color color
-        :style {:stroke-dasharray (str dash-filled " " dash-empty)
-                :stroke-width     (css/px     strength)
-                :transform        (css/rotate rotation)}}))
+       (-> {:cx x :cy y :r r
+            :class :pd-circle-diagram--section
+            :data-stroke-color color
+            :style {:stroke-dasharray (str dash-filled " " dash-empty)
+                    :stroke-width     (css/px     strength)
+                    :transform        (css/rotate rotation)}}
+
+           ; stroke-color (color) és stroke-width (strength)
+           (pretty-css.svg/stroke-attributes diagram-props))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -74,7 +79,7 @@
   ; {:class (keyword or keywords in vector)}
   [_ diagram-props]
   (-> {:class :pd-circle-diagram--body}
-      (pretty-css/indent-attributes diagram-props)
+      (pretty-css.layout/indent-attributes diagram-props)
       (pretty-css/style-attributes  diagram-props)))
 
 ;; ----------------------------------------------------------------------------
@@ -91,5 +96,6 @@
   [_ diagram-props]
   (-> {:class :pd-circle-diagram}
       (pretty-css/class-attributes   diagram-props)
-      (pretty-css/outdent-attributes diagram-props)
-      (pretty-css/state-attributes   diagram-props)))
+      (pretty-css.layout/outdent-attributes diagram-props)
+      (pretty-css/state-attributes   diagram-props)
+      (pretty-css/theme-attributes   diagram-props)))

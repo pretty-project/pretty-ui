@@ -1,6 +1,7 @@
 
 (ns pretty-layouts.plain-surface.attributes
-    (:require [pretty-css.api :as pretty-css]))
+    (:require [pretty-css.api :as pretty-css]
+              [pretty-css.appearance.api :as pretty-css.appearance]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -18,5 +19,6 @@
   [_ {:keys [content-orientation] :as surface-props}]
   (-> {:class            :pl-plain-surface--body
        :data-orientation content-orientation}
-      (pretty-css/color-attributes surface-props)
-      (pretty-css/style-attributes surface-props)))
+      (pretty-css.appearance/background-attributes surface-props)
+      (pretty-css/style-attributes surface-props)
+      (pretty-css/theme-attributes surface-props)))

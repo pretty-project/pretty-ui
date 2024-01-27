@@ -2,7 +2,8 @@
 (ns pretty-website.follow-us-links.attributes
     (:require [fruits.href.api                      :as href]
               [pretty-css.api :as pretty-css]
-              [pretty-website.follow-us-links.utils :as follow-us-links.utils]))
+              [pretty-website.follow-us-links.utils :as follow-us-links.utils]
+              [pretty-css.layout.api :as pretty-css.layout]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -36,7 +37,7 @@
   ; {:class (keyword or keywords in vector)}
   [_ links-props]
   (-> {:class :pw-follow-us-links--body}
-      (pretty-css/indent-attributes links-props)
+      (pretty-css.layout/indent-attributes links-props)
       (pretty-css/style-attributes  links-props)))
 
 ;; ----------------------------------------------------------------------------
@@ -53,5 +54,6 @@
   [_ links-props]
   (-> {:class :pw-follow-us-links}
       (pretty-css/class-attributes   links-props)
-      (pretty-css/outdent-attributes links-props)
-      (pretty-css/state-attributes   links-props)))
+      (pretty-css.layout/outdent-attributes links-props)
+      (pretty-css/state-attributes   links-props)
+      (pretty-css/theme-attributes   links-props)))

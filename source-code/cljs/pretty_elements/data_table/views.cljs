@@ -112,7 +112,8 @@
   ;     :preset (keyword)(opt)
   ;     :template (string)(opt)
   ;      Default: "repeat(*cell-count*, 1fr)"}]
-  ;  :style (map)(opt)}
+  ;  :style (map)(opt)
+  ;  :theme (keyword)(opt)}
   ;
   ; @usage
   ; [data-table {...}]

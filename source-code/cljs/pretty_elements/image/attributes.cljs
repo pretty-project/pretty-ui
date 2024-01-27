@@ -2,6 +2,7 @@
 (ns pretty-elements.image.attributes
     (:require [pretty-css.api :as pretty-css]
               [pretty-elements.image.utils :as image.utils]
+              [pretty-css.layout.api :as pretty-css.layout]
               [react.api                   :as react]))
 
 ;; ----------------------------------------------------------------------------
@@ -24,8 +25,8 @@
        :on-error (image.utils/on-error-f image-id)
        :ref      (react/set-reference-f  image-id)
        :src      (-> src)}
-      (pretty-css/element-size-attributes image-props)
-      (pretty-css/indent-attributes       image-props)
+      (pretty-css.layout/element-size-attributes image-props)
+      (pretty-css.layout/indent-attributes       image-props)
       (pretty-css/style-attributes        image-props)))
 
 ;; ----------------------------------------------------------------------------
@@ -42,6 +43,7 @@
   [_ image-props]
   (-> {:class :pe-image}
       (pretty-css/class-attributes        image-props)
-      (pretty-css/outdent-attributes      image-props)
+      (pretty-css.layout/outdent-attributes      image-props)
       (pretty-css/state-attributes        image-props)
-      (pretty-css/wrapper-size-attributes image-props)))
+      (pretty-css/theme-attributes        image-props)
+      (pretty-css.layout/wrapper-size-attributes image-props)))

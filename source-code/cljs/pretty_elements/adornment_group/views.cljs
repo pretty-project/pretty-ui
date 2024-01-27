@@ -58,6 +58,7 @@
   ;  :overflow (keyword)(opt)
   ;  :preset (keyword)(opt)
   ;  :style (map)(opt)
+  ;  :theme (keyword)(opt)
   ;  :vertical-align (keyword)(opt)
   ;  :width (keyword, px or string)(opt)}
   ;

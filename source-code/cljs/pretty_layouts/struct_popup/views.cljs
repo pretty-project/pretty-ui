@@ -161,7 +161,8 @@
   ;  :preset (keyword)(opt)
   ;  :stretch-orientation (keyword)(opt)
   ;   :both, :horizontal, :vertical
-  ;  :style (map)(opt)}
+  ;  :style (map)(opt)
+  ;  :theme (keyword)(opt)}
   ;
   ; @usage
   ; [struct-popup {...}]

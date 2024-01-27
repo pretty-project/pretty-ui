@@ -43,7 +43,9 @@
   ;  :fill-pattern (keyword)(opt)
   ;   Default: :cover
   ;  :height (keyword, px or string)(opt)
+  ;  :hover-color (keyword or string)(opt)
   ;  :hover-effect (keyword)(opt)
+  ;  :hover-pattern (keyword)(opt)
   ;  :href-target (keyword)(opt)
   ;  :href-uri (string)(opt)
   ;  :indent (map)(opt)
@@ -61,6 +63,7 @@
   ;  :style (map)(opt)
   ;  :text-color (keyword or string)(opt)
   ;   Default: :default
+  ;  :theme (keyword)(opt)
   ;  :width (keyword, px or string)(opt)}
   ;
   ; @usage

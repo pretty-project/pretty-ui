@@ -2,7 +2,9 @@
 (ns pretty-inputs.select.attributes
     (:require [dom.api              :as dom]
               [pretty-css.api :as pretty-css]
-              [pretty-engine.api    :as pretty-engine]))
+              [pretty-engine.api    :as pretty-engine]
+              [pretty-css.appearance.api :as pretty-css.appearance]
+              [pretty-css.layout.api :as pretty-css.layout]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -93,7 +95,7 @@
             :disabled      disabled?}
            (merge (if-not option-color-f {:data-hover-color :highlight}))
            (pretty-css/effect-attributes select-props)
-           (pretty-css/color-attributes       {:fill-color option-color})
+           (pretty-css.appearance/background-attributes       {:fill-color option-color})
            (pretty-css/mouse-event-attributes {:on-click-f on-click-f :on-mouse-up-f dom/blur-active-element!}))))
 
 ;; ----------------------------------------------------------------------------
@@ -126,7 +128,7 @@
   ; {}
   [_ select-props]
   (-> {:class :pi-select--body}
-      (pretty-css/indent-attributes select-props)
+      (pretty-css.layout/indent-attributes select-props)
       (pretty-css/style-attributes  select-props)))
 
 ;; ----------------------------------------------------------------------------
@@ -143,5 +145,6 @@
   [_ select-props]
   (-> {:class :pi-select}
       (pretty-css/class-attributes   select-props)
-      (pretty-css/outdent-attributes select-props)
-      (pretty-css/state-attributes   select-props)))
+      (pretty-css.layout/outdent-attributes select-props)
+      (pretty-css/state-attributes   select-props)
+      (pretty-css/theme-attributes   select-props)))

@@ -22,6 +22,7 @@
   ;  :style (map)(opt)
   ;  :strength (px)(opt)
   ;   Default: 1
+  ;  :theme (keyword)(opt)
   ;  :width (keyword, px or string)(opt)
   ;   Default: :auto}
   ;

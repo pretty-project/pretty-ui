@@ -1,6 +1,9 @@
 
 (ns pretty-elements.button.attributes
-    (:require [pretty-css.api :as pretty-css]))
+    (:require [pretty-css.api :as pretty-css]
+              [pretty-css.appearance.api :as pretty-css.appearance]
+              [pretty-css.accessories.api :as pretty-css.accessories]
+              [pretty-css.layout.api :as pretty-css.layout]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -43,23 +46,23 @@
   ; {:class (keyword or keywords in vector)}
   [_ button-props]
   (-> {:class :pe-button--body}
-      (pretty-css/badge-attributes        button-props)
-      (pretty-css/border-attributes       button-props)
-      (pretty-css/color-attributes        button-props)
+      (pretty-css.accessories/badge-attributes        button-props)
+      (pretty-css.appearance/background-attributes        button-props)
+      (pretty-css.appearance/border-attributes       button-props)
       (pretty-css/control-attributes      button-props)
       (pretty-css/cursor-attributes       button-props)
       (pretty-css/effect-attributes       button-props)
-      (pretty-css/element-size-attributes button-props)
+      (pretty-css.layout/element-size-attributes button-props)
       (pretty-css/focus-attributes        button-props)
       (pretty-css/href-attributes         button-props)
-      (pretty-css/indent-attributes       button-props)
-      (pretty-css/marker-attributes       button-props)
+      (pretty-css.layout/indent-attributes       button-props)
+      (pretty-css.accessories/marker-attributes       button-props)
       (pretty-css/mouse-event-attributes  button-props)
       (pretty-css/progress-attributes     button-props)
       (pretty-css/row-attributes          button-props)
       (pretty-css/style-attributes        button-props)
       (pretty-css/tab-attributes          button-props)
-      (pretty-css/tooltip-attributes      button-props)))
+      (pretty-css.accessories/tooltip-attributes      button-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -75,6 +78,7 @@
   [_ button-props]
   (-> {:class :pe-button}
       (pretty-css/class-attributes        button-props)
-      (pretty-css/outdent-attributes      button-props)
+      (pretty-css.layout/outdent-attributes      button-props)
       (pretty-css/state-attributes        button-props)
-      (pretty-css/wrapper-size-attributes button-props)))
+      (pretty-css/theme-attributes        button-props)
+      (pretty-css.layout/wrapper-size-attributes button-props)))

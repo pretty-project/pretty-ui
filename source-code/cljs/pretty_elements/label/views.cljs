@@ -177,6 +177,7 @@
   ;  :text-overflow (keyword)(opt)
   ;  :text-selectable? (boolean)(opt)
   ;  :text-transform (keyword)(opt)
+  ;  :theme (keyword)(opt)
   ;  :tooltip-content (metamorphic-content)(opt)
   ;  :tooltip-position (keyword)(opt)
   ;  :vertical-align (keyword)(opt)

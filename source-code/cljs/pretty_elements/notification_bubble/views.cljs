@@ -89,6 +89,7 @@
   ;  :text-color (keyword or string)(opt)
   ;   Default: :default
   ;  :text-selectable? (boolean)(opt)
+  ;  :theme (keyword)(opt)
   ;  :width (keyword, px or string)(opt)}
   ;
   ; @usage
@@ -105,3 +106,7 @@
        (let [bubble-props (pretty-presets/apply-preset                           bubble-props)
              bubble-props (notification-bubble.prototypes/bubble-props-prototype bubble-props)]
             [notification-bubble bubble-id bubble-props]))))
+
+            ; + hover-color, hover-effect, hover-pattern ...
+            ; + href-uri, href-target ...
+            ; + on-click-f, on-click-timeout ...

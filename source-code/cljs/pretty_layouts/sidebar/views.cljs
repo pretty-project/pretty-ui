@@ -62,6 +62,7 @@
   ;   Default: :left
   ;  :preset (keyword)(opt)
   ;  :style (map)(opt)
+  ;  :theme (keyword)(opt)
   ;  :threshold (px)(opt)
   ;   Default: 720}
   ;

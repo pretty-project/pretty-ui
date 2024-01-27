@@ -5,7 +5,10 @@
               [pretty-css.api :as pretty-css]
               [pretty-elements.label.side-effects :as label.side-effects]
               [pretty-elements.label.utils        :as label.utils]
-              [pretty-engine.api                  :as pretty-engine]))
+              [pretty-engine.api                  :as pretty-engine]
+              [pretty-css.appearance.api :as pretty-css.appearance]
+              [pretty-css.accessories.api :as pretty-css.accessories]
+              [pretty-css.layout.api :as pretty-css.layout]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -86,15 +89,15 @@
   (-> {:class               :pe-label--body
        :data-letter-spacing :auto
        :on-mouse-up #(if focus-id (pretty-engine/focus-element! focus-id))}
-      (pretty-css/border-attributes       label-props)
-      (pretty-css/color-attributes        label-props)
+      (pretty-css.appearance/background-attributes        label-props)
+      (pretty-css.appearance/border-attributes       label-props)
       (pretty-css/font-attributes         label-props)
-      (pretty-css/element-size-attributes label-props)
-      (pretty-css/indent-attributes       label-props)
-      (pretty-css/marker-attributes       label-props)
+      (pretty-css.layout/element-size-attributes label-props)
+      (pretty-css.layout/indent-attributes       label-props)
+      (pretty-css.accessories/marker-attributes       label-props)
       (pretty-css/row-attributes          label-props)
       (pretty-css/style-attributes        label-props)
-      (pretty-css/tooltip-attributes      label-props)))
+      (pretty-css.accessories/tooltip-attributes      label-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -110,6 +113,7 @@
   [_ label-props]
   (-> {:class :pe-label}
       (pretty-css/class-attributes        label-props)
-      (pretty-css/outdent-attributes      label-props)
+      (pretty-css.layout/outdent-attributes      label-props)
       (pretty-css/state-attributes        label-props)
-      (pretty-css/wrapper-size-attributes label-props)))
+      (pretty-css/theme-attributes        label-props)
+      (pretty-css.layout/wrapper-size-attributes label-props)))

@@ -53,7 +53,8 @@
   ;   :left, :right
   ;   Default: :left
   ;  :preset (keyword)(opt)
-  ;  :style (map)(opt)}
+  ;  :style (map)(opt)
+  ;  :theme (keyword)(opt)}
   ;
   ; @usage
   ; [sidebar {...}]

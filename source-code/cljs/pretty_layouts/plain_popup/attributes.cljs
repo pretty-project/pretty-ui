@@ -31,4 +31,5 @@
   ; {}
   [_ popup-props]
   (-> {:class :pl-plain-popup}
-      (pretty-css/style-attributes popup-props)))
+      (pretty-css/style-attributes popup-props)
+      (pretty-css/theme-attributes popup-props)))

@@ -2,7 +2,9 @@
 (ns pretty-elements.text.attributes
     (:require [fruits.css.api                   :as css]
               [pretty-css.api :as pretty-css]
-              [pretty-elements.label.attributes :as label.attributes]))
+              [pretty-elements.label.attributes :as label.attributes]
+              [pretty-css.appearance.api :as pretty-css.appearance]
+              [pretty-css.layout.api :as pretty-css.layout]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -59,12 +61,12 @@
                           :style               {:max-height height-calc}}
                          {:class               :pe-text--body
                           :data-letter-spacing :auto})
-           (pretty-css/border-attributes          text-props)
-           (pretty-css/color-attributes           text-props)
+           (pretty-css.appearance/background-attributes           text-props)
+           (pretty-css.appearance/border-attributes          text-props)
            (pretty-css/column-attributes          text-props)
-           (pretty-css/element-size-attributes    text-props)
+           (pretty-css.layout/element-size-attributes    text-props)
            (pretty-css/font-attributes            text-props)
-           (pretty-css/indent-attributes          text-props)
+           (pretty-css.layout/indent-attributes          text-props)
            (pretty-css/selectable-text-attributes text-props)
            (pretty-css/style-attributes           text-props))))
 
@@ -82,6 +84,7 @@
   [_ text-props]
   (-> {:class :pe-text}
       (pretty-css/class-attributes        text-props)
-      (pretty-css/outdent-attributes      text-props)
+      (pretty-css.layout/outdent-attributes      text-props)
       (pretty-css/state-attributes        text-props)
-      (pretty-css/wrapper-size-attributes text-props)))
+      (pretty-css/theme-attributes        text-props)
+      (pretty-css.layout/wrapper-size-attributes text-props)))

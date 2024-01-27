@@ -1,6 +1,7 @@
 
 (ns pretty-inputs.chip-group.attributes
-    (:require [pretty-css.api :as pretty-css]))
+    (:require [pretty-css.api :as pretty-css]
+              [pretty-css.layout.api :as pretty-css.layout]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -33,7 +34,7 @@
   ; {:class (keyword or keywords in vector)}
   [_ group-props]
   (-> {:class :pi-chip-group--body}
-      (pretty-css/indent-attributes group-props)
+      (pretty-css.layout/indent-attributes group-props)
       (pretty-css/style-attributes  group-props)))
 
 ;; ----------------------------------------------------------------------------
@@ -50,5 +51,5 @@
   [_ group-props]
   (-> {:class :pi-chip-group}
       (pretty-css/class-attributes   group-props)
-      (pretty-css/outdent-attributes group-props)
+      (pretty-css.layout/outdent-attributes group-props)
       (pretty-css/state-attributes   group-props)))

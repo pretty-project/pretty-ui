@@ -23,7 +23,8 @@
   ;  :preset (keyword)(opt)
   ;  :style (map)(opt)
   ;  :strength (px)(opt)
-  ;   Default: 1}
+  ;   Default: 1
+  ;  :theme (keyword)(opt)}
   ;
   ; @usage
   ; [vertical-line {...}]

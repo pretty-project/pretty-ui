@@ -87,7 +87,8 @@
   ;  :preset (keyword)(opt)
   ;  :projected-value (vector)(opt)
   ;  :set-value-f (function)(opt)
-  ;  :style (map)(opt)}
+  ;  :style (map)(opt)
+  ;  :theme (keyword)(opt)}
   ;
   ; @usage
   ; [chip-group {...}]

@@ -64,6 +64,7 @@
   ;  :height (keyword, px or string)(opt)
   ;  :horizontal-align (keyword)(opt)
   ;  :hover-color (keyword or string)(opt)
+  ;  :hover-pattern (keyword)(opt)
   ;  :hover-effect (keyword)(opt)
   ;  :href-target (keyword)(opt)
   ;  :href-uri (string)(opt)
@@ -97,6 +98,7 @@
   ;  :text-color (keyword or string)(opt)
   ;  :text-overflow (keyword)(opt)
   ;  :text-transform (keyword)(opt)
+  ;  :theme (keyword)(opt)
   ;  :tooltip-content (metamorphic-content)(opt)
   ;  :tooltip-position (keyword)(opt)
   ;  :width (keyword, px or string)(opt)}

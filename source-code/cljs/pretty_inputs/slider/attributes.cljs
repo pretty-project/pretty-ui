@@ -4,7 +4,8 @@
               [pretty-css.api :as pretty-css]
               [pretty-inputs.slider.side-effects :as slider.side-effects]
               [pretty-inputs.slider.state        :as slider.state]
-              [re-frame.api                      :as r]))
+              [re-frame.api                      :as r]
+              [pretty-css.layout.api :as pretty-css.layout]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -74,8 +75,8 @@
   ; {:class (keyword or keywords in vector)}
   [_ slider-props]
   (-> {:class :pi-slider--body}
-      (pretty-css/element-size-attributes slider-props)
-      (pretty-css/indent-attributes       slider-props)
+      (pretty-css.layout/element-size-attributes slider-props)
+      (pretty-css.layout/indent-attributes       slider-props)
       (pretty-css/style-attributes        slider-props)))
 
 ;; ----------------------------------------------------------------------------
@@ -92,6 +93,7 @@
   [_ slider-props]
   (-> {:class :pi-slider}
       (pretty-css/class-attributes        slider-props)
-      (pretty-css/outdent-attributes      slider-props)
+      (pretty-css.layout/outdent-attributes      slider-props)
       (pretty-css/state-attributes        slider-props)
-      (pretty-css/wrapper-size-attributes slider-props)))
+      (pretty-css/theme-attributes        slider-props)
+      (pretty-css.layout/wrapper-size-attributes slider-props)))

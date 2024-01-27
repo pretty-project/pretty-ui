@@ -59,6 +59,7 @@
   ;  :fill-color (keyword or string)(opt)
   ;  :fill-pattern (keyword)(opt)
   ;  :hover-color (keyword or string)(opt)
+  ;  :hover-pattern (keyword)(opt)
   ;  :hover-effect (keyword)(opt)
   ;  :href-target (keyword)(opt)
   ;  :href-uri (string)(opt)
@@ -86,6 +87,7 @@
   ;  :progress-duration (ms)(opt)
   ;   Default: 250
   ;  :style (map)(opt)
+  ;  :theme (keyword)(opt)
   ;  :tooltip-content (metamorphic-content)(opt)
   ;  :tooltip-position (keyword)(opt)}
   ;

@@ -70,6 +70,7 @@
   ;  :resetable? (boolean)(opt)
   ;   Default: false
   ;  :style (map)(opt)
+  ;  :theme (keyword)(opt)
   ;  :value-path (Re-Frame path vector)(opt)}
   ;
   ; @usage

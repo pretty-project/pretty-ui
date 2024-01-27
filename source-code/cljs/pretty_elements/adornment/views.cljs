@@ -46,6 +46,7 @@
   ; ... implements the [Pretty CSS icon attributes](xxx).
   ; ... implements the [Pretty CSS progress attributes](xxx).
   ; ... implements the [Pretty CSS text attributes](xxx).
+  ; ... implements the [Pretty CSS theme attributes](xxx).
   ; ... implements the [Pretty CSS tooltip attributes](xxx).
   ; ... can display a label (or its placeholder) OR an icon at a time.
   ;
@@ -56,6 +57,9 @@
   ; ... the 'button' element can display an icon AND a label at a time.
   ; ... the 'adornment' element doesn't implement any Pretty CSS flex layout,
   ; ... the 'button' element implements the Pretty CSS column and row flex layouts.
+
+  ; + shadow-attributes?
+
   ;
   ; @param (keyword)(opt) adornment-id
   ; @param (map) adornment-props
@@ -67,6 +71,7 @@
   ;  :fill-pattern (keyword)(opt)
   ;  :height (keyword, px or string)(opt)
   ;  :hover-color (keyword or string)(opt)
+  ;  :hover-pattern (keyword)(opt)
   ;  :hover-effect (keyword)(opt)
   ;  :href-target (keyword)(opt)
   ;  :href-uri (string)(opt)
@@ -97,6 +102,7 @@
   ;  :progress-duration (ms)(opt)
   ;  :style (map)(opt)
   ;  :tab-disabled? (boolean)(opt)
+  ;  :theme (keyword)(opt)
   ;  :text-color (keyword or string)(opt)
   ;  :text-overflow (keyword)(opt)
   ;  :text-transform (keyword)(opt)
