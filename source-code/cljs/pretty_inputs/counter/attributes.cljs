@@ -4,7 +4,9 @@
               [pretty-css.api :as pretty-css]
               [re-frame.api         :as r]
               [pretty-css.appearance.api :as pretty-css.appearance]
-              [pretty-css.layout.api :as pretty-css.layout]))
+              [pretty-css.content.api :as pretty-css.content]
+              [pretty-css.layout.api :as pretty-css.layout]
+              [pretty-css.basic.api :as pretty-css.basic]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -95,10 +97,10 @@
   [_ counter-props]
   (-> {:class :pi-counter--body}
       (pretty-css.layout/indent-attributes counter-props)
-      (pretty-css/style-attributes  counter-props)
+      (pretty-css.basic/style-attributes  counter-props)
 
       ; nem elég ha a value-n van csak alkalmazva a text-attributes?
-      (pretty-css/unselectable-text-attributes counter-props)))
+      (pretty-css.content/unselectable-text-attributes counter-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -112,7 +114,7 @@
   ; @return (map)
   [_ counter-props]
   (-> {:class :pi-counter}
-      (pretty-css/class-attributes   counter-props)
+      (pretty-css.basic/class-attributes   counter-props)
       (pretty-css.layout/outdent-attributes counter-props)
-      (pretty-css/state-attributes   counter-props)
-      (pretty-css/theme-attributes   counter-props)))
+      (pretty-css.basic/state-attributes   counter-props)
+      (pretty-css.appearance/theme-attributes   counter-props)))

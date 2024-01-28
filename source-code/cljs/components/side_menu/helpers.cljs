@@ -2,6 +2,7 @@
 (ns components.side-menu.helpers
     (:require [pretty-css.api :as pretty-css]
               [pretty-css.appearance.api :as pretty-css.appearance]
+              [pretty-css.basic.api :as pretty-css.basic]
               [pretty-css.layout.api :as pretty-css.layout]))
 
 ;; ----------------------------------------------------------------------------
@@ -19,7 +20,7 @@
       (pretty-css.appearance/background-attributes menu-props)
       (pretty-css.appearance/border-attributes     menu-props)
       (pretty-css.layout/indent-attributes menu-props)
-      (pretty-css/style-attributes  menu-props)))
+      (pretty-css.basic/style-attributes  menu-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -30,6 +31,6 @@
   ;
   ; @return (map)
   [_ menu-props]
-  (-> {} (pretty-css/class-attributes   menu-props)
+  (-> {} (pretty-css.basic/class-attributes   menu-props)
          (pretty-css.layout/outdent-attributes menu-props)
-         (pretty-css/state-attributes   menu-props)))
+         (pretty-css.basic/state-attributes   menu-props)))

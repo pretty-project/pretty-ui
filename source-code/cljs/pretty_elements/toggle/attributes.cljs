@@ -2,6 +2,9 @@
 (ns pretty-elements.toggle.attributes
     (:require [pretty-css.api :as pretty-css]
               [pretty-css.appearance.api :as pretty-css.appearance]
+              [pretty-css.basic.api :as pretty-css.basic]
+              [pretty-css.control.api :as pretty-css.control]
+              [pretty-css.content.api :as pretty-css.content]
               [pretty-css.layout.api :as pretty-css.layout]))
 
 ;; ----------------------------------------------------------------------------
@@ -23,13 +26,13 @@
        :data-text-overflow :hidden}
       (pretty-css.appearance/background-attributes             toggle-props)
       (pretty-css.appearance/border-attributes            toggle-props)
-      (pretty-css/cursor-attributes            toggle-props)
+      (pretty-css.content/cursor-attributes            toggle-props)
       (pretty-css.layout/element-size-attributes      toggle-props)
-      (pretty-css/focus-attributes             toggle-props)
+      (pretty-css.control/focus-attributes             toggle-props)
       (pretty-css.layout/indent-attributes            toggle-props)
-      (pretty-css/href-attributes              toggle-props)
-      (pretty-css/mouse-event-attributes       toggle-props)
-      (pretty-css/unselectable-text-attributes toggle-props)))
+      (pretty-css.control/anchor-attributes              toggle-props)
+      (pretty-css.control/mouse-event-attributes       toggle-props)
+      (pretty-css.content/unselectable-text-attributes toggle-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -44,8 +47,8 @@
   ; {:class (keyword or keywords in vector)}
   [_ toggle-props]
   (-> {:class :pe-toggle}
-      (pretty-css/class-attributes        toggle-props)
+      (pretty-css.basic/class-attributes        toggle-props)
       (pretty-css.layout/outdent-attributes      toggle-props)
-      (pretty-css/state-attributes        toggle-props)
-      (pretty-css/theme-attributes        toggle-props)
+      (pretty-css.basic/state-attributes        toggle-props)
+      (pretty-css.appearance/theme-attributes        toggle-props)
       (pretty-css.layout/wrapper-size-attributes toggle-props)))

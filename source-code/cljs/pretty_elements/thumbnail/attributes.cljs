@@ -2,7 +2,11 @@
 (ns pretty-elements.thumbnail.attributes
     (:require [pretty-css.api :as pretty-css]
               [pretty-css.appearance.api :as pretty-css.appearance]
-              [pretty-css.layout.api :as pretty-css.layout]))
+              [pretty-css.basic.api :as pretty-css.basic]
+              [pretty-css.content.api :as pretty-css.content]
+              [pretty-css.control.api :as pretty-css.control]
+              [pretty-css.layout.api :as pretty-css.layout]
+              [pretty-css.live.api :as pretty-css.live]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -23,17 +27,17 @@
                     {:class                :pe-thumbnail--body
                      :data-background-size background-size})
       (pretty-css.appearance/border-attributes         thumbnail-props)
-      (pretty-css/effect-attributes         thumbnail-props)
+      (pretty-css.live/effect-attributes         thumbnail-props)
       (pretty-css.layout/indent-attributes         thumbnail-props)
-      (pretty-css/href-attributes           thumbnail-props)
-      (pretty-css/mouse-event-attributes    thumbnail-props)
-      (pretty-css/style-attributes          thumbnail-props)
+      (pretty-css.control/anchor-attributes           thumbnail-props)
+      (pretty-css.control/mouse-event-attributes    thumbnail-props)
+      (pretty-css.basic/style-attributes          thumbnail-props)
       (pretty-css.layout/thumbnail-size-attributes thumbnail-props)
 
       ; i think this text attributes fn is only applied because of the text-selection property
       ; so maybe find a solution for images to make the unselectable just as the icon-attributes fn
       ; makes the icons unselectable.
-      (pretty-css/unselectable-text-attributes thumbnail-props)))
+      (pretty-css.content/unselectable-text-attributes thumbnail-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -48,8 +52,8 @@
   ; {}
   [_ thumbnail-props]
   (-> {:class :pe-thumbnail}
-      (pretty-css/class-attributes        thumbnail-props)
+      (pretty-css.basic/class-attributes        thumbnail-props)
       (pretty-css.layout/outdent-attributes      thumbnail-props)
-      (pretty-css/state-attributes        thumbnail-props)
-      (pretty-css/theme-attributes        thumbnail-props)
+      (pretty-css.basic/state-attributes        thumbnail-props)
+      (pretty-css.appearance/theme-attributes        thumbnail-props)
       (pretty-css.layout/wrapper-size-attributes thumbnail-props)))

@@ -3,6 +3,9 @@
     (:require [dom.api                                 :as dom]
               [pretty-css.api :as pretty-css]
               [pretty-elements.expandable.side-effects :as expandable.side-effects]
+              [pretty-css.basic.api :as pretty-css.basic]
+              [pretty-css.content.api :as pretty-css.content]
+              [pretty-css.appearance.api :as pretty-css.appearance]
               [pretty-css.layout.api :as pretty-css.layout]))
 
 ;; ----------------------------------------------------------------------------
@@ -20,7 +23,7 @@
   ; {}
   [_ expandable-props]
   (-> {:class :pe-expandable--icon}
-      (pretty-css/icon-attributes expandable-props)))
+      (pretty-css.content/icon-attributes expandable-props)))
 
 (defn expandable-header-attributes
   ; @ignore
@@ -55,7 +58,7 @@
   [_ expandable-props]
   (-> {:class :pe-expandable--body}
       (pretty-css.layout/indent-attributes expandable-props)
-      (pretty-css/style-attributes  expandable-props)))
+      (pretty-css.basic/style-attributes  expandable-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -70,7 +73,7 @@
   ; {}
   [_ expandable-props]
   (-> {:class :pe-expandable}
-      (pretty-css/class-attributes   expandable-props)
+      (pretty-css.basic/class-attributes   expandable-props)
       (pretty-css.layout/outdent-attributes expandable-props)
-      (pretty-css/state-attributes   expandable-props)
-      (pretty-css/theme-attributes   expandable-props)))
+      (pretty-css.basic/state-attributes   expandable-props)
+      (pretty-css.appearance/theme-attributes   expandable-props)))

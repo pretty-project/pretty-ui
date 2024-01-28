@@ -1,7 +1,9 @@
 
 (ns pretty-website.multi-menu.attributes
     (:require [pretty-css.api :as pretty-css]
-              [pretty-css.layout.api :as pretty-css.layout]))
+              [pretty-css.layout.api :as pretty-css.layout]
+              [pretty-css.appearance.api :as pretty-css.appearance]
+              [pretty-css.basic.api :as pretty-css.basic]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -17,7 +19,7 @@
   [_ menu-props]
   (-> {:class :pw-multi-menu--body}
       (pretty-css.layout/indent-attributes menu-props)
-      (pretty-css/style-attributes  menu-props)))
+      (pretty-css.basic/style-attributes  menu-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -32,7 +34,7 @@
   ; {:class (keyword or keywords in vector)}
   [_ menu-props]
   (-> {:class :pw-multi-menu}
-      (pretty-css/class-attributes   menu-props)
-      (pretty-css/state-attributes   menu-props)
+      (pretty-css.basic/class-attributes   menu-props)
+      (pretty-css.basic/state-attributes   menu-props)
       (pretty-css.layout/outdent-attributes menu-props)
-      (pretty-css/theme-attributes   menu-props)))
+      (pretty-css.appearance/theme-attributes   menu-props)))

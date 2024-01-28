@@ -8,7 +8,8 @@
               [pretty-elements.label.prototypes :as label.prototypes]
               [pretty-presets.api               :as pretty-presets]
               [pretty-engine.api :as pretty-engine]
-              [reagent.api :as reagent]))
+              [reagent.api :as reagent]
+              [pretty-css.content.api :as pretty-css.content]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -57,7 +58,7 @@
   ; @param (map) label-props
   ; {:icon (keyword)}
   [_ {:keys [icon] :as label-props}]
-  (if icon [:i (pretty-css/icon-attributes {:class :pe-label--icon} label-props) icon]))
+  (if icon [:i (pretty-css.content/icon-attributes {:class :pe-label--icon} label-props) icon]))
 
 (defn- label-content
   ; @ignore

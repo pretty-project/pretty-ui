@@ -141,7 +141,6 @@
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :placeholder (metamorphic-content)(opt)
   ;  :preset (keyword)(opt)
-  ;  :reveal-effect (keyword)(opt)
   ;  :set-value-f (function)(opt)
   ;  :start-adornments (maps in vector)(opt)
   ;  :style (map)(opt)

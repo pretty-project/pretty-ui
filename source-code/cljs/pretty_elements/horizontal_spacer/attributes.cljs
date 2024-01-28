@@ -1,7 +1,8 @@
 
 (ns pretty-elements.horizontal-spacer.attributes
     (:require [pretty-css.api :as pretty-css]
-              [pretty-css.layout.api :as pretty-css.layout]))
+              [pretty-css.layout.api :as pretty-css.layout]
+              [pretty-css.basic.api :as pretty-css.basic]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -17,6 +18,6 @@
   [_ spacer-props]
   (-> {:class :pe-horizontal-spacer}
       (pretty-css.layout/block-size-attributes spacer-props)
-      (pretty-css/class-attributes      spacer-props)
-      (pretty-css/state-attributes      spacer-props)
-      (pretty-css/style-attributes      spacer-props)))
+      (pretty-css.basic/class-attributes      spacer-props)
+      (pretty-css.basic/state-attributes      spacer-props)
+      (pretty-css.basic/style-attributes      spacer-props)))

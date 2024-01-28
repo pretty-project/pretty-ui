@@ -3,6 +3,9 @@
     (:require [app-dictionary.api   :as app-dictionary]
               [dom.api              :as dom]
               [pretty-css.api :as pretty-css]
+              [pretty-css.content.api :as pretty-css.content]
+              [pretty-css.appearance.api :as pretty-css.appearance]
+              [pretty-css.basic.api :as pretty-css.basic]
               [pretty-css.layout.api :as pretty-css.layout]))
 
 ;; ----------------------------------------------------------------------------
@@ -29,8 +32,8 @@
             :data-selected        selected?
             :on-click             on-click-f
             :on-mouse-up          dom/blur-active-element!}
-           (pretty-css/font-attributes              selector-props)
-           (pretty-css/unselectable-text-attributes selector-props))))
+           (pretty-css.content/font-attributes              selector-props)
+           (pretty-css.content/unselectable-text-attributes selector-props))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -46,8 +49,8 @@
   [_ selector-props]
   (-> {:class :pw-language-selector--body}
       (pretty-css.layout/indent-attributes selector-props)
-      (pretty-css/row-attributes    selector-props)
-      (pretty-css/style-attributes  selector-props)))
+      (pretty-css.layout/flex-attributes    selector-props)
+      (pretty-css.basic/style-attributes  selector-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -62,7 +65,7 @@
   ; {:class (keyword or keywords in vector)}
   [_ selector-props]
   (-> {:class :pw-language-selector}
-      (pretty-css/class-attributes   selector-props)
-      (pretty-css/state-attributes   selector-props)
+      (pretty-css.basic/class-attributes   selector-props)
+      (pretty-css.basic/state-attributes   selector-props)
       (pretty-css.layout/outdent-attributes selector-props)
-      (pretty-css/theme-attributes   selector-props)))
+      (pretty-css.appearance/theme-attributes   selector-props)))

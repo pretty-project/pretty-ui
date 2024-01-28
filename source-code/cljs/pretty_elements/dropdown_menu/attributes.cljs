@@ -3,6 +3,7 @@
     (:require [pretty-css.api :as pretty-css]
               [pretty-elements.dropdown-menu.state :as dropdown-menu.state]
               [pretty-css.appearance.api :as pretty-css.appearance]
+              [pretty-css.basic.api :as pretty-css.basic]
               [pretty-css.layout.api :as pretty-css.layout]))
 
 ;; ----------------------------------------------------------------------------
@@ -50,7 +51,7 @@
   [_ menu-props]
   (-> {:class :pe-dropdown-menu--body}
       (pretty-css.layout/indent-attributes menu-props)
-      (pretty-css/style-attributes  menu-props)))
+      (pretty-css.basic/style-attributes  menu-props)))
 
 (defn menu-attributes
   ; @ignore
@@ -75,6 +76,6 @@
   ;   solves the problem.
   (-> {:class :pe-dropdown-menu
        :on-mouse-leave #(swap! dropdown-menu.state/MENUS assoc-in [menu-id :active-dex] nil)}
-      (pretty-css/class-attributes   menu-props)
-      (pretty-css/outdent-attributes menu-props)
-      (pretty-css/state-attributes   menu-props)))
+      (pretty-css.basic/class-attributes   menu-props)
+      (pretty-css.layout/outdent-attributes menu-props)
+      (pretty-css.basic/state-attributes   menu-props)))

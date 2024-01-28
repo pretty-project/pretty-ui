@@ -2,7 +2,8 @@
 (ns pretty-layouts.sidebar.attributes
     (:require [pretty-css.api :as pretty-css]
               [pretty-css.appearance.api :as pretty-css.appearance]
-              [pretty-css.layout.api :as pretty-css.layout]))
+              [pretty-css.layout.api :as pretty-css.layout]
+              [pretty-css.basic.api :as pretty-css.basic]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -41,8 +42,8 @@
       (pretty-css.appearance/border-attributes       sidebar-props)
       (pretty-css.layout/element-size-attributes sidebar-props)
       (pretty-css.layout/indent-attributes       sidebar-props)
-      (pretty-css/style-attributes        sidebar-props)
-      (pretty-css/theme-attributes        sidebar-props)))
+      (pretty-css.basic/style-attributes        sidebar-props)
+      (pretty-css.appearance/theme-attributes        sidebar-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

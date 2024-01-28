@@ -3,7 +3,9 @@
     (:require [pretty-css.api :as pretty-css]
               [pretty-elements.image.utils :as image.utils]
               [pretty-css.layout.api :as pretty-css.layout]
-              [react.api                   :as react]))
+              [pretty-css.appearance.api :as pretty-css.appearance]
+              [react.api                   :as react]
+              [pretty-css.basic.api :as pretty-css.basic]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -27,7 +29,7 @@
        :src      (-> src)}
       (pretty-css.layout/element-size-attributes image-props)
       (pretty-css.layout/indent-attributes       image-props)
-      (pretty-css/style-attributes        image-props)))
+      (pretty-css.basic/style-attributes        image-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -42,8 +44,8 @@
   ; {:class (keyword or keywords in vector)}
   [_ image-props]
   (-> {:class :pe-image}
-      (pretty-css/class-attributes        image-props)
+      (pretty-css.basic/class-attributes        image-props)
       (pretty-css.layout/outdent-attributes      image-props)
-      (pretty-css/state-attributes        image-props)
-      (pretty-css/theme-attributes        image-props)
+      (pretty-css.basic/state-attributes        image-props)
+      (pretty-css.appearance/theme-attributes        image-props)
       (pretty-css.layout/wrapper-size-attributes image-props)))

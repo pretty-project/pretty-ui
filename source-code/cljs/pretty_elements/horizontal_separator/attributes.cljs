@@ -2,6 +2,8 @@
 (ns pretty-elements.horizontal-separator.attributes
     (:require [pretty-css.api :as pretty-css]
               [pretty-css.appearance.api :as pretty-css.appearance]
+              [pretty-css.basic.api :as pretty-css.basic]
+              [pretty-css.content.api :as pretty-css.content]
               [pretty-css.layout.api :as pretty-css.layout]))
 
 ;; ----------------------------------------------------------------------------
@@ -20,8 +22,8 @@
       (pretty-css.appearance/background-attributes             separator-props)
       (pretty-css.layout/indent-attributes            separator-props)
       (pretty-css.layout/element-size-attributes      separator-props)
-      (pretty-css/style-attributes             separator-props)
-      (pretty-css/unselectable-text-attributes separator-props)))
+      (pretty-css.basic/style-attributes             separator-props)
+      (pretty-css.content/unselectable-text-attributes separator-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -36,8 +38,8 @@
   ; {:class (keyword or keywords in vector)}
   [_ separator-props]
   (-> {:class :pe-horizontal-separator}
-      (pretty-css/class-attributes        separator-props)
+      (pretty-css.basic/class-attributes        separator-props)
       (pretty-css.layout/outdent-attributes      separator-props)
-      (pretty-css/state-attributes        separator-props)
-      (pretty-css/theme-attributes        separator-props)
+      (pretty-css.basic/state-attributes        separator-props)
+      (pretty-css.appearance/theme-attributes        separator-props)
       (pretty-css.layout/wrapper-size-attributes separator-props)))

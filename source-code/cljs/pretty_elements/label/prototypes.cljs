@@ -39,8 +39,8 @@
   ; - In some cases the content can be an empty string for a short while before it
   ;   gets its value (e.g., from a subscription or a HTTP request, etc.).
   ;   Therefore, the placeholder has to get the same height, even if it's empty!
-  ;   Otherwise, an empty placeholder, and a delayed content would cause a short
-  ;   flickering by the inconsistent label height!
+  ;   Otherwise, an empty placeholder, and a delayed content could cause a short
+  ;   flickering due to the inconsistent label height!
   ; - Solution:
   ;   In case of the placeholder is also an empty string, the "\u00A0" white
   ;   character provides the consistent height for the element until the content gets its value.

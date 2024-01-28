@@ -2,7 +2,8 @@
 (ns pretty-elements.row.attributes
     (:require [pretty-css.api :as pretty-css]
               [pretty-css.appearance.api :as pretty-css.appearance]
-              [pretty-css.layout.api :as pretty-css.layout]))
+              [pretty-css.layout.api :as pretty-css.layout]
+              [pretty-css.basic.api :as pretty-css.basic]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -21,8 +22,8 @@
       (pretty-css.appearance/border-attributes       row-props)
       (pretty-css.layout/indent-attributes       row-props)
       (pretty-css.layout/element-size-attributes row-props)
-      (pretty-css/row-attributes          row-props)
-      (pretty-css/style-attributes        row-props)))
+      (pretty-css.layout/flex-attributes          row-props)
+      (pretty-css.basic/style-attributes        row-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -37,8 +38,8 @@
   ; {}
   [_ row-props]
   (-> {:class :pe-row}
-      (pretty-css/class-attributes        row-props)
+      (pretty-css.basic/class-attributes        row-props)
       (pretty-css.layout/outdent-attributes      row-props)
-      (pretty-css/state-attributes        row-props)
-      (pretty-css/theme-attributes        row-props)
+      (pretty-css.basic/state-attributes        row-props)
+      (pretty-css.appearance/theme-attributes        row-props)
       (pretty-css.layout/wrapper-size-attributes row-props)))

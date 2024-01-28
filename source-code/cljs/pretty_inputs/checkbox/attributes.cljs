@@ -4,7 +4,11 @@
               [pretty-css.api :as pretty-css]
               [pretty-engine.api    :as pretty-engine]
               [pretty-css.appearance.api :as pretty-css.appearance]
-              [pretty-css.layout.api :as pretty-css.layout]))
+              [pretty-css.basic.api :as pretty-css.basic]
+              [pretty-css.content.api :as pretty-css.content]
+              [pretty-css.control.api :as pretty-css.control]
+              [pretty-css.layout.api :as pretty-css.layout]
+              [pretty-css.live.api :as pretty-css.live]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -59,7 +63,7 @@
        :data-font-weight    :medium
        :data-letter-spacing :auto
        :data-line-height    :text-block}
-      (pretty-css/unselectable-text-attributes checkbox-props)))
+      (pretty-css.content/unselectable-text-attributes checkbox-props)))
 
 (defn checkbox-option-button-attributes
   ; @ignore
@@ -107,8 +111,8 @@
        (-> {:class        :pi-checkbox--option
             :data-checked option-selected?
             :disabled     disabled?}
-           (pretty-css/effect-attributes checkbox-props)
-           (pretty-css/mouse-event-attributes {:on-click-f on-click-f :on-mouse-up-f dom/blur-active-element!}))))
+           (pretty-css.live/effect-attributes checkbox-props)
+           (pretty-css.control/mouse-event-attributes {:on-click-f on-click-f :on-mouse-up-f dom/blur-active-element!}))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -130,8 +134,8 @@
             :on-blur  on-blur-f
             :on-focus on-focus-f}
            (pretty-css.layout/indent-attributes      checkbox-props)
-           (pretty-css/orientation-attributes checkbox-props)
-           (pretty-css/style-attributes       checkbox-props))))
+           (pretty-css.layout/flex-attributes checkbox-props)
+           (pretty-css.basic/style-attributes       checkbox-props))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -146,7 +150,7 @@
   ; {:class (keyword or keywords in vector)}
   [_ checkbox-props]
   (-> {:class :pi-checkbox}
-      (pretty-css/class-attributes   checkbox-props)
+      (pretty-css.basic/class-attributes   checkbox-props)
       (pretty-css.layout/outdent-attributes checkbox-props)
-      (pretty-css/state-attributes   checkbox-props)
-      (pretty-css/theme-attributes   checkbox-props)))
+      (pretty-css.basic/state-attributes   checkbox-props)
+      (pretty-css.appearance/theme-attributes   checkbox-props)))

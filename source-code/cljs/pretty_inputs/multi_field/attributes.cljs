@@ -1,7 +1,8 @@
 
 (ns pretty-inputs.multi-field.attributes
     (:require [pretty-css.api :as pretty-css]
-              [pretty-css.layout.api :as pretty-css.layout]))
+              [pretty-css.layout.api :as pretty-css.layout]
+              [pretty-css.basic.api :as pretty-css.basic]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -17,7 +18,7 @@
   [_ group-props]
   (-> {:class :pi-multi-field--body}
       (pretty-css.layout/indent-attributes group-props)
-      (pretty-css/style-attributes  group-props)))
+      (pretty-css.basic/style-attributes  group-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -35,6 +36,6 @@
   ; Therefore, no need to the group reacts to it.
   (let [group-props (dissoc group-props :disabled?)]
        (-> {:class :pi-multi-field}
-           (pretty-css/class-attributes   group-props)
+           (pretty-css.basic/class-attributes   group-props)
            (pretty-css.layout/outdent-attributes group-props)
-           (pretty-css/state-attributes   group-props))))
+           (pretty-css.basic/state-attributes   group-props))))

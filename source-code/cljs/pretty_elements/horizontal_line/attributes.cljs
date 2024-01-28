@@ -2,6 +2,7 @@
 (ns pretty-elements.horizontal-line.attributes
     (:require [fruits.css.api       :as css]
               [pretty-css.api :as pretty-css]
+              [pretty-css.basic.api :as pretty-css.basic]
               [pretty-css.appearance.api :as pretty-css.appearance]
               [pretty-css.layout.api :as pretty-css.layout]))
 
@@ -23,7 +24,7 @@
       (pretty-css.appearance/background-attributes        line-props)
       (pretty-css.layout/element-size-attributes line-props)
       (pretty-css.layout/indent-attributes       line-props)
-      (pretty-css/style-attributes        line-props)))
+      (pretty-css.basic/style-attributes        line-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -38,8 +39,8 @@
   ; {:class (keyword or keywords in vector)}
   [_ line-props]
   (-> {:class :pe-horizontal-line}
-      (pretty-css/class-attributes        line-props)
+      (pretty-css.basic/class-attributes        line-props)
       (pretty-css.layout/outdent-attributes      line-props)
-      (pretty-css/state-attributes        line-props)
-      (pretty-css/theme-attributes        line-props)
+      (pretty-css.basic/state-attributes        line-props)
+      (pretty-css.appearance/theme-attributes        line-props)
       (pretty-css.layout/wrapper-size-attributes line-props)))

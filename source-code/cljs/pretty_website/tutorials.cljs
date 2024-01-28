@@ -237,27 +237,6 @@
 ;
 ;
 ;
-
-;
-; @title :class
-;
-; @code Usage
-; [pretty-elements/button {:class (keyword or keywords in vector)]
-; [pretty-elements/button {:class :my-class]
-; [pretty-elements/button {:class [:my-class :another-class]]
-;
-;
-;
-; @title :click-effect
-;
-; @code Usage
-; [pretty-elements/button {:click-effect (keyword)}]
-; [pretty-elements/button {:click-effect :opacity}]
-;
-; @code Predefined values
-; :none, :opacity
-;
-;
 ;
 ; @title :content
 ;
@@ -273,19 +252,6 @@
 ; [pretty-elements/button {:content #'my-reagent-component}]
 ;
 ;
-;
-; @title :cursor
-;
-; @code Usage
-; [pretty-elements/button {:cursor (keyword or string)}]
-; [pretty-elements/button {:cursor :pointer}]
-; [pretty-elements/button {:cursor "pointer"}]
-;
-; @code Predefined values
-; :default, :disabled, :grab, :grabbing, :move, :pointer, :progress
-;
-;
-;
 ; @title :disabled?
 ;
 ; @code Usage
@@ -295,49 +261,6 @@
 ;
 ;
 
-;
-;
-;
-; @title :font-size
-;
-; @code Usage
-; [pretty-elements/button {:font-size (keyword, px or string)}]
-; [pretty-elements/button {:font-size :xs}]
-; [pretty-elements/button {:font-size 10}]
-; [pretty-elements/button {:font-size "10px"}]
-; [pretty-elements/button {:font-size "5em"}]
-;
-; @code Predefined values
-; :inherit,
-; :micro, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-;
-;
-;
-; @title :font-weight
-;
-; @code Usage
-; [pretty-elements/button {:font-weight (keyword or integer)}]
-; [pretty-elements/button {:font-weight :medium}]
-; [pretty-elements/button {:font-weight 500}]
-;
-; @code Predefined values
-; :inherit,
-; :thin, :extra-light, :light, :normal, :medium, :semi-bold, :bold, :extra-bold, :black, :extra-black
-;
-;
-;
-; @title :gap
-;
-; @code Usage
-; [pretty-elements/button {:gap (keyword, px or string)}]
-; [pretty-elements/button {:gap :xs}]
-; [pretty-elements/button {:gap 10}]
-; [pretty-elements/button {:gap "10px"}]
-; [pretty-elements/button {:gap "5%"}]
-;
-; @code Predefined values
-; :auto,
-; :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
 ;
 ;
 ;
@@ -354,20 +277,6 @@
 ;
 ;
 ;
-; @title :height
-;
-; @code Usage
-; [pretty-elements/button {:height (keyword, px or string)}]
-; [pretty-elements/button {:height :xs}]
-; [pretty-elements/button {:height 10}]
-; [pretty-elements/button {:height "10px"}]
-; [pretty-elements/button {:height "5%"}]
-;
-; @code Predefined values
-; :auto, :content, :parent,
-; :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-;
-;
 ;
 ; @title :horizontal-align
 ;
@@ -382,18 +291,6 @@
 ;
 ;
 
-;
-;
-;
-; @title :hover-effect
-;
-; @code Usage
-; [pretty-elements/button {:hover-effect (keyword)}]
-; [pretty-elements/button {:hover-effect :opacity}]
-;
-; @code Predefined values
-; :none, :opacity
-;
 ;
 ;
 ; @title :href-target
@@ -415,39 +312,6 @@
 ;
 ;
 ;
-; @title :icon
-;
-; @code Usage
-; [pretty-elements/button {:icon (keyword)}]
-; [pretty-elements/button {:icon :any_material_icons_icon_name}]
-; [pretty-elements/button {:icon :any_material_symbols_icon_name}]
-;
-;
-;
-; @title :icon-color
-;
-; @code Usage
-; [pretty-elements/button {:icon-color (keyword or string)}]
-; [pretty-elements/button {:icon-color :primary}]
-; [pretty-elements/button {:icon-color "#888"}]
-;
-; @code Predefined values
-; :inherit,
-; :default, :highlight, :invert, :muted, :primary, :secondary, :tertiary, :success, :warning,
-;
-;
-;
-; @title :icon-family
-;
-; @code Usage
-; [pretty-elements/button {:icon-family (keyword)}]
-; [pretty-elements/button {:icon-family :material-symbols-outlined}]
-;
-; @code Predefined values
-; :material-symbols-filled, :material-symbols-outlined
-;
-;
-;
 ; @title :icon-position
 ;
 ; @code Usage
@@ -456,22 +320,6 @@
 ;
 ; @code Predefined values
 ; :left, :right
-;
-;
-;
-; @title :icon-size
-;
-; @code Usage
-; [pretty-elements/button {:icon-size (keyword, px or string)}]
-; [pretty-elements/button {:icon-size :xs}]
-; [pretty-elements/button {:icon-size 10}]
-; [pretty-elements/button {:icon-size "10px"}]
-; [pretty-elements/button {:icon-size "5em"}]
-;
-; @code Predefined values
-; :inherit,
-; :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-;
 ;
 ;
 
@@ -486,80 +334,6 @@
 ; @code Usage
 ; [pretty-elements/button {:keypress (map)}]
 ; [pretty-elements/button {:keypress {:key-code 13 ...} :on-click-f (fn [] ...)}]
-;
-;
-;
-; @title :line-height
-;
-; @code Usage
-; [pretty-elements/button {:line-height (keyword, px or string)}]
-; [pretty-elements/button {:line-height :xs}]
-; [pretty-elements/button {:line-height 10}]
-; [pretty-elements/button {:line-height "10px"}]
-; [pretty-elements/button {:line-height "5em"}]
-;
-; @code Predefined values
-; :auto, :inherit, :text-block,
-; :micro, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-;
-;
-;
-;
-;
-;
-; @title :max-height
-;
-; @code Usage
-; [pretty-elements/button {:max-height (keyword, px or string)}]
-; [pretty-elements/button {:max-height :xs}]
-; [pretty-elements/button {:max-height 10}]
-; [pretty-elements/button {:max-height "10px"}]
-; [pretty-elements/button {:max-height "5%"}]
-;
-; @code Predefined values
-; :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-;
-;
-;
-; @title :max-width
-;
-; @code Usage
-; [pretty-elements/button {:max-width (keyword, px or string)}]
-; [pretty-elements/button {:max-width :xs}]
-; [pretty-elements/button {:max-width 10}]
-; [pretty-elements/button {:max-width "10px"}]
-; [pretty-elements/button {:max-width "5%"}]
-;
-; @code Predefined values
-; :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-;
-;
-;
-; @title :min-height
-;
-; @code Usage
-; [pretty-elements/button {:min-height (keyword, px or string)}]
-; [pretty-elements/button {:min-height :xs}]
-; [pretty-elements/button {:min-height 10}]
-; [pretty-elements/button {:min-height "10px"}]
-; [pretty-elements/button {:min-height "5%"}]
-;
-; @code Predefined values
-; :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-;
-;
-;
-; @title :min-width
-;
-; @code Usage
-; [pretty-elements/button {:min-width (keyword, px or string)}]
-; [pretty-elements/button {:min-width :xs}]
-; [pretty-elements/button {:min-width 10}]
-; [pretty-elements/button {:min-width "10px"}]
-; [pretty-elements/button {:min-width "5%"}]
-;
-; @code Predefined values
-; :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
 ;
 ;
 ;
@@ -710,77 +484,11 @@
 ;
 ;
 ;
-; @title :reveal-effect
+; @title :on-click-timeout
 ;
 ; @code Usage
-; [pretty-elements/button {:reveal-effect (keyword)}]
-; [pretty-elements/button {:reveal-effect :opacity}]
-;
-; @code Predefined values
-; :none, :delayed, :opacity
-;
-;
-;
-; @title :text-align
-;
-; @code Usage
-; [pretty-elements/text {:text-align (keyword)}]
-; [pretty-elements/text {:text-align :left}]
-;
-; @code Predefined values
-; :center, :left, :right
-;
-;
-;
-; @title :text-color
-;
-; @code Usage
-; [pretty-elements/button {:text-color (keyword or string)}]
-; [pretty-elements/button {:text-color :primary}]
-; [pretty-elements/button {:text-color "#888"}]
-;
-; @code Predefined values
-; :inherit,
-; :default, :highlight, :invert, :muted, :primary, :secondary, :tertiary, :success, :warning,
-;
-;
-;
-; @title :text-overflow
-;
-; @code Usage
-; [pretty-elements/button {:text-overflow (keyword)}]
-; [pretty-elements/button {:text-overflow :ellipsis}]
-;
-; @code Predefined values
-; :inherit, (is the :text-overflow really inheritable?)
-; :ellipsis, :hidden, :visible, :wrap
-;
-;
-;
-; @title :text-selectable?
-;
-; @code Usage
-; [pretty-elements/text {:text-selectable? (boolean)}]
-; [pretty-elements/text {:text-selectable? false}]
-;
-;
-;
-; @title :text-transform
-;
-; @code Usage
-; [pretty-elements/button {:text-transform (keyword)}]
-; [pretty-elements/button {:text-transform :lowercase}]
-;
-; @code Predefined values
-; :capitalize, :lowercase, :uppercase
-;
-;
-;
-; @title :timeout
-;
-; @code Usage
-; [pretty-elements/button {:timeout (ms)}]
-; [pretty-elements/button {:on-click (fn [] (println '...')) :timeout 5000}]
+; [pretty-elements/button {:on-click-timeout (ms)}]
+; [pretty-elements/button {:on-click-f (fn [] (println '...')) :on-click-timeout 5000}]
 ;
 ;
 ;
@@ -795,16 +503,3 @@
 ; :space-around, :space-between, :space-evenly
 ;
 ;
-;
-; @title :width
-;
-; @code Usage
-; [pretty-elements/button {:width (keyword, px or string)}]
-; [pretty-elements/button {:width :xs}]
-; [pretty-elements/button {:width 10}]
-; [pretty-elements/button {:width "10px"}]
-; [pretty-elements/button {:width "5%"}]
-;
-; @code Predefined values
-; :auto, :content, :parent,
-; :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl

@@ -2,6 +2,8 @@
 (ns pretty-elements.content-swapper.attributes
     (:require [pretty-css.api :as pretty-css]
               [pretty-elements.content-swapper.state :as content-swapper.state]
+              [pretty-css.basic.api :as pretty-css.basic]
+              [pretty-css.appearance.api :as pretty-css.appearance]
               [pretty-css.layout.api :as pretty-css.layout]))
 
 ;; ----------------------------------------------------------------------------
@@ -20,7 +22,7 @@
   (-> {:class                    :pe-content-swapper--body
        :data-animation-direction (-> @content-swapper.state/SWAPPERS swapper-id :animation-direction)}
       (pretty-css.layout/indent-attributes swapper-props)
-      (pretty-css/style-attributes  swapper-props)))
+      (pretty-css.basic/style-attributes  swapper-props)))
 
 (defn swapper-attributes
   ; @ignore
@@ -32,7 +34,7 @@
   ; {:class (keyword or keywords in vector)}
   [_ swapper-props]
   (-> {:class :pe-content-swapper}
-      (pretty-css/class-attributes   swapper-props)
+      (pretty-css.basic/class-attributes   swapper-props)
       (pretty-css.layout/outdent-attributes swapper-props)
-      (pretty-css/state-attributes   swapper-props)
-      (pretty-css/theme-attributes   swapper-props)))
+      (pretty-css.basic/state-attributes   swapper-props)
+      (pretty-css.appearance/theme-attributes   swapper-props)))

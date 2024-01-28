@@ -6,6 +6,7 @@
               [pretty-diagrams.line-diagram.utils :as line-diagram.utils]
               [pretty-css.accessories.api :as pretty-css.accessories]
               [pretty-css.appearance.api :as pretty-css.appearance]
+              [pretty-css.basic.api :as pretty-css.basic]
               [pretty-css.layout.api :as pretty-css.layout]))
 
 ;; ----------------------------------------------------------------------------
@@ -61,7 +62,7 @@
   (-> {:class :pd-line-diagram--body}
       (pretty-css.layout/indent-attributes       diagram-props)
       (pretty-css.layout/element-size-attributes diagram-props)
-      (pretty-css/style-attributes        diagram-props)))
+      (pretty-css.basic/style-attributes        diagram-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -76,8 +77,8 @@
   ; {:class (keyword or keywords in vector)}
   [_ diagram-props]
   (-> {:class :pd-line-diagram}
-      (pretty-css/class-attributes        diagram-props)
+      (pretty-css.basic/class-attributes        diagram-props)
       (pretty-css.layout/outdent-attributes      diagram-props)
-      (pretty-css/state-attributes        diagram-props)
-      (pretty-css/theme-attributes        diagram-props)
+      (pretty-css.basic/state-attributes        diagram-props)
+      (pretty-css.appearance/theme-attributes        diagram-props)
       (pretty-css.layout/wrapper-size-attributes diagram-props)))

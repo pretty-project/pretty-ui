@@ -1,7 +1,9 @@
 
 (ns pretty-inputs.digit-field.attributes
     (:require [pretty-css.api :as pretty-css]
-              [pretty-css.layout.api :as pretty-css.layout]))
+              [pretty-css.layout.api :as pretty-css.layout]
+              [pretty-css.basic.api :as pretty-css.basic]
+              [pretty-css.appearance.api :as pretty-css.appearance]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -17,7 +19,7 @@
   [_ field-props]
   (-> {:class :pi-digit-field--body}
       (pretty-css.layout/indent-attributes field-props)
-      (pretty-css/style-attributes  field-props)))
+      (pretty-css.basic/style-attributes  field-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -32,7 +34,7 @@
   ; {}
   [_ field-props]
   (-> {:class :pi-digit-field}
-      (pretty-css/class-attributes   field-props)
+      (pretty-css.basic/class-attributes   field-props)
       (pretty-css.layout/outdent-attributes field-props)
-      (pretty-css/state-attributes   field-props)
-      (pretty-css/theme-attributes   field-props)))
+      (pretty-css.basic/state-attributes   field-props)
+      (pretty-css.appearance/theme-attributes   field-props)))

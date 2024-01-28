@@ -5,7 +5,9 @@
               [pretty-css.api :as pretty-css]
               [pretty-css.svg.api :as pretty-css.svg]
               [pretty-diagrams.circle-diagram.config :as circle-diagram.config]
-              [pretty-css.layout.api :as pretty-css.layout]))
+              [pretty-css.basic.api :as pretty-css.basic]
+              [pretty-css.layout.api :as pretty-css.layout]
+              [pretty-css.appearance.api :as pretty-css.appearance]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -80,7 +82,7 @@
   [_ diagram-props]
   (-> {:class :pd-circle-diagram--body}
       (pretty-css.layout/indent-attributes diagram-props)
-      (pretty-css/style-attributes  diagram-props)))
+      (pretty-css.basic/style-attributes  diagram-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -95,7 +97,7 @@
   ; {}
   [_ diagram-props]
   (-> {:class :pd-circle-diagram}
-      (pretty-css/class-attributes   diagram-props)
+      (pretty-css.basic/class-attributes   diagram-props)
       (pretty-css.layout/outdent-attributes diagram-props)
-      (pretty-css/state-attributes   diagram-props)
-      (pretty-css/theme-attributes   diagram-props)))
+      (pretty-css.basic/state-attributes   diagram-props)
+      (pretty-css.appearance/theme-attributes   diagram-props)))

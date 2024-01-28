@@ -2,6 +2,7 @@
 (ns pretty-elements.column.attributes
     (:require [pretty-css.api :as pretty-css]
               [pretty-css.appearance.api :as pretty-css.appearance]
+              [pretty-css.basic.api :as pretty-css.basic]
               [pretty-css.layout.api :as pretty-css.layout]))
 
 ;; ----------------------------------------------------------------------------
@@ -19,10 +20,10 @@
   (-> {:class :pe-column--body}
       (pretty-css.appearance/background-attributes        column-props)
       (pretty-css.appearance/border-attributes       column-props)
-      (pretty-css/column-attributes       column-props)
+      (pretty-css.layout/flex-attributes       column-props)
       (pretty-css.layout/element-size-attributes column-props)
       (pretty-css.layout/indent-attributes       column-props)
-      (pretty-css/style-attributes        column-props)))
+      (pretty-css.basic/style-attributes        column-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -37,8 +38,8 @@
   ; {}
   [_ column-props]
   (-> {:class :pe-column}
-      (pretty-css/class-attributes        column-props)
+      (pretty-css.basic/class-attributes        column-props)
       (pretty-css.layout/outdent-attributes      column-props)
-      (pretty-css/state-attributes        column-props)
-      (pretty-css/theme-attributes        column-props)
+      (pretty-css.basic/state-attributes        column-props)
+      (pretty-css.appearance/theme-attributes        column-props)
       (pretty-css.layout/wrapper-size-attributes column-props)))

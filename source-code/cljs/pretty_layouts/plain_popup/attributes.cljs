@@ -1,7 +1,9 @@
 
 (ns pretty-layouts.plain-popup.attributes
     (:require [pretty-css.api :as pretty-css]
-              [re-frame.api         :as r]))
+              [re-frame.api         :as r]
+              [pretty-css.basic.api :as pretty-css.basic]
+              [pretty-css.appearance.api :as pretty-css.appearance]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -31,5 +33,7 @@
   ; {}
   [_ popup-props]
   (-> {:class :pl-plain-popup}
-      (pretty-css/style-attributes popup-props)
-      (pretty-css/theme-attributes popup-props)))
+      (pretty-css.basic/style-attributes popup-props)
+      (pretty-css.appearance/theme-attributes popup-props)))
+
+      ; class-attributes?

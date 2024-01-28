@@ -5,7 +5,11 @@
               [pretty-engine.api    :as pretty-engine]
               [re-frame.api         :as r]
               [pretty-css.appearance.api :as pretty-css.appearance]
-              [pretty-css.layout.api :as pretty-css.layout]))
+              [pretty-css.basic.api :as pretty-css.basic]
+              [pretty-css.content.api :as pretty-css.content]
+              [pretty-css.control.api :as pretty-css.control]
+              [pretty-css.layout.api :as pretty-css.layout]
+              [pretty-css.live.api :as pretty-css.live]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -59,7 +63,7 @@
        :data-font-weight    :medium
        :data-letter-spacing :auto
        :data-line-height    :text-block}
-      (pretty-css/unselectable-text-attributes switch-props)))
+      (pretty-css.content/unselectable-text-attributes switch-props)))
 
 (defn switch-option-thumb-attributes
   ; @ignore
@@ -107,8 +111,8 @@
        (-> {:class         :pi-switch--option
             :data-switched option-selected?
             :disabled      disabled?}
-           (pretty-css/effect-attributes switch-props)
-           (pretty-css/mouse-event-attributes {:on-click-f on-click-f :on-mouse-up-f dom/blur-active-element!}))))
+           (pretty-css.live/effect-attributes switch-props)
+           (pretty-css.control/mouse-event-attributes {:on-click-f on-click-f :on-mouse-up-f dom/blur-active-element!}))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -128,8 +132,8 @@
             :on-blur  on-blur-f
             :on-focus on-focus-f}
            (pretty-css.layout/indent-attributes      switch-props)
-           (pretty-css/orientation-attributes switch-props)
-           (pretty-css/style-attributes       switch-props))))
+           (pretty-css.layout/flex-attributes switch-props)
+           (pretty-css.basic/style-attributes              switch-props))))
 
 (defn switch-attributes
   ; @ignore
@@ -141,7 +145,7 @@
   ; {}
   [_ switch-props]
   (-> {:class :pi-switch}
-      (pretty-css/class-attributes   switch-props)
+      (pretty-css.basic/class-attributes   switch-props)
       (pretty-css.layout/outdent-attributes switch-props)
-      (pretty-css/state-attributes   switch-props)
-      (pretty-css/theme-attributes   switch-props)))
+      (pretty-css.basic/state-attributes   switch-props)
+      (pretty-css.appearance/theme-attributes   switch-props)))

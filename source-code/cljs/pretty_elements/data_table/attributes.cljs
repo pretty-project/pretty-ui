@@ -2,6 +2,8 @@
 (ns pretty-elements.data-table.attributes
     (:require [pretty-css.api :as pretty-css]
               [pretty-css.appearance.api :as pretty-css.appearance]
+              [pretty-css.basic.api :as pretty-css.basic]
+              [pretty-css.content.api :as pretty-css.content]
               [pretty-css.layout.api :as pretty-css.layout]))
 
 ;; ----------------------------------------------------------------------------
@@ -48,9 +50,9 @@
   [_ _ cell-props]
   (-> {:class :pe-data-table--cell}
       (pretty-css.appearance/background-attributes           cell-props)
-      (pretty-css/font-attributes            cell-props)
+      (pretty-css.content/font-attributes            cell-props)
       (pretty-css.layout/indent-attributes          cell-props)
-      (pretty-css/selectable-text-attributes cell-props)))
+      (pretty-css.content/selectable-text-attributes cell-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -66,7 +68,7 @@
   [_ table-props]
   (-> {:class :pe-data-table--body}
       (pretty-css.layout/indent-attributes table-props)
-      (pretty-css/style-attributes  table-props)))
+      (pretty-css.basic/style-attributes  table-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -81,7 +83,7 @@
   ; {:class (keyword or keywords in vector)}
   [_ table-props]
   (-> {:class :pe-data-table}
-      (pretty-css/class-attributes   table-props)
+      (pretty-css.basic/class-attributes   table-props)
       (pretty-css.layout/outdent-attributes table-props)
-      (pretty-css/state-attributes   table-props)
-      (pretty-css/theme-attributes   table-props)))
+      (pretty-css.basic/state-attributes   table-props)
+      (pretty-css.appearance/theme-attributes   table-props)))

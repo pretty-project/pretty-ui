@@ -206,7 +206,6 @@
   ;  :placeholder (metamorphic-content)(opt)
   ;  :popup (map)(opt)
   ;  :projected-value (*)(opt)
-  ;  :reveal-effect (keyword)(opt)
   ;  :set-value-f (function)(opt)
   ;  :theme (keyword)(opt)
   ;  :validate-when-change? (boolean)(opt)

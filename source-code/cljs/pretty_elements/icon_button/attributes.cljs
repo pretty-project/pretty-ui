@@ -3,6 +3,9 @@
     (:require [pretty-css.api :as pretty-css]
               [pretty-elements.button.attributes :as button.attributes]
               [pretty-css.accessories.api :as pretty-css.accessories]
+              [pretty-css.content.api :as pretty-css.content]
+              [pretty-css.appearance.api :as pretty-css.appearance]
+              [pretty-css.basic.api :as pretty-css.basic]
               [pretty-css.layout.api :as pretty-css.layout]))
 
 ;; ----------------------------------------------------------------------------
@@ -19,7 +22,7 @@
   ; {}
   [_ button-props]
   (-> {:class :pe-icon-button--icon}
-      (pretty-css/icon-attributes button-props)))
+      (pretty-css.content/icon-attributes button-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -51,7 +54,7 @@
   ; {:class (keyword or keywords in vector)}
   [_ button-props]
   (-> {:class :pe-icon-button}
-      (pretty-css/class-attributes   button-props)
+      (pretty-css.basic/class-attributes   button-props)
       (pretty-css.layout/outdent-attributes button-props)
-      (pretty-css/state-attributes   button-props)
-      (pretty-css/theme-attributes   button-props)))
+      (pretty-css.basic/state-attributes   button-props)
+      (pretty-css.appearance/theme-attributes   button-props)))
