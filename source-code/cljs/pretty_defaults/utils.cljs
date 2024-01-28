@@ -7,9 +7,6 @@
 ;; ----------------------------------------------------------------------------
 
 (defn use-default-values
-  ; @note
-  ; Use keyword type keys!
-  ;
   ; @description
   ; - Replaces NIL or missing values in the given 'element-props' map with corresponding values from the given 'default-props' map(s).
   ; - Updates map type values in the given 'element-props' map by merging them with corresponding values from the given 'default-props' map(s).
@@ -46,9 +43,6 @@
        (map/deep-merge default-props element-props)))
 
 (defn use-default-value-group
-  ; @note
-  ; Use keyword type keys!
-  ;
   ; @description
   ; - Replaces NIL or missing values in the given 'element-props' map with corresponding values from the given 'default-props' map(s)
   ;   in case at least one key of the given 'default-props' map(s) is present in the given 'element-props' map.
@@ -86,9 +80,6 @@
 ;; ----------------------------------------------------------------------------
 
 (defn force-values
-  ; @note
-  ; Use keyword type keys!
-  ;
   ; @description
   ; - Replaces values in the given 'element-props' map with corresponding values from the given 'forced-props' map(s).
   ; - Updates map type values in the given 'element-props' map by merging them with corresponding values from the given 'forced-props' map(s).
@@ -117,9 +108,6 @@
        (map/deep-merge element-props forced-props)))
 
 (defn force-value-group
-  ; @note
-  ; Use keyword type keys!
-  ;
   ; @description
   ; - Replaces values in the given 'element-props' map with corresponding values from the given 'forced-props' map(s)
   ;   in case at least one key of the given 'forced-props' map is present in the given 'element-props' map.

@@ -41,7 +41,7 @@
   ; @note (#4401)
   ; Keypress events are registered with '{:exclusive? true}' setting. Therefore, ...
   ; ... the rendered layouts don't have keypress concurrency problems.
-  ; ... they must be registered only if the 'on-enter-f' and/or 'on-escape-f' functions are provided.
+  ; ... they are registered only if the 'on-enter-f' and/or 'on-escape-f' functions are provided.
   (let [on-enter-id         (layout.utils/layout-id->subitem-id layout-id :layout-ENTER-pressed)
         on-escape-id        (layout.utils/layout-id->subitem-id layout-id :layout-ESC-pressed)
         on-enter-pressed-f  (fn [_] (layout-ENTER-pressed layout-id layout-props))

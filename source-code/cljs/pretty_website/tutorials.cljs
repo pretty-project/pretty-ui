@@ -35,21 +35,6 @@
 
 
 
-
-
-; @tutorial First steps
-;
-; Implement the [pretty-project/pretty-css](https://github.com/pretty-project/pretty-css) library in your project.
-;
-; Implement the [pretty-project/pretty-icons](https://github.com/pretty-project/pretty-icons) library in your project.
-;
-; Implement the [pretty-project/pretty-normalizer](https://github.com/pretty-project/pretty-normalizer) library in your project.
-;
-; Place the 'pretty-ui.min.css' file in the HTML header.
-; You can find it in the [resources/public](https://github.com/pretty-project/pretty-ui/tree/release/resources/public) folder of this repository.
-
-
-
 ; @tutorial Introduction
 ;
 ; This library includes:
