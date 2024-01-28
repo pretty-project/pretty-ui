@@ -1,7 +1,6 @@
 
 (ns pretty-elements.icon.attributes
-    (:require [pretty-css.api :as pretty-css]
-              [pretty-css.content.api :as pretty-css.content]
+    (:require [pretty-css.content.api :as pretty-css.content]
               [pretty-css.appearance.api :as pretty-css.appearance]
               [pretty-css.layout.api :as pretty-css.layout]
               [pretty-css.basic.api :as pretty-css.basic]))

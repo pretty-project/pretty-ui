@@ -1,6 +1,5 @@
 
-(ns pretty-elements.horizontal-spacer.prototypes
-    (:require [pretty-css.api :as pretty-css]))
+(ns pretty-elements.horizontal-spacer.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

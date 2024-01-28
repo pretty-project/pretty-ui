@@ -1,6 +1,5 @@
 
-(ns pretty-inputs.counter.prototypes
-    (:require [pretty-css.api :as pretty-css]))
+(ns pretty-inputs.counter.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

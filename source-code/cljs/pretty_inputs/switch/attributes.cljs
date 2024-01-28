@@ -1,7 +1,7 @@
 
 (ns pretty-inputs.switch.attributes
     (:require [dom.api              :as dom]
-              [pretty-css.api :as pretty-css]
+              
               [pretty-engine.api    :as pretty-engine]
               [re-frame.api         :as r]
               [pretty-css.appearance.api :as pretty-css.appearance]

@@ -2,7 +2,7 @@
 (ns pretty-website.language-selector.attributes
     (:require [app-dictionary.api   :as app-dictionary]
               [dom.api              :as dom]
-              [pretty-css.api :as pretty-css]
+              
               [pretty-css.content.api :as pretty-css.content]
               [pretty-css.appearance.api :as pretty-css.appearance]
               [pretty-css.basic.api :as pretty-css.basic]

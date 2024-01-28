@@ -1,6 +1,5 @@
 
-(ns pretty-inputs.number-field.prototypes
-    (:require [pretty-css.api :as pretty-css]))
+(ns pretty-inputs.number-field.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

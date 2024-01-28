@@ -1,7 +1,7 @@
 
 (ns pretty-inputs.text-field.attributes
     (:require [dom.api                               :as dom]
-              [pretty-css.api :as pretty-css]
+              
               [pretty-engine.api                     :as pretty-engine]
               [pretty-inputs.text-field.env          :as text-field.env]
               [pretty-inputs.text-field.side-effects :as text-field.side-effects]

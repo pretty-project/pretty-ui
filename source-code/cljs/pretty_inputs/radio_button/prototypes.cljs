@@ -1,7 +1,6 @@
 
 (ns pretty-inputs.radio-button.prototypes
-    (:require [fruits.noop.api      :refer [none return]]
-              [pretty-css.api :as pretty-css]))
+    (:require [fruits.noop.api      :refer [none return]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

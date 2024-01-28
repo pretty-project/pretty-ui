@@ -1,7 +1,7 @@
 
 (ns pretty-inputs.counter.attributes
     (:require [dom.api              :as dom]
-              [pretty-css.api :as pretty-css]
+              
               [re-frame.api         :as r]
               [pretty-css.appearance.api :as pretty-css.appearance]
               [pretty-css.content.api :as pretty-css.content]

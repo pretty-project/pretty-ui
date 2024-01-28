@@ -1,7 +1,6 @@
 
 (ns pretty-elements.toggle.attributes
-    (:require [pretty-css.api :as pretty-css]
-              [pretty-css.appearance.api :as pretty-css.appearance]
+    (:require [pretty-css.appearance.api :as pretty-css.appearance]
               [pretty-css.basic.api :as pretty-css.basic]
               [pretty-css.control.api :as pretty-css.control]
               [pretty-css.content.api :as pretty-css.content]

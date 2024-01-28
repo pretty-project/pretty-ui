@@ -1,6 +1,5 @@
 
-(ns pretty-website.multi-menu.prototypes
-    (:require [pretty-css.api :as pretty-css]))
+(ns pretty-website.multi-menu.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

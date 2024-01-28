@@ -1,6 +1,5 @@
 
-(ns pretty-layouts.box-popup.prototypes
-    (:require [pretty-css.api :as pretty-css]))
+(ns pretty-layouts.box-popup.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

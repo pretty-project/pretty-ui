@@ -1,7 +1,6 @@
 
 (ns pretty-website.sidebar.attributes
-    (:require [pretty-css.api :as pretty-css]
-              [pretty-website.sidebar.side-effects :as sidebar.side-effects]
+    (:require [pretty-website.sidebar.side-effects :as sidebar.side-effects]
               [pretty-css.appearance.api :as pretty-css.appearance]
               [pretty-css.basic.api :as pretty-css.basic]
               [pretty-css.layout.api :as pretty-css.layout]))

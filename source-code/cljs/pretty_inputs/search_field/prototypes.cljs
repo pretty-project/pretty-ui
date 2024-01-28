@@ -1,7 +1,6 @@
 
 (ns pretty-inputs.search-field.prototypes
-    (:require [pretty-css.api :as pretty-css]
-              [pretty-engine.api    :as pretty-engine]))
+    (:require [pretty-engine.api    :as pretty-engine]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

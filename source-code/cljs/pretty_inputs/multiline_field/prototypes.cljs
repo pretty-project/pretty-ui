@@ -1,6 +1,5 @@
 
-(ns pretty-inputs.multiline-field.prototypes
-    (:require [pretty-css.api :as pretty-css]))
+(ns pretty-inputs.multiline-field.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

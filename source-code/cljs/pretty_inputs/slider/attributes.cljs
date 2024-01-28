@@ -1,7 +1,7 @@
 
 (ns pretty-inputs.slider.attributes
     (:require [fruits.css.api                    :as css]
-              [pretty-css.api :as pretty-css]
+              
               [pretty-inputs.slider.side-effects :as slider.side-effects]
               [pretty-inputs.slider.state        :as slider.state]
               [re-frame.api                      :as r]

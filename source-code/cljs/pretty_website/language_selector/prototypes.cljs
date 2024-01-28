@@ -1,6 +1,5 @@
 
-(ns pretty-website.language-selector.prototypes
-    (:require [pretty-css.api :as pretty-css]))
+(ns pretty-website.language-selector.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

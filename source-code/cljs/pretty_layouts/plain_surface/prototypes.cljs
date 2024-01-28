@@ -1,6 +1,5 @@
 
-(ns pretty-layouts.plain-surface.prototypes
-    (:require [pretty-css.api :as pretty-css]))
+(ns pretty-layouts.plain-surface.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

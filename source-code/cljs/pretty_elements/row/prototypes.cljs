@@ -1,6 +1,5 @@
 
-(ns pretty-elements.row.prototypes
-    (:require [pretty-css.api :as pretty-css]))
+(ns pretty-elements.row.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

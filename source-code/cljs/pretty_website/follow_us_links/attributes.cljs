@@ -1,7 +1,7 @@
 
 (ns pretty-website.follow-us-links.attributes
     (:require [fruits.href.api                      :as href]
-              [pretty-css.api :as pretty-css]
+              
               [pretty-website.follow-us-links.utils :as follow-us-links.utils]
               [pretty-css.appearance.api :as pretty-css.appearance]
               [pretty-css.basic.api :as pretty-css.basic]

@@ -1,6 +1,5 @@
 
-(ns pretty-elements.column.prototypes
-    (:require [pretty-css.api :as pretty-css]))
+(ns pretty-elements.column.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -1,6 +1,5 @@
 
-(ns pretty-elements.vertical-line.prototypes
-    (:require [pretty-css.api :as pretty-css]))
+(ns pretty-elements.vertical-line.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

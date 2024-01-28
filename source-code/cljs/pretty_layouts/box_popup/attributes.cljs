@@ -1,7 +1,6 @@
 
 (ns pretty-layouts.box-popup.attributes
-    (:require [pretty-css.api :as pretty-css]
-              [pretty-layouts.plain-popup.attributes :as plain-popup.attributes]
+    (:require [pretty-layouts.plain-popup.attributes :as plain-popup.attributes]
               [pretty-css.appearance.api :as pretty-css.appearance]
               [pretty-css.basic.api :as pretty-css.basic]
               [pretty-css.layout.api :as pretty-css.layout]))

@@ -2,7 +2,7 @@
 (ns pretty-elements.label.views
     (:require [fruits.random.api                :as random]
               [metamorphic-content.api          :as metamorphic-content]
-              [pretty-css.api :as pretty-css]
+              
               [pretty-elements.label.attributes :as label.attributes]
               [pretty-elements.label.env        :as label.env]
               [pretty-elements.label.prototypes :as label.prototypes]

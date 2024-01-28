@@ -1,7 +1,6 @@
 
 (ns pretty-elements.text.prototypes
-    (:require [metamorphic-content.api :as metamorphic-content]
-              [pretty-css.api :as pretty-css]))
+    (:require [metamorphic-content.api :as metamorphic-content]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

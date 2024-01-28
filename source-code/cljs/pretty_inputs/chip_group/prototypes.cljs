@@ -2,7 +2,7 @@
 (ns pretty-inputs.chip-group.prototypes
     (:require [fruits.noop.api                     :refer [return]]
               [fruits.vector.api                   :as vector]
-              [pretty-css.api :as pretty-css]
+              
               [pretty-inputs.chip-group.adornments :as chip-group.adornments]))
 
 ;; ----------------------------------------------------------------------------

@@ -1,7 +1,7 @@
 
 (ns pretty-elements.card.attributes
     (:require [dom.api              :as dom]
-              [pretty-css.api :as pretty-css]
+              
               [pretty-css.appearance.api :as pretty-css.appearance]
               [pretty-css.accessories.api :as pretty-css.accessories]
               [pretty-css.basic.api :as pretty-css.basic]

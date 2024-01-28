@@ -1,8 +1,7 @@
 
 (ns pretty-elements.icon-button.prototypes
     (:require [dom.api                 :as dom]
-              [metamorphic-content.api :as metamorphic-content]
-              [pretty-css.api :as pretty-css]))
+              [metamorphic-content.api :as metamorphic-content]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

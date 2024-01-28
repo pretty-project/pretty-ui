@@ -42,12 +42,12 @@
   ; @note
   ; The 'adornment' element ...
   ; ... implements the [Pretty CSS block size profile](/pretty-css/cljs/pretty-css/layout/api.html).
-  ; ... implements the [Pretty CSS font attributes](xxx).
-  ; ... implements the [Pretty CSS icon attributes](xxx).
-  ; ... implements the [Pretty CSS progress attributes](xxx).
-  ; ... implements the [Pretty CSS text attributes](xxx).
-  ; ... implements the [Pretty CSS theme attributes](xxx).
-  ; ... implements the [Pretty CSS tooltip attributes](xxx).
+  ; ... implements the [Pretty CSS font properties](xxx).
+  ; ... implements the [Pretty CSS icon properties](xxx).
+  ; ... implements the [Pretty CSS progress properties](xxx).
+  ; ... implements the [Pretty CSS text properties](xxx).
+  ; ... implements the [Pretty CSS theme properties](xxx).
+  ; ... implements the [Pretty CSS tooltip properties](xxx).
   ; ... can display a label (or its placeholder) OR an icon at a time.
   ;
   ; The difference between the 'adornment' and 'button' elements is that ...

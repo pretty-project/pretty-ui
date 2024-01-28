@@ -1,7 +1,7 @@
 
 (ns pretty-inputs.select.attributes
     (:require [dom.api              :as dom]
-              [pretty-css.api :as pretty-css]
+              
               [pretty-engine.api    :as pretty-engine]
               [pretty-css.appearance.api :as pretty-css.appearance]
               [pretty-css.basic.api :as pretty-css.basic]

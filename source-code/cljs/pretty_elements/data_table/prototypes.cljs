@@ -1,7 +1,6 @@
 
 (ns pretty-elements.data-table.prototypes
-    (:require [fruits.css.api       :as css]
-              [pretty-css.api :as pretty-css]))
+    (:require [fruits.css.api       :as css]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

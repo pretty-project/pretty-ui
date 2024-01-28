@@ -2,7 +2,7 @@
 (ns pretty-diagrams.line-diagram.attributes
     (:require [fruits.css.api                     :as css]
               [metamorphic-content.api            :as metamorphic-content]
-              [pretty-css.api :as pretty-css]
+              
               [pretty-diagrams.line-diagram.utils :as line-diagram.utils]
               [pretty-css.accessories.api :as pretty-css.accessories]
               [pretty-css.appearance.api :as pretty-css.appearance]

@@ -1,7 +1,6 @@
 
 (ns pretty-inputs.multi-field.prototypes
-    (:require [pretty-css.api :as pretty-css]
-              [pretty-inputs.multi-field.env   :as multi-field.env]
+    (:require [pretty-inputs.multi-field.env   :as multi-field.env]
               [pretty-inputs.multi-field.utils :as multi-field.utils]))
 
 ;; ----------------------------------------------------------------------------

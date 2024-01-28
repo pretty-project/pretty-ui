@@ -1,6 +1,5 @@
 
-(ns pretty-elements.notification-bubble.prototypes
-    (:require [pretty-css.api :as pretty-css]))
+(ns pretty-elements.notification-bubble.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

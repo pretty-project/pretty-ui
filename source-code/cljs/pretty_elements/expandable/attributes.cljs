@@ -1,7 +1,7 @@
 
 (ns pretty-elements.expandable.attributes
     (:require [dom.api                                 :as dom]
-              [pretty-css.api :as pretty-css]
+              
               [pretty-elements.expandable.side-effects :as expandable.side-effects]
               [pretty-css.basic.api :as pretty-css.basic]
               [pretty-css.content.api :as pretty-css.content]

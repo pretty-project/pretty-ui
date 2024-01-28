@@ -1,6 +1,5 @@
 
-(ns pretty-layouts.plain-popup.prototypes
-    (:require [pretty-css.api :as pretty-css]))
+(ns pretty-layouts.plain-popup.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

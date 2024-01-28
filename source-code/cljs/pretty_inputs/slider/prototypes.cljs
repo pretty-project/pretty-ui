@@ -1,6 +1,5 @@
 
-(ns pretty-inputs.slider.prototypes
-    (:require [pretty-css.api :as pretty-css]))
+(ns pretty-inputs.slider.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -1,6 +1,5 @@
 
-(ns pretty-layouts.struct-popup.prototypes
-    (:require [pretty-css.api :as pretty-css]))
+(ns pretty-layouts.struct-popup.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
