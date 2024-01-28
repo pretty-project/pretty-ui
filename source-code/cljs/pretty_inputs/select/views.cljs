@@ -159,7 +159,10 @@
                                           [select-button-layout select-id select-props])
               [select-popup select-id select-props]]])
 
-(defn- select-lifecycles
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- input-lifecycles
   ; @ignore
   ;
   ; @param (keyword) select-id
@@ -227,4 +230,4 @@
    (fn [_ select-props]
        (let [select-props (pretty-presets/apply-preset              select-props)
              select-props (select.prototypes/select-props-prototype select-props)]
-            [select-lifecycles select-id select-props]))))
+            [input-lifecycles select-id select-props]))))

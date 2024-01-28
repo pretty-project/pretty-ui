@@ -3,9 +3,9 @@
     (:require [fruits.random.api               :as random]
               [pretty-elements.icon.attributes :as icon.attributes]
               [pretty-elements.icon.prototypes :as icon.prototypes]
+              [pretty-engine.api               :as pretty-engine]
               [pretty-presets.api              :as pretty-presets]
-              [pretty-engine.api :as pretty-engine]
-              [reagent.api :as reagent]))
+              [reagent.api                     :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -19,6 +19,20 @@
   [icon-id {:keys [icon] :as icon-props}]
   [:div (icon.attributes/icon-attributes icon-id icon-props)
         [:i (icon.attributes/icon-body-attributes icon-id icon-props) icon]])
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- element-lifecycles
+  ; @ignore
+  ;
+  ; @param (keyword) icon-id
+  ; @param (map) icon-props
+  [icon-id icon-props]
+  ; @note (tutorials#parametering)
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-engine/element-did-mount    icon-id icon-props))
+                       :component-will-unmount (fn [_ _] (pretty-engine/element-will-unmount icon-id icon-props))
+                       :reagent-render         (fn [_ icon-props] [icon icon-id icon-props])}))
 
 (defn element
   ; @param (keyword)(opt) icon-id
@@ -52,4 +66,4 @@
    (fn [_ icon-props]
        (let [icon-props (pretty-presets/apply-preset          icon-props)
              icon-props (icon.prototypes/icon-props-prototype icon-props)]
-            [icon icon-id icon-props]))))
+            [element-lifecycles icon-id icon-props]))))

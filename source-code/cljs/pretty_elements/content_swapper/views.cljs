@@ -5,11 +5,11 @@
               [metamorphic-content.api                    :as metamorphic-content]
               [pretty-elements.content-swapper.attributes :as content-swapper.attributes]
               [pretty-elements.content-swapper.state      :as content-swapper.state]
+              [pretty-engine.api                          :as pretty-engine]
               [pretty-presets.api                         :as pretty-presets]
               [re-frame.api                               :as r]
               [react.api                                  :as react]
-              [pretty-engine.api :as pretty-engine]
-              [reagent.api :as reagent]))
+              [reagent.api                                :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -29,7 +29,10 @@
                                                                                        [metamorphic-content/compose content]]])]
                           (hiccup/put-with-indexed [:<>] content-pool f0)))]])
 
-(defn- content-swapper-lifecycles
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- element-lifecycles
   ; @ignore
   ;
   ; @param (keyword) swapper-id
@@ -41,6 +44,7 @@
        (reagent/lifecycles {:component-did-mount    (fn [_ _] (swap! content-swapper.state/SWAPPERS update swapper-id merge initial-state))
                             :component-will-unmount (fn [_ _] (swap! content-swapper.state/SWAPPERS dissoc swapper-id))
                             :reagent-render         (fn [_ swapper-props] [content-swapper swapper-id swapper-props])})))
+                            ; + element-did-mount, element-will-unmount
 
 (defn element
   ; @important
@@ -75,4 +79,4 @@
    (fn [_ swapper-props]
        (let [ ; swapper-props (content-swapper.prototypes/swapper-props-prototype swapper-props)
              swapper-props (pretty-presets/apply-preset swapper-props)]
-            [content-swapper-lifecycles swapper-id swapper-props]))))
+            [element-lifecycles swapper-id swapper-props]))))

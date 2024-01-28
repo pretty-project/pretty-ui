@@ -1,9 +1,8 @@
 
 (ns pretty-inputs.text-field.env
-    (:require [fruits.string.api    :as string]
-              
+    (:require [fruits.string.api      :as string]
               [pretty-css.content.api :as pretty-css.content]
-              [pretty-engine.api    :as pretty-engine]))
+              [pretty-engine.api      :as pretty-engine]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

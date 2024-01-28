@@ -4,9 +4,9 @@
               [metamorphic-content.api        :as metamorphic-content]
               [pretty-elements.row.attributes :as row.attributes]
               [pretty-elements.row.prototypes :as row.prototypes]
+              [pretty-engine.api              :as pretty-engine]
               [pretty-presets.api             :as pretty-presets]
-              [pretty-engine.api :as pretty-engine]
-              [reagent.api :as reagent]))
+              [reagent.api                    :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -22,6 +22,20 @@
   [:div (row.attributes/row-attributes row-id row-props)
         [:div (row.attributes/row-body-attributes row-id row-props)
               [metamorphic-content/compose content placeholder]]])
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- element-lifecycles
+  ; @ignore
+  ;
+  ; @param (keyword) row-id
+  ; @param (map) row-props
+  [row-id row-props]
+  ; @note (tutorials#parametering)
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-engine/element-did-mount    row-id row-props))
+                       :component-will-unmount (fn [_ _] (pretty-engine/element-will-unmount row-id row-props))
+                       :reagent-render         (fn [_ row-props] [row row-id row-props])}))
 
 (defn element
   ; @param (keyword)(opt) row-id
@@ -70,4 +84,4 @@
    (fn [_ row-props]
        (let [row-props (pretty-presets/apply-preset        row-props)
              row-props (row.prototypes/row-props-prototype row-props)]
-            [row row-id row-props]))))
+            [element-lifecycles row-id row-props]))))

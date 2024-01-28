@@ -1,12 +1,11 @@
 
 (ns pretty-website.language-selector.attributes
-    (:require [app-dictionary.api   :as app-dictionary]
-              [dom.api              :as dom]
-              
-              [pretty-css.content.api :as pretty-css.content]
+    (:require [app-dictionary.api        :as app-dictionary]
+              [dom.api                   :as dom]
               [pretty-css.appearance.api :as pretty-css.appearance]
-              [pretty-css.basic.api :as pretty-css.basic]
-              [pretty-css.layout.api :as pretty-css.layout]))
+              [pretty-css.basic.api      :as pretty-css.basic]
+              [pretty-css.content.api    :as pretty-css.content]
+              [pretty-css.layout.api     :as pretty-css.layout]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

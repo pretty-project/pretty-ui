@@ -4,9 +4,9 @@
               [metamorphic-content.api                         :as metamorphic-content]
               [pretty-elements.horizontal-separator.attributes :as horizontal-separator.attributes]
               [pretty-elements.horizontal-separator.prototypes :as horizontal-separator.prototypes]
+              [pretty-engine.api                               :as pretty-engine]
               [pretty-presets.api                              :as pretty-presets]
-              [pretty-engine.api :as pretty-engine]
-              [reagent.api :as reagent]))
+              [reagent.api                                     :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -25,6 +25,20 @@
               (if label [:span {:class :pe-horizontal-separator--label}
                                (metamorphic-content/compose label)])
               [:hr {:class :pe-horizontal-separator--line :data-border-color color}]]])
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- element-lifecycles
+  ; @ignore
+  ;
+  ; @param (keyword) separator-id
+  ; @param (map) separator-props
+  [separator-id separator-props]
+  ; @note (tutorials#parametering)
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-engine/element-did-mount    separator-id separator-props))
+                       :component-will-unmount (fn [_ _] (pretty-engine/element-will-unmount separator-id separator-props))
+                       :reagent-render         (fn [_ separator-props] [horizontal-separator separator-id separator-props])}))
 
 (defn element
   ; @param (keyword)(opt) separator-id
@@ -57,4 +71,4 @@
    (fn [_ separator-props]
        (let [separator-props (pretty-presets/apply-preset                               separator-props)
              separator-props (horizontal-separator.prototypes/separator-props-prototype separator-props)]
-            [horizontal-separator separator-id separator-props]))))
+            [element-lifecycles separator-id separator-props]))))

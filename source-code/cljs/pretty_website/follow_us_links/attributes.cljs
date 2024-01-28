@@ -1,11 +1,10 @@
 
 (ns pretty-website.follow-us-links.attributes
     (:require [fruits.href.api                      :as href]
-              
-              [pretty-website.follow-us-links.utils :as follow-us-links.utils]
-              [pretty-css.appearance.api :as pretty-css.appearance]
-              [pretty-css.basic.api :as pretty-css.basic]
-              [pretty-css.layout.api :as pretty-css.layout]))
+              [pretty-css.appearance.api            :as pretty-css.appearance]
+              [pretty-css.basic.api                 :as pretty-css.basic]
+              [pretty-css.layout.api                :as pretty-css.layout]
+              [pretty-website.follow-us-links.utils :as follow-us-links.utils]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

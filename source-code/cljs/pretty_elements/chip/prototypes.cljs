@@ -2,7 +2,7 @@
 (ns pretty-elements.chip.prototypes
     (:require [dom.api                 :as dom]
               [metamorphic-content.api :as metamorphic-content]
-              [pretty-defaults.api :as pretty-defaults]))
+              [pretty-defaults.api     :as pretty-defaults]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -19,8 +19,8 @@
           :icon/default           (pretty-defaults/use-default-value-group {:icon nil :icon-color :primary :icon-position :left :icon-size (or font-size :s)})
           :progress/default       (pretty-defaults/use-default-value-group {:progress nil :progress-color :muted :progress-direction :ltr :progress-duration  250})
           :tooltip/default        (pretty-defaults/use-default-value-group {:tooltip-content nil :tooltip-position :right})
-          :badge-content/update   (pretty-defaults/value-update-fns    {:badge-content   metamorphic-content/compose})
-          :tooltip-content/update (pretty-defaults/value-update-fns    {:tooltip-content metamorphic-content/compose})
+          ;:badge-content/update   (pretty-defaults/value-update-fns    {:badge-content   metamorphic-content/compose})
+          ;:tooltip-content/update (pretty-defaults/value-update-fns    {:tooltip-content metamorphic-content/compose})
           (-> on-click)           (pretty-defaults/force-values       {:on-mouse-up     dom/blur-active-element!})))
 
 (defn chip-props-prototype

@@ -2,7 +2,6 @@
 (ns pretty-elements.dropdown-menu.prototypes
     (:require [fruits.noop.api                     :refer [return]]
               [fruits.vector.api                   :as vector]
-              
               [pretty-elements.dropdown-menu.state :as dropdown-menu.state]))
 
 ;; ----------------------------------------------------------------------------

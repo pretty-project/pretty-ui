@@ -1,8 +1,8 @@
 
 (ns components.compact-list-header.attributes
     (:require [pretty-css.appearance.api :as pretty-css.appearance]
-              [pretty-css.basic.api :as pretty-css.basic]
-              [pretty-css.layout.api :as pretty-css.layout]))
+              [pretty-css.basic.api      :as pretty-css.basic]
+              [pretty-css.layout.api     :as pretty-css.layout]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -7,8 +7,8 @@
               [pretty-elements.dropdown-menu.prototypes :as dropdown-menu.prototypes]
               [pretty-elements.dropdown-menu.state      :as dropdown-menu.state]
               [pretty-elements.menu-bar.views           :as menu-bar.views]
-              [pretty-engine.api :as pretty-engine]
-              [reagent.api :as reagent]))
+              [pretty-engine.api                        :as pretty-engine]
+              [reagent.api                              :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -27,6 +27,20 @@
                       [:div (dropdown-menu.attributes/menu-surface-attributes menu-id menu-props)
                             [:div (dropdown-menu.attributes/menu-surface-body-attributes menu-id menu-props)
                                   [metamorphic-content/compose surface-content]]])]])
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- element-lifecycles
+  ; @ignore
+  ;
+  ; @param (keyword) menu-id
+  ; @param (map) menu-props
+  [menu-id menu-props]
+  ; @note (tutorials#parametering)
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-engine/element-did-mount    menu-id menu-props))
+                       :component-will-unmount (fn [_ _] (pretty-engine/element-will-unmount menu-id menu-props))
+                       :reagent-render         (fn [_ menu-props] [dropdown-menu menu-id menu-props])}))
 
 (defn element
   ; @note
@@ -61,4 +75,4 @@
    ; @note (tutorials#parametering)
    (fn [_ menu-props]
        (let [menu-props (dropdown-menu.prototypes/menu-props-prototype menu-id menu-props)]
-            [dropdown-menu menu-id menu-props]))))
+            [element-lifecycles menu-id menu-props]))))

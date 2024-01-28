@@ -1,10 +1,9 @@
 
 (ns pretty-elements.vertical-line.attributes
-    (:require [fruits.css.api       :as css]
-              
-              [pretty-css.basic.api :as pretty-css.basic]
+    (:require [fruits.css.api            :as css]
               [pretty-css.appearance.api :as pretty-css.appearance]
-              [pretty-css.layout.api :as pretty-css.layout]))
+              [pretty-css.basic.api      :as pretty-css.basic]
+              [pretty-css.layout.api     :as pretty-css.layout]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

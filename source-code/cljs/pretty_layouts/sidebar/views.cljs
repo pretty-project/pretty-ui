@@ -2,12 +2,12 @@
 (ns pretty-layouts.sidebar.views
     (:require [fruits.random.api                 :as random]
               [metamorphic-content.api           :as metamorphic-content]
+              [pretty-engine.api                 :as pretty-engine]
               [pretty-layouts.sidebar.attributes :as sidebar.attributes]
               [pretty-layouts.sidebar.prototypes :as sidebar.prototypes]
               [pretty-presets.api                :as pretty-presets]
               [re-frame.api                      :as r]
-              [pretty-engine.api :as pretty-engine]
-              [reagent.api :as reagent]
+              [reagent.api                       :as reagent]
               [window-observer.api               :as window-observer]))
 
 ;; ----------------------------------------------------------------------------
@@ -28,7 +28,10 @@
                   [:div (sidebar.attributes/sidebar-body-attributes sidebar-id sidebar-props)
                         [metamorphic-content/compose content]]]]))
 
-(defn- sidebar-lifecycles
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- layout-lifecycles
   ; @ignore
   ;
   ; @param (keyword) sidebar-id
@@ -79,4 +82,4 @@
    (fn [_ sidebar-props]
        (let [sidebar-props (pretty-presets/apply-preset                sidebar-props)
              sidebar-props (sidebar.prototypes/sidebar-props-prototype sidebar-props)]
-            [sidebar-lifecycles sidebar-id sidebar-props]))))
+            [layout-lifecycles sidebar-id sidebar-props]))))

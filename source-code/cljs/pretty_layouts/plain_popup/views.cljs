@@ -2,12 +2,12 @@
 (ns pretty-layouts.plain-popup.views
     (:require [fruits.random.api                     :as random]
               [metamorphic-content.api               :as metamorphic-content]
+              [pretty-engine.api                     :as pretty-engine]
               [pretty-layouts.plain-popup.attributes :as plain-popup.attributes]
               [pretty-layouts.plain-popup.prototypes :as plain-popup.prototypes]
               [pretty-presets.api                    :as pretty-presets]
               [re-frame.api                          :as r]
-              [pretty-engine.api :as pretty-engine]
-              [reagent.api :as reagent]
+              [reagent.api                           :as reagent]
               [scroll-lock.api                       :as scroll-lock]))
 
 ;; ----------------------------------------------------------------------------
@@ -25,7 +25,10 @@
         (if content     [:div {:class :pl-plain-popup--content}
                               [metamorphic-content/compose content]])])
 
-(defn- plain-popup-lifecycles
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- layout-lifecycles
   ; @ignore
   ;
   ; @param (keyword) popup-id
@@ -65,4 +68,4 @@
    (fn [_ popup-props]
        (let [popup-props (pretty-presets/apply-preset                  popup-props)
              popup-props (plain-popup.prototypes/popup-props-prototype popup-props)]
-            [plain-popup-lifecycles popup-id popup-props]))))
+            [layout-lifecycles popup-id popup-props]))))

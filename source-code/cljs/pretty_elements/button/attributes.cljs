@@ -1,13 +1,13 @@
 
 (ns pretty-elements.button.attributes
-    (:require [pretty-css.appearance.api :as pretty-css.appearance]
-              [pretty-css.accessories.api :as pretty-css.accessories]
-              [pretty-css.basic.api :as pretty-css.basic]
-              [pretty-css.content.api :as pretty-css.content]
-              [pretty-css.control.api :as pretty-css.control]
-              [pretty-css.layout.api :as pretty-css.layout]
-              [pretty-css.control.api :as pretty-css.control]
-              [pretty-css.live.api :as pretty-css.live]))
+    (:require [pretty-css.accessories.api :as pretty-css.accessories]
+              [pretty-css.appearance.api  :as pretty-css.appearance]
+              [pretty-css.basic.api       :as pretty-css.basic]
+              [pretty-css.content.api     :as pretty-css.content]
+              [pretty-css.control.api     :as pretty-css.control]
+              [pretty-css.control.api     :as pretty-css.control]
+              [pretty-css.layout.api      :as pretty-css.layout]
+              [pretty-css.live.api        :as pretty-css.live]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -81,8 +81,8 @@
   ; {:class (keyword or keywords in vector)}
   [_ button-props]
   (-> {:class :pe-button}
-      (pretty-css.basic/class-attributes        button-props)
+      (pretty-css.appearance/theme-attributes    button-props)
+      (pretty-css.basic/class-attributes         button-props)
+      (pretty-css.basic/state-attributes         button-props)
       (pretty-css.layout/outdent-attributes      button-props)
-      (pretty-css.basic/state-attributes        button-props)
-      (pretty-css.appearance/theme-attributes        button-props)
       (pretty-css.layout/wrapper-size-attributes button-props)))

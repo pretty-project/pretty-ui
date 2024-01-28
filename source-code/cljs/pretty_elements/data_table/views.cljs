@@ -5,9 +5,9 @@
               [metamorphic-content.api               :as metamorphic-content]
               [pretty-elements.data-table.attributes :as data-table.attributes]
               [pretty-elements.data-table.prototypes :as data-table.prototypes]
+              [pretty-engine.api                     :as pretty-engine]
               [pretty-presets.api                    :as pretty-presets]
-              [pretty-engine.api :as pretty-engine]
-              [reagent.api :as reagent]))
+              [reagent.api                           :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -67,6 +67,20 @@
         [:div (data-table.attributes/table-body-attributes table-id table-props)
               (cond columns (letfn [(f0 [column-props] [data-table-column table-id table-props column-props])] (hiccup/put-with [:<>] columns f0))
                     rows    (letfn [(f0 [row-props]    [data-table-row    table-id table-props row-props])]    (hiccup/put-with [:<>] rows    f0)))]])
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- element-lifecycles
+  ; @ignore
+  ;
+  ; @param (keyword) table-id
+  ; @param (map) table-props
+  [table-id table-props]
+  ; @note (tutorials#parametering)
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-engine/element-did-mount    table-id table-props))
+                       :component-will-unmount (fn [_ _] (pretty-engine/element-will-unmount table-id table-props))
+                       :reagent-render         (fn [_ table-props] [data-table table-id table-props])}))
 
 (defn element
   ; @param (keyword)(opt) table-id
@@ -136,4 +150,4 @@
    (fn [_ table-props]
        (let [ ; table-props (data-table.prototypes/table-props-prototype table-props)
              table-props (pretty-presets/apply-preset     table-props)]
-            [data-table table-id table-props]))))
+            [element-lifecycles table-id table-props]))))

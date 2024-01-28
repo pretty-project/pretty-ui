@@ -3,12 +3,35 @@
     (:require [fruits.random.api                        :as random]
               [pretty-elements.vertical-line.attributes :as vertical-line.attributes]
               [pretty-elements.vertical-line.prototypes :as vertical-line.prototypes]
+              [pretty-engine.api                        :as pretty-engine]
               [pretty-presets.api                       :as pretty-presets]
-              [pretty-engine.api :as pretty-engine]
-              [reagent.api :as reagent]))
+              [reagent.api                              :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+(defn- vertical-line
+  ; @ignore
+  ;
+  ; @param (keyword) line-id
+  ; @param (map) line-props
+  [line-id line-props]
+  [:div (vertical-line.attributes/line-attributes line-id line-props)
+        [:div (vertical-line.attributes/line-body-attributes line-id line-props)]])
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- element-lifecycles
+  ; @ignore
+  ;
+  ; @param (keyword) line-id
+  ; @param (map) line-props
+  [line-id line-props]
+  ; @note (tutorials#parametering)
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-engine/element-did-mount    line-id line-props))
+                       :component-will-unmount (fn [_ _] (pretty-engine/element-will-unmount line-id line-props))
+                       :reagent-render         (fn [_ line-props] [vertical-line line-id line-props])}))
 
 (defn element
   ; @param (keyword)(opt) line-id
@@ -39,5 +62,4 @@
    (fn [_ line-props]
        (let [line-props (pretty-presets/apply-preset                   line-props)
              line-props (vertical-line.prototypes/line-props-prototype line-props)]
-            [:div (vertical-line.attributes/line-attributes line-id line-props)
-                  [:div (vertical-line.attributes/line-body-attributes line-id line-props)]]))))
+            [element-lifecycles line-id line-props]))))

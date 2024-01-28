@@ -63,7 +63,10 @@
         [:div (checkbox.attributes/checkbox-body-attributes checkbox-id checkbox-props)
               [checkbox-option-list                         checkbox-id checkbox-props]]])
 
-(defn- checkbox-lifecycles
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- input-lifecycles
   ; @ignore
   ;
   ; @param (keyword) checkbox-id
@@ -140,4 +143,4 @@
    (fn [_ checkbox-props]
        (let [checkbox-props (pretty-presets/apply-preset                  checkbox-props)
              checkbox-props (checkbox.prototypes/checkbox-props-prototype checkbox-id checkbox-props)]
-            [checkbox-lifecycles checkbox-id checkbox-props]))))
+            [input-lifecycles checkbox-id checkbox-props]))))

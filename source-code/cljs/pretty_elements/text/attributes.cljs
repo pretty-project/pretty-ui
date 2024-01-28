@@ -1,12 +1,11 @@
 
 (ns pretty-elements.text.attributes
     (:require [fruits.css.api                   :as css]
-              
-              [pretty-elements.label.attributes :as label.attributes]
-              [pretty-css.appearance.api :as pretty-css.appearance]
-              [pretty-css.basic.api :as pretty-css.basic]
-              [pretty-css.content.api :as pretty-css.content]
-              [pretty-css.layout.api :as pretty-css.layout]))
+              [pretty-css.appearance.api        :as pretty-css.appearance]
+              [pretty-css.basic.api             :as pretty-css.basic]
+              [pretty-css.content.api           :as pretty-css.content]
+              [pretty-css.layout.api            :as pretty-css.layout]
+              [pretty-elements.label.attributes :as label.attributes]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

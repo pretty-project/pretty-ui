@@ -2,12 +2,11 @@
 (ns pretty-diagrams.line-diagram.attributes
     (:require [fruits.css.api                     :as css]
               [metamorphic-content.api            :as metamorphic-content]
-              
-              [pretty-diagrams.line-diagram.utils :as line-diagram.utils]
-              [pretty-css.accessories.api :as pretty-css.accessories]
-              [pretty-css.appearance.api :as pretty-css.appearance]
-              [pretty-css.basic.api :as pretty-css.basic]
-              [pretty-css.layout.api :as pretty-css.layout]))
+              [pretty-css.accessories.api         :as pretty-css.accessories]
+              [pretty-css.appearance.api          :as pretty-css.appearance]
+              [pretty-css.basic.api               :as pretty-css.basic]
+              [pretty-css.layout.api              :as pretty-css.layout]
+              [pretty-diagrams.line-diagram.utils :as line-diagram.utils]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

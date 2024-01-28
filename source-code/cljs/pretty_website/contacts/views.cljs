@@ -3,11 +3,11 @@
     (:require [fruits.hiccup.api                  :as hiccup]
               [fruits.random.api                  :as random]
               [metamorphic-content.api            :as metamorphic-content]
+              [pretty-engine.api                  :as pretty-engine]
               [pretty-presets.api                 :as pretty-presets]
               [pretty-website.contacts.attributes :as contacts.attributes]
               [pretty-website.contacts.prototypes :as contacts.prototypes]
-              [pretty-engine.api :as pretty-engine]
-              [reagent.api :as reagent]))
+              [reagent.api                        :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -57,6 +57,20 @@
                       (letfn [(f0 [group-props] [contact-group contacts-id contacts-props group-props])]
                              (hiccup/put-with [:<>] contact-groups f0)))]])
 
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- component-lifecycles
+  ; @ignore
+  ;
+  ; @param (keyword) contacts-id
+  ; @param (map) contacts-props
+  [contacts-id contacts-props]
+  ; @note (tutorials#parametering)
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-engine/element-did-mount    contacts-id contacts-props))
+                       :component-will-unmount (fn [_ _] (pretty-engine/element-will-unmount contacts-id contacts-props))
+                       :reagent-render         (fn [_ contacts-props] [contacts contacts-id contacts-props])}))
+
 (defn component
   ; @param (keyword)(opt) contacts-id
   ; @param (map) contacts-props
@@ -89,4 +103,4 @@
    (fn [_ contacts-props]
        (let [contacts-props (pretty-presets/apply-preset contacts-props)]
             ; contacts-props (contacts.prototypes/contacts-props-prototype contacts-props)
-            [contacts contacts-id contacts-props]))))
+            [component-lifecycles contacts-id contacts-props]))))

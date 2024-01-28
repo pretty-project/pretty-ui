@@ -4,9 +4,9 @@
               [metamorphic-content.api           :as metamorphic-content]
               [pretty-elements.column.attributes :as column.attributes]
               [pretty-elements.column.prototypes :as column.prototypes]
+              [pretty-engine.api                 :as pretty-engine]
               [pretty-presets.api                :as pretty-presets]
-              [pretty-engine.api :as pretty-engine]
-              [reagent.api :as reagent]))
+              [reagent.api                       :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -22,6 +22,20 @@
   [:div (column.attributes/column-attributes column-id column-props)
         [:div (column.attributes/column-body-attributes column-id column-props)
               [metamorphic-content/compose content placeholder]]])
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- element-lifecycles
+  ; @ignore
+  ;
+  ; @param (keyword) column-id
+  ; @param (map) column-props
+  [column-id column-props]
+  ; @note (tutorials#parametering)
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-engine/element-did-mount    column-id column-props))
+                       :component-will-unmount (fn [_ _] (pretty-engine/element-will-unmount column-id column-props))
+                       :reagent-render         (fn [_ column-props] [column column-id column-props])}))
 
 (defn element
   ; @param (keyword)(opt) column-id
@@ -70,4 +84,4 @@
    (fn [_ column-props]
        (let [column-props (pretty-presets/apply-preset              column-props)
              column-props (column.prototypes/column-props-prototype column-props)]
-            [column column-id column-props]))))
+            [element-lifecycles column-id column-props]))))

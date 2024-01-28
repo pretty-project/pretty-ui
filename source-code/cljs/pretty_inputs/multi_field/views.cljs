@@ -8,7 +8,8 @@
               [pretty-inputs.multi-field.prototypes :as multi-field.prototypes]
               [pretty-inputs.multi-field.utils      :as multi-field.utils]
               [pretty-inputs.text-field.views       :as text-field.views]
-              [re-frame.api                         :as r]))
+              [re-frame.api                         :as r]
+              [reagent.api :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -39,6 +40,19 @@
              (letfn [(f0 [field-dex _] [multi-field-text-field group-id group-props field-dex])]
                     (hiccup/put-with-indexed [:<>] group-value f0)))])
 
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- input-lifecycles
+  ; @ignore
+  ;
+  ; @param (keyword) group-id
+  ; @param (map) group-props
+  [group-id group-props]
+  ; @note (tutorials#parametering)
+  (reagent/lifecycles {:component-did-mount (fn [_ _]); (r/dispatch [:pretty-inputs.group/group-did-mount group-id group-props]))
+                       :reagent-render      (fn [_ group-props] [multi-field group-id group-props])}))
+
 (defn input
   ; @note
   ; For more information, check out the documentation of the ['text-field'](#text-field) and ['combo-box'](#combo-box) inputs.
@@ -64,4 +78,4 @@
    ; @note (tutorials#parametering)
    (fn [_ group-props]
        (let [group-props (multi-field.prototypes/group-props-prototype group-id group-props)]
-            [multi-field group-id group-props]))))
+            [input-lifecycles group-id group-props]))))

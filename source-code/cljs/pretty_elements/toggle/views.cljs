@@ -4,9 +4,9 @@
               [metamorphic-content.api           :as metamorphic-content]
               [pretty-elements.toggle.attributes :as toggle.attributes]
               [pretty-elements.toggle.prototypes :as toggle.prototypes]
+              [pretty-engine.api                 :as pretty-engine]
               [pretty-presets.api                :as pretty-presets]
-              [pretty-engine.api :as pretty-engine]
-              [reagent.api :as reagent]))
+              [reagent.api                       :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -22,6 +22,22 @@
         [(cond href :a on-click-f :button :else :div)
          (toggle.attributes/toggle-body-attributes toggle-id toggle-props)
          [metamorphic-content/compose content placeholder]]])
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- element-lifecycles
+  ; @ignore
+  ;
+  ; @param (keyword) toggle-id
+  ; @param (map) toggle-props
+  [toggle-id toggle-props]
+  ; @note (tutorials#parametering)
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-engine/element-did-mount    toggle-id toggle-props))
+                       :component-will-unmount (fn [_ _] (pretty-engine/element-will-unmount toggle-id toggle-props))
+                       :reagent-render         (fn [_ toggle-props] [toggle toggle-id toggle-props])}))
+                       ; @note (pretty-engine.element.lifecycles.side-effects#8097)
+                       ; + did-update, keypress?
 
 (defn element
   ; @param (keyword)(opt) toggle-id
@@ -75,4 +91,4 @@
    (fn [_ toggle-props]
        (let [toggle-props (pretty-presets/apply-preset                        toggle-props)
              toggle-props (toggle.prototypes/toggle-props-prototype toggle-id toggle-props)]
-            [toggle toggle-id toggle-props]))))
+            [element-lifecycles toggle-id toggle-props]))))

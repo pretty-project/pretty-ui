@@ -15,9 +15,20 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   [field-id field-props]
+  [text-field.views/input field-id field-props])
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- input-lifecycles
+  ; @ignore
+  ;
+  ; @param (keyword) field-id
+  ; @param (map) field-props
+  [field-id field-props]
   ; @note (tutorials#parametering)
   (reagent/lifecycles {:component-will-unmount (fn [_ _] (password-field.side-effects/field-will-unmount field-id field-props))
-                       :reagent-render         (fn [_ field-props] [text-field.views/input field-id field-props])}))
+                       :reagent-render         (fn [_ field-props] [password-field field-id field-props])}))
 
 (defn input
   ; @note
@@ -38,4 +49,4 @@
    ; @note (tutorials#parametering)
    (fn [_ field-props]
        (let [field-props (password-field.prototypes/field-props-prototype field-id field-props)]
-            [password-field field-id field-props]))))
+            [input-lifecycles field-id field-props]))))

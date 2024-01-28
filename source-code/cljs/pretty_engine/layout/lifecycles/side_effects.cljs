@@ -1,8 +1,8 @@
 
 (ns pretty-engine.layout.lifecycles.side-effects
-    (:require [pretty-engine.layout.keypress.side-effects :as layout.keypress.side-effects]
-              [pretty-engine.layout.state.side-effects :as layout.state.side-effects]
-              [keypress-handler.api :as keypress-handler]))
+    (:require [keypress-handler.api                       :as keypress-handler]
+              [pretty-engine.layout.keypress.side-effects :as layout.keypress.side-effects]
+              [pretty-engine.layout.state.side-effects    :as layout.state.side-effects]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -3,9 +3,9 @@
     (:require [fruits.random.api                :as random]
               [pretty-elements.ghost.attributes :as ghost.attributes]
               [pretty-elements.ghost.prototypes :as ghost.prototypes]
+              [pretty-engine.api                :as pretty-engine]
               [pretty-presets.api               :as pretty-presets]
-              [pretty-engine.api :as pretty-engine]
-              [reagent.api :as reagent]))
+              [reagent.api                      :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -18,6 +18,20 @@
   [ghost-id ghost-props]
   [:div (ghost.attributes/ghost-attributes ghost-id ghost-props)
         [:div (ghost.attributes/ghost-body-attributes ghost-id ghost-props)]])
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- element-lifecycles
+  ; @ignore
+  ;
+  ; @param (keyword) ghost-id
+  ; @param (map) ghost-props
+  [ghost-id ghost-props]
+  ; @note (tutorials#parametering)
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-engine/element-did-mount    ghost-id ghost-props))
+                       :component-will-unmount (fn [_ _] (pretty-engine/element-will-unmount ghost-id ghost-props))
+                       :reagent-render         (fn [_ ghost-props] [ghost ghost-id ghost-props])}))
 
 (defn element
   ; @param (keyword)(opt) ghost-id
@@ -53,4 +67,4 @@
    (fn [_ ghost-props]
        (let [ghost-props (pretty-presets/apply-preset            ghost-props)
              ghost-props (ghost.prototypes/ghost-props-prototype ghost-props)]
-            [ghost ghost-id ghost-props]))))
+            [element-lifecycles ghost-id ghost-props]))))

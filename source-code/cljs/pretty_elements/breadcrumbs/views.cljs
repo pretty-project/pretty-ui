@@ -3,11 +3,11 @@
     (:require [fruits.hiccup.api                      :as hiccup]
               [fruits.random.api                      :as random]
               [pretty-elements.breadcrumbs.attributes :as breadcrumbs.attributes]
-              [pretty-elements.button.views :as button.views]
               [pretty-elements.breadcrumbs.prototypes :as breadcrumbs.prototypes]
+              [pretty-elements.button.views           :as button.views]
+              [pretty-engine.api                      :as pretty-engine]
               [pretty-presets.api                     :as pretty-presets]
-              [pretty-engine.api :as pretty-engine]
-              [reagent.api :as reagent]))
+              [reagent.api                            :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -26,7 +26,10 @@
                                                             [button.views/element crumb-props])])]
                      (hiccup/put-with-indexed [:<>] crumbs f0))]])
 
-(defn breadcrumbs-lifecycles
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- element-lifecycles
   ; @ignore
   ;
   ; @param (keyword) breadcrumbs-id
@@ -71,4 +74,4 @@
    (fn [_ breadcrumbs-props]
        (let [breadcrumbs-props (pretty-presets/apply-preset                        breadcrumbs-id breadcrumbs-props)
              breadcrumbs-props (breadcrumbs.prototypes/breadcrumbs-props-prototype breadcrumbs-id breadcrumbs-props)]
-            [breadcrumbs-lifecycles breadcrumbs-id breadcrumbs-props]))))
+            [element-lifecycles breadcrumbs-id breadcrumbs-props]))))

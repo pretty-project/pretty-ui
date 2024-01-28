@@ -1,9 +1,9 @@
 
 (ns pretty-elements.content-swapper.attributes
-    (:require [pretty-elements.content-swapper.state :as content-swapper.state]
-              [pretty-css.basic.api :as pretty-css.basic]
-              [pretty-css.appearance.api :as pretty-css.appearance]
-              [pretty-css.layout.api :as pretty-css.layout]))
+    (:require [pretty-css.appearance.api             :as pretty-css.appearance]
+              [pretty-css.basic.api                  :as pretty-css.basic]
+              [pretty-css.layout.api                 :as pretty-css.layout]
+              [pretty-elements.content-swapper.state :as content-swapper.state]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

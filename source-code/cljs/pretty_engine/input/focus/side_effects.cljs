@@ -1,9 +1,9 @@
 
 (ns pretty-engine.input.focus.side-effects
     (:require [pretty-engine.element.focus.side-effects]
-              [pretty-engine.input.value.env :as input.value.env]
               [pretty-engine.input.keypress.side-effects :as input.keypress.side-effects]
-              [pretty-forms.api :as pretty-forms]))
+              [pretty-engine.input.value.env             :as input.value.env]
+              [pretty-forms.api                          :as pretty-forms]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

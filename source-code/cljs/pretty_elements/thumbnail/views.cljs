@@ -4,9 +4,9 @@
               [fruits.random.api                    :as random]
               [pretty-elements.thumbnail.attributes :as thumbnail.attributes]
               [pretty-elements.thumbnail.prototypes :as thumbnail.prototypes]
+              [pretty-engine.api                    :as pretty-engine]
               [pretty-presets.api                   :as pretty-presets]
-              [pretty-engine.api :as pretty-engine]
-              [reagent.api :as reagent]))
+              [reagent.api                          :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -26,6 +26,22 @@
          (thumbnail.attributes/thumbnail-body-attributes thumbnail-id thumbnail-props)
          [:i   {:class :pe-thumbnail--icon :data-icon-family :material-symbols-outlined :data-icon-size :s} :image]
          [:div {:class :pe-thumbnail--image :style {:background-image (css/url uri) :background-size background-size}}]]])
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- element-lifecycles
+  ; @ignore
+  ;
+  ; @param (keyword) thumbnail-id
+  ; @param (map) thumbnail-props
+  [thumbnail-id thumbnail-props]
+  ; @note (tutorials#parametering)
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-engine/element-did-mount    thumbnail-id thumbnail-props))
+                       :component-will-unmount (fn [_ _] (pretty-engine/element-will-unmount thumbnail-id thumbnail-props))
+                       :reagent-render         (fn [_ thumbnail-props] [thumbnail thumbnail-id thumbnail-props])}))
+                       ; @note (pretty-engine.element.lifecycles.side-effects#8097)
+                       ; + did update, keypress?
 
 (defn element
   ; @param (keyword)(opt) thumbnail-id
@@ -79,4 +95,4 @@
    (fn [_ thumbnail-props]
        (let [thumbnail-props (pretty-presets/apply-preset                    thumbnail-props)
              thumbnail-props (thumbnail.prototypes/thumbnail-props-prototype thumbnail-props)]
-            [thumbnail thumbnail-id thumbnail-props]))))
+            [element-lifecycles thumbnail-id thumbnail-props]))))

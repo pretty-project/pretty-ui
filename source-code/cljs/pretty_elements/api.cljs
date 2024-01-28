@@ -1,7 +1,7 @@
 
 (ns pretty-elements.api
-    (:require [pretty-elements.adornment.views            :as adornment.views]
-              [pretty-elements.adornment-group.views      :as adornment-group.views]
+    (:require [pretty-elements.adornment-group.views      :as adornment-group.views]
+              [pretty-elements.adornment.views            :as adornment.views]
               [pretty-elements.blank.views                :as blank.views]
               [pretty-elements.breadcrumbs.views          :as breadcrumbs.views]
               [pretty-elements.button.views               :as button.views]

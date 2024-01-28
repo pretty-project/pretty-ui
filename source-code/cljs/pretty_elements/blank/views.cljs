@@ -3,9 +3,9 @@
     (:require [fruits.random.api                :as random]
               [pretty-elements.blank.attributes :as blank.attributes]
               [pretty-elements.blank.prototypes :as blank.prototypes]
-              [pretty-engine.api :as pretty-engine]
-              [reagent.api :as reagent]
-              [pretty-presets.api               :as pretty-presets]))
+              [pretty-engine.api                :as pretty-engine]
+              [pretty-presets.api               :as pretty-presets]
+              [reagent.api                      :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -21,7 +21,10 @@
         [:div (blank.attributes/blank-body-attributes blank-id blank-props)
               (-> content)]])
 
-(defn blank-lifecycles
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- element-lifecycles
   ; @ignore
   ;
   ; @param (keyword) blank-id
@@ -62,4 +65,4 @@
    (fn [_ blank-props]
        (let [blank-props (pretty-presets/apply-preset            blank-id blank-props)
              blank-props (blank.prototypes/blank-props-prototype blank-id blank-props)]
-            [blank-lifecycles blank-id blank-props]))))
+            [element-lifecycles blank-id blank-props]))))

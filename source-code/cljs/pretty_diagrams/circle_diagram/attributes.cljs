@@ -2,12 +2,11 @@
 (ns pretty-diagrams.circle-diagram.attributes
     (:require [fruits.css.api                        :as css]
               [fruits.math.api                       :as math]
-              
-              [pretty-css.svg.api :as pretty-css.svg]
-              [pretty-diagrams.circle-diagram.config :as circle-diagram.config]
-              [pretty-css.basic.api :as pretty-css.basic]
-              [pretty-css.layout.api :as pretty-css.layout]
-              [pretty-css.appearance.api :as pretty-css.appearance]))
+              [pretty-css.appearance.api             :as pretty-css.appearance]
+              [pretty-css.basic.api                  :as pretty-css.basic]
+              [pretty-css.layout.api                 :as pretty-css.layout]
+              [pretty-css.svg.api                    :as pretty-css.svg]
+              [pretty-diagrams.circle-diagram.config :as circle-diagram.config]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

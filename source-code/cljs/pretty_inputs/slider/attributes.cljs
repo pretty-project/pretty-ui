@@ -1,13 +1,12 @@
 
 (ns pretty-inputs.slider.attributes
     (:require [fruits.css.api                    :as css]
-              
+              [pretty-css.appearance.api         :as pretty-css.appearance]
+              [pretty-css.basic.api              :as pretty-css.basic]
+              [pretty-css.layout.api             :as pretty-css.layout]
               [pretty-inputs.slider.side-effects :as slider.side-effects]
               [pretty-inputs.slider.state        :as slider.state]
-              [re-frame.api                      :as r]
-              [pretty-css.basic.api :as pretty-css.basic]
-              [pretty-css.appearance.api :as pretty-css.appearance]
-              [pretty-css.layout.api :as pretty-css.layout]))
+              [re-frame.api                      :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

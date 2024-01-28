@@ -1,9 +1,9 @@
 
 (ns pretty-website.scroll-icon.attributes
-    (:require [pretty-website.scroll-icon.state :as scroll-icon.state]
-              [pretty-css.basic.api :as pretty-css.basic]
-              [pretty-css.layout.api :as pretty-css.layout]
-              [pretty-css.appearance.api :as pretty-css.appearance]))
+    (:require [pretty-css.appearance.api        :as pretty-css.appearance]
+              [pretty-css.basic.api             :as pretty-css.basic]
+              [pretty-css.layout.api            :as pretty-css.layout]
+              [pretty-website.scroll-icon.state :as scroll-icon.state]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

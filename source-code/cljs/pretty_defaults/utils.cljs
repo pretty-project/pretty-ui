@@ -1,6 +1,6 @@
 
 (ns pretty-defaults.utils
-    (:require [fruits.map.api :as map]
+    (:require [fruits.map.api    :as map]
               [fruits.vector.api :as vector]))
 
 ;; ----------------------------------------------------------------------------
@@ -152,37 +152,3 @@
        (if (map/has-same-keys? element-props forced-props)
            (map/deep-merge     element-props forced-props)
            (-> element-props))))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-
-
-
-; deprecated
-(defn value-update-fns
-  ; @note
-  ; Use keyword type keys!
-  ;
-  ; @description
-  ; Updates values within the given 'element-props' map with functions from the given 'value-update-fns' map
-  ; in case their keys are present in both maps.
-  ;
-  ; @param (map) element-props
-  ; @param (map) value-update-fns
-  ;
-  ; @usage
-  ; (value-update-fns {:content     "My content"}
-  ;                   {:content     clojure.string/upper-case
-  ;                    :placeholder clojure.string/upper-case})
-  ; =>
-  ; {:content "MY CONTENT"}
-  ;
-  ; @return (map)
-  [element-props value-update-fns]
-  (letfn [(f0 [result k v]
-              (if (-> element-props k some?)
-                  (-> result (update k v))
-                  (-> result)))]
-         (reduce-kv f0 element-props value-update-fns)))
-; deprecated

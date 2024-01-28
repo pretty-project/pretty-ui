@@ -1,7 +1,7 @@
 
 (ns pretty-engine.layout.keypress.side-effects
-    (:require [pretty-engine.layout.utils :as layout.utils]
-              [keypress-handler.api :as keypress-handler]))
+    (:require [keypress-handler.api       :as keypress-handler]
+              [pretty-engine.layout.utils :as layout.utils]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -25,7 +25,10 @@
               [:div (slider.attributes/slider-primary-thumb-attributes   slider-id slider-props)]
               [:div (slider.attributes/slider-secondary-thumb-attributes slider-id slider-props)]]])
 
-(defn- slider-lifecycles
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- input-lifecycles
   ; @ignore
   ;
   ; @param (keyword) slider-id
@@ -77,4 +80,4 @@
    (fn [_ slider-props]
        (let [slider-props (pretty-presets/apply-preset                        slider-props)
              slider-props (slider.prototypes/slider-props-prototype slider-id slider-props)]
-            [slider-lifecycles slider-id slider-props]))))
+            [input-lifecycles slider-id slider-props]))))

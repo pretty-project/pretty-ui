@@ -5,9 +5,9 @@
               [pretty-elements.expandable.attributes :as expandable.attributes]
               [pretty-elements.expandable.env        :as expandable.env]
               [pretty-elements.expandable.prototypes :as expandable.prototypes]
+              [pretty-engine.api                     :as pretty-engine]
               [pretty-presets.api                    :as pretty-presets]
-              [pretty-engine.api :as pretty-engine]
-              [reagent.api :as reagent]))
+              [reagent.api                           :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -45,6 +45,20 @@
             [:div (expandable.attributes/expandable-body-attributes expandable-id expandable-props)
                   [metamorphic-content/compose content placeholder]])])
 
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- element-lifecycles
+  ; @ignore
+  ;
+  ; @param (keyword) expandable-id
+  ; @param (map) expandable-props
+  [expandable-id expandable-props]
+  ; @note (tutorials#parametering)
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-engine/element-did-mount    expandable-id expandable-props))
+                       :component-will-unmount (fn [_ _] (pretty-engine/element-will-unmount expandable-id expandable-props))
+                       :reagent-render         (fn [_ expandable-props] [expandable expandable-id expandable-props])}))
+
 (defn element
   ; @param (keyword)(opt) expandable-id
   ; @param (map) expandable-props
@@ -81,4 +95,4 @@
    (fn [_ expandable-props]
        (let [expandable-props (pretty-presets/apply-preset                      expandable-props)
              expandable-props (expandable.prototypes/expandable-props-prototype expandable-props)]
-            [expandable expandable-id expandable-props]))))
+            [element-lifecycles expandable-id expandable-props]))))

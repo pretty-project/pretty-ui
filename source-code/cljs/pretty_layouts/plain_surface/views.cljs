@@ -2,12 +2,12 @@
 (ns pretty-layouts.plain-surface.views
     (:require [fruits.random.api                       :as random]
               [metamorphic-content.api                 :as metamorphic-content]
+              [pretty-engine.api                       :as pretty-engine]
               [pretty-layouts.plain-surface.attributes :as plain-surface.attributes]
               [pretty-layouts.plain-surface.prototypes :as plain-surface.prototypes]
               [pretty-presets.api                      :as pretty-presets]
               [re-frame.api                            :as r]
-              [pretty-engine.api :as pretty-engine]
-              [reagent.api :as reagent]))
+              [reagent.api                             :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -23,7 +23,10 @@
         [:div (plain-surface.attributes/surface-body-attributes surface-id surface-props)
               [metamorphic-content/compose content]]])
 
-(defn- plain-surface-lifecycles
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- layout-lifecycles
   ; @ignore
   ;
   ; @param (keyword) surface-id
@@ -63,4 +66,4 @@
    (fn [_ surface-props]
        (let [surface-props (pretty-presets/apply-preset                      surface-props)
              surface-props (plain-surface.prototypes/surface-props-prototype surface-props)]
-            [plain-surface-lifecycles surface-id surface-props]))))
+            [layout-lifecycles surface-id surface-props]))))

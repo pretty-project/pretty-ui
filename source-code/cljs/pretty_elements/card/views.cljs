@@ -4,9 +4,9 @@
               [metamorphic-content.api         :as metamorphic-content]
               [pretty-elements.card.attributes :as card.attributes]
               [pretty-elements.card.prototypes :as card.prototypes]
+              [pretty-engine.api               :as pretty-engine]
               [pretty-presets.api              :as pretty-presets]
-              [pretty-engine.api :as pretty-engine]
-              [reagent.api :as reagent]))
+              [reagent.api                     :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -25,6 +25,22 @@
         [(cond href :a on-click-f :button :else :div)
          (card.attributes/card-body-attributes card-id card-props)
          [metamorphic-content/compose content placeholder]]])
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- element-lifecycles
+  ; @ignore
+  ;
+  ; @param (keyword) card-id
+  ; @param (map) card-props
+  [card-id card-props]
+  ; @note (tutorials#parametering)
+  ; @note (pretty-engine.element.lifecycles.side-effects#8097)
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-engine/element-did-mount    card-id card-props))
+                       :component-will-unmount (fn [_ _] (pretty-engine/element-will-unmount card-id card-props))
+                       :component-did-update   (fn [%]   (pretty-engine/element-did-update   card-id card-props %))
+                       :reagent-render         (fn [_ card-props] [card card-id card-props])}))
 
 (defn element
   ; @param (keyword)(opt) card-id
@@ -87,4 +103,4 @@
    (fn [_ card-props]
        (let [card-props (pretty-presets/apply-preset          card-props)
              card-props (card.prototypes/card-props-prototype card-props)]
-            [card card-id card-props]))))
+            [element-lifecycles card-id card-props]))))

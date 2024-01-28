@@ -1,7 +1,7 @@
 
 (ns components.vector-item-list.attributes
-    (:require [pretty-css.layout.api :as pretty-css.layout]
-              [pretty-css.basic.api :as pretty-css.basic]))
+    (:require [pretty-css.basic.api  :as pretty-css.basic]
+              [pretty-css.layout.api :as pretty-css.layout]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

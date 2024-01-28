@@ -3,9 +3,9 @@
     (:require [fruits.random.api                        :as random]
               [pretty-diagrams.point-diagram.attributes :as point-diagram.attributes]
               [pretty-diagrams.point-diagram.prototypes :as point-diagram.prototypes]
+              [pretty-engine.api                        :as pretty-engine]
               [pretty-presets.api                       :as pretty-presets]
-              [pretty-engine.api :as pretty-engine]
-              [reagent.api :as reagent]))
+              [reagent.api                              :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -24,22 +24,41 @@
                     [:polyline {:points "0,100 100,1"
                                 :style  {:fill "none" :stroke "red" :stroke-width "2px"}}]]]])
 
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- diagram-lifecycles
+  ; @ignore
+  ;
+  ; @param (keyword) diagram-id
+  ; @param (map) diagram-props
+  [diagram-id diagram-props]
+  ; @note (tutorials#parametering)
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-engine/diagram-did-mount    diagram-id diagram-props))
+                       :component-will-unmount (fn [_ _] (pretty-engine/diagram-will-unmount diagram-id diagram-props))
+                       :reagent-render         (fn [_ diagram-props] [point-diagram diagram-id diagram-props])}))
+
 (defn diagram
   ; @important
   ; This function is incomplete and may not behave as expected.
   ;
   ; @param (keyword)(opt) diagram-id
   ; @param (map) diagram-props
-  ; {:color (keyword or string)(opt)
+  ; {:class (keyword or keywords in vector)
+  ;  :color (keyword or string)(opt)
   ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;   Default: :default
   ;   W/ {:label ...}
+  ;  :disabled? (boolean)(opt)
   ;  :indent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
+  ;  :on-mount-f (function)(opt)
+  ;  :on-unmount-f (function)(opt)
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :points (integers in vector)
+  ;  :points (integers in vector)(opt)
   ;  :preset (keyword)(opt)
+  ;  :style (map)(opt)
   ;  :strength (px)(opt)
   ;    Default: 2
   ;    Min: 1
@@ -57,6 +76,6 @@
   ([diagram-id diagram-props]
    ; @note (tutorials#parametering)
    (fn [_ diagram-props]
-       (let [diagram-props (pretty-presets/apply-preset diagram-props)]
-             ; diagram-props (point-diagram.prototypes/diagram-props-prototype diagram-props)
-            [point-diagram diagram-id diagram-props]))))
+       (let [diagram-props (pretty-presets/apply-preset                      diagram-id diagram-props)
+             diagram-props (point-diagram.prototypes/diagram-props-prototype diagram-id diagram-props)]
+            [diagram-lifecycles diagram-id diagram-props]))))

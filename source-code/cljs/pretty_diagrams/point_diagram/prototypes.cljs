@@ -7,7 +7,9 @@
 (defn diagram-props-prototype
   ; @ignore
   ;
+  ; @param (keyword) diagram-id
   ; @param (map) diagram-props
   ;
   ; @return (map)
-  [_])
+  [_ diagram-props]
+  (-> diagram-props))

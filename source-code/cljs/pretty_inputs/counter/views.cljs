@@ -32,7 +32,10 @@
               [:button (counter.attributes/increase-button-attributes counter-id counter-props)]
               (if resetable? [:button (counter.attributes/reset-button-attributes counter-id counter-props)])]])
 
-(defn- counter-lifecycles
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- input-lifecycles
   ; @ignore
   ;
   ; @param (keyword) counter-id
@@ -86,4 +89,4 @@
    (fn [_ counter-props]
        (let [counter-props (pretty-presets/apply-preset                           counter-props)
              counter-props (counter.prototypes/counter-props-prototype counter-id counter-props)]
-            [counter-lifecycles counter-id counter-props]))))
+            [input-lifecycles counter-id counter-props]))))

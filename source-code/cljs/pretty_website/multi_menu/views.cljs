@@ -2,13 +2,13 @@
 (ns pretty-website.multi-menu.views
     (:require [fruits.random.api                    :as random]
               [pretty-elements.api                  :as pretty-elements]
+              [pretty-engine.api                    :as pretty-engine]
               [pretty-presets.api                   :as pretty-presets]
               [pretty-website.multi-menu.attributes :as multi-menu.attributes]
               [pretty-website.multi-menu.prototypes :as multi-menu.prototypes]
               [pretty-website.sidebar.views         :as sidebar.views]
-              [window-observer.api                  :as window-observer]
-              [pretty-engine.api :as pretty-engine]
-              [reagent.api :as reagent]))
+              [reagent.api                          :as reagent]
+              [window-observer.api                  :as window-observer]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -32,6 +32,20 @@
   (if (window-observer/viewport-width-min? threshold)
       [pretty-elements/dropdown-menu menu-id menu-props]
       [sidebar.views/component       menu-id {:content [sidebar-menu menu-id menu-props]}]))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- component-lifecycles
+  ; @ignore
+  ;
+  ; @param (keyword) menu-id
+  ; @param (map) menu-props
+  [menu-id menu-props]
+  ; @note (tutorials#parametering)
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-engine/element-did-mount    menu-id menu-props))
+                       :component-will-unmount (fn [_ _] (pretty-engine/element-will-unmount menu-id menu-props))
+                       :reagent-render         (fn [_ menu-props] [multi-menu menu-id menu-props])}))
 
 (defn component
   ; @note
@@ -68,4 +82,4 @@
    (fn [_ menu-props]
        (let [menu-props (pretty-presets/apply-preset                menu-props)
              menu-props (multi-menu.prototypes/menu-props-prototype menu-props)]
-            [multi-menu menu-id menu-props]))))
+            [component-lifecycles menu-id menu-props]))))

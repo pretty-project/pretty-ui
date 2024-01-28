@@ -1,8 +1,8 @@
 
 (ns pretty-engine.input.keypress.side-effects
-    (:require [pretty-engine.input.value.env :as input.value.env]
-              [pretty-engine.input.utils :as input.utils]
-              [keypress-handler.api :as keypress-handler]))
+    (:require [keypress-handler.api          :as keypress-handler]
+              [pretty-engine.input.utils     :as input.utils]
+              [pretty-engine.input.value.env :as input.value.env]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

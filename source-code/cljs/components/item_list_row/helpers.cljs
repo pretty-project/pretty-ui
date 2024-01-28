@@ -1,7 +1,7 @@
 
 (ns components.item-list-row.helpers
-    (:require [pretty-css.appearance.api :as pretty-css.appearance]
-              [pretty-css.accessories.api :as pretty-css.accessories]))
+    (:require [pretty-css.accessories.api :as pretty-css.accessories]
+              [pretty-css.appearance.api  :as pretty-css.appearance]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

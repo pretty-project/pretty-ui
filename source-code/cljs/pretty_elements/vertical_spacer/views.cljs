@@ -3,12 +3,34 @@
     (:require [fruits.random.api                          :as random]
               [pretty-elements.vertical-spacer.attributes :as vertical-spacer.attributes]
               [pretty-elements.vertical-spacer.prototypes :as vertical-spacer.prototypes]
+              [pretty-engine.api                          :as pretty-engine]
               [pretty-presets.api                         :as pretty-presets]
-              [pretty-engine.api :as pretty-engine]
-              [reagent.api :as reagent]))
+              [reagent.api                                :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+(defn- vertical-spacer
+  ; @ignore
+  ;
+  ; @param (keyword) spacer-id
+  ; @param (map) spacer-props
+  [spacer-id spacer-props]
+  [:div (vertical-spacer.attributes/spacer-attributes spacer-id spacer-props)])
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- element-lifecycles
+  ; @ignore
+  ;
+  ; @param (keyword) spacer-id
+  ; @param (map) spacer-props
+  [spacer-id spacer-props]
+  ; @note (tutorials#parametering)
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-engine/element-did-mount    spacer-id spacer-props))
+                       :component-will-unmount (fn [_ _] (pretty-engine/element-will-unmount spacer-id spacer-props))
+                       :reagent-render         (fn [_ spacer-props] [vertical-spacer spacer-id spacer-props])}))
 
 (defn element
   ; @param (keyword)(opt) spacer-id
@@ -34,4 +56,4 @@
    (fn [_ spacer-props]
        (let [spacer-props (pretty-presets/apply-preset                       spacer-props)
              spacer-props (vertical-spacer.prototypes/spacer-props-prototype spacer-props)]
-            [:div (vertical-spacer.attributes/spacer-attributes spacer-id spacer-props)]))))
+            [element-lifecycles spacer-id spacer-props]))))

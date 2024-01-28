@@ -6,9 +6,9 @@
               [pretty-elements.icon-button.views              :as icon-button.views]
               [pretty-elements.notification-bubble.attributes :as notification-bubble.attributes]
               [pretty-elements.notification-bubble.prototypes :as notification-bubble.prototypes]
+              [pretty-engine.api                              :as pretty-engine]
               [pretty-presets.api                             :as pretty-presets]
-              [pretty-engine.api :as pretty-engine]
-              [reagent.api :as reagent]))
+              [reagent.api                                    :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -47,6 +47,23 @@
                     [metamorphic-content/compose content placeholder]]
               [notification-bubble-secondary-button bubble-id bubble-props]
               [notification-bubble-primary-button   bubble-id bubble-props]]])
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- element-lifecycles
+  ; @ignore
+  ;
+  ; @param (keyword) bubble-id
+  ; @param (map) bubble-props
+  [bubble-id bubble-props]
+  ; @note (tutorials#parametering)
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-engine/element-did-mount    bubble-id bubble-props))
+                       :component-will-unmount (fn [_ _] (pretty-engine/element-will-unmount bubble-id bubble-props))
+                       :reagent-render         (fn [_ bubble-props] [notification-bubble bubble-id bubble-props])}))
+
+                       ; @note (pretty-engine.element.lifecycles.side-effects#8097)
+                       ; + element-did-mount, keypress?
 
 (defn element
   ; @param (keyword) bubble-id
@@ -105,7 +122,7 @@
    (fn [_ bubble-props]
        (let [bubble-props (pretty-presets/apply-preset                           bubble-props)
              bubble-props (notification-bubble.prototypes/bubble-props-prototype bubble-props)]
-            [notification-bubble bubble-id bubble-props]))))
+            [element-lifecycles bubble-id bubble-props]))))
 
             ; + hover-color, hover-effect, hover-pattern ...
             ; + href-uri, href-target ...

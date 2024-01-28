@@ -5,9 +5,9 @@
               [metamorphic-content.api         :as metamorphic-content]
               [pretty-elements.text.attributes :as text.attributes]
               [pretty-elements.text.prototypes :as text.prototypes]
+              [pretty-engine.api               :as pretty-engine]
               [pretty-presets.api              :as pretty-presets]
-              [pretty-engine.api :as pretty-engine]
-              [reagent.api :as reagent]))
+              [reagent.api                     :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -28,6 +28,20 @@
                                         (hiccup/parse-newlines [:<> (metamorphic-content/compose content placeholder)])]]
                             [:<>  [:div (text.attributes/content-attributes text-id text-props)
                                         (hiccup/parse-newlines [:<> (metamorphic-content/compose content placeholder)])]])]])
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- element-lifecycles
+  ; @ignore
+  ;
+  ; @param (keyword) text-id
+  ; @param (map) text-props
+  [text-id text-props]
+  ; @note (tutorials#parametering)
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-engine/element-did-mount    text-id text-props))
+                       :component-will-unmount (fn [_ _] (pretty-engine/element-will-unmount text-id text-props))
+                       :reagent-render         (fn [_ text-props] [text text-id text-props])}))
 
 (defn element
   ; @param (keyword)(opt) text-id
@@ -90,4 +104,4 @@
    (fn [_ text-props]
        (let [text-props (pretty-presets/apply-preset          text-props)
              text-props (text.prototypes/text-props-prototype text-props)]
-            [text text-id text-props]))))
+            [element-lifecycles text-id text-props]))))

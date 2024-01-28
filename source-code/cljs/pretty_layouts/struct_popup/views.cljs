@@ -3,13 +3,13 @@
     (:require [fruits.hiccup.api                      :as hiccup]
               [fruits.random.api                      :as random]
               [metamorphic-content.api                :as metamorphic-content]
+              [pretty-engine.api                      :as pretty-engine]
               [pretty-layouts.struct-popup.attributes :as struct-popup.attributes]
               [pretty-layouts.struct-popup.prototypes :as struct-popup.prototypes]
               [pretty-layouts.struct-popup.utils      :as struct-popup.utils]
               [pretty-presets.api                     :as pretty-presets]
               [re-frame.api                           :as r]
-              [pretty-engine.api :as pretty-engine]
-              [reagent.api :as reagent]
+              [reagent.api                            :as reagent]
               [scroll-lock.api                        :as scroll-lock]))
 
 ;; ----------------------------------------------------------------------------
@@ -117,7 +117,10 @@
                           [struct-popup-header-lifecycles popup-id popup-props]]
                     [struct-popup-footer-lifecycles popup-id popup-props]]]])
 
-(defn- struct-popup-lifecycles
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- layout-lifecycles
   ; @ignore
   ;
   ; @param (keyword) popup-id
@@ -177,4 +180,4 @@
    (fn [_ popup-props]
        (let [popup-props (pretty-presets/apply-preset                   popup-props)
              popup-props (struct-popup.prototypes/popup-props-prototype popup-props)]
-            [struct-popup-lifecycles popup-id popup-props]))))
+            [layout-lifecycles popup-id popup-props]))))

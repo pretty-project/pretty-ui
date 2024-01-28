@@ -3,13 +3,13 @@
     (:require [fruits.random.api                 :as random]
               [metamorphic-content.api           :as metamorphic-content]
               [pretty-elements.api               :as pretty-elements]
+              [pretty-engine.api                 :as pretty-engine]
               [pretty-presets.api                :as pretty-presets]
               [pretty-website.sidebar.attributes :as sidebar.attributes]
               [pretty-website.sidebar.prototypes :as sidebar.prototypes]
               [pretty-website.sidebar.state      :as sidebar.state]
               [react.api                         :as react]
-              [pretty-engine.api :as pretty-engine]
-              [reagent.api :as reagent]))
+              [reagent.api                       :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -29,6 +29,20 @@
                                     [:div (sidebar.attributes/sidebar-body-attributes sidebar-id sidebar-props)
                                           [:div {:class :pw-sidebar--content}
                                                 [metamorphic-content/compose content placeholder]]]]]])
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- component-lifecycles
+  ; @ignore
+  ;
+  ; @param (keyword) sidebar-id
+  ; @param (map) sidebar-props
+  [sidebar-id sidebar-props]
+  ; @note (tutorials#parametering)
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-engine/element-did-mount    sidebar-id sidebar-props))
+                       :component-will-unmount (fn [_ _] (pretty-engine/element-will-unmount sidebar-id sidebar-props))
+                       :reagent-render         (fn [_ sidebar-props] [sidebar sidebar-id sidebar-props])}))
 
 (defn component
   ; @param (keyword)(opt) sidebar-id
@@ -69,4 +83,4 @@
    (fn [_ sidebar-props]
        (let [sidebar-props (pretty-presets/apply-preset                sidebar-props)
              sidebar-props (sidebar.prototypes/sidebar-props-prototype sidebar-props)]
-            [sidebar sidebar-id sidebar-props]))))
+            [component-lifecycles sidebar-id sidebar-props]))))

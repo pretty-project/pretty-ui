@@ -1,7 +1,7 @@
 
 (ns pretty-layouts.plain-surface.attributes
     (:require [pretty-css.appearance.api :as pretty-css.appearance]
-              [pretty-css.basic.api :as pretty-css.basic]))
+              [pretty-css.basic.api      :as pretty-css.basic]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

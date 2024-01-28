@@ -51,7 +51,10 @@
         [:div (chip-group.attributes/chip-group-body-attributes group-id group-props)
               [chip-group-chip-list                             group-id group-props]]])
 
-(defn- chip-group-lifecycles
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- input-lifecycles
   ; @ignore
   ;
   ; @param (keyword) group-id
@@ -103,4 +106,4 @@
    (fn [_ group-props]
        (let [group-props (pretty-presets/apply-preset                 group-props)
              group-props (chip-group.prototypes/group-props-prototype group-props)]
-            [chip-group-lifecycles group-id group-props]))))
+            [input-lifecycles group-id group-props]))))

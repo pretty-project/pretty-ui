@@ -1,8 +1,8 @@
 
 (ns pretty-engine.element.timeout.props
-    (:require [pretty-engine.element.timeout.env :as element.timeout.env]
-              [time.api :as time]
-              [countdown-timer.api :as countdown-timer]))
+    (:require [countdown-timer.api               :as countdown-timer]
+              [pretty-engine.element.timeout.env :as element.timeout.env]
+              [time.api                          :as time]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

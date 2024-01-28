@@ -1,9 +1,9 @@
 
 (ns pretty-elements.core.props
-    (:require [pretty-defaults.utils :as utils]
-              [fruits.map.api :as map]
+    (:require [dom.api                 :as dom]
+              [fruits.map.api          :as map]
               [metamorphic-content.api :as metamorphic-content]
-              [dom.api :as dom]))
+              [pretty-defaults.utils   :as utils]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

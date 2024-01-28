@@ -63,7 +63,10 @@
         [:div (radio-button.attributes/radio-button-body-attributes button-id button-props)
               [radio-button-option-list                             button-id button-props]]])
 
-(defn- radio-button-lifecycles
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- input-lifecycles
   ; @ignore
   ;
   ; @param (keyword) button-id
@@ -141,4 +144,4 @@
    (fn [_ button-props]
        (let [button-props (pretty-presets/apply-preset                    button-props)
              button-props (radio-button.prototypes/button-props-prototype button-props)]
-            [radio-button-lifecycles button-id button-props]))))
+            [input-lifecycles button-id button-props]))))

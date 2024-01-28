@@ -6,9 +6,9 @@
               [pretty-elements.adornment-group.views :as adornment-group.views]
               [pretty-elements.chip.attributes       :as chip.attributes]
               [pretty-elements.chip.prototypes       :as chip.prototypes]
+              [pretty-engine.api                     :as pretty-engine]
               [pretty-presets.api                    :as pretty-presets]
-              [pretty-engine.api :as pretty-engine]
-              [reagent.api :as reagent]))
+              [reagent.api                           :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -28,6 +28,22 @@
          [:div (chip.attributes/chip-label-attributes chip-id chip-props) [metamorphic-content/compose label placeholder]]
          (if (vector/not-empty? end-adornments)
              [adornment-group.views/element {:adornments end-adornments}])]])
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- element-lifecycles
+  ; @ignore
+  ;
+  ; @param (keyword) chip-id
+  ; @param (map) chip-props
+  [chip-id chip-props]
+  ; @note (tutorials#parametering)
+  ; @note (pretty-engine.element.lifecycles.side-effects#8097)
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-engine/element-did-mount    chip-id chip-props))
+                       :component-will-unmount (fn [_ _] (pretty-engine/element-will-unmount chip-id chip-props))
+                       :component-did-update   (fn [%]   (pretty-engine/element-did-update   chip-id chip-props %))
+                       :reagent-render         (fn [_ chip-props] [chip chip-id chip-props])}))
 
 (defn element
   ; @param (keyword)(opt) chip-id
@@ -79,4 +95,4 @@
    (fn [_ chip-props]
        (let [chip-props (pretty-presets/apply-preset          chip-props)
              chip-props (chip.prototypes/chip-props-prototype chip-props)]
-            [chip chip-id chip-props]))))
+            [element-lifecycles chip-id chip-props]))))

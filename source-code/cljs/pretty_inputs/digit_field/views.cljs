@@ -7,7 +7,9 @@
               [pretty-inputs.digit-field.attributes :as digit-field.attributes]
               [pretty-inputs.digit-field.prototypes :as digit-field.prototypes]
               [pretty-inputs.digit-field.utils      :as digit-field.utils]
-              [re-frame.api                         :as r]))
+              [re-frame.api                         :as r]
+              [reagent.api :as reagent]
+              [pretty-engine.api :as pretty-engine]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -48,6 +50,20 @@
         [digit-field-input                       field-id field-props]
         [digit-field-cover                       field-id field-props]])
 
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- input-lifecycles
+  ; @ignore
+  ;
+  ; @param (keyword) field-id
+  ; @param (map) field-props
+  [field-id field-props]
+  ; @note (tutorials#parametering)
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-engine/input-did-mount    field-id field-props))
+                       :component-will-unmount (fn [_ _] (pretty-engine/input-will-unmount field-id field-props))
+                       :reagent-render         (fn [_ field-props] [digit-field field-id field-props])}))
+
 (defn input
   ; @important
   ; This function is incomplete and may not behave as expected.
@@ -80,4 +96,4 @@
    ; @note (tutorials#parametering)
    (fn [_ field-props]
        (let [] ; field-props (digit-field.prototypes/field-props-prototype field-props)
-            [digit-field field-id field-props]))))
+            [input-lifecycles field-id field-props]))))

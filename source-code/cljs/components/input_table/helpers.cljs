@@ -1,9 +1,9 @@
 
 (ns components.input-table.helpers
-    (:require [fruits.hiccup.api    :as hiccup]
+    (:require [fruits.hiccup.api         :as hiccup]
               [pretty-css.appearance.api :as pretty-css.appearance]
-              [pretty-css.basic.api :as pretty-css.basic]
-              [pretty-css.layout.api :as pretty-css.layout]))
+              [pretty-css.basic.api      :as pretty-css.basic]
+              [pretty-css.layout.api     :as pretty-css.layout]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

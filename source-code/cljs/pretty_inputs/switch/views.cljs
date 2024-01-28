@@ -4,7 +4,6 @@
               [fruits.random.api               :as random]
               [fruits.vector.api               :as vector]
               [metamorphic-content.api         :as metamorphic-content]
-              
               [pretty-elements.api             :as pretty-elements]
               [pretty-engine.api               :as pretty-engine]
               [pretty-forms.api                :as pretty-forms]
@@ -63,7 +62,10 @@
         [:div (switch.attributes/switch-body-attributes switch-id switch-props)
               [switch-option-list                       switch-id switch-props]]])
 
-(defn- switch-lifecycles
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- input-lifecycles
   ; @ignore
   ;
   ; @param (keyword) switch-id
@@ -142,4 +144,4 @@
    (fn [_ switch-props]
        (let [switch-props (pretty-presets/apply-preset                        switch-props)
              switch-props (switch.prototypes/switch-props-prototype switch-id switch-props)]
-            [switch-lifecycles switch-id switch-props]))))
+            [input-lifecycles switch-id switch-props]))))

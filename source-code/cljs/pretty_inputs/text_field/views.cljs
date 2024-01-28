@@ -79,7 +79,10 @@
                               [:div (text-field.attributes/field-surface-attributes field-id field-props)
                                     [metamorphic-content/compose surface]]]))])
 
-(defn- text-field-lifecycles
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- input-lifecycles
   ; @ignore
   ;
   ; @param (keyword) field-id
@@ -174,4 +177,4 @@
    (fn [_ field-props]
        (let [field-props (pretty-presets/apply-preset                          field-props)
              field-props (text-field.prototypes/field-props-prototype field-id field-props)]
-            [text-field-lifecycles field-id field-props]))))
+            [input-lifecycles field-id field-props]))))

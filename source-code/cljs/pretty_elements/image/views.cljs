@@ -3,9 +3,9 @@
     (:require [fruits.random.api                :as random]
               [pretty-elements.image.attributes :as image.attributes]
               [pretty-elements.image.prototypes :as image.prototypes]
+              [pretty-engine.api                :as pretty-engine]
               [pretty-presets.api               :as pretty-presets]
-              [pretty-engine.api :as pretty-engine]
-              [reagent.api :as reagent]))
+              [reagent.api                      :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -26,6 +26,20 @@
   [image-id image-props]
   [:div (image.attributes/image-attributes image-id image-props)
         [:img (image.attributes/image-body-attributes image-id image-props)]])
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- element-lifecycles
+  ; @ignore
+  ;
+  ; @param (keyword) image-id
+  ; @param (map) image-props
+  [image-id image-props]
+  ; @note (tutorials#parametering)
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-engine/element-did-mount    image-id image-props))
+                       :component-will-unmount (fn [_ _] (pretty-engine/element-will-unmount image-id image-props))
+                       :reagent-render         (fn [_ image-props] [image image-id image-props])}))
 
 (defn element
   ; @param (keyword)(opt) image-id
@@ -63,4 +77,4 @@
    (fn [_ image-props]
        (let [image-props (pretty-presets/apply-preset image-props)]
              ; image-props (image.prototypes/image-props-prototype image-props)
-            [image image-id image-props]))))
+            [element-lifecycles image-id image-props]))))

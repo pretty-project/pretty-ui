@@ -1,8 +1,8 @@
 
 (ns pretty-engine.element.keypress.side-effects
-    (:require [keypress-handler.api :as keypress-handler]
+    (:require [keypress-handler.api                     :as keypress-handler]
               [pretty-engine.element.focus.side-effects :as element.focus.side-effects]
-              [pretty-engine.element.utils :as element.utils]))
+              [pretty-engine.element.utils              :as element.utils]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

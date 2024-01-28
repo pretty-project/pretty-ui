@@ -4,10 +4,10 @@
               [metamorphic-content.api                :as metamorphic-content]
               [pretty-elements.icon-button.attributes :as icon-button.attributes]
               [pretty-elements.icon-button.prototypes :as icon-button.prototypes]
+              [pretty-engine.api                      :as pretty-engine]
               [pretty-presets.api                     :as pretty-presets]
               [re-frame.api                           :as r]
-              [pretty-engine.api :as pretty-engine]
-              [reagent.api :as reagent]))
+              [reagent.api                            :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -29,13 +29,17 @@
         (if label [:div {:class :pe-icon-button--label :data-text-selectable false}
                         (metamorphic-content/compose label)])])
 
-(defn- icon-button-lifecycles
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- element-lifecycles
   ; @ignore
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
   [button-id button-props]
   ; @note (tutorials#parametering)
+  ; @note (pretty-engine.element.lifecycles.side-effects#8097)
   (reagent/lifecycles {:component-did-mount    (fn [_ _]) ;(r/dispatch [:pretty-elements.button/button-did-mount    button-id button-props]))
                        :component-will-unmount (fn [_ _]) ;(r/dispatch [:pretty-elements.button/button-will-unmount button-id button-props]))
                        :component-did-update   (fn [%])   ;(r/dispatch [:pretty-elements.button/button-did-update   button-id %]))
@@ -104,4 +108,4 @@
    (fn [_ button-props]
        (let [button-props (pretty-presets/apply-preset                             button-props)
              button-props (icon-button.prototypes/button-props-prototype button-id button-props)]
-            [icon-button-lifecycles button-id button-props]))))
+            [element-lifecycles button-id button-props]))))

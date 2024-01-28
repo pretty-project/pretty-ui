@@ -4,9 +4,9 @@
               [fruits.random.api                           :as random]
               [pretty-elements.horizontal-group.attributes :as horizontal-group.attributes]
               [pretty-elements.horizontal-group.prototypes :as horizontal-group.prototypes]
+              [pretty-engine.api                           :as pretty-engine]
               [pretty-presets.api                          :as pretty-presets]
-              [pretty-engine.api :as pretty-engine]
-              [reagent.api :as reagent]))
+              [reagent.api                                 :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -21,6 +21,20 @@
         [:div (horizontal-group.attributes/group-body-attributes group-id group-props)
               (letfn [(f0 [group-item] [element (merge default-props group-item)])]
                      (hiccup/put-with [:<>] group-items f0))]])
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- element-lifecycles
+  ; @ignore
+  ;
+  ; @param (keyword) group-id
+  ; @param (map) group-props
+  [group-id group-props]
+  ; @note (tutorials#parametering)
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-engine/element-did-mount    group-id group-props))
+                       :component-will-unmount (fn [_ _] (pretty-engine/element-will-unmount group-id group-props))
+                       :reagent-render         (fn [_ group-props] [horizontal-group group-id group-props])}))
 
 (defn element
   ; @param (keyword)(opt) group-id
@@ -58,4 +72,4 @@
    (fn [_ group-props]
        (let [group-props (pretty-presets/apply-preset group-props)]
              ; group-props (horizontal-group.prototypes/group-props-prototype group-props)
-            [horizontal-group group-id group-props]))))
+            [element-lifecycles group-id group-props]))))

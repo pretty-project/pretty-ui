@@ -8,6 +8,5 @@
 ; @redirect (pretty-defaults.utils/*)
 (def use-default-values      utils/use-default-values)
 (def use-default-value-group utils/use-default-value-group)
-(def force-values       utils/force-values)
-(def force-value-group  utils/force-value-group)
-(def value-update-fns    utils/value-update-fns)
+(def force-values            utils/force-values)
+(def force-value-group       utils/force-value-group)

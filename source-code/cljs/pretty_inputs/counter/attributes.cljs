@@ -1,12 +1,11 @@
 
 (ns pretty-inputs.counter.attributes
-    (:require [dom.api              :as dom]
-              
-              [re-frame.api         :as r]
+    (:require [dom.api                   :as dom]
               [pretty-css.appearance.api :as pretty-css.appearance]
-              [pretty-css.content.api :as pretty-css.content]
-              [pretty-css.layout.api :as pretty-css.layout]
-              [pretty-css.basic.api :as pretty-css.basic]))
+              [pretty-css.basic.api      :as pretty-css.basic]
+              [pretty-css.content.api    :as pretty-css.content]
+              [pretty-css.layout.api     :as pretty-css.layout]
+              [re-frame.api              :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

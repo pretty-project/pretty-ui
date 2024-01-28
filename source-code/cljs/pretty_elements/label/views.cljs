@@ -2,14 +2,13 @@
 (ns pretty-elements.label.views
     (:require [fruits.random.api                :as random]
               [metamorphic-content.api          :as metamorphic-content]
-              
+              [pretty-css.content.api           :as pretty-css.content]
               [pretty-elements.label.attributes :as label.attributes]
               [pretty-elements.label.env        :as label.env]
               [pretty-elements.label.prototypes :as label.prototypes]
+              [pretty-engine.api                :as pretty-engine]
               [pretty-presets.api               :as pretty-presets]
-              [pretty-engine.api :as pretty-engine]
-              [reagent.api :as reagent]
-              [pretty-css.content.api :as pretty-css.content]))
+              [reagent.api                      :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -119,6 +118,20 @@
         [label-info-text                   label-id label-props]
         [label-helper                      label-id label-props]])
 
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- element-lifecycles
+  ; @ignore
+  ;
+  ; @param (keyword) label-id
+  ; @param (map) label-props
+  [label-id label-props]
+  ; @note (tutorials#parametering)
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-engine/element-did-mount    label-id label-props))
+                       :component-will-unmount (fn [_ _] (pretty-engine/element-will-unmount label-id label-props))
+                       :reagent-render         (fn [_ label-props] [label label-id label-props])}))
+
 (defn element
   ; @param (keyword)(opt) label-id
   ; @param (map) label-props
@@ -197,4 +210,4 @@
    (fn [_ label-props]
        (let [label-props (pretty-presets/apply-preset            label-props)
              label-props (label.prototypes/label-props-prototype label-props)]
-            [label label-id label-props]))))
+            [element-lifecycles label-id label-props]))))

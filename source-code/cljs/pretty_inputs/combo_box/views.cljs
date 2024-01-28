@@ -59,6 +59,9 @@
   (let [box-props (assoc-in box-props [:surface :content] [combo-box-surface-content box-id box-props])]
        [text-field.views/input box-id box-props]))
 
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn input
   ; @note
   ; For more information, check out the documentation of the ['text-field'](#text-field) input.

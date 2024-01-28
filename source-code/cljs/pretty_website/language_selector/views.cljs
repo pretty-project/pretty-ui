@@ -2,11 +2,11 @@
 (ns pretty-website.language-selector.views
     (:require [fruits.hiccup.api                           :as hiccup]
               [fruits.random.api                           :as random]
+              [pretty-engine.api                           :as pretty-engine]
               [pretty-presets.api                          :as pretty-presets]
               [pretty-website.language-selector.attributes :as language-selector.attributes]
               [pretty-website.language-selector.prototypes :as language-selector.prototypes]
-              [pretty-engine.api :as pretty-engine]
-              [reagent.api :as reagent]))
+              [reagent.api                                 :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -24,6 +24,20 @@
                           [:button (language-selector.attributes/language-button-attributes selector-id selector-props language)
                                    (name language)])]
                      (hiccup/put-with [:<>] languages f0))]])
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- component-lifecycles
+  ; @ignore
+  ;
+  ; @param (keyword) selector-id
+  ; @param (map) selector-props
+  [selector-id selector-props]
+  ; @note (tutorials#parametering)
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-engine/element-did-mount    selector-id selector-props))
+                       :component-will-unmount (fn [_ _] (pretty-engine/element-will-unmount selector-id selector-props))
+                       :reagent-render         (fn [_ selector-props] [language-selector selector-id selector-props])}))
 
 (defn component
   ; @param (keyword)(opt) selector-id
@@ -58,4 +72,4 @@
    (fn [_ selector-props]
        (let [selector-props (pretty-presets/apply-preset                           selector-props)
              selector-props (language-selector.prototypes/selector-props-prototype selector-props)]
-            [language-selector selector-id selector-props]))))
+            [component-lifecycles selector-id selector-props]))))

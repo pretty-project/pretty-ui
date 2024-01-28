@@ -1,15 +1,14 @@
 
 (ns pretty-inputs.switch.attributes
-    (:require [dom.api              :as dom]
-              
-              [pretty-engine.api    :as pretty-engine]
-              [re-frame.api         :as r]
+    (:require [dom.api                   :as dom]
               [pretty-css.appearance.api :as pretty-css.appearance]
-              [pretty-css.basic.api :as pretty-css.basic]
-              [pretty-css.content.api :as pretty-css.content]
-              [pretty-css.control.api :as pretty-css.control]
-              [pretty-css.layout.api :as pretty-css.layout]
-              [pretty-css.live.api :as pretty-css.live]))
+              [pretty-css.basic.api      :as pretty-css.basic]
+              [pretty-css.content.api    :as pretty-css.content]
+              [pretty-css.control.api    :as pretty-css.control]
+              [pretty-css.layout.api     :as pretty-css.layout]
+              [pretty-css.live.api       :as pretty-css.live]
+              [pretty-engine.api         :as pretty-engine]
+              [re-frame.api              :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

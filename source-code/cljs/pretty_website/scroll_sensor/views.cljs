@@ -1,11 +1,11 @@
 
 (ns pretty-website.scroll-sensor.views
     (:require [fruits.random.api                         :as random]
+              [pretty-engine.api                         :as pretty-engine]
               [pretty-presets.api                        :as pretty-presets]
               [pretty-website.scroll-sensor.attributes   :as scroll-sensor.attributes]
               [pretty-website.scroll-sensor.side-effects :as scroll-sensor.side-effects]
-              [pretty-engine.api :as pretty-engine]
-              [reagent.api :as reagent]))
+              [reagent.api                               :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -15,11 +15,22 @@
   ;
   ; @param (keyword) sensor-id
   ; @param (map) sensor-props
+  [sensor-id sensor-props]
+  [:div (scroll-sensor.attributes/sensor-attributes sensor-id sensor-props)])
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- component-lifecycles
+  ; @ignore
+  ;
+  ; @param (keyword) sensor-id
+  ; @param (map) sensor-props
   ; {:callback-f (function)}
   [sensor-id {:keys [callback-f] :as sensor-props}]
   ; @note (tutorials#parametering)
-  (reagent/lifecycles {:component-did-mount (fn [_ _] (scroll-sensor.side-effects/sensor-did-mount-f sensor-id callback-f))
-                       :reagent-render      (fn [_ _] [:div (scroll-sensor.attributes/sensor-attributes sensor-id sensor-props)])}))
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (scroll-sensor.side-effects/sensor-did-mount-f sensor-id callback-f))
+                       :reagent-render         (fn [_ sensor-props] [scroll-sensor sensor-id sensor-props])}))
 
 (defn component
   ; @param (keyword)(opt) sensor-id

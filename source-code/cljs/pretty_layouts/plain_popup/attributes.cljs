@@ -1,8 +1,8 @@
 
 (ns pretty-layouts.plain-popup.attributes
-    (:require [re-frame.api         :as r]
-              [pretty-css.basic.api :as pretty-css.basic]
-              [pretty-css.appearance.api :as pretty-css.appearance]))
+    (:require [pretty-css.appearance.api :as pretty-css.appearance]
+              [pretty-css.basic.api      :as pretty-css.basic]
+              [re-frame.api              :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

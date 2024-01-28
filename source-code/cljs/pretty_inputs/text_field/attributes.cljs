@@ -1,18 +1,17 @@
 
 (ns pretty-inputs.text-field.attributes
     (:require [dom.api                               :as dom]
-              
+              [pretty-css.accessories.api            :as pretty-css.accessories]
+              [pretty-css.appearance.api             :as pretty-css.appearance]
+              [pretty-css.basic.api                  :as pretty-css.basic]
+              [pretty-css.content.api                :as pretty-css.content]
+              [pretty-css.control.api                :as pretty-css.control]
+              [pretty-css.input.api                  :as pretty-css.input]
+              [pretty-css.layout.api                 :as pretty-css.layout]
+              [pretty-css.live.api                   :as pretty-css.live]
               [pretty-engine.api                     :as pretty-engine]
               [pretty-inputs.text-field.env          :as text-field.env]
-              [pretty-inputs.text-field.side-effects :as text-field.side-effects]
-              [pretty-css.appearance.api :as pretty-css.appearance]
-              [pretty-css.accessories.api :as pretty-css.accessories]
-              [pretty-css.basic.api :as pretty-css.basic]
-              [pretty-css.content.api :as pretty-css.content]
-              [pretty-css.control.api :as pretty-css.control]
-              [pretty-css.layout.api :as pretty-css.layout]
-              [pretty-css.live.api :as pretty-css.live]
-              [pretty-css.input.api :as pretty-css.input]))
+              [pretty-inputs.text-field.side-effects :as text-field.side-effects]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

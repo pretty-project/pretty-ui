@@ -1,7 +1,7 @@
 
 (ns pretty-diagrams.line-diagram.prototypes
-    (:require [fruits.math.api :as math]
-              [pretty-defaults.api :as pretty-defaults]
+    (:require [fruits.math.api                    :as math]
+              [pretty-defaults.api                :as pretty-defaults]
               [pretty-diagrams.line-diagram.utils :as line-diagram.utils]))
 
 ;; ----------------------------------------------------------------------------
@@ -17,9 +17,13 @@
   [section-props]
   (-> section-props (pretty-defaults/use-default-values {:color :primary})))
 
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn diagram-props-prototype
   ; @ignore
   ;
+  ; @param (keyword) diagram-id
   ; @param (map) diagram-props
   ; {:strength (integer)(opt)}
   ;
@@ -27,7 +31,7 @@
   ; {:strength (px)
   ;  :total-value (integer)
   ;  :width (keyword, px or string)}
-  [{:keys [strength] :as diagram-props}]
+  [_ {:keys [strength] :as diagram-props}]
   (merge {:total-value (line-diagram.utils/diagram-props->total-value diagram-props)
           :width :auto}
          (-> diagram-props)

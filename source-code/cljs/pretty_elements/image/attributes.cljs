@@ -1,10 +1,10 @@
 
 (ns pretty-elements.image.attributes
-    (:require [pretty-elements.image.utils :as image.utils]
-              [pretty-css.layout.api :as pretty-css.layout]
-              [pretty-css.appearance.api :as pretty-css.appearance]
-              [react.api                   :as react]
-              [pretty-css.basic.api :as pretty-css.basic]))
+    (:require [pretty-css.appearance.api   :as pretty-css.appearance]
+              [pretty-css.basic.api        :as pretty-css.basic]
+              [pretty-css.layout.api       :as pretty-css.layout]
+              [pretty-elements.image.utils :as image.utils]
+              [react.api                   :as react]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

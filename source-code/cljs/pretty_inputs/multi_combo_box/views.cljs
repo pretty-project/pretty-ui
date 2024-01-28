@@ -7,7 +7,8 @@
               [pretty-inputs.combo-box.views            :as combo-box.views]
               [pretty-inputs.multi-combo-box.attributes :as multi-combo-box.attributes]
               [pretty-inputs.multi-combo-box.prototypes :as multi-combo-box.prototypes]
-              [re-frame.api                             :as r]))
+              [re-frame.api                             :as r]
+              [reagent.api :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -53,6 +54,20 @@
               [multi-combo-box-chip-group                     box-id box-props]
               [multi-combo-box-field                          box-id box-props]]])
 
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- input-lifecycles
+  ; @ignore
+  ;
+  ; @param (keyword) box-id
+  ; @param (map) box-props
+  [box-id box-props]
+  ; @note (tutorials#parametering)
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-engine/input-did-mount    box-id box-props))
+                       :component-will-unmount (fn [_ _] (pretty-engine/input-will-unmount box-id box-props))
+                       :reagent-render         (fn [_ box-props] [multi-combo-box box-id box-props])}))
+
 (defn input
   ; @note
   ; For more information, check out the documentation of the ['text-field'](#text-field) input.
@@ -92,4 +107,4 @@
    (fn [_ box-props]
        (let [box-props (multi-combo-box.prototypes/box-props-prototype box-id box-props)
              box-props (assoc-in box-props [:surface :content] [combo-box.views/combo-box-surface-content box-id box-props])]
-            [multi-combo-box box-id box-props]))))
+            [input-lifecycles box-id box-props]))))

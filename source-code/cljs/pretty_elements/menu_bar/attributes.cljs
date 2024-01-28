@@ -1,12 +1,12 @@
 
 (ns pretty-elements.menu-bar.attributes
-    (:require [pretty-css.appearance.api :as pretty-css.appearance]
-              [pretty-css.accessories.api :as pretty-css.accessories]
-              [pretty-css.basic.api :as pretty-css.basic]
-              [pretty-css.control.api :as pretty-css.control]
-              [pretty-css.content.api :as pretty-css.content]
-              [pretty-css.layout.api :as pretty-css.layout]
-              [pretty-css.live.api :as pretty-css.live]))
+    (:require [pretty-css.accessories.api :as pretty-css.accessories]
+              [pretty-css.appearance.api  :as pretty-css.appearance]
+              [pretty-css.basic.api       :as pretty-css.basic]
+              [pretty-css.content.api     :as pretty-css.content]
+              [pretty-css.control.api     :as pretty-css.control]
+              [pretty-css.layout.api      :as pretty-css.layout]
+              [pretty-css.live.api        :as pretty-css.live]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -1,7 +1,6 @@
 
 (ns pretty-website.scroll-sensor.attributes
     (:require [fruits.hiccup.api    :as hiccup]
-              
               [pretty-css.basic.api :as pretty-css.basic]))
 
 ;; ----------------------------------------------------------------------------

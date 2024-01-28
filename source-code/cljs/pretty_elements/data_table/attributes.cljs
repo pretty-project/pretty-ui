@@ -1,9 +1,9 @@
 
 (ns pretty-elements.data-table.attributes
     (:require [pretty-css.appearance.api :as pretty-css.appearance]
-              [pretty-css.basic.api :as pretty-css.basic]
-              [pretty-css.content.api :as pretty-css.content]
-              [pretty-css.layout.api :as pretty-css.layout]))
+              [pretty-css.basic.api      :as pretty-css.basic]
+              [pretty-css.content.api    :as pretty-css.content]
+              [pretty-css.layout.api     :as pretty-css.layout]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

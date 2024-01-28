@@ -4,15 +4,15 @@
               [fruits.random.api                          :as random]
               [pretty-elements.adornment-group.attributes :as adornment-group.attributes]
               [pretty-elements.adornment-group.prototypes :as adornment-group.prototypes]
-              [pretty-elements.adornment.views :as adornment.views]
-              [pretty-engine.api :as pretty-engine]
-              [pretty-presets.api :as pretty-presets]
-              [reagent.api :as reagent]))
+              [pretty-elements.adornment.views            :as adornment.views]
+              [pretty-engine.api                          :as pretty-engine]
+              [pretty-presets.api                         :as pretty-presets]
+              [reagent.api                                :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn adornment-group
+(defn- adornment-group
   ; @ignore
   ;
   ; @param (keyword) group-id
@@ -24,7 +24,10 @@
               (letfn [(f0 [adornment-props] [adornment.views/element adornment-props])]
                      (hiccup/put-with [:<>] adornments f0))]])
 
-(defn adornment-group-lifecycles
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- element-lifecycles
   ; @ignore
   ;
   ; @param (keyword) group-id
@@ -75,4 +78,4 @@
    (fn [_ group-props]
        (let [group-props (pretty-presets/apply-preset                      group-id group-props)
              group-props (adornment-group.prototypes/group-props-prototype group-id group-props)]
-            [adornment-group-lifecycles group-id group-props]))))
+            [element-lifecycles group-id group-props]))))
