@@ -5,7 +5,7 @@
               [fruits.vector.api               :as vector]
               [metamorphic-content.api         :as metamorphic-content]
               [pretty-elements.api             :as pretty-elements]
-              [pretty-engine.api               :as pretty-engine]
+              [pretty-inputs.engine.api               :as pretty-inputs.engine]
               [pretty-forms.api                :as pretty-forms]
               [pretty-inputs.switch.attributes :as switch.attributes]
               [pretty-inputs.switch.prototypes :as switch.prototypes]
@@ -20,18 +20,16 @@
   ;
   ; @param (keyword) switch-id
   ; @param (map) switch-props
-  ; {:option-helper-f (function)
-  ;  :option-label-f (function)}
   ; @param (*) option
-  [switch-id {:keys [option-helper-f option-label-f] :as switch-props} option]
+  [switch-id switch-props option]
   [:button (switch.attributes/switch-option-attributes switch-id switch-props option)
            [:div (switch.attributes/switch-option-track-attributes switch-id switch-props option)
                  [:div (switch.attributes/switch-option-thumb-attributes switch-id switch-props option)]]
            [:div {:class :pi-switch--option-content}
-                 (if-some [option-label (-> option option-label-f)]
+                 (if-some [option-label (pretty-inputs.engine/get-input-option-label switch-id switch-props option)]
                           [:div (switch.attributes/switch-option-label-attributes switch-id switch-props option)
                                 [metamorphic-content/compose option-label]])
-                 (if-some [option-helper (-> option option-helper-f)]
+                 (if-some [option-helper (pretty-inputs.engine/get-input-option-helper switch-id switch-props option)]
                           [:div (switch.attributes/switch-option-helper-attributes switch-id switch-props option)
                                 [metamorphic-content/compose option-helper]])]])
 
@@ -43,7 +41,7 @@
   ; {:placeholder (metamorphic-content)(opt)}
   [switch-id {:keys [placeholder] :as switch-props}]
   (letfn [(f0 [option] [switch-option switch-id switch-props option])]
-         (let [options (pretty-engine/get-input-options switch-id switch-props)]
+         (let [options (pretty-inputs.engine/get-input-options switch-id switch-props)]
               (cond (-> options vector/not-empty?) (hiccup/put-with [:<>] options f0)
                     (-> placeholder) [:div (switch.attributes/switch-placeholder-attributes switch-id switch-props)
                                            (metamorphic-content/compose placeholder)]))))
@@ -55,10 +53,10 @@
   ; @param (map) switch-props
   [switch-id switch-props]
   [:div (switch.attributes/switch-attributes switch-id switch-props)
-        (if-let [label-props (pretty-engine/input-label-props switch-id switch-props)]
+        (if-let [label-props (pretty-inputs.engine/input-label-props switch-id switch-props)]
                 [pretty-elements/label label-props])
-        [pretty-forms/invalid-message     switch-id switch-props]
-        [pretty-engine/input-synchronizer switch-id switch-props]
+        [pretty-forms/invalid-message            switch-id switch-props]
+        [pretty-inputs.engine/input-synchronizer switch-id switch-props]
         [:div (switch.attributes/switch-body-attributes switch-id switch-props)
               [switch-option-list                       switch-id switch-props]]])
 
@@ -72,8 +70,8 @@
   ; @param (map) switch-props
   [switch-id switch-props]
   ; @note (tutorials#parametering)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-engine/input-did-mount    switch-id switch-props))
-                       :component-will-unmount (fn [_ _] (pretty-engine/input-will-unmount switch-id switch-props))
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-inputs.engine/input-did-mount    switch-id switch-props))
+                       :component-will-unmount (fn [_ _] (pretty-inputs.engine/input-will-unmount switch-id switch-props))
                        :reagent-render         (fn [_ switch-props] [switch switch-id switch-props])}))
 
 (defn input

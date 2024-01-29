@@ -3,7 +3,7 @@
     (:require [fruits.random.api                            :as random]
               [pretty-elements.horizontal-spacer.attributes :as horizontal-spacer.attributes]
               [pretty-elements.horizontal-spacer.prototypes :as horizontal-spacer.prototypes]
-              [pretty-engine.api                            :as pretty-engine]
+              [pretty-elements.engine.api                            :as pretty-elements.engine]
               [pretty-presets.api                           :as pretty-presets]
               [reagent.api                                  :as reagent]))
 
@@ -28,8 +28,8 @@
   ; @param (map) spacer-props
   [spacer-id spacer-props]
   ; @note (tutorials#parametering)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-engine/element-did-mount    spacer-id spacer-props))
-                       :component-will-unmount (fn [_ _] (pretty-engine/element-will-unmount spacer-id spacer-props))
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    spacer-id spacer-props))
+                       :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount spacer-id spacer-props))
                        :reagent-render         (fn [_ spacer-props] [horizontal-spacer spacer-id spacer-props])}))
 
 (defn element

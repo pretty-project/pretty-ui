@@ -27,8 +27,9 @@
   [_ diagram-props {:keys [color label] :as section-props}]
   (let [value-ratio (line-diagram.utils/section-props->value-ratio diagram-props section-props)]
        (-> {:class :pd-line-diagram--section
-            :style {:width (css/percent value-ratio)}}
-           (pretty-css.accessories/badge-attributes     {:badge-content label :badge-position :bl})
+            :style {:width (css/percent value-ratio)
+                    :height (css/px (:strength diagram-props))}}
+           (pretty-css.accessories/badge-attributes     {:badge-content label :badge-position :left :badge-color :highlight})
            (pretty-css.appearance/background-attributes {:fill-color color}))))
 
 (defn diagram-sections-attributes
@@ -59,9 +60,10 @@
   ; {:class (keyword or keywords in vector)}
   [_ diagram-props]
   (-> {:class :pd-line-diagram--body}
-      (pretty-css.layout/indent-attributes       diagram-props)
+      (pretty-css.basic/style-attributes         diagram-props)
       (pretty-css.layout/element-size-attributes diagram-props)
-      (pretty-css.basic/style-attributes        diagram-props)))
+      (pretty-css.layout/flex-attributes         diagram-props)
+      (pretty-css.layout/indent-attributes       diagram-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -76,8 +78,8 @@
   ; {:class (keyword or keywords in vector)}
   [_ diagram-props]
   (-> {:class :pd-line-diagram}
-      (pretty-css.basic/class-attributes        diagram-props)
+      (pretty-css.appearance/theme-attributes    diagram-props)
+      (pretty-css.basic/class-attributes         diagram-props)
+      (pretty-css.basic/state-attributes         diagram-props)
       (pretty-css.layout/outdent-attributes      diagram-props)
-      (pretty-css.basic/state-attributes        diagram-props)
-      (pretty-css.appearance/theme-attributes        diagram-props)
       (pretty-css.layout/wrapper-size-attributes diagram-props)))

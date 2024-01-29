@@ -19,14 +19,15 @@
   ; {:diameter (px)
   ;  :strength (px)
   ;  :total-value (integer)}
+  ; @param (integer) section-dex
   ; @param (map) section-props
   ; {:color (keyword or string)
-  ;  :sub (integer)
+  ;  :sum (integer)
   ;  :value (integer)}
   ;
   ; @return (map)
   ; {}
-  [_ {:keys [diameter strength total-value] :as diagram-props} {:keys [color sum value]}]
+  [_ {:keys [diameter strength total-value] :as diagram-props} _ {:keys [color sum value]}]
   (let [x  (/ diameter 2)
         y  (/ diameter 2)
         r  (/ (- diameter strength) 2)
@@ -44,6 +45,7 @@
                     :stroke-width     (css/px     strength)
                     :transform        (css/rotate rotation)}}
 
+
            ; stroke-color (color) és stroke-width (strength)
            (pretty-css.svg/stroke-attributes diagram-props))))
 
@@ -58,14 +60,10 @@
   ; {:diameter (px)}
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)
-  ;  :style (map)
-  ;   {:height (string)
-  ;    :width (string)}}
-  [_ {:keys [diameter] :as diagram-props}]
-  (-> {:class :pd-circle-diagram--svg-container
-       :style {:height (css/px diameter)
-               :width  (css/px diameter)}}))
+  ; {:class (keyword or keywords in vector)}
+  [_ {:keys [diameter]}]
+  (-> {:class :pd-circle-diagram--svg-container}
+      (pretty-css.layout/element-size-attributes {:height diameter :width diameter})))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -80,8 +78,8 @@
   ; {:class (keyword or keywords in vector)}
   [_ diagram-props]
   (-> {:class :pd-circle-diagram--body}
-      (pretty-css.layout/indent-attributes diagram-props)
-      (pretty-css.basic/style-attributes  diagram-props)))
+      (pretty-css.basic/style-attributes   diagram-props)
+      (pretty-css.layout/indent-attributes diagram-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -93,10 +91,10 @@
   ; @param (map) diagram-props
   ;
   ; @return (map)
-  ; {}
+  ; {:class (keyword or keywords in vector)}
   [_ diagram-props]
   (-> {:class :pd-circle-diagram}
-      (pretty-css.basic/class-attributes   diagram-props)
-      (pretty-css.layout/outdent-attributes diagram-props)
-      (pretty-css.basic/state-attributes   diagram-props)
-      (pretty-css.appearance/theme-attributes   diagram-props)))
+      (pretty-css.appearance/theme-attributes diagram-props)
+      (pretty-css.basic/class-attributes      diagram-props)
+      (pretty-css.basic/state-attributes      diagram-props)
+      (pretty-css.layout/outdent-attributes   diagram-props)))

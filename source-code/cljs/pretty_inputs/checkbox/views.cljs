@@ -5,7 +5,7 @@
               [fruits.vector.api                 :as vector]
               [metamorphic-content.api           :as metamorphic-content]
               [pretty-elements.api               :as pretty-elements]
-              [pretty-engine.api                 :as pretty-engine]
+              [pretty-inputs.engine.api                 :as pretty-inputs.engine]
               [pretty-forms.api                  :as pretty-forms]
               [pretty-inputs.checkbox.attributes :as checkbox.attributes]
               [pretty-inputs.checkbox.prototypes :as checkbox.prototypes]
@@ -20,19 +20,17 @@
   ;
   ; @param (keyword) checkbox-id
   ; @param (map) checkbox-props
-  ; {:option-helper-f (function)
-  ;  :option-label-f (function)}
   ; @param (*) option
-  [checkbox-id {:keys [option-helper-f option-label-f] :as checkbox-props} option]
+  [checkbox-id checkbox-props option]
   [:button (checkbox.attributes/checkbox-option-attributes checkbox-id checkbox-props option)
            [:div (checkbox.attributes/checkbox-option-button-attributes checkbox-id checkbox-props option)
-                 (if (pretty-engine/input-option-selected? checkbox-id checkbox-props option)
+                 (if (pretty-inputs.engine/input-option-selected? checkbox-id checkbox-props option)
                      [:div (checkbox.attributes/checkbox-option-checkmark-attributes checkbox-id checkbox-props option) :done])]
            [:div {:class :pi-checkbox--option-content}
-                 (if-some [option-label (-> option option-label-f)]
+                 (if-some [option-label (pretty-inputs.engine/get-input-option-label checkbox-id checkbox-props option)]
                           [:div (checkbox.attributes/checkbox-option-label-attributes checkbox-id checkbox-props option)
                                 [metamorphic-content/compose option-label]])
-                 (if-some [option-helper (-> option option-helper-f)]
+                 (if-some [option-helper (pretty-inputs.engine/get-input-option-helper checkbox-id checkbox-props option)]
                           [:div (checkbox.attributes/checkbox-option-helper-attributes checkbox-id checkbox-props option)
                                 [metamorphic-content/compose option-helper]])]])
 
@@ -44,7 +42,7 @@
   ; {:placeholder (metamorphic-content)(opt)}
   [checkbox-id {:keys [placeholder] :as checkbox-props}]
   (letfn [(f0 [option] [checkbox-option checkbox-id checkbox-props option])]
-         (let [options (pretty-engine/get-input-options checkbox-id checkbox-props)]
+         (let [options (pretty-inputs.engine/get-input-options checkbox-id checkbox-props)]
               (cond (-> options vector/not-empty?) (hiccup/put-with [:<>] options f0)
                     (-> placeholder) [:div (checkbox.attributes/checkbox-placeholder-attributes checkbox-id checkbox-props)
                                            (metamorphic-content/compose placeholder)]))))
@@ -56,10 +54,10 @@
   ; @param (map) checkbox-props
   [checkbox-id checkbox-props]
   [:div (checkbox.attributes/checkbox-attributes checkbox-id checkbox-props)
-        (if-let [label-props (pretty-engine/input-label-props checkbox-id checkbox-props)]
+        (if-let [label-props (pretty-inputs.engine/input-label-props checkbox-id checkbox-props)]
                 [pretty-elements/label label-props])
-        [pretty-forms/invalid-message     checkbox-id checkbox-props]
-        [pretty-engine/input-synchronizer checkbox-id checkbox-props]
+        [pretty-forms/invalid-message            checkbox-id checkbox-props]
+        [pretty-inputs.engine/input-synchronizer checkbox-id checkbox-props]
         [:div (checkbox.attributes/checkbox-body-attributes checkbox-id checkbox-props)
               [checkbox-option-list                         checkbox-id checkbox-props]]])
 
@@ -73,8 +71,8 @@
   ; @param (map) checkbox-props
   [checkbox-id checkbox-props]
   ; @note (tutorials#parametering)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-engine/input-did-mount    checkbox-id checkbox-props))
-                       :component-will-unmount (fn [_ _] (pretty-engine/input-will-unmount checkbox-id checkbox-props))
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-inputs.engine/input-did-mount    checkbox-id checkbox-props))
+                       :component-will-unmount (fn [_ _] (pretty-inputs.engine/input-will-unmount checkbox-id checkbox-props))
                        :reagent-render         (fn [_ checkbox-props] [checkbox checkbox-id checkbox-props])}))
 
 (defn input

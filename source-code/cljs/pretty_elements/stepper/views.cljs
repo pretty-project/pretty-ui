@@ -3,7 +3,7 @@
     (:require [fruits.random.api                  :as random]
               [pretty-elements.stepper.attributes :as stepper.attributes]
               [pretty-elements.stepper.prototypes :as stepper.prototypes]
-              [pretty-engine.api                  :as pretty-engine]
+              [pretty-elements.engine.api                  :as pretty-elements.engine]
               [reagent.api                        :as reagent]))
 
 ;; ----------------------------------------------------------------------------
@@ -28,8 +28,8 @@
   ; @param (map) stepper-props
   [stepper-id stepper-props]
   ; @note (tutorials#parametering)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-engine/element-did-mount    stepper-id stepper-props))
-                       :component-will-unmount (fn [_ _] (pretty-engine/element-will-unmount stepper-id stepper-props))
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    stepper-id stepper-props))
+                       :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount stepper-id stepper-props))
                        :reagent-render         (fn [_ stepper-props] [stepper stepper-id stepper-props])}))
 
 (defn element

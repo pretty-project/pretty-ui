@@ -3,7 +3,7 @@
     (:require [fruits.random.api                 :as random]
               [pretty-elements.button.attributes :as button.attributes]
               [pretty-elements.button.prototypes :as button.prototypes]
-              [pretty-engine.api                 :as pretty-engine]
+              [pretty-elements.engine.api                 :as pretty-elements.engine]
               [pretty-presets.api                :as pretty-presets]
               [reagent.api                       :as reagent]))
 
@@ -39,10 +39,10 @@
   ; @param (map) button-props
   [button-id button-props]
   ; @note (tutorials#parametering)
-  ; @note (pretty-engine.element.lifecycles.side-effects#8097)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-engine/element-did-mount    button-id button-props))
-                       :component-will-unmount (fn [_ _] (pretty-engine/element-will-unmount button-id button-props))
-                       :component-did-update   (fn [%]   (pretty-engine/element-did-update   button-id button-props %))
+  ; @note (pretty-elements.adornment.views#8097)
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    button-id button-props))
+                       :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount button-id button-props))
+                       :component-did-update   (fn [%]   (pretty-elements.engine/element-did-update   button-id button-props %))
                        :reagent-render         (fn [_ button-props] [button button-id button-props])}))
 
 (defn element
@@ -121,7 +121,7 @@
   ([button-id button-props]
    ; @note (tutorials#parametering)
    (fn [_ button-props]
-       (let [button-props (pretty-presets/apply-preset              button-id button-props)
-             button-props (button.prototypes/button-props-prototype button-id button-props)
-             button-props (pretty-engine/element-timeout-props      button-id button-props)]
+       (let [button-props (pretty-presets/apply-preset                  button-id button-props)
+             button-props (button.prototypes/button-props-prototype     button-id button-props)
+             button-props (pretty-elements.engine/element-timeout-props button-id button-props)]
             [element-lifecycles button-id button-props]))))

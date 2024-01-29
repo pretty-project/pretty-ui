@@ -5,7 +5,7 @@
               [metamorphic-content.api             :as metamorphic-content]
               [pretty-elements.menu-bar.attributes :as menu-bar.attributes]
               [pretty-elements.menu-bar.prototypes :as menu-bar.prototypes]
-              [pretty-engine.api                   :as pretty-engine]
+              [pretty-elements.engine.api                   :as pretty-elements.engine]
               [pretty-presets.api                  :as pretty-presets]
               [reagent.api                         :as reagent]))
 
@@ -61,8 +61,8 @@
   ; @param (map) bar-props
   [bar-id bar-props]
   ; @note (tutorials#parametering)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-engine/element-did-mount    bar-id bar-props))
-                       :component-will-unmount (fn [_ _] (pretty-engine/element-will-unmount bar-id bar-props))
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    bar-id bar-props))
+                       :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount bar-id bar-props))
                        :reagent-render         (fn [_ bar-props] [menu-bar bar-id bar-props])}))
 
 (defn element

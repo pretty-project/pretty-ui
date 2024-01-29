@@ -4,7 +4,7 @@
               [fruits.random.api                         :as random]
               [pretty-elements.vertical-group.attributes :as vertical-group.attributes]
               [pretty-elements.vertical-group.prototypes :as vertical-group.prototypes]
-              [pretty-engine.api                         :as pretty-engine]
+              [pretty-elements.engine.api                         :as pretty-elements.engine]
               [pretty-presets.api                        :as pretty-presets]
               [reagent.api                               :as reagent]))
 
@@ -32,8 +32,8 @@
   ; @param (map) group-props
   [group-id group-props]
   ; @note (tutorials#parametering)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-engine/element-did-mount    group-id group-props))
-                       :component-will-unmount (fn [_ _] (pretty-engine/element-will-unmount group-id group-props))
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    group-id group-props))
+                       :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount group-id group-props))
                        :reagent-render         (fn [_ group-props] [vertical-group group-id group-props])}))
 
 (defn element

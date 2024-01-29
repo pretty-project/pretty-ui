@@ -4,7 +4,7 @@
               [fruits.vector.api                   :as vector]
               [metamorphic-content.api             :as metamorphic-content]
               [pretty-elements.api                 :as pretty-elements]
-              [pretty-engine.api                   :as pretty-engine]
+              [pretty-inputs.engine.api                   :as pretty-inputs.engine]
               [pretty-forms.api                    :as pretty-forms]
               [pretty-inputs.text-field.attributes :as text-field.attributes]
               [pretty-inputs.text-field.env        :as text-field.env]
@@ -60,14 +60,14 @@
   ; - The surface element has a relatively positioned wrapper element, otherwise
   ;   it wouldn't shrink (in terms of width) in case the text-field has outdent.
   [:div (text-field.attributes/field-attributes field-id field-props)
-        (if-let [label-props (pretty-engine/input-label-props field-id field-props)]
+        (if-let [label-props (pretty-inputs.engine/input-label-props field-id field-props)]
                 [pretty-elements/label label-props])
-        [pretty-forms/invalid-message     field-id field-props]
-        [pretty-engine/input-synchronizer field-id field-props]
+        [pretty-forms/invalid-message            field-id field-props]
+        [pretty-inputs.engine/input-synchronizer field-id field-props]
         [:div (text-field.attributes/field-body-attributes field-id field-props)
               [field-start-adornments field-id field-props]
               [:div {:class :pi-text-field--input-structure}
-                    (if placeholder (if-let [field-empty? (pretty-engine/input-empty? field-id field-props)]
+                    (if placeholder (if-let [field-empty? (pretty-inputs.engine/input-empty? field-id field-props)]
                                             [:div (text-field.attributes/field-placeholder-attributes field-id field-props)
                                                   (metamorphic-content/compose placeholder)]))
                     [:div (text-field.attributes/input-emphasize-attributes field-id field-props)
@@ -89,8 +89,8 @@
   ; @param (map) field-props
   [field-id field-props]
   ; @note (tutorials#parametering)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-engine/input-did-mount    field-id field-props))
-                       :component-will-unmount (fn [_ _] (pretty-engine/input-will-unmount field-id field-props))
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-inputs.engine/input-did-mount    field-id field-props))
+                       :component-will-unmount (fn [_ _] (pretty-inputs.engine/input-will-unmount field-id field-props))
                        :reagent-render         (fn [_ field-props] [text-field field-id field-props])}))
 
 (defn input

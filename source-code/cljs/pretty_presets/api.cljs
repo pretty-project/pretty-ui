@@ -1,14 +1,10 @@
 
 (ns pretty-presets.api
     (:require [pretty-presets.default-presets.presets]
-              [pretty-presets.preset-pool.env          :as preset-pool.env]
-              [pretty-presets.preset-pool.side-effects :as preset-pool.side-effects]))
+              [pretty-presets.engine.api :as preset-presets.engine]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; @redirect (pretty-presets.preset-pool.env/*)
-(def apply-preset preset-pool.env/apply-preset)
-
-; @redirect (pretty-presets.preset-pool.side-effects/*)
-(def reg-preset! preset-pool.side-effects/reg-preset!)
+; @redirect (preset-presets.engine.api/*)
+(def reg-preset! preset-presets.engine/reg-preset!)

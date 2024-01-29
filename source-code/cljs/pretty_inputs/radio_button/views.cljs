@@ -5,7 +5,7 @@
               [fruits.vector.api                     :as vector]
               [metamorphic-content.api               :as metamorphic-content]
               [pretty-elements.api                   :as pretty-elements]
-              [pretty-engine.api                     :as pretty-engine]
+              [pretty-inputs.engine.api                     :as pretty-inputs.engine]
               [pretty-forms.api                      :as pretty-forms]
               [pretty-inputs.radio-button.attributes :as radio-button.attributes]
               [pretty-inputs.radio-button.prototypes :as radio-button.prototypes]
@@ -20,19 +20,17 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  ; {:option-helper-f (function)
-  ;  :option-label-f (function)}
   ; @param (*) option
-  [button-id {:keys [option-helper-f option-label-f] :as button-props} option]
+  [button-id button-props option]
   [:button (radio-button.attributes/radio-button-option-attributes button-id button-props option)
            [:div (radio-button.attributes/radio-button-option-button-attributes button-id button-props option)
-                 (if (pretty-engine/input-option-selected? button-id button-props option)
+                 (if (pretty-inputs.engine/input-option-selected? button-id button-props option)
                      [:div (radio-button.attributes/radio-button-option-thumb-attributes button-id button-props option)])]
            [:div {:class :pi-radio-button--option-content}
-                 (if-some [option-label (-> option option-label-f)]
+                 (if-some [option-label (pretty-inputs.engine/get-input-option-label button-id button-props option)]
                           [:div (radio-button.attributes/radio-button-option-label-attributes button-id button-props option)
                                 [metamorphic-content/compose option-label]])
-                 (if-some [option-helper (-> option option-helper-f)]
+                 (if-some [option-helper (pretty-inputs.engine/get-input-option-helper button-id button-props option)]
                           [:div (radio-button.attributes/radio-button-option-helper-attributes button-id button-props option)
                                 [metamorphic-content/compose option-helper]])]])
 
@@ -44,7 +42,7 @@
   ; {:placeholder (metamorphic-content)(opt)}
   [button-id {:keys [placeholder] :as button-props}]
   (letfn [(f0 [option] [radio-button-option button-id button-props option])]
-         (let [options (pretty-engine/get-input-options button-id button-props)]
+         (let [options (pretty-inputs.engine/get-input-options button-id button-props)]
               (cond (-> options vector/not-empty?) (hiccup/put-with [:<>] options f0)
                     (-> placeholder) [:div (radio-button.attributes/radio-button-placeholder-attributes button-id button-props)
                                            (metamorphic-content/compose placeholder)]))))
@@ -56,10 +54,10 @@
   ; @param (map) button-props
   [button-id button-props]
   [:div (radio-button.attributes/radio-button-attributes button-id button-props)
-        (if-let [label-props (pretty-engine/input-label-props button-id button-props)]
+        (if-let [label-props (pretty-inputs.engine/input-label-props button-id button-props)]
                 [pretty-elements/label label-props])
-        [pretty-forms/invalid-message     button-id button-props]
-        [pretty-engine/input-synchronizer button-id button-props]
+        [pretty-forms/invalid-message            button-id button-props]
+        [pretty-inputs.engine/input-synchronizer button-id button-props]
         [:div (radio-button.attributes/radio-button-body-attributes button-id button-props)
               [radio-button-option-list                             button-id button-props]]])
 
@@ -73,8 +71,8 @@
   ; @param (map) button-props
   [button-id button-props]
   ; @note (tutorials#parametering)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-engine/input-did-mount    button-id button-props))
-                       :component-will-unmount (fn [_ _] (pretty-engine/input-will-unmount button-id button-props))
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-inputs.engine/input-did-mount    button-id button-props))
+                       :component-will-unmount (fn [_ _] (pretty-inputs.engine/input-will-unmount button-id button-props))
                        :reagent-render         (fn [_ button-props] [radio-button button-id button-props])}))
 
 (defn input

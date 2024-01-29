@@ -11,7 +11,7 @@
 
 
 ; link a pretty-css properties doksikhoz
-; link a pretty-engines properties doksikhoz
+; link a pretty-elements.engines properties doksikhoz
 
 
 

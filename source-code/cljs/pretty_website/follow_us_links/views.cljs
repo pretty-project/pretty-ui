@@ -2,7 +2,7 @@
 (ns pretty-website.follow-us-links.views
     (:require [fruits.hiccup.api                         :as hiccup]
               [fruits.random.api                         :as random]
-              [pretty-engine.api                         :as pretty-engine]
+              [pretty-elements.engine.api                         :as pretty-elements.engine]
               [pretty-presets.api                        :as pretty-presets]
               [pretty-website.follow-us-links.attributes :as follow-us-links.attributes]
               [pretty-website.follow-us-links.prototypes :as follow-us-links.prototypes]
@@ -33,8 +33,8 @@
   ; @param (map) links-props
   [links-id links-props]
   ; @note (tutorials#parametering)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-engine/element-did-mount    links-id links-props))
-                       :component-will-unmount (fn [_ _] (pretty-engine/element-will-unmount links-id links-props))
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    links-id links-props))
+                       :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount links-id links-props))
                        :reagent-render         (fn [_ links-props] [follow-us-links links-id links-props])}))
 
 (defn component

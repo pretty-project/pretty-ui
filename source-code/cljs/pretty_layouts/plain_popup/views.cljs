@@ -2,7 +2,7 @@
 (ns pretty-layouts.plain-popup.views
     (:require [fruits.random.api                     :as random]
               [metamorphic-content.api               :as metamorphic-content]
-              [pretty-engine.api                     :as pretty-engine]
+              [pretty-layouts.engine.api                     :as pretty-layouts.engine]
               [pretty-layouts.plain-popup.attributes :as plain-popup.attributes]
               [pretty-layouts.plain-popup.prototypes :as plain-popup.prototypes]
               [pretty-presets.api                    :as pretty-presets]

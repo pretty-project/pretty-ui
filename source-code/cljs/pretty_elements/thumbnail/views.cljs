@@ -4,7 +4,7 @@
               [fruits.random.api                    :as random]
               [pretty-elements.thumbnail.attributes :as thumbnail.attributes]
               [pretty-elements.thumbnail.prototypes :as thumbnail.prototypes]
-              [pretty-engine.api                    :as pretty-engine]
+              [pretty-elements.engine.api                    :as pretty-elements.engine]
               [pretty-presets.api                   :as pretty-presets]
               [reagent.api                          :as reagent]))
 
@@ -37,10 +37,10 @@
   ; @param (map) thumbnail-props
   [thumbnail-id thumbnail-props]
   ; @note (tutorials#parametering)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-engine/element-did-mount    thumbnail-id thumbnail-props))
-                       :component-will-unmount (fn [_ _] (pretty-engine/element-will-unmount thumbnail-id thumbnail-props))
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    thumbnail-id thumbnail-props))
+                       :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount thumbnail-id thumbnail-props))
                        :reagent-render         (fn [_ thumbnail-props] [thumbnail thumbnail-id thumbnail-props])}))
-                       ; @note (pretty-engine.element.lifecycles.side-effects#8097)
+                       ; @note (pretty-elements.adornment.views#8097)
                        ; + did update, keypress?
 
 (defn element

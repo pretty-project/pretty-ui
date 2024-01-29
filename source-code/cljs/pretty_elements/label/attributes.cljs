@@ -9,7 +9,7 @@
               [pretty-css.layout.api              :as pretty-css.layout]
               [pretty-elements.label.side-effects :as label.side-effects]
               [pretty-elements.label.utils        :as label.utils]
-              [pretty-engine.api                  :as pretty-engine]))
+              [pretty-elements.engine.api                  :as pretty-elements.engine]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -89,7 +89,7 @@
   [_ {:keys [focus-id] :as label-props}]
   (-> {:class               :pe-label--body
        :data-letter-spacing :auto
-       :on-mouse-up #(if focus-id (pretty-engine/focus-element! focus-id))}
+       :on-mouse-up #(if focus-id (pretty-elements.engine/focus-element! focus-id))}
       (pretty-css.appearance/background-attributes        label-props)
       (pretty-css.appearance/border-attributes       label-props)
       (pretty-css.content/font-attributes         label-props)

@@ -4,7 +4,7 @@
               [metamorphic-content.api        :as metamorphic-content]
               [pretty-elements.row.attributes :as row.attributes]
               [pretty-elements.row.prototypes :as row.prototypes]
-              [pretty-engine.api              :as pretty-engine]
+              [pretty-elements.engine.api              :as pretty-elements.engine]
               [pretty-presets.api             :as pretty-presets]
               [reagent.api                    :as reagent]))
 
@@ -33,8 +33,8 @@
   ; @param (map) row-props
   [row-id row-props]
   ; @note (tutorials#parametering)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-engine/element-did-mount    row-id row-props))
-                       :component-will-unmount (fn [_ _] (pretty-engine/element-will-unmount row-id row-props))
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    row-id row-props))
+                       :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount row-id row-props))
                        :reagent-render         (fn [_ row-props] [row row-id row-props])}))
 
 (defn element

@@ -3,7 +3,7 @@
     (:require [fruits.random.api                :as random]
               [pretty-elements.image.attributes :as image.attributes]
               [pretty-elements.image.prototypes :as image.prototypes]
-              [pretty-engine.api                :as pretty-engine]
+              [pretty-elements.engine.api                :as pretty-elements.engine]
               [pretty-presets.api               :as pretty-presets]
               [reagent.api                      :as reagent]))
 
@@ -37,8 +37,8 @@
   ; @param (map) image-props
   [image-id image-props]
   ; @note (tutorials#parametering)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-engine/element-did-mount    image-id image-props))
-                       :component-will-unmount (fn [_ _] (pretty-engine/element-will-unmount image-id image-props))
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    image-id image-props))
+                       :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount image-id image-props))
                        :reagent-render         (fn [_ image-props] [image image-id image-props])}))
 
 (defn element

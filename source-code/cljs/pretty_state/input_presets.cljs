@@ -1,13 +1,13 @@
 
 (ns pretty-state.input-presets
     (:require [fruits.vector.api  :as vector]
-              [pretty-presets.api :as pretty-presets]
+              [pretty-presets.api :refer [reg-preset!]]
               [re-frame.extra.api :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(pretty-presets/reg-preset! :pretty-state/field-input
+(reg-preset! :pretty-state/field-input
   ; @ignore
   ;
   ; @param (map) input-props
@@ -41,7 +41,7 @@
              (if value-path   {:on-blur-f       #(r/dispatch   [:set-item! value-path %])})
              (-> input-props))))
 
-(pretty-presets/reg-preset! :pretty-state/selectable-input
+(reg-preset! :pretty-state/selectable-input
   ; @ignore
   ;
   ; @param (map) input-props

@@ -1,6 +1,6 @@
 
 (ns pretty-inputs.password-field.env
-    (:require [pretty-engine.api :as pretty-engine]))
+    (:require [pretty-inputs.engine.api :as pretty-inputs.engine]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -13,4 +13,4 @@
   ;
   ; @return (boolean)
   [field-id _]
-  (pretty-engine/get-input-state field-id :password-visible?))
+  (pretty-inputs.engine/get-input-state field-id :password-visible?))

@@ -9,7 +9,7 @@
               [pretty-inputs.digit-field.utils      :as digit-field.utils]
               [re-frame.api                         :as r]
               [reagent.api :as reagent]
-              [pretty-engine.api :as pretty-engine]))
+              [pretty-inputs.engine.api :as pretty-inputs.engine]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -60,8 +60,8 @@
   ; @param (map) field-props
   [field-id field-props]
   ; @note (tutorials#parametering)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-engine/input-did-mount    field-id field-props))
-                       :component-will-unmount (fn [_ _] (pretty-engine/input-will-unmount field-id field-props))
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-inputs.engine/input-did-mount    field-id field-props))
+                       :component-will-unmount (fn [_ _] (pretty-inputs.engine/input-will-unmount field-id field-props))
                        :reagent-render         (fn [_ field-props] [digit-field field-id field-props])}))
 
 (defn input

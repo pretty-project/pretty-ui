@@ -5,7 +5,7 @@
               [pretty-elements.expandable.attributes :as expandable.attributes]
               [pretty-elements.expandable.env        :as expandable.env]
               [pretty-elements.expandable.prototypes :as expandable.prototypes]
-              [pretty-engine.api                     :as pretty-engine]
+              [pretty-elements.engine.api                     :as pretty-elements.engine]
               [pretty-presets.api                    :as pretty-presets]
               [reagent.api                           :as reagent]))
 
@@ -55,8 +55,8 @@
   ; @param (map) expandable-props
   [expandable-id expandable-props]
   ; @note (tutorials#parametering)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-engine/element-did-mount    expandable-id expandable-props))
-                       :component-will-unmount (fn [_ _] (pretty-engine/element-will-unmount expandable-id expandable-props))
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    expandable-id expandable-props))
+                       :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount expandable-id expandable-props))
                        :reagent-render         (fn [_ expandable-props] [expandable expandable-id expandable-props])}))
 
 (defn element

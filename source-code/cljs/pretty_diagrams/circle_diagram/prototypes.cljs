@@ -1,7 +1,7 @@
 
 (ns pretty-diagrams.circle-diagram.prototypes
-    (:require [pretty-defaults.api                  :as pretty-defaults]
-              [pretty-diagrams.circle-diagram.utils :as circle-diagram.utils]))
+    (:require [pretty-defaults.api :as pretty-defaults]
+              [pretty-diagrams.engine.api :as pretty-diagrams.engine]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -33,4 +33,4 @@
   [_ diagram-props]
   ; @note (pretty-diagrams.circle-diagram.utils#1218)
   (-> diagram-props (pretty-defaults/use-default-values {:diameter 48 :strength 2})
-                    (circle-diagram.utils/diagram-props<-total-value)))
+                    (pretty-diagrams.engine/sum-diagram-sections)))

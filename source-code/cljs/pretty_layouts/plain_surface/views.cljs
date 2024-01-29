@@ -2,7 +2,7 @@
 (ns pretty-layouts.plain-surface.views
     (:require [fruits.random.api                       :as random]
               [metamorphic-content.api                 :as metamorphic-content]
-              [pretty-engine.api                       :as pretty-engine]
+              [pretty-layouts.engine.api                       :as pretty-layouts.engine]
               [pretty-layouts.plain-surface.attributes :as plain-surface.attributes]
               [pretty-layouts.plain-surface.prototypes :as plain-surface.prototypes]
               [pretty-presets.api                      :as pretty-presets]

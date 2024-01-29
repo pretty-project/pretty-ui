@@ -7,7 +7,7 @@
               [pretty-css.control.api    :as pretty-css.control]
               [pretty-css.layout.api     :as pretty-css.layout]
               [pretty-css.live.api       :as pretty-css.live]
-              [pretty-engine.api         :as pretty-engine]
+              [pretty-inputs.engine.api         :as pretty-inputs.engine]
               [re-frame.api              :as r]))
 
 ;; ----------------------------------------------------------------------------
@@ -87,7 +87,7 @@
   ; @return (map)
   ; {}
   [switch-id switch-props option]
-  (let [option-color (pretty-engine/get-input-option-color switch-id switch-props option)]
+  (let [option-color (pretty-inputs.engine/get-input-option-color switch-id switch-props option)]
        (-> {:class :pi-switch--option-track}
            (pretty-css.appearance/background-attributes {:fill-color option-color})
            (pretty-css.appearance/border-attributes switch-props))))
@@ -105,8 +105,8 @@
   ;  :data-switched (boolean)
   ;  :disabled (boolean)}
   [switch-id {:keys [disabled?] :as switch-props} option]
-  (let [option-selected? (pretty-engine/input-option-selected? switch-id switch-props option)
-        on-click-f       (fn [_] (pretty-engine/select-input-option! switch-id switch-props option))]
+  (let [option-selected? (pretty-inputs.engine/input-option-selected? switch-id switch-props option)
+        on-click-f       (fn [_] (pretty-inputs.engine/select-input-option! switch-id switch-props option))]
        (-> {:class         :pi-switch--option
             :data-switched option-selected?
             :disabled      disabled?}
@@ -125,8 +125,8 @@
   ; @return (map)
   ; {:class (keyword or keywords in vector)}
   [switch-id switch-props]
-  (let [on-blur-f  (fn [_] (pretty-engine/input-left    switch-id switch-props))
-        on-focus-f (fn [_] (pretty-engine/input-focused switch-id switch-props))]
+  (let [on-blur-f  (fn [_] (pretty-inputs.engine/input-left    switch-id switch-props))
+        on-focus-f (fn [_] (pretty-inputs.engine/input-focused switch-id switch-props))]
        (-> {:class :pi-switch--body
             :on-blur  on-blur-f
             :on-focus on-focus-f}

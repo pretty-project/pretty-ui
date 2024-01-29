@@ -3,7 +3,7 @@
     (:require [fruits.random.api                 :as random]
               [metamorphic-content.api           :as metamorphic-content]
               [pretty-elements.api               :as pretty-elements]
-              [pretty-engine.api                 :as pretty-engine]
+              [pretty-elements.engine.api                 :as pretty-elements.engine]
               [pretty-presets.api                :as pretty-presets]
               [pretty-website.sidebar.attributes :as sidebar.attributes]
               [pretty-website.sidebar.prototypes :as sidebar.prototypes]
@@ -40,8 +40,8 @@
   ; @param (map) sidebar-props
   [sidebar-id sidebar-props]
   ; @note (tutorials#parametering)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-engine/element-did-mount    sidebar-id sidebar-props))
-                       :component-will-unmount (fn [_ _] (pretty-engine/element-will-unmount sidebar-id sidebar-props))
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    sidebar-id sidebar-props))
+                       :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount sidebar-id sidebar-props))
                        :reagent-render         (fn [_ sidebar-props] [sidebar sidebar-id sidebar-props])}))
 
 (defn component

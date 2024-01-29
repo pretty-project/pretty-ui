@@ -3,7 +3,7 @@
     (:require [fruits.random.api               :as random]
               [pretty-elements.icon.attributes :as icon.attributes]
               [pretty-elements.icon.prototypes :as icon.prototypes]
-              [pretty-engine.api               :as pretty-engine]
+              [pretty-elements.engine.api               :as pretty-elements.engine]
               [pretty-presets.api              :as pretty-presets]
               [reagent.api                     :as reagent]))
 
@@ -30,8 +30,8 @@
   ; @param (map) icon-props
   [icon-id icon-props]
   ; @note (tutorials#parametering)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-engine/element-did-mount    icon-id icon-props))
-                       :component-will-unmount (fn [_ _] (pretty-engine/element-will-unmount icon-id icon-props))
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    icon-id icon-props))
+                       :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount icon-id icon-props))
                        :reagent-render         (fn [_ icon-props] [icon icon-id icon-props])}))
 
 (defn element

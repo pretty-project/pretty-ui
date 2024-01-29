@@ -4,25 +4,41 @@
               [fruits.random.api                       :as random]
               [pretty-diagrams.line-diagram.attributes :as line-diagram.attributes]
               [pretty-diagrams.line-diagram.prototypes :as line-diagram.prototypes]
-              [pretty-engine.api                       :as pretty-engine]
+              [pretty-diagrams.engine.api                       :as pretty-diagrams.engine]
               [pretty-presets.api                      :as pretty-presets]
               [reagent.api                             :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn- line-diagram-datum
+  ; @ignore
+  ;
+  ; @param (keyword) diagram-id
+  ; @param (map) diagram-props
+  ; @param (*) datum
+  [diagram-id diagram-props datum]
+  [:div (line-diagram.attributes/diagram-datum-attributes diagram-id diagram-props datum)])
+
+(defn- line-diagram-datum-list
+  ; @ignore
+  ;
+  ; @param (keyword) diagram-id
+  ; @param (map) diagram-props
+  [diagram-id diagram-props]
+  (letfn [(f0 [section-dex section-props] [line-diagram-datum diagram-id diagram-props datum])]
+         (let [data (pretty-diagrams.engine/get-diagram-data diagram-id diagram-props)]
+              (hiccup/put-with-indexed [:<>] data f0))))
+
 (defn- line-diagram
   ; @ignore
   ;
   ; @param (keyword) diagram-id
   ; @param (map) diagram-props
-  ; {:sections (maps in vector)}
-  [diagram-id {:keys [sections] :as diagram-props}]
+  [diagram-id diagram-props]
   [:div (line-diagram.attributes/diagram-attributes diagram-id diagram-props)
-        (letfn [(f0 [section-props] (let [section-props (line-diagram.prototypes/section-props-prototype section-props)]
-                                         [:div (line-diagram.attributes/diagram-section-attributes diagram-id diagram-props section-props)]))]
-               [:div (line-diagram.attributes/diagram-sections-attributes diagram-id diagram-props)
-                     (hiccup/put-with [:<>] sections f0)])])
+        [:div (line-diagram.attributes/diagram-body-attributes diagram-id diagram-props)
+              [line-diagram-datum-list                         diagram-id diagram-props]]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -34,14 +50,19 @@
   ; @param (map) diagram-props
   [diagram-id diagram-props]
   ; @note (tutorials#parametering)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-engine/diagram-did-mount    diagram-id diagram-props))
-                       :component-will-unmount (fn [_ _] (pretty-engine/diagram-will-unmount diagram-id diagram-props))
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-diagrams.engine/diagram-did-mount    diagram-id diagram-props))
+                       :component-will-unmount (fn [_ _] (pretty-diagrams.engine/diagram-will-unmount diagram-id diagram-props))
                        :reagent-render         (fn [_ diagram-props] [line-diagram diagram-id diagram-props])}))
 
 (defn diagram
   ; @param (keyword)(opt) diagram-id
   ; @param (map) diagram-props
   ; {:disabled? (boolean)(opt)
+  ;  :datum-color-f (function)(opt)
+  ;  :datum-label-f (function)(opt)
+  ;  :datum-value-f (function)(opt)
+  ;  :get-data-f (function)(opt)
+  ;  :height (keyword, px or string)(opt)
   ;  :indent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :on-mount-f (function)(opt)
@@ -49,10 +70,8 @@
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :preset (keyword)(opt)
-  ;  :sections (maps in vector)}
+  ;  :sections (maps in vector)(opt)
   ;   [{:color (keyword or string)(opt)
-  ;      :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
-  ;      Default: primary
   ;     :label (metamorphic-content)(opt)
   ;     :value (integer)(opt)}]
   ;  :strength (px)(opt)
@@ -63,9 +82,13 @@
   ;  :theme (keyword)(opt)
   ;  :total-value (integer)(opt)
   ;   Default: Sum of the section values
-  ;  :width (keyword, px or string)(opt)
-  ;   auto, :parent, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  ;   Default: :auto}
+  ;  :width (keyword, px or string)(opt)}
+  ;
+  ; :get-sections-f
+  ; :section-color-f
+  ; :section-label-f
+  ; :section-value-f
+  ; :strength (px)
   ;
   ; @usage
   ; [line-diagram {...}]

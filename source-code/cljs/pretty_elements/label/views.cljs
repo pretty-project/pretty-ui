@@ -6,7 +6,7 @@
               [pretty-elements.label.attributes :as label.attributes]
               [pretty-elements.label.env        :as label.env]
               [pretty-elements.label.prototypes :as label.prototypes]
-              [pretty-engine.api                :as pretty-engine]
+              [pretty-elements.engine.api                :as pretty-elements.engine]
               [pretty-presets.api               :as pretty-presets]
               [reagent.api                      :as reagent]))
 
@@ -128,8 +128,8 @@
   ; @param (map) label-props
   [label-id label-props]
   ; @note (tutorials#parametering)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-engine/element-did-mount    label-id label-props))
-                       :component-will-unmount (fn [_ _] (pretty-engine/element-will-unmount label-id label-props))
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    label-id label-props))
+                       :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount label-id label-props))
                        :reagent-render         (fn [_ label-props] [label label-id label-props])}))
 
 (defn element

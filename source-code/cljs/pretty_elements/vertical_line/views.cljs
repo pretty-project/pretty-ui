@@ -3,7 +3,7 @@
     (:require [fruits.random.api                        :as random]
               [pretty-elements.vertical-line.attributes :as vertical-line.attributes]
               [pretty-elements.vertical-line.prototypes :as vertical-line.prototypes]
-              [pretty-engine.api                        :as pretty-engine]
+              [pretty-elements.engine.api                        :as pretty-elements.engine]
               [pretty-presets.api                       :as pretty-presets]
               [reagent.api                              :as reagent]))
 
@@ -29,8 +29,8 @@
   ; @param (map) line-props
   [line-id line-props]
   ; @note (tutorials#parametering)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-engine/element-did-mount    line-id line-props))
-                       :component-will-unmount (fn [_ _] (pretty-engine/element-will-unmount line-id line-props))
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    line-id line-props))
+                       :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount line-id line-props))
                        :reagent-render         (fn [_ line-props] [vertical-line line-id line-props])}))
 
 (defn element
@@ -48,6 +48,9 @@
   ;  :strength (px)(opt)
   ;   Default: 1
   ;  :theme (keyword)(opt)}
+  ;
+  ; + attol még lehet a container-nek width tulajdonsága, hogy a vonal vastagságát a strength határozzta meg
+  ;   csak középre kell benne igazítani a vonalat
   ;
   ; @usage
   ; [vertical-line {...}]

@@ -5,7 +5,7 @@
               [fruits.vector.api                   :as vector]
               [metamorphic-content.api             :as metamorphic-content]
               [pretty-elements.api                 :as pretty-elements]
-              [pretty-engine.api                   :as pretty-engine]
+              [pretty-inputs.engine.api                   :as pretty-inputs.engine]
               [pretty-inputs.chip-group.attributes :as chip-group.attributes]
               [pretty-inputs.chip-group.prototypes :as chip-group.prototypes]
               [pretty-presets.api                  :as pretty-presets]
@@ -33,7 +33,7 @@
   ; {:placeholder (metamorphic-content)(opt)}
   [group-id {:keys [placeholder] :as group-props}]
   (letfn [(f0 [chip-dex chip-value] [chip-group-chip group-id group-props chip-dex chip-value])]
-         (let [chips (pretty-engine/get-input-displayed-value group-id group-props)]
+         (let [chips (pretty-inputs.engine/get-input-displayed-value group-id group-props)]
               (cond (-> chips vector/not-empty?) (hiccup/put-with-indexed [:<>] chips f0)
                     (-> placeholder) [:div (chip-group.attributes/chip-group-placeholder-attributes group-id group-props)
                                            (metamorphic-content/compose placeholder)]))))
@@ -45,9 +45,9 @@
   ; @param (map) group-props
   [group-id group-props]
   [:div (chip-group.attributes/chip-group-attributes group-id group-props)
-        (if-let [label-props (pretty-engine/input-label-props group-id group-props)]
+        (if-let [label-props (pretty-inputs.engine/input-label-props group-id group-props)]
                 [pretty-elements/label label-props])
-        [pretty-engine/input-synchronizer group-id group-props]
+        [pretty-inputs.engine/input-synchronizer group-id group-props]
         [:div (chip-group.attributes/chip-group-body-attributes group-id group-props)
               [chip-group-chip-list                             group-id group-props]]])
 
@@ -61,8 +61,8 @@
   ; @param (map) group-props
   [group-id group-props]
   ; @note (tutorials#parametering)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-engine/input-did-mount    group-id group-props))
-                       :component-will-unmount (fn [_ _] (pretty-engine/input-will-unmount group-id group-props))
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-inputs.engine/input-did-mount    group-id group-props))
+                       :component-will-unmount (fn [_ _] (pretty-inputs.engine/input-will-unmount group-id group-props))
                        :reagent-render         (fn [_ group-props] [chip-group group-id group-props])}))
 
 (defn input

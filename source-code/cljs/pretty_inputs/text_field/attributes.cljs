@@ -9,7 +9,7 @@
               [pretty-css.input.api                  :as pretty-css.input]
               [pretty-css.layout.api                 :as pretty-css.layout]
               [pretty-css.live.api                   :as pretty-css.live]
-              [pretty-engine.api                     :as pretty-engine]
+              [pretty-inputs.engine.api                     :as pretty-inputs.engine]
               [pretty-inputs.text-field.env          :as text-field.env]
               [pretty-inputs.text-field.side-effects :as text-field.side-effects]))
 
@@ -78,7 +78,7 @@
   ; {}
   [field-id field-props]
   ; @bug (#2105)
-  (let [on-mouse-up-f #(pretty-engine/focus-input! field-id field-props)]
+  (let [on-mouse-up-f #(pretty-inputs.engine/focus-input! field-id field-props)]
        {:class         :pi-text-field--adornments-placeholder
         :on-mouse-down dom/prevent-default
         :on-mouse-up   on-mouse-up-f}))

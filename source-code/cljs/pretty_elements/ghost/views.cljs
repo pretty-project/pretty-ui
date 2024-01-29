@@ -3,7 +3,7 @@
     (:require [fruits.random.api                :as random]
               [pretty-elements.ghost.attributes :as ghost.attributes]
               [pretty-elements.ghost.prototypes :as ghost.prototypes]
-              [pretty-engine.api                :as pretty-engine]
+              [pretty-elements.engine.api                :as pretty-elements.engine]
               [pretty-presets.api               :as pretty-presets]
               [reagent.api                      :as reagent]))
 
@@ -29,8 +29,8 @@
   ; @param (map) ghost-props
   [ghost-id ghost-props]
   ; @note (tutorials#parametering)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-engine/element-did-mount    ghost-id ghost-props))
-                       :component-will-unmount (fn [_ _] (pretty-engine/element-will-unmount ghost-id ghost-props))
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    ghost-id ghost-props))
+                       :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount ghost-id ghost-props))
                        :reagent-render         (fn [_ ghost-props] [ghost ghost-id ghost-props])}))
 
 (defn element

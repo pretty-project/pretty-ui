@@ -6,7 +6,7 @@
               [pretty-elements.icon-button.views              :as icon-button.views]
               [pretty-elements.notification-bubble.attributes :as notification-bubble.attributes]
               [pretty-elements.notification-bubble.prototypes :as notification-bubble.prototypes]
-              [pretty-engine.api                              :as pretty-engine]
+              [pretty-elements.engine.api                              :as pretty-elements.engine]
               [pretty-presets.api                             :as pretty-presets]
               [reagent.api                                    :as reagent]))
 
@@ -58,11 +58,11 @@
   ; @param (map) bubble-props
   [bubble-id bubble-props]
   ; @note (tutorials#parametering)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-engine/element-did-mount    bubble-id bubble-props))
-                       :component-will-unmount (fn [_ _] (pretty-engine/element-will-unmount bubble-id bubble-props))
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    bubble-id bubble-props))
+                       :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount bubble-id bubble-props))
                        :reagent-render         (fn [_ bubble-props] [notification-bubble bubble-id bubble-props])}))
 
-                       ; @note (pretty-engine.element.lifecycles.side-effects#8097)
+                       ; @note (pretty-elements.adornment.views#8097)
                        ; + element-did-mount, keypress?
 
 (defn element

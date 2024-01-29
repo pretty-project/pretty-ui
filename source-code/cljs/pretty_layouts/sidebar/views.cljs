@@ -2,7 +2,7 @@
 (ns pretty-layouts.sidebar.views
     (:require [fruits.random.api                 :as random]
               [metamorphic-content.api           :as metamorphic-content]
-              [pretty-engine.api                 :as pretty-engine]
+              [pretty-layouts.engine.api                 :as pretty-layouts.engine]
               [pretty-layouts.sidebar.attributes :as sidebar.attributes]
               [pretty-layouts.sidebar.prototypes :as sidebar.prototypes]
               [pretty-presets.api                :as pretty-presets]

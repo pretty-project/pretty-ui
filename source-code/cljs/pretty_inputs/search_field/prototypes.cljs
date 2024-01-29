@@ -1,6 +1,6 @@
 
 (ns pretty-inputs.search-field.prototypes
-    (:require [pretty-engine.api :as pretty-engine]))
+    (:require [pretty-inputs.engine.api :as pretty-inputs.engine]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -15,7 +15,7 @@
   ; @return (map)
   ; {:start-adornments (maps in vector)}
   [field-id {:keys [on-enter] :as field-props}]
-  (let [field-empty? (pretty-engine/input-empty? field-id field-props)]
+  (let [field-empty? (pretty-inputs.engine/input-empty? field-id field-props)]
        (merge (if on-enter {:start-adornments [{:icon :search :on-click on-enter :tab-indexed? false :disabled? field-empty?}]}
                            {:start-adornments [{:icon :search}]})
               (-> field-props))))

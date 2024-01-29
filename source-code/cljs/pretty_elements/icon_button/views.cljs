@@ -4,7 +4,7 @@
               [metamorphic-content.api                :as metamorphic-content]
               [pretty-elements.icon-button.attributes :as icon-button.attributes]
               [pretty-elements.icon-button.prototypes :as icon-button.prototypes]
-              [pretty-engine.api                      :as pretty-engine]
+              [pretty-elements.engine.api                      :as pretty-elements.engine]
               [pretty-presets.api                     :as pretty-presets]
               [re-frame.api                           :as r]
               [reagent.api                            :as reagent]))
@@ -39,7 +39,7 @@
   ; @param (map) button-props
   [button-id button-props]
   ; @note (tutorials#parametering)
-  ; @note (pretty-engine.element.lifecycles.side-effects#8097)
+  ; @note (pretty-elements.adornment.views#8097)
   (reagent/lifecycles {:component-did-mount    (fn [_ _]) ;(r/dispatch [:pretty-elements.button/button-did-mount    button-id button-props]))
                        :component-will-unmount (fn [_ _]) ;(r/dispatch [:pretty-elements.button/button-will-unmount button-id button-props]))
                        :component-did-update   (fn [%])   ;(r/dispatch [:pretty-elements.button/button-did-update   button-id %]))

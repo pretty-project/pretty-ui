@@ -5,7 +5,7 @@
               [metamorphic-content.api               :as metamorphic-content]
               [pretty-elements.data-table.attributes :as data-table.attributes]
               [pretty-elements.data-table.prototypes :as data-table.prototypes]
-              [pretty-engine.api                     :as pretty-engine]
+              [pretty-elements.engine.api                     :as pretty-elements.engine]
               [pretty-presets.api                    :as pretty-presets]
               [reagent.api                           :as reagent]))
 
@@ -78,8 +78,8 @@
   ; @param (map) table-props
   [table-id table-props]
   ; @note (tutorials#parametering)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-engine/element-did-mount    table-id table-props))
-                       :component-will-unmount (fn [_ _] (pretty-engine/element-will-unmount table-id table-props))
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    table-id table-props))
+                       :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount table-id table-props))
                        :reagent-render         (fn [_ table-props] [data-table table-id table-props])}))
 
 (defn element

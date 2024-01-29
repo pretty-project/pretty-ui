@@ -3,7 +3,7 @@
     (:require [fruits.random.api                        :as random]
               [pretty-diagrams.point-diagram.attributes :as point-diagram.attributes]
               [pretty-diagrams.point-diagram.prototypes :as point-diagram.prototypes]
-              [pretty-engine.api                        :as pretty-engine]
+              [pretty-diagrams.engine.api                        :as pretty-diagrams.engine]
               [pretty-presets.api                       :as pretty-presets]
               [reagent.api                              :as reagent]))
 
@@ -34,8 +34,8 @@
   ; @param (map) diagram-props
   [diagram-id diagram-props]
   ; @note (tutorials#parametering)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-engine/diagram-did-mount    diagram-id diagram-props))
-                       :component-will-unmount (fn [_ _] (pretty-engine/diagram-will-unmount diagram-id diagram-props))
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-diagrams.engine/diagram-did-mount    diagram-id diagram-props))
+                       :component-will-unmount (fn [_ _] (pretty-diagrams.engine/diagram-will-unmount diagram-id diagram-props))
                        :reagent-render         (fn [_ diagram-props] [point-diagram diagram-id diagram-props])}))
 
 (defn diagram
@@ -49,7 +49,11 @@
   ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;   Default: :default
   ;   W/ {:label ...}
+  ;  :datum-color-f (function)(opt)
+  ;  :datum-label-f (function)(opt)
+  ;  :datum-value-f (function)(opt)
   ;  :disabled? (boolean)(opt)
+  ;  :get-data-f (function)(opt)
   ;  :indent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :on-mount-f (function)(opt)

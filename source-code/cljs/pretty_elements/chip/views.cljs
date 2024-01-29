@@ -6,7 +6,7 @@
               [pretty-elements.adornment-group.views :as adornment-group.views]
               [pretty-elements.chip.attributes       :as chip.attributes]
               [pretty-elements.chip.prototypes       :as chip.prototypes]
-              [pretty-engine.api                     :as pretty-engine]
+              [pretty-elements.engine.api                     :as pretty-elements.engine]
               [pretty-presets.api                    :as pretty-presets]
               [reagent.api                           :as reagent]))
 
@@ -39,10 +39,10 @@
   ; @param (map) chip-props
   [chip-id chip-props]
   ; @note (tutorials#parametering)
-  ; @note (pretty-engine.element.lifecycles.side-effects#8097)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-engine/element-did-mount    chip-id chip-props))
-                       :component-will-unmount (fn [_ _] (pretty-engine/element-will-unmount chip-id chip-props))
-                       :component-did-update   (fn [%]   (pretty-engine/element-did-update   chip-id chip-props %))
+  ; @note (pretty-elements.adornment.views#8097)
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    chip-id chip-props))
+                       :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount chip-id chip-props))
+                       :component-did-update   (fn [%]   (pretty-elements.engine/element-did-update   chip-id chip-props %))
                        :reagent-render         (fn [_ chip-props] [chip chip-id chip-props])}))
 
 (defn element
@@ -96,3 +96,5 @@
        (let [chip-props (pretty-presets/apply-preset          chip-props)
              chip-props (chip.prototypes/chip-props-prototype chip-props)]
             [element-lifecycles chip-id chip-props]))))
+
+            ; on-click-timeout?

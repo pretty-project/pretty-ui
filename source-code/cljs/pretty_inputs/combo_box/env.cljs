@@ -4,7 +4,7 @@
               [fruits.hiccup.api             :as hiccup]
               [fruits.string.api             :as string]
               [fruits.vector.api             :as vector]
-              [pretty-engine.api             :as pretty-engine]
+              [pretty-inputs.engine.api             :as pretty-inputs.engine]
               [pretty-inputs.combo-box.state :as combo-box.state]))
 
 ;; ----------------------------------------------------------------------------
@@ -37,8 +37,8 @@
   ;
   ; @return (vector)
   [box-id box-props]
-  (let [options (pretty-engine/get-input-options box-id box-props)]
-       (letfn [(f0 [options option] (if (pretty-engine/render-input-option? box-id box-props option)
+  (let [options (pretty-inputs.engine/get-input-options box-id box-props)]
+       (letfn [(f0 [options option] (if (pretty-inputs.engine/render-input-option? box-id box-props option)
                                         (conj options option)
                                         (->   options)))]
               (reduce f0 [] options))))

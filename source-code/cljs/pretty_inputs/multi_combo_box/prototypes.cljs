@@ -2,7 +2,7 @@
 (ns pretty-inputs.multi-combo-box.prototypes
     (:require [fruits.loop.api   :refer [<-walk]]
               [fruits.noop.api   :refer [return]]
-              [pretty-engine.api :as pretty-engine]))
+              [pretty-inputs.engine.api :as pretty-inputs.engine]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -18,7 +18,7 @@
   [box-id box-props]
   ; XXX#5061
   ; XXX#5062
-  (let [field-id    (pretty-engine/input-id->subitem-id box-id :text-field)
+  (let [field-id    (pretty-inputs.engine/input-id->subitem-id box-id :text-field)
         field-props (dissoc box-props :class :helper :indent :label :outdent :style :value-path)]))
        ;(merge {:value-path (input.utils/default-value-path field-id)}
         ;      (-> field-props)]))

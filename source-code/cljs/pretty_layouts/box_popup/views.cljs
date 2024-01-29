@@ -2,7 +2,7 @@
 (ns pretty-layouts.box-popup.views
     (:require [fruits.random.api                   :as random]
               [metamorphic-content.api             :as metamorphic-content]
-              [pretty-engine.api                   :as pretty-engine]
+              [pretty-layouts.engine.api                   :as pretty-layouts.engine]
               [pretty-layouts.box-popup.attributes :as box-popup.attributes]
               [pretty-layouts.box-popup.prototypes :as box-popup.prototypes]
               [pretty-presets.api                  :as pretty-presets]

@@ -8,7 +8,7 @@
               [pretty-css.control.api    :as pretty-css.control]
               [pretty-css.layout.api     :as pretty-css.layout]
               [pretty-css.live.api       :as pretty-css.live]
-              [pretty-engine.api         :as pretty-engine]
+              [pretty-inputs.engine.api         :as pretty-inputs.engine]
               [re-frame.api              :as r]))
 
 ;; ----------------------------------------------------------------------------
@@ -89,7 +89,7 @@
   ; @return (map)
   ; {}
   [button-id button-props option]
-  (let [option-color (pretty-engine/get-input-option-color button-id button-props option)]
+  (let [option-color (pretty-inputs.engine/get-input-option-color button-id button-props option)]
        (-> {:class :pi-radio-button--option-button}
            (pretty-css.appearance/background-attributes {:fill-color option-color})
            (pretty-css.appearance/border-attributes button-props))))
@@ -105,8 +105,8 @@
   ; @return (map)
   ; {}
   [button-id {:keys [disabled?] :as button-props} option]
-  (let [option-selected? (pretty-engine/input-option-selected? button-id button-props option)
-        on-click-f       (fn [_] (pretty-engine/select-input-option! button-id button-props option))]
+  (let [option-selected? (pretty-inputs.engine/input-option-selected? button-id button-props option)
+        on-click-f       (fn [_] (pretty-inputs.engine/select-input-option! button-id button-props option))]
        (-> {:class         :pi-radio-button--option
             :data-selected option-selected?
             :disabled      disabled?}
@@ -125,8 +125,8 @@
   ; @return (map)
   ; {}
   [button-id button-props]
-  (let [on-blur-f  (fn [_] (pretty-engine/input-left    button-id button-props))
-        on-focus-f (fn [_] (pretty-engine/input-focused button-id button-props))]
+  (let [on-blur-f  (fn [_] (pretty-inputs.engine/input-left    button-id button-props))
+        on-focus-f (fn [_] (pretty-inputs.engine/input-focused button-id button-props))]
        (-> {:class :pi-radio-button--body
             :on-blur  on-blur-f
             :on-focus on-focus-f}

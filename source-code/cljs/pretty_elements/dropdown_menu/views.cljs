@@ -7,7 +7,7 @@
               [pretty-elements.dropdown-menu.prototypes :as dropdown-menu.prototypes]
               [pretty-elements.dropdown-menu.state      :as dropdown-menu.state]
               [pretty-elements.menu-bar.views           :as menu-bar.views]
-              [pretty-engine.api                        :as pretty-engine]
+              [pretty-elements.engine.api                        :as pretty-elements.engine]
               [reagent.api                              :as reagent]))
 
 ;; ----------------------------------------------------------------------------
@@ -38,8 +38,8 @@
   ; @param (map) menu-props
   [menu-id menu-props]
   ; @note (tutorials#parametering)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-engine/element-did-mount    menu-id menu-props))
-                       :component-will-unmount (fn [_ _] (pretty-engine/element-will-unmount menu-id menu-props))
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    menu-id menu-props))
+                       :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount menu-id menu-props))
                        :reagent-render         (fn [_ menu-props] [dropdown-menu menu-id menu-props])}))
 
 (defn element

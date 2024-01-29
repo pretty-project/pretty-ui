@@ -2,7 +2,7 @@
 (ns pretty-inputs.counter.views
     (:require [fruits.random.api                :as random]
               [pretty-elements.api              :as pretty-elements]
-              [pretty-engine.api                :as pretty-engine]
+              [pretty-inputs.engine.api                :as pretty-inputs.engine]
               [pretty-forms.api                 :as pretty-forms]
               [pretty-inputs.counter.attributes :as counter.attributes]
               [pretty-inputs.counter.prototypes :as counter.prototypes]
@@ -21,10 +21,10 @@
   ; {}
   [counter-id {:keys [resetable? value-path] :as counter-props}]
   [:div (counter.attributes/counter-attributes counter-id counter-props)
-        (if-let [label-props (pretty-engine/input-label-props counter-id counter-props)]
+        (if-let [label-props (pretty-inputs.engine/input-label-props counter-id counter-props)]
                 [pretty-elements/label label-props])
-        [pretty-forms/invalid-message     counter-id counter-props]
-        [pretty-engine/input-synchronizer counter-id counter-props]
+        [pretty-forms/invalid-message            counter-id counter-props]
+        [pretty-inputs.engine/input-synchronizer counter-id counter-props]
         [:div (counter.attributes/counter-body-attributes counter-id counter-props)
               [:button (counter.attributes/decrease-button-attributes counter-id counter-props)]
               (let [value @(r/subscribe [:get-item value-path])]

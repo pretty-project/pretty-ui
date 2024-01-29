@@ -4,7 +4,7 @@
               [metamorphic-content.api           :as metamorphic-content]
               [pretty-elements.toggle.attributes :as toggle.attributes]
               [pretty-elements.toggle.prototypes :as toggle.prototypes]
-              [pretty-engine.api                 :as pretty-engine]
+              [pretty-elements.engine.api                 :as pretty-elements.engine]
               [pretty-presets.api                :as pretty-presets]
               [reagent.api                       :as reagent]))
 
@@ -33,10 +33,10 @@
   ; @param (map) toggle-props
   [toggle-id toggle-props]
   ; @note (tutorials#parametering)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-engine/element-did-mount    toggle-id toggle-props))
-                       :component-will-unmount (fn [_ _] (pretty-engine/element-will-unmount toggle-id toggle-props))
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    toggle-id toggle-props))
+                       :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount toggle-id toggle-props))
                        :reagent-render         (fn [_ toggle-props] [toggle toggle-id toggle-props])}))
-                       ; @note (pretty-engine.element.lifecycles.side-effects#8097)
+                       ; @note (pretty-elements.adornment.views#8097)
                        ; + did-update, keypress?
 
 (defn element

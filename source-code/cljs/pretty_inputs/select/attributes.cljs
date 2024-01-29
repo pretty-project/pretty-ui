@@ -7,7 +7,7 @@
               [pretty-css.control.api    :as pretty-css.control]
               [pretty-css.layout.api     :as pretty-css.layout]
               [pretty-css.live.api       :as pretty-css.live]
-              [pretty-engine.api         :as pretty-engine]))
+              [pretty-inputs.engine.api         :as pretty-inputs.engine]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -57,7 +57,7 @@
   ; @return (map)
   ; {}
   [select-id {:keys [font-size] :as select-props} option]
-  (let [option-selected? (pretty-engine/input-option-selected? select-id select-props option)]
+  (let [option-selected? (pretty-inputs.engine/input-option-selected? select-id select-props option)]
        (-> {:class               :pi-select--option-label
             :data-font-size      font-size
             :data-font-weight    (if option-selected? :semi-bold :medium)
@@ -90,9 +90,9 @@
   ; @return (map)
   ; {}
   [select-id {:keys [disabled? option-color-f] :as select-props} option]
-  (let [option-selected? (pretty-engine/input-option-selected? select-id select-props option)
-        option-color     (pretty-engine/get-input-option-color select-id select-props option)
-        on-click-f       (fn [_] (pretty-engine/select-input-option! select-id select-props option))]
+  (let [option-selected? (pretty-inputs.engine/input-option-selected? select-id select-props option)
+        option-color     (pretty-inputs.engine/get-input-option-color select-id select-props option)
+        on-click-f       (fn [_] (pretty-inputs.engine/select-input-option! select-id select-props option))]
        (-> {:class         :pi-select--option
             :data-selected option-selected?
             :disabled      disabled?}

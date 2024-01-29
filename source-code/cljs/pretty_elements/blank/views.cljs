@@ -3,7 +3,7 @@
     (:require [fruits.random.api                :as random]
               [pretty-elements.blank.attributes :as blank.attributes]
               [pretty-elements.blank.prototypes :as blank.prototypes]
-              [pretty-engine.api                :as pretty-engine]
+              [pretty-elements.engine.api                :as pretty-elements.engine]
               [pretty-presets.api               :as pretty-presets]
               [reagent.api                      :as reagent]))
 
@@ -31,8 +31,8 @@
   ; @param (map) blank-props
   [blank-id blank-props]
   ; @note (tutorials#parametering)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-engine/element-did-mount    blank-id blank-props))
-                       :component-will-unmount (fn [_ _] (pretty-engine/element-will-unmount blank-id blank-props))
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    blank-id blank-props))
+                       :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount blank-id blank-props))
                        :reagent-render         (fn [_ blank-props] [blank blank-id blank-props])}))
 
 (defn element

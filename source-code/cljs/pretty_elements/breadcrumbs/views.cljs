@@ -5,7 +5,7 @@
               [pretty-elements.breadcrumbs.attributes :as breadcrumbs.attributes]
               [pretty-elements.breadcrumbs.prototypes :as breadcrumbs.prototypes]
               [pretty-elements.button.views           :as button.views]
-              [pretty-engine.api                      :as pretty-engine]
+              [pretty-elements.engine.api                      :as pretty-elements.engine]
               [pretty-presets.api                     :as pretty-presets]
               [reagent.api                            :as reagent]))
 
@@ -36,8 +36,8 @@
   ; @param (map) breadcrumbs-props
   [breadcrumbs-id breadcrumbs-props]
   ; @note (tutorials#parametering)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-engine/element-did-mount    breadcrumbs-id breadcrumbs-props))
-                       :component-will-unmount (fn [_ _] (pretty-engine/element-will-unmount breadcrumbs-id breadcrumbs-props))
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    breadcrumbs-id breadcrumbs-props))
+                       :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount breadcrumbs-id breadcrumbs-props))
                        :reagent-render         (fn [_ breadcrumbs-props] [breadcrumbs breadcrumbs-id breadcrumbs-props])}))
 
 (defn element

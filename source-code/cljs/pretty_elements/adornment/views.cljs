@@ -3,7 +3,7 @@
     (:require [fruits.random.api                    :as random]
               [pretty-elements.adornment.attributes :as adornment.attributes]
               [pretty-elements.adornment.prototypes :as adornment.prototypes]
-              [pretty-engine.api                    :as pretty-engine]
+              [pretty-elements.engine.api                    :as pretty-elements.engine]
               [pretty-presets.api                   :as pretty-presets]
               [reagent.api                          :as reagent]))
 
@@ -36,10 +36,11 @@
   ; @param (map) adornment-props
   [adornment-id adornment-props]
   ; @note (tutorials#parametering)
-  ; @note (pretty-engine.element.lifecycles.side-effects#8097)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-engine/element-did-mount    adornment-id adornment-props))
-                       :component-will-unmount (fn [_ _] (pretty-engine/element-will-unmount adornment-id adornment-props))
-                       :component-did-update   (fn [%]   (pretty-engine/element-did-update   adornment-id adornment-props %))
+  ; @note (#8097)
+  ; The 'element-did-update' function re-registers the keypress events when the element properties map gets changed.
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    adornment-id adornment-props))
+                       :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount adornment-id adornment-props))
+                       :component-did-update   (fn [%]   (pretty-elements.engine/element-did-update   adornment-id adornment-props %))
                        :reagent-render         (fn [_ adornment-props] [adornment adornment-id adornment-props])}))
 
 (defn element
@@ -105,5 +106,5 @@
    (fn [_ adornment-props]
        (let [adornment-props (pretty-presets/apply-preset                    adornment-id adornment-props)
              adornment-props (adornment.prototypes/adornment-props-prototype adornment-id adornment-props)
-             adornment-props (pretty-engine/element-timeout-props            adornment-id adornment-props)]
+             adornment-props (pretty-elements.engine/element-timeout-props   adornment-id adornment-props)]
             [element-lifecycles adornment-id adornment-props]))))

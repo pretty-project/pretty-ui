@@ -1,7 +1,7 @@
 
 (ns pretty-website.scroll-icon.views
     (:require [fruits.random.api                     :as random]
-              [pretty-engine.api                     :as pretty-engine]
+              [pretty-elements.engine.api                     :as pretty-elements.engine]
               [pretty-presets.api                    :as pretty-presets]
               [pretty-website.scroll-icon.attributes :as scroll-icon.attributes]
               [pretty-website.scroll-icon.prototypes :as scroll-icon.prototypes]
@@ -31,8 +31,8 @@
   ; @param (map) icon-props
   [icon-id icon-props]
   ; @note (tutorials#parametering)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-engine/element-did-mount    icon-id icon-props))
-                       :component-will-unmount (fn [_ _] (pretty-engine/element-will-unmount icon-id icon-props))
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    icon-id icon-props))
+                       :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount icon-id icon-props))
                        :reagent-render         (fn [_ icon-props] [scroll-icon icon-id icon-props])}))
 
 (defn component

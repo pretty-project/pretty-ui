@@ -2,7 +2,7 @@
 (ns pretty-website.multi-menu.views
     (:require [fruits.random.api                    :as random]
               [pretty-elements.api                  :as pretty-elements]
-              [pretty-engine.api                    :as pretty-engine]
+              [pretty-elements.engine.api                    :as pretty-elements.engine]
               [pretty-presets.api                   :as pretty-presets]
               [pretty-website.multi-menu.attributes :as multi-menu.attributes]
               [pretty-website.multi-menu.prototypes :as multi-menu.prototypes]
@@ -43,8 +43,8 @@
   ; @param (map) menu-props
   [menu-id menu-props]
   ; @note (tutorials#parametering)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-engine/element-did-mount    menu-id menu-props))
-                       :component-will-unmount (fn [_ _] (pretty-engine/element-will-unmount menu-id menu-props))
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    menu-id menu-props))
+                       :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount menu-id menu-props))
                        :reagent-render         (fn [_ menu-props] [multi-menu menu-id menu-props])}))
 
 (defn component

@@ -4,7 +4,7 @@
               [metamorphic-content.api                         :as metamorphic-content]
               [pretty-elements.horizontal-separator.attributes :as horizontal-separator.attributes]
               [pretty-elements.horizontal-separator.prototypes :as horizontal-separator.prototypes]
-              [pretty-engine.api                               :as pretty-engine]
+              [pretty-elements.engine.api                               :as pretty-elements.engine]
               [pretty-presets.api                              :as pretty-presets]
               [reagent.api                                     :as reagent]))
 
@@ -36,8 +36,8 @@
   ; @param (map) separator-props
   [separator-id separator-props]
   ; @note (tutorials#parametering)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-engine/element-did-mount    separator-id separator-props))
-                       :component-will-unmount (fn [_ _] (pretty-engine/element-will-unmount separator-id separator-props))
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    separator-id separator-props))
+                       :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount separator-id separator-props))
                        :reagent-render         (fn [_ separator-props] [horizontal-separator separator-id separator-props])}))
 
 (defn element

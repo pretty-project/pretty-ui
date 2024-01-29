@@ -5,7 +5,7 @@
               [metamorphic-content.api         :as metamorphic-content]
               [pretty-elements.text.attributes :as text.attributes]
               [pretty-elements.text.prototypes :as text.prototypes]
-              [pretty-engine.api               :as pretty-engine]
+              [pretty-elements.engine.api               :as pretty-elements.engine]
               [pretty-presets.api              :as pretty-presets]
               [reagent.api                     :as reagent]))
 
@@ -39,8 +39,8 @@
   ; @param (map) text-props
   [text-id text-props]
   ; @note (tutorials#parametering)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-engine/element-did-mount    text-id text-props))
-                       :component-will-unmount (fn [_ _] (pretty-engine/element-will-unmount text-id text-props))
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    text-id text-props))
+                       :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount text-id text-props))
                        :reagent-render         (fn [_ text-props] [text text-id text-props])}))
 
 (defn element

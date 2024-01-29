@@ -5,7 +5,7 @@
               [fruits.svg.api                            :as svg]
               [pretty-diagrams.circle-diagram.attributes :as circle-diagram.attributes]
               [pretty-diagrams.circle-diagram.prototypes :as circle-diagram.prototypes]
-              [pretty-engine.api                         :as pretty-engine]
+              [pretty-diagrams.engine.api                         :as pretty-diagrams.engine]
               [pretty-presets.api                        :as pretty-presets]
               [reagent.api                               :as reagent]))
 
@@ -57,16 +57,20 @@
   ; @param (map) diagram-props
   [diagram-id diagram-props]
   ; @note (tutorials#parametering)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-engine/diagram-did-mount    diagram-id diagram-props))
-                       :component-will-unmount (fn [_ _] (pretty-engine/diagram-will-unmount diagram-id diagram-props))
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-diagrams.engine/diagram-did-mount    diagram-id diagram-props))
+                       :component-will-unmount (fn [_ _] (pretty-diagrams.engine/diagram-will-unmount diagram-id diagram-props))
                        :reagent-render         (fn [_ diagram-props] [circle-diagram diagram-id diagram-props])}))
 
 (defn diagram
   ; @param (keyword)(opt) diagram-id
   ; @param (map) diagram-props
   ; {:class (keyword or keywords in vector)(opt)
+  ;  :datum-color-f (function)(opt)
+  ;  :datum-label-f (function)(opt)
+  ;  :datum-value-f (function)(opt)
   ;  :disabled? (boolean)(opt)
   ;  :diameter (px)(opt)
+  ;  :get-data-f (function)(opt)
   ;  :indent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :on-mount-f (function)(opt)
@@ -74,13 +78,15 @@
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :preset (keyword)(opt)
-  ;  :sections (maps in vector)}
+  ;  :sections (maps in vector)(opt)
   ;   [{:color (keyword or string)(opt)
   ;     :label (metamorphic-content)(opt)
   ;     :value (integer)(opt)}]
+  ;
+  ; :circle-diameter
+  ; :circle-w
+
   ;  :strength (px)(opt)
-  ;    Min: 1
-  ;    Max: 6
   ;  :style (map)(opt)
   ;  :theme (keyword)(opt)}
   ;

@@ -2,7 +2,9 @@
 (ns pretty-diagrams.line-diagram.prototypes
     (:require [fruits.math.api                    :as math]
               [pretty-defaults.api                :as pretty-defaults]
-              [pretty-diagrams.line-diagram.utils :as line-diagram.utils]))
+              [pretty-diagrams.engine.api                :as pretty-diagrams.engine]
+              [pretty-diagrams.line-diagram.utils :as line-diagram.utils]
+              [pretty-diagrams.core.props :as core.props]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -25,15 +27,16 @@
   ;
   ; @param (keyword) diagram-id
   ; @param (map) diagram-props
-  ; {:strength (integer)(opt)}
   ;
   ; @return (map)
-  ; {:strength (px)
-  ;  :total-value (integer)
-  ;  :width (keyword, px or string)}
-  [_ {:keys [strength] :as diagram-props}]
-  (merge {:total-value (line-diagram.utils/diagram-props->total-value diagram-props)
-          :width :auto}
-         (-> diagram-props)
-         (if strength {:strength (math/between! strength 1 6)}
-                      {:strength 2})))
+  [diagram-id diagram-props]
+  (-> diagram-props (core.props/row-props {})))
+
+
+
+
+;  (merge {:total-value (line-diagram.utils/diagram-props->total-value diagram-props)
+;          :width :auto
+;         (-> diagram-props)
+;         (if strength {:strength (math/between! strength 1 6)}
+;                      {:strength 2})))

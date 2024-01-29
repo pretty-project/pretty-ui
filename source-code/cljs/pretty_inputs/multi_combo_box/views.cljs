@@ -2,7 +2,7 @@
 (ns pretty-inputs.multi-combo-box.views
     (:require [fruits.random.api                        :as random]
               [fruits.vector.api                        :as vector]
-              [pretty-engine.api                        :as pretty-engine]
+              [pretty-inputs.engine.api                        :as pretty-inputs.engine]
               [pretty-inputs.chip-group.views           :as chip-group.views]
               [pretty-inputs.combo-box.views            :as combo-box.views]
               [pretty-inputs.multi-combo-box.attributes :as multi-combo-box.attributes]
@@ -22,7 +22,7 @@
   [box-id {:keys [value-path] :as box-props}]
   (if-let [chips @(r/subscribe [:get-item value-path])]
           (if (vector/not-empty? chips)
-              (let [group-id    (pretty-engine/input-id->subitem-id               box-id :chip-group)
+              (let [group-id    (pretty-inputs.engine/input-id->subitem-id        box-id :chip-group)
                     group-props (multi-combo-box.prototypes/group-props-prototype box-id box-props)]
                    [chip-group.views/input group-id group-props]))))
 
@@ -35,7 +35,7 @@
   ; @param (keyword) box-id
   ; @param (map) box-props
   [box-id box-props]
-  (let [field-id    (pretty-engine/input-id->subitem-id               box-id :text-field)
+  (let [field-id    (pretty-inputs.engine/input-id->subitem-id        box-id :text-field)
         field-props (multi-combo-box.prototypes/field-props-prototype box-id box-props)]
        [combo-box.views/combo-box field-id field-props]))
 
@@ -50,7 +50,7 @@
   [box-id box-props]
   [:div (multi-combo-box.attributes/box-attributes box-id box-props)
         [:div (multi-combo-box.attributes/box-body-attributes box-id box-props)
-              ;[pretty-engine/input-label                         box-id box-props]
+              ;[pretty-inputs.engine/input-label box-id box-props]
               [multi-combo-box-chip-group                     box-id box-props]
               [multi-combo-box-field                          box-id box-props]]])
 
@@ -64,8 +64,8 @@
   ; @param (map) box-props
   [box-id box-props]
   ; @note (tutorials#parametering)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-engine/input-did-mount    box-id box-props))
-                       :component-will-unmount (fn [_ _] (pretty-engine/input-will-unmount box-id box-props))
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-inputs.engine/input-did-mount    box-id box-props))
+                       :component-will-unmount (fn [_ _] (pretty-inputs.engine/input-will-unmount box-id box-props))
                        :reagent-render         (fn [_ box-props] [multi-combo-box box-id box-props])}))
 
 (defn input

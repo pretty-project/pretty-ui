@@ -5,7 +5,7 @@
               [metamorphic-content.api                    :as metamorphic-content]
               [pretty-elements.content-swapper.attributes :as content-swapper.attributes]
               [pretty-elements.content-swapper.state      :as content-swapper.state]
-              [pretty-engine.api                          :as pretty-engine]
+              [pretty-elements.engine.api                          :as pretty-elements.engine]
               [pretty-presets.api                         :as pretty-presets]
               [re-frame.api                               :as r]
               [react.api                                  :as react]

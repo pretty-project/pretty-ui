@@ -1,6 +1,6 @@
 
 (ns pretty-presets.default-presets.presets
-    (:require [pretty-presets.preset-pool.side-effects :refer [reg-preset!]]))
+    (:require [pretty-presets.engine.api :refer [reg-preset!]]))
 
 ;; -- Popup menu buttons ------------------------------------------------------
 ;; ----------------------------------------------------------------------------

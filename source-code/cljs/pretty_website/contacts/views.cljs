@@ -3,7 +3,7 @@
     (:require [fruits.hiccup.api                  :as hiccup]
               [fruits.random.api                  :as random]
               [metamorphic-content.api            :as metamorphic-content]
-              [pretty-engine.api                  :as pretty-engine]
+              [pretty-elements.engine.api                  :as pretty-elements.engine]
               [pretty-presets.api                 :as pretty-presets]
               [pretty-website.contacts.attributes :as contacts.attributes]
               [pretty-website.contacts.prototypes :as contacts.prototypes]
@@ -67,8 +67,8 @@
   ; @param (map) contacts-props
   [contacts-id contacts-props]
   ; @note (tutorials#parametering)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-engine/element-did-mount    contacts-id contacts-props))
-                       :component-will-unmount (fn [_ _] (pretty-engine/element-will-unmount contacts-id contacts-props))
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    contacts-id contacts-props))
+                       :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount contacts-id contacts-props))
                        :reagent-render         (fn [_ contacts-props] [contacts contacts-id contacts-props])}))
 
 (defn component
