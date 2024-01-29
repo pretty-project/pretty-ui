@@ -37,11 +37,12 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
+  ; @param (integer) option-dex
   ; @param (*) option
   ;
   ; @return (map)
   ; {}
-  [_ _ _]
+  [_ _ _ _]
   {:class               :pi-radio-button--option-helper
    :data-font-size      :xs
    :data-letter-spacing :auto
@@ -54,11 +55,12 @@
   ; @param (keyword) button-id
   ; @param (map) button-props
   ; {}
+  ; @param (integer) option-dex
   ; @param (*) option
   ;
   ; @return (map)
   ; {}
-  [_ {:keys [font-size] :as button-props} _]
+  [_ {:keys [font-size] :as button-props} _ _]
   (-> {:class               :pi-radio-button--option-label
        :data-font-size      font-size
        :data-font-weight    :medium
@@ -71,11 +73,12 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
+  ; @param (integer) option-dex
   ; @param (*) option
   ;
   ; @return (map)
   ; {}
-  [_ button-props _]
+  [_ button-props _ _]
   (-> {:class :pi-radio-button--option-thumb}
       (pretty-css.appearance/adaptive-border-attributes button-props 0.3)))
 
@@ -84,12 +87,13 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
+  ; @param (integer) option-dex
   ; @param (*) option
   ;
   ; @return (map)
   ; {}
-  [button-id button-props option]
-  (let [option-color (pretty-inputs.engine/get-input-option-color button-id button-props option)]
+  [button-id button-props option-dex option]
+  (let [option-color (pretty-inputs.engine/get-input-option-color button-id button-props option-dex option)]
        (-> {:class :pi-radio-button--option-button}
            (pretty-css.appearance/background-attributes {:fill-color option-color})
            (pretty-css.appearance/border-attributes button-props))))
@@ -100,13 +104,14 @@
   ; @param (keyword) button-id
   ; @param (map) button-props
   ; {:disabled? (boolean)(opt)}
+  ; @param (integer) option-dex
   ; @param (*) option
   ;
   ; @return (map)
   ; {}
-  [button-id {:keys [disabled?] :as button-props} option]
-  (let [option-selected? (pretty-inputs.engine/input-option-selected? button-id button-props option)
-        on-click-f       (fn [_] (pretty-inputs.engine/select-input-option! button-id button-props option))]
+  [button-id {:keys [disabled?] :as button-props} option-dex option]
+  (let [option-selected? (pretty-inputs.engine/input-option-selected? button-id button-props option-dex option)
+        on-click-f       (fn [_] (pretty-inputs.engine/select-input-option! button-id button-props option-dex option))]
        (-> {:class         :pi-radio-button--option
             :data-selected option-selected?
             :disabled      disabled?}

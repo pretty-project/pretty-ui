@@ -35,11 +35,12 @@
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
+  ; @param (integer) option-dex
   ; @param (*) option
   ;
   ; @return (map)
   ; {}
-  [_ _ _]
+  [_ _ _ _]
   {:class               :pi-select--option-helper
    :data-font-size      :xs
    :data-letter-spacing :auto
@@ -52,12 +53,13 @@
   ; @param (keyword) select-id
   ; @param (map) select-props
   ; {}
+  ; @param (integer) option-dex
   ; @param (*) option
   ;
   ; @return (map)
   ; {}
-  [select-id {:keys [font-size] :as select-props} option]
-  (let [option-selected? (pretty-inputs.engine/input-option-selected? select-id select-props option)]
+  [select-id {:keys [font-size] :as select-props} option-dex option]
+  (let [option-selected? (pretty-inputs.engine/input-option-selected? select-id select-props option-dex option)]
        (-> {:class               :pi-select--option-label
             :data-font-size      font-size
             :data-font-weight    (if option-selected? :semi-bold :medium)
@@ -70,11 +72,12 @@
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
+  ; @param (integer) option-dex
   ; @param (*) option
   ;
   ; @return (map)
   ; {}
-  [_ _ _]
+  [_ _ _ _]
   {:class            :pi-select--option-checkmark
    :data-icon-family :material-symbols-outlined})
 
@@ -85,14 +88,15 @@
   ; @param (map) select-props
   ; {:disabled? (boolean)(opt)
   ;  :option-color-f (function)(opt)}
+  ; @param (integer) option-dex
   ; @param (*) option
   ;
   ; @return (map)
   ; {}
-  [select-id {:keys [disabled? option-color-f] :as select-props} option]
-  (let [option-selected? (pretty-inputs.engine/input-option-selected? select-id select-props option)
-        option-color     (pretty-inputs.engine/get-input-option-color select-id select-props option)
-        on-click-f       (fn [_] (pretty-inputs.engine/select-input-option! select-id select-props option))]
+  [select-id {:keys [disabled? option-color-f] :as select-props} option-dex option]
+  (let [option-selected? (pretty-inputs.engine/input-option-selected? select-id select-props option-dex option)
+        option-color     (pretty-inputs.engine/get-input-option-color select-id select-props option-dex option)
+        on-click-f       (fn [_] (pretty-inputs.engine/select-input-option! select-id select-props option-dex option))]
        (-> {:class         :pi-select--option
             :data-selected option-selected?
             :disabled      disabled?}

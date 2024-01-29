@@ -35,11 +35,12 @@
   ;
   ; @param (keyword) checkbox-id
   ; @param (map) checkbox-props
+  ; @param (integer) option-dex
   ; @param (*) option
   ;
   ; @return (map)
   ; {}
-  [_ _ _]
+  [_ _ _ _]
   {:class               :pi-checkbox--option-helper
    :data-font-size      :xs
    :data-letter-spacing :auto
@@ -52,11 +53,12 @@
   ; @param (keyword) checkbox-id
   ; @param (map) checkbox-props
   ; {}
+  ; @param (integer) option-dex
   ; @param (*) option
   ;
   ; @return (map)
   ; {}
-  [_ {:keys [font-size] :as checkbox-props} _]
+  [_ {:keys [font-size] :as checkbox-props} _ _]
   (-> {:class               :pi-checkbox--option-label
        :data-font-size      font-size
        :data-font-weight    :medium
@@ -69,12 +71,13 @@
   ;
   ; @param (keyword) checkbox-id
   ; @param (map) checkbox-props
+  ; @param (integer) option-dex
   ; @param (*) option
   ;
   ; @return (map)
   ; {}
-  [checkbox-id checkbox-props option]
-  (let [option-color (pretty-inputs.engine/get-input-option-color checkbox-id checkbox-props option)]
+  [checkbox-id checkbox-props option-dex option]
+  (let [option-color (pretty-inputs.engine/get-input-option-color checkbox-id checkbox-props option-dex option)]
        (-> {:class :pi-checkbox--option-button}
            (pretty-css.appearance/background-attributes {:fill-color option-color})
            (pretty-css.appearance/border-attributes checkbox-props))))
@@ -84,11 +87,12 @@
   ;
   ; @param (keyword) checkbox-id
   ; @param (map) checkbox-props
+  ; @param (integer) option-dex
   ; @param (*) option
   ;
   ; @return (map)
   ; {}
-  [_ _ _]
+  [_ _ _ _]
   {:class            :pi-checkbox--option-checkmark
    :data-icon-family :material-symbols-outlined})
 
@@ -98,15 +102,16 @@
   ; @param (keyword) checkbox-id
   ; @param (map) checkbox-props
   ; {}
+  ; @param (integer) option-dex
   ; @param (*) option
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  :data-checked (boolean)
   ;  :disabled (boolean)}
-  [checkbox-id {:keys [disabled?] :as checkbox-props} option]
-  (let [option-selected? (pretty-inputs.engine/input-option-selected? checkbox-id checkbox-props option)
-        on-click-f       (fn [_] (pretty-inputs.engine/select-input-option! checkbox-id checkbox-props option))]
+  [checkbox-id {:keys [disabled?] :as checkbox-props} option-dex option]
+  (let [option-selected? (pretty-inputs.engine/input-option-selected? checkbox-id checkbox-props option-dex option)
+        on-click-f       (fn [_] (pretty-inputs.engine/select-input-option! checkbox-id checkbox-props option-dex option))]
        (-> {:class        :pi-checkbox--option
             :data-checked option-selected?
             :disabled     disabled?}

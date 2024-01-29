@@ -39,19 +39,20 @@
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
+  ; @param (integer) option-dex
   ; @param (*) option
-  [select-id select-props option]
-  (if (pretty-inputs.engine/render-input-option? select-id select-props option)
-      [:button (select.attributes/select-option-attributes select-id select-props option)
-               (if (pretty-inputs.engine/input-option-selected? select-id select-props option)
-                   [:div (select.attributes/select-option-checkmark-attributes select-id select-props option) :done])
+  [select-id select-props option-dex option]
+  (if (pretty-inputs.engine/render-input-option? select-id select-props option-dex option)
+      [:button (select.attributes/select-option-attributes select-id select-props option-dex option)
+               (if (pretty-inputs.engine/input-option-selected? select-id select-props option-dex option)
+                   [:div (select.attributes/select-option-checkmark-attributes select-id select-props option-dex option) :done])
                [:div {:class :pi-select--option-content}
-                     (if-some [option-label (pretty-inputs.engine/get-input-option-label select-id select-props option)]
-                              [:div (select.attributes/select-option-label-attributes select-id select-props option)
-                                    [metamorphic-content/compose option-label]])
-                     (if-some [option-helper (pretty-inputs.engine/get-input-option-helper select-id select-props option)]
-                              [:div (select.attributes/select-option-helper-attributes select-id select-props option)
-                                    [metamorphic-content/compose option-helper]])]]))
+                     (if-some [option-label (pretty-inputs.engine/get-input-option-label select-id select-props option-dex option)]
+                              [:div (select.attributes/select-option-label-attributes select-id select-props option-dex option)
+                                    (-> option-label)])
+                     (if-some [option-helper (pretty-inputs.engine/get-input-option-helper select-id select-props option-dex option)]
+                              [:div (select.attributes/select-option-helper-attributes select-id select-props option-dex option)
+                                    (-> option-helper)])]]))
 
 (defn- select-option-list
   ; @ignore
@@ -60,9 +61,9 @@
   ; @param (map) select-props
   ; {}
   [select-id {:keys [placeholder] :as select-props}]
-  (letfn [(f0 [option] [select-option select-id select-props option])]
+  (letfn [(f0 [option-dex option] [select-option select-id select-props option-dex option])]
          (let [options (pretty-inputs.engine/get-input-options select-id select-props)]
-              (cond (-> options vector/not-empty?) (hiccup/put-with [:<>] options f0)
+              (cond (-> options vector/not-empty?) (hiccup/put-with-indexed [:<>] options f0)
                     (-> placeholder) [:div (select.attributes/select-placeholder-attributes select-id select-props)
                                            (metamorphic-content/compose placeholder)]))))
 

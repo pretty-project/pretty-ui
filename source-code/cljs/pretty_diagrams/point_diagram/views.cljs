@@ -65,9 +65,6 @@
   ;  :preset (keyword)(opt)
   ;  :style (map)(opt)
   ;  :strength (px)(opt)
-  ;    Default: 2
-  ;    Min: 1
-  ;    Max: 6
   ;  :theme (keyword)(opt)}
   ;
   ; @usage

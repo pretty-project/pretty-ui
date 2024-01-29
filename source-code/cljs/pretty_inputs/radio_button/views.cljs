@@ -3,14 +3,14 @@
     (:require [fruits.hiccup.api                     :as hiccup]
               [fruits.random.api                     :as random]
               [fruits.vector.api                     :as vector]
-              [metamorphic-content.api               :as metamorphic-content]
               [pretty-elements.api                   :as pretty-elements]
               [pretty-inputs.engine.api                     :as pretty-inputs.engine]
               [pretty-forms.engine.api                      :as pretty-forms.engine]
               [pretty-inputs.radio-button.attributes :as radio-button.attributes]
               [pretty-inputs.radio-button.prototypes :as radio-button.prototypes]
               [pretty-presets.engine.api :as pretty-presets.engine]
-              [reagent.api                           :as reagent]))
+              [reagent.api                           :as reagent]
+              [metamorphic-content.api :as metamorphic-content]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -20,19 +20,20 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
+  ; @param (integer) option-dex
   ; @param (*) option
-  [button-id button-props option]
-  [:button (radio-button.attributes/radio-button-option-attributes button-id button-props option)
-           [:div (radio-button.attributes/radio-button-option-button-attributes button-id button-props option)
-                 (if (pretty-inputs.engine/input-option-selected? button-id button-props option)
-                     [:div (radio-button.attributes/radio-button-option-thumb-attributes button-id button-props option)])]
+  [button-id button-props option-dex option]
+  [:button (radio-button.attributes/radio-button-option-attributes button-id button-props option-dex option)
+           [:div (radio-button.attributes/radio-button-option-button-attributes button-id button-props option-dex option)
+                 (if (pretty-inputs.engine/input-option-selected? button-id button-props option-dex option)
+                     [:div (radio-button.attributes/radio-button-option-thumb-attributes button-id button-props option-dex option)])]
            [:div {:class :pi-radio-button--option-content}
-                 (if-some [option-label (pretty-inputs.engine/get-input-option-label button-id button-props option)]
-                          [:div (radio-button.attributes/radio-button-option-label-attributes button-id button-props option)
-                                [metamorphic-content/compose option-label]])
-                 (if-some [option-helper (pretty-inputs.engine/get-input-option-helper button-id button-props option)]
-                          [:div (radio-button.attributes/radio-button-option-helper-attributes button-id button-props option)
-                                [metamorphic-content/compose option-helper]])]])
+                 (if-some [option-label (pretty-inputs.engine/get-input-option-label button-id button-props option-dex option)]
+                          [:div (radio-button.attributes/radio-button-option-label-attributes button-id button-props option-dex option)
+                                (-> option-label)])
+                 (if-some [option-helper (pretty-inputs.engine/get-input-option-helper button-id button-props option-dex option)]
+                          [:div (radio-button.attributes/radio-button-option-helper-attributes button-id button-props option-dex option)
+                                (-> option-helper)])]])
 
 (defn- radio-button-option-list
   ; @ignore
@@ -41,9 +42,9 @@
   ; @param (map) button-props
   ; {:placeholder (metamorphic-content)(opt)}
   [button-id {:keys [placeholder] :as button-props}]
-  (letfn [(f0 [option] [radio-button-option button-id button-props option])]
+  (letfn [(f0 [option-dex option] [radio-button-option button-id button-props option-dex option])]
          (let [options (pretty-inputs.engine/get-input-options button-id button-props)]
-              (cond (-> options vector/not-empty?) (hiccup/put-with [:<>] options f0)
+              (cond (-> options vector/not-empty?) (hiccup/put-with-indexed [:<>] options f0)
                     (-> placeholder) [:div (radio-button.attributes/radio-button-placeholder-attributes button-id button-props)
                                            (metamorphic-content/compose placeholder)]))))
 

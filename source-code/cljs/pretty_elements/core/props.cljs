@@ -306,7 +306,7 @@
   [element-props & [default-props]]
   (-> element-props (utils/use-default-values {:horizontal-align :center
                                                :orientation      :vertical
-                                               :overflow         :visible
+                                               ;:overflow         :visible ; this is the default value, so ...
                                                :vertical-align   :top}
                                               (-> default-props))))
 
@@ -324,7 +324,7 @@
   [element-props & [default-props]]
   (-> element-props (utils/use-default-values {:horizontal-align :center
                                                :orientation      :horizontal
-                                               :overflow         :visible
+                                               ;:overflow         :visible ; this is the default value, so ...
                                                :vertical-align   :center}
                                               (-> default-props))))
 

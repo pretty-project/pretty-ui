@@ -1,53 +1,35 @@
 
 (ns pretty-diagrams.circle-diagram.attributes
-    (:require [fruits.css.api                        :as css]
-              [fruits.math.api                       :as math]
-              [pretty-css.appearance.api             :as pretty-css.appearance]
+    (:require [pretty-css.appearance.api             :as pretty-css.appearance]
               [pretty-css.basic.api                  :as pretty-css.basic]
               [pretty-css.layout.api                 :as pretty-css.layout]
               [pretty-css.svg.api                    :as pretty-css.svg]
-              [pretty-diagrams.circle-diagram.config :as circle-diagram.config]))
+              [pretty-diagrams.circle-diagram.utils :as circle-diagram.utils]
+              [pretty-diagrams.engine.api :as pretty-diagrams.engine]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn diagram-section-attributes
+(defn diagram-datum-attributes
   ; @ignore
   ;
   ; @param (keyword) diagram-id
   ; @param (map) diagram-props
   ; {:diameter (px)
-  ;  :strength (px)
-  ;  :total-value (integer)}
-  ; @param (integer) section-dex
-  ; @param (map) section-props
-  ; {:color (keyword or string)
-  ;  :sum (integer)
-  ;  :value (integer)}
+  ;  :strength (px)}
+  ; @param (integer) datum-dex
+  ; @param (*) datum
   ;
   ; @return (map)
   ; {}
-  [_ {:keys [diameter strength total-value] :as diagram-props} _ {:keys [color sum value]}]
-  (let [x  (/ diameter 2)
-        y  (/ diameter 2)
-        r  (/ (- diameter strength) 2)
-        cf (* 2 r math/PI)
-        value-ratio      (math/percent total-value value)
-        dash-filled      (* cf (/ value-ratio 100))
-        dash-empty       (- cf dash-filled)
-        rotation-percent (math/percent total-value sum)
-        rotation-angle   (math/percent->angle rotation-percent)
-        rotation         (+ rotation-angle circle-diagram.config/ANGLE-CORRECTION)]
-       (-> {:cx x :cy y :r r
-            :class :pd-circle-diagram--section
-            :data-stroke-color color
-            :style {:stroke-dasharray (str dash-filled " " dash-empty)
-                    :stroke-width     (css/px     strength)
-                    :transform        (css/rotate rotation)}}
-
-
-           ; stroke-color (color) és stroke-width (strength)
-           (pretty-css.svg/stroke-attributes diagram-props))))
+  [diagram-id {:keys [diameter strength] :as diagram-props} datum-dex datum]
+  (let [datum-color     (pretty-diagrams.engine/get-diagram-datum-color diagram-id diagram-props datum-dex datum)
+        datum-pattern   (circle-diagram.utils/diagram-datum-pattern     diagram-id diagram-props datum-dex datum)
+        datum-transform (circle-diagram.utils/diagram-datum-transform   diagram-id diagram-props datum-dex datum)]
+       (-> {:class :pd-circle-diagram--datum}
+           (pretty-css.svg/circle-attributes       diagram-props)
+           (pretty-css.layout/transform-attributes {:transform datum-transform})
+           (pretty-css.svg/stroke-attributes       {:stroke-color datum-color :stroke-pattern datum-pattern :stroke-width strength}))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -78,8 +60,9 @@
   ; {:class (keyword or keywords in vector)}
   [_ diagram-props]
   (-> {:class :pd-circle-diagram--body}
-      (pretty-css.basic/style-attributes   diagram-props)
-      (pretty-css.layout/indent-attributes diagram-props)))
+      (pretty-css.basic/style-attributes         diagram-props)
+      (pretty-css.layout/element-size-attributes diagram-props)
+      (pretty-css.layout/indent-attributes       diagram-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -94,7 +77,8 @@
   ; {:class (keyword or keywords in vector)}
   [_ diagram-props]
   (-> {:class :pd-circle-diagram}
-      (pretty-css.appearance/theme-attributes diagram-props)
-      (pretty-css.basic/class-attributes      diagram-props)
-      (pretty-css.basic/state-attributes      diagram-props)
-      (pretty-css.layout/outdent-attributes   diagram-props)))
+      (pretty-css.appearance/theme-attributes    diagram-props)
+      (pretty-css.basic/class-attributes         diagram-props)
+      (pretty-css.basic/state-attributes         diagram-props)
+      (pretty-css.layout/outdent-attributes      diagram-props)
+      (pretty-css.layout/wrapper-size-attributes diagram-props)))

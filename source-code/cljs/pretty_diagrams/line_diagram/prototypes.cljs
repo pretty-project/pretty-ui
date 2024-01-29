@@ -14,14 +14,5 @@
   ; @return (map)
   [diagram-id diagram-props]
   (-> diagram-props (core.props/data-props   {})
-                    (core.props/row-props    {})
+                    (core.props/row-props    {:horizontal-align :left})
                     (core.props/stroke-props {:strength 2})))
-
-
-
-
-;  (merge {:total-value (line-diagram.utils/diagram-props->total-value diagram-props)
-;          :width :auto
-;         (-> diagram-props)
-;         (if strength {:strength (math/between! strength 1 6)}
-;                      {:strength 2})))

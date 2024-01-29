@@ -11,7 +11,7 @@
          bithandshake/cljs-intersection-observer {:git/url "https://github.com/bithandshake/cljs-intersection-observer"
                                                   :sha     "3c012f825d27a095760f1c3f8fb01cb058ebcdf4"}
          bithandshake/cljs-keypress-handler      {:git/url "https://github.com/bithandshake/cljs-keypress-handler"
-                                                  :sha     "9d8970dafa641bb4641a74390b98eb2d1edf17f8"}
+                                                  :sha     "53a07339ad282d84a2a2143d6d0106699c635fb0"}
          bithandshake/cljs-scroll-lock           {:git/url "https://github.com/bithandshake/cljs-scroll-lock"
                                                   :sha     "3c012f825d27a095760f1c3f8fb01cb058ebcdf4"}
          bithandshake/cljs-window-observer       {:git/url "https://github.com/bithandshake/cljs-window-observer"
@@ -26,11 +26,11 @@
                                                   :sha     "3c012f825d27a095760f1c3f8fb01cb058ebcdf4"}
          org.clojure/clojurescript               {:mvn/version "1.10.891"}
          pretty-project/pretty-css               {:git/url "https://github.com/pretty-project/pretty-css"
-                                                  :sha     "1d1f376943e2772f7f14fface03e0f08efeb97c8"}
+                                                  :sha     "809eeeb5c3f3bc716c35391f694264c22c2c3800"}
          pretty-project/pretty-icons             {:git/url "https://github.com/pretty-project/pretty-icons"
-                                                  :sha     "1d1f376943e2772f7f14fface03e0f08efeb97c8"}
+                                                  :sha     "809eeeb5c3f3bc716c35391f694264c22c2c3800"}
          pretty-project/pretty-normalizer        {:git/url "https://github.com/pretty-project/pretty-normalizer"
-                                                  :sha     "1d1f376943e2772f7f14fface03e0f08efeb97c8"}}}
+                                                  :sha     "809eeeb5c3f3bc716c35391f694264c22c2c3800"}}}
 
 
 ; + state-synchronizer

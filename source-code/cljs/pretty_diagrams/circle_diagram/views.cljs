@@ -12,26 +12,25 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- circle-diagram-section
+(defn- circle-diagram-datum
   ; @ignore
   ;
   ; @param (keyword) diagram-id
   ; @param (map) diagram-props
-  ; @param (integer) section-dex
-  ; @param (map) section-props
-  [diagram-id diagram-props section-dex section-props]
-  (let [section-props (circle-diagram.prototypes/section-props-prototype section-dex section-props)]
-       [:circle (circle-diagram.attributes/diagram-section-attributes diagram-id diagram-props section-dex section-props)]))
+  ; @param (integer) datum-dex
+  ; @param (map) datum-props
+  [diagram-id diagram-props datum-dex datum-props]
+  [:circle (circle-diagram.attributes/diagram-datum-attributes diagram-id diagram-props datum-dex datum-props)])
 
-(defn- circle-diagram-section-list
+(defn- circle-diagram-datum-list
   ; @ignore
   ;
   ; @param (keyword) diagram-id
   ; @param (map) diagram-props
-  ; {:sections (maps in vector)}
-  [diagram-id {:keys [sections] :as diagram-props}]
-  (letfn [(f0 [section-dex section-props] [circle-diagram-section diagram-id diagram-props section-dex section-props])]
-         (hiccup/put-with-indexed [:<>] sections f0)))
+  [diagram-id diagram-props]
+  (letfn [(f0 [datum-dex datum] [circle-diagram-datum diagram-id diagram-props datum-dex datum])]
+         (let [data (pretty-diagrams.engine/get-diagram-data diagram-id diagram-props)]
+              (hiccup/put-with-indexed [:<>] data f0))))
 
 (defn- circle-diagram
   ; @ignore
@@ -45,7 +44,7 @@
         [:div (circle-diagram.attributes/diagram-body-attributes diagram-id diagram-props)
               [:div (circle-diagram.attributes/diagram-svg-container-attributes diagram-id diagram-props)
                     [:svg (svg/wrapper-attributes {:height diameter :width diameter})
-                          [circle-diagram-section-list diagram-id diagram-props]]]]])
+                          [circle-diagram-datum-list diagram-id diagram-props]]]]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -79,14 +78,6 @@
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :preset (keyword)(opt)
-  ;  :sections (maps in vector)(opt)
-  ;   [{:color (keyword or string)(opt)
-  ;     :label (metamorphic-content)(opt)
-  ;     :value (integer)(opt)}]
-  ;
-  ; :circle-diameter
-  ; :circle-w
-
   ;  :strength (px)(opt)
   ;  :style (map)(opt)
   ;  :theme (keyword)(opt)}

@@ -2,8 +2,8 @@
 (ns pretty-inputs.checkbox.views
     (:require [fruits.hiccup.api                 :as hiccup]
               [fruits.random.api                 :as random]
+              [metamorphic-content.api :as metamorphic-content]
               [fruits.vector.api                 :as vector]
-              [metamorphic-content.api           :as metamorphic-content]
               [pretty-elements.api               :as pretty-elements]
               [pretty-inputs.engine.api                 :as pretty-inputs.engine]
               [pretty-forms.engine.api                  :as pretty-forms.engine]
@@ -20,19 +20,20 @@
   ;
   ; @param (keyword) checkbox-id
   ; @param (map) checkbox-props
+  ; @param (integer) option-dex
   ; @param (*) option
-  [checkbox-id checkbox-props option]
-  [:button (checkbox.attributes/checkbox-option-attributes checkbox-id checkbox-props option)
-           [:div (checkbox.attributes/checkbox-option-button-attributes checkbox-id checkbox-props option)
-                 (if (pretty-inputs.engine/input-option-selected? checkbox-id checkbox-props option)
-                     [:div (checkbox.attributes/checkbox-option-checkmark-attributes checkbox-id checkbox-props option) :done])]
+  [checkbox-id checkbox-props option-dex option]
+  [:button (checkbox.attributes/checkbox-option-attributes checkbox-id checkbox-props option-dex option)
+           [:div (checkbox.attributes/checkbox-option-button-attributes checkbox-id checkbox-props option-dex option)
+                 (if (pretty-inputs.engine/input-option-selected? checkbox-id checkbox-props option-dex option)
+                     [:div (checkbox.attributes/checkbox-option-checkmark-attributes checkbox-id checkbox-props option-dex option) :done])]
            [:div {:class :pi-checkbox--option-content}
-                 (if-some [option-label (pretty-inputs.engine/get-input-option-label checkbox-id checkbox-props option)]
-                          [:div (checkbox.attributes/checkbox-option-label-attributes checkbox-id checkbox-props option)
-                                [metamorphic-content/compose option-label]])
-                 (if-some [option-helper (pretty-inputs.engine/get-input-option-helper checkbox-id checkbox-props option)]
-                          [:div (checkbox.attributes/checkbox-option-helper-attributes checkbox-id checkbox-props option)
-                                [metamorphic-content/compose option-helper]])]])
+                 (if-some [option-label (pretty-inputs.engine/get-input-option-label checkbox-id checkbox-props option-dex option)]
+                          [:div (checkbox.attributes/checkbox-option-label-attributes checkbox-id checkbox-props option-dex option)
+                                (-> option-label)])
+                 (if-some [option-helper (pretty-inputs.engine/get-input-option-helper checkbox-id checkbox-props option-dex option)]
+                          [:div (checkbox.attributes/checkbox-option-helper-attributes checkbox-id checkbox-props option-dex option)
+                                (-> option-helper)])]])
 
 (defn- checkbox-option-list
   ; @ignore
@@ -41,9 +42,9 @@
   ; @param (map) checkbox-props
   ; {:placeholder (metamorphic-content)(opt)}
   [checkbox-id {:keys [placeholder] :as checkbox-props}]
-  (letfn [(f0 [option] [checkbox-option checkbox-id checkbox-props option])]
+  (letfn [(f0 [option-dex option] [checkbox-option checkbox-id checkbox-props option-dex option])]
          (let [options (pretty-inputs.engine/get-input-options checkbox-id checkbox-props)]
-              (cond (-> options vector/not-empty?) (hiccup/put-with [:<>] options f0)
+              (cond (-> options vector/not-empty?) (hiccup/put-with-indexed [:<>] options f0)
                     (-> placeholder) [:div (checkbox.attributes/checkbox-placeholder-attributes checkbox-id checkbox-props)
                                            (metamorphic-content/compose placeholder)]))))
 

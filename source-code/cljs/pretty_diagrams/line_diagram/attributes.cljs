@@ -1,7 +1,7 @@
 
 (ns pretty-diagrams.line-diagram.attributes
     (:require [fruits.css.api                     :as css]
-              [pretty-css.accessories.api         :as pretty-css.accessories]
+              [fruits.math.api :as math]
               [pretty-css.appearance.api          :as pretty-css.appearance]
               [pretty-css.basic.api               :as pretty-css.basic]
               [pretty-css.layout.api              :as pretty-css.layout]
@@ -21,17 +21,16 @@
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)}
-  [diagram-id {:keys [strength] :as diagram-props} _ datum]
-  (let [datum-color  (pretty-diagrams.engine/get-diagram-datum-color diagram-id diagram-props datum)
-        datum-label  (pretty-diagrams.engine/get-diagram-datum-label diagram-id diagram-props datum)
-        datum-ratio  (pretty-diagrams.engine/get-diagram-datum-ratio diagram-id diagram-props datum)
-        datum-value  (pretty-diagrams.engine/get-diagram-datum-value diagram-id diagram-props datum)
-        datum-height (css/px      strength)
-        datum-width  (css/percent datum-ratio)]
+  [diagram-id {:keys [strength] :as diagram-props} datum-dex datum]
+  (let [data-limit   (pretty-diagrams.engine/get-diagram-data-limit  diagram-id diagram-props)
+        datum-color  (pretty-diagrams.engine/get-diagram-datum-color diagram-id diagram-props datum-dex datum)
+        datum-value  (pretty-diagrams.engine/get-diagram-datum-value diagram-id diagram-props datum-dex datum)
+        datum-ratio  (math/percent data-limit datum-value)
+        datum-height (css/px       strength)
+        datum-width  (css/percent  datum-ratio)]
        (-> {:class :pd-line-diagram--datum}
-           (pretty-css.accessories/badge-attributes     {:badge-content datum-label :badge-position :left :badge-color :highlight})
-           (pretty-css.appearance/background-attributes {:fill-color    datum-color})
-           (pretty-css.layout/block-size-attributes     {:height        datum-height :width datum-width}))))
+           (pretty-css.appearance/background-attributes {:fill-color datum-color})
+           (pretty-css.layout/block-size-attributes     {:height     datum-height :width datum-width}))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

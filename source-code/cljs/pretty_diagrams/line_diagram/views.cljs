@@ -58,10 +58,11 @@
 (defn diagram
   ; @param (keyword)(opt) diagram-id
   ; @param (map) diagram-props
-  ; {:disabled? (boolean)(opt)
+  ; {:class (keyword or keywords in vector)(opt)
   ;  :datum-color-f (function)(opt)
   ;  :datum-label-f (function)(opt)
   ;  :datum-value-f (function)(opt)
+  ;  :disabled? (boolean)(opt)
   ;  :get-data-f (function)(opt)
   ;  :height (keyword, px or string)(opt)
   ;  :indent (map)(opt)

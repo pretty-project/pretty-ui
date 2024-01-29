@@ -36,10 +36,11 @@
   ;
   ; @param (keyword) switch-id
   ; @param (map) switch-props
+  ; @param (integer) option-dex
   ; @param (*) option
   ;
   ; @return (map)
-  [_ _ _]
+  [_ _ _ _]
   {:class               :pi-switch--option-helper
    :data-font-size      :xs
    :data-letter-spacing :auto
@@ -52,11 +53,12 @@
   ; @param (keyword) switch-id
   ; @param (map) switch-props
   ; {:font-size (keyword, px or string)}
+  ; @param (integer) option-dex
   ; @param (*) option
   ;
   ; @return (map)
   ; {}
-  [_ {:keys [font-size] :as switch-props} _]
+  [_ {:keys [font-size] :as switch-props} _ _]
   (-> {:class               :pi-switch--option-label
        :data-font-size      font-size
        :data-font-weight    :medium
@@ -69,11 +71,12 @@
   ;
   ; @param (keyword) switch-id
   ; @param (map) switch-props
+  ; @param (integer) option-dex
   ; @param (*) option
   ;
   ; @return (map)
   ; {}
-  [_ switch-props _]
+  [_ switch-props _ _]
   (-> {:class :pi-switch--option-thumb}
       (pretty-css.appearance/adaptive-border-attributes switch-props 0.75)))
 
@@ -82,12 +85,13 @@
   ;
   ; @param (keyword) switch-id
   ; @param (map) switch-props
+  ; @param (integer) option-dex
   ; @param (*) option
   ;
   ; @return (map)
   ; {}
-  [switch-id switch-props option]
-  (let [option-color (pretty-inputs.engine/get-input-option-color switch-id switch-props option)]
+  [switch-id switch-props option-dex option]
+  (let [option-color (pretty-inputs.engine/get-input-option-color switch-id switch-props option-dex option)]
        (-> {:class :pi-switch--option-track}
            (pretty-css.appearance/background-attributes {:fill-color option-color})
            (pretty-css.appearance/border-attributes switch-props))))
@@ -98,15 +102,16 @@
   ; @param (keyword) switch-id
   ; @param (map) switch-props
   ; {:disabled? (boolean)(opt)}
+  ; @param (integer) option-dex
   ; @param (*) option
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  :data-switched (boolean)
   ;  :disabled (boolean)}
-  [switch-id {:keys [disabled?] :as switch-props} option]
-  (let [option-selected? (pretty-inputs.engine/input-option-selected? switch-id switch-props option)
-        on-click-f       (fn [_] (pretty-inputs.engine/select-input-option! switch-id switch-props option))]
+  [switch-id {:keys [disabled?] :as switch-props} option-dex option]
+  (let [option-selected? (pretty-inputs.engine/input-option-selected? switch-id switch-props option-dex option)
+        on-click-f       (fn [_] (pretty-inputs.engine/select-input-option! switch-id switch-props option-dex option))]
        (-> {:class         :pi-switch--option
             :data-switched option-selected?
             :disabled      disabled?}

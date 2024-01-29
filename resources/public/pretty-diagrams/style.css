@@ -16,10 +16,7 @@
 
 /*** Section ***/
 
-.pd-circle-diagram--section {
-  /* When using the transition property the animations got lagged :(
- -transition: stroke-dasharray .5s ease-out; */
-
+.pd-circle-diagram--datum {
   fill: transparent;
   transform-origin: center;
 }

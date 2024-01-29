@@ -3,12 +3,12 @@
     (:require [fruits.hiccup.api               :as hiccup]
               [fruits.random.api               :as random]
               [fruits.vector.api               :as vector]
-              [metamorphic-content.api         :as metamorphic-content]
               [pretty-elements.api             :as pretty-elements]
               [pretty-inputs.engine.api               :as pretty-inputs.engine]
               [pretty-forms.engine.api                :as pretty-forms.engine]
               [pretty-inputs.switch.attributes :as switch.attributes]
               [pretty-inputs.switch.prototypes :as switch.prototypes]
+              [metamorphic-content.api         :as metamorphic-content]
               [pretty-presets.engine.api :as pretty-presets.engine]
               [reagent.api                     :as reagent]))
 
@@ -20,18 +20,19 @@
   ;
   ; @param (keyword) switch-id
   ; @param (map) switch-props
+  ; @param (integer) option-dex
   ; @param (*) option
-  [switch-id switch-props option]
-  [:button (switch.attributes/switch-option-attributes switch-id switch-props option)
-           [:div (switch.attributes/switch-option-track-attributes switch-id switch-props option)
-                 [:div (switch.attributes/switch-option-thumb-attributes switch-id switch-props option)]]
+  [switch-id switch-props option-dex option]
+  [:button (switch.attributes/switch-option-attributes switch-id switch-props option-dex option)
+           [:div (switch.attributes/switch-option-track-attributes switch-id switch-props option-dex option)
+                 [:div (switch.attributes/switch-option-thumb-attributes switch-id switch-props option-dex option)]]
            [:div {:class :pi-switch--option-content}
-                 (if-some [option-label (pretty-inputs.engine/get-input-option-label switch-id switch-props option)]
-                          [:div (switch.attributes/switch-option-label-attributes switch-id switch-props option)
-                                [metamorphic-content/compose option-label]])
-                 (if-some [option-helper (pretty-inputs.engine/get-input-option-helper switch-id switch-props option)]
-                          [:div (switch.attributes/switch-option-helper-attributes switch-id switch-props option)
-                                [metamorphic-content/compose option-helper]])]])
+                 (if-some [option-label (pretty-inputs.engine/get-input-option-label switch-id switch-props option-dex option)]
+                          [:div (switch.attributes/switch-option-label-attributes switch-id switch-props option-dex option)
+                                (-> option-label)])
+                 (if-some [option-helper (pretty-inputs.engine/get-input-option-helper switch-id switch-props option-dex option)]
+                          [:div (switch.attributes/switch-option-helper-attributes switch-id switch-props option-dex option)
+                                (-> option-helper)])]])
 
 (defn- switch-option-list
   ; @ignore
@@ -40,9 +41,9 @@
   ; @param (map) switch-props
   ; {:placeholder (metamorphic-content)(opt)}
   [switch-id {:keys [placeholder] :as switch-props}]
-  (letfn [(f0 [option] [switch-option switch-id switch-props option])]
+  (letfn [(f0 [option-dex option] [switch-option switch-id switch-props option-dex option])]
          (let [options (pretty-inputs.engine/get-input-options switch-id switch-props)]
-              (cond (-> options vector/not-empty?) (hiccup/put-with [:<>] options f0)
+              (cond (-> options vector/not-empty?) (hiccup/put-with-indexed [:<>] options f0)
                     (-> placeholder) [:div (switch.attributes/switch-placeholder-attributes switch-id switch-props)
                                            (metamorphic-content/compose placeholder)]))))
 
