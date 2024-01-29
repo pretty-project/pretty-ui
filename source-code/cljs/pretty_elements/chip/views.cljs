@@ -7,7 +7,7 @@
               [pretty-elements.chip.attributes       :as chip.attributes]
               [pretty-elements.chip.prototypes       :as chip.prototypes]
               [pretty-elements.engine.api                     :as pretty-elements.engine]
-              [pretty-presets.api                    :as pretty-presets]
+              [pretty-presets.engine.api :as pretty-presets.engine]
               [reagent.api                           :as reagent]))
 
 ;; ----------------------------------------------------------------------------
@@ -93,7 +93,7 @@
   ([chip-id chip-props]
    ; @note (tutorials#parametering)
    (fn [_ chip-props]
-       (let [chip-props (pretty-presets/apply-preset          chip-props)
+       (let [chip-props (pretty-presets.engine/apply-preset   chip-props)
              chip-props (chip.prototypes/chip-props-prototype chip-props)]
             [element-lifecycles chip-id chip-props]))))
 

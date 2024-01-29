@@ -84,7 +84,7 @@
 ;
 ; @code
 ; (ns my-namespace
-;     (:require [pretty-presets.api :as pretty-presets]))
+;     (:require [pretty-presets.engine.api :as pretty-presets.engine]))
 ;
 ; (pretty-presets/reg-preset! :my-preset
 ;                             {:border-radius {:all :xs}})

@@ -7,7 +7,7 @@
               [pretty-elements.label.env        :as label.env]
               [pretty-elements.label.prototypes :as label.prototypes]
               [pretty-elements.engine.api                :as pretty-elements.engine]
-              [pretty-presets.api               :as pretty-presets]
+              [pretty-presets.engine.api :as pretty-presets.engine]
               [reagent.api                      :as reagent]))
 
 ;; ----------------------------------------------------------------------------
@@ -208,6 +208,6 @@
   ([label-id label-props]
    ; @note (tutorials#parametering)
    (fn [_ label-props]
-       (let [label-props (pretty-presets/apply-preset            label-props)
+       (let [label-props (pretty-presets.engine/apply-preset     label-props)
              label-props (label.prototypes/label-props-prototype label-props)]
             [element-lifecycles label-id label-props]))))

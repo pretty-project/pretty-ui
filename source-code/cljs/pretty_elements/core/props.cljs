@@ -191,7 +191,7 @@
   ; @ignore
   ;
   ; @description
-  ; Composes the 'content' or 'placeholder' values (if any) in the given 'element-props' map.
+  ; Composes the 'content' or 'placeholder' value (if any) in the given 'element-props' map.
   ;
   ; @param (map) element-props
   ; {}
@@ -208,7 +208,7 @@
   ; @ignore
   ;
   ; @description
-  ; Composes the 'label' or 'placeholder' values (if any) in the given 'element-props' map.
+  ; Composes the 'label' or 'placeholder' value (if any) in the given 'element-props' map.
   ;
   ; @param (map) element-props
   ; {}

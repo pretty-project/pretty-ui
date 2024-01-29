@@ -5,7 +5,7 @@
               [pretty-layouts.engine.api                       :as pretty-layouts.engine]
               [pretty-layouts.plain-surface.attributes :as plain-surface.attributes]
               [pretty-layouts.plain-surface.prototypes :as plain-surface.prototypes]
-              [pretty-presets.api                      :as pretty-presets]
+              [pretty-presets.engine.api :as pretty-presets.engine]
               [re-frame.api                            :as r]
               [reagent.api                             :as reagent]))
 
@@ -64,6 +64,6 @@
   ([surface-id surface-props]
    ; @note (tutorials#parametering)
    (fn [_ surface-props]
-       (let [surface-props (pretty-presets/apply-preset                      surface-props)
+       (let [surface-props (pretty-presets.engine/apply-preset               surface-props)
              surface-props (plain-surface.prototypes/surface-props-prototype surface-props)]
             [layout-lifecycles surface-id surface-props]))))

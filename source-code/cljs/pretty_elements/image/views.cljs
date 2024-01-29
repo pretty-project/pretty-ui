@@ -4,7 +4,7 @@
               [pretty-elements.image.attributes :as image.attributes]
               [pretty-elements.image.prototypes :as image.prototypes]
               [pretty-elements.engine.api                :as pretty-elements.engine]
-              [pretty-presets.api               :as pretty-presets]
+              [pretty-presets.engine.api :as pretty-presets.engine]
               [reagent.api                      :as reagent]))
 
 ;; ----------------------------------------------------------------------------
@@ -75,6 +75,6 @@
   ([image-id image-props]
    ; @note (tutorials#parametering)
    (fn [_ image-props]
-       (let [image-props (pretty-presets/apply-preset image-props)]
+       (let [image-props (pretty-presets.engine/apply-preset image-props)]
              ; image-props (image.prototypes/image-props-prototype image-props)
             [element-lifecycles image-id image-props]))))

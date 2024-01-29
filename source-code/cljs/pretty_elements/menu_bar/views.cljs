@@ -6,7 +6,7 @@
               [pretty-elements.menu-bar.attributes :as menu-bar.attributes]
               [pretty-elements.menu-bar.prototypes :as menu-bar.prototypes]
               [pretty-elements.engine.api                   :as pretty-elements.engine]
-              [pretty-presets.api                  :as pretty-presets]
+              [pretty-presets.engine.api :as pretty-presets.engine]
               [reagent.api                         :as reagent]))
 
 ;; ----------------------------------------------------------------------------
@@ -23,7 +23,7 @@
   ;  :label (metamorphic-content)(opt)
   ;  :on-click (function or Re-Frame metamorphic-event)(opt)}
   [bar-id bar-props {:keys [href icon label on-click] :as item-props}]
-  (let [item-props (pretty-presets/apply-preset                        item-props)
+  (let [item-props (pretty-presets.engine/apply-preset                 item-props)
         item-props (menu-bar.prototypes/item-props-prototype bar-props item-props)]
        [:div (menu-bar.attributes/menu-item-attributes bar-id bar-props item-props)
              [(cond href :a on-click :button :else :div)
@@ -144,6 +144,6 @@
   ([bar-id bar-props]
    ; @note (tutorials#parametering)
    (fn [_ bar-props]
-       (let [bar-props (pretty-presets/apply-preset             bar-props)
+       (let [bar-props (pretty-presets.engine/apply-preset      bar-props)
              bar-props (menu-bar.prototypes/bar-props-prototype bar-props)]
             [element-lifecycles bar-id bar-props]))))

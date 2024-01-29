@@ -5,11 +5,11 @@
               [metamorphic-content.api             :as metamorphic-content]
               [pretty-elements.api                 :as pretty-elements]
               [pretty-inputs.engine.api                   :as pretty-inputs.engine]
-              [pretty-forms.api                    :as pretty-forms]
+              [pretty-forms.engine.api                    :as pretty-forms.engine]
               [pretty-inputs.text-field.attributes :as text-field.attributes]
               [pretty-inputs.text-field.env        :as text-field.env]
               [pretty-inputs.text-field.prototypes :as text-field.prototypes]
-              [pretty-presets.api                  :as pretty-presets]
+              [pretty-presets.engine.api :as pretty-presets.engine]
               [reagent.api                         :as reagent]))
 
 ;; ----------------------------------------------------------------------------
@@ -62,7 +62,7 @@
   [:div (text-field.attributes/field-attributes field-id field-props)
         (if-let [label-props (pretty-inputs.engine/input-label-props field-id field-props)]
                 [pretty-elements/label label-props])
-        [pretty-forms/invalid-message            field-id field-props]
+        [pretty-forms.engine/invalid-message     field-id field-props]
         [pretty-inputs.engine/input-synchronizer field-id field-props]
         [:div (text-field.attributes/field-body-attributes field-id field-props)
               [field-start-adornments field-id field-props]
@@ -175,6 +175,6 @@
   ([field-id field-props]
    ; @note (tutorials#parametering)
    (fn [_ field-props]
-       (let [field-props (pretty-presets/apply-preset                          field-props)
+       (let [field-props (pretty-presets.engine/apply-preset                   field-props)
              field-props (text-field.prototypes/field-props-prototype field-id field-props)]
             [input-lifecycles field-id field-props]))))

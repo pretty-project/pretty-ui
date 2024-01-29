@@ -1,7 +1,8 @@
 
 (ns pretty-diagrams.core.props
     (:require [pretty-elements.core.props]
-              [fruits.noop.api :refer [none return]]))
+              [fruits.noop.api :refer [none return]]
+              [pretty-defaults.utils :as utils]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -24,10 +25,11 @@
   ; @return (map)
   ; {}
   [diagram-props & [default-props]]
-  (-> element-props (utils/use-default-values {:data-color-f none
-                                               :data-label-f none
-                                               :data-value-f return}
+  (-> diagram-props (utils/use-default-values {:datum-color-f none
+                                               :datum-label-f none
+                                               :datum-value-f return}
                                               (-> default-props))))
+
 (defn stroke-props
   ; @ignore
   ;
@@ -39,4 +41,6 @@
   ;
   ; @return (map)
   ; {}
-  [diagram-props & [default-props]])
+  [diagram-props & [default-props]]
+  (-> diagram-props (utils/use-default-values {}
+                                              (-> default-props))))

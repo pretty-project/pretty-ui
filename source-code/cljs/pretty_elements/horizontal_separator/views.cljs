@@ -5,7 +5,7 @@
               [pretty-elements.horizontal-separator.attributes :as horizontal-separator.attributes]
               [pretty-elements.horizontal-separator.prototypes :as horizontal-separator.prototypes]
               [pretty-elements.engine.api                               :as pretty-elements.engine]
-              [pretty-presets.api                              :as pretty-presets]
+              [pretty-presets.engine.api :as pretty-presets.engine]
               [reagent.api                                     :as reagent]))
 
 ;; ----------------------------------------------------------------------------
@@ -69,6 +69,6 @@
   ([separator-id separator-props]
    ; @note (tutorials#parametering)
    (fn [_ separator-props]
-       (let [separator-props (pretty-presets/apply-preset                               separator-props)
+       (let [separator-props (pretty-presets.engine/apply-preset                        separator-props)
              separator-props (horizontal-separator.prototypes/separator-props-prototype separator-props)]
             [element-lifecycles separator-id separator-props]))))

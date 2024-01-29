@@ -6,7 +6,7 @@
               [pretty-elements.breadcrumbs.prototypes :as breadcrumbs.prototypes]
               [pretty-elements.button.views           :as button.views]
               [pretty-elements.engine.api                      :as pretty-elements.engine]
-              [pretty-presets.api                     :as pretty-presets]
+              [pretty-presets.engine.api :as pretty-presets.engine]
               [reagent.api                            :as reagent]))
 
 ;; ----------------------------------------------------------------------------
@@ -72,6 +72,6 @@
   ([breadcrumbs-id breadcrumbs-props]
    ; @note (tutorials#parametering)
    (fn [_ breadcrumbs-props]
-       (let [breadcrumbs-props (pretty-presets/apply-preset                        breadcrumbs-id breadcrumbs-props)
+       (let [breadcrumbs-props (pretty-presets.engine/apply-preset                 breadcrumbs-id breadcrumbs-props)
              breadcrumbs-props (breadcrumbs.prototypes/breadcrumbs-props-prototype breadcrumbs-id breadcrumbs-props)]
             [element-lifecycles breadcrumbs-id breadcrumbs-props]))))

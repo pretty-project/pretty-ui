@@ -7,7 +7,7 @@
               [pretty-elements.notification-bubble.attributes :as notification-bubble.attributes]
               [pretty-elements.notification-bubble.prototypes :as notification-bubble.prototypes]
               [pretty-elements.engine.api                              :as pretty-elements.engine]
-              [pretty-presets.api                             :as pretty-presets]
+              [pretty-presets.engine.api :as pretty-presets.engine]
               [reagent.api                                    :as reagent]))
 
 ;; ----------------------------------------------------------------------------
@@ -120,7 +120,7 @@
   ([bubble-id bubble-props]
    ; @note (tutorials#parametering)
    (fn [_ bubble-props]
-       (let [bubble-props (pretty-presets/apply-preset                           bubble-props)
+       (let [bubble-props (pretty-presets.engine/apply-preset                    bubble-props)
              bubble-props (notification-bubble.prototypes/bubble-props-prototype bubble-props)]
             [element-lifecycles bubble-id bubble-props]))))
 

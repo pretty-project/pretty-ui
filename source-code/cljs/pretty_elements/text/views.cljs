@@ -6,7 +6,7 @@
               [pretty-elements.text.attributes :as text.attributes]
               [pretty-elements.text.prototypes :as text.prototypes]
               [pretty-elements.engine.api               :as pretty-elements.engine]
-              [pretty-presets.api              :as pretty-presets]
+              [pretty-presets.engine.api :as pretty-presets.engine]
               [reagent.api                     :as reagent]))
 
 ;; ----------------------------------------------------------------------------
@@ -102,6 +102,6 @@
   ([text-id text-props]
    ; @note (tutorials#parametering)
    (fn [_ text-props]
-       (let [text-props (pretty-presets/apply-preset          text-props)
+       (let [text-props (pretty-presets.engine/apply-preset   text-props)
              text-props (text.prototypes/text-props-prototype text-props)]
             [element-lifecycles text-id text-props]))))

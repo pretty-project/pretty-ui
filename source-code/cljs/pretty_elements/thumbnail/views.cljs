@@ -5,7 +5,7 @@
               [pretty-elements.thumbnail.attributes :as thumbnail.attributes]
               [pretty-elements.thumbnail.prototypes :as thumbnail.prototypes]
               [pretty-elements.engine.api                    :as pretty-elements.engine]
-              [pretty-presets.api                   :as pretty-presets]
+              [pretty-presets.engine.api :as pretty-presets.engine]
               [reagent.api                          :as reagent]))
 
 ;; ----------------------------------------------------------------------------
@@ -93,6 +93,6 @@
   ([thumbnail-id thumbnail-props]
    ; @note (tutorials#parametering)
    (fn [_ thumbnail-props]
-       (let [thumbnail-props (pretty-presets/apply-preset                    thumbnail-props)
+       (let [thumbnail-props (pretty-presets.engine/apply-preset             thumbnail-props)
              thumbnail-props (thumbnail.prototypes/thumbnail-props-prototype thumbnail-props)]
             [element-lifecycles thumbnail-id thumbnail-props]))))

@@ -1,23 +1,6 @@
 
 (ns pretty-diagrams.line-diagram.prototypes
-    (:require [fruits.math.api                    :as math]
-              [pretty-defaults.api                :as pretty-defaults]
-              [pretty-diagrams.engine.api                :as pretty-diagrams.engine]
-              [pretty-diagrams.line-diagram.utils :as line-diagram.utils]
-              [pretty-diagrams.core.props :as core.props]))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn section-props-prototype
-  ; @ignore
-  ;
-  ; @param (map) section-props
-  ;
-  ; @return (map)
-  ; {:color (keyword or string)}
-  [section-props]
-  (-> section-props (pretty-defaults/use-default-values {:color :primary})))
+    (:require [pretty-diagrams.core.props :as core.props]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -30,7 +13,9 @@
   ;
   ; @return (map)
   [diagram-id diagram-props]
-  (-> diagram-props (core.props/row-props {})))
+  (-> diagram-props (core.props/data-props   {})
+                    (core.props/row-props    {})
+                    (core.props/stroke-props {:strength 2})))
 
 
 

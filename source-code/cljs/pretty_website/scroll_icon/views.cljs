@@ -2,7 +2,7 @@
 (ns pretty-website.scroll-icon.views
     (:require [fruits.random.api                     :as random]
               [pretty-elements.engine.api                     :as pretty-elements.engine]
-              [pretty-presets.api                    :as pretty-presets]
+              [pretty-presets.engine.api :as pretty-presets.engine]
               [pretty-website.scroll-icon.attributes :as scroll-icon.attributes]
               [pretty-website.scroll-icon.prototypes :as scroll-icon.prototypes]
               [pretty-website.scroll-sensor.views    :as scroll-sensor.views]
@@ -58,6 +58,6 @@
   ([icon-id icon-props]
    ; @note (tutorials#parametering)
    (fn [_ icon-props]
-       (let [icon-props (pretty-presets/apply-preset                 icon-props)
+       (let [icon-props (pretty-presets.engine/apply-preset          icon-props)
              icon-props (scroll-icon.prototypes/icon-props-prototype icon-props)]
             [component-lifecycles icon-id icon-props]))))

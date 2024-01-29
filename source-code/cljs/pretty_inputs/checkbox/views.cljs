@@ -6,10 +6,10 @@
               [metamorphic-content.api           :as metamorphic-content]
               [pretty-elements.api               :as pretty-elements]
               [pretty-inputs.engine.api                 :as pretty-inputs.engine]
-              [pretty-forms.api                  :as pretty-forms]
+              [pretty-forms.engine.api                  :as pretty-forms.engine]
               [pretty-inputs.checkbox.attributes :as checkbox.attributes]
               [pretty-inputs.checkbox.prototypes :as checkbox.prototypes]
-              [pretty-presets.api                :as pretty-presets]
+              [pretty-presets.engine.api :as pretty-presets.engine]
               [reagent.api                       :as reagent]))
 
 ;; ----------------------------------------------------------------------------
@@ -56,7 +56,7 @@
   [:div (checkbox.attributes/checkbox-attributes checkbox-id checkbox-props)
         (if-let [label-props (pretty-inputs.engine/input-label-props checkbox-id checkbox-props)]
                 [pretty-elements/label label-props])
-        [pretty-forms/invalid-message            checkbox-id checkbox-props]
+        [pretty-forms.engine/invalid-message     checkbox-id checkbox-props]
         [pretty-inputs.engine/input-synchronizer checkbox-id checkbox-props]
         [:div (checkbox.attributes/checkbox-body-attributes checkbox-id checkbox-props)
               [checkbox-option-list                         checkbox-id checkbox-props]]])
@@ -139,6 +139,6 @@
   ([checkbox-id checkbox-props]
    ; @note (tutorials#parametering)
    (fn [_ checkbox-props]
-       (let [checkbox-props (pretty-presets/apply-preset                  checkbox-props)
+       (let [checkbox-props (pretty-presets.engine/apply-preset           checkbox-props)
              checkbox-props (checkbox.prototypes/checkbox-props-prototype checkbox-id checkbox-props)]
             [input-lifecycles checkbox-id checkbox-props]))))

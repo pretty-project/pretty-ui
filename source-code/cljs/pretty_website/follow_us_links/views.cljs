@@ -3,7 +3,7 @@
     (:require [fruits.hiccup.api                         :as hiccup]
               [fruits.random.api                         :as random]
               [pretty-elements.engine.api                         :as pretty-elements.engine]
-              [pretty-presets.api                        :as pretty-presets]
+              [pretty-presets.engine.api :as pretty-presets.engine]
               [pretty-website.follow-us-links.attributes :as follow-us-links.attributes]
               [pretty-website.follow-us-links.prototypes :as follow-us-links.prototypes]
               [reagent.api                               :as reagent]))
@@ -76,6 +76,6 @@
   ([links-id links-props]
    ; @note (tutorials#parametering)
    (fn [_ links-props]
-       (let [links-props (pretty-presets/apply-preset links-props)]
+       (let [links-props (pretty-presets.engine/apply-preset links-props)]
              ; links-props (follow-us-links.prototypes/links-props-prototype links-props)
             [component-lifecycles links-id links-props]))))

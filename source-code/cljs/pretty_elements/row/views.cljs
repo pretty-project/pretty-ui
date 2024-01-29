@@ -5,7 +5,7 @@
               [pretty-elements.row.attributes :as row.attributes]
               [pretty-elements.row.prototypes :as row.prototypes]
               [pretty-elements.engine.api              :as pretty-elements.engine]
-              [pretty-presets.api             :as pretty-presets]
+              [pretty-presets.engine.api :as pretty-presets.engine]
               [reagent.api                    :as reagent]))
 
 ;; ----------------------------------------------------------------------------
@@ -82,6 +82,6 @@
   ([row-id row-props]
    ; @note (tutorials#parametering)
    (fn [_ row-props]
-       (let [row-props (pretty-presets/apply-preset        row-props)
+       (let [row-props (pretty-presets.engine/apply-preset row-props)
              row-props (row.prototypes/row-props-prototype row-props)]
             [element-lifecycles row-id row-props]))))

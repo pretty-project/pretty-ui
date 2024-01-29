@@ -6,7 +6,7 @@
               [pretty-elements.data-table.attributes :as data-table.attributes]
               [pretty-elements.data-table.prototypes :as data-table.prototypes]
               [pretty-elements.engine.api                     :as pretty-elements.engine]
-              [pretty-presets.api                    :as pretty-presets]
+              [pretty-presets.engine.api :as pretty-presets.engine]
               [reagent.api                           :as reagent]))
 
 ;; ----------------------------------------------------------------------------
@@ -21,7 +21,7 @@
   ; {:content (metamorphic-content)(opt)
   ;  :placeholder (metamorphic-content)(opt)}
   [table-id table-props {:keys [content placeholder] :as cell-props}]
-  (let [cell-props (pretty-presets/apply-preset                cell-props)
+  (let [cell-props (pretty-presets.engine/apply-preset         cell-props)
         cell-props (data-table.prototypes/cell-props-prototype cell-props)]
        [:div (data-table.attributes/table-cell-attributes table-id table-props cell-props)
              [metamorphic-content/compose content placeholder]]))
@@ -35,7 +35,7 @@
   ; @param (map) column-props
   ; {}
   [table-id table-props {:keys [cells] :as column-props}]
-  (let [column-props (pretty-presets/apply-preset                  column-props)
+  (let [column-props (pretty-presets.engine/apply-preset           column-props)
         column-props (data-table.prototypes/column-props-prototype column-props)]
        [:div (data-table.attributes/table-column-attributes table-id table-props column-props)
              (letfn [(f0 [cell-props] [data-table-cell table-id table-props cell-props])]
@@ -50,7 +50,7 @@
   ; @param (map) row-props
   ; {}
   [table-id table-props {:keys [cells] :as row-props}]
-  (let [row-props (pretty-presets/apply-preset               row-props)
+  (let [row-props (pretty-presets.engine/apply-preset        row-props)
         row-props (data-table.prototypes/row-props-prototype row-props)]
        [:div (data-table.attributes/table-row-attributes table-id table-props row-props)
              (letfn [(f0 [cell-props] [data-table-cell table-id table-props cell-props])]
@@ -149,5 +149,5 @@
    ; @note (tutorials#parametering)
    (fn [_ table-props]
        (let [ ; table-props (data-table.prototypes/table-props-prototype table-props)
-             table-props (pretty-presets/apply-preset     table-props)]
+             table-props (pretty-presets.engine/apply-preset     table-props)]
             [element-lifecycles table-id table-props]))))

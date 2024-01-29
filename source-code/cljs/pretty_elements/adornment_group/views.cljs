@@ -6,7 +6,7 @@
               [pretty-elements.adornment-group.prototypes :as adornment-group.prototypes]
               [pretty-elements.adornment.views            :as adornment.views]
               [pretty-elements.engine.api                          :as pretty-elements.engine]
-              [pretty-presets.api                         :as pretty-presets]
+              [pretty-presets.engine.api :as pretty-presets.engine]
               [reagent.api                                :as reagent]))
 
 ;; ----------------------------------------------------------------------------
@@ -76,6 +76,6 @@
   ([group-id group-props]
    ; @note (tutorials#parametering)
    (fn [_ group-props]
-       (let [group-props (pretty-presets/apply-preset                      group-id group-props)
+       (let [group-props (pretty-presets.engine/apply-preset               group-id group-props)
              group-props (adornment-group.prototypes/group-props-prototype group-id group-props)]
             [element-lifecycles group-id group-props]))))

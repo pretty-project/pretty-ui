@@ -4,7 +4,7 @@
               [pretty-elements.button.attributes :as button.attributes]
               [pretty-elements.button.prototypes :as button.prototypes]
               [pretty-elements.engine.api                 :as pretty-elements.engine]
-              [pretty-presets.api                :as pretty-presets]
+              [pretty-presets.engine.api :as pretty-presets.engine]
               [reagent.api                       :as reagent]))
 
 ;; ----------------------------------------------------------------------------
@@ -121,7 +121,7 @@
   ([button-id button-props]
    ; @note (tutorials#parametering)
    (fn [_ button-props]
-       (let [button-props (pretty-presets/apply-preset                  button-id button-props)
+       (let [button-props (pretty-presets.engine/apply-preset           button-id button-props)
              button-props (button.prototypes/button-props-prototype     button-id button-props)
              button-props (pretty-elements.engine/element-timeout-props button-id button-props)]
             [element-lifecycles button-id button-props]))))

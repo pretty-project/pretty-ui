@@ -6,7 +6,7 @@
               [pretty-elements.expandable.env        :as expandable.env]
               [pretty-elements.expandable.prototypes :as expandable.prototypes]
               [pretty-elements.engine.api                     :as pretty-elements.engine]
-              [pretty-presets.api                    :as pretty-presets]
+              [pretty-presets.engine.api :as pretty-presets.engine]
               [reagent.api                           :as reagent]))
 
 ;; ----------------------------------------------------------------------------
@@ -93,6 +93,6 @@
   ([expandable-id expandable-props]
    ; @note (tutorials#parametering)
    (fn [_ expandable-props]
-       (let [expandable-props (pretty-presets/apply-preset                      expandable-props)
+       (let [expandable-props (pretty-presets.engine/apply-preset               expandable-props)
              expandable-props (expandable.prototypes/expandable-props-prototype expandable-props)]
             [element-lifecycles expandable-id expandable-props]))))

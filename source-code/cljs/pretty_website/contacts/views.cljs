@@ -4,7 +4,7 @@
               [fruits.random.api                  :as random]
               [metamorphic-content.api            :as metamorphic-content]
               [pretty-elements.engine.api                  :as pretty-elements.engine]
-              [pretty-presets.api                 :as pretty-presets]
+              [pretty-presets.engine.api :as pretty-presets.engine]
               [pretty-website.contacts.attributes :as contacts.attributes]
               [pretty-website.contacts.prototypes :as contacts.prototypes]
               [reagent.api                        :as reagent]))
@@ -101,6 +101,6 @@
   ([contacts-id contacts-props]
    ; @note (tutorials#parametering)
    (fn [_ contacts-props]
-       (let [contacts-props (pretty-presets/apply-preset contacts-props)]
+       (let [contacts-props (pretty-presets.engine/apply-preset contacts-props)]
             ; contacts-props (contacts.prototypes/contacts-props-prototype contacts-props)
             [component-lifecycles contacts-id contacts-props]))))

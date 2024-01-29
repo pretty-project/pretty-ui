@@ -6,7 +6,7 @@
               [pretty-elements.content-swapper.attributes :as content-swapper.attributes]
               [pretty-elements.content-swapper.state      :as content-swapper.state]
               [pretty-elements.engine.api                          :as pretty-elements.engine]
-              [pretty-presets.api                         :as pretty-presets]
+              [pretty-presets.engine.api :as pretty-presets.engine]
               [re-frame.api                               :as r]
               [react.api                                  :as react]
               [reagent.api                                :as reagent]))
@@ -78,5 +78,5 @@
    ; @note (tutorials#parametering)
    (fn [_ swapper-props]
        (let [ ; swapper-props (content-swapper.prototypes/swapper-props-prototype swapper-props)
-             swapper-props (pretty-presets/apply-preset swapper-props)]
+             swapper-props (pretty-presets.engine/apply-preset swapper-props)]
             [element-lifecycles swapper-id swapper-props]))))

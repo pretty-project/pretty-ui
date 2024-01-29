@@ -4,7 +4,7 @@
               [pretty-elements.icon.attributes :as icon.attributes]
               [pretty-elements.icon.prototypes :as icon.prototypes]
               [pretty-elements.engine.api               :as pretty-elements.engine]
-              [pretty-presets.api              :as pretty-presets]
+              [pretty-presets.engine.api :as pretty-presets.engine]
               [reagent.api                     :as reagent]))
 
 ;; ----------------------------------------------------------------------------
@@ -64,6 +64,6 @@
   ([icon-id icon-props]
    ; @note (tutorials#parametering)
    (fn [_ icon-props]
-       (let [icon-props (pretty-presets/apply-preset          icon-props)
+       (let [icon-props (pretty-presets.engine/apply-preset   icon-props)
              icon-props (icon.prototypes/icon-props-prototype icon-props)]
             [element-lifecycles icon-id icon-props]))))

@@ -8,7 +8,7 @@
               [pretty-inputs.engine.api                   :as pretty-inputs.engine]
               [pretty-inputs.chip-group.attributes :as chip-group.attributes]
               [pretty-inputs.chip-group.prototypes :as chip-group.prototypes]
-              [pretty-presets.api                  :as pretty-presets]
+              [pretty-presets.engine.api :as pretty-presets.engine]
               [reagent.api                         :as reagent]))
 
 ;; ----------------------------------------------------------------------------
@@ -104,6 +104,6 @@
   ([group-id group-props]
    ; @note (tutorials#parametering)
    (fn [_ group-props]
-       (let [group-props (pretty-presets/apply-preset                 group-props)
+       (let [group-props (pretty-presets.engine/apply-preset          group-props)
              group-props (chip-group.prototypes/group-props-prototype group-props)]
             [input-lifecycles group-id group-props]))))

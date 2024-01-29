@@ -7,7 +7,7 @@
               [pretty-layouts.struct-popup.attributes :as struct-popup.attributes]
               [pretty-layouts.struct-popup.prototypes :as struct-popup.prototypes]
               [pretty-layouts.struct-popup.utils      :as struct-popup.utils]
-              [pretty-presets.api                     :as pretty-presets]
+              [pretty-presets.engine.api :as pretty-presets.engine]
               [re-frame.api                           :as r]
               [reagent.api                            :as reagent]
               [scroll-lock.api                        :as scroll-lock]))
@@ -178,6 +178,6 @@
   ([popup-id popup-props]
    ; @note (tutorials#parametering)
    (fn [_ popup-props]
-       (let [popup-props (pretty-presets/apply-preset                   popup-props)
+       (let [popup-props (pretty-presets.engine/apply-preset            popup-props)
              popup-props (struct-popup.prototypes/popup-props-prototype popup-props)]
             [layout-lifecycles popup-id popup-props]))))

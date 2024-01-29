@@ -1,51 +1,37 @@
 
 (ns pretty-diagrams.line-diagram.attributes
     (:require [fruits.css.api                     :as css]
-              [metamorphic-content.api            :as metamorphic-content]
               [pretty-css.accessories.api         :as pretty-css.accessories]
               [pretty-css.appearance.api          :as pretty-css.appearance]
               [pretty-css.basic.api               :as pretty-css.basic]
               [pretty-css.layout.api              :as pretty-css.layout]
-              [pretty-diagrams.line-diagram.utils :as line-diagram.utils]))
+              [pretty-diagrams.engine.api :as pretty-diagrams.engine]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn diagram-section-attributes
-  ; @ignore
-  ;
-  ; @param (keyword) diagram-id
-  ; @param (map) diagram-props
-  ; @param (map) section-props
-  ; {:color (keyword or string)
-  ;  :label (metamorphic-content)(opt)}
-  ;
-  ; @return (map)
-  ; {:class (keyword or keywords in vector)
-  ;  :style (map)
-  ;   {:width (string)}}
-  [_ diagram-props {:keys [color label] :as section-props}]
-  (let [value-ratio (line-diagram.utils/section-props->value-ratio diagram-props section-props)]
-       (-> {:class :pd-line-diagram--section
-            :style {:width (css/percent value-ratio)
-                    :height (css/px (:strength diagram-props))}}
-           (pretty-css.accessories/badge-attributes     {:badge-content label :badge-position :left :badge-color :highlight})
-           (pretty-css.appearance/background-attributes {:fill-color color}))))
-
-(defn diagram-sections-attributes
+(defn diagram-datum-attributes
   ; @ignore
   ;
   ; @param (keyword) diagram-id
   ; @param (map) diagram-props
   ; {:strength (px)}
+  ; @param (integer) datum-dex
+  ; @param (*) datum
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)
-  ;  :style (map)
-  ;   {:height (string)}}
-  [_ {:keys [strength]}]
-  {:class :pd-line-diagram--sections
-   :style {:height (css/px strength)}})
+  ; {:class (keyword or keywords in vector)}
+  [diagram-id {:keys [strength] :as diagram-props} _ datum]
+  (let [datum-color  (pretty-diagrams.engine/get-diagram-datum-color diagram-id diagram-props datum)
+        datum-label  (pretty-diagrams.engine/get-diagram-datum-label diagram-id diagram-props datum)
+        datum-ratio  (pretty-diagrams.engine/get-diagram-datum-ratio diagram-id diagram-props datum)
+        datum-value  (pretty-diagrams.engine/get-diagram-datum-value diagram-id diagram-props datum)
+        datum-height (css/px      strength)
+        datum-width  (css/percent datum-ratio)]
+       (-> {:class :pd-line-diagram--datum}
+           (pretty-css.accessories/badge-attributes     {:badge-content datum-label :badge-position :left :badge-color :highlight})
+           (pretty-css.appearance/background-attributes {:fill-color    datum-color})
+           (pretty-css.layout/block-size-attributes     {:height        datum-height :width datum-width}))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

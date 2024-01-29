@@ -1,8 +1,8 @@
 
 (ns pretty-website.scroll-sensor.views
     (:require [fruits.random.api                         :as random]
-              [pretty-elements.engine.api                         :as pretty-elements.engine]
-              [pretty-presets.api                        :as pretty-presets]
+              [pretty-elements.engine.api :as pretty-elements.engine]
+              [pretty-presets.engine.api :as pretty-presets.engine]
               [pretty-website.scroll-sensor.attributes   :as scroll-sensor.attributes]
               [pretty-website.scroll-sensor.side-effects :as scroll-sensor.side-effects]
               [reagent.api                               :as reagent]))
@@ -54,6 +54,6 @@
   ([sensor-id sensor-props]
    ; @note (tutorials#parametering)
    (fn [_ sensor-props]
-       (let [sensor-props (pretty-presets/apply-preset sensor-props)]
+       (let [sensor-props (pretty-presets.engine/apply-preset sensor-props)]
              ; sensor-props (scroll-sensor.prototypes/sensor-props-prototype sensor-props)
             [scroll-sensor sensor-id sensor-props]))))

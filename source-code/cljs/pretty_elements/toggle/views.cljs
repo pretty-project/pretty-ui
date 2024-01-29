@@ -5,7 +5,7 @@
               [pretty-elements.toggle.attributes :as toggle.attributes]
               [pretty-elements.toggle.prototypes :as toggle.prototypes]
               [pretty-elements.engine.api                 :as pretty-elements.engine]
-              [pretty-presets.api                :as pretty-presets]
+              [pretty-presets.engine.api :as pretty-presets.engine]
               [reagent.api                       :as reagent]))
 
 ;; ----------------------------------------------------------------------------
@@ -89,6 +89,6 @@
   ([toggle-id toggle-props]
    ; @note (tutorials#parametering)
    (fn [_ toggle-props]
-       (let [toggle-props (pretty-presets/apply-preset                        toggle-props)
+       (let [toggle-props (pretty-presets.engine/apply-preset                 toggle-props)
              toggle-props (toggle.prototypes/toggle-props-prototype toggle-id toggle-props)]
             [element-lifecycles toggle-id toggle-props]))))

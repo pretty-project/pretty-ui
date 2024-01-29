@@ -3,7 +3,7 @@
     (:require [fruits.random.api                    :as random]
               [pretty-elements.api                  :as pretty-elements]
               [pretty-elements.engine.api                    :as pretty-elements.engine]
-              [pretty-presets.api                   :as pretty-presets]
+              [pretty-presets.engine.api :as pretty-presets.engine]
               [pretty-website.multi-menu.attributes :as multi-menu.attributes]
               [pretty-website.multi-menu.prototypes :as multi-menu.prototypes]
               [pretty-website.sidebar.views         :as sidebar.views]
@@ -80,6 +80,6 @@
   ([menu-id menu-props]
    ; @note (tutorials#parametering)
    (fn [_ menu-props]
-       (let [menu-props (pretty-presets/apply-preset                menu-props)
+       (let [menu-props (pretty-presets.engine/apply-preset         menu-props)
              menu-props (multi-menu.prototypes/menu-props-prototype menu-props)]
             [component-lifecycles menu-id menu-props]))))

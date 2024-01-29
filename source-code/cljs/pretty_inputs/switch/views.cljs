@@ -6,10 +6,10 @@
               [metamorphic-content.api         :as metamorphic-content]
               [pretty-elements.api             :as pretty-elements]
               [pretty-inputs.engine.api               :as pretty-inputs.engine]
-              [pretty-forms.api                :as pretty-forms]
+              [pretty-forms.engine.api                :as pretty-forms.engine]
               [pretty-inputs.switch.attributes :as switch.attributes]
               [pretty-inputs.switch.prototypes :as switch.prototypes]
-              [pretty-presets.api              :as pretty-presets]
+              [pretty-presets.engine.api :as pretty-presets.engine]
               [reagent.api                     :as reagent]))
 
 ;; ----------------------------------------------------------------------------
@@ -55,7 +55,7 @@
   [:div (switch.attributes/switch-attributes switch-id switch-props)
         (if-let [label-props (pretty-inputs.engine/input-label-props switch-id switch-props)]
                 [pretty-elements/label label-props])
-        [pretty-forms/invalid-message            switch-id switch-props]
+        [pretty-forms.engine/invalid-message     switch-id switch-props]
         [pretty-inputs.engine/input-synchronizer switch-id switch-props]
         [:div (switch.attributes/switch-body-attributes switch-id switch-props)
               [switch-option-list                       switch-id switch-props]]])
@@ -140,6 +140,6 @@
   ([switch-id switch-props]
    ; @note (tutorials#parametering)
    (fn [_ switch-props]
-       (let [switch-props (pretty-presets/apply-preset                        switch-props)
+       (let [switch-props (pretty-presets.engine/apply-preset                 switch-props)
              switch-props (switch.prototypes/switch-props-prototype switch-id switch-props)]
             [input-lifecycles switch-id switch-props]))))

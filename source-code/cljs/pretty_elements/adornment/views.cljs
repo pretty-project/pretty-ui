@@ -4,7 +4,7 @@
               [pretty-elements.adornment.attributes :as adornment.attributes]
               [pretty-elements.adornment.prototypes :as adornment.prototypes]
               [pretty-elements.engine.api                    :as pretty-elements.engine]
-              [pretty-presets.api                   :as pretty-presets]
+              [pretty-presets.engine.api :as pretty-presets.engine]
               [reagent.api                          :as reagent]))
 
 ;; ----------------------------------------------------------------------------
@@ -104,7 +104,7 @@
   ([adornment-id adornment-props]
    ; @note (tutorials#parametering)
    (fn [_ adornment-props]
-       (let [adornment-props (pretty-presets/apply-preset                    adornment-id adornment-props)
+       (let [adornment-props (pretty-presets.engine/apply-preset             adornment-id adornment-props)
              adornment-props (adornment.prototypes/adornment-props-prototype adornment-id adornment-props)
              adornment-props (pretty-elements.engine/element-timeout-props   adornment-id adornment-props)]
             [element-lifecycles adornment-id adornment-props]))))

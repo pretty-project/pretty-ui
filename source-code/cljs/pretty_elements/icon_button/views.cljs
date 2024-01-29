@@ -5,7 +5,7 @@
               [pretty-elements.icon-button.attributes :as icon-button.attributes]
               [pretty-elements.icon-button.prototypes :as icon-button.prototypes]
               [pretty-elements.engine.api                      :as pretty-elements.engine]
-              [pretty-presets.api                     :as pretty-presets]
+              [pretty-presets.engine.api :as pretty-presets.engine]
               [re-frame.api                           :as r]
               [reagent.api                            :as reagent]))
 
@@ -106,6 +106,6 @@
   ([button-id button-props]
    ; @note (tutorials#parametering)
    (fn [_ button-props]
-       (let [button-props (pretty-presets/apply-preset                             button-props)
+       (let [button-props (pretty-presets.engine/apply-preset                      button-props)
              button-props (icon-button.prototypes/button-props-prototype button-id button-props)]
             [element-lifecycles button-id button-props]))))

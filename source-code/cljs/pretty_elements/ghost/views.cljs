@@ -4,7 +4,7 @@
               [pretty-elements.ghost.attributes :as ghost.attributes]
               [pretty-elements.ghost.prototypes :as ghost.prototypes]
               [pretty-elements.engine.api                :as pretty-elements.engine]
-              [pretty-presets.api               :as pretty-presets]
+              [pretty-presets.engine.api :as pretty-presets.engine]
               [reagent.api                      :as reagent]))
 
 ;; ----------------------------------------------------------------------------
@@ -65,6 +65,6 @@
   ([ghost-id ghost-props]
    ; @note (tutorials#parametering)
    (fn [_ ghost-props]
-       (let [ghost-props (pretty-presets/apply-preset            ghost-props)
+       (let [ghost-props (pretty-presets.engine/apply-preset     ghost-props)
              ghost-props (ghost.prototypes/ghost-props-prototype ghost-props)]
             [element-lifecycles ghost-id ghost-props]))))

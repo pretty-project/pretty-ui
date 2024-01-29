@@ -4,7 +4,7 @@
               [pretty-elements.vertical-line.attributes :as vertical-line.attributes]
               [pretty-elements.vertical-line.prototypes :as vertical-line.prototypes]
               [pretty-elements.engine.api                        :as pretty-elements.engine]
-              [pretty-presets.api                       :as pretty-presets]
+              [pretty-presets.engine.api :as pretty-presets.engine]
               [reagent.api                              :as reagent]))
 
 ;; ----------------------------------------------------------------------------
@@ -63,6 +63,6 @@
   ([line-id line-props]
    ; @note (tutorials#parametering)
    (fn [_ line-props]
-       (let [line-props (pretty-presets/apply-preset                   line-props)
+       (let [line-props (pretty-presets.engine/apply-preset            line-props)
              line-props (vertical-line.prototypes/line-props-prototype line-props)]
             [element-lifecycles line-id line-props]))))

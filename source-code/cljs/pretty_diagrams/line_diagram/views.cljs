@@ -4,9 +4,9 @@
               [fruits.random.api                       :as random]
               [pretty-diagrams.line-diagram.attributes :as line-diagram.attributes]
               [pretty-diagrams.line-diagram.prototypes :as line-diagram.prototypes]
-              [pretty-diagrams.engine.api                       :as pretty-diagrams.engine]
-              [pretty-presets.api                      :as pretty-presets]
-              [reagent.api                             :as reagent]))
+              [pretty-diagrams.engine.api :as pretty-diagrams.engine]
+              [pretty-presets.engine.api :as pretty-presets.engine]
+              [reagent.api :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -16,9 +16,10 @@
   ;
   ; @param (keyword) diagram-id
   ; @param (map) diagram-props
+  ; @param (integer) datum-dex
   ; @param (*) datum
-  [diagram-id diagram-props datum]
-  [:div (line-diagram.attributes/diagram-datum-attributes diagram-id diagram-props datum)])
+  [diagram-id diagram-props datum-dex datum]
+  [:div (line-diagram.attributes/diagram-datum-attributes diagram-id diagram-props datum-dex datum)])
 
 (defn- line-diagram-datum-list
   ; @ignore
@@ -26,7 +27,7 @@
   ; @param (keyword) diagram-id
   ; @param (map) diagram-props
   [diagram-id diagram-props]
-  (letfn [(f0 [section-dex section-props] [line-diagram-datum diagram-id diagram-props datum])]
+  (letfn [(f0 [datum-dex datum] [line-diagram-datum diagram-id diagram-props datum-dex datum])]
          (let [data (pretty-diagrams.engine/get-diagram-data diagram-id diagram-props)]
               (hiccup/put-with-indexed [:<>] data f0))))
 
@@ -65,30 +66,16 @@
   ;  :height (keyword, px or string)(opt)
   ;  :indent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
+  ;  :max-value (number)(opt)
   ;  :on-mount-f (function)(opt)
   ;  :on-unmount-f (function)(opt)
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :preset (keyword)(opt)
-  ;  :sections (maps in vector)(opt)
-  ;   [{:color (keyword or string)(opt)
-  ;     :label (metamorphic-content)(opt)
-  ;     :value (integer)(opt)}]
   ;  :strength (px)(opt)
-  ;    Default: 2
-  ;    Min: 1
-  ;    Max: 6
   ;  :style (map)(opt)
   ;  :theme (keyword)(opt)
-  ;  :total-value (integer)(opt)
-  ;   Default: Sum of the section values
   ;  :width (keyword, px or string)(opt)}
-  ;
-  ; :get-sections-f
-  ; :section-color-f
-  ; :section-label-f
-  ; :section-value-f
-  ; :strength (px)
   ;
   ; @usage
   ; [line-diagram {...}]
@@ -101,6 +88,7 @@
   ([diagram-id diagram-props]
    ; @note (tutorials#parametering)
    (fn [_ diagram-props]
-       (let [diagram-props (pretty-presets/apply-preset                     diagram-id diagram-props)
-             diagram-props (line-diagram.prototypes/diagram-props-prototype diagram-id diagram-props)]
+       (let [diagram-props (pretty-presets.engine/apply-preset                diagram-id diagram-props)
+             diagram-props (line-diagram.prototypes/diagram-props-prototype   diagram-id diagram-props)
+             diagram-props (pretty-diagrams.engine/calculate-diagram-data-sum diagram-id diagram-props)]
             [diagram-lifecycles diagram-id diagram-props]))))

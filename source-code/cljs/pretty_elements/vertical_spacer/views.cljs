@@ -4,7 +4,7 @@
               [pretty-elements.vertical-spacer.attributes :as vertical-spacer.attributes]
               [pretty-elements.vertical-spacer.prototypes :as vertical-spacer.prototypes]
               [pretty-elements.engine.api                          :as pretty-elements.engine]
-              [pretty-presets.api                         :as pretty-presets]
+              [pretty-presets.engine.api :as pretty-presets.engine]
               [reagent.api                                :as reagent]))
 
 ;; ----------------------------------------------------------------------------
@@ -54,6 +54,6 @@
   ([spacer-id spacer-props]
    ; @note (tutorials#parametering)
    (fn [_ spacer-props]
-       (let [spacer-props (pretty-presets/apply-preset                       spacer-props)
+       (let [spacer-props (pretty-presets.engine/apply-preset                spacer-props)
              spacer-props (vertical-spacer.prototypes/spacer-props-prototype spacer-props)]
             [element-lifecycles spacer-id spacer-props]))))

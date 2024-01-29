@@ -5,7 +5,7 @@
               [pretty-elements.column.attributes :as column.attributes]
               [pretty-elements.column.prototypes :as column.prototypes]
               [pretty-elements.engine.api                 :as pretty-elements.engine]
-              [pretty-presets.api                :as pretty-presets]
+              [pretty-presets.engine.api :as pretty-presets.engine]
               [reagent.api                       :as reagent]))
 
 ;; ----------------------------------------------------------------------------
@@ -82,6 +82,6 @@
   ([column-id column-props]
    ; @note (tutorials#parametering)
    (fn [_ column-props]
-       (let [column-props (pretty-presets/apply-preset              column-props)
+       (let [column-props (pretty-presets.engine/apply-preset       column-props)
              column-props (column.prototypes/column-props-prototype column-props)]
             [element-lifecycles column-id column-props]))))

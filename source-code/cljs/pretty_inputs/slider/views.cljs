@@ -4,7 +4,7 @@
               [pretty-inputs.engine.api               :as pretty-inputs.engine]
               [pretty-inputs.slider.attributes :as slider.attributes]
               [pretty-inputs.slider.prototypes :as slider.prototypes]
-              [pretty-presets.api              :as pretty-presets]
+              [pretty-presets.engine.api :as pretty-presets.engine]
               [re-frame.api                    :as r]
               [reagent.api                     :as reagent]))
 
@@ -78,6 +78,6 @@
   ([slider-id slider-props]
    ; @note (tutorials#parametering)
    (fn [_ slider-props]
-       (let [slider-props (pretty-presets/apply-preset                        slider-props)
+       (let [slider-props (pretty-presets.engine/apply-preset                 slider-props)
              slider-props (slider.prototypes/slider-props-prototype slider-id slider-props)]
             [input-lifecycles slider-id slider-props]))))

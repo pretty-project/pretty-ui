@@ -5,7 +5,7 @@
               [pretty-layouts.engine.api                 :as pretty-layouts.engine]
               [pretty-layouts.sidebar.attributes :as sidebar.attributes]
               [pretty-layouts.sidebar.prototypes :as sidebar.prototypes]
-              [pretty-presets.api                :as pretty-presets]
+              [pretty-presets.engine.api :as pretty-presets.engine]
               [re-frame.api                      :as r]
               [reagent.api                       :as reagent]
               [window-observer.api               :as window-observer]))
@@ -80,6 +80,6 @@
   ([sidebar-id sidebar-props]
    ; @note (tutorials#parametering)
    (fn [_ sidebar-props]
-       (let [sidebar-props (pretty-presets/apply-preset                sidebar-props)
+       (let [sidebar-props (pretty-presets.engine/apply-preset         sidebar-props)
              sidebar-props (sidebar.prototypes/sidebar-props-prototype sidebar-props)]
             [layout-lifecycles sidebar-id sidebar-props]))))

@@ -5,9 +5,9 @@
               [fruits.svg.api                            :as svg]
               [pretty-diagrams.circle-diagram.attributes :as circle-diagram.attributes]
               [pretty-diagrams.circle-diagram.prototypes :as circle-diagram.prototypes]
-              [pretty-diagrams.engine.api                         :as pretty-diagrams.engine]
-              [pretty-presets.api                        :as pretty-presets]
-              [reagent.api                               :as reagent]))
+              [pretty-diagrams.engine.api :as pretty-diagrams.engine]
+              [pretty-presets.engine.api :as pretty-presets.engine]
+              [reagent.api :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -73,6 +73,7 @@
   ;  :get-data-f (function)(opt)
   ;  :indent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
+  ;  :max-value (number)(opt)
   ;  :on-mount-f (function)(opt)
   ;  :on-unmount-f (function)(opt)
   ;  :outdent (map)(opt)
@@ -101,6 +102,7 @@
   ([diagram-id diagram-props]
    ; @note (tutorials#parametering)
    (fn [_ diagram-props]
-       (let [diagram-props (pretty-presets/apply-preset                       diagram-id diagram-props)
-             diagram-props (circle-diagram.prototypes/diagram-props-prototype diagram-id diagram-props)]
+       (let [diagram-props (pretty-presets.engine/apply-preset                diagram-id diagram-props)
+             diagram-props (circle-diagram.prototypes/diagram-props-prototype diagram-id diagram-props)
+             diagram-props (pretty-diagrams.engine/calculate-diagram-data-sum diagram-id diagram-props)]
             [diagram-lifecycles diagram-id diagram-props]))))

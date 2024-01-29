@@ -5,7 +5,7 @@
               [pretty-elements.card.attributes :as card.attributes]
               [pretty-elements.card.prototypes :as card.prototypes]
               [pretty-elements.engine.api               :as pretty-elements.engine]
-              [pretty-presets.api              :as pretty-presets]
+              [pretty-presets.engine.api :as pretty-presets.engine]
               [reagent.api                     :as reagent]))
 
 ;; ----------------------------------------------------------------------------
@@ -101,7 +101,7 @@
   ([card-id card-props]
    ; @note (tutorials#parametering)
    (fn [_ card-props]
-       (let [card-props (pretty-presets/apply-preset          card-props)
+       (let [card-props (pretty-presets.engine/apply-preset   card-props)
              card-props (card.prototypes/card-props-prototype card-props)]
             [element-lifecycles card-id card-props]))))
 

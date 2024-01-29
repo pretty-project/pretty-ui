@@ -5,7 +5,7 @@
               [pretty-elements.horizontal-group.attributes :as horizontal-group.attributes]
               [pretty-elements.horizontal-group.prototypes :as horizontal-group.prototypes]
               [pretty-elements.engine.api                           :as pretty-elements.engine]
-              [pretty-presets.api                          :as pretty-presets]
+              [pretty-presets.engine.api :as pretty-presets.engine]
               [reagent.api                                 :as reagent]))
 
 ;; ----------------------------------------------------------------------------
@@ -70,6 +70,6 @@
   ([group-id group-props]
    ; @note (tutorials#parametering)
    (fn [_ group-props]
-       (let [group-props (pretty-presets/apply-preset group-props)]
+       (let [group-props (pretty-presets.engine/apply-preset group-props)]
              ; group-props (horizontal-group.prototypes/group-props-prototype group-props)
             [element-lifecycles group-id group-props]))))

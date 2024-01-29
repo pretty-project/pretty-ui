@@ -6,13 +6,13 @@
               [metamorphic-content.api         :as metamorphic-content]
               [pretty-elements.api             :as pretty-elements]
               [pretty-inputs.engine.api               :as pretty-inputs.engine]
-              [pretty-forms.api                :as pretty-forms]
+              [pretty-forms.engine.api                :as pretty-forms.engine]
               [pretty-inputs.select.attributes :as select.attributes]
               [pretty-inputs.select.env        :as select.env]
               [pretty-inputs.select.prototypes :as select.prototypes]
               [pretty-inputs.text-field.views  :as text-field.views]
               [pretty-layouts.api              :as pretty-layouts]
-              [pretty-presets.api              :as pretty-presets]
+              [pretty-presets.engine.api :as pretty-presets.engine]
               [reagent.api                     :as reagent]))
 
 ;; ----------------------------------------------------------------------------
@@ -149,7 +149,7 @@
   [:div (select.attributes/select-attributes select-id select-props)
         (if-let [label-props (pretty-inputs.engine/input-label-props select-id select-props)]
                 [pretty-elements/label label-props])
-        [pretty-forms/invalid-message            select-id select-props]
+        [pretty-forms.engine/invalid-message     select-id select-props]
         [pretty-inputs.engine/input-synchronizer select-id select-props]
         [:div (select.attributes/select-body-attributes select-id select-props)
               (case layout :button        [button-layout        select-id select-props]
@@ -227,6 +227,6 @@
   ([select-id select-props]
    ; @note (tutorials#parametering)
    (fn [_ select-props]
-       (let [select-props (pretty-presets/apply-preset              select-props)
+       (let [select-props (pretty-presets.engine/apply-preset       select-props)
              select-props (select.prototypes/select-props-prototype select-props)]
             [input-lifecycles select-id select-props]))))

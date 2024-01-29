@@ -3,7 +3,7 @@
     (:require [fruits.hiccup.api                           :as hiccup]
               [fruits.random.api                           :as random]
               [pretty-elements.engine.api                           :as pretty-elements.engine]
-              [pretty-presets.api                          :as pretty-presets]
+              [pretty-presets.engine.api :as pretty-presets.engine]
               [pretty-website.language-selector.attributes :as language-selector.attributes]
               [pretty-website.language-selector.prototypes :as language-selector.prototypes]
               [reagent.api                                 :as reagent]))
@@ -70,6 +70,6 @@
   ([selector-id selector-props]
    ; @note (tutorials#parametering)
    (fn [_ selector-props]
-       (let [selector-props (pretty-presets/apply-preset                           selector-props)
+       (let [selector-props (pretty-presets.engine/apply-preset                    selector-props)
              selector-props (language-selector.prototypes/selector-props-prototype selector-props)]
             [component-lifecycles selector-id selector-props]))))
