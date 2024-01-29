@@ -175,6 +175,6 @@
   ([field-id field-props]
    ; @note (tutorials#parametering)
    (fn [_ field-props]
-       (let [field-props (pretty-presets.engine/apply-preset                   field-props)
+       (let [field-props (pretty-presets.engine/apply-preset          field-id field-props)
              field-props (text-field.prototypes/field-props-prototype field-id field-props)]
             [input-lifecycles field-id field-props]))))

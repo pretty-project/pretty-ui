@@ -17,12 +17,12 @@
   ; @param (keyword) card-id
   ; @param (map) card-props
   ; {:content (metamorphic-content)(opt)
-  ;  :href (string)(opt)
+  ;  :href-uri (string)(opt)
   ;  :on-click-f (function)(opt)
   ;  :placeholder (metamorphic-content)(opt)}
-  [card-id {:keys [content href on-click-f placeholder] :as card-props}]
+  [card-id {:keys [content href-uri on-click-f placeholder] :as card-props}]
   [:div (card.attributes/card-attributes card-id card-props)
-        [(cond href :a on-click-f :button :else :div)
+        [(cond href-uri :a on-click-f :button :else :div)
          (card.attributes/card-body-attributes card-id card-props)
          [metamorphic-content/compose content placeholder]]])
 
@@ -57,7 +57,6 @@
   ;  :border-width (keyword, px or string)(opt)
   ;  :class (keyword or keywords in vector)(opt)
   ;  :click-effect (keyword)(opt)
-  ;   Default: :opacity (if 'href-uri' or 'on-click-f' is provided)
   ;  :content (metamorphic-content)(opt)
   ;  :cursor (keyword or string)(opt)
   ;  :disabled? (boolean)(opt)
@@ -73,6 +72,7 @@
   ;  :href-uri (string)(opt)
   ;  :indent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
+  ;  :keypress (map)(opt)
   ;  :marker-color (keyword or string)(opt)
   ;  :marker-position (keyword)(opt)
   ;  :max-height (keyword, px or string)(opt)
@@ -80,13 +80,13 @@
   ;  :min-height (keyword, px or string)(opt)
   ;  :min-width (keyword, px or string)(opt)
   ;  :on-click-f (function)(opt)
-  ;  :on-mouse-over-f (function)(opt)
-  ;  :on-right-click-f (function)(opt)
+  ;  :on-click-timeout (ms)(opt)
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :placeholder (metamorphic-content)(opt)
   ;  :preset (keyword)(opt)
   ;  :style (map)(opt)
+  ;  :tab-disabled? (boolean)(opt)
   ;  :theme (keyword)(opt)
   ;  :width (keyword, px or string)(opt)}
   ;
@@ -101,8 +101,7 @@
   ([card-id card-props]
    ; @note (tutorials#parametering)
    (fn [_ card-props]
-       (let [card-props (pretty-presets.engine/apply-preset   card-props)
-             card-props (card.prototypes/card-props-prototype card-props)]
+       (let [card-props (pretty-presets.engine/apply-preset           card-id card-props)
+             card-props (card.prototypes/card-props-prototype         card-id card-props)
+             card-props (pretty-elements.engine/element-timeout-props card-id card-props)]
             [element-lifecycles card-id card-props]))))
-
-            ; on-click-timeout ?

@@ -228,6 +228,6 @@
   ([select-id select-props]
    ; @note (tutorials#parametering)
    (fn [_ select-props]
-       (let [select-props (pretty-presets.engine/apply-preset       select-props)
-             select-props (select.prototypes/select-props-prototype select-props)]
+       (let [select-props (pretty-presets.engine/apply-preset       select-id select-props)
+             select-props (select.prototypes/select-props-prototype select-id select-props)]
             [input-lifecycles select-id select-props]))))

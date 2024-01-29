@@ -17,12 +17,12 @@
   ; @param (keyword) thumbnail-id
   ; @param (map) thumbnail-props
   ; {:background-size (keyword)
-  ;  :href (string)(opt)
+  ;  :href-uri (string)(opt)
   ;  :on-click-f (function)(opt)
   ;  :uri (string)(opt)}
-  [thumbnail-id {:keys [background-size href on-click-f uri] :as thumbnail-props}]
+  [thumbnail-id {:keys [background-size href-uri on-click-f uri] :as thumbnail-props}]
   [:div (thumbnail.attributes/thumbnail-attributes thumbnail-id thumbnail-props)
-        [(cond href :a on-click-f :button :else :div)
+        [(cond href-uri :a on-click-f :button :else :div)
          (thumbnail.attributes/thumbnail-body-attributes thumbnail-id thumbnail-props)
          [:i   {:class :pe-thumbnail--icon :data-icon-family :material-symbols-outlined :data-icon-size :s} :image]
          [:div {:class :pe-thumbnail--image :style {:background-image (css/url uri) :background-size background-size}}]]])
@@ -37,11 +37,11 @@
   ; @param (map) thumbnail-props
   [thumbnail-id thumbnail-props]
   ; @note (tutorials#parametering)
+  ; @note (pretty-elements.adornment.views#8097)
   (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    thumbnail-id thumbnail-props))
                        :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount thumbnail-id thumbnail-props))
+                       :component-did-update   (fn [%]   (pretty-elements.engine/element-did-update   thumbnail-id thumbnail-props %))
                        :reagent-render         (fn [_ thumbnail-props] [thumbnail thumbnail-id thumbnail-props])}))
-                       ; @note (pretty-elements.adornment.views#8097)
-                       ; + did update, keypress?
 
 (defn element
   ; @param (keyword)(opt) thumbnail-id
@@ -60,7 +60,8 @@
   ;  :height (keyword, px or string)(opt)
   ;   Default: :s
   ;  :helper (metamorphic-content)(opt)
-  ;  :href (string)(opt)
+  ;  :href-target (keyword)(opt)
+  ;  :href-uri (string)(opt)
   ;  :icon (keyword)(opt)
   ;   Default: :icon
   ;  :icon-family (keyword)(opt)
@@ -68,19 +69,20 @@
   ;  :indent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :info-text (metamorphic-content)(opt)
+  ;  :keypress (map)(opt)
   ;  :on-click-f (function)(opt)
-  ;  :on-mouse-over-f (function)(opt)
-  ;  :on-right-click-f (function)(opt)
+  ;  :on-click-timeout (ms)(opt)
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :preset (keyword)(opt)
   ;  :style (map)(opt)
-  ;  :target (keyword)(opt)
-  ;   :blank, :self
+  ;  :tab-disabled? (boolean)(opt)
   ;  :theme (keyword)(opt)
   ;  :uri (string)(opt)
   ;  :width (keyword, px or string)(opt)
   ;   Default: :s}
+  ;
+  ; + keypress?
   ;
   ; @usage
   ; [thumbnail {...}]
@@ -93,6 +95,7 @@
   ([thumbnail-id thumbnail-props]
    ; @note (tutorials#parametering)
    (fn [_ thumbnail-props]
-       (let [thumbnail-props (pretty-presets.engine/apply-preset             thumbnail-props)
-             thumbnail-props (thumbnail.prototypes/thumbnail-props-prototype thumbnail-props)]
+       (let [thumbnail-props (pretty-presets.engine/apply-preset             thumbnail-id thumbnail-props)
+             thumbnail-props (thumbnail.prototypes/thumbnail-props-prototype thumbnail-id thumbnail-props)
+             thumbnail-props (pretty-elements.engine/element-timeout-props   thumbnail-id thumbnail-props)]
             [element-lifecycles thumbnail-id thumbnail-props]))))

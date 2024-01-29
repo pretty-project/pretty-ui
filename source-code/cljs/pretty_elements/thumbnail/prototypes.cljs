@@ -8,6 +8,7 @@
 (defn thumbnail-props-prototype
   ; @ignore
   ;
+  ; @param (keyword) thumbnail-id
   ; @param (map) thumbnail-props
   ; {:border-color (keyword or string)(opt)
   ;  :href (string)(opt)
@@ -24,7 +25,7 @@
   ;  :icon-family (keyword)
   ;  :on-mouse-up-f (function)
   ;  :width (keyword, px or string)}
-  [{:keys [border-color href on-click-f] :as thumbnail-props}]
+  [_ {:keys [border-color href on-click-f] :as thumbnail-props}]
   (merge {:background-size :contain
           :height          :s
           :icon            :image

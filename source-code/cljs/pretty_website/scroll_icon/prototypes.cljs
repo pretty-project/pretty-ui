@@ -7,10 +7,11 @@
 (defn icon-props-prototype
   ; @ignore
   ;
+  ; @param (keyword) icon-id
   ; @param (map) icon-props
   ;
   ; @return (map)
   ; {:color (keyword)}
-  [icon-props]
+  [_ icon-props]
   (merge {:color "#FFFFFF"}
          (-> icon-props)))

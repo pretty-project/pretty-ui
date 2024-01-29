@@ -8,6 +8,7 @@
 (defn button-props-prototype
   ; @ignore
   ;
+  ; @param (keyword) button-id
   ; @param (map) button-props
   ;
   ; @return (map)
@@ -22,7 +23,7 @@
   ;  :option-label-f (function)
   ;  :option-value-f (function)
   ;  :orientation (keyword)}
-  [button-props]
+  [_ button-props]
   (merge {:border-color    :default
           :border-position :all
           :border-radius   {:all :m}

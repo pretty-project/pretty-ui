@@ -93,6 +93,6 @@
   ([expandable-id expandable-props]
    ; @note (tutorials#parametering)
    (fn [_ expandable-props]
-       (let [expandable-props (pretty-presets.engine/apply-preset               expandable-props)
-             expandable-props (expandable.prototypes/expandable-props-prototype expandable-props)]
+       (let [expandable-props (pretty-presets.engine/apply-preset               expandable-id expandable-props)
+             expandable-props (expandable.prototypes/expandable-props-prototype expandable-id expandable-props)]
             [element-lifecycles expandable-id expandable-props]))))

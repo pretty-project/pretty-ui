@@ -7,13 +7,14 @@
 (defn ghost-props-prototype
   ; @ignore
   ;
+  ; @param (keyword) ghost-id
   ; @param (map) ghost-props
   ;
   ; @return (map)
   ; {:fill-color (keyword or string)
   ;  :height (keyword, px or string)
   ;  :width (keyword, px or string)}
-  [ghost-props]
+  [_ ghost-props]
   (merge {
 
           :animation-duration 2000

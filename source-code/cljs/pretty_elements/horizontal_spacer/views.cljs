@@ -54,6 +54,6 @@
   ([spacer-id spacer-props]
    ; @note (tutorials#parametering)
    (fn [_ spacer-props]
-       (let [spacer-props (pretty-presets.engine/apply-preset                  spacer-props)
-             spacer-props (horizontal-spacer.prototypes/spacer-props-prototype spacer-props)]
+       (let [spacer-props (pretty-presets.engine/apply-preset                  spacer-id spacer-props)
+             spacer-props (horizontal-spacer.prototypes/spacer-props-prototype spacer-id spacer-props)]
             [element-lifecycles spacer-id spacer-props]))))

@@ -3,6 +3,7 @@
     (:require [fruits.random.api                  :as random]
               [pretty-elements.stepper.attributes :as stepper.attributes]
               [pretty-elements.stepper.prototypes :as stepper.prototypes]
+              [pretty-presets.engine.api                  :as pretty-presets.engine]
               [pretty-elements.engine.api                  :as pretty-elements.engine]
               [reagent.api                        :as reagent]))
 
@@ -51,5 +52,6 @@
   ([stepper-id stepper-props]
    ; @note (tutorials#parametering)
    (fn [_ stepper-props]
-       (let [] ; stepper-props (stepper.prototypes/stepper-props-prototype stepper-props)
+       (let [stepper-props (pretty-presets.engine/apply-preset         stepper-id stepper-props)
+             stepper-props (stepper.prototypes/stepper-props-prototype stepper-id stepper-props)]
             [element-lifecycles stepper-id stepper-props]))))

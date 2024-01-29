@@ -1,5 +1,5 @@
 
-(ns pretty-diagrams.point-diagram.prototypes
+(ns pretty-diagrams.bar-diagram.prototypes
     (:require [pretty-diagrams.core.props :as core.props]))
 
 ;; ----------------------------------------------------------------------------

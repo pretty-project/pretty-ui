@@ -7,7 +7,9 @@
 (defn image-props-prototype
   ; @ignore
   ;
+  ; @param (keyword) image-id
   ; @param (map) image-props
   ;
   ; @return (map)
-  [_])
+  [_ image-props]
+  (-> image-props))

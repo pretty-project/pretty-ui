@@ -75,6 +75,6 @@
   ([image-id image-props]
    ; @note (tutorials#parametering)
    (fn [_ image-props]
-       (let [image-props (pretty-presets.engine/apply-preset image-props)]
-             ; image-props (image.prototypes/image-props-prototype image-props)
+       (let [image-props (pretty-presets.engine/apply-preset     image-id image-props)
+             image-props (image.prototypes/image-props-prototype image-id image-props)]
             [element-lifecycles image-id image-props]))))

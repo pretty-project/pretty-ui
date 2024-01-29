@@ -101,6 +101,7 @@
 (defn select-props-prototype
   ; @ignore
   ;
+  ; @param (keyword) select-id
   ; @param (map) select-props
   ; {:border-color (keyword or string)(opt)}
   ;
@@ -112,7 +113,7 @@
   ;  :option-label-f (function)
   ;  :option-value-f (function)
   ;  :orientation (keyword)}
-  [{:keys [border-color] :as select-props}]
+  [_ {:keys [border-color] :as select-props}]
   (merge {:click-effect    :opacity
           :font-size       :s
           :hover-effect    :opacity

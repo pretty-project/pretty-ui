@@ -7,6 +7,7 @@
 (defn sidebar-props-prototype
   ; @ignore
   ;
+  ; @param (keyword) sidebar-id
   ; @param (map) sidebar-props
   ; {:border-color (keyword or string)(opt)}
   ;
@@ -14,7 +15,7 @@
   ; {:border-width (keyword, px or string)
   ;  :position (keyword)
   ;  :threshold (px)}
-  [{:keys [border-color] :as sidebar-props}]
+  [_ {:keys [border-color] :as sidebar-props}]
   (merge {:position  :left
           :threshold 720}
          (if border-color {:border-width :xxs})

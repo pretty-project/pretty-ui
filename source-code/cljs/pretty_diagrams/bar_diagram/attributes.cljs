@@ -1,5 +1,5 @@
 
-(ns pretty-diagrams.point-diagram.attributes
+(ns pretty-diagrams.bar-diagram.attributes
     (:require [pretty-css.appearance.api :as pretty-css.appearance]
               [pretty-css.basic.api      :as pretty-css.basic]
               [pretty-css.layout.api     :as pretty-css.layout]
@@ -32,7 +32,7 @@
   ; @return (map)
   ; {:class (keyword or keywords in vector)}
   [_ diagram-props]
-  (-> {:class :pd-point-diagram--body}
+  (-> {:class :pd-bar-diagram--body}
       (pretty-css.basic/style-attributes         diagram-props)
       (pretty-css.layout/element-size-attributes diagram-props)
       (pretty-css.layout/indent-attributes       diagram-props)))
@@ -49,7 +49,7 @@
   ; @return (map)
   ; {:class (keyword or keywords in vector)}
   [_ diagram-props]
-  (-> {:class :pd-point-diagram}
+  (-> {:class :pd-bar-diagram}
       (pretty-css.appearance/theme-attributes    diagram-props)
       (pretty-css.basic/class-attributes         diagram-props)
       (pretty-css.basic/state-attributes         diagram-props)

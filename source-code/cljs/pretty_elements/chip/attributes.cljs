@@ -46,8 +46,10 @@
       (pretty-css.layout/element-size-attributes chip-props)
       (pretty-css.control/anchor-attributes         chip-props)
       (pretty-css.layout/indent-attributes       chip-props)
+      (pretty-css.control/focus-attributes         chip-props)
       (pretty-css.control/mouse-event-attributes  chip-props)
-      (pretty-css.basic/style-attributes        chip-props)))
+      (pretty-css.basic/style-attributes        chip-props)
+      (pretty-css.control/tab-attributes           chip-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

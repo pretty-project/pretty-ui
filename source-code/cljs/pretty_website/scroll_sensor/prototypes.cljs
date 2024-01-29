@@ -1,15 +1,15 @@
 
-(ns pretty-elements.horizontal-group.prototypes)
+(ns pretty-website.scroll-sensor.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn group-props-prototype
+(defn sensor-props-prototype
   ; @ignore
   ;
-  ; @param (keyword) group-id
-  ; @param (map) group-props
+  ; @param (keyword) sensor-id
+  ; @param (map) sensor-props
   ;
   ; @return (map)
-  [_ group-props]
-  (-> group-props))
+  [_ sensor-props]
+  (-> sensor-props))

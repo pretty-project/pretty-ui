@@ -7,7 +7,9 @@
 (defn stepper-props-prototype
   ; @ignore
   ;
+  ; @param (keyword) stepper-id
   ; @param (map) stepper-props
   ;
   ; @return (map)
-  [_])
+  [_ stepper-props]
+  (-> stepper-props))

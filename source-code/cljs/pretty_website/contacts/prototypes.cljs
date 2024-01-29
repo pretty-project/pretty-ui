@@ -7,7 +7,9 @@
 (defn contacts-props-prototype
   ; @ignore
   ;
+  ; @param (keyword) contacts-id
   ; @param (map) contacts-props
   ;
   ; @return (map)
-  [_])
+  [_ contacts-props]
+  (-> contacts-props))

@@ -29,6 +29,7 @@
       (pretty-css.appearance/border-attributes     card-props)
       (pretty-css.layout/flex-attributes       card-props)
       (pretty-css.content/cursor-attributes       card-props)
+      (pretty-css.control/focus-attributes         card-props)
       (pretty-css.live/effect-attributes       card-props)
       (pretty-css.layout/element-size-attributes card-props)
       (pretty-css.layout/indent-attributes       card-props)

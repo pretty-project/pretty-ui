@@ -104,6 +104,6 @@
   ([group-id group-props]
    ; @note (tutorials#parametering)
    (fn [_ group-props]
-       (let [group-props (pretty-presets.engine/apply-preset          group-props)
-             group-props (chip-group.prototypes/group-props-prototype group-props)]
+       (let [group-props (pretty-presets.engine/apply-preset          group-id group-props)
+             group-props (chip-group.prototypes/group-props-prototype group-id group-props)]
             [input-lifecycles group-id group-props]))))

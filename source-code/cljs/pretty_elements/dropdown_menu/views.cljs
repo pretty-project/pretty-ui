@@ -7,7 +7,8 @@
               [pretty-elements.dropdown-menu.prototypes :as dropdown-menu.prototypes]
               [pretty-elements.dropdown-menu.state      :as dropdown-menu.state]
               [pretty-elements.menu-bar.views           :as menu-bar.views]
-              [pretty-elements.engine.api                        :as pretty-elements.engine]
+              [pretty-presets.engine.api :as pretty-presets.engine]
+              [pretty-elements.engine.api :as pretty-elements.engine]
               [reagent.api                              :as reagent]))
 
 ;; ----------------------------------------------------------------------------
@@ -74,5 +75,6 @@
   ([menu-id menu-props]
    ; @note (tutorials#parametering)
    (fn [_ menu-props]
-       (let [menu-props (dropdown-menu.prototypes/menu-props-prototype menu-id menu-props)]
+       (let [menu-props (pretty-presets.engine/apply-preset            menu-id menu-props)
+             menu-props (dropdown-menu.prototypes/menu-props-prototype menu-id menu-props)]
             [element-lifecycles menu-id menu-props]))))

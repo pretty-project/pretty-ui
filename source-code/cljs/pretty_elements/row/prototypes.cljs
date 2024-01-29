@@ -7,6 +7,7 @@
 (defn row-props-prototype
   ; @ignore
   ;
+  ; @param (keyword) row-id
   ; @param (map) row-props
   ; {}
   ;
@@ -15,7 +16,7 @@
   ;  :border-width (keyword, px or string)
   ;  :horizontal-align (keyword)
   ;  :vertical-align (keyword)}
-  [{:keys [border-color] :as row-props}]
+  [_ {:keys [border-color] :as row-props}]
   (merge {:horizontal-align    :left
           :vertical-align      :center}
          (if border-color {:border-position :all

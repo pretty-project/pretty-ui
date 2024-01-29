@@ -8,6 +8,7 @@
 (defn checkbox-props-prototype
   ; @ignore
   ;
+  ; @param (keyword) checkbox-id
   ; @param (map) checkbox-props
   ;
   ; @return (map)

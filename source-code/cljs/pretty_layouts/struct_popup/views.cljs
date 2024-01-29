@@ -178,6 +178,6 @@
   ([popup-id popup-props]
    ; @note (tutorials#parametering)
    (fn [_ popup-props]
-       (let [popup-props (pretty-presets.engine/apply-preset            popup-props)
-             popup-props (struct-popup.prototypes/popup-props-prototype popup-props)]
+       (let [popup-props (pretty-presets.engine/apply-preset            popup-id popup-props)
+             popup-props (struct-popup.prototypes/popup-props-prototype popup-id popup-props)]
             [layout-lifecycles popup-id popup-props]))))

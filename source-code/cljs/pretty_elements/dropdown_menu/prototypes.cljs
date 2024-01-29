@@ -74,4 +74,4 @@
   [menu-props]
   ; Filters the menu bar properties to avoid property duplications between the 'dropdown-menu'
   ; element and the implemented 'menu-bar' element.
-  (dissoc menu-props :class :indent :outdent :style))
+  (dissoc menu-props :class :indent :outdent :preset :style))

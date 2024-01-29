@@ -7,7 +7,9 @@
 (defn links-props-prototype
   ; @ignore
   ;
+  ; @param (keyword) links-id
   ; @param (map) links-props
   ;
   ; @return (map)
-  [_])
+  [_ links-props]
+  (-> links-props))

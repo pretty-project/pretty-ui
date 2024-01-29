@@ -3,9 +3,10 @@
     (:require [fruits.hiccup.api                          :as hiccup]
               [fruits.random.api                          :as random]
               [metamorphic-content.api                    :as metamorphic-content]
+              [pretty-elements.content-swapper.prototypes :as content-swapper.prototypes]
               [pretty-elements.content-swapper.attributes :as content-swapper.attributes]
               [pretty-elements.content-swapper.state      :as content-swapper.state]
-              [pretty-elements.engine.api                          :as pretty-elements.engine]
+              [pretty-elements.engine.api :as pretty-elements.engine]
               [pretty-presets.engine.api :as pretty-presets.engine]
               [re-frame.api                               :as r]
               [react.api                                  :as react]
@@ -77,6 +78,6 @@
   ([swapper-id swapper-props]
    ; @note (tutorials#parametering)
    (fn [_ swapper-props]
-       (let [ ; swapper-props (content-swapper.prototypes/swapper-props-prototype swapper-props)
-             swapper-props (pretty-presets.engine/apply-preset swapper-props)]
+       (let [swapper-props (pretty-presets.engine/apply-preset                 swapper-id swapper-props)
+             swapper-props (content-swapper.prototypes/swapper-props-prototype swapper-id swapper-props)]
             [element-lifecycles swapper-id swapper-props]))))

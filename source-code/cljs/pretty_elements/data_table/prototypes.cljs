@@ -51,7 +51,9 @@
 (defn table-props-prototype
   ; @ignore
   ;
+  ; @param (keyword) table-id
   ; @param (map) table-props
   ;
   ; @return (map)
-  [_])
+  [_ table-props]
+  (-> table-props))

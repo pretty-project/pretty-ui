@@ -141,6 +141,6 @@
   ([switch-id switch-props]
    ; @note (tutorials#parametering)
    (fn [_ switch-props]
-       (let [switch-props (pretty-presets.engine/apply-preset                 switch-props)
+       (let [switch-props (pretty-presets.engine/apply-preset       switch-id switch-props)
              switch-props (switch.prototypes/switch-props-prototype switch-id switch-props)]
             [input-lifecycles switch-id switch-props]))))

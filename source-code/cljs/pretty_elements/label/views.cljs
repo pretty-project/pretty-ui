@@ -208,6 +208,6 @@
   ([label-id label-props]
    ; @note (tutorials#parametering)
    (fn [_ label-props]
-       (let [label-props (pretty-presets.engine/apply-preset     label-props)
-             label-props (label.prototypes/label-props-prototype label-props)]
+       (let [label-props (pretty-presets.engine/apply-preset     label-id label-props)
+             label-props (label.prototypes/label-props-prototype label-id label-props)]
             [element-lifecycles label-id label-props]))))

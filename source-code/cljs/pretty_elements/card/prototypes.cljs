@@ -9,6 +9,7 @@
 (defn card-props-prototype
   ; @ignore
   ;
+  ; @param (keyword) card-id
   ; @param (map) card-props
   ; {:badge-content (metamorphic-content)(opt)
   ;  :border-color (keyword or string)(opt)
@@ -26,7 +27,7 @@
   ;  :cursor (keyword or string)
   ;  :on-click-f (function)
   ;  :on-mouse--fup (function)}
-  [{:keys [badge-content border-color href marker-color on-click-f] :as card-props}]
+  [_ {:keys [badge-content border-color href marker-color on-click-f] :as card-props}]
   ; @note (pretty-elements.button.prototypes#7861)
   ;
   ; @bug (#7901)

@@ -7,7 +7,9 @@
 (defn swapper-props-prototype
   ; @ignore
   ;
+  ; @param (keyword) swapper-id
   ; @param (map) swapper-props
   ;
   ; @return (map)
-  [_])
+  [_ swapper-props]
+  (-> swapper-props))

@@ -101,6 +101,6 @@
   ([contacts-id contacts-props]
    ; @note (tutorials#parametering)
    (fn [_ contacts-props]
-       (let [contacts-props (pretty-presets.engine/apply-preset contacts-props)]
-            ; contacts-props (contacts.prototypes/contacts-props-prototype contacts-props)
+       (let [contacts-props (pretty-presets.engine/apply-preset           contacts-id contacts-props)
+             contacts-props (contacts.prototypes/contacts-props-prototype contacts-id contacts-props)]
             [component-lifecycles contacts-id contacts-props]))))

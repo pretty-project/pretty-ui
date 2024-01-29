@@ -3,7 +3,8 @@
     (:require [pretty-css.appearance.api :as pretty-css.appearance]
               [pretty-css.basic.api      :as pretty-css.basic]
               [pretty-css.content.api    :as pretty-css.content]
-              [pretty-css.layout.api     :as pretty-css.layout]))
+              [pretty-css.layout.api     :as pretty-css.layout]
+              [pretty-css.control.api    :as pretty-css.control]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -39,7 +40,12 @@
   (-> {:class :pe-notification-bubble--body}
       (pretty-css.appearance/background-attributes        bubble-props)
       (pretty-css.appearance/border-attributes       bubble-props)
+      (pretty-css.control/anchor-attributes        bubble-props)
       (pretty-css.layout/element-size-attributes bubble-props)
+      (pretty-css.control/mouse-event-attributes    bubble-props)
+      (pretty-css.control/tab-attributes           bubble-props)
+      (pretty-css.live/effect-attributes           bubble-props)
+      (pretty-css.control/focus-attributes         bubble-props)
       (pretty-css.basic/style-attributes        bubble-props)))
 
 ;; ----------------------------------------------------------------------------

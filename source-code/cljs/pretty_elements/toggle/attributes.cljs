@@ -21,7 +21,6 @@
   ;  :data-text-overflow (keyword)}
   [_ toggle-props]
   (-> {:class              :pe-toggle--body
-       :data-click-effect  :opacity
        :data-text-overflow :hidden}
       (pretty-css.appearance/background-attributes             toggle-props)
       (pretty-css.appearance/border-attributes            toggle-props)
@@ -29,6 +28,8 @@
       (pretty-css.layout/element-size-attributes      toggle-props)
       (pretty-css.control/focus-attributes             toggle-props)
       (pretty-css.layout/indent-attributes            toggle-props)
+      (pretty-css.live/effect-attributes           toggle-props)
+      (pretty-css.control/tab-attributes           toggle-props)
       (pretty-css.control/anchor-attributes              toggle-props)
       (pretty-css.control/mouse-event-attributes       toggle-props)
       (pretty-css.content/unselectable-text-attributes toggle-props)))

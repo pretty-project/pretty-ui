@@ -1,6 +1,7 @@
 
 (ns pretty-elements.adornment.attributes
     (:require [pretty-css.appearance.api :as pretty-css.appearance]
+              [pretty-css.accessories.api :as pretty-css.accessories]
               [pretty-css.basic.api      :as pretty-css.basic]
               [pretty-css.content.api    :as pretty-css.content]
               [pretty-css.control.api    :as pretty-css.control]
@@ -48,6 +49,7 @@
   ; {:class (keyword or keywords in vector)}
   [adornment-id adornment-props]
   (-> {:class :pe-adornment--body}
+      (pretty-css.accessories/tooltip-attributes   adornment-props)
       (pretty-css.appearance/background-attributes adornment-props)
       (pretty-css.basic/style-attributes           adornment-props)
       (pretty-css.control/anchor-attributes        adornment-props)

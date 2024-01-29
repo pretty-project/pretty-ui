@@ -13,6 +13,6 @@
   ;
   ; @return (map)
   [diagram-id diagram-props]
-  (-> diagram-props (core.props/data-props   {})
-                    (core.props/row-props    {:horizontal-align :left})
-                    (core.props/stroke-props {:strength 2})))
+  (-> diagram-props (core.props/data-props  {})
+                    (core.props/row-props   {:horizontal-align :left})
+                    (core.props/shape-props {})))

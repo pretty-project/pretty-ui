@@ -7,12 +7,13 @@
 (defn popup-props-prototype
   ; @ignore
   ;
+  ; @param (keyword) popup-id
   ; @param (map) popup-props
   ; {}
   ;
   ; @return
   ; {}
-  [{:keys [border-color on-cover] :as popup-props}]
+  [_ {:keys [border-color on-cover] :as popup-props}]
   (merge {:fill-color :default}
          (if border-color {:border-position :all
                            :border-width    :xxs})

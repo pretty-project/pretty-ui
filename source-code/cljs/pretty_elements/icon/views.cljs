@@ -64,6 +64,6 @@
   ([icon-id icon-props]
    ; @note (tutorials#parametering)
    (fn [_ icon-props]
-       (let [icon-props (pretty-presets.engine/apply-preset   icon-props)
-             icon-props (icon.prototypes/icon-props-prototype icon-props)]
+       (let [icon-props (pretty-presets.engine/apply-preset   icon-id icon-props)
+             icon-props (icon.prototypes/icon-props-prototype icon-id icon-props)]
             [element-lifecycles icon-id icon-props]))))

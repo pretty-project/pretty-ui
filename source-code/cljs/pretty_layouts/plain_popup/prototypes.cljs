@@ -7,12 +7,13 @@
 (defn popup-props-prototype
   ; @ignore
   ;
+  ; @param (keyword) popup-id
   ; @param (map) popup-props
   ; {}
   ;
   ; @return (map)
   ; {}
-  [{:keys [on-cover] :as popup-props}]
+  [_ {:keys [on-cover] :as popup-props}]
   (merge {}
          (if on-cover {:cover-color :black})
          (-> popup-props)))

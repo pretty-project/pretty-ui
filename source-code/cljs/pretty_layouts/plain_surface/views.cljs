@@ -64,6 +64,6 @@
   ([surface-id surface-props]
    ; @note (tutorials#parametering)
    (fn [_ surface-props]
-       (let [surface-props (pretty-presets.engine/apply-preset               surface-props)
-             surface-props (plain-surface.prototypes/surface-props-prototype surface-props)]
+       (let [surface-props (pretty-presets.engine/apply-preset               surface-id surface-props)
+             surface-props (plain-surface.prototypes/surface-props-prototype surface-id surface-props)]
             [layout-lifecycles surface-id surface-props]))))

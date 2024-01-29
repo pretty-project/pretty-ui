@@ -15,7 +15,7 @@
   ;
   ; @param (keyword) diagram-id
   ; @param (map) diagram-props
-  ; {:strength (px)}
+  ; {:strength (percent)}
   ; @param (integer) datum-dex
   ; @param (*) datum
   ;
@@ -26,7 +26,7 @@
         datum-color  (pretty-diagrams.engine/get-diagram-datum-color diagram-id diagram-props datum-dex datum)
         datum-value  (pretty-diagrams.engine/get-diagram-datum-value diagram-id diagram-props datum-dex datum)
         datum-ratio  (math/percent data-limit datum-value)
-        datum-height (css/px       strength)
+        datum-height (css/percent  strength)
         datum-width  (css/percent  datum-ratio)]
        (-> {:class :pd-line-diagram--datum}
            (pretty-css.appearance/background-attributes {:fill-color datum-color})

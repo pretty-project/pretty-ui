@@ -121,8 +121,6 @@
   ;     :icon (keyword)(opt)
   ;     :label (metamorphic-content)(opt)
   ;     :on-click-f (function)(opt)
-  ;     :on-mouse-over-f (function)(opt)
-  ;     :on-right-click-f (function)(opt)
   ;     :preset (keyword)(opt)}]
   ;  :orientation (keyword)(opt)
   ;   :horizontal, :vertical
@@ -144,6 +142,6 @@
   ([bar-id bar-props]
    ; @note (tutorials#parametering)
    (fn [_ bar-props]
-       (let [bar-props (pretty-presets.engine/apply-preset      bar-props)
-             bar-props (menu-bar.prototypes/bar-props-prototype bar-props)]
+       (let [bar-props (pretty-presets.engine/apply-preset      bar-id bar-props)
+             bar-props (menu-bar.prototypes/bar-props-prototype bar-id bar-props)]
             [element-lifecycles bar-id bar-props]))))

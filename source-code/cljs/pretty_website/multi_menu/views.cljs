@@ -80,6 +80,6 @@
   ([menu-id menu-props]
    ; @note (tutorials#parametering)
    (fn [_ menu-props]
-       (let [menu-props (pretty-presets.engine/apply-preset         menu-props)
-             menu-props (multi-menu.prototypes/menu-props-prototype menu-props)]
+       (let [menu-props (pretty-presets.engine/apply-preset         menu-id menu-props)
+             menu-props (multi-menu.prototypes/menu-props-prototype menu-id menu-props)]
             [component-lifecycles menu-id menu-props]))))

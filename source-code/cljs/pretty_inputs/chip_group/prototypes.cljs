@@ -27,10 +27,11 @@
 (defn group-props-prototype
   ; @ignore
   ;
+  ; @param (keyword) group-id
   ; @param (map) group-props
   ;
   ; @return (map)
   ; {}
-  [group-props]
+  [_ group-props]
   (merge {:chip-label-f return}
          (-> group-props)))

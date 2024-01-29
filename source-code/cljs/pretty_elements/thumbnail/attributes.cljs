@@ -29,7 +29,9 @@
       (pretty-css.live/effect-attributes         thumbnail-props)
       (pretty-css.layout/indent-attributes         thumbnail-props)
       (pretty-css.control/anchor-attributes           thumbnail-props)
+      (pretty-css.control/focus-attributes         thumbnail-props)
       (pretty-css.control/mouse-event-attributes    thumbnail-props)
+      (pretty-css.control/tab-attributes           thumbnail-props)
       (pretty-css.basic/style-attributes          thumbnail-props)
       (pretty-css.layout/thumbnail-size-attributes thumbnail-props)
 

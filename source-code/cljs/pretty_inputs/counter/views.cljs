@@ -87,6 +87,6 @@
   ([counter-id counter-props]
    ; @note (tutorials#parametering)
    (fn [_ counter-props]
-       (let [counter-props (pretty-presets.engine/apply-preset                    counter-props)
+       (let [counter-props (pretty-presets.engine/apply-preset         counter-id counter-props)
              counter-props (counter.prototypes/counter-props-prototype counter-id counter-props)]
             [input-lifecycles counter-id counter-props]))))

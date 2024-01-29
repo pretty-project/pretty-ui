@@ -8,6 +8,7 @@
 (defn label-props-prototype
   ; @ignore
   ;
+  ; @param (keyword) label-id
   ; @param (map) label-props
   ; {:border-color (keyword or string)(opt)
   ;  :font-size (keyword, px or string)(opt)
@@ -33,7 +34,7 @@
   ;  :text-color (keyword or string)
   ;  :tooltip-content (string)
   ;  :tooltip-position (keyword)}
-  [{:keys [border-color font-size icon marker-color text-color tooltip-content] :as label-props}]
+  [_ {:keys [border-color font-size icon marker-color text-color tooltip-content] :as label-props}]
   ; BUG#9811
   ; - In some cases the content can be an empty string for a short while before it
   ;   gets its value (e.g., from a subscription or a HTTP request, etc.).

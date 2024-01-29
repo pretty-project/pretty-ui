@@ -1,56 +1,23 @@
 
 /***** Circle diagram *****/
-/*** Wrapper ***/
-
-.pd-circle-diagram {
-  align-items:     center;
-  display:         flex;
-  flex-direction:  column;
-  justify-content: center;
-
-  /* XXX#6668 */
-  width: fit-content;
-}
-
-/*** Wrapper ***/
-
-/*** Section ***/
+/*** Datum ***/
 
 .pd-circle-diagram--datum {
   fill: transparent;
   transform-origin: center;
 }
 
-/*** Section ***/
+/*** Datum ***/
 /***** Circle diagram *****/
 
 
 
 /***** Line diagram *****/
-/*** Wrapper ***/
+/*** Datum ***/
 
-.pd-line-diagram {
-  display:         flex;
-  flex-direction:  column;
-  justify-content: center;
-}
-
-/*** Wrapper ***/
-
-/*** Sections ***/
-
-.pd-line-diagram--sections {
-  display: flex;
-}
-
-/*** Sections ***/
-
-/*** Section ***/
-
-.pd-line-diagram--section {
+.pd-line-diagram--datum {
   transition: width .5s ease-out;
-  height: 100%;
 }
 
-/*** Section ***/
+/*** Datum ***/
 /***** Line diagram *****/

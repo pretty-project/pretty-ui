@@ -1,6 +1,6 @@
 
 (ns pretty-diagrams.circle-diagram.prototypes
-    (:require [pretty-defaults.api :as pretty-defaults]))
+    (:require [pretty-diagrams.core.props :as core.props]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -13,4 +13,5 @@
   ;
   ; @return (map)
   [_ diagram-props]
-  (-> diagram-props (pretty-defaults/use-default-values {:diameter 48 :strength 2})))
+  (-> diagram-props (core.props/data-props  {})
+                    (core.props/shape-props {})))

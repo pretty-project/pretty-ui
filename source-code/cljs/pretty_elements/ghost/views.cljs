@@ -65,6 +65,6 @@
   ([ghost-id ghost-props]
    ; @note (tutorials#parametering)
    (fn [_ ghost-props]
-       (let [ghost-props (pretty-presets.engine/apply-preset     ghost-props)
-             ghost-props (ghost.prototypes/ghost-props-prototype ghost-props)]
+       (let [ghost-props (pretty-presets.engine/apply-preset     ghost-id ghost-props)
+             ghost-props (ghost.prototypes/ghost-props-prototype ghost-id ghost-props)]
             [element-lifecycles ghost-id ghost-props]))))

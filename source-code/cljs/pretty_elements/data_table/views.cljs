@@ -148,6 +148,6 @@
   ([table-id table-props]
    ; @note (tutorials#parametering)
    (fn [_ table-props]
-       (let [ ; table-props (data-table.prototypes/table-props-prototype table-props)
-             table-props (pretty-presets.engine/apply-preset     table-props)]
+       (let [table-props (pretty-presets.engine/apply-preset          table-id table-props)
+             table-props (data-table.prototypes/table-props-prototype table-id table-props)]
             [element-lifecycles table-id table-props]))))

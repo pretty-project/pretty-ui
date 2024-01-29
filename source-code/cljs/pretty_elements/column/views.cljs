@@ -82,6 +82,6 @@
   ([column-id column-props]
    ; @note (tutorials#parametering)
    (fn [_ column-props]
-       (let [column-props (pretty-presets.engine/apply-preset       column-props)
-             column-props (column.prototypes/column-props-prototype column-props)]
+       (let [column-props (pretty-presets.engine/apply-preset       column-id column-props)
+             column-props (column.prototypes/column-props-prototype column-id column-props)]
             [element-lifecycles column-id column-props]))))

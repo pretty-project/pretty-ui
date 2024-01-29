@@ -7,6 +7,7 @@
 (defn line-props-prototype
   ; @ignore
   ;
+  ; @param (keyword) line-id
   ; @param (map) line-props
   ; {:color (keyword or string)(opt)}
   ;
@@ -14,7 +15,7 @@
   ; {:fill-color (keyword or string)
   ;  :height (keyword, px or string)
   ;  :strength (px)}
-  [{:keys [color] :as line-props}]
+  [_ {:keys [color] :as line-props}]
   (merge {:fill-color (or color :muted)
           :height     :parent
           :strength   1}

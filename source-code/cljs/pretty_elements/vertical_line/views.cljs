@@ -63,6 +63,6 @@
   ([line-id line-props]
    ; @note (tutorials#parametering)
    (fn [_ line-props]
-       (let [line-props (pretty-presets.engine/apply-preset            line-props)
-             line-props (vertical-line.prototypes/line-props-prototype line-props)]
+       (let [line-props (pretty-presets.engine/apply-preset            line-id line-props)
+             line-props (vertical-line.prototypes/line-props-prototype line-id line-props)]
             [element-lifecycles line-id line-props]))))

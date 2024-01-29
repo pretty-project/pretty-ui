@@ -8,6 +8,7 @@
 (defn text-props-prototype
   ; @ignore
   ;
+  ; @param (keyword) text-id
   ; @param (map) text-props
   ;
   ; @return (map)
@@ -16,7 +17,7 @@
   ;  :line-height (keyword, px or string)
   ;  :placeholder (metamorphic-content)
   ;  :text-overflow (keyword)}
-  [text-props]
+  [_ text-props]
   ; BUG#9811 (source-code/cljs/pretty_elements/label/views.cljs)
   (merge {:font-size     :s
           :font-weight   :normal

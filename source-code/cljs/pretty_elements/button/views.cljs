@@ -87,8 +87,6 @@
   ;  :marker-position (keyword)(opt)
   ;  :on-click-f (function)(opt)
   ;  :on-click-timeout (ms)(opt)
-  ;  :on-mouse-over-f (function)(opt)
-  ;  :on-right-click-f (function)(opt)
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :placeholder (metamorphic-content)(opt)
@@ -112,9 +110,6 @@
   ;
   ; @usage
   ; [button :my-button {...}]
-  ;
-  ; @usage
-  ; [button {:keypress {:key-code 13} :on-click-f (fn [_] (println "ENTER pressed"))}]
   ([button-props]
    [element (random/generate-keyword) button-props])
 

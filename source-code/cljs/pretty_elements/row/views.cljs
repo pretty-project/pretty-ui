@@ -82,6 +82,6 @@
   ([row-id row-props]
    ; @note (tutorials#parametering)
    (fn [_ row-props]
-       (let [row-props (pretty-presets.engine/apply-preset row-props)
-             row-props (row.prototypes/row-props-prototype row-props)]
+       (let [row-props (pretty-presets.engine/apply-preset row-id row-props)
+             row-props (row.prototypes/row-props-prototype row-id row-props)]
             [element-lifecycles row-id row-props]))))

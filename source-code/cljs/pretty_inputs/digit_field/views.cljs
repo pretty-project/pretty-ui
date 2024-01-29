@@ -9,6 +9,7 @@
               [pretty-inputs.digit-field.utils      :as digit-field.utils]
               [re-frame.api                         :as r]
               [reagent.api :as reagent]
+              [pretty-presets.engine.api :as pretty-presets.engine]
               [pretty-inputs.engine.api :as pretty-inputs.engine]))
 
 ;; ----------------------------------------------------------------------------
@@ -95,5 +96,6 @@
   ([field-id field-props]
    ; @note (tutorials#parametering)
    (fn [_ field-props]
-       (let [] ; field-props (digit-field.prototypes/field-props-prototype field-props)
+       (let [field-props (pretty-presets.engine/apply-preset           field-id field-props)
+             field-props (digit-field.prototypes/field-props-prototype field-id field-props)]
             [input-lifecycles field-id field-props]))))

@@ -19,12 +19,13 @@
 (defn sidebar-props-prototype
   ; @ignore
   ;
+  ; @param (keyword) sidebar-id
   ; @param (map) sidebar-props
   ; {}
   ;
   ; @return (map)
   ; {}
-  [{:keys [border-color position] :as sidebar-props}]
+  [_ {:keys [border-color position] :as sidebar-props}]
   ; Sets the default border position on the other side than the sidebar position,
   ; if the sidebar placed on the left, the default border position will be on
   ; the right and vica versa.

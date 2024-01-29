@@ -39,14 +39,17 @@
   ; @param (keyword) bubble-id
   ; @param (map) bubble-props
   ; {:content (metamorphic-content)(opt)
+  ;  :href-uri (string)(opt)
+  ;  :on-click-f (function)(opt)
   ;  :placeholder (metamorphic-content)(opt)}
-  [bubble-id {:keys [content placeholder] :as bubble-props}]
+  [bubble-id {:keys [content href-uri on-click-f placeholder] :as bubble-props}]
   [:div (notification-bubble.attributes/bubble-attributes bubble-id bubble-props)
-        [:div (notification-bubble.attributes/bubble-body-attributes bubble-id bubble-props)
-              [:div (notification-bubble.attributes/bubble-content-attributes bubble-id bubble-props)
-                    [metamorphic-content/compose content placeholder]]
-              [notification-bubble-secondary-button bubble-id bubble-props]
-              [notification-bubble-primary-button   bubble-id bubble-props]]])
+        [(cond href-uri :a on-click-f :button :else :div)
+         (notification-bubble.attributes/bubble-body-attributes bubble-id bubble-props)
+         [:div (notification-bubble.attributes/bubble-content-attributes bubble-id bubble-props)
+               [metamorphic-content/compose content placeholder]]
+         [notification-bubble-secondary-button bubble-id bubble-props]
+         [notification-bubble-primary-button   bubble-id bubble-props]]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -58,12 +61,11 @@
   ; @param (map) bubble-props
   [bubble-id bubble-props]
   ; @note (tutorials#parametering)
+  ; @note (pretty-elements.adornment.views#8097)
   (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    bubble-id bubble-props))
                        :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount bubble-id bubble-props))
+                       :component-did-update   (fn [%]   (pretty-elements.engine/element-did-update   bubble-id bubble-props %))
                        :reagent-render         (fn [_ bubble-props] [notification-bubble bubble-id bubble-props])}))
-
-                       ; @note (pretty-elements.adornment.views#8097)
-                       ; + element-did-mount, keypress?
 
 (defn element
   ; @param (keyword) bubble-id
@@ -84,8 +86,11 @@
   ;  :fill-pattern (keyword)(opt)
   ;   Default: :cover
   ;  :height (keyword, px or string)(opt)
+  ;  :href-target (string)(opt)
+  ;  :href-uri (string)(opt)
   ;  :indent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
+  ;  :keypress (map)(opt)
   ;  :max-height (keyword, px or string)(opt)
   ;  :max-width (keyword, px or string)(opt)
   ;  :min-height (keyword, px or string)(opt)
@@ -103,11 +108,15 @@
   ;     :button, :icon-button
   ;     Default: :icon-button}
   ;  :style (map)(opt)
+  ;  :tab-disabled? (boolean)(opt)
   ;  :text-color (keyword or string)(opt)
   ;   Default: :default
   ;  :text-selectable? (boolean)(opt)
   ;  :theme (keyword)(opt)
   ;  :width (keyword, px or string)(opt)}
+  ;
+  ; + end-adornments, start-adornments
+  ; + keypress?
   ;
   ; @usage
   ; [notification-bubble {...}]
@@ -120,8 +129,9 @@
   ([bubble-id bubble-props]
    ; @note (tutorials#parametering)
    (fn [_ bubble-props]
-       (let [bubble-props (pretty-presets.engine/apply-preset                    bubble-props)
-             bubble-props (notification-bubble.prototypes/bubble-props-prototype bubble-props)]
+       (let [bubble-props (pretty-presets.engine/apply-preset                    bubble-id bubble-props)
+             bubble-props (notification-bubble.prototypes/bubble-props-prototype bubble-id bubble-props)
+             bubble-props (pretty-elements.engine/element-timeout-props          bubble-id bubble-props)]
             [element-lifecycles bubble-id bubble-props]))))
 
             ; + hover-color, hover-effect, hover-pattern ...

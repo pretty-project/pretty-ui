@@ -141,6 +141,6 @@
   ([button-id button-props]
    ; @note (tutorials#parametering)
    (fn [_ button-props]
-       (let [button-props (pretty-presets.engine/apply-preset             button-props)
-             button-props (radio-button.prototypes/button-props-prototype button-props)]
+       (let [button-props (pretty-presets.engine/apply-preset             button-id button-props)
+             button-props (radio-button.prototypes/button-props-prototype button-id button-props)]
             [input-lifecycles button-id button-props]))))

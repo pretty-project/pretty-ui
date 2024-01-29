@@ -7,12 +7,13 @@
 (defn bubble-props-prototype
   ; @ignore
   ;
+  ; @param (keyword) bubble-id
   ; @param (map) bubble-props
   ; {}
   ;
   ; @return (map)
   ; {}
-  [{:keys [border-color] :as bubble-props}]
+  [_ {:keys [border-color] :as bubble-props}]
   (merge {:font-size   :s
           :font-weight :medium
           :text-color  :default}

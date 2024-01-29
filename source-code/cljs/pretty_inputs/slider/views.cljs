@@ -78,6 +78,6 @@
   ([slider-id slider-props]
    ; @note (tutorials#parametering)
    (fn [_ slider-props]
-       (let [slider-props (pretty-presets.engine/apply-preset                 slider-props)
+       (let [slider-props (pretty-presets.engine/apply-preset       slider-id slider-props)
              slider-props (slider.prototypes/slider-props-prototype slider-id slider-props)]
             [input-lifecycles slider-id slider-props]))))

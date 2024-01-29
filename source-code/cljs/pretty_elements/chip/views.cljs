@@ -52,7 +52,6 @@
   ;   {:all, :tl, :tr, :br, :bl (keyword, px or string)(opt)}
   ;  :class (keyword or keywords in vector)(opt)
   ;  :click-effect (keyword)(opt)
-  ;   Default: :opacity (if 'href-uri' or 'on-click-f' is provided)
   ;  :disabled? (boolean)(opt)
   ;  :end-adornments (maps in vector)(opt)
   ;  :fill-color (keyword or string)(opt)
@@ -66,17 +65,18 @@
   ;  :href-uri (string)(opt)
   ;  :indent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
+  ;  :keypress (map)(opt)
   ;  :label (metamorphic-content)(opt)
   ;  :min-width (keyword, px or string)(opt)
   ;  :on-click-f (function)(opt)
-  ;  :on-mouse-over-f (function)(opt)
-  ;  :on-right-click-f (function)(opt)
+  ;  :on-click-timeout (ms)(opt)
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :placeholder (metamorphic-content)(opt)
   ;  :preset (keyword)(opt)
   ;  :start-adornments (maps in vector)(opt)
   ;  :style (map)(opt)
+  ;  :tab-disabled? (boolean)(opt)
   ;  :text-color (keyword or string)(opt)
   ;   Default: :default
   ;  :theme (keyword)(opt)
@@ -93,8 +93,7 @@
   ([chip-id chip-props]
    ; @note (tutorials#parametering)
    (fn [_ chip-props]
-       (let [chip-props (pretty-presets.engine/apply-preset   chip-props)
-             chip-props (chip.prototypes/chip-props-prototype chip-props)]
+       (let [chip-props (pretty-presets.engine/apply-preset           chip-id chip-props)
+             chip-props (chip.prototypes/chip-props-prototype         chip-id chip-props)
+             chip-props (pretty-elements.engine/element-timeout-props chip-id chip-props)]
             [element-lifecycles chip-id chip-props]))))
-
-            ; on-click-timeout?

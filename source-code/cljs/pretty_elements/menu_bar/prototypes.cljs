@@ -51,10 +51,11 @@
 (defn bar-props-prototype
   ; @ignore
   ;
+  ; @param (keyword) bar-id
   ; @param (map) bar-props
   ;
   ; @return (map)
   ; {:orientation (keyword)}
-  [bar-props]
+  [_ bar-props]
   (merge {:orientation :horizontal}
          (-> bar-props)))

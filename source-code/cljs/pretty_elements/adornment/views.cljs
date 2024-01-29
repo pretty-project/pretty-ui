@@ -3,9 +3,9 @@
     (:require [fruits.random.api                    :as random]
               [pretty-elements.adornment.attributes :as adornment.attributes]
               [pretty-elements.adornment.prototypes :as adornment.prototypes]
-              [pretty-elements.engine.api                    :as pretty-elements.engine]
+              [pretty-elements.engine.api :as pretty-elements.engine]
               [pretty-presets.engine.api :as pretty-presets.engine]
-              [reagent.api                          :as reagent]))
+              [reagent.api :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -72,8 +72,6 @@
   ;  :on-click-f (function)(opt)
   ;  :on-click-timeout (ms)(opt)
   ;  :on-mount-f (function)(opt)
-  ;  :on-mouse-over-f (function)(opt)
-  ;  :on-right-click-f (function)(opt)
   ;  :on-unmount-f (function)(opt)
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}

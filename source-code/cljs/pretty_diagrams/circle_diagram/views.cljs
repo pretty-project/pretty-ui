@@ -37,14 +37,11 @@
   ;
   ; @param (keyword) diagram-id
   ; @param (map) diagram-props
-  ; {:diameter (px)}
-  [diagram-id {:keys [diameter] :as diagram-props}]
-  ; The SVG container element prevents the SVG element to shrink if the indent property of the body element is set.
+  [diagram-id diagram-props]
   [:div (circle-diagram.attributes/diagram-attributes diagram-id diagram-props)
         [:div (circle-diagram.attributes/diagram-body-attributes diagram-id diagram-props)
-              [:div (circle-diagram.attributes/diagram-svg-container-attributes diagram-id diagram-props)
-                    [:svg (svg/wrapper-attributes {:height diameter :width diameter})
-                          [circle-diagram-datum-list diagram-id diagram-props]]]]])
+              [:svg (svg/wrapper-attributes {:height 200 :width 200})
+                    [circle-diagram-datum-list diagram-id diagram-props]]]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -68,7 +65,6 @@
   ;  :datum-label-f (function)(opt)
   ;  :datum-value-f (function)(opt)
   ;  :disabled? (boolean)(opt)
-  ;  :diameter (px)(opt)
   ;  :get-data-f (function)(opt)
   ;  :indent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
@@ -78,7 +74,7 @@
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :preset (keyword)(opt)
-  ;  :strength (px)(opt)
+  ;  :strength (percent)(opt)
   ;  :style (map)(opt)
   ;  :theme (keyword)(opt)}
   ;

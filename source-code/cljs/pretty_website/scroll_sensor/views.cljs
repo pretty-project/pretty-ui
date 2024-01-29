@@ -5,6 +5,7 @@
               [pretty-presets.engine.api :as pretty-presets.engine]
               [pretty-website.scroll-sensor.attributes   :as scroll-sensor.attributes]
               [pretty-website.scroll-sensor.side-effects :as scroll-sensor.side-effects]
+              [pretty-website.scroll-sensor.prototypes :as scroll-sensor.prototypes]
               [reagent.api                               :as reagent]))
 
 ;; ----------------------------------------------------------------------------
@@ -54,6 +55,6 @@
   ([sensor-id sensor-props]
    ; @note (tutorials#parametering)
    (fn [_ sensor-props]
-       (let [sensor-props (pretty-presets.engine/apply-preset sensor-props)]
-             ; sensor-props (scroll-sensor.prototypes/sensor-props-prototype sensor-props)
+       (let [sensor-props (pretty-presets.engine/apply-preset              sensor-id sensor-props)
+             sensor-props (scroll-sensor.prototypes/sensor-props-prototype sensor-id sensor-props)]
             [scroll-sensor sensor-id sensor-props]))))

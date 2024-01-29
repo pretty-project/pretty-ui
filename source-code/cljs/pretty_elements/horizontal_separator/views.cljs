@@ -69,6 +69,6 @@
   ([separator-id separator-props]
    ; @note (tutorials#parametering)
    (fn [_ separator-props]
-       (let [separator-props (pretty-presets.engine/apply-preset                        separator-props)
-             separator-props (horizontal-separator.prototypes/separator-props-prototype separator-props)]
+       (let [separator-props (pretty-presets.engine/apply-preset                        separator-id separator-props)
+             separator-props (horizontal-separator.prototypes/separator-props-prototype separator-id separator-props)]
             [element-lifecycles separator-id separator-props]))))

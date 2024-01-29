@@ -102,6 +102,6 @@
   ([text-id text-props]
    ; @note (tutorials#parametering)
    (fn [_ text-props]
-       (let [text-props (pretty-presets.engine/apply-preset   text-props)
-             text-props (text.prototypes/text-props-prototype text-props)]
+       (let [text-props (pretty-presets.engine/apply-preset   text-id text-props)
+             text-props (text.prototypes/text-props-prototype text-id text-props)]
             [element-lifecycles text-id text-props]))))

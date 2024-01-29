@@ -26,13 +26,14 @@
 (defn chip-props-prototype
   ; @ignore
   ;
+  ; @param (keyword) chip-id
   ; @param (map) chip-props
   ; {:href-uri (string)
   ;  :on-click-f (function)(opt)}
   ;
   ; @return (map)
   ; {:text-color (keyword or string)}
-  [{:keys [href-uri on-click-f] :as chip-props}]
+  [_ {:keys [href-uri on-click-f] :as chip-props}]
   (merge {:text-color :default}
          (if href-uri   {:click-effect :opacity})
          (if on-click-f {:click-effect :opacity})

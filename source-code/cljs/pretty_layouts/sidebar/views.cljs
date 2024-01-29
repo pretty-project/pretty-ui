@@ -80,6 +80,6 @@
   ([sidebar-id sidebar-props]
    ; @note (tutorials#parametering)
    (fn [_ sidebar-props]
-       (let [sidebar-props (pretty-presets.engine/apply-preset         sidebar-props)
-             sidebar-props (sidebar.prototypes/sidebar-props-prototype sidebar-props)]
+       (let [sidebar-props (pretty-presets.engine/apply-preset         sidebar-id sidebar-props)
+             sidebar-props (sidebar.prototypes/sidebar-props-prototype sidebar-id sidebar-props)]
             [layout-lifecycles sidebar-id sidebar-props]))))
