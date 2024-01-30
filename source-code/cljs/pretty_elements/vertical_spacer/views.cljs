@@ -36,12 +36,14 @@
   ; @param (keyword)(opt) spacer-id
   ; @param (map) spacer-props
   ; {:class (keyword or keywords in vector)(opt)
+  ;  :disabled? (boolean)(opt)
   ;  :height (keyword, px or string)(opt)
   ;   Default: :parent
   ;  :on-mount-f (function)(opt)
   ;  :on-unmount-f (function)(opt)
   ;  :preset (keyword)(opt)
   ;  :style (map)(opt)
+  ;  :theme (keyword)(opt)       ?????
   ;  :width (keyword, px or string)(opt)
   ;   Default: :s}
   ;

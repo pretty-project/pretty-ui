@@ -36,6 +36,7 @@
   ; @param (keyword)(opt) spacer-id
   ; @param (map) spacer-props
   ; {:class (keyword or keywords in vector)(opt)
+  ;  :disabled? (boolean)(opt)
   ;  :height (keyword, px or string)(opt)
   ;   Default: :s
   ;  :on-mount-f (function)(opt)

@@ -144,6 +144,7 @@
   ;  :border-width (keyword, px or string)(opt)
   ;   Default: :xxs
   ;  :cover-color (keyword or string)(opt)
+  ;  :disabled? (boolean)(opt)
   ;  :fill-color (keyword or string)(opt)
   ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;   Default: :default

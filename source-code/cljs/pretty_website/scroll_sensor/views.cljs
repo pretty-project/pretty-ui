@@ -38,10 +38,13 @@
   ; @param (keyword)(opt) sensor-id
   ; @param (map) sensor-props
   ; {:callback-f (function)
+  ;  :class (keyword or keywords in vector)(opt) -> class-attributes
+  ;  :disabled? (boolean)(opt) -> make it really disabled -> turn off the callback-f! state-attributes
   ;  :on-mount-f (function)(opt)
   ;  :on-unmount-f (function)(opt)
   ;  :preset (keyword)(opt)
-  ;  :style (map)(opt)}
+  ;  :style (map)(opt)        -> style-attributes
+  ;  :theme (keyword)(opt) ????}
   ;
   ; @usage
   ; [scroll-sensor {...}]

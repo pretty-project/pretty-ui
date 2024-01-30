@@ -82,6 +82,7 @@
   ;     :phone-numbers (numbers or strings in vector)(opt)
   ;  :class (keyword or keywords in vector)(opt)
   ;   ...
+  ;  :disabled? (boolean)(opt)
   ;  :indent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)}
   ;  :on-mount-f (function)(opt)

@@ -41,6 +41,7 @@
   ; {:class (keyword or keywords in vector)(opt)
   ;  :color (string)(opt)
   ;   Default: "#FFFFFF"
+  ;  :disabled? (boolean)(opt)
   ;  :on-mount-f (function)(opt)
   ;  :on-unmount-f (function)(opt)
   ;  :outdent (map)(opt)

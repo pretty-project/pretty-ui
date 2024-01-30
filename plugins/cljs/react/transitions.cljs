@@ -26,9 +26,9 @@
   ;                                             [my-component]])
   [{:keys [animation-timeout mounted?] :or {animation-timeout 350}} component]
   [:> css-transition {:in            mounted?
-                      :classNames    {:enter  :r-mount   :enterActive  :r-mounting   :enterDone  :r-mounted
-                                      :exit   :r-unmount :exitActive   :r-unmounting :exitDone   :r-unmounted
-                                      :appear :r-appear  :appearActive :r-appearing  :appearDone :r-appeared}
+                      :classNames    {:enter  :pr-mount   :enterActive  :pr-mounting   :enterDone  :pr-mounted
+                                      :exit   :pr-unmount :exitActive   :pr-unmounting :exitDone   :pr-unmounted
+                                      :appear :pr-appear  :appearActive :pr-appearing  :appearDone :pr-appeared}
                       :appear        true
                       :timeout       animation-timeout
                       :unmountOnExit true}

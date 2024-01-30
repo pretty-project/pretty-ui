@@ -18,3 +18,4 @@
        :id (hiccup/value sensor-id)}
       (pretty-css.basic/style-attributes sensor-props)))
  ; class-attributes?
+ ; + disabled? state attributes

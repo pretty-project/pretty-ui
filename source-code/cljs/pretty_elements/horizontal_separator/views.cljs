@@ -47,6 +47,7 @@
   ;  :color (keyword or string)(opt)
   ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;   Default: :default
+  ;  :disabled? (boolean)(opt)
   ;  :indent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :label (metamorphic-content)(opt)

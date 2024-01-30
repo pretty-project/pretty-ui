@@ -72,6 +72,7 @@
   ;  :chip (map)(opt)
   ;  :chips-deletable? (boolean)(opt)
   ;  :chip-label-f (function)(opt)
+  ;  :disabled? (boolean)(opt)
   ;  :get-value-f (function)(opt)
   ;  :helper (metamorphic-content)(opt)
   ;  :indent (map)(opt)

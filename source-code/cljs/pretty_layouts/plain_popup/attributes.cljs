@@ -36,3 +36,4 @@
       (pretty-css.appearance/theme-attributes popup-props)))
 
       ; class-attributes?
+      ; + class-attributes, state-attributes, style-attributes, theme-attributes

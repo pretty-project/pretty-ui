@@ -16,6 +16,7 @@
   (-> chip-props (pretty-elements.properties/default-background-props  {:fill-color :primary})
                  (pretty-elements.properties/default-border-props      {})
                  (pretty-elements.properties/default-effect-props      {})
+                 (pretty-elements.properties/default-flex-props        {:orientation :horizontal :gap :xxs})
                  (pretty-elements.properties/default-focus-props       {:focus-id chip-id})
                  (pretty-elements.properties/default-font-props        {:font-size :xxs :font-weight :medium})
                  (pretty-elements.properties/default-label-props       {})

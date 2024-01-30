@@ -22,32 +22,6 @@
 
 
 
-/***** Chip *****/
-/*** Body ***/
-
-.pe-chip--body {
-  display: flex;
-  gap:     4px;
-}
-
-/*** Body ***/
-/***** Chip *****/
-
-
-
-/***** Column *****/
-/*** Body ***/
-
-.pe-column--body {
-  display: flex;
-  flex-direction: column;
-}
-
-/*** Body ***/
-/***** Column *****/
-
-
-
 /***** Content swapper *****/
 /*** Wrapper ***/
 
@@ -77,7 +51,7 @@
 
 /*** Animations ***/
 
-@keyframes e-content-swapper--swap-fwd-in {
+@keyframes pe-content-swapper--swap-fwd-in {
   from {
     opacity:   0;
     transform: translateX(10%);
@@ -88,7 +62,7 @@
   }
 }
 
-@keyframes e-content-swapper--swap-fwd-out {
+@keyframes pe-content-swapper--swap-fwd-out {
   from {
     opacity:   1;
     transform: translateX(0);
@@ -99,7 +73,7 @@
   }
 }
 
-@keyframes e-content-swapper--swap-bwd-in {
+@keyframes pe-content-swapper--swap-bwd-in {
   from {
     opacity:   0;
     transform: translateX(-10%);
@@ -110,7 +84,7 @@
   }
 }
 
-@keyframes e-content-swapper--swap-bwd-out {
+@keyframes pe-content-swapper--swap-bwd-out {
   from {
     opacity:   1;
     transform: translateX(0);
@@ -137,20 +111,20 @@
   width:  -webkit-fill-available;
 }
 
-.pe-content-swapper--body[data-animation-direction="fwd"] .pe-content-swapper--page.r-mounting {
-  animation-name: e-content-swapper--swap-fwd-in;
+.pe-content-swapper--body[data-animation-direction="fwd"] .pe-content-swapper--page.pr-mounting {
+  animation-name: pe-content-swapper--swap-fwd-in;
 }
 
-.pe-content-swapper--body[data-animation-direction="fwd"] .pe-content-swapper--page.r-unmounting {
-  animation-name: e-content-swapper--swap-fwd-out;
+.pe-content-swapper--body[data-animation-direction="fwd"] .pe-content-swapper--page.pr-unmounting {
+  animation-name: pe-content-swapper--swap-fwd-out;
 }
 
-.pe-content-swapper--body[data-animation-direction="bwd"] .pe-content-swapper--page.r-mounting {
-  animation-name: e-content-swapper--swap-bwd-in;
+.pe-content-swapper--body[data-animation-direction="bwd"] .pe-content-swapper--page.pr-mounting {
+  animation-name: pe-content-swapper--swap-bwd-in;
 }
 
-.pe-content-swapper--body[data-animation-direction="bwd"] .pe-content-swapper--page.r-unmounting {
-  animation-name: e-content-swapper--swap-bwd-out;
+.pe-content-swapper--body[data-animation-direction="bwd"] .pe-content-swapper--page.pr-unmounting {
+  animation-name: pe-content-swapper--swap-bwd-out;
 }
 
 /*** Page ***/

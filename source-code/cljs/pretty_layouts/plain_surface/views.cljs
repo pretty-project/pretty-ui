@@ -45,6 +45,7 @@
   ;  :content-orientation (keyword)(opt)
   ;   :horizontal, :vertical
   ;   Default: :vertical
+  ;  :disabled? (boolean)(opt)
   ;  :fill-color (keyword or string)(opt)
   ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;  :on-mount-f (function)(opt)

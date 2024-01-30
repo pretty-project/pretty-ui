@@ -117,7 +117,7 @@
 }
 
 .pw-scroll-icon--body::before {
-  animation-name:            w-scroll-icon;
+  animation-name:            pw-scroll-icon;
   animation-duration:        2s;
   animation-iteration-count: infinite;
   background-color:          var( --icon-color );
@@ -147,7 +147,7 @@
 
 /*** Animation ***/
 
-@keyframes w-scroll-icon {
+@keyframes pw-scroll-icon {
   0%   {
          opacity: 0;
          transform: translate(0, 0);
@@ -211,11 +211,11 @@
   width: 100%;
 }
 
-.pw-sidebar.r-mounting .pw-sidebar--cover {
+.pw-sidebar.pr-mounting .pw-sidebar--cover {
   animation-name: translate-x--110vw-0;
 }
 
-.pw-sidebar.r-unmounting .pw-sidebar--cover {
+.pw-sidebar.pr-unmounting .pw-sidebar--cover {
   animation-delay: .15s;
   animation-name: translate-x-0--110vw;
 }
@@ -232,12 +232,12 @@
   width: 320px;
 }
 
-.pw-sidebar.r-mounting .pw-sidebar--body {
+.pw-sidebar.pr-mounting .pw-sidebar--body {
   animation-delay: .15s;
   animation-name: translate-x--110vw-0;
 }
 
-.pw-sidebar.r-unmounting .pw-sidebar--body {
+.pw-sidebar.pr-unmounting .pw-sidebar--body {
   animation-name: translate-x-0--110vw;
 }
 

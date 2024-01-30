@@ -50,6 +50,7 @@
   ; {}
   [_ group-props]
   (-> {:class :pi-chip-group}
+      ; + theme-attributes
       (pretty-css.basic/class-attributes   group-props)
       (pretty-css.layout/outdent-attributes group-props)
       (pretty-css.basic/state-attributes   group-props)))

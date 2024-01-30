@@ -80,3 +80,5 @@
   [popup-id popup-props]
   (merge (box-popup.attributes/popup-attributes popup-id popup-props)
          {:class :pl-struct-popup}))
+
+; + class-attributes, state-attributes, style-attributes, theme-attributes

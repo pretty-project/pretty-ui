@@ -38,7 +38,7 @@
   ;
   ; @param (keyword) swapper-id
   ; @param (map) swapper-props
-  ; {:initial-content (metamorphic-content)}
+  ; {:initial-content (metamorphic-content)(opt)}
   [swapper-id {:keys [initial-content] :as swapper-props}]
   (let [initial-state {:content-pool [{:id :initial-content :content initial-content}] :active-content :initial-content}]
        ; @note (tutorials#parametering)
@@ -58,9 +58,10 @@
   ; @param (keyword)(opt) swapper-id
   ; @param (map) swapper-props
   ; {:class (keyword or keywords in vector)(opt)
+  ;  :disabled? (boolean)(opt)
   ;  :indent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :initial-content (metamorphic-content)
+  ;  :initial-content (metamorphic-content)(opt)
   ;  :on-mount-f (function)(opt)
   ;  :on-unmount-f (function)(opt)
   ;  :outdent (map)(opt)

@@ -41,6 +41,7 @@
   ; @param (map) group-props
   ; {:class (keyword or keywords in vector)(opt)
   ;  :default-props (map)(opt)
+  ;  :disabled? (boolean)(opt)
   ;  :element (Reagent component symbol)
   ;  :group-items (maps in vector)
   ;  :height (keyword, px or string)(opt)

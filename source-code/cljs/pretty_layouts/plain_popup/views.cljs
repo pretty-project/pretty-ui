@@ -47,6 +47,7 @@
   ; @param (map) popup-props
   ; {:content (metamorphic-content)
   ;  :cover-color (keyword or string)(opt)
+  ;  :disabled? (boolean)(opt)
   ;  :lock-scroll? (boolean)(opt)
   ;  :on-cover (Re-Frame metamorphic-event)(opt)
   ;  :on-mount-f (function)(opt)

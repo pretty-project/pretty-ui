@@ -1,12 +1,11 @@
 
 (ns pretty-elements.column.views
     (:require [fruits.random.api                 :as random]
-              [metamorphic-content.api           :as metamorphic-content]
               [pretty-elements.column.attributes :as column.attributes]
               [pretty-elements.column.prototypes :as column.prototypes]
-              [pretty-elements.engine.api                 :as pretty-elements.engine]
+              [pretty-elements.engine.api :as pretty-elements.engine]
               [pretty-presets.engine.api :as pretty-presets.engine]
-              [reagent.api                       :as reagent]))
+              [reagent.api :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -16,12 +15,11 @@
   ;
   ; @param (keyword) column-id
   ; @param (map) column-props
-  ; {:content (metamorphic-content)(opt)
-  ;  :placeholder (metamorphic-content)(opt)}
-  [column-id {:keys [content placeholder] :as column-props}]
+  ; {:content (metamorphic-content)(opt)}
+  [column-id {:keys [content] :as column-props}]
   [:div (column.attributes/column-attributes column-id column-props)
         [:div (column.attributes/column-body-attributes column-id column-props)
-              [metamorphic-content/compose content placeholder]]])
+              (-> content)]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -47,13 +45,12 @@
   ;  :border-width (keyword, px or string)(opt)
   ;  :class (keyword or keywords in vector)(opt)
   ;  :content (metamorphic-content)(opt)
+  ;  :disabled? (boolean)(opt)
   ;  :fill-color (keyword or string)(opt)
   ;  :fill-pattern (keyword)(opt)
-  ;   Default: :cover
   ;  :gap (keyword, px or string)(opt)
   ;  :height (keyword, px or string)(opt)
   ;  :horizontal-align (keyword)(opt)
-  ;   Default: :center
   ;  :indent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :max-height (keyword, px or string)(opt)
@@ -70,7 +67,6 @@
   ;  :style (map)(opt)
   ;  :theme (keyword)(opt)
   ;  :vertical-align (keyword)(opt)
-  ;   Default: :top
   ;  :width (keyword, px or string)(opt)}
   ;
   ; @usage

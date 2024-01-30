@@ -62,3 +62,4 @@
    :data-position-fixed (case position :left :tl :tr)})
 
    ; + outdent?
+   ; + class-attributes, state-attributes, style-attributes, theme-attributes

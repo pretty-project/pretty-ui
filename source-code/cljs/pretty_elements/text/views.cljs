@@ -53,6 +53,7 @@
   ;  :border-width (keyword, px or string)(opt)
   ;  :class (keyword or keywords in vector)(opt)
   ;  :content (metamorphic-content)(opt)
+  ;  :disabled? (boolean)(opt)
   ;  :fill-color (keyword or string)(opt)
   ;  :fill-pattern (keyword)(opt)
   ;   Default: :cover

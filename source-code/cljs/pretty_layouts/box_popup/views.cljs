@@ -54,6 +54,7 @@
   ;   Default: :xxs
   ;  :content (metamorphic-content)
   ;  :cover-color (keyword or string)(opt)
+  ;  :disabled? (boolean)(opt)
   ;  :fill-color (keyword or string)(opt)
   ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;   Default: :default

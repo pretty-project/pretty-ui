@@ -63,3 +63,4 @@
    :data-stretch-orientation stretch-orientation})
 
    ; class-attributes?
+   ; + class-attributes, state-attributes, style-attributes, theme-attributes

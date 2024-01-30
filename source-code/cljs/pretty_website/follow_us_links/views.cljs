@@ -49,6 +49,7 @@
   ; @param (keyword)(opt) links-id
   ; @param (map) links-props
   ; {:class (keyword or keywords in vector)(opt)
+  ;  :disabled? (boolean)(opt)
   ;  :indent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :links (vectors in vector)

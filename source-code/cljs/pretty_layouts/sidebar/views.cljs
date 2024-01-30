@@ -52,6 +52,7 @@
   ;  :border-width (keyword, px or string)(opt)
   ;   Default: :xxs
   ;  :content (metamorphic-content)
+  ;  :disabled? (boolean)(opt)
   ;  :fill-color (keyword or string)(opt)
   ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;  :indent (map)(opt)

@@ -46,6 +46,7 @@
   ; @param (map) image-props
   ; {:alt (string)(opt)
   ;  :class (keyword or keywords in vector)(opt)
+  ;  :disabled? (boolean)(opt)
   ;  :error-src (string)(opt)
   ;   TODO
   ;  :height (keyword, px or string)(opt)

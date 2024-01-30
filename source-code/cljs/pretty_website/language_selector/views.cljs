@@ -43,6 +43,7 @@
   ; @param (keyword)(opt) selector-id
   ; @param (map) selector-props
   ; {:class (keyword or keywords in vector)(opt)
+  ;  :disabled? (boolean)(opt)
   ;  :font-size (keyword, px or string)(opt)
   ;   Default: :s
   ;  :gap (keyword, px or string)(opt)

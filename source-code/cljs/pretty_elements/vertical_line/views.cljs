@@ -39,6 +39,7 @@
   ; {:class (keyword or keywords in vector)(opt)
   ;  :color (keyword or string)(opt)
   ;   Default: :muted
+  ;  :disabled? (boolean)(opt)
   ;  :height (keyword, px or string)(opt)
   ;   Default: :parent
   ;  :on-mount-f (function)(opt)

@@ -56,6 +56,7 @@
   ;  :content (metamorphic-content)(opt)
   ;  :cover-color (keyword or string)(opt)
   ;   Default: :black
+  ;  :disabled? (boolean)(opt)
   ;  :fill-color (keyword or string)(opt)
   ;   Default: :white
   ;  :indent (map)(opt)
