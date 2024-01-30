@@ -21,8 +21,8 @@
   [group-id {:keys [adornments] :as group-props}]
   [:div (adornment-group.attributes/adornment-group-attributes group-id group-props)
         [:div (adornment-group.attributes/adornment-group-body-attributes group-id group-props)
-              (letfn [(f0 [adornment-props] [adornment.views/element adornment-props])]
-                     (hiccup/put-with [:<>] adornments f0))]])
+              (letfn [(f0 [_ adornment-props] [adornment.views/element adornment-props])]
+                     (hiccup/put-with-indexed [:<>] adornments f0))]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -45,14 +45,9 @@
   ;  :class (keyword or keywords in vector)(opt)
   ;  :disabled? (boolean)(opt)
   ;  :gap (keyword, px or string)(opt)
-  ;  :height (keyword, px or string)(opt)
   ;  :horizontal-align (keyword)(opt)
   ;  :indent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :max-height (keyword, px or string)(opt)
-  ;  :max-width (keyword, px or string)(opt)
-  ;  :min-height (keyword, px or string)(opt)
-  ;  :min-width (keyword, px or string)(opt)
   ;  :on-mount-f (function)(opt)
   ;  :on-unmount-f (function)(opt)
   ;  :orientation (keyword)(opt)
@@ -62,8 +57,7 @@
   ;  :preset (keyword)(opt)
   ;  :style (map)(opt)
   ;  :theme (keyword)(opt)
-  ;  :vertical-align (keyword)(opt)
-  ;  :width (keyword, px or string)(opt)}
+  ;  :vertical-align (keyword)(opt)}
   ;
   ; @usage
   ; [adornment-group {...}]

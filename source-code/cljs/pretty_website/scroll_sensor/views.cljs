@@ -32,11 +32,14 @@
   ; @note (tutorials#parametering)
   (reagent/lifecycles {:component-did-mount    (fn [_ _] (scroll-sensor.side-effects/sensor-did-mount-f sensor-id callback-f))
                        :reagent-render         (fn [_ sensor-props] [scroll-sensor sensor-id sensor-props])}))
+                      ;on-mount? on-unmount?
 
 (defn component
   ; @param (keyword)(opt) sensor-id
   ; @param (map) sensor-props
   ; {:callback-f (function)
+  ;  :on-mount-f (function)(opt)
+  ;  :on-unmount-f (function)(opt)
   ;  :preset (keyword)(opt)
   ;  :style (map)(opt)}
   ;

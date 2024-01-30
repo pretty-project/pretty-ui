@@ -14,15 +14,15 @@
   ; @param (map) column-props
   ;
   ; @return (map)
-  ; {}
+  ; {:class (keyword or keywords in vector)}
   [_ column-props]
   (-> {:class :pe-column--body}
-      (pretty-css.appearance/background-attributes        column-props)
-      (pretty-css.appearance/border-attributes       column-props)
-      (pretty-css.layout/flex-attributes       column-props)
-      (pretty-css.layout/element-size-attributes column-props)
-      (pretty-css.layout/indent-attributes       column-props)
-      (pretty-css.basic/style-attributes        column-props)))
+      (pretty-css.appearance/background-attributes column-props)
+      (pretty-css.appearance/border-attributes     column-props)
+      (pretty-css.basic/style-attributes           column-props)
+      (pretty-css.layout/flex-attributes           column-props)
+      (pretty-css.layout/element-size-attributes   column-props)
+      (pretty-css.layout/indent-attributes         column-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -34,11 +34,11 @@
   ; @param (map) column-props
   ;
   ; @return (map)
-  ; {}
+  ; {:class (keyword or keywords in vector)}
   [_ column-props]
   (-> {:class :pe-column}
-      (pretty-css.basic/class-attributes        column-props)
+      (pretty-css.appearance/theme-attributes    column-props)
+      (pretty-css.basic/class-attributes         column-props)
+      (pretty-css.basic/state-attributes         column-props)
       (pretty-css.layout/outdent-attributes      column-props)
-      (pretty-css.basic/state-attributes        column-props)
-      (pretty-css.appearance/theme-attributes        column-props)
       (pretty-css.layout/wrapper-size-attributes column-props)))

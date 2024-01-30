@@ -1,6 +1,6 @@
 
 (ns pretty-elements.button.prototypes
-    (:require [pretty-elements.core.props :as core.props]))
+    (:require [pretty-elements.properties.api :as pretty-elements.properties]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -13,17 +13,17 @@
   ;
   ; @return (map)
   [button-id button-props]
-  (-> button-props (core.props/badge-props       {})
-                   (core.props/border-props      {})
-                   (core.props/clickable-props   {})
-                   (core.props/effect-props      {})
-                   (core.props/focus-props       {:focus-id button-id})
-                   (core.props/font-props        {})
-                   (core.props/label-icon-props  {})
-                   (core.props/label-props       {})
-                   (core.props/marker-props      {})
-                   (core.props/mouse-event-props {})
-                   (core.props/progress-props    {})
-                   (core.props/row-props         {})
-                   (core.props/text-props        {})
-                   (core.props/tooltip-props     {})))
+  (-> button-props (pretty-elements.properties/default-badge-props        {})
+                   (pretty-elements.properties/default-border-props       {})
+                   (pretty-elements.properties/default-button-label-props {})
+                   (pretty-elements.properties/default-effect-props       {})
+                   (pretty-elements.properties/default-focus-props        {:focus-id button-id})
+                   (pretty-elements.properties/default-font-props         {})
+                   (pretty-elements.properties/default-label-icon-props   {})
+                   (pretty-elements.properties/default-label-props        {})
+                   (pretty-elements.properties/default-marker-props       {})
+                   (pretty-elements.properties/default-mouse-event-props  {})
+                   (pretty-elements.properties/default-progress-props     {})
+                   (pretty-elements.properties/default-flex-props         {:orientation :horizontal})
+                   (pretty-elements.properties/default-text-props         {})
+                   (pretty-elements.properties/default-tooltip-props      {})))

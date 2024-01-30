@@ -17,14 +17,10 @@
   ; @param (map) chip-props
   ;
   ; @return (map)
-  ; {}
+  ; {:class (keyword or keywords in vector)}
   [_ chip-props]
-  (-> {:class               :pe-chip--label
-       :data-font-size      :xs
-       :data-font-weight    :medium
-       :data-letter-spacing :auto
-       :data-line-height    :text-block
-       :data-text-overflow  :hidden}
+  (-> {:class :pe-chip--label}
+      (pretty-css.content/font-attributes              chip-props)
       (pretty-css.content/unselectable-text-attributes chip-props)))
 
 ;; ----------------------------------------------------------------------------
@@ -45,6 +41,8 @@
       (pretty-css.live/effect-attributes       chip-props)
       (pretty-css.layout/element-size-attributes chip-props)
       (pretty-css.control/anchor-attributes         chip-props)
+      (pretty-css.control/state-attributes         chip-props)
+      (pretty-css.content/cursor-attributes       chip-props)
       (pretty-css.layout/indent-attributes       chip-props)
       (pretty-css.control/focus-attributes         chip-props)
       (pretty-css.control/mouse-event-attributes  chip-props)

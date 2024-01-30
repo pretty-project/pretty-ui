@@ -1,6 +1,6 @@
 
 (ns pretty-diagrams.line-diagram.prototypes
-    (:require [pretty-diagrams.core.props :as core.props]))
+    (:require [pretty-diagrams.properties.api :as pretty-diagrams.properties]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -13,6 +13,6 @@
   ;
   ; @return (map)
   [diagram-id diagram-props]
-  (-> diagram-props (core.props/data-props  {})
-                    (core.props/row-props   {:horizontal-align :left})
-                    (core.props/shape-props {})))
+  (-> diagram-props (pretty-diagrams.properties/default-data-props  {})
+                    (pretty-diagrams.properties/default-flex-props  {:horizontal-align :left :orientation :horizontal})
+                    (pretty-diagrams.properties/default-shape-props {})))

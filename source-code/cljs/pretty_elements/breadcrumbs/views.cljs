@@ -5,26 +5,44 @@
               [pretty-elements.breadcrumbs.attributes :as breadcrumbs.attributes]
               [pretty-elements.breadcrumbs.prototypes :as breadcrumbs.prototypes]
               [pretty-elements.button.views           :as button.views]
-              [pretty-elements.engine.api                      :as pretty-elements.engine]
+              [pretty-elements.engine.api :as pretty-elements.engine]
               [pretty-presets.engine.api :as pretty-presets.engine]
               [reagent.api                            :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn breadcrumbs
+(defn breadcrumbs-crumb
+  ; @ignore
+  ;
+  ; @param (keyword) breadcrumbs-id
+  ; @param (map) breadcrumbs-props
+  ; @param (integer) crumb-dex
+  ; @param (map) crumb-props
+  [breadcrumbs-id breadcrumbs-props crumb-dex crumb-props]
+  [:<> (if  (-> crumb-dex pos?) [:div {:class :pe-breadcrumbs--separator}])
+       (let [crumb-props (breadcrumbs.prototypes/crumb-props-prototype crumb-dex crumb-props)]
+            [button.views/element crumb-props])])
+
+(defn breadcrumbs-crumb-list
   ; @ignore
   ;
   ; @param (keyword) breadcrumbs-id
   ; @param (map) breadcrumbs-props
   ; {:crumbs (maps in vector)(opt)}
   [breadcrumbs-id {:keys [crumbs] :as breadcrumbs-props}]
+  (letfn [(f0 [crumb-dex crumb-props] [breadcrumbs-crumb breadcrumbs-id breadcrumbs-props crumb-dex crumb-props])]
+         (hiccup/put-with-indexed [:<>] crumbs f0)))
+
+(defn breadcrumbs
+  ; @ignore
+  ;
+  ; @param (keyword) breadcrumbs-id
+  ; @param (map) breadcrumbs-props
+  [breadcrumbs-id breadcrumbs-props]
   [:div (breadcrumbs.attributes/breadcrumbs-attributes breadcrumbs-id breadcrumbs-props)
         [:div (breadcrumbs.attributes/breadcrumbs-body-attributes breadcrumbs-id breadcrumbs-props)
-              (letfn [(f0 [crumb-dex crumb-props] [:<> (if  (-> crumb-dex pos?) [:div {:class :pe-breadcrumbs--separator}])
-                                                       (let [crumb-props (breadcrumbs.prototypes/crumb-props-prototype crumb-props)]
-                                                            [button.views/element crumb-props])])]
-                     (hiccup/put-with-indexed [:<>] crumbs f0))]])
+              [breadcrumbs-crumb-list                             breadcrumbs-id breadcrumbs-props]]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -58,8 +76,6 @@
   ;  :preset (keyword)(opt)
   ;  :style (map)(opt)
   ;  :theme (keyword)(opt)}
-  ;
-  ; @preview (pretty-elements/breadcrumbs.png)
   ;
   ; @usage
   ; [breadcrumbs {...}]

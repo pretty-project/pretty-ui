@@ -53,6 +53,8 @@
   ;   [{:content (metamorphic-content)(opt)
   ;     :placeholder (metamorphic-content)(opt)
   ;     :preset (keyword)(opt)}]
+  ;  :on-mount-f (function)(opt)
+  ;  :on-unmount-f (function)(opt)
   ;  :surface (map)(opt)
   ;   {:border-color (keyword or string)(opt)
   ;    :border-position (keyword)(opt)

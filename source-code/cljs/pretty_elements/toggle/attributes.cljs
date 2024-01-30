@@ -4,7 +4,8 @@
               [pretty-css.basic.api      :as pretty-css.basic]
               [pretty-css.content.api    :as pretty-css.content]
               [pretty-css.control.api    :as pretty-css.control]
-              [pretty-css.layout.api     :as pretty-css.layout]))
+              [pretty-css.layout.api     :as pretty-css.layout]
+              [pretty-css.live.api :as pretty-css.live]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -17,7 +18,6 @@
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
-  ;  :data-click-effect (keyword)
   ;  :data-text-overflow (keyword)}
   [_ toggle-props]
   (-> {:class              :pe-toggle--body
@@ -27,6 +27,7 @@
       (pretty-css.content/cursor-attributes            toggle-props)
       (pretty-css.layout/element-size-attributes      toggle-props)
       (pretty-css.control/focus-attributes             toggle-props)
+      (pretty-css.control/state-attributes             toggle-props)
       (pretty-css.layout/indent-attributes            toggle-props)
       (pretty-css.live/effect-attributes           toggle-props)
       (pretty-css.control/tab-attributes           toggle-props)

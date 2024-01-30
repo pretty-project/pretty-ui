@@ -17,13 +17,11 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  ; {:href-uri (string)(opt)
-  ;  :icon (keyword)
-  ;  :on-click-f (function)(opt)
+  ; {:icon (keyword)
   ;  :label (metamorphic-content)(opt)}
-  [button-id {:keys [href-uri icon on-click-f label] :as button-props}]
+  [button-id {:keys [icon label] :as button-props}]
   [:div (icon-button.attributes/button-attributes button-id button-props)
-        [(cond href-uri :a on-click-f :button :else :div)
+        [(pretty-elements.engine/clickable-auto-tag     button-id button-props)
          (icon-button.attributes/button-body-attributes button-id button-props)
          [:i (icon-button.attributes/button-icon-attributes button-id button-props) icon]]
         (if label [:div {:class :pe-icon-button--label :data-text-selectable false}
@@ -79,6 +77,8 @@
   ;  :marker-position (keyword)(opt)
   ;  :on-click-f (function)(opt)
   ;  :on-click-timeout (ms)(opt)
+  ;  :on-mount-f (function)(opt)
+  ;  :on-unmount-f (function)(opt)
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :preset (keyword)(opt)

@@ -39,12 +39,10 @@
   ; @param (keyword) bubble-id
   ; @param (map) bubble-props
   ; {:content (metamorphic-content)(opt)
-  ;  :href-uri (string)(opt)
-  ;  :on-click-f (function)(opt)
   ;  :placeholder (metamorphic-content)(opt)}
-  [bubble-id {:keys [content href-uri on-click-f placeholder] :as bubble-props}]
+  [bubble-id {:keys [content placeholder] :as bubble-props}]
   [:div (notification-bubble.attributes/bubble-attributes bubble-id bubble-props)
-        [(cond href-uri :a on-click-f :button :else :div)
+        [(pretty-elements.engine/clickable-auto-tag             bubble-id bubble-props)
          (notification-bubble.attributes/bubble-body-attributes bubble-id bubble-props)
          [:div (notification-bubble.attributes/bubble-content-attributes bubble-id bubble-props)
                [metamorphic-content/compose content placeholder]]
@@ -76,6 +74,7 @@
   ;   {:all, :tl, :tr, :br, :bl (keyword, px or string)(opt)}
   ;  :border-width (keyword, px or string)(opt)
   ;  :class (keyword or keywords in vector)(opt)
+  ;  :cursor (keyword or string)(opt)
   ;  :content (metamorphic-content)(opt)
   ;  :disabled? (boolean)(opt)
   ;  :font-size (keyword, px or string)(opt)
@@ -95,6 +94,8 @@
   ;  :max-width (keyword, px or string)(opt)
   ;  :min-height (keyword, px or string)(opt)
   ;  :min-width (keyword, px or string)(opt)
+  ;  :on-mount-f (function)(opt)
+  ;  :on-unmount-f (function)(opt)
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :placeholder (metamorphic-content)(opt)

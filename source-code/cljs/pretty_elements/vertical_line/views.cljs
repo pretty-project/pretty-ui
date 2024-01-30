@@ -41,6 +41,8 @@
   ;   Default: :muted
   ;  :height (keyword, px or string)(opt)
   ;   Default: :parent
+  ;  :on-mount-f (function)(opt)
+  ;  :on-unmount-f (function)(opt)
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :preset (keyword)(opt)
@@ -51,6 +53,8 @@
   ;
   ; + attol még lehet a container-nek width tulajdonsága, hogy a vonal vastagságát a strength határozzta meg
   ;   csak középre kell benne igazítani a vonalat
+  ;
+  ; indent?
   ;
   ; @usage
   ; [vertical-line {...}]

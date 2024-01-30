@@ -4,6 +4,7 @@
               [pretty-css.basic.api      :as pretty-css.basic]
               [pretty-css.content.api    :as pretty-css.content]
               [pretty-css.layout.api     :as pretty-css.layout]
+              [pretty-css.live.api :as pretty-css.live]
               [pretty-css.control.api    :as pretty-css.control]))
 
 ;; ----------------------------------------------------------------------------
@@ -42,7 +43,9 @@
       (pretty-css.appearance/border-attributes       bubble-props)
       (pretty-css.control/anchor-attributes        bubble-props)
       (pretty-css.layout/element-size-attributes bubble-props)
+      (pretty-css.control/state-attributes         bubble-props)
       (pretty-css.control/mouse-event-attributes    bubble-props)
+      (pretty-css.content/cursor-attributes       bubble-props)
       (pretty-css.control/tab-attributes           bubble-props)
       (pretty-css.live/effect-attributes           bubble-props)
       (pretty-css.control/focus-attributes         bubble-props)

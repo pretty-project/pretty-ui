@@ -1,85 +1,5 @@
 
-/*** Adornment ***/
-/*** Wrapper ***/
-
-.pe-adornment {
-  /* XXX#6668 No need for the adornment element be wider than its content. */
-  -width: fit-content;
-}
-
-/*** Wrapper ***/
-
-/*** Label ***/
-
-.pe-adornment--label {
-  -min-width:  24px;
- -text-align: center; /* Why was this here? */
- -padding:    0 4px;  /* Use indent if you need space between label type adornments! */
-}
-
-/*** Label ***/
-/*** Adornment ***/
-
-
-
-/***** Adornment-group *****/
-/*** Wrapper ***/
-
-.pe-adornment-group {
-  /* XXX#6668 */
-  -width: fit-content;
-}
-
-/*** Wrapper ***/
-
-/*** Adornment list ***/
-
-.pe-adornment-group--body {
-  -align-items: center; /* Adornments can have different heights! */
-  -display:     flex;
-}
-
-/*** Adornment list ***/
-/***** Adornment-group *****/
-
-
-
-/***** Blank *****/
-/*** Body ***/
-
-.pe-blank--body {}
-
-/*** Body ***/
-/***** Blank *****/
-
-
-
 /***** Breadcrumbs *****/
-/*** Wrapper ***/
-
-.pe-breadcrumbs {
-  /* XXX#6669 The breadcrumbs body element is scrollable on its X axis. */
-  width: auto;
-}
-
-/*** Wrapper ***/
-
-/*** Body ***/
-
-.pe-breadcrumbs--body {
-  display: flex;
-}
-
-/*** Body ***/
-
-/*** Crumb ***/
-
-.pe-breadcrumbs .pe-button {
-  max-width: 160px;
-}
-
-/*** Crumb ***/
-
 /*** Separator ***/
 
 .pe-breadcrumbs--separator {
@@ -99,32 +19,6 @@
 
 /*** Separator ***/
 /***** Breadcrumbs *****/
-
-
-
-/***** Button *****/
-/*** Body ***/
-
-.pe-button--body {
-  align-items: center;
-  display:     flex;
-}
-
-/*** Body ***/
-/***** Button *****/
-
-
-
-/***** Card *****/
-/*** Body ***/
-
-.pe-card--body {
-  display:        flex;
-  flex-direction: column;
-}
-
-/*** Body ***/
-/***** Card *****/
 
 
 
@@ -530,7 +424,7 @@
 /*** Wrapper ***/
 
 .pe-menu-bar {
-  /* XXX#6669 */
+  /* XXX#6669 The menu-bar body element is scrollable on its X axis. */
   width: auto;
 }
 

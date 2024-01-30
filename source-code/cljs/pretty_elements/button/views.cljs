@@ -15,15 +15,13 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  ; {:href-uri (string)(opt)
-  ;  :icon (keyword)(opt)
+  ; {:icon (keyword)(opt)
   ;  :icon-position (keyword)(opt)
-  ;  :label (metamorphic-content)(opt)
-  ;  :on-click-f (function)(opt)}
-  [button-id {:keys [href-uri icon icon-position label on-click-f] :as button-props}]
+  ;  :label (metamorphic-content)(opt)}
+  [button-id {:keys [icon icon-position label] :as button-props}]
   [:div (button.attributes/button-attributes button-id button-props)
-        [(cond href-uri :a on-click-f :button :else :div)
-         (button.attributes/button-body-attributes button-id button-props)
+        [(pretty-elements.engine/clickable-auto-tag button-id button-props)
+         (button.attributes/button-body-attributes  button-id button-props)
          (case icon-position :right [:<> (if label [:div (button.attributes/button-label-attributes button-id button-props) label])
                                          (if icon  [:i   (button.attributes/button-icon-attributes  button-id button-props) icon])]
                                     [:<> (if icon  [:i   (button.attributes/button-icon-attributes  button-id button-props) icon])

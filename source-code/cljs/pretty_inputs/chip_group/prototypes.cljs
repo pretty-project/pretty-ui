@@ -18,11 +18,11 @@
   ;
   ; @return (map)
   ; {}
-  [group-id {:keys [chip chip-label-f chips-unselectable?] :as group-props} chip-dex chip-value]
+  [group-id {:keys [chip chip-label-f chips-deletable?] :as group-props} chip-dex chip-value]
   (let [delete-chip-adornment (chip-group.adornments/delete-chip-adornment group-id group-props chip-dex chip-value)]
-       (merge {:label        (-> chip-value chip-label-f)}
-              (if chips-unselectable? (-> chip (update :end-adornments vector/conj-item delete-chip-adornment))
-                                      (-> chip)))))
+       (merge {:label              (-> chip-value chip-label-f)}
+              (if chips-deletable? (-> chip (update :end-adornments vector/conj-item delete-chip-adornment))
+                                   (-> chip)))))
 
 (defn group-props-prototype
   ; @ignore

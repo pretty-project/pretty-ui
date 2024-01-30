@@ -70,8 +70,8 @@
   ; @param (map) group-props
   ; {:class (keyword or keywords in vector)(opt)
   ;  :chip (map)(opt)
+  ;  :chips-deletable? (boolean)(opt)
   ;  :chip-label-f (function)(opt)
-  ;  :chips-unselectable? (boolean)(opt)
   ;  :get-value-f (function)(opt)
   ;  :helper (metamorphic-content)(opt)
   ;  :indent (map)(opt)

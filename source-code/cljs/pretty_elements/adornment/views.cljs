@@ -15,13 +15,11 @@
   ;
   ; @param (keyword) adornment-id
   ; @param (map) adornment-props
-  ; {:href-uri (string)(opt)
-  ;  :icon (keyword)(opt)
-  ;  :label (string)(opt)
-  ;  :on-click-f (function)(opt)}
-  [adornment-id {:keys [href-uri icon label on-click-f] :as adornment-props}]
+  ; {:icon (keyword)(opt)
+  ;  :label (string)(opt)}
+  [adornment-id {:keys [icon label] :as adornment-props}]
   [:div (adornment.attributes/adornment-attributes adornment-id adornment-props)
-        [(cond href-uri :a on-click-f :button :else :div)
+        [(pretty-elements.engine/clickable-auto-tag      adornment-id adornment-props)
          (adornment.attributes/adornment-body-attributes adornment-id adornment-props)
          (cond label [:div (adornment.attributes/adornment-label-attributes adornment-id adornment-props) label]
                icon  [:i   (adornment.attributes/adornment-icon-attributes  adornment-id adornment-props) icon])]])

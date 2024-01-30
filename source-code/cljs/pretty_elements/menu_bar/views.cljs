@@ -122,6 +122,8 @@
   ;     :label (metamorphic-content)(opt)
   ;     :on-click-f (function)(opt)
   ;     :preset (keyword)(opt)}]
+  ;  :on-mount-f (function)(opt)
+  ;  :on-unmount-f (function)(opt)
   ;  :orientation (keyword)(opt)
   ;   :horizontal, :vertical
   ;   Default: :horizontal

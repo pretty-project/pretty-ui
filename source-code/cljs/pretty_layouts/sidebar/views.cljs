@@ -58,8 +58,8 @@
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :min-width (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  ;  :on-mount (Re-Frame metamorphic-event)(opt)
-  ;  :on-unmount (Re-Frame metamorphic-event)(opt)
+  ;  :on-mount-f (function)(opt)
+  ;  :on-unmount-f (function)(opt)
   ;  :position (keyword)(opt)
   ;   :left, :right
   ;   Default: :left

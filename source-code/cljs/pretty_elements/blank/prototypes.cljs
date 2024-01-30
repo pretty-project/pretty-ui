@@ -1,6 +1,6 @@
 
 (ns pretty-elements.blank.prototypes
-    (:require [pretty-elements.core.props :as core.props]))
+    (:require [pretty-elements.properties.api :as pretty-elements.properties]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -13,4 +13,4 @@
   ;
   ; @return (map)
   [_ blank-props]
-  (-> blank-props (core.props/content-props {})))
+  (-> blank-props (pretty-elements.properties/default-content-props {})))

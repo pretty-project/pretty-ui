@@ -17,12 +17,10 @@
   ; @param (keyword) thumbnail-id
   ; @param (map) thumbnail-props
   ; {:background-size (keyword)
-  ;  :href-uri (string)(opt)
-  ;  :on-click-f (function)(opt)
   ;  :uri (string)(opt)}
-  [thumbnail-id {:keys [background-size href-uri on-click-f uri] :as thumbnail-props}]
+  [thumbnail-id {:keys [background-size uri] :as thumbnail-props}]
   [:div (thumbnail.attributes/thumbnail-attributes thumbnail-id thumbnail-props)
-        [(cond href-uri :a on-click-f :button :else :div)
+        [(pretty-elements.engine/clickable-auto-tag      thumbnail-id thumbnail-props)
          (thumbnail.attributes/thumbnail-body-attributes thumbnail-id thumbnail-props)
          [:i   {:class :pe-thumbnail--icon :data-icon-family :material-symbols-outlined :data-icon-size :s} :image]
          [:div {:class :pe-thumbnail--image :style {:background-image (css/url uri) :background-size background-size}}]]])
@@ -56,6 +54,7 @@
   ;   Default: {:all :m}
   ;  :border-width (keyword, px or string)(opt)
   ;  :class (keyword or keywords in vector)(opt)
+  ;  :cursor (keyword or string)(opt)
   ;  :disabled? (boolean)(opt)
   ;  :height (keyword, px or string)(opt)
   ;   Default: :s
@@ -72,6 +71,8 @@
   ;  :keypress (map)(opt)
   ;  :on-click-f (function)(opt)
   ;  :on-click-timeout (ms)(opt)
+  ;  :on-mount-f (function)(opt)
+  ;  :on-unmount-f (function)(opt)
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :preset (keyword)(opt)

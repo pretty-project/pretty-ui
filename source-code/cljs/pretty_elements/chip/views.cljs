@@ -2,13 +2,12 @@
 (ns pretty-elements.chip.views
     (:require [fruits.random.api                     :as random]
               [fruits.vector.api                     :as vector]
-              [metamorphic-content.api               :as metamorphic-content]
               [pretty-elements.adornment-group.views :as adornment-group.views]
               [pretty-elements.chip.attributes       :as chip.attributes]
               [pretty-elements.chip.prototypes       :as chip.prototypes]
-              [pretty-elements.engine.api                     :as pretty-elements.engine]
+              [pretty-elements.engine.api :as pretty-elements.engine]
               [pretty-presets.engine.api :as pretty-presets.engine]
-              [reagent.api                           :as reagent]))
+              [reagent.api :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -19,15 +18,15 @@
   ; @param (keyword) chip-id
   ; @param (map) chip-props
   ; {}
-  [chip-id {:keys [end-adornments href-uri label on-click-f placeholder start-adornments] :as chip-props}]
+  [chip-id {:keys [end-adornments label start-adornments] :as chip-props}]
   [:div (chip.attributes/chip-attributes chip-id chip-props)
-        [(cond href-uri :a on-click-f :button :else :div)
-         (chip.attributes/chip-body-attributes chip-id chip-props)
-         (if (vector/not-empty? start-adornments)
-             [adornment-group.views/element {:adornments start-adornments}])
-         [:div (chip.attributes/chip-label-attributes chip-id chip-props) [metamorphic-content/compose label placeholder]]
-         (if (vector/not-empty? end-adornments)
-             [adornment-group.views/element {:adornments end-adornments}])]])
+        [(pretty-elements.engine/clickable-auto-tag chip-id chip-props)
+         (chip.attributes/chip-body-attributes      chip-id chip-props)
+         (when (vector/not-empty? start-adornments)
+               [adornment-group.views/element {:adornments start-adornments}])
+         [:div (chip.attributes/chip-label-attributes chip-id chip-props) label]
+         (when (vector/not-empty? end-adornments)
+               [adornment-group.views/element {:adornments end-adornments}])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -48,10 +47,13 @@
 (defn element
   ; @param (keyword)(opt) chip-id
   ; @param (map) chip-props
-  ; {:border-radius (map)(opt)
+  ; {:border-color (keyword or string)(opt)
+  ;  :border-position (keyword)(opt)
+  ;  :border-radius (map)(opt)
   ;   {:all, :tl, :tr, :br, :bl (keyword, px or string)(opt)}
   ;  :class (keyword or keywords in vector)(opt)
   ;  :click-effect (keyword)(opt)
+  ;  :cursor (keyword or string)(opt)
   ;  :disabled? (boolean)(opt)
   ;  :end-adornments (maps in vector)(opt)
   ;  :fill-color (keyword or string)(opt)
@@ -70,6 +72,8 @@
   ;  :min-width (keyword, px or string)(opt)
   ;  :on-click-f (function)(opt)
   ;  :on-click-timeout (ms)(opt)
+  ;  :on-mount-f (function)(opt)
+  ;  :on-unmount-f (function)(opt)
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :placeholder (metamorphic-content)(opt)
@@ -78,7 +82,6 @@
   ;  :style (map)(opt)
   ;  :tab-disabled? (boolean)(opt)
   ;  :text-color (keyword or string)(opt)
-  ;   Default: :default
   ;  :theme (keyword)(opt)
   ;  :width (keyword, px or string)(opt)}
   ;

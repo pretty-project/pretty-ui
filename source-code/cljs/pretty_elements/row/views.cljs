@@ -60,6 +60,8 @@
   ;  :max-width (keyword, px or string)(opt)
   ;  :min-height (keyword, px or string)(opt)
   ;  :min-width (keyword, px or string)(opt)
+  ;  :on-mount-f (function)(opt)
+  ;  :on-unmount-f (function)(opt)
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :overflow (keyword)(opt)

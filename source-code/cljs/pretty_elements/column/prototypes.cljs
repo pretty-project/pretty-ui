@@ -1,6 +1,7 @@
 
-(ns pretty-elements.column.prototypes)
-
+(ns pretty-elements.column.prototypes
+    (:require [pretty-elements.properties.api :as pretty-elements.properties]))
+    
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -9,13 +10,9 @@
   ;
   ; @param (keyword) column-id
   ; @param (map) column-props
-  ; {}
   ;
   ; @return (map)
-  ; {}
-  [_ {:keys [border-color] :as column-props}]
-  (merge {:horizontal-align    :center
-          :vertical-align      :top}
-         (if border-color {:border-position :all
-                           :border-width    :xxs})
-         (-> column-props)))
+  [_ column-props]
+  (-> column-props (pretty-elements.properties/default-border-props  {})
+                   (pretty-elements.properties/default-content-props {})
+                   (pretty-elements.properties/default-flex-props    {:orientation :vertical :vertical-align :top})))

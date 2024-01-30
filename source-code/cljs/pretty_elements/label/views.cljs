@@ -177,6 +177,8 @@
   ;  :min-width (keyword, px or string)(opt)
   ;  :on-copy-f (function)(opt)
   ;   Takes the label content as parameter.
+  ;  :on-mount-f (function)(opt)
+  ;  :on-unmount-f (function)(opt)
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :placeholder (metamorphic-content)(opt)

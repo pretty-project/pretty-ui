@@ -1,12 +1,11 @@
 
 (ns pretty-elements.card.views
     (:require [fruits.random.api               :as random]
-              [metamorphic-content.api         :as metamorphic-content]
               [pretty-elements.card.attributes :as card.attributes]
               [pretty-elements.card.prototypes :as card.prototypes]
-              [pretty-elements.engine.api               :as pretty-elements.engine]
+              [pretty-elements.engine.api :as pretty-elements.engine]
               [pretty-presets.engine.api :as pretty-presets.engine]
-              [reagent.api                     :as reagent]))
+              [reagent.api :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -16,15 +15,12 @@
   ;
   ; @param (keyword) card-id
   ; @param (map) card-props
-  ; {:content (metamorphic-content)(opt)
-  ;  :href-uri (string)(opt)
-  ;  :on-click-f (function)(opt)
-  ;  :placeholder (metamorphic-content)(opt)}
-  [card-id {:keys [content href-uri on-click-f placeholder] :as card-props}]
+  ; {:content (metamorphic-content)(opt)}
+  [card-id {:keys [content] :as card-props}]
   [:div (card.attributes/card-attributes card-id card-props)
-        [(cond href-uri :a on-click-f :button :else :div)
-         (card.attributes/card-body-attributes card-id card-props)
-         [metamorphic-content/compose content placeholder]]])
+        [(pretty-elements.engine/clickable-auto-tag card-id card-props)
+         (card.attributes/card-body-attributes      card-id card-props)
+         (-> content)]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -46,10 +42,8 @@
   ; @param (keyword)(opt) card-id
   ; @param (map) card-props
   ; {:badge-color (keyword or string)(opt)
-  ;   Default: :primary
   ;  :badge-content (metamorphic-content)(opt)
   ;  :badge-position (keyword)(opt)
-  ;   Default: :tr
   ;  :border-color (keyword or string)(opt)
   ;  :border-position (keyword)(opt)
   ;  :border-radius (map)(opt)
@@ -62,7 +56,6 @@
   ;  :disabled? (boolean)(opt)
   ;  :fill-color (keyword or string)(opt)
   ;  :fill-pattern (keyword)(opt)
-  ;   Default: :cover
   ;  :height (keyword, px or string)(opt)
   ;  :horizontal-align (keyword)(opt)
   ;  :hover-color (keyword or string)(opt)
@@ -81,6 +74,7 @@
   ;  :min-width (keyword, px or string)(opt)
   ;  :on-click-f (function)(opt)
   ;  :on-click-timeout (ms)(opt)
+  ;  :orientation (keyword)(opt)
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :placeholder (metamorphic-content)(opt)
@@ -88,6 +82,9 @@
   ;  :style (map)(opt)
   ;  :tab-disabled? (boolean)(opt)
   ;  :theme (keyword)(opt)
+  ;  :tooltip-content (metamorphic-content)(opt)
+  ;  :tooltip-position (keyword)(opt)
+  ;  :vertical-align (keyword)(opt)
   ;  :width (keyword, px or string)(opt)}
   ;
   ; @usage

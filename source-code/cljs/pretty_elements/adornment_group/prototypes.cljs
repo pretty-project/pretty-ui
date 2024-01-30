@@ -1,6 +1,6 @@
 
 (ns pretty-elements.adornment-group.prototypes
-    (:require [pretty-elements.core.props :as core.props]))
+    (:require [pretty-elements.properties.api :as pretty-elements.properties]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -13,5 +13,5 @@
   ;
   ; @return (map)
   [_ group-props]
-  (-> group-props (core.props/size-props {:height :content :width :content})
-                  (core.props/flex-props {:orientation :horizontal :overflow :scroll})))
+  (-> group-props (pretty-elements.properties/default-flex-props {:orientation :horizontal :overflow :scroll})
+                  (pretty-elements.properties/default-size-props {:height :content :width :content})))

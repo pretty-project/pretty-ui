@@ -17,10 +17,10 @@
   ; @param (keyword) toggle-id
   ; @param (map) toggle-props
   ; {}
-  [toggle-id {:keys [content href-uri on-click-f placeholder] :as toggle-props}]
+  [toggle-id {:keys [content placeholder] :as toggle-props}]
   [:div (toggle.attributes/toggle-attributes toggle-id toggle-props)
-        [(cond href-uri :a on-click-f :button :else :div)
-         (toggle.attributes/toggle-body-attributes toggle-id toggle-props)
+        [(pretty-elements.engine/clickable-auto-tag toggle-id toggle-props)
+         (toggle.attributes/toggle-body-attributes  toggle-id toggle-props)
          [metamorphic-content/compose content placeholder]]])
 
 ;; ----------------------------------------------------------------------------
@@ -69,6 +69,8 @@
   ;  :marker-position (keyword)(opt)
   ;  :on-click-f (function)(opt)
   ;  :on-click-timeout (ms)(opt)
+  ;  :on-mount-f (function)(opt)
+  ;  :on-unmount-f (function)(opt)
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :placeholder (metamorphic-content)(opt)

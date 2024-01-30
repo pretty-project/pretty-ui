@@ -1,6 +1,6 @@
 
 (ns pretty-elements.breadcrumbs.prototypes
-    (:require [pretty-elements.core.props :as core.props]))
+    (:require [pretty-elements.properties.api :as pretty-elements.properties]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -8,11 +8,17 @@
 (defn crumb-props-prototype
   ; @ignore
   ;
+  ; @param (integer) crumb-dex
   ; @param (map) crumb-props
   ;
   ; @return (map)
-  [crumb-props]
-  (-> crumb-props (core.props/font-props {:font-size :xs :font-weight :semi-bold})))
+  [_ crumb-props]
+  (-> crumb-props (pretty-elements.properties/default-font-props {:font-size :xs :font-weight :semi-bold})
+                  (pretty-elements.properties/default-size-props {:max-width :s})
+                  (pretty-elements.properties/default-text-props {:text-overflow :ellipsis})))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn breadcrumbs-props-prototype
   ; @ignore
@@ -22,4 +28,5 @@
   ;
   ; @return (map)
   [_ breadcrumbs-props]
-  (-> breadcrumbs-props))
+  (-> breadcrumbs-props (pretty-elements.properties/default-flex-props {:gap :xs :orientation :horizontal :overflow :scroll})
+                        (pretty-elements.properties/default-size-props {:height :content :width :content})))

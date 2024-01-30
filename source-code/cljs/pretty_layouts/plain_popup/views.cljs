@@ -49,8 +49,8 @@
   ;  :cover-color (keyword or string)(opt)
   ;  :lock-scroll? (boolean)(opt)
   ;  :on-cover (Re-Frame metamorphic-event)(opt)
-  ;  :on-mount (Re-Frame metamorphic-event)(opt)
-  ;  :on-unmount (Re-Frame metamorphic-event)(opt)
+  ;  :on-mount-f (function)(opt)
+  ;  :on-unmount-f (function)(opt)
   ;  :preset (keyword)(opt)
   ;  :style (map)(opt)
   ;  :theme (keyword)(opt)}
