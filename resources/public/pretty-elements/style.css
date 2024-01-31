@@ -42,7 +42,7 @@
 }
 
 .pe-content-swapper--body[data-animation-direction] {
-  /* Because the appering / disappearing pages animated to move in LTR or RTL
+  /* Because the appering / disappearing contents animated to move in LTR or RTL
    * directions, the body has to hide the overflowing pages during animations. */
   overflow-x: hidden;
 }
@@ -97,9 +97,9 @@
 
 /*** Animations ***/
 
-/*** Page ***/
+/*** Content ***/
 
-.pe-content-swapper--page {
+.pe-content-swapper--content {
   animation-duration:  .3s;
   animation-fill-mode: both;
   position:            absolute;
@@ -111,23 +111,23 @@
   width:  -webkit-fill-available;
 }
 
-.pe-content-swapper--body[data-animation-direction="fwd"] .pe-content-swapper--page.pr-mounting {
+.pe-content-swapper--body[data-animation-direction="fwd"] .pe-content-swapper--content.pr-mounting {
   animation-name: pe-content-swapper--swap-fwd-in;
 }
 
-.pe-content-swapper--body[data-animation-direction="fwd"] .pe-content-swapper--page.pr-unmounting {
+.pe-content-swapper--body[data-animation-direction="fwd"] .pe-content-swapper--content.pr-unmounting {
   animation-name: pe-content-swapper--swap-fwd-out;
 }
 
-.pe-content-swapper--body[data-animation-direction="bwd"] .pe-content-swapper--page.pr-mounting {
+.pe-content-swapper--body[data-animation-direction="bwd"] .pe-content-swapper--content.pr-mounting {
   animation-name: pe-content-swapper--swap-bwd-in;
 }
 
-.pe-content-swapper--body[data-animation-direction="bwd"] .pe-content-swapper--page.pr-unmounting {
+.pe-content-swapper--body[data-animation-direction="bwd"] .pe-content-swapper--content.pr-unmounting {
   animation-name: pe-content-swapper--swap-bwd-out;
 }
 
-/*** Page ***/
+/*** Content ***/
 /***** Content swapper *****/
 
 

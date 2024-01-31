@@ -8,6 +8,7 @@
               [re-frame.api                          :as r]
               [time.api                              :as time]))
 
+
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -30,18 +31,24 @@
   ;    (the animation has to be disarmed before the cleaning; otherwise, changing the pool can cause an animated rerending of the active content).
   (let [content-id     (random/generate-keyword)
         active-content (content-swapper.env/get-active-content swapper-id)]
+       ;(println "rere?" (not= active-content content))
        (when (or rerender-same? (not= active-content content))
              (swap! content-swapper.state/SWAPPERS update-in [swapper-id :content-pool] vector/conj-item {:id content-id :content content})
              (swap! content-swapper.state/SWAPPERS assoc-in  [swapper-id :animation-direction] direction)
-             (letfn [(f0 [] (swap! content-swapper.state/SWAPPERS assoc-in [swapper-id :active-content] content-id))]
-                    (time/set-timeout! f0 50))
+
+             (swap! content-swapper.state/SWAPPERS assoc-in [swapper-id :active-content] content-id)
+             ;(letfn [(f0 [] (swap! content-swapper.state/SWAPPERS assoc-in [swapper-id :active-content] content-id))]
+              ;      (time/set-timeout! f0 50))
+
+
              (letfn [(f0 [] (let [active-content-id (get-in @content-swapper.state/SWAPPERS [swapper-id :active-content])]
+                                 (println "clean?" content-id active-content-id (= content-id active-content-id))
                                  (when (= content-id active-content-id)
                                        (swap! content-swapper.state/SWAPPERS dissoc-in [swapper-id :animation-direction])
-                                       (swap! content-swapper.state/SWAPPERS update-in [swapper-id :content-pool] vector/remove-items-by #(not= content-id (:id %))))))]))))
+                                       (swap! content-swapper.state/SWAPPERS update-in [swapper-id :content-pool] vector/remove-items-by #(not= content-id (:id %))))))]
                     ; Cleaning the pool is disabled because it could cause flickering when the user swaps contents at the exact same time
                     ; as the cleaning function works ...
-                    ; (time/set-timeout! f0 350)
+                    (time/set-timeout! f0 800)))))
 
 (defn go-fwd!
   ; @ignore

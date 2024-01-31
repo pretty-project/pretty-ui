@@ -17,6 +17,7 @@
 (def set-reference-f references/set-reference-f)
 
 ; @redirect (react.transitions/*)
-(def transition      transitions/transition)
-(def css-transition  transitions/css-transition)
-(def mount-animation transitions/mount-animation)
+(def transition       transitions/transition)
+(def css-transition   transitions/css-transition)
+(def transition-group transitions/transition-group)
+(def mount-animation  transitions/mount-animation)
