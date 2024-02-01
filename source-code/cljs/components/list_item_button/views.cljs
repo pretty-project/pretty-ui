@@ -37,7 +37,7 @@
    [view (random/generate-keyword) button-props])
 
   ([button-id button-props]
-   ; @note (tutorials#parametering)
+   ; @note (tutorials#parameterizing)
    (fn [_ button-props]
        (let [button-props (list-item-button.prototypes/button-props-prototype button-props)]
             [list-item-button button-id button-props]))))

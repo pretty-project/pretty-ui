@@ -28,7 +28,7 @@
   ; @param (keyword) stepper-id
   ; @param (map) stepper-props
   [stepper-id stepper-props]
-  ; @note (tutorials#parametering)
+  ; @note (tutorials#parameterizing)
   (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    stepper-id stepper-props))
                        :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount stepper-id stepper-props))
                        :reagent-render         (fn [_ stepper-props] [stepper stepper-id stepper-props])}))
@@ -50,7 +50,7 @@
    [view (random/generate-keyword) stepper-props])
 
   ([stepper-id stepper-props]
-   ; @note (tutorials#parametering)
+   ; @note (tutorials#parameterizing)
    (fn [_ stepper-props]
        (let [stepper-props (pretty-presets.engine/apply-preset         stepper-id stepper-props)
              stepper-props (stepper.prototypes/stepper-props-prototype stepper-id stepper-props)]

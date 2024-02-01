@@ -140,7 +140,7 @@
    [view (random/generate-keyword) table-props])
 
   ([table-id table-props]
-   ; @note (tutorials#parametering)
+   ; @note (tutorials#parameterizing)
    (fn [_ table-props]
        (let [table-props (menu-table.prototypes/table-props-prototype table-props)]
             [menu-table table-id table-props]))))

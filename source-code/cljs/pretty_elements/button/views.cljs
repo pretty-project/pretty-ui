@@ -36,7 +36,7 @@
   ; @param (keyword) button-id
   ; @param (map) button-props
   [button-id button-props]
-  ; @note (tutorials#parametering)
+  ; @note (tutorials#parameterizing)
   ; @note (pretty-elements.adornment.views#8097)
   (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    button-id button-props))
                        :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount button-id button-props))
@@ -112,7 +112,7 @@
    [view (random/generate-keyword) button-props])
 
   ([button-id button-props]
-   ; @note (tutorials#parametering)
+   ; @note (tutorials#parameterizing)
    (fn [_ button-props]
        (let [button-props (pretty-presets.engine/apply-preset           button-id button-props)
              button-props (button.prototypes/button-props-prototype     button-id button-props)

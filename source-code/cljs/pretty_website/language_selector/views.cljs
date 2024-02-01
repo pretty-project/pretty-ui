@@ -34,7 +34,7 @@
   ; @param (keyword) selector-id
   ; @param (map) selector-props
   [selector-id selector-props]
-  ; @note (tutorials#parametering)
+  ; @note (tutorials#parameterizing)
   (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    selector-id selector-props))
                        :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount selector-id selector-props))
                        :reagent-render         (fn [_ selector-props] [language-selector selector-id selector-props])}))
@@ -71,7 +71,7 @@
    [view (random/generate-keyword) selector-props])
 
   ([selector-id selector-props]
-   ; @note (tutorials#parametering)
+   ; @note (tutorials#parameterizing)
    (fn [_ selector-props]
        (let [selector-props (pretty-presets.engine/apply-preset                    selector-id selector-props)
              selector-props (language-selector.prototypes/selector-props-prototype selector-id selector-props)]

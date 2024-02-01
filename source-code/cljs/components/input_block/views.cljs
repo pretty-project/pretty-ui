@@ -37,7 +37,7 @@
    [view (random/generate-keyword) block-props])
 
   ([block-id block-props]
-   ; @note (tutorials#parametering)
+   ; @note (tutorials#parameterizing)
    (fn [_ block-props]
        (let [] ; block-props (input-block.prototypes/block-props-prototype block-props)
             [input-block block-id block-props]))))

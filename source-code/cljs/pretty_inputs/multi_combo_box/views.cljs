@@ -63,7 +63,7 @@
   ; @param (keyword) box-id
   ; @param (map) box-props
   [box-id box-props]
-  ; @note (tutorials#parametering)
+  ; @note (tutorials#parameterizing)
   (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-inputs.engine/input-did-mount    box-id box-props))
                        :component-will-unmount (fn [_ _] (pretty-inputs.engine/input-will-unmount box-id box-props))
                        :reagent-render         (fn [_ box-props] [multi-combo-box box-id box-props])}))
@@ -103,7 +103,7 @@
    [view (random/generate-keyword) box-props])
 
   ([box-id box-props]
-   ; @note (tutorials#parametering)
+   ; @note (tutorials#parameterizing)
    (fn [_ box-props]
        (let [box-props (multi-combo-box.prototypes/box-props-prototype box-id box-props)
              box-props (assoc-in box-props [:surface :content] [combo-box.views/combo-box-surface-content box-id box-props])]

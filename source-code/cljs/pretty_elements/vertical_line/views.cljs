@@ -28,7 +28,7 @@
   ; @param (keyword) line-id
   ; @param (map) line-props
   [line-id line-props]
-  ; @note (tutorials#parametering)
+  ; @note (tutorials#parameterizing)
   (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    line-id line-props))
                        :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount line-id line-props))
                        :reagent-render         (fn [_ line-props] [vertical-line line-id line-props])}))
@@ -66,7 +66,7 @@
    [view (random/generate-keyword) line-props])
 
   ([line-id line-props]
-   ; @note (tutorials#parametering)
+   ; @note (tutorials#parameterizing)
    (fn [_ line-props]
        (let [line-props (pretty-presets.engine/apply-preset            line-id line-props)
              line-props (vertical-line.prototypes/line-props-prototype line-id line-props)]

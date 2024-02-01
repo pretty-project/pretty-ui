@@ -28,7 +28,7 @@
   ; @param (keyword) ghost-id
   ; @param (map) ghost-props
   [ghost-id ghost-props]
-  ; @note (tutorials#parametering)
+  ; @note (tutorials#parameterizing)
   (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    ghost-id ghost-props))
                        :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount ghost-id ghost-props))
                        :reagent-render         (fn [_ ghost-props] [ghost ghost-id ghost-props])}))
@@ -66,7 +66,7 @@
    [view (random/generate-keyword) ghost-props])
 
   ([ghost-id ghost-props]
-   ; @note (tutorials#parametering)
+   ; @note (tutorials#parameterizing)
    (fn [_ ghost-props]
        (let [ghost-props (pretty-presets.engine/apply-preset     ghost-id ghost-props)
              ghost-props (ghost.prototypes/ghost-props-prototype ghost-id ghost-props)]

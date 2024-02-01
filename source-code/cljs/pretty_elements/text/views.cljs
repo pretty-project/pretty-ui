@@ -38,7 +38,7 @@
   ; @param (keyword) text-id
   ; @param (map) text-props
   [text-id text-props]
-  ; @note (tutorials#parametering)
+  ; @note (tutorials#parameterizing)
   (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    text-id text-props))
                        :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount text-id text-props))
                        :reagent-render         (fn [_ text-props] [text text-id text-props])}))
@@ -103,7 +103,7 @@
    [view (random/generate-keyword) text-props])
 
   ([text-id text-props]
-   ; @note (tutorials#parametering)
+   ; @note (tutorials#parameterizing)
    (fn [_ text-props]
        (let [text-props (pretty-presets.engine/apply-preset   text-id text-props)
              text-props (text.prototypes/text-props-prototype text-id text-props)]

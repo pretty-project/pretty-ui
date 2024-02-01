@@ -47,7 +47,7 @@
 
 
 
-; @tutorial Parametering
+; @tutorial Parameterizing
 ;
 ; Pretty UI items take two arguments:
 ;

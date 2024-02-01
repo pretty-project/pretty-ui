@@ -6,7 +6,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn visibility-adornment
+(defn toggle-visibility-adornment
   ; @ignore
   ;
   ; @param (keyword) field-id
@@ -14,8 +14,9 @@
   ;
   ; @return (map)
   [field-id field-props]
-  (let [password-visible? (password-field.env/password-visible? field-id field-props)]
+  (let [password-visible? (password-field.env/password-visible? field-id field-props)
+        on-click-f        (fn [] (password-field.side-effects/toggle-password-visibility! field-id field-props))]
        {:icon-family     :material-symbols-filled
+        :on-click-f      on-click-f
         :icon            (if password-visible? :visibility_off :visibility)
-        :tooltip-content (if password-visible? :hide-password! :show-password!)
-        :on-click-f      #(password-field.side-effects/toggle-password-visibility! field-id field-props)}))
+        :tooltip-content (if password-visible? :hide-password! :show-password!)}))

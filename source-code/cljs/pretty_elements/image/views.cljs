@@ -36,7 +36,7 @@
   ; @param (keyword) image-id
   ; @param (map) image-props
   [image-id image-props]
-  ; @note (tutorials#parametering)
+  ; @note (tutorials#parameterizing)
   (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    image-id image-props))
                        :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount image-id image-props))
                        :reagent-render         (fn [_ image-props] [image image-id image-props])}))
@@ -76,7 +76,7 @@
    [view (random/generate-keyword) image-props])
 
   ([image-id image-props]
-   ; @note (tutorials#parametering)
+   ; @note (tutorials#parameterizing)
    (fn [_ image-props]
        (let [image-props (pretty-presets.engine/apply-preset     image-id image-props)
              image-props (image.prototypes/image-props-prototype image-id image-props)]

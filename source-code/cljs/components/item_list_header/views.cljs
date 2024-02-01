@@ -59,7 +59,7 @@
    [view (random/generate-keyword) header-props])
 
   ([header-id header-props]
-   ; @note (tutorials#parametering)
+   ; @note (tutorials#parameterizing)
    (fn [_ header-props]
        (let [header-props (item-list-header.prototypes/header-props-prototype header-props)]
             [item-list-header header-id header-props]))))

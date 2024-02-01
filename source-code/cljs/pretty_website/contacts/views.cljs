@@ -66,7 +66,7 @@
   ; @param (keyword) contacts-id
   ; @param (map) contacts-props
   [contacts-id contacts-props]
-  ; @note (tutorials#parametering)
+  ; @note (tutorials#parameterizing)
   (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    contacts-id contacts-props))
                        :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount contacts-id contacts-props))
                        :reagent-render         (fn [_ contacts-props] [contacts contacts-id contacts-props])}))
@@ -102,7 +102,7 @@
    [view (random/generate-keyword) contacts-props])
 
   ([contacts-id contacts-props]
-   ; @note (tutorials#parametering)
+   ; @note (tutorials#parameterizing)
    (fn [_ contacts-props]
        (let [contacts-props (pretty-presets.engine/apply-preset           contacts-id contacts-props)
              contacts-props (contacts.prototypes/contacts-props-prototype contacts-id contacts-props)]

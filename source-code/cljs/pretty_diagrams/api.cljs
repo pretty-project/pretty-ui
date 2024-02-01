@@ -7,6 +7,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; @redirect (*/diagram)
-(def line-diagram   line-diagram.views/diagram)
-(def circle-diagram circle-diagram.views/diagram)
+; @redirect (*/view)
+(def line-diagram   line-diagram.views/view)
+(def circle-diagram circle-diagram.views/view)

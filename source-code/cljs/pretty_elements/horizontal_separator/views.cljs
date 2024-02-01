@@ -35,7 +35,7 @@
   ; @param (keyword) separator-id
   ; @param (map) separator-props
   [separator-id separator-props]
-  ; @note (tutorials#parametering)
+  ; @note (tutorials#parameterizing)
   (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    separator-id separator-props))
                        :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount separator-id separator-props))
                        :reagent-render         (fn [_ separator-props] [horizontal-separator separator-id separator-props])}))
@@ -70,7 +70,7 @@
    [view (random/generate-keyword) separator-props])
 
   ([separator-id separator-props]
-   ; @note (tutorials#parametering)
+   ; @note (tutorials#parameterizing)
    (fn [_ separator-props]
        (let [separator-props (pretty-presets.engine/apply-preset                        separator-id separator-props)
              separator-props (horizontal-separator.prototypes/separator-props-prototype separator-id separator-props)]

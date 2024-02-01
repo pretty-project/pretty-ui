@@ -31,7 +31,7 @@
   ; @param (keyword) card-id
   ; @param (map) card-props
   [card-id card-props]
-  ; @note (tutorials#parametering)
+  ; @note (tutorials#parameterizing)
   ; @note (pretty-elements.adornment.views#8097)
   (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    card-id card-props))
                        :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount card-id card-props))
@@ -96,7 +96,7 @@
    [view (random/generate-keyword) card-props])
 
   ([card-id card-props]
-   ; @note (tutorials#parametering)
+   ; @note (tutorials#parameterizing)
    (fn [_ card-props]
        (let [card-props (pretty-presets.engine/apply-preset           card-id card-props)
              card-props (card.prototypes/card-props-prototype         card-id card-props)

@@ -30,7 +30,7 @@
   ; @param (keyword) column-id
   ; @param (map) column-props
   [column-id column-props]
-  ; @note (tutorials#parametering)
+  ; @note (tutorials#parameterizing)
   (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    column-id column-props))
                        :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount column-id column-props))
                        :reagent-render         (fn [_ column-props] [column column-id column-props])}))
@@ -78,7 +78,7 @@
    [view (random/generate-keyword) column-props])
 
   ([column-id column-props]
-   ; @note (tutorials#parametering)
+   ; @note (tutorials#parameterizing)
    (fn [_ column-props]
        (let [column-props (pretty-presets.engine/apply-preset       column-id column-props)
              column-props (column.prototypes/column-props-prototype column-id column-props)]

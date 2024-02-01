@@ -103,7 +103,7 @@
    [view (random/generate-keyword) menu-props])
 
   ([menu-id menu-props]
-   ; @note (tutorials#parametering)
+   ; @note (tutorials#parameterizing)
    (fn [_ menu-props]
        (let []; menu-props (context-menu.prototypes/menu-props-prototype menu-props)
             [context-menu menu-id menu-props]))))

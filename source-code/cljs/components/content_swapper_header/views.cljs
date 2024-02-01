@@ -46,7 +46,7 @@
    [view (random/generate-keyword) header-props])
 
   ([header-id header-props]
-   ; @note (tutorials#parametering)
+   ; @note (tutorials#parameterizing)
    (fn [_ header-props]
        (let [header-props (content-swapper-header.prototypes/header-props-prototype header-props)]
             [pretty-elements/button header-id header-props]))))

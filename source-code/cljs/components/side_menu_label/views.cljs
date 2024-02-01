@@ -35,7 +35,7 @@
    [view (random/generate-keyword) label-props])
 
   ([label-id label-props]
-   ; @note (tutorials#parametering)
+   ; @note (tutorials#parameterizing)
    (fn [_ label-props]
        (let [label-props (side-menu-label.prototypes/label-props-prototype label-props)]
             [pretty-elements/label label-id label-props]))))

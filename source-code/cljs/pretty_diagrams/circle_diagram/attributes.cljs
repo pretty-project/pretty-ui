@@ -22,7 +22,7 @@
   ; @param (*) datum
   ;
   ; @return (map)
-  ; {}
+  ; {:class (keyword or keywords in vector)}
   [diagram-id {:keys [strength] :as diagram-props} datum-dex datum]
   (let [datum-color     (pretty-diagrams.engine/get-diagram-datum-color diagram-id diagram-props datum-dex datum)
         datum-pattern   (circle-diagram.utils/diagram-datum-pattern     diagram-id diagram-props datum-dex datum)

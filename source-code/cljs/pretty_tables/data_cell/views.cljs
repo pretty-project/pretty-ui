@@ -30,7 +30,7 @@
   ; @param (keyword) cell-id
   ; @param (map) cell-props
   [cell-id cell-props]
-  ; @note (tutorials#parametering)
+  ; @note (tutorials#parameterizing)
   (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    cell-id cell-props))
                        :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount cell-id cell-props))
                        :reagent-render         (fn [_ cell-props] [data-cell cell-id cell-props])}))
@@ -71,7 +71,7 @@
    [view (random/generate-keyword) cell-props])
 
   ([cell-id cell-props]
-   ; @note (tutorials#parametering)
+   ; @note (tutorials#parameterizing)
    (fn [_ cell-props]
        (let [cell-props (pretty-presets.engine/apply-preset        cell-id cell-props)
              cell-props (data-cell.prototypes/cell-props-prototype cell-id cell-props)]

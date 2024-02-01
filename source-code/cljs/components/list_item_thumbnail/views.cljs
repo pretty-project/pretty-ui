@@ -46,7 +46,7 @@
    [view (random/generate-keyword) thumbnail-props])
 
   ([thumbnail-id thumbnail-props]
-   ; @note (tutorials#parametering)
+   ; @note (tutorials#parameterizing)
    (fn [_ thumbnail-props]
        (let [] ; thumbnail-props (list-item-thumbnail.prototypes/thumbnail-props-prototype thumbnail-props)
             [list-item-thumbnail thumbnail-id thumbnail-props]))))

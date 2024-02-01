@@ -29,7 +29,7 @@
   ; @param (keyword) icon-id
   ; @param (map) icon-props
   [icon-id icon-props]
-  ; @note (tutorials#parametering)
+  ; @note (tutorials#parameterizing)
   (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    icon-id icon-props))
                        :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount icon-id icon-props))
                        :reagent-render         (fn [_ icon-props] [icon icon-id icon-props])}))
@@ -65,7 +65,7 @@
    [view (random/generate-keyword) icon-props])
 
   ([icon-id icon-props]
-   ; @note (tutorials#parametering)
+   ; @note (tutorials#parameterizing)
    (fn [_ icon-props]
        (let [icon-props (pretty-presets.engine/apply-preset   icon-id icon-props)
              icon-props (icon.prototypes/icon-props-prototype icon-id icon-props)]

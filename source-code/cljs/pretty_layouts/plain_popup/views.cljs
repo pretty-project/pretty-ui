@@ -35,7 +35,7 @@
   ; @param (map) popup-props
   ; {}
   [popup-id {:keys [lock-scroll? on-mount on-unmount] :as popup-props}]
-  ; @note (tutorials#parametering)
+  ; @note (tutorials#parameterizing)
   (reagent/lifecycles {:component-did-mount    (fn [_ _] (if lock-scroll? (scroll-lock/add-scroll-prohibition! popup-id))
                                                          (if on-mount     (r/dispatch on-mount)))
                        :component-will-unmount (fn [_ _] (if lock-scroll? (scroll-lock/remove-scroll-prohibition! popup-id))
@@ -65,7 +65,7 @@
    [view (random/generate-keyword) popup-props])
 
   ([popup-id popup-props]
-   ; @note (tutorials#parametering)
+   ; @note (tutorials#parameterizing)
    (fn [_ popup-props]
        (let [popup-props (pretty-presets.engine/apply-preset           popup-id popup-props)
              popup-props (plain-popup.prototypes/popup-props-prototype popup-id popup-props)]

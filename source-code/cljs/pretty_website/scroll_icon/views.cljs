@@ -17,7 +17,7 @@
   ; @param (keyword) icon-id
   ; @param (map) icon-props
   [icon-id icon-props]
-  [:<> [scroll-sensor.views/component (scroll-icon.attributes/sensor-attributes icon-id icon-props)]
+  [:<> [scroll-sensor.views/view (scroll-icon.attributes/sensor-attributes icon-id icon-props)]
        [:div (scroll-icon.attributes/icon-attributes icon-id icon-props)
              [:div (scroll-icon.attributes/icon-body-attributes icon-id icon-props)]]])
 
@@ -30,7 +30,7 @@
   ; @param (keyword) icon-id
   ; @param (map) icon-props
   [icon-id icon-props]
-  ; @note (tutorials#parametering)
+  ; @note (tutorials#parameterizing)
   (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    icon-id icon-props))
                        :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount icon-id icon-props))
                        :reagent-render         (fn [_ icon-props] [scroll-icon icon-id icon-props])}))
@@ -59,7 +59,7 @@
    [view (random/generate-keyword) icon-props])
 
   ([icon-id icon-props]
-   ; @note (tutorials#parametering)
+   ; @note (tutorials#parameterizing)
    (fn [_ icon-props]
        (let [icon-props (pretty-presets.engine/apply-preset          icon-id icon-props)
              icon-props (scroll-icon.prototypes/icon-props-prototype icon-id icon-props)]

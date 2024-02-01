@@ -30,7 +30,7 @@
    [view (random/generate-keyword) preview-props])
 
   ([preview-id preview-props]
-   ; @note (tutorials#parametering)
+   ; @note (tutorials#parameterizing)
    (fn [_ preview-props]
        (let [] ; preview-props (pdf-preview.prototypes/preview-props-prototype preview-props)
             [pdf-preview preview-id preview-props]))))

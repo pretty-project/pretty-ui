@@ -32,7 +32,7 @@
   ; @param (keyword) links-id
   ; @param (map) links-props
   [links-id links-props]
-  ; @note (tutorials#parametering)
+  ; @note (tutorials#parameterizing)
   (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    links-id links-props))
                        :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount links-id links-props))
                        :reagent-render         (fn [_ links-props] [follow-us-links links-id links-props])}))
@@ -77,7 +77,7 @@
    [view (random/generate-keyword) links-props])
 
   ([links-id links-props]
-   ; @note (tutorials#parametering)
+   ; @note (tutorials#parameterizing)
    (fn [_ links-props]
        (let [links-props (pretty-presets.engine/apply-preset               links-id links-props)
              links-props (follow-us-links.prototypes/links-props-prototype links-id links-props)]

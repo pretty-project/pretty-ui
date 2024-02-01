@@ -33,7 +33,7 @@
    [view (random/generate-keyword) footer-props])
 
   ([footer-id footer-props]
-   ; @note (tutorials#parametering)
+   ; @note (tutorials#parameterizing)
    (fn [_ footer-props]
        (let [] ; footer-props (side-menu-footer.prototypes/footer-props-prototype footer-props)
             [side-menu-footer footer-id footer-props]))))

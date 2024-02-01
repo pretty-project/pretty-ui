@@ -3,9 +3,8 @@
     (:require [fruits.hiccup.api                     :as hiccup]
               [fruits.random.api                     :as random]
               [fruits.vector.api                     :as vector]
-              [pretty-elements.api                   :as pretty-elements]
+              [pretty-inputs.header.views :as header.views]
               [pretty-inputs.engine.api                     :as pretty-inputs.engine]
-              [pretty-forms.engine.api                      :as pretty-forms.engine]
               [pretty-inputs.radio-button.attributes :as radio-button.attributes]
               [pretty-inputs.radio-button.prototypes :as radio-button.prototypes]
               [pretty-presets.engine.api :as pretty-presets.engine]
@@ -55,10 +54,8 @@
   ; @param (map) button-props
   [button-id button-props]
   [:div (radio-button.attributes/radio-button-attributes button-id button-props)
-        (if-let [label-props (pretty-inputs.engine/input-label-props button-id button-props)]
-                [pretty-elements/label label-props])
-        [pretty-forms.engine/invalid-message     button-id button-props]
-        [pretty-inputs.engine/input-synchronizer button-id button-props]
+        [pretty-inputs.header.views/view                 button-id button-props]
+        [pretty-inputs.engine/input-synchronizer         button-id button-props]
         [:div (radio-button.attributes/radio-button-body-attributes button-id button-props)
               [radio-button-option-list                             button-id button-props]]])
 
@@ -71,7 +68,7 @@
   ; @param (keyword) button-id
   ; @param (map) button-props
   [button-id button-props]
-  ; @note (tutorials#parametering)
+  ; @note (tutorials#parameterizing)
   (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-inputs.engine/input-did-mount    button-id button-props))
                        :component-will-unmount (fn [_ _] (pretty-inputs.engine/input-will-unmount button-id button-props))
                        :reagent-render         (fn [_ button-props] [radio-button button-id button-props])}))
@@ -98,7 +95,7 @@
   ;  :hover-effect (keyword)(opt)
   ;  :indent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :info-text (metamorphic-content)(opt)
+  ;  :info (metamorphic-content)(opt)
   ;  :initial-value (*)(opt)
   ;  :label (metamorphic-content)
   ;  :marker-color (keyword or string)(opt)
@@ -139,7 +136,7 @@
    [view (random/generate-keyword) button-props])
 
   ([button-id button-props]
-   ; @note (tutorials#parametering)
+   ; @note (tutorials#parameterizing)
    (fn [_ button-props]
        (let [button-props (pretty-presets.engine/apply-preset             button-id button-props)
              button-props (radio-button.prototypes/button-props-prototype button-id button-props)]

@@ -75,7 +75,7 @@
    [view (random/generate-keyword) dialog-props])
 
   ([dialog-id dialog-props]
-   ; @note (tutorials#parametering)
+   ; @note (tutorials#parameterizing)
    (fn [_ dialog-props]
        (let [] ; dialog-props (consent-dialog.prototypes/dialog-props-prototype dialog-props)
             [consent-dialog dialog-id dialog-props]))))

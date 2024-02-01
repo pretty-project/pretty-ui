@@ -38,7 +38,7 @@
    [view (random/generate-keyword) illustration-props])
 
   ([illustration-id illustration-props]
-   ; @note (tutorials#parametering)
+   ; @note (tutorials#parameterizing)
    (fn [_ illustration-props]
        (let [illustration-props (illustration.prototypes/illustration-props-prototype illustration-props)]
             [illustration illustration-id illustration-props]))))

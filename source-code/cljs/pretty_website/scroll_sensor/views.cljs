@@ -29,7 +29,7 @@
   ; @param (map) sensor-props
   ; {:callback-f (function)}
   [sensor-id {:keys [callback-f] :as sensor-props}]
-  ; @note (tutorials#parametering)
+  ; @note (tutorials#parameterizing)
   (reagent/lifecycles {:component-did-mount    (fn [_ _] (scroll-sensor.side-effects/sensor-did-mount-f sensor-id callback-f))
                        :reagent-render         (fn [_ sensor-props] [scroll-sensor sensor-id sensor-props])}))
                       ;on-mount? on-unmount?
@@ -59,7 +59,7 @@
    [view (random/generate-keyword) sensor-props])
 
   ([sensor-id sensor-props]
-   ; @note (tutorials#parametering)
+   ; @note (tutorials#parameterizing)
    (fn [_ sensor-props]
        (let [sensor-props (pretty-presets.engine/apply-preset              sensor-id sensor-props)
              sensor-props (scroll-sensor.prototypes/sensor-props-prototype sensor-id sensor-props)]

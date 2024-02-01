@@ -4,8 +4,8 @@
               [fruits.vector.api                   :as vector]
               [metamorphic-content.api             :as metamorphic-content]
               [pretty-elements.api                 :as pretty-elements]
+              [pretty-inputs.header.views :as header.views]
               [pretty-inputs.engine.api                   :as pretty-inputs.engine]
-              [pretty-forms.engine.api                    :as pretty-forms.engine]
               [pretty-inputs.text-field.attributes :as text-field.attributes]
               [pretty-inputs.text-field.env        :as text-field.env]
               [pretty-inputs.text-field.prototypes :as text-field.prototypes]
@@ -59,10 +59,8 @@
   ;   it would be misplaced in case the text-field has indent (applied on the input container).
   ; - The surface element has a relatively positioned wrapper element, otherwise
   ;   it wouldn't shrink (in terms of width) in case the text-field has outdent.
-  [:div (text-field.attributes/field-attributes field-id field-props)
-        (if-let [label-props (pretty-inputs.engine/input-label-props field-id field-props)]
-                [pretty-elements/label label-props])
-        [pretty-forms.engine/invalid-message     field-id field-props]
+  [:div (text-field.attributes/field-attributes  field-id field-props)
+        [pretty-inputs.header.views/view         field-id field-props]
         [pretty-inputs.engine/input-synchronizer field-id field-props]
         [:div (text-field.attributes/field-body-attributes field-id field-props)
               [field-start-adornments field-id field-props]
@@ -88,7 +86,7 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   [field-id field-props]
-  ; @note (tutorials#parametering)
+  ; @note (tutorials#parameterizing)
   (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-inputs.engine/input-did-mount    field-id field-props))
                        :component-will-unmount (fn [_ _] (pretty-inputs.engine/input-will-unmount field-id field-props))
                        :reagent-render         (fn [_ field-props] [text-field field-id field-props])}))
@@ -121,7 +119,7 @@
   ;  :hover-pattern (keyword)(opt)              ??
   ;  :indent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :info-text (metamorphic-content)(opt)
+  ;  :info (metamorphic-content)(opt)
   ;  :initial-value (string)(opt)
   ;  :label (metamorphic-content)(opt)
   ;  :line-height (keyword, px or string)(opt)
@@ -173,7 +171,7 @@
    [view (random/generate-keyword) field-props])
 
   ([field-id field-props]
-   ; @note (tutorials#parametering)
+   ; @note (tutorials#parameterizing)
    (fn [_ field-props]
        (let [field-props (pretty-presets.engine/apply-preset          field-id field-props)
              field-props (text-field.prototypes/field-props-prototype field-id field-props)]

@@ -31,7 +31,7 @@
   ; @param (keyword) group-id
   ; @param (map) group-props
   [group-id group-props]
-  ; @note (tutorials#parametering)
+  ; @note (tutorials#parameterizing)
   (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    group-id group-props))
                        :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount group-id group-props))
                        :reagent-render         (fn [_ group-props] [vertical-group group-id group-props])}))
@@ -73,7 +73,7 @@
    [view (random/generate-keyword) group-props])
 
   ([group-id group-props]
-   ; @note (tutorials#parametering)
+   ; @note (tutorials#parameterizing)
    (fn [_ group-props]
        (let [group-props (pretty-presets.engine/apply-preset              group-id group-props)
              group-props (vertical-group.prototypes/group-props-prototype group-id group-props)]

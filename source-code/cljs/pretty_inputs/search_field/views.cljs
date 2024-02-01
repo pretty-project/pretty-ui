@@ -23,7 +23,7 @@
    [view (random/generate-keyword) field-props])
 
   ([field-id field-props]
-   ; @note (tutorials#parametering)
+   ; @note (tutorials#parameterizing)
    (fn [_ field-props]
        (let [field-props (search-field.prototypes/field-props-prototype field-id field-props)]
             [text-field.views/view field-id field-props]))))

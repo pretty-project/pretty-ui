@@ -58,7 +58,7 @@
   ; @param (keyword) bubble-id
   ; @param (map) bubble-props
   [bubble-id bubble-props]
-  ; @note (tutorials#parametering)
+  ; @note (tutorials#parameterizing)
   ; @note (pretty-elements.adornment.views#8097)
   (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    bubble-id bubble-props))
                        :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount bubble-id bubble-props))
@@ -128,7 +128,7 @@
    [view (random/generate-keyword) bubble-props])
 
   ([bubble-id bubble-props]
-   ; @note (tutorials#parametering)
+   ; @note (tutorials#parameterizing)
    (fn [_ bubble-props]
        (let [bubble-props (pretty-presets.engine/apply-preset                    bubble-id bubble-props)
              bubble-props (notification-bubble.prototypes/bubble-props-prototype bubble-id bubble-props)

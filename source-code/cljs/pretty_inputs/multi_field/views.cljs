@@ -49,7 +49,7 @@
   ; @param (keyword) group-id
   ; @param (map) group-props
   [group-id group-props]
-  ; @note (tutorials#parametering)
+  ; @note (tutorials#parameterizing)
   (reagent/lifecycles {:component-did-mount (fn [_ _]); (r/dispatch [:pretty-inputs.group/group-did-mount group-id group-props]))
                        :reagent-render      (fn [_ group-props] [multi-field group-id group-props])}))
 
@@ -75,7 +75,7 @@
    [view (random/generate-keyword) group-props])
 
   ([group-id group-props]
-   ; @note (tutorials#parametering)
+   ; @note (tutorials#parameterizing)
    (fn [_ group-props]
        (let [group-props (multi-field.prototypes/group-props-prototype group-id group-props)]
             [view-lifecycles group-id group-props]))))

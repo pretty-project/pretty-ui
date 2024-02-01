@@ -33,7 +33,7 @@
   ; @param (keyword) swapper-id
   ; @param (map) swapper-props
   [swapper-id swapper-props]
-  ; @note (tutorials#parametering)
+  ; @note (tutorials#parameterizing)
   (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    swapper-id swapper-props))
                        :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount swapper-id swapper-props))
                        :reagent-render         (fn [_ swapper-props] [content-swapper swapper-id swapper-props])}))
@@ -70,9 +70,9 @@
    [view (random/generate-keyword) swapper-props])
 
   ([swapper-id swapper-props]
-   ; @note (tutorials#parametering)
+   ; @note (tutorials#parameterizing)
    (fn [_ swapper-props]
-       (let [swapper-props (pretty-presets.engine/apply-preset                 swapper-id swapper-props)
-             swapper-props (content-swapper.prototypes/swapper-props-prototype swapper-id swapper-props)
-             swapper-props (pretty-elements.engine/use-element-dynamic-props   swapper-id swapper-props)]
+       (let [swapper-props (pretty-presets.engine/apply-preset                  swapper-id swapper-props)
+             swapper-props (content-swapper.prototypes/swapper-props-prototype  swapper-id swapper-props)
+             swapper-props (pretty-elements.engine/import-element-dynamic-props swapper-id swapper-props)]
             [view-lifecycles swapper-id swapper-props]))))

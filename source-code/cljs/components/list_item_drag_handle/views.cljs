@@ -28,7 +28,7 @@
    [view (random/generate-keyword) handle-props])
 
   ([handle-id handle-props]
-   ; @note (tutorials#parametering)
+   ; @note (tutorials#parameterizing)
    (fn [_ handle-props]
        (let [] ; handle-props (list-item-drag-handle.prototypes/handle-props-prototype handle-props)
             [list-item-drag-handle handle-id handle-props]))))

@@ -34,7 +34,7 @@
   ; @param (keyword) slider-id
   ; @param (map) slider-props
   [slider-id slider-props]
-  ; @note (tutorials#parametering)
+  ; @note (tutorials#parameterizing)
   (reagent/lifecycles {:component-did-mount (fn [_ _] (r/dispatch [:pretty-inputs.slider/slider-did-mount slider-id slider-props]))
                        :reagent-render      (fn [_ slider-props] [slider slider-id slider-props])}))
 
@@ -50,7 +50,7 @@
   ;  :helper (metamorphic-content)(opt)
   ;  :indent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :info-text (metamorphic-content)(opt)
+  ;  :info (metamorphic-content)(opt)
   ;  :initial-value (vector)(opt)
   ;   Default: [0 100]
   ;  :label (metamorphic-content)(opt)
@@ -76,7 +76,7 @@
    [view (random/generate-keyword) slider-props])
 
   ([slider-id slider-props]
-   ; @note (tutorials#parametering)
+   ; @note (tutorials#parameterizing)
    (fn [_ slider-props]
        (let [slider-props (pretty-presets.engine/apply-preset       slider-id slider-props)
              slider-props (slider.prototypes/slider-props-prototype slider-id slider-props)]

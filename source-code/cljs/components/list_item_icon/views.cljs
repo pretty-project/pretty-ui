@@ -29,6 +29,6 @@
    [view (random/generate-keyword) icon-props])
 
   ([icon-id icon-props]
-   ; @note (tutorials#parametering)
+   ; @note (tutorials#parameterizing)
    (fn [_ icon-props]
        [list-item-icon icon-id icon-props])))

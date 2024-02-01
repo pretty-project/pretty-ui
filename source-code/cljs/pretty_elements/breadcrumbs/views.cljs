@@ -53,7 +53,7 @@
   ; @param (keyword) breadcrumbs-id
   ; @param (map) breadcrumbs-props
   [breadcrumbs-id breadcrumbs-props]
-  ; @note (tutorials#parametering)
+  ; @note (tutorials#parameterizing)
   (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    breadcrumbs-id breadcrumbs-props))
                        :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount breadcrumbs-id breadcrumbs-props))
                        :reagent-render         (fn [_ breadcrumbs-props] [breadcrumbs breadcrumbs-id breadcrumbs-props])}))
@@ -86,7 +86,7 @@
    [view (random/generate-keyword) breadcrumbs-props])
 
   ([breadcrumbs-id breadcrumbs-props]
-   ; @note (tutorials#parametering)
+   ; @note (tutorials#parameterizing)
    (fn [_ breadcrumbs-props]
        (let [breadcrumbs-props (pretty-presets.engine/apply-preset                 breadcrumbs-id breadcrumbs-props)
              breadcrumbs-props (breadcrumbs.prototypes/breadcrumbs-props-prototype breadcrumbs-id breadcrumbs-props)]

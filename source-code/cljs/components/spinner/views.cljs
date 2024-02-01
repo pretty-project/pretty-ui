@@ -32,7 +32,7 @@
    [view (random/generate-keyword) spinner-props])
 
   ([spinner-id spinner-props]
-   ; @note (tutorials#parametering)
+   ; @note (tutorials#parameterizing)
    (fn [_ spinner-props]
        (let [spinner-props (spinner.prototypes/spinner-props-prototype spinner-props)]
             [spinner spinner-id spinner-props]))))

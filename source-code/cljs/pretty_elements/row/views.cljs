@@ -32,7 +32,7 @@
   ; @param (keyword) row-id
   ; @param (map) row-props
   [row-id row-props]
-  ; @note (tutorials#parametering)
+  ; @note (tutorials#parameterizing)
   (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    row-id row-props))
                        :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount row-id row-props))
                        :reagent-render         (fn [_ row-props] [row row-id row-props])}))
@@ -83,7 +83,7 @@
    [view (random/generate-keyword) row-props])
 
   ([row-id row-props]
-   ; @note (tutorials#parametering)
+   ; @note (tutorials#parameterizing)
    (fn [_ row-props]
        (let [row-props (pretty-presets.engine/apply-preset row-id row-props)
              row-props (row.prototypes/row-props-prototype row-id row-props)]

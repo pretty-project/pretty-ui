@@ -264,23 +264,6 @@
 }
 
 /*** Icon ***/
-
-/*** Helper, info-text ***/
-
-.pe-label--helper,
-.pe-label--info-text {
-  color: var( --text-color-muted );
-}
-
-/*** Helper, info-text ***/
-
-/*** Info-text button ***/
-
-.pe-label--info-text-button {
-  color: var( --text-color-muted );
-}
-
-/*** Info-text button ***/
 /***** Label *****/
 
 
@@ -442,7 +425,11 @@
 /*** Body ***/
 
 .pe-toggle--body {
-  display:     block;
+  /* The 'toggle' element doesn't use flex properties. Therefore, no '{:display :flex}' setting is applied.
+   * When the ':href-uri' property is provide the toggle implements the A html tag.
+   * The pretty-normalizer only sets the block display model for buttons not for anchors. */
+  display: block;
+
   font-weight: 500;
   width:       100%;
 

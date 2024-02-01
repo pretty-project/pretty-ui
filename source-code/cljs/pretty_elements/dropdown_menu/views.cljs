@@ -38,7 +38,7 @@
   ; @param (keyword) menu-id
   ; @param (map) menu-props
   [menu-id menu-props]
-  ; @note (tutorials#parametering)
+  ; @note (tutorials#parameterizing)
   (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    menu-id menu-props))
                        :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount menu-id menu-props))
                        :reagent-render         (fn [_ menu-props] [dropdown-menu menu-id menu-props])}))
@@ -78,7 +78,7 @@
    [view (random/generate-keyword) menu-props])
 
   ([menu-id menu-props]
-   ; @note (tutorials#parametering)
+   ; @note (tutorials#parameterizing)
    (fn [_ menu-props]
        (let [menu-props (pretty-presets.engine/apply-preset            menu-id menu-props)
              menu-props (dropdown-menu.prototypes/menu-props-prototype menu-id menu-props)]

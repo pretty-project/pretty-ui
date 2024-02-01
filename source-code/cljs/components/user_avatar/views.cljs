@@ -72,7 +72,7 @@
    [view (random/generate-keyword) avatar-props])
 
   ([avatar-id avatar-props]
-   ; @note (tutorials#parametering)
+   ; @note (tutorials#parameterizing)
    (fn [_ avatar-props]
        (let [avatar-props (user-avatar.prototypes/avatar-props-prototype avatar-props)]
             [user-avatar avatar-id avatar-props]))))

@@ -81,7 +81,7 @@
    [view (random/generate-keyword) table-props])
 
   ([table-id table-props]
-   ; @note (tutorials#parametering)
+   ; @note (tutorials#parameterizing)
    (fn [_ table-props]
        (let [table-props (input-table.prototypes/table-props-prototype table-props)]
             [input-table table-id table-props]))))

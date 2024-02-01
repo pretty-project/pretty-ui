@@ -55,7 +55,7 @@
    [view (random/generate-keyword) label-props])
 
   ([label-id label-props]
-   ; @note (tutorials#parametering)
+   ; @note (tutorials#parameterizing)
    (fn [_ label-props]
        (let [label-props (copyright-label.prototypes/label-props-prototype label-props)]
             [copyright-label label-id label-props]))))

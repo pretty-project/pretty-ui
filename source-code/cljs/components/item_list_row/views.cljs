@@ -54,7 +54,7 @@
    [view (random/generate-keyword) row-props])
 
   ([row-id row-props]
-   ; @note (tutorials#parametering)
+   ; @note (tutorials#parameterizing)
    (fn [_ row-props]
        (let [row-props (item-list-row.prototypes/row-props-prototype row-props)]
             [item-list-row row-id row-props]))))

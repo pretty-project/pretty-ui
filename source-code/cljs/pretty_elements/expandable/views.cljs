@@ -54,7 +54,7 @@
   ; @param (keyword) expandable-id
   ; @param (map) expandable-props
   [expandable-id expandable-props]
-  ; @note (tutorials#parametering)
+  ; @note (tutorials#parameterizing)
   (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    expandable-id expandable-props))
                        :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount expandable-id expandable-props))
                        :reagent-render         (fn [_ expandable-props] [expandable expandable-id expandable-props])}))
@@ -93,7 +93,7 @@
    [view (random/generate-keyword) expandable-props])
 
   ([expandable-id expandable-props]
-   ; @note (tutorials#parametering)
+   ; @note (tutorials#parameterizing)
    (fn [_ expandable-props]
        (let [expandable-props (pretty-presets.engine/apply-preset               expandable-id expandable-props)
              expandable-props (expandable.prototypes/expandable-props-prototype expandable-id expandable-props)]

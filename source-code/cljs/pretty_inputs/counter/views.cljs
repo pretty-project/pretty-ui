@@ -1,9 +1,8 @@
 
 (ns pretty-inputs.counter.views
     (:require [fruits.random.api                :as random]
-              [pretty-elements.api              :as pretty-elements]
+              [pretty-inputs.header.views :as header.views]
               [pretty-inputs.engine.api                :as pretty-inputs.engine]
-              [pretty-forms.engine.api                 :as pretty-forms.engine]
               [pretty-inputs.counter.attributes :as counter.attributes]
               [pretty-inputs.counter.prototypes :as counter.prototypes]
               [pretty-presets.engine.api :as pretty-presets.engine]
@@ -20,10 +19,8 @@
   ; @param (map) counter-props
   ; {}
   [counter-id {:keys [resetable? value-path] :as counter-props}]
-  [:div (counter.attributes/counter-attributes counter-id counter-props)
-        (if-let [label-props (pretty-inputs.engine/input-label-props counter-id counter-props)]
-                [pretty-elements/label label-props])
-        [pretty-forms.engine/invalid-message     counter-id counter-props]
+  [:div (counter.attributes/counter-attributes   counter-id counter-props)
+        [pretty-inputs.header.views/view         counter-id counter-props]
         [pretty-inputs.engine/input-synchronizer counter-id counter-props]
         [:div (counter.attributes/counter-body-attributes counter-id counter-props)
               [:button (counter.attributes/decrease-button-attributes counter-id counter-props)]
@@ -41,7 +38,7 @@
   ; @param (keyword) counter-id
   ; @param (map) counter-props
   [counter-id counter-props]
-  ; @note (tutorials#parametering)
+  ; @note (tutorials#parameterizing)
   (reagent/lifecycles {:component-did-mount (fn [_ _] (r/dispatch [:pretty-inputs.counter/counter-did-mount counter-id counter-props]))
                        :reagent-render      (fn [_ counter-props] [counter counter-id counter-props])}))
 
@@ -60,7 +57,7 @@
   ;  :helper (metamorphic-content)(opt)
   ;  :indent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :info-text (metamorphic-content)(opt)
+  ;  :info (metamorphic-content)(opt)
   ;  :initial-value (integer)(opt)
   ;   Default: 0
   ;  :label (metamorphic-content)(opt)
@@ -85,7 +82,7 @@
    [view (random/generate-keyword) counter-props])
 
   ([counter-id counter-props]
-   ; @note (tutorials#parametering)
+   ; @note (tutorials#parameterizing)
    (fn [_ counter-props]
        (let [counter-props (pretty-presets.engine/apply-preset         counter-id counter-props)
              counter-props (counter.prototypes/counter-props-prototype counter-id counter-props)]

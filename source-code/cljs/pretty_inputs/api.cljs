@@ -22,7 +22,7 @@
               [pretty-inputs.date-field.views      :as date-field.views]
               [pretty-inputs.digit-field.views     :as digit-field.views]
               [pretty-inputs.multi-combo-box.views :as multi-combo-box.views]
-              [pretty-inputs.label.views :as label.views]
+              [pretty-inputs.header.views :as header.views]
               [pretty-inputs.multi-field.views     :as multi-field.views]
               [pretty-inputs.multiline-field.views :as multiline-field.views]
               [pretty-inputs.number-field.views    :as number-field.views]
@@ -37,22 +37,22 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; @redirect (*/input)
-(def checkbox        checkbox.views/input)
-(def chip-group      chip-group.views/input)
-(def combo-box       combo-box.views/input)
-(def counter         counter.views/input)
-(def date-field      date-field.views/input)
-(def digit-field     digit-field.views/input)
-(def label           label.views/input)
-(def multi-combo-box multi-combo-box.views/input)
-(def multi-field     multi-field.views/input)
-(def multiline-field multiline-field.views/input)
-(def number-field    number-field.views/input)
-(def password-field  password-field.views/input)
-(def radio-button    radio-button.views/input)
-(def search-field    search-field.views/input)
-(def select          select.views/input)
-(def slider          slider.views/input)
-(def switch          switch.views/input)
-(def text-field      text-field.views/input)
+; @redirect (*/view)
+(def checkbox        checkbox.views/view)
+(def chip-group      chip-group.views/view)
+(def combo-box       combo-box.views/view)
+(def counter         counter.views/view)
+(def date-field      date-field.views/view)
+(def digit-field     digit-field.views/view)
+(def header          header.views/view)
+(def multi-combo-box multi-combo-box.views/view)
+(def multi-field     multi-field.views/view)
+(def multiline-field multiline-field.views/view)
+(def number-field    number-field.views/view)
+(def password-field  password-field.views/view)
+(def radio-button    radio-button.views/view)
+(def search-field    search-field.views/view)
+(def select          select.views/view)
+(def slider          slider.views/view)
+(def switch          switch.views/view)
+(def text-field      text-field.views/view)

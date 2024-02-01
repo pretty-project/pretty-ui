@@ -31,7 +31,7 @@
   [menu-id {:keys [threshold] :as menu-props}]
   (if (window-observer/viewport-width-min? threshold)
       [pretty-elements/dropdown-menu menu-id menu-props]
-      [sidebar.views/component       menu-id {:content [sidebar-menu menu-id menu-props]}]))
+      [sidebar.views/view            menu-id {:content [sidebar-menu menu-id menu-props]}]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -42,7 +42,7 @@
   ; @param (keyword) menu-id
   ; @param (map) menu-props
   [menu-id menu-props]
-  ; @note (tutorials#parametering)
+  ; @note (tutorials#parameterizing)
   (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    menu-id menu-props))
                        :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount menu-id menu-props))
                        :reagent-render         (fn [_ menu-props] [multi-menu menu-id menu-props])}))
@@ -81,7 +81,7 @@
    [view (random/generate-keyword) menu-props])
 
   ([menu-id menu-props]
-   ; @note (tutorials#parametering)
+   ; @note (tutorials#parameterizing)
    (fn [_ menu-props]
        (let [menu-props (pretty-presets.engine/apply-preset         menu-id menu-props)
              menu-props (multi-menu.prototypes/menu-props-prototype menu-id menu-props)]

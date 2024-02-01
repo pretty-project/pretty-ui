@@ -42,7 +42,7 @@
    [view (random/generate-keyword) button-props])
 
   ([button-id button-props]
-   ; @note (tutorials#parametering)
+   ; @note (tutorials#parameterizing)
    (fn [_ button-props]
        (let [button-props (content-swapper-button.prototypes/button-props-prototype button-props)]
             [pretty-elements/button button-id button-props]))))

@@ -77,7 +77,7 @@
   ; @param (keyword) table-id
   ; @param (map) table-props
   [table-id table-props]
-  ; @note (tutorials#parametering)
+  ; @note (tutorials#parameterizing)
   (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    table-id table-props))
                        :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount table-id table-props))
                        :reagent-render         (fn [_ table-props] [data-table table-id table-props])}))
@@ -131,7 +131,7 @@
    [view (random/generate-keyword) table-props])
 
   ([table-id table-props]
-   ; @note (tutorials#parametering)
+   ; @note (tutorials#parameterizing)
    (fn [_ table-props]
        (let [table-props (pretty-presets.engine/apply-preset          table-id table-props)
              table-props (data-table.prototypes/table-props-prototype table-id table-props)]

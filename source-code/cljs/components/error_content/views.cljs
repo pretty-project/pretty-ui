@@ -48,7 +48,7 @@
    [view (random/generate-keyword) content-props])
 
   ([content-id content-props]
-   ; @note (tutorials#parametering)
+   ; @note (tutorials#parameterizing)
    (fn [_ content-props]
        (let [] ; content-props (error-content.prototypes/content-props-prototype content-props)
             [error-content content-id content-props]))))

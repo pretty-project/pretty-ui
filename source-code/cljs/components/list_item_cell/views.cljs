@@ -52,7 +52,7 @@
    [view (random/generate-keyword) cell-props])
 
   ([cell-id cell-props]
-   ; @note (tutorials#parametering)
+   ; @note (tutorials#parameterizing)
    (fn [_ cell-props]
        (let [] ; cell-props (list-item-cell.prototypes/cell-props-prototype cell-props)
             [list-item-cell cell-id cell-props]))))

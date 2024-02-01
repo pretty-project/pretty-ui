@@ -5,6 +5,7 @@
               [fruits.vector.api                   :as vector]
               [metamorphic-content.api             :as metamorphic-content]
               [pretty-elements.api                 :as pretty-elements]
+              [pretty-inputs.header.views :as header.views]
               [pretty-inputs.engine.api                   :as pretty-inputs.engine]
               [pretty-inputs.chip-group.attributes :as chip-group.attributes]
               [pretty-inputs.chip-group.prototypes :as chip-group.prototypes]
@@ -45,9 +46,8 @@
   ; @param (map) group-props
   [group-id group-props]
   [:div (chip-group.attributes/chip-group-attributes group-id group-props)
-        (if-let [label-props (pretty-inputs.engine/input-label-props group-id group-props)]
-                [pretty-elements/label label-props])
-        [pretty-inputs.engine/input-synchronizer group-id group-props]
+        [pretty-inputs.header.views/view             group-id group-props]
+        [pretty-inputs.engine/input-synchronizer     group-id group-props]
         [:div (chip-group.attributes/chip-group-body-attributes group-id group-props)
               [chip-group-chip-list                             group-id group-props]]])
 
@@ -60,7 +60,7 @@
   ; @param (keyword) group-id
   ; @param (map) group-props
   [group-id group-props]
-  ; @note (tutorials#parametering)
+  ; @note (tutorials#parameterizing)
   (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-inputs.engine/input-did-mount    group-id group-props))
                        :component-will-unmount (fn [_ _] (pretty-inputs.engine/input-will-unmount group-id group-props))
                        :reagent-render         (fn [_ group-props] [chip-group group-id group-props])}))
@@ -77,7 +77,7 @@
   ;  :helper (metamorphic-content)(opt)
   ;  :indent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :info-text (metamorphic-content)(opt)
+  ;  :info (metamorphic-content)(opt)
   ;  :initial-value (vector)(opt)
   ;  :label (metamorphic-content)(opt)
   ;  :on-changed-f (function)(opt)
@@ -103,7 +103,7 @@
    [view (random/generate-keyword) group-props])
 
   ([group-id group-props]
-   ; @note (tutorials#parametering)
+   ; @note (tutorials#parameterizing)
    (fn [_ group-props]
        (let [group-props (pretty-presets.engine/apply-preset          group-id group-props)
              group-props (chip-group.prototypes/group-props-prototype group-id group-props)]

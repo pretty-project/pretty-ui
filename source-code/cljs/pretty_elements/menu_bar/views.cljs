@@ -60,7 +60,7 @@
   ; @param (keyword) bar-id
   ; @param (map) bar-props
   [bar-id bar-props]
-  ; @note (tutorials#parametering)
+  ; @note (tutorials#parameterizing)
   (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    bar-id bar-props))
                        :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount bar-id bar-props))
                        :reagent-render         (fn [_ bar-props] [menu-bar bar-id bar-props])}))
@@ -142,7 +142,7 @@
    [view (random/generate-keyword) bar-props])
 
   ([bar-id bar-props]
-   ; @note (tutorials#parametering)
+   ; @note (tutorials#parameterizing)
    (fn [_ bar-props]
        (let [bar-props (pretty-presets.engine/apply-preset      bar-id bar-props)
              bar-props (menu-bar.prototypes/bar-props-prototype bar-id bar-props)]

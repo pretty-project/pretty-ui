@@ -27,7 +27,7 @@
    [view (random/generate-keyword) gap-props])
 
   ([gap-id gap-props]
-   ; @note (tutorials#parametering)
+   ; @note (tutorials#parameterizing)
    (fn [_ gap-props]
        (let [] ; gap-props (list-item-gap.prototypes/gap-props-prototype gap-props)
             [list-item-gap gap-id gap-props]))))

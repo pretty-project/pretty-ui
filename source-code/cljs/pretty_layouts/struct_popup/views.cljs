@@ -33,7 +33,7 @@
   ; @param (map) popup-props
   ; {:footer (metamorphic-content)(opt)}
   [popup-id {:keys [footer] :as popup-props}]
-  ; @note (tutorials#parametering)
+  ; @note (tutorials#parameterizing)
   (if footer (reagent/lifecycles {:component-did-mount    (fn [_ _] (struct-popup.utils/footer-did-mount-f    popup-id))
                                   :component-will-unmount (fn [_ _] (struct-popup.utils/footer-will-unmount-f popup-id))
                                   :reagent-render         (fn [_ popup-props] [struct-popup-footer popup-id popup-props])})))
@@ -59,7 +59,7 @@
   ; @param (map) popup-props
   ; {:header (metamorphic-content)(opt)}
   [popup-id {:keys [header] :as popup-props}]
-  ; @note (tutorials#parametering)
+  ; @note (tutorials#parameterizing)
   (if header (reagent/lifecycles {:component-did-mount    (fn [_ _] (struct-popup.utils/header-did-mount-f    popup-id))
                                   :component-will-unmount (fn [_ _] (struct-popup.utils/header-will-unmount-f popup-id))
                                   :reagent-render         (fn [_ popup-props] [struct-popup-header popup-id popup-props])})))
@@ -95,7 +95,7 @@
   ; @param (map) popup-props
   ; {:body (metamorphic-content)(opt)}
   [popup-id {:keys [body] :as popup-props}]
-  ; @note (tutorials#parametering)
+  ; @note (tutorials#parameterizing)
   (if body (reagent/lifecycles {:reagent-render (fn [_ popup-props] [struct-popup-body popup-id popup-props])})))
 
 ;; ----------------------------------------------------------------------------
@@ -127,7 +127,7 @@
   ; @param (map) popup-props
   ; {}
   [popup-id {:keys [lock-scroll? on-mount on-unmount] :as popup-props}]
-  ; @note (tutorials#parametering)
+  ; @note (tutorials#parameterizing)
   (reagent/lifecycles {:component-did-mount    (fn [_ _] (if lock-scroll? (scroll-lock/add-scroll-prohibition! popup-id))
                                                          (if on-mount     (r/dispatch on-mount)))
                        :component-will-unmount (fn [_ _] (if lock-scroll? (scroll-lock/remove-scroll-prohibition! popup-id))
@@ -177,7 +177,7 @@
    [view (random/generate-keyword) popup-props])
 
   ([popup-id popup-props]
-   ; @note (tutorials#parametering)
+   ; @note (tutorials#parameterizing)
    (fn [_ popup-props]
        (let [popup-props (pretty-presets.engine/apply-preset            popup-id popup-props)
              popup-props (struct-popup.prototypes/popup-props-prototype popup-id popup-props)]

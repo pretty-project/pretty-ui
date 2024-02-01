@@ -38,7 +38,7 @@
   ; @param (map) sidebar-props
   ; {}
   [sidebar-id {:keys [on-mount on-unmount] :as sidebar-props}]
-  ; @note (tutorials#parametering)
+  ; @note (tutorials#parameterizing)
   (reagent/lifecycles {:component-did-mount    (fn [_ _] (r/dispatch on-mount))
                        :component-will-unmount (fn [_ _] (r/dispatch on-unmount))
                        :reagent-render         (fn [_ sidebar-props] [sidebar sidebar-id sidebar-props])}))
@@ -79,7 +79,7 @@
    [view (random/generate-keyword) sidebar-props])
 
   ([sidebar-id sidebar-props]
-   ; @note (tutorials#parametering)
+   ; @note (tutorials#parameterizing)
    (fn [_ sidebar-props]
        (let [sidebar-props (pretty-presets.engine/apply-preset         sidebar-id sidebar-props)
              sidebar-props (sidebar.prototypes/sidebar-props-prototype sidebar-id sidebar-props)]

@@ -4,9 +4,8 @@
               [fruits.random.api                 :as random]
               [metamorphic-content.api :as metamorphic-content]
               [fruits.vector.api                 :as vector]
-              [pretty-elements.api               :as pretty-elements]
+              [pretty-inputs.header.views :as header.views]
               [pretty-inputs.engine.api                 :as pretty-inputs.engine]
-              [pretty-forms.engine.api                  :as pretty-forms.engine]
               [pretty-inputs.checkbox.attributes :as checkbox.attributes]
               [pretty-inputs.checkbox.prototypes :as checkbox.prototypes]
               [pretty-presets.engine.api :as pretty-presets.engine]
@@ -55,9 +54,7 @@
   ; @param (map) checkbox-props
   [checkbox-id checkbox-props]
   [:div (checkbox.attributes/checkbox-attributes checkbox-id checkbox-props)
-        (if-let [label-props (pretty-inputs.engine/input-label-props checkbox-id checkbox-props)]
-                [pretty-elements/label label-props])
-        [pretty-forms.engine/invalid-message     checkbox-id checkbox-props]
+        [pretty-inputs.header.views/view         checkbox-id checkbox-props]
         [pretty-inputs.engine/input-synchronizer checkbox-id checkbox-props]
         [:div (checkbox.attributes/checkbox-body-attributes checkbox-id checkbox-props)
               [checkbox-option-list                         checkbox-id checkbox-props]]])
@@ -71,7 +68,7 @@
   ; @param (keyword) checkbox-id
   ; @param (map) checkbox-props
   [checkbox-id checkbox-props]
-  ; @note (tutorials#parametering)
+  ; @note (tutorials#parameterizing)
   (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-inputs.engine/input-did-mount    checkbox-id checkbox-props))
                        :component-will-unmount (fn [_ _] (pretty-inputs.engine/input-will-unmount checkbox-id checkbox-props))
                        :reagent-render         (fn [_ checkbox-props] [checkbox checkbox-id checkbox-props])}))
@@ -94,7 +91,7 @@
   ;  :get-options-f (function)(opt)
   ;  :get-value-f (function)(opt)
   ;  :helper (metamorphic-content)(opt)
-  ;  :info-text (metamorphic-content)(opt)
+  ;  :info (metamorphic-content)(opt)
   ;  :hover-effect (keyword)(opt)
   ;  :indent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
@@ -126,8 +123,8 @@
   ;  :validate-when-change? (boolean)(opt)
   ;  :validate-when-leave? (boolean)(opt)
   ;  :validators (maps in vector)(opt)
-  ;   [{:f (function)
-  ;     :invalid-message (metamorphic-content)(opt)}]}
+  ;   [{:error-text (metamorphic-content)(opt)
+  ;     :f (function)}]}
   ;
   ; @usage
   ; [checkbox {...}]
@@ -138,7 +135,7 @@
    [view (random/generate-keyword) checkbox-props])
 
   ([checkbox-id checkbox-props]
-   ; @note (tutorials#parametering)
+   ; @note (tutorials#parameterizing)
    (fn [_ checkbox-props]
        (let [checkbox-props (pretty-presets.engine/apply-preset           checkbox-id checkbox-props)
              checkbox-props (checkbox.prototypes/checkbox-props-prototype checkbox-id checkbox-props)]

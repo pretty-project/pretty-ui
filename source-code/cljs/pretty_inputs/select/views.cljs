@@ -5,8 +5,8 @@
               [fruits.vector.api               :as vector]
               [metamorphic-content.api         :as metamorphic-content]
               [pretty-elements.api             :as pretty-elements]
+              [pretty-inputs.header.views :as header.views]
               [pretty-inputs.engine.api               :as pretty-inputs.engine]
-              [pretty-forms.engine.api                :as pretty-forms.engine]
               [pretty-inputs.select.attributes :as select.attributes]
               [pretty-inputs.select.env        :as select.env]
               [pretty-inputs.select.prototypes :as select.prototypes]
@@ -147,10 +147,8 @@
   ; @param (map) select-props
   ; {:layout (keyword)}
   [select-id {:keys [layout] :as select-props}]
-  [:div (select.attributes/select-attributes select-id select-props)
-        (if-let [label-props (pretty-inputs.engine/input-label-props select-id select-props)]
-                [pretty-elements/label label-props])
-        [pretty-forms.engine/invalid-message     select-id select-props]
+  [:div (select.attributes/select-attributes     select-id select-props)
+        [pretty-inputs.header.views/view         select-id select-props]
         [pretty-inputs.engine/input-synchronizer select-id select-props]
         [:div (select.attributes/select-body-attributes select-id select-props)
               (case layout :button        [button-layout        select-id select-props]
@@ -168,7 +166,7 @@
   ; @param (keyword) select-id
   ; @param (map) select-props
   [select-id select-props]
-  ; @note (tutorials#parametering)
+  ; @note (tutorials#parameterizing)
   (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-inputs.engine/input-did-mount    select-id select-props))
                        :component-will-unmount (fn [_ _] (pretty-inputs.engine/input-will-unmount select-id select-props))
                        :reagent-render         (fn [_ select-props] [select select-id select-props])}))
@@ -187,7 +185,7 @@
   ;  :get-value-f (function)(opt)
   ;  :helper (metamorphic-content)(opt)
   ;  :hover-effect (keyword)(opt)
-  ;  :info-text (metamorphic-content)(opt)
+  ;  :info (metamorphic-content)(opt)
   ;  :initial-value (*)(opt)
   ;  :label (metamorphic-content)(opt)
   ;  :layout (keyword)(opt)
@@ -230,7 +228,7 @@
    [view (random/generate-keyword) select-props])
 
   ([select-id select-props]
-   ; @note (tutorials#parametering)
+   ; @note (tutorials#parameterizing)
    (fn [_ select-props]
        (let [select-props (pretty-presets.engine/apply-preset       select-id select-props)
              select-props (select.prototypes/select-props-prototype select-id select-props)]

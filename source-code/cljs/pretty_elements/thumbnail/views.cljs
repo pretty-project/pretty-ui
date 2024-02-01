@@ -34,7 +34,7 @@
   ; @param (keyword) thumbnail-id
   ; @param (map) thumbnail-props
   [thumbnail-id thumbnail-props]
-  ; @note (tutorials#parametering)
+  ; @note (tutorials#parameterizing)
   ; @note (pretty-elements.adornment.views#8097)
   (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    thumbnail-id thumbnail-props))
                        :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount thumbnail-id thumbnail-props))
@@ -94,7 +94,7 @@
    [view (random/generate-keyword) thumbnail-props])
 
   ([thumbnail-id thumbnail-props]
-   ; @note (tutorials#parametering)
+   ; @note (tutorials#parameterizing)
    (fn [_ thumbnail-props]
        (let [thumbnail-props (pretty-presets.engine/apply-preset             thumbnail-id thumbnail-props)
              thumbnail-props (thumbnail.prototypes/thumbnail-props-prototype thumbnail-id thumbnail-props)

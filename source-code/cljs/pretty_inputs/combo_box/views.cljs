@@ -93,7 +93,7 @@
    [view (random/generate-keyword) box-props])
 
   ([box-id box-props]
-   ; @note (tutorials#parametering)
+   ; @note (tutorials#parameterizing)
    (fn [_ box-props]
        (let [box-props (combo-box.prototypes/box-props-prototype box-id box-props)]
             [combo-box box-id box-props]))))

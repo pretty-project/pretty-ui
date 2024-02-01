@@ -19,7 +19,7 @@
   ; @return (map)
   ; {}
   [text-id text-props]
-  (merge (label.attributes/copyable-attributes text-id text-props)
+  (merge ;(label.attributes/copyable-attributes text-id text-props)
          {:class :pe-text--copyable}))
 
 ;; ----------------------------------------------------------------------------
@@ -34,7 +34,7 @@
   ; @return (map)
   ; {}
   [text-id text-props]
-  (merge (label.attributes/content-attributes text-id text-props)
+  (merge ;(label.attributes/content-attributes text-id text-props)
          {:class :pe-text--content}))
 
 ;; ----------------------------------------------------------------------------

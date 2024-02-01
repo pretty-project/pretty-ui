@@ -30,7 +30,7 @@
   ; @param (keyword) blank-id
   ; @param (map) blank-props
   [blank-id blank-props]
-  ; @note (tutorials#parametering)
+  ; @note (tutorials#parameterizing)
   (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    blank-id blank-props))
                        :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount blank-id blank-props))
                        :reagent-render         (fn [_ blank-props] [blank blank-id blank-props])}))
@@ -61,7 +61,7 @@
    [view (random/generate-keyword) blank-props])
 
   ([blank-id blank-props]
-   ; @note (tutorials#parametering)
+   ; @note (tutorials#parameterizing)
    (fn [_ blank-props]
        (let [blank-props (pretty-presets.engine/apply-preset     blank-id blank-props)
              blank-props (blank.prototypes/blank-props-prototype blank-id blank-props)]

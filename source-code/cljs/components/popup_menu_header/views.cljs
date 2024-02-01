@@ -40,7 +40,7 @@
    [view (random/generate-keyword) header-props])
 
   ([header-id header-props]
-   ; @note (tutorials#parametering)
+   ; @note (tutorials#parameterizing)
    (fn [_ header-props]
        (let [header-props (popup-menu-header.prototypes/header-props-prototype header-props)]
             [popup-menu-header header-id header-props]))))

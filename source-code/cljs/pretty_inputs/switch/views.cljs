@@ -3,9 +3,8 @@
     (:require [fruits.hiccup.api               :as hiccup]
               [fruits.random.api               :as random]
               [fruits.vector.api               :as vector]
-              [pretty-elements.api             :as pretty-elements]
+              [pretty-inputs.header.views :as header.views]
               [pretty-inputs.engine.api               :as pretty-inputs.engine]
-              [pretty-forms.engine.api                :as pretty-forms.engine]
               [pretty-inputs.switch.attributes :as switch.attributes]
               [pretty-inputs.switch.prototypes :as switch.prototypes]
               [metamorphic-content.api         :as metamorphic-content]
@@ -53,10 +52,8 @@
   ; @param (keyword) switch-id
   ; @param (map) switch-props
   [switch-id switch-props]
-  [:div (switch.attributes/switch-attributes switch-id switch-props)
-        (if-let [label-props (pretty-inputs.engine/input-label-props switch-id switch-props)]
-                [pretty-elements/label label-props])
-        [pretty-forms.engine/invalid-message     switch-id switch-props]
+  [:div (switch.attributes/switch-attributes     switch-id switch-props)
+        [pretty-inputs.header.views/view         switch-id switch-props]
         [pretty-inputs.engine/input-synchronizer switch-id switch-props]
         [:div (switch.attributes/switch-body-attributes switch-id switch-props)
               [switch-option-list                       switch-id switch-props]]])
@@ -70,7 +67,7 @@
   ; @param (keyword) switch-id
   ; @param (map) switch-props
   [switch-id switch-props]
-  ; @note (tutorials#parametering)
+  ; @note (tutorials#parameterizing)
   (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-inputs.engine/input-did-mount    switch-id switch-props))
                        :component-will-unmount (fn [_ _] (pretty-inputs.engine/input-will-unmount switch-id switch-props))
                        :reagent-render         (fn [_ switch-props] [switch switch-id switch-props])}))
@@ -97,7 +94,7 @@
   ;  :hover-effect (keyword)(opt)
   ;  :indent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :info-text (metamorphic-content)(opt)
+  ;  :info (metamorphic-content)(opt)
   ;  :initial-options (vector)(opt)
   ;  :initial-value (*)(opt)
   ;  :label (metamorphic-content)(opt)
@@ -139,7 +136,7 @@
    [view (random/generate-keyword) switch-props])
 
   ([switch-id switch-props]
-   ; @note (tutorials#parametering)
+   ; @note (tutorials#parameterizing)
    (fn [_ switch-props]
        (let [switch-props (pretty-presets.engine/apply-preset       switch-id switch-props)
              switch-props (switch.prototypes/switch-props-prototype switch-id switch-props)]

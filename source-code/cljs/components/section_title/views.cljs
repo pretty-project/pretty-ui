@@ -39,7 +39,7 @@
    [view (random/generate-keyword) title-props])
 
   ([title-id title-props]
-   ; @note (tutorials#parametering)
+   ; @note (tutorials#parameterizing)
    (fn [_ title-props]
        (let [title-props (section-title.prototypes/title-props-prototype title-props)]
             [section-title title-id title-props]))))

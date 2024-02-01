@@ -46,7 +46,7 @@
    [view (random/generate-keyword) bubble-props])
 
   ([bubble-id bubble-props]
-   ; @note (tutorials#parametering)
+   ; @note (tutorials#parameterizing)
    (fn [_ bubble-props]
        (let [bubble-props (notification-bubble.prototypes/bubble-props-prototype bubble-id bubble-props)]
             [pretty-elements/notification-bubble bubble-id bubble-props]))))

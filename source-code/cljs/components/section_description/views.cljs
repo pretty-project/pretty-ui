@@ -31,7 +31,7 @@
    [view (random/generate-keyword) description-props])
 
   ([description-id description-props]
-   ; @note (tutorials#parametering)
+   ; @note (tutorials#parameterizing)
    (fn [_ description-props]
        (let [description-props (section-description.prototypes/description-props-prototype description-props)]
             [pretty-elements/label description-id description-props]))))

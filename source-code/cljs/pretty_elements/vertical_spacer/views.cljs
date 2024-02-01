@@ -27,7 +27,7 @@
   ; @param (keyword) spacer-id
   ; @param (map) spacer-props
   [spacer-id spacer-props]
-  ; @note (tutorials#parametering)
+  ; @note (tutorials#parameterizing)
   (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    spacer-id spacer-props))
                        :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount spacer-id spacer-props))
                        :reagent-render         (fn [_ spacer-props] [vertical-spacer spacer-id spacer-props])}))
@@ -56,7 +56,7 @@
    [view (random/generate-keyword) spacer-props])
 
   ([spacer-id spacer-props]
-   ; @note (tutorials#parametering)
+   ; @note (tutorials#parameterizing)
    (fn [_ spacer-props]
        (let [spacer-props (pretty-presets.engine/apply-preset                spacer-id spacer-props)
              spacer-props (vertical-spacer.prototypes/spacer-props-prototype spacer-id spacer-props)]

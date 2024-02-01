@@ -95,7 +95,7 @@
    ; típus vagy metamorphic-content típusok vektorban (egyszerre több értéket is
    ; fel tud sorolni).
    ;
-   ; @note (tutorials#parametering)
+   ; @note (tutorials#parameterizing)
    (fn [_ element-props]
        (let [element-props (data-element.prototypes/element-props-prototype element-props)]
             [data-element element-id element-props]))))

@@ -32,7 +32,7 @@
   ; @param (keyword) toggle-id
   ; @param (map) toggle-props
   [toggle-id toggle-props]
-  ; @note (tutorials#parametering)
+  ; @note (tutorials#parameterizing)
   ; @note (pretty-elements.adornment.views#8097)
   (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    toggle-id toggle-props))
                        :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount toggle-id toggle-props))
@@ -91,7 +91,7 @@
    [view (random/generate-keyword) toggle-props])
 
   ([toggle-id toggle-props]
-   ; @note (tutorials#parametering)
+   ; @note (tutorials#parameterizing)
    (fn [_ toggle-props]
        (let [toggle-props (pretty-presets.engine/apply-preset           toggle-id toggle-props)
              toggle-props (toggle.prototypes/toggle-props-prototype     toggle-id toggle-props)

@@ -37,7 +37,7 @@
   ; @param (keyword) chip-id
   ; @param (map) chip-props
   [chip-id chip-props]
-  ; @note (tutorials#parametering)
+  ; @note (tutorials#parameterizing)
   ; @note (pretty-elements.adornment.views#8097)
   (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    chip-id chip-props))
                        :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount chip-id chip-props))
@@ -94,7 +94,7 @@
    [view (random/generate-keyword) chip-props])
 
   ([chip-id chip-props]
-   ; @note (tutorials#parametering)
+   ; @note (tutorials#parameterizing)
    (fn [_ chip-props]
        (let [chip-props (pretty-presets.engine/apply-preset           chip-id chip-props)
              chip-props (chip.prototypes/chip-props-prototype         chip-id chip-props)
