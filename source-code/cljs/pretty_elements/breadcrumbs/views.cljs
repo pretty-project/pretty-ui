@@ -60,7 +60,7 @@
 
 (defn element
   ; @note
-  ; Crumbs take the same properties as buttons.
+  ; Crumbs take the same properties as the 'button' element.
   ;
   ; @param (keyword)(opt) breadcrumbs-id
   ; @param (map) breadcrumbs-props

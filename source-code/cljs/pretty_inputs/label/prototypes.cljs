@@ -1,5 +1,5 @@
 
-(ns pretty-elements.label.prototypes
+(ns pretty-inputs.label.prototypes
     (:require [pretty-elements.properties.api :as pretty-elements.properties]))
 
 ;; ----------------------------------------------------------------------------

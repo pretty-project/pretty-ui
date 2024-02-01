@@ -8,8 +8,8 @@
               [pretty-elements.card.views                 :as card.views]
               [pretty-elements.chip.views                 :as chip.views]
               [pretty-elements.column.views               :as column.views]
+              [pretty-elements.content-swapper.side-effects :as content-swapper.side-effects]
               [pretty-elements.content-swapper.views      :as content-swapper.views]
-              [pretty-elements.data-table.views           :as data-table.views]
               [pretty-elements.dropdown-menu.views        :as dropdown-menu.views]
               [pretty-elements.expandable.views           :as expandable.views]
               [pretty-elements.ghost.views                :as ghost.views]
@@ -35,6 +35,9 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+; @redirect (pretty-elements.content-swapper.side-effects/*)
+(def swap-content! content-swapper.side-effects/swap-content!)
+
 ; @redirect (*/element)
 (def adornment            adornment.views/element)
 (def adornment-group      adornment-group.views/element)
@@ -45,7 +48,6 @@
 (def chip                 chip.views/element)
 (def column               column.views/element)
 (def content-swapper      content-swapper.views/element)
-(def data-table           data-table.views/element)
 (def dropdown-menu        dropdown-menu.views/element)
 (def expandable           expandable.views/element)
 (def ghost                ghost.views/element)

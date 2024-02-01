@@ -23,138 +23,29 @@
 
 
 /***** Content swapper *****/
-/*** Wrapper ***/
-
-.pe-content-swapper {
-  /* XXX#0517 (source-code/cljs/pretty_elements/content_swapper/views.cljs) */
-  height: 100%;
-  width:  100%;
-}
-
-/*** Wrapper ***/
-
-/*** Body ***/
-
-.pe-content-swapper--body {
-  /* XXX#0517 (source-code/cljs/pretty_elements/content_swapper/views.cljs) */
-  height: 100%;
-  width:  100%;
-}
-
-.pe-content-swapper--body[data-animation-direction] {
-  /* Because the appering / disappearing contents animated to move in LTR or RTL
-   * directions, the body has to hide the overflowing pages during animations. */
-  overflow-x: hidden;
-}
-
-/*** Body ***/
-
-/*** Animations ***/
-
-@keyframes pe-content-swapper--swap-fwd-in {
-  from {
-    opacity:   0;
-    transform: translateX(10%);
-  }
-  to {
-    opacity:   1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes pe-content-swapper--swap-fwd-out {
-  from {
-    opacity:   1;
-    transform: translateX(0);
-  }
-  to {
-    opacity:   0;
-    transform: translateX(-10%);
-  }
-}
-
-@keyframes pe-content-swapper--swap-bwd-in {
-  from {
-    opacity:   0;
-    transform: translateX(-10%);
-  }
-  to {
-    opacity:   1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes pe-content-swapper--swap-bwd-out {
-  from {
-    opacity:   1;
-    transform: translateX(0);
-  }
-  to {
-    opacity:   0;
-    transform: translateX(10%);
-  }
-}
-
-/*** Animations ***/
-
 /*** Content ***/
 
 .pe-content-swapper--content {
-  animation-duration:  .3s;
   animation-fill-mode: both;
-  position:            absolute;
-  top:                 0;
-
-  /* If the content-swapper body element has indent padding, the absolute
-   * positioned page shouldn't inherit its size (100%) from the body! */
-  height: -webkit-fill-available;
-  width:  -webkit-fill-available;
+  animation-duration: 350ms;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
 }
 
-.pe-content-swapper--body[data-animation-direction="fwd"] .pe-content-swapper--content.pr-mounting {
-  animation-name: pe-content-swapper--swap-fwd-in;
-}
-
-.pe-content-swapper--body[data-animation-direction="fwd"] .pe-content-swapper--content.pr-unmounting {
-  animation-name: pe-content-swapper--swap-fwd-out;
-}
-
-.pe-content-swapper--body[data-animation-direction="bwd"] .pe-content-swapper--content.pr-mounting {
-  animation-name: pe-content-swapper--swap-bwd-in;
-}
-
-.pe-content-swapper--body[data-animation-direction="bwd"] .pe-content-swapper--content.pr-unmounting {
-  animation-name: pe-content-swapper--swap-bwd-out;
-}
+[data-animation-direction="ltr"] .pe-content-swapper--content.tc-appear-active { animation-name: fade-in-ltr;  }
+[data-animation-direction="ltr"] .pe-content-swapper--content.tc-exit-active   { animation-name: fade-out-ltr; }
+[data-animation-direction="rtl"] .pe-content-swapper--content.tc-appear-active { animation-name: fade-in-rtl;  }
+[data-animation-direction="rtl"] .pe-content-swapper--content.tc-exit-active   { animation-name: fade-out-rtl; }
+[data-animation-direction="ttb"] .pe-content-swapper--content.tc-appear-active { animation-name: fade-in-ttb;  }
+[data-animation-direction="ttb"] .pe-content-swapper--content.tc-exit-active   { animation-name: fade-out-ttb; }
+[data-animation-direction="btt"] .pe-content-swapper--content.tc-appear-active { animation-name: fade-in-btt;  }
+[data-animation-direction="btt"] .pe-content-swapper--content.tc-exit-active   { animation-name: fade-out-btt; }
 
 /*** Content ***/
 /***** Content swapper *****/
-
-
-
-/***** Data table *****/
-/*** Column ***/
-
-.pe-data-table--column {
-  display: grid;
-}
-
-/*** Column ***/
-
-/*** Row ***/
-
-.pe-data-table--row {
-  display: grid;
-}
-
-/*** Row ***/
-
-/*** Cell ***/
-
-.pe-data-table--cell {}
-
-/*** Cell ***/
-/***** Data table *****/
 
 
 

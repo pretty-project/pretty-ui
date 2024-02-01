@@ -1,5 +1,5 @@
 
-(ns pretty-elements.label.attributes
+(ns pretty-inputs.label.attributes
     (:require [dom.api                            :as dom]
               [metamorphic-content.api            :as metamorphic-content]
               [pretty-css.accessories.api         :as pretty-css.accessories]
@@ -7,9 +7,9 @@
               [pretty-css.basic.api               :as pretty-css.basic]
               [pretty-css.content.api             :as pretty-css.content]
               [pretty-css.layout.api              :as pretty-css.layout]
-              [pretty-elements.label.side-effects :as label.side-effects]
-              [pretty-elements.label.utils        :as label.utils]
-              [pretty-elements.engine.api                  :as pretty-elements.engine]))
+              [pretty-inputs.label.side-effects :as label.side-effects]
+              [pretty-inputs.label.utils        :as label.utils]
+              [pretty-inputs.engine.api                  :as pretty-inputs.engine]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -86,10 +86,10 @@
   ;
   ; @return (map)
   ; {}
-  [_ {:keys [focus-id] :as label-props}]
+  [_ {:keys [input-id] :as label-props}]
   (-> {:class               :pe-label--body
        :data-letter-spacing :auto
-       :on-mouse-up #(if focus-id (pretty-elements.engine/focus-element! focus-id))}
+       :on-mouse-up #(if input-id (pretty-inputs.engine/focus-input! input-id))}
       (pretty-css.appearance/background-attributes        label-props)
       (pretty-css.appearance/border-attributes       label-props)
       (pretty-css.content/font-attributes         label-props)

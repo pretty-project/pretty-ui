@@ -22,6 +22,7 @@
               [pretty-inputs.date-field.views      :as date-field.views]
               [pretty-inputs.digit-field.views     :as digit-field.views]
               [pretty-inputs.multi-combo-box.views :as multi-combo-box.views]
+              [pretty-inputs.label.views :as label.views]
               [pretty-inputs.multi-field.views     :as multi-field.views]
               [pretty-inputs.multiline-field.views :as multiline-field.views]
               [pretty-inputs.number-field.views    :as number-field.views]
@@ -43,6 +44,7 @@
 (def counter         counter.views/input)
 (def date-field      date-field.views/input)
 (def digit-field     digit-field.views/input)
+(def label           label.views/input)
 (def multi-combo-box multi-combo-box.views/input)
 (def multi-field     multi-field.views/input)
 (def multiline-field multiline-field.views/input)

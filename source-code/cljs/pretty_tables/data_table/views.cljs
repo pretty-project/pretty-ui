@@ -1,10 +1,10 @@
 
-(ns pretty-elements.data-table.views
+(ns pretty-tables.data-table.views
     (:require [fruits.hiccup.api                     :as hiccup]
               [fruits.random.api                     :as random]
               [metamorphic-content.api               :as metamorphic-content]
-              [pretty-elements.data-table.attributes :as data-table.attributes]
-              [pretty-elements.data-table.prototypes :as data-table.prototypes]
+              [pretty-tables.data-table.attributes :as data-table.attributes]
+              [pretty-tables.data-table.prototypes :as data-table.prototypes]
               [pretty-elements.engine.api                     :as pretty-elements.engine]
               [pretty-presets.engine.api :as pretty-presets.engine]
               [reagent.api                           :as reagent]))
@@ -83,31 +83,14 @@
                        :reagent-render         (fn [_ table-props] [data-table table-id table-props])}))
 
 (defn element
+  ; @note
+  ; Cells take the same properties as the 'text' element.
+  ;
   ; @param (keyword)(opt) table-id
   ; @param (map) table-props
   ; {:class (keyword or keywords in vector)(opt)
   ;  :columns (maps in vector)(opt)
   ;   [{:cells (maps in vector)
-  ;      [{:content (metamorphic-content)(opt)
-  ;        :font-size (keyword, px or string)(opt)
-  ;         Default: :s
-  ;        :font-weight (keyword or integer)(opt)
-  ;         Default :normal
-  ;        :horizontal-align (keyword)(opt)
-  ;         Default: :left
-  ;        :indent (map)(opt)
-  ;        :line-height (keyword, px or string)(opt)
-  ;         Default: :text-block
-  ;        :placeholder (metamorphic-content)(opt)
-  ;        :preset (keyword)(opt)
-  ;        :text-color (keyword or string)(opt)
-  ;         Default: :inherit
-  ;        :text-overflow (keyword)(opt)
-  ;         Default: :ellipsis
-  ;        :text-selectable? (boolean)(opt)
-  ;        :text-transform (keyword)(opt)
-  ;        :tooltip-content (metamorphic-content)(opt)
-  ;        :tooltip-position (keyword)(opt)}]
   ;     :preset (keyword)(opt)
   ;     :template (string)(opt)
   ;      Default: "repeat(*cell-count*, 1fr)"

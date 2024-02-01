@@ -36,4 +36,4 @@
 ; + state-synchronizer
 ; + activity-listener
 ; + countdown-timer
-; + content-swapper
+; + transition-controller
