@@ -21,7 +21,7 @@
   (-> {:class :pe-horizontal-line--body
        :style {:height (css/px strength)}}
       (pretty-css.appearance/background-attributes        line-props)
-      (pretty-css.layout/element-size-attributes line-props)
+      (pretty-css.layout/full-block-size-attributes line-props)
       (pretty-css.layout/indent-attributes       line-props)
       (pretty-css.basic/style-attributes        line-props)))
 

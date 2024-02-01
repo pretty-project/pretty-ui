@@ -42,7 +42,7 @@
       (pretty-css.appearance/background-attributes        bubble-props)
       (pretty-css.appearance/border-attributes       bubble-props)
       (pretty-css.control/anchor-attributes        bubble-props)
-      (pretty-css.layout/element-size-attributes bubble-props)
+      (pretty-css.layout/full-block-size-attributes bubble-props)
       (pretty-css.control/state-attributes         bubble-props)
       (pretty-css.control/mouse-event-attributes    bubble-props)
       (pretty-css.content/cursor-attributes       bubble-props)

@@ -23,11 +23,7 @@
       (pretty-css.appearance/border-attributes    ghost-props)
       (pretty-css.layout/indent-attributes    ghost-props)
       (pretty-css.basic/style-attributes     ghost-props)
-      ; The ghost element uses ...
-      ; ... block height profiles,
-      ; ... element width profiles.
-      (pretty-css.layout/block-size-attributes   (dissoc ghost-props :width))
-      (pretty-css.layout/element-size-attributes (dissoc ghost-props :height))))
+      (pretty-css.layout/full-block-size-attributes ghost-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

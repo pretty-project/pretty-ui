@@ -17,10 +17,10 @@
   ; {:class (keyword or keywords in vector)}
   [_ breadcrumbs-props]
   (-> {:class :pe-breadcrumbs--body}
-      (pretty-css.basic/style-attributes         breadcrumbs-props)
-      (pretty-css.layout/flex-attributes         breadcrumbs-props)
-      (pretty-css.layout/element-size-attributes breadcrumbs-props)
-      (pretty-css.layout/indent-attributes       breadcrumbs-props)))
+      (pretty-css.basic/style-attributes            breadcrumbs-props)
+      (pretty-css.layout/flex-attributes            breadcrumbs-props)
+      (pretty-css.layout/full-block-size-attributes breadcrumbs-props)
+      (pretty-css.layout/indent-attributes          breadcrumbs-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

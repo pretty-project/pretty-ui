@@ -35,7 +35,7 @@
       (pretty-css.control/state-attributes    thumbnail-props)
       (pretty-css.control/tab-attributes           thumbnail-props)
       (pretty-css.basic/style-attributes          thumbnail-props)
-      (pretty-css.layout/thumbnail-size-attributes thumbnail-props)
+      (pretty-css.layout/full-block-size-attributes thumbnail-props)
 
       ; i think this text attributes fn is only applied because of the text-selection property
       ; so maybe find a solution for images to make the unselectable just as the icon-attributes fn

@@ -49,19 +49,21 @@
   ; {:class (keyword or keywords in vector)}
   [adornment-id adornment-props]
   (-> {:class :pe-adornment--body}
-      (pretty-css.accessories/tooltip-attributes   adornment-props)
-      (pretty-css.appearance/background-attributes adornment-props)
-      (pretty-css.basic/style-attributes           adornment-props)
-      (pretty-css.control/anchor-attributes        adornment-props)
-      (pretty-css.control/focus-attributes         adornment-props)
-      (pretty-css.control/mouse-event-attributes   adornment-props)
-      (pretty-css.control/state-attributes         adornment-props)
-      (pretty-css.control/tab-attributes           adornment-props)
-      (pretty-css.content/cursor-attributes        adornment-props)
-      (pretty-css.layout/block-size-attributes     adornment-props)
-      (pretty-css.layout/indent-attributes         adornment-props)
-      (pretty-css.live/effect-attributes           adornment-props)
-      (pretty-css.live/progress-attributes         adornment-props)))
+      (pretty-css.accessories/tooltip-attributes    adornment-props)
+      (pretty-css.appearance/background-attributes  adornment-props)
+      (pretty-css.appearance/border-attributes      adornment-props)
+      (pretty-css.basic/style-attributes            adornment-props)
+      (pretty-css.control/anchor-attributes         adornment-props)
+      (pretty-css.control/focus-attributes          adornment-props)
+      (pretty-css.control/mouse-event-attributes    adornment-props)
+      (pretty-css.control/state-attributes          adornment-props)
+      (pretty-css.control/tab-attributes            adornment-props)
+      (pretty-css.content/cursor-attributes         adornment-props)
+      (pretty-css.layout/flex-attributes            adornment-props)
+      (pretty-css.layout/half-block-size-attributes adornment-props)
+      (pretty-css.layout/indent-attributes          adornment-props)
+      (pretty-css.live/effect-attributes            adornment-props)
+      (pretty-css.live/progress-attributes          adornment-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

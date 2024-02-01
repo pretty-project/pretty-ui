@@ -16,7 +16,7 @@
   ; {:class (keyword or keywords in vector)
   [_ spacer-props]
   (-> {:class :pe-horizontal-spacer}
-      (pretty-css.layout/block-size-attributes spacer-props)
       (pretty-css.basic/class-attributes      spacer-props)
       (pretty-css.basic/state-attributes      spacer-props)
-      (pretty-css.basic/style-attributes      spacer-props)))
+      (pretty-css.basic/style-attributes      spacer-props)
+      (pretty-css.layout/quarter-block-size-attributes spacer-props)))

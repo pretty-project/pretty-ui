@@ -20,7 +20,7 @@
   (-> {:class :pe-horizontal-separator--body}
       (pretty-css.appearance/background-attributes             separator-props)
       (pretty-css.layout/indent-attributes            separator-props)
-      (pretty-css.layout/element-size-attributes      separator-props)
+      (pretty-css.layout/full-block-size-attributes      separator-props)
       (pretty-css.basic/style-attributes             separator-props)
       (pretty-css.content/unselectable-text-attributes separator-props)))
 

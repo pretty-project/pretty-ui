@@ -49,7 +49,7 @@
   (-> {:class :pe-label--body}
       (pretty-css.appearance/background-attributes label-props)
       (pretty-css.appearance/border-attributes     label-props)
-      (pretty-css.layout/element-size-attributes   label-props)
+      (pretty-css.layout/full-block-size-attributes   label-props)
       (pretty-css.layout/flex-attributes           label-props)
       (pretty-css.layout/indent-attributes         label-props)
       (pretty-css.basic/style-attributes           label-props)))

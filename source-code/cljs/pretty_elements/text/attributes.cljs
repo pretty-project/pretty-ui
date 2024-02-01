@@ -65,7 +65,7 @@
            (pretty-css.appearance/background-attributes           text-props)
            (pretty-css.appearance/border-attributes          text-props)
            (pretty-css.layout/flex-attributes          text-props)
-           (pretty-css.layout/element-size-attributes    text-props)
+           (pretty-css.layout/full-block-size-attributes    text-props)
            (pretty-css.content/font-attributes            text-props)
            (pretty-css.layout/indent-attributes          text-props)
            (pretty-css.content/selectable-text-attributes text-props)

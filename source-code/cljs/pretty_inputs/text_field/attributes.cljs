@@ -149,7 +149,7 @@
            (pretty-css.input/autofill-attributes     field-props)
            (pretty-css.input/field-attributes        field-props)
            (pretty-css.live/effect-attributes       field-props)
-           (pretty-css.layout/element-size-attributes field-props)
+           (pretty-css.layout/full-block-size-attributes field-props)
            (pretty-css.control/focus-attributes        field-props))))
 
 ;; ----------------------------------------------------------------------------

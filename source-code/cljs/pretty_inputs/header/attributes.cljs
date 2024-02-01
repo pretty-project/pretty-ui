@@ -78,9 +78,9 @@
   ; {:class (keyword or keywords in vector)}
   [_ header-props]
   (-> {:class :pi-header--body}
-      (pretty-css.basic/style-attributes         header-props)
-      (pretty-css.layout/indent-attributes       header-props)
-      (pretty-css.layout/element-size-attributes header-props)))
+      (pretty-css.basic/style-attributes            header-props)
+      (pretty-css.layout/full-block-size-attributes header-props)
+      (pretty-css.layout/indent-attributes          header-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

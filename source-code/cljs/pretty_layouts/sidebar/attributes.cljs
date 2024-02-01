@@ -39,7 +39,7 @@
   (-> {:class :pl-sidebar--body}
       (pretty-css.appearance/background-attributes        sidebar-props)
       (pretty-css.appearance/border-attributes       sidebar-props)
-      (pretty-css.layout/element-size-attributes sidebar-props)
+      (pretty-css.layout/double-block-size-attributes sidebar-props)
       (pretty-css.layout/indent-attributes       sidebar-props)
       (pretty-css.basic/style-attributes        sidebar-props)
       (pretty-css.appearance/theme-attributes        sidebar-props)))

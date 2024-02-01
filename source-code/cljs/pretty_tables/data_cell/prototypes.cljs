@@ -13,6 +13,8 @@
   ;
   ; @return (map)
   [_ cell-props]
-  (-> cell-props (pretty-elements.properties/default-font-props    {:font-size :xxs :font-weight :medium})
+  (-> cell-props (pretty-elements.properties/default-font-props    {:font-size :xxs :font-weight :normal})
                  (pretty-elements.properties/default-content-props {})
+                 (pretty-elements.properties/default-flex-props    {:horizontal-align :left :orientation :horizontal})
+                 (pretty-elements.properties/default-size-props    {:height :parent :width :parent})
                  (pretty-elements.properties/default-text-props    {:text-overflow :ellipsis})))

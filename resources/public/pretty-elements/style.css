@@ -227,10 +227,6 @@
 /*** Wrapper ***/
 
 .pe-label {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-
   /* TEMP
    * 2022.11.26
    * A bubble elemen megjelenített hosszu feliratok kilogtak a bubble elemből.
@@ -239,31 +235,6 @@
 }
 
 /*** Wrapper ***/
-
-/*** Body ***/
-
-.pe-label--body {
-  display: flex;
-}
-
-/*** Body ***/
-
-/*** Copyable ***/
-
-.pe-label--copyable {
-  display: flex;
-  max-width: 100%;
-}
-
-/*** Copyable ***/
-
-/*** Icon ***/
-
-.pe-label--icon {
-  flex-shrink:  0;
-}
-
-/*** Icon ***/
 /***** Label *****/
 
 

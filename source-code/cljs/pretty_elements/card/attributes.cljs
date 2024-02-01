@@ -21,22 +21,22 @@
   ; {:class (keyword or keywords in vector)}
   [card-id card-props]
   (-> {:class :pe-card--body}
-      (pretty-css.accessories/badge-attributes     card-props)
-      (pretty-css.accessories/marker-attributes    card-props)
-      (pretty-css.accessories/tooltip-attributes   card-props)
-      (pretty-css.appearance/background-attributes card-props)
-      (pretty-css.appearance/border-attributes     card-props)
-      (pretty-css.basic/style-attributes           card-props)
-      (pretty-css.content/cursor-attributes        card-props)
-      (pretty-css.control/anchor-attributes        card-props)
-      (pretty-css.control/focus-attributes         card-props)
-      (pretty-css.control/mouse-event-attributes   card-props)
-      (pretty-css.control/state-attributes         card-props)
-      (pretty-css.control/tab-attributes           card-props)
-      (pretty-css.layout/element-size-attributes   card-props)
-      (pretty-css.layout/flex-attributes           card-props)
-      (pretty-css.layout/indent-attributes         card-props)
-      (pretty-css.live/effect-attributes           card-props)))
+      (pretty-css.accessories/badge-attributes        card-props)
+      (pretty-css.accessories/marker-attributes       card-props)
+      (pretty-css.accessories/tooltip-attributes      card-props)
+      (pretty-css.appearance/background-attributes    card-props)
+      (pretty-css.appearance/border-attributes        card-props)
+      (pretty-css.basic/style-attributes              card-props)
+      (pretty-css.content/cursor-attributes           card-props)
+      (pretty-css.control/anchor-attributes           card-props)
+      (pretty-css.control/focus-attributes            card-props)
+      (pretty-css.control/mouse-event-attributes      card-props)
+      (pretty-css.control/state-attributes            card-props)
+      (pretty-css.control/tab-attributes              card-props)
+      (pretty-css.layout/double-block-size-attributes card-props)
+      (pretty-css.layout/flex-attributes              card-props)
+      (pretty-css.layout/indent-attributes            card-props)
+      (pretty-css.live/effect-attributes              card-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

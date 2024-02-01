@@ -26,7 +26,7 @@
        :on-error (image.utils/on-error-f image-id)
        :ref      (react/set-reference-f  image-id)
        :src      (-> src)}
-      (pretty-css.layout/element-size-attributes image-props)
+      (pretty-css.layout/double-block-size-attributes image-props)
       (pretty-css.layout/indent-attributes       image-props)
       (pretty-css.basic/style-attributes        image-props)))
 

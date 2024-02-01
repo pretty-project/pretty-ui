@@ -18,7 +18,7 @@
   [_ group-props]
   (-> {:class :pe-horizontal-group--body}
       (pretty-css.layout/indent-attributes       group-props)
-      (pretty-css.layout/element-size-attributes group-props)
+      (pretty-css.layout/double-block-size-attributes group-props)
       (pretty-css.basic/style-attributes        group-props)))
 
 (defn group-attributes

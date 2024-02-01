@@ -44,7 +44,12 @@
 (defn view
   ; @param (keyword)(opt) adornment-id
   ; @param (map) adornment-props
-  ; {:class (keyword or keywords in vector)(opt)
+  ; {:border-color (keyword or string)(opt)
+  ;  :border-position (keyword)(opt)
+  ;  :border-radius (map)(opt)
+  ;   {:all, :tl, :tr, :br, :bl (keyword, px or string)(opt)}
+  ;  :border-width (keyword, px or string)(opt)
+  ;  :class (keyword or keywords in vector)(opt)
   ;  :click-effect (keyword)(opt)
   ;  :cursor (keyword or string)(opt)
   ;  :disabled? (boolean)(opt)

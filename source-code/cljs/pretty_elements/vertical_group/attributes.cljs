@@ -17,7 +17,7 @@
   ; {:class (keyword or keywords in vector)}
   [_ group-props]
   (-> {:class :pe-vertical-group--body}
-      (pretty-css.layout/element-size-attributes group-props)
+      (pretty-css.layout/full-block-size-attributes group-props)
       (pretty-css.layout/indent-attributes       group-props)
       (pretty-css.basic/style-attributes        group-props)))
 

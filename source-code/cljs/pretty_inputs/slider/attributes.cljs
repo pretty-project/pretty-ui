@@ -76,7 +76,7 @@
   ; {:class (keyword or keywords in vector)}
   [_ slider-props]
   (-> {:class :pi-slider--body}
-      (pretty-css.layout/element-size-attributes slider-props)
+      (pretty-css.layout/full-block-size-attributes slider-props)
       (pretty-css.layout/indent-attributes       slider-props)
       (pretty-css.basic/style-attributes        slider-props)))
 

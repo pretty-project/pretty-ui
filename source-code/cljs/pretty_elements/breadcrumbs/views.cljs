@@ -24,25 +24,17 @@
        (let [crumb-props (breadcrumbs.prototypes/crumb-props-prototype crumb-dex crumb-props)]
             [button.views/view crumb-props])])
 
-(defn breadcrumbs-crumb-list
+(defn breadcrumbs
   ; @ignore
   ;
   ; @param (keyword) breadcrumbs-id
   ; @param (map) breadcrumbs-props
   ; {:crumbs (maps in vector)(opt)}
   [breadcrumbs-id {:keys [crumbs] :as breadcrumbs-props}]
-  (letfn [(f0 [crumb-dex crumb-props] [breadcrumbs-crumb breadcrumbs-id breadcrumbs-props crumb-dex crumb-props])]
-         (hiccup/put-with-indexed [:<>] crumbs f0)))
-
-(defn breadcrumbs
-  ; @ignore
-  ;
-  ; @param (keyword) breadcrumbs-id
-  ; @param (map) breadcrumbs-props
-  [breadcrumbs-id breadcrumbs-props]
   [:div (breadcrumbs.attributes/breadcrumbs-attributes breadcrumbs-id breadcrumbs-props)
         [:div (breadcrumbs.attributes/breadcrumbs-body-attributes breadcrumbs-id breadcrumbs-props)
-              [breadcrumbs-crumb-list                             breadcrumbs-id breadcrumbs-props]]])
+              (letfn [(f0 [crumb-dex crumb-props] [breadcrumbs-crumb breadcrumbs-id breadcrumbs-props crumb-dex crumb-props])]
+                     (hiccup/put-with-indexed [:<>] crumbs f0))]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

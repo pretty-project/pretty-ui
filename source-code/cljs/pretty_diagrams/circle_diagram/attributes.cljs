@@ -45,9 +45,9 @@
   ; {:class (keyword or keywords in vector)}
   [_ diagram-props]
   (-> {:class :pd-circle-diagram--body}
-      (pretty-css.basic/style-attributes         diagram-props)
-      (pretty-css.layout/element-size-attributes diagram-props)
-      (pretty-css.layout/indent-attributes       diagram-props)))
+      (pretty-css.basic/style-attributes            diagram-props)
+      (pretty-css.layout/full-block-size-attributes diagram-props)
+      (pretty-css.layout/indent-attributes          diagram-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

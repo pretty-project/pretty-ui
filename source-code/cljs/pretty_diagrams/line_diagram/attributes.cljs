@@ -29,8 +29,8 @@
         datum-height (css/percent  strength)
         datum-width  (css/percent  datum-ratio)]
        (-> {:class :pd-line-diagram--datum}
-           (pretty-css.appearance/background-attributes {:fill-color datum-color})
-           (pretty-css.layout/block-size-attributes     {:height     datum-height :width datum-width}))))
+           (pretty-css.appearance/background-attributes     {:fill-color datum-color})
+           (pretty-css.layout/quarter-block-size-attributes {:height     datum-height :width datum-width}))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -45,10 +45,10 @@
   ; {:class (keyword or keywords in vector)}
   [_ diagram-props]
   (-> {:class :pd-line-diagram--body}
-      (pretty-css.basic/style-attributes         diagram-props)
-      (pretty-css.layout/element-size-attributes diagram-props)
-      (pretty-css.layout/flex-attributes         diagram-props)
-      (pretty-css.layout/indent-attributes       diagram-props)))
+      (pretty-css.basic/style-attributes            diagram-props)
+      (pretty-css.layout/full-block-size-attributes diagram-props)
+      (pretty-css.layout/flex-attributes            diagram-props)
+      (pretty-css.layout/indent-attributes          diagram-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -25,7 +25,7 @@
       (pretty-css.appearance/background-attributes             toggle-props)
       (pretty-css.appearance/border-attributes            toggle-props)
       (pretty-css.content/cursor-attributes            toggle-props)
-      (pretty-css.layout/element-size-attributes      toggle-props)
+      (pretty-css.layout/full-block-size-attributes      toggle-props)
       (pretty-css.control/focus-attributes             toggle-props)
       (pretty-css.control/state-attributes             toggle-props)
       (pretty-css.layout/indent-attributes            toggle-props)

@@ -18,10 +18,10 @@
   ; {:class (keyword or keywords in vector)}
   [swapper-id swapper-props]
   (-> {:class :pe-content-swapper--body}
-      (pretty-css.basic/style-attributes         swapper-props)
-      (pretty-css.layout/element-size-attributes swapper-props)
-      (pretty-css.layout/indent-attributes       swapper-props)
-      (pretty-css.live/animation-attributes      swapper-props)))
+      (pretty-css.basic/style-attributes              swapper-props)
+      (pretty-css.layout/double-block-size-attributes swapper-props)
+      (pretty-css.layout/indent-attributes            swapper-props)
+      (pretty-css.live/animation-attributes           swapper-props)))
 
 (defn swapper-attributes
   ; @ignore

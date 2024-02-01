@@ -17,11 +17,13 @@
   ; @return (map)
   ; {:class (keyword or keywords in vector)}
   [_ cell-props]
-  (-> {:class :pe-data-cell--body}
+  (-> {:class :pt-data-cell--body}
       (pretty-css.appearance/background-attributes   cell-props)
+      (pretty-css.basic/style-attributes             cell-props)
       (pretty-css.content/font-attributes            cell-props)
       (pretty-css.content/selectable-text-attributes cell-props)
-      (pretty-css.basic/style-attributes             cell-props)
+      (pretty-css.layout/full-block-size-attributes  cell-props)
+      (pretty-css.layout/flex-attributes             cell-props)
       (pretty-css.layout/indent-attributes           cell-props)))
 
 ;; ----------------------------------------------------------------------------
@@ -40,4 +42,5 @@
       (pretty-css.appearance/theme-attributes cell-props)
       (pretty-css.basic/class-attributes      cell-props)
       (pretty-css.basic/state-attributes      cell-props)
-      (pretty-css.layout/outdent-attributes   cell-props)))
+      (pretty-css.layout/outdent-attributes   cell-props)
+      (pretty-css.layout/wrapper-size-attributes cell-props)))

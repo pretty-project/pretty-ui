@@ -36,19 +36,19 @@
   ; {:class (keyword or keywords in vector)}
   [chip-id chip-props]
   (-> {:class :pe-chip--body}
-      (pretty-css.appearance/background-attributes chip-props)
-      (pretty-css.appearance/border-attributes     chip-props)
-      (pretty-css.basic/style-attributes           chip-props)
-      (pretty-css.content/cursor-attributes        chip-props)
-      (pretty-css.control/anchor-attributes        chip-props)
-      (pretty-css.control/focus-attributes         chip-props)
-      (pretty-css.control/mouse-event-attributes   chip-props)
-      (pretty-css.control/state-attributes         chip-props)
-      (pretty-css.control/tab-attributes           chip-props)
-      (pretty-css.layout/element-size-attributes   chip-props)
-      (pretty-css.layout/flex-attributes           chip-props)
-      (pretty-css.layout/indent-attributes         chip-props)
-      (pretty-css.live/effect-attributes           chip-props)))
+      (pretty-css.appearance/background-attributes  chip-props)
+      (pretty-css.appearance/border-attributes      chip-props)
+      (pretty-css.basic/style-attributes            chip-props)
+      (pretty-css.content/cursor-attributes         chip-props)
+      (pretty-css.control/anchor-attributes         chip-props)
+      (pretty-css.control/focus-attributes          chip-props)
+      (pretty-css.control/mouse-event-attributes    chip-props)
+      (pretty-css.control/state-attributes          chip-props)
+      (pretty-css.control/tab-attributes            chip-props)
+      (pretty-css.layout/full-block-size-attributes chip-props)
+      (pretty-css.layout/flex-attributes            chip-props)
+      (pretty-css.layout/indent-attributes          chip-props)
+      (pretty-css.live/effect-attributes            chip-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
