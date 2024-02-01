@@ -20,7 +20,7 @@
               [pretty-inputs/text-field    search-field]
               [pretty-elements/icon-button hide-button]]])
 
-(defn component
+(defn view
   ; @param (keyword)(opt) header-id
   ; @param (map) header-props
   ; {:class (keyword or keywords in vector)(opt)
@@ -40,7 +40,7 @@
   ; @usage
   ; [compact-list-header :my-compact-list-header {...}]
   ([header-props]
-   [component (random/generate-keyword) header-props])
+   [view (random/generate-keyword) header-props])
 
   ([header-id header-props]
    ; @note (tutorials#parametering)

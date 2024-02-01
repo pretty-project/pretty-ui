@@ -24,7 +24,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- component-lifecycles
+(defn- view-lifecycles
   ; @ignore
   ;
   ; @param (keyword) icon-id
@@ -35,7 +35,7 @@
                        :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount icon-id icon-props))
                        :reagent-render         (fn [_ icon-props] [scroll-icon icon-id icon-props])}))
 
-(defn component
+(defn view
   ; @param (keyword)(opt) icon-id
   ; @param (map) icon-props
   ; {:class (keyword or keywords in vector)(opt)
@@ -56,11 +56,11 @@
   ; @usage
   ; [scroll-icon :my-scroll-icon {...}]
   ([icon-props]
-   [component (random/generate-keyword) icon-props])
+   [view (random/generate-keyword) icon-props])
 
   ([icon-id icon-props]
    ; @note (tutorials#parametering)
    (fn [_ icon-props]
        (let [icon-props (pretty-presets.engine/apply-preset          icon-id icon-props)
              icon-props (scroll-icon.prototypes/icon-props-prototype icon-id icon-props)]
-            [component-lifecycles icon-id icon-props]))))
+            [view-lifecycles icon-id icon-props]))))

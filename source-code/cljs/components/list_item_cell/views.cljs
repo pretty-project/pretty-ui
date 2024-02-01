@@ -27,7 +27,7 @@
   [:div.c-list-item-cell (list-item-cell.helpers/cell-attributes cell-id cell-props)
                          [list-item-cell-body cell-id cell-props]])
 
-(defn component
+(defn view
   ; @param (keyword)(opt) cell-id
   ; @param (map) cell-props
   ; {:on-click (function or Re-Frame metamorphic-event)(opt)
@@ -49,7 +49,7 @@
   ; @usage
   ; [list-item-cell :my-cell {:rows [{:content "Row #1"}]}]
   ([cell-props]
-   [component (random/generate-keyword) cell-props])
+   [view (random/generate-keyword) cell-props])
 
   ([cell-id cell-props]
    ; @note (tutorials#parametering)

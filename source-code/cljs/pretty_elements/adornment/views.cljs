@@ -27,7 +27,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- element-lifecycles
+(defn- view-lifecycles
   ; @ignore
   ;
   ; @param (keyword) adornment-id
@@ -41,7 +41,7 @@
                        :component-did-update   (fn [%]   (pretty-elements.engine/element-did-update   adornment-id adornment-props %))
                        :reagent-render         (fn [_ adornment-props] [adornment adornment-id adornment-props])}))
 
-(defn element
+(defn view
   ; @param (keyword)(opt) adornment-id
   ; @param (map) adornment-props
   ; {:class (keyword or keywords in vector)(opt)
@@ -95,7 +95,7 @@
   ; @usage
   ; [adornment :my-adornment {...}]
   ([adornment-props]
-   [element (random/generate-keyword) adornment-props])
+   [view (random/generate-keyword) adornment-props])
 
   ([adornment-id adornment-props]
    ; @note (tutorials#parametering)
@@ -103,4 +103,4 @@
        (let [adornment-props (pretty-presets.engine/apply-preset             adornment-id adornment-props)
              adornment-props (adornment.prototypes/adornment-props-prototype adornment-id adornment-props)
              adornment-props (pretty-elements.engine/element-timeout-props   adornment-id adornment-props)]
-            [element-lifecycles adornment-id adornment-props]))))
+            [view-lifecycles adornment-id adornment-props]))))

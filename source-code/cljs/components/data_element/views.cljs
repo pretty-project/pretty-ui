@@ -62,7 +62,7 @@
                           :content [:<> [data-element-label  element-id element-props]
                                         [data-element-values element-id element-props]]}])
 
-(defn component
+(defn view
   ; @param (keyword)(opt) element-id
   ; @param (map) element-props
   ; {:copyable? (boolean)(opt)
@@ -87,7 +87,7 @@
   ; @usage
   ; [data-element :my-data-element {...}]
   ([element-props]
-   [component (random/generate-keyword) element-props])
+   [view (random/generate-keyword) element-props])
 
   ([element-id element-props]
    ; XXX#0516

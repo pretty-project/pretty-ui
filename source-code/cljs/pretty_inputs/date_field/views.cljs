@@ -7,7 +7,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn input
+(defn view
   ; @note
   ; For more information, check out the documentation of the ['text-field'](#text-field) input.
   ;
@@ -22,10 +22,10 @@
   ; @usage
   ; [date-field :my-date-field {...}]
   ([field-props]
-   [input (random/generate-keyword) field-props])
+   [view (random/generate-keyword) field-props])
 
   ([field-id field-props]
    ; @note (tutorials#parametering)
    (fn [_ field-props]
        (let [field-props (date-field.prototypes/field-props-prototype field-id field-props)]
-            [text-field.views/input field-id field-props]))))
+            [text-field.views/view field-id field-props]))))

@@ -26,8 +26,8 @@
         field-props (multi-field.prototypes/field-props-prototype group-id group-props field-dex)]
        [:div {:class :pi-multi-field--text-field :key field-key}
              (if (or initial-options options options-path)
-                 [combo-box.views/input  field-id field-props]
-                 [text-field.views/input field-id field-props])]))
+                 [combo-box.views/view  field-id field-props]
+                 [text-field.views/view field-id field-props])]))
 
 (defn- multi-field
   ; @ignore
@@ -43,7 +43,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- input-lifecycles
+(defn- view-lifecycles
   ; @ignore
   ;
   ; @param (keyword) group-id
@@ -53,7 +53,7 @@
   (reagent/lifecycles {:component-did-mount (fn [_ _]); (r/dispatch [:pretty-inputs.group/group-did-mount group-id group-props]))
                        :reagent-render      (fn [_ group-props] [multi-field group-id group-props])}))
 
-(defn input
+(defn view
   ; @note
   ; For more information, check out the documentation of the ['text-field'](#text-field) and ['combo-box'](#combo-box) inputs.
   ;
@@ -72,10 +72,10 @@
   ; @usage
   ; [multi-field :my-multi-field {...}]
   ([group-props]
-   [input (random/generate-keyword) group-props])
+   [view (random/generate-keyword) group-props])
 
   ([group-id group-props]
    ; @note (tutorials#parametering)
    (fn [_ group-props]
        (let [group-props (multi-field.prototypes/group-props-prototype group-id group-props)]
-            [input-lifecycles group-id group-props]))))
+            [view-lifecycles group-id group-props]))))

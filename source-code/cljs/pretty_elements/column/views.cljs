@@ -24,7 +24,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- element-lifecycles
+(defn- view-lifecycles
   ; @ignore
   ;
   ; @param (keyword) column-id
@@ -35,7 +35,7 @@
                        :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount column-id column-props))
                        :reagent-render         (fn [_ column-props] [column column-id column-props])}))
 
-(defn element
+(defn view
   ; @param (keyword)(opt) column-id
   ; @param (map) column-props
   ; {:border-color (keyword or string)(opt)
@@ -75,11 +75,11 @@
   ; @usage
   ; [elements/column :my-column {...}]
   ([column-props]
-   [element (random/generate-keyword) column-props])
+   [view (random/generate-keyword) column-props])
 
   ([column-id column-props]
    ; @note (tutorials#parametering)
    (fn [_ column-props]
        (let [column-props (pretty-presets.engine/apply-preset       column-id column-props)
              column-props (column.prototypes/column-props-prototype column-id column-props)]
-            [element-lifecycles column-id column-props]))))
+            [view-lifecycles column-id column-props]))))

@@ -30,7 +30,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- element-lifecycles
+(defn- view-lifecycles
   ; @ignore
   ;
   ; @param (keyword) button-id
@@ -43,7 +43,7 @@
                        :component-did-update   (fn [%]   (pretty-elements.engine/element-did-update   button-id button-props %))
                        :reagent-render         (fn [_ button-props] [button button-id button-props])}))
 
-(defn element
+(defn view
   ; @param (keyword)(opt) button-id
   ; @param (map) button-props
   ; {:badge-color (keyword or string)(opt)
@@ -109,7 +109,7 @@
   ; @usage
   ; [button :my-button {...}]
   ([button-props]
-   [element (random/generate-keyword) button-props])
+   [view (random/generate-keyword) button-props])
 
   ([button-id button-props]
    ; @note (tutorials#parametering)
@@ -117,4 +117,4 @@
        (let [button-props (pretty-presets.engine/apply-preset           button-id button-props)
              button-props (button.prototypes/button-props-prototype     button-id button-props)
              button-props (pretty-elements.engine/element-timeout-props button-id button-props)]
-            [element-lifecycles button-id button-props]))))
+            [view-lifecycles button-id button-props]))))

@@ -27,7 +27,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- element-lifecycles
+(defn- view-lifecycles
   ; @ignore
   ;
   ; @param (keyword) swapper-id
@@ -38,7 +38,7 @@
                        :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount swapper-id swapper-props))
                        :reagent-render         (fn [_ swapper-props] [content-swapper swapper-id swapper-props])}))
 
-(defn element
+(defn view
   ; @param (keyword)(opt) swapper-id
   ; @param (map) swapper-props
   ; {:class (keyword or keywords in vector)(opt)
@@ -67,7 +67,7 @@
   ; @usage
   ; [content-swapper :my-content-swapper {...}]
   ([swapper-props]
-   [element (random/generate-keyword) swapper-props])
+   [view (random/generate-keyword) swapper-props])
 
   ([swapper-id swapper-props]
    ; @note (tutorials#parametering)
@@ -75,4 +75,4 @@
        (let [swapper-props (pretty-presets.engine/apply-preset                 swapper-id swapper-props)
              swapper-props (content-swapper.prototypes/swapper-props-prototype swapper-id swapper-props)
              swapper-props (pretty-elements.engine/use-element-dynamic-props   swapper-id swapper-props)]
-            [element-lifecycles swapper-id swapper-props]))))
+            [view-lifecycles swapper-id swapper-props]))))

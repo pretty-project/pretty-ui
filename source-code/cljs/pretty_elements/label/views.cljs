@@ -121,7 +121,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- element-lifecycles
+(defn- view-lifecycles
   ; @ignore
   ;
   ; @param (keyword) label-id
@@ -132,7 +132,7 @@
                        :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount label-id label-props))
                        :reagent-render         (fn [_ label-props] [label label-id label-props])}))
 
-(defn element
+(defn view
   ; @param (keyword)(opt) label-id
   ; @param (map) label-props
   ; {:border-color (keyword or string)(opt)
@@ -171,8 +171,6 @@
   ;  :info-text (metamorphic-content)(opt)
   ;  :line-height (keyword, px or string)(opt)
   ;   Default: :text-block
-  ;  :marker-color (keyword or string)(opt)
-  ;  :marker-position (keyword)(opt)
   ;  :min-height (keyword, px or string)(opt)
   ;  :min-width (keyword, px or string)(opt)
   ;  :on-copy-f (function)(opt)
@@ -205,11 +203,11 @@
   ; @usage
   ; [label :my-label {...}]
   ([label-props]
-   [element (random/generate-keyword) label-props])
+   [view (random/generate-keyword) label-props])
 
   ([label-id label-props]
    ; @note (tutorials#parametering)
    (fn [_ label-props]
        (let [label-props (pretty-presets.engine/apply-preset     label-id label-props)
              label-props (label.prototypes/label-props-prototype label-id label-props)]
-            [element-lifecycles label-id label-props]))))
+            [view-lifecycles label-id label-props]))))

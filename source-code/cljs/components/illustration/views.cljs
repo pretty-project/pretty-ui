@@ -18,7 +18,7 @@
                                                    :data-element-height height
                                                    :data-element-width  width}]])
 
-(defn component
+(defn view
   ; @param (keyword)(opt) illustration-id
   ; @param (map) illustration-props
   ; {:class (keyword or keywords in vector)(opt)
@@ -35,7 +35,7 @@
   ; @usage
   ; [illustration :my-illustration {...}]
   ([illustration-props]
-   [component (random/generate-keyword) illustration-props])
+   [view (random/generate-keyword) illustration-props])
 
   ([illustration-id illustration-props]
    ; @note (tutorials#parametering)

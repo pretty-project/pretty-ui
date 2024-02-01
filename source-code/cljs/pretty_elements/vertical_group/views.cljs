@@ -25,7 +25,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- element-lifecycles
+(defn- view-lifecycles
   ; @ignore
   ;
   ; @param (keyword) group-id
@@ -36,7 +36,7 @@
                        :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount group-id group-props))
                        :reagent-render         (fn [_ group-props] [vertical-group group-id group-props])}))
 
-(defn element
+(defn view
   ; @param (keyword)(opt) group-id
   ; @param (map) group-props
   ; {:class (keyword or keywords in vector)(opt)
@@ -70,11 +70,11 @@
   ;                  :group-items [{:label "First button"  :href "/first"}
   ;                                {:label "Second button" :href "/second"}]}]
   ([group-props]
-   [element (random/generate-keyword) group-props])
+   [view (random/generate-keyword) group-props])
 
   ([group-id group-props]
    ; @note (tutorials#parametering)
    (fn [_ group-props]
        (let [group-props (pretty-presets.engine/apply-preset              group-id group-props)
              group-props (vertical-group.prototypes/group-props-prototype group-id group-props)]
-            [element-lifecycles group-id group-props]))))
+            [view-lifecycles group-id group-props]))))

@@ -31,7 +31,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- layout-lifecycles
+(defn- view-lifecycles
   ; @ignore
   ;
   ; @param (keyword) sidebar-id
@@ -43,7 +43,7 @@
                        :component-will-unmount (fn [_ _] (r/dispatch on-unmount))
                        :reagent-render         (fn [_ sidebar-props] [sidebar sidebar-id sidebar-props])}))
 
-(defn layout
+(defn view
   ; @param (keyword)(opt) sidebar-id
   ; @param (map) sidebar-props
   ; {:border-color (keyword or string)(opt)
@@ -76,11 +76,11 @@
   ; @usage
   ; [sidebar :my-sidebar {...}]
   ([sidebar-props]
-   [layout (random/generate-keyword) sidebar-props])
+   [view (random/generate-keyword) sidebar-props])
 
   ([sidebar-id sidebar-props]
    ; @note (tutorials#parametering)
    (fn [_ sidebar-props]
        (let [sidebar-props (pretty-presets.engine/apply-preset         sidebar-id sidebar-props)
              sidebar-props (sidebar.prototypes/sidebar-props-prototype sidebar-id sidebar-props)]
-            [layout-lifecycles sidebar-id sidebar-props]))))
+            [view-lifecycles sidebar-id sidebar-props]))))

@@ -11,9 +11,9 @@
   ; @param (map) avatar-props
   [avatar-id avatar-props]
   [:div {:class :c-list-item-avatar}
-        [user-avatar.views/component avatar-id avatar-props]])
+        [user-avatar.views/view avatar-id avatar-props]])
 
-(defn component
+(defn view
   ; @note
   ; For more information, check out the documentation of the ['user-avatar'](/pretty-ui/cljs/pretty-elements/api.html#user-avatar) element.
   ;
@@ -26,7 +26,7 @@
   ; @usage
   ; [list-item-avatar :my-list-item-avatar {...}]
   ([avatar-props]
-   [component (random/generate-keyword) avatar-props])
+   [view (random/generate-keyword) avatar-props])
 
   ([avatar-id avatar-props]
    ; @note (tutorials#parametering)

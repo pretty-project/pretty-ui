@@ -34,7 +34,7 @@
   [:<> [pretty-elements/horizontal-separator {:height :xs}]
        [app-home-button header-id header-props]])
 
-(defn component
+(defn view
   ; @param (keyword)(opt) header-id
   ; @param (map) header-props
   ; {}
@@ -45,7 +45,7 @@
   ; @usage
   ; [side-menu-header :my-side-menu-header {...}]
   ([header-props]
-   [component (random/generate-keyword) header-props])
+   [view (random/generate-keyword) header-props])
 
   ([header-id header-props]
    ; @note (tutorials#parametering)

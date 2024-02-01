@@ -22,7 +22,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- element-lifecycles
+(defn- view-lifecycles
   ; @ignore
   ;
   ; @param (keyword) ghost-id
@@ -33,7 +33,7 @@
                        :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount ghost-id ghost-props))
                        :reagent-render         (fn [_ ghost-props] [ghost ghost-id ghost-props])}))
 
-(defn element
+(defn view
   ; @param (keyword)(opt) ghost-id
   ; @param (map) ghost-props
   ; {:border-radius (map)(opt)
@@ -63,11 +63,11 @@
   ; @usage
   ; [ghost :my-ghost {...}]
   ([ghost-props]
-   [element (random/generate-keyword) ghost-props])
+   [view (random/generate-keyword) ghost-props])
 
   ([ghost-id ghost-props]
    ; @note (tutorials#parametering)
    (fn [_ ghost-props]
        (let [ghost-props (pretty-presets.engine/apply-preset     ghost-id ghost-props)
              ghost-props (ghost.prototypes/ghost-props-prototype ghost-id ghost-props)]
-            [element-lifecycles ghost-id ghost-props]))))
+            [view-lifecycles ghost-id ghost-props]))))

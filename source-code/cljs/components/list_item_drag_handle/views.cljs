@@ -14,7 +14,7 @@
   [_ {:keys [drag-attributes]}]
   [:div.c-list-item-drag-handle drag-attributes [pretty-elements/icon {:icon :drag_handle}]])
 
-(defn component
+(defn view
   ; @param (keyword)(opt) handle-id
   ; @param (map)(opt) handle-props
   ; {:drag-attributes (map)}
@@ -25,7 +25,7 @@
   ; @usage
   ; [list-item-drag-handle :my-handle {...}]
   ([handle-props]
-   [component (random/generate-keyword) handle-props])
+   [view (random/generate-keyword) handle-props])
 
   ([handle-id handle-props]
    ; @note (tutorials#parametering)

@@ -42,7 +42,7 @@
                                                [:div {:class :c-user-avatar--icon :data-icon-family icon-family :data-icon-size :m} icon])
               (if (vector/not-empty? colors)   [user-avatar-colors avatar-id avatar-props])]])
 
-(defn component
+(defn view
   ; @param (keyword)(opt) avatar-id
   ; @param (map) avatar-props
   ; {:class (keyword or keywords in vector)(opt)
@@ -69,7 +69,7 @@
   ; @usage
   ; [user-avatar :my-user-avatar {...}]
   ([avatar-props]
-   [component (random/generate-keyword) avatar-props])
+   [view (random/generate-keyword) avatar-props])
 
   ([avatar-id avatar-props]
    ; @note (tutorials#parametering)

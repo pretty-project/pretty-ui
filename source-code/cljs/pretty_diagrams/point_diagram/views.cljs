@@ -45,7 +45,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- diagram-lifecycles
+(defn- view-lifecycles
   ; @ignore
   ;
   ; @param (keyword) diagram-id
@@ -56,7 +56,7 @@
                        :component-will-unmount (fn [_ _] (pretty-diagrams.engine/diagram-will-unmount diagram-id diagram-props))
                        :reagent-render         (fn [_ diagram-props] [point-diagram diagram-id diagram-props])}))
 
-(defn diagram
+(defn view
   ; @important
   ; This function is incomplete and may not behave as expected.
   ;
@@ -86,7 +86,7 @@
   ; @usage
   ; [point-diagram :my-point-diagram {...}]
   ([diagram-props]
-   [diagram (random/generate-keyword) diagram-props])
+   [view (random/generate-keyword) diagram-props])
 
   ([diagram-id diagram-props]
    ; @note (tutorials#parametering)
@@ -94,4 +94,4 @@
        (let [diagram-props (pretty-presets.engine/apply-preset                diagram-id diagram-props)
              diagram-props (point-diagram.prototypes/diagram-props-prototype  diagram-id diagram-props)
              diagram-props (pretty-diagrams.engine/calculate-diagram-data-sum diagram-id diagram-props)]
-            [diagram-lifecycles diagram-id diagram-props]))))
+            [view-lifecycles diagram-id diagram-props]))))

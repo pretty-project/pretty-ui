@@ -65,7 +65,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- input-lifecycles
+(defn- view-lifecycles
   ; @ignore
   ;
   ; @param (keyword) checkbox-id
@@ -76,7 +76,7 @@
                        :component-will-unmount (fn [_ _] (pretty-inputs.engine/input-will-unmount checkbox-id checkbox-props))
                        :reagent-render         (fn [_ checkbox-props] [checkbox checkbox-id checkbox-props])}))
 
-(defn input
+(defn view
   ; @param (keyword)(opt) checkbox-id
   ; @param (map) checkbox-props
   ; {:border-color (keyword or string)(opt)
@@ -135,11 +135,11 @@
   ; @usage
   ; [checkbox :my-checkbox {...}]
   ([checkbox-props]
-   [input (random/generate-keyword) checkbox-props])
+   [view (random/generate-keyword) checkbox-props])
 
   ([checkbox-id checkbox-props]
    ; @note (tutorials#parametering)
    (fn [_ checkbox-props]
        (let [checkbox-props (pretty-presets.engine/apply-preset           checkbox-id checkbox-props)
              checkbox-props (checkbox.prototypes/checkbox-props-prototype checkbox-id checkbox-props)]
-            [input-lifecycles checkbox-id checkbox-props]))))
+            [view-lifecycles checkbox-id checkbox-props]))))

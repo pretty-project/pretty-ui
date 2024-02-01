@@ -48,7 +48,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- element-lifecycles
+(defn- view-lifecycles
   ; @ignore
   ;
   ; @param (keyword) expandable-id
@@ -59,7 +59,7 @@
                        :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount expandable-id expandable-props))
                        :reagent-render         (fn [_ expandable-props] [expandable expandable-id expandable-props])}))
 
-(defn element
+(defn view
   ; @param (keyword)(opt) expandable-id
   ; @param (map) expandable-props
   ; {:class (keywords or keywords in vector)(opt)
@@ -90,11 +90,11 @@
   ; @usage
   ; [expandable :my-expandable {...}]
   ([expandable-props]
-   [element (random/generate-keyword) expandable-props])
+   [view (random/generate-keyword) expandable-props])
 
   ([expandable-id expandable-props]
    ; @note (tutorials#parametering)
    (fn [_ expandable-props]
        (let [expandable-props (pretty-presets.engine/apply-preset               expandable-id expandable-props)
              expandable-props (expandable.prototypes/expandable-props-prototype expandable-id expandable-props)]
-            [element-lifecycles expandable-id expandable-props]))))
+            [view-lifecycles expandable-id expandable-props]))))

@@ -7,7 +7,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn component
+(defn view
   ; @note
   ; For more information, check out the documentation of the ['notification-bubble'](/pretty-ui/cljs/pretty-elements/api.html#notification-bubble) element.
   ;
@@ -43,7 +43,7 @@
   ; @usage
   ; [notification-bubble :my-notification-bubble {...}]
   ([bubble-props]
-   [component (random/generate-keyword) bubble-props])
+   [view (random/generate-keyword) bubble-props])
 
   ([bubble-id bubble-props]
    ; @note (tutorials#parametering)

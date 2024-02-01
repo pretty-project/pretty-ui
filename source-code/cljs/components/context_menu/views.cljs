@@ -82,7 +82,7 @@
                                 :header [context-menu-header menu-id menu-props]
                                 :min-width :xs}])
 
-(defn component
+(defn view
   ; @param (keyword)(opt) menu-id
   ; @param (map) menu-props
   ; {:label (metamorphic-content)(opt)
@@ -100,7 +100,7 @@
   ; @usage
   ; [context-menu :my-context-menu {...}]
   ([menu-props]
-   [component (random/generate-keyword) menu-props])
+   [view (random/generate-keyword) menu-props])
 
   ([menu-id menu-props]
    ; @note (tutorials#parametering)

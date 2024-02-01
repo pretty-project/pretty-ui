@@ -24,7 +24,7 @@
   [thumbnail-id thumbnail-props]
   [:div.c-list-item-thumbnail [list-item-thumbnail-body thumbnail-id thumbnail-props]])
 
-(defn component
+(defn view
   ; @param (keyword)(opt) thumbnail-id
   ; @param (map) thumbnail-props
   ; {:icon (keyword)(opt)
@@ -43,7 +43,7 @@
   ; @usage
   ; [list-item-thumbnail {:icon :people}]
   ([thumbnail-props]
-   [component (random/generate-keyword) thumbnail-props])
+   [view (random/generate-keyword) thumbnail-props])
 
   ([thumbnail-id thumbnail-props]
    ; @note (tutorials#parametering)

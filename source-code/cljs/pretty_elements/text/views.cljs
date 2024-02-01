@@ -32,7 +32,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- element-lifecycles
+(defn- view-lifecycles
   ; @ignore
   ;
   ; @param (keyword) text-id
@@ -43,7 +43,7 @@
                        :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount text-id text-props))
                        :reagent-render         (fn [_ text-props] [text text-id text-props])}))
 
-(defn element
+(defn view
   ; @param (keyword)(opt) text-id
   ; @param (map) text-props
   ; {:border-color (keyword or string)(opt)
@@ -100,11 +100,11 @@
   ; @usage
   ; [text :my-text {...}]
   ([text-props]
-   [element (random/generate-keyword) text-props])
+   [view (random/generate-keyword) text-props])
 
   ([text-id text-props]
    ; @note (tutorials#parametering)
    (fn [_ text-props]
        (let [text-props (pretty-presets.engine/apply-preset   text-id text-props)
              text-props (text.prototypes/text-props-prototype text-id text-props)]
-            [element-lifecycles text-id text-props]))))
+            [view-lifecycles text-id text-props]))))

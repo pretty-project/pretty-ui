@@ -64,7 +64,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- input-lifecycles
+(defn- view-lifecycles
   ; @ignore
   ;
   ; @param (keyword) switch-id
@@ -75,7 +75,7 @@
                        :component-will-unmount (fn [_ _] (pretty-inputs.engine/input-will-unmount switch-id switch-props))
                        :reagent-render         (fn [_ switch-props] [switch switch-id switch-props])}))
 
-(defn input
+(defn view
   ; @param (keyword)(opt) switch-id
   ; @param (map) switch-props
   ; {:border-color (keyword or string)(opt)
@@ -136,11 +136,11 @@
   ; @usage
   ; [switch :my-switch {...}]
   ([switch-props]
-   [input (random/generate-keyword) switch-props])
+   [view (random/generate-keyword) switch-props])
 
   ([switch-id switch-props]
    ; @note (tutorials#parametering)
    (fn [_ switch-props]
        (let [switch-props (pretty-presets.engine/apply-preset       switch-id switch-props)
              switch-props (switch.prototypes/switch-props-prototype switch-id switch-props)]
-            [input-lifecycles switch-id switch-props]))))
+            [view-lifecycles switch-id switch-props]))))

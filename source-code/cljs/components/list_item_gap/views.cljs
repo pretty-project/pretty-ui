@@ -13,7 +13,7 @@
   [_ {:keys [width]}]
   [:div.c-list-item-gap {}])
 
-(defn component
+(defn view
   ; @param (keyword)(opt) gap-id
   ; @param (map) gap-props
   ; {}
@@ -24,7 +24,7 @@
   ; @usage
   ; [list-item-gap :my-gap {...}]
   ([gap-props]
-   [component (random/generate-keyword) gap-props])
+   [view (random/generate-keyword) gap-props])
 
   ([gap-id gap-props]
    ; @note (tutorials#parametering)

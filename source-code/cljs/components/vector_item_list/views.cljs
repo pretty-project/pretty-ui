@@ -19,7 +19,7 @@
   ;   {}}
   [_ {{:keys [illustration label]} :placeholder}]
   [:div {:class :c-vector-item-list--placeholder}
-        (if illustration [illustration.views/component {:illustration illustration :height :s :width :s}])
+        (if illustration [illustration.views/view {:illustration illustration :height :s :width :s}])
         (if label        [pretty-elements/label {:content label :font-size :l :font-weight :semi-bold}])])
 
 (defn- vector-item-list-items
@@ -46,7 +46,7 @@
         [:div (vector-item-list.attributes/list-body-attributes list-id list-props)
               [vector-item-list-items list-id list-props]]])
 
-(defn component
+(defn view
   ; @param (keyword)(opt) list-id
   ; @param (map) list-props
   ; {:class (keyword or keywords in vector)(opt)
@@ -73,7 +73,7 @@
   ; [vector-item-list :my-vector-item-list {:item-element #'my-item-element
   ;                                         :value-path   [:my-items]}]
   ([list-props]
-   [component (random/generate-keyword) list-props])
+   [view (random/generate-keyword) list-props])
 
   ([list-id list-props]
    ; @note (tutorials#parametering)

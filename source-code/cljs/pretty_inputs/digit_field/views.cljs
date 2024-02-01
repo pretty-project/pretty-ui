@@ -54,7 +54,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- input-lifecycles
+(defn- view-lifecycles
   ; @ignore
   ;
   ; @param (keyword) field-id
@@ -65,7 +65,7 @@
                        :component-will-unmount (fn [_ _] (pretty-inputs.engine/input-will-unmount field-id field-props))
                        :reagent-render         (fn [_ field-props] [digit-field field-id field-props])}))
 
-(defn input
+(defn view
   ; @important
   ; This function is incomplete and may not behave as expected.
   ;
@@ -91,11 +91,11 @@
   ; @usage
   ; [digit-field :my-digit-field {...}]
   ([field-props]
-   [input (random/generate-keyword) field-props])
+   [view (random/generate-keyword) field-props])
 
   ([field-id field-props]
    ; @note (tutorials#parametering)
    (fn [_ field-props]
        (let [field-props (pretty-presets.engine/apply-preset           field-id field-props)
              field-props (digit-field.prototypes/field-props-prototype field-id field-props)]
-            [input-lifecycles field-id field-props]))))
+            [view-lifecycles field-id field-props]))))

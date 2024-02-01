@@ -30,7 +30,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- element-lifecycles
+(defn- view-lifecycles
   ; @ignore
   ;
   ; @param (keyword) image-id
@@ -41,7 +41,7 @@
                        :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount image-id image-props))
                        :reagent-render         (fn [_ image-props] [image image-id image-props])}))
 
-(defn element
+(defn view
   ; @param (keyword)(opt) image-id
   ; @param (map) image-props
   ; {:alt (string)(opt)
@@ -73,11 +73,11 @@
   ; @usage
   ; [image :my-image {...}]
   ([image-props]
-   [element (random/generate-keyword) image-props])
+   [view (random/generate-keyword) image-props])
 
   ([image-id image-props]
    ; @note (tutorials#parametering)
    (fn [_ image-props]
        (let [image-props (pretty-presets.engine/apply-preset     image-id image-props)
              image-props (image.prototypes/image-props-prototype image-id image-props)]
-            [element-lifecycles image-id image-props]))))
+            [view-lifecycles image-id image-props]))))

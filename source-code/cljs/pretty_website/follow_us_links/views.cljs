@@ -26,7 +26,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- component-lifecycles
+(defn- view-lifecycles
   ; @ignore
   ;
   ; @param (keyword) links-id
@@ -37,7 +37,7 @@
                        :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount links-id links-props))
                        :reagent-render         (fn [_ links-props] [follow-us-links links-id links-props])}))
 
-(defn component
+(defn view
   ; @important
   ; To use this component you must add the Font Awesome icon set to your project!
   ;
@@ -74,11 +74,11 @@
   ; [follow-us-links {:links [[:facebook "facebook.com/my-profile"]
   ;                           [:instagram "instagram.com/my-profile"]]}]
   ([links-props]
-   [component (random/generate-keyword) links-props])
+   [view (random/generate-keyword) links-props])
 
   ([links-id links-props]
    ; @note (tutorials#parametering)
    (fn [_ links-props]
        (let [links-props (pretty-presets.engine/apply-preset               links-id links-props)
              links-props (follow-us-links.prototypes/links-props-prototype links-id links-props)]
-            [component-lifecycles links-id links-props]))))
+            [view-lifecycles links-id links-props]))))

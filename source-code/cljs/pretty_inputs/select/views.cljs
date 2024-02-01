@@ -29,7 +29,7 @@
   ; ... optionally provide an "Add" button as end adornment to add new options.
   (let [field-id    (pretty-inputs.engine/input-id->subitem-id      select-id :text-field)
         field-props (select.prototypes/field-props-prototype select-id select-props)]
-       [text-field.views/input field-id field-props]))
+       [text-field.views/view field-id field-props]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -162,7 +162,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- input-lifecycles
+(defn- view-lifecycles
   ; @ignore
   ;
   ; @param (keyword) select-id
@@ -173,7 +173,7 @@
                        :component-will-unmount (fn [_ _] (pretty-inputs.engine/input-will-unmount select-id select-props))
                        :reagent-render         (fn [_ select-props] [select select-id select-props])}))
 
-(defn input
+(defn view
   ; @param (keyword)(opt) select-id
   ; @param (map) select-props
   ; {:add-option-f (function)(opt)
@@ -227,11 +227,11 @@
   ; @usage
   ; [select :my-select {...}]
   ([select-props]
-   [input (random/generate-keyword) select-props])
+   [view (random/generate-keyword) select-props])
 
   ([select-id select-props]
    ; @note (tutorials#parametering)
    (fn [_ select-props]
        (let [select-props (pretty-presets.engine/apply-preset       select-id select-props)
              select-props (select.prototypes/select-props-prototype select-id select-props)]
-            [input-lifecycles select-id select-props]))))
+            [view-lifecycles select-id select-props]))))

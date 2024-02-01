@@ -13,7 +13,7 @@
   [:div {:class :c-list-item-icon}
         [pretty-elements/icon icon-id icon-props]])
 
-(defn component
+(defn view
   ; @note
   ; For more information, check out the documentation of the ['icon'](/pretty-ui/cljs/pretty-elements/api.html#icon) element.
   ;
@@ -26,7 +26,7 @@
   ; @usage
   ; [list-item-icon :my-list-item-icon {...}]
   ([icon-props]
-   [component (random/generate-keyword) icon-props])
+   [view (random/generate-keyword) icon-props])
 
   ([icon-id icon-props]
    ; @note (tutorials#parametering)

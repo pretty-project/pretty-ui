@@ -21,7 +21,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- element-lifecycles
+(defn- view-lifecycles
   ; @ignore
   ;
   ; @param (keyword) spacer-id
@@ -32,7 +32,7 @@
                        :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount spacer-id spacer-props))
                        :reagent-render         (fn [_ spacer-props] [horizontal-spacer spacer-id spacer-props])}))
 
-(defn element
+(defn view
   ; @param (keyword)(opt) spacer-id
   ; @param (map) spacer-props
   ; {:class (keyword or keywords in vector)(opt)
@@ -52,11 +52,11 @@
   ; @usage
   ; [horizontal-spacer :my-horizontal-spacer {...}]
   ([spacer-props]
-   [element (random/generate-keyword) spacer-props])
+   [view (random/generate-keyword) spacer-props])
 
   ([spacer-id spacer-props]
    ; @note (tutorials#parametering)
    (fn [_ spacer-props]
        (let [spacer-props (pretty-presets.engine/apply-preset                  spacer-id spacer-props)
              spacer-props (horizontal-spacer.prototypes/spacer-props-prototype spacer-id spacer-props)]
-            [element-lifecycles spacer-id spacer-props]))))
+            [view-lifecycles spacer-id spacer-props]))))

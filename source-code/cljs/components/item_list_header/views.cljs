@@ -36,7 +36,7 @@
   [:div.c-item-list-header (item-list-header.helpers/header-attributes header-id header-props)
                            [header-cells                               header-id header-props]])
 
-(defn component
+(defn view
   ; @param (keyword)(opt) header-id
   ; @param (map) header-props
   ; {:border (keyword)(opt)
@@ -56,7 +56,7 @@
   ; @usage
   ; [item-list-header :my-item-list-header {:cells [[:div ]]}]
   ([header-props]
-   [component (random/generate-keyword) header-props])
+   [view (random/generate-keyword) header-props])
 
   ([header-id header-props]
    ; @note (tutorials#parametering)

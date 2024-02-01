@@ -120,7 +120,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- layout-lifecycles
+(defn- view-lifecycles
   ; @ignore
   ;
   ; @param (keyword) popup-id
@@ -134,7 +134,7 @@
                                                          (if on-unmount   (r/dispatch on-unmount)))
                        :reagent-render         (fn [_ popup-props] [struct-popup popup-id popup-props])}))
 
-(defn layout
+(defn view
   ; @param (keyword)(opt) popup-id
   ; @param (map) popup-props
   ; {:body (metamorphic-content)(opt)
@@ -174,11 +174,11 @@
   ; @usage
   ; [struct-popup :my-struct-popup {...}]
   ([popup-props]
-   [layout (random/generate-keyword) popup-props])
+   [view (random/generate-keyword) popup-props])
 
   ([popup-id popup-props]
    ; @note (tutorials#parametering)
    (fn [_ popup-props]
        (let [popup-props (pretty-presets.engine/apply-preset            popup-id popup-props)
              popup-props (struct-popup.prototypes/popup-props-prototype popup-id popup-props)]
-            [layout-lifecycles popup-id popup-props]))))
+            [view-lifecycles popup-id popup-props]))))

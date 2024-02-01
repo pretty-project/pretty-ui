@@ -25,7 +25,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- element-lifecycles
+(defn- view-lifecycles
   ; @ignore
   ;
   ; @param (keyword) card-id
@@ -38,7 +38,7 @@
                        :component-did-update   (fn [%]   (pretty-elements.engine/element-did-update   card-id card-props %))
                        :reagent-render         (fn [_ card-props] [card card-id card-props])}))
 
-(defn element
+(defn view
   ; @param (keyword)(opt) card-id
   ; @param (map) card-props
   ; {:badge-color (keyword or string)(opt)
@@ -93,7 +93,7 @@
   ; @usage
   ; [card :my-card {...}]
   ([card-props]
-   [element (random/generate-keyword) card-props])
+   [view (random/generate-keyword) card-props])
 
   ([card-id card-props]
    ; @note (tutorials#parametering)
@@ -101,4 +101,4 @@
        (let [card-props (pretty-presets.engine/apply-preset           card-id card-props)
              card-props (card.prototypes/card-props-prototype         card-id card-props)
              card-props (pretty-elements.engine/element-timeout-props card-id card-props)]
-            [element-lifecycles card-id card-props]))))
+            [view-lifecycles card-id card-props]))))

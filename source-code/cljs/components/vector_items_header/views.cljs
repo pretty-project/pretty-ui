@@ -36,7 +36,7 @@
               [pretty-elements/label {:content label :font-size :xl}]
               [add-icon-button header-id header-props]]])
 
-(defn component
+(defn view
   ; @param (keyword)(opt) header-id
   ; @param (map) header-props
   ; {:class (keyword or keywords in vector)(opt)
@@ -60,7 +60,7 @@
   ; @usage
   ; [vector-items-header :my-vector-items-header {...}]
   ([header-props]
-   [component (random/generate-keyword) header-props])
+   [view (random/generate-keyword) header-props])
 
   ([header-id header-props]
    ; @note (tutorials#parametering)

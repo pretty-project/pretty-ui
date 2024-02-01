@@ -22,7 +22,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- element-lifecycles
+(defn- view-lifecycles
   ; @ignore
   ;
   ; @param (keyword) stepper-id
@@ -33,7 +33,7 @@
                        :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount stepper-id stepper-props))
                        :reagent-render         (fn [_ stepper-props] [stepper stepper-id stepper-props])}))
 
-(defn element
+(defn view
   ; @important
   ; This function is incomplete and may not behave as expected.
   ;
@@ -47,11 +47,11 @@
   ; @usage
   ; [stepper :my-stepper {...}]
   ([stepper-props]
-   [element (random/generate-keyword) stepper-props])
+   [view (random/generate-keyword) stepper-props])
 
   ([stepper-id stepper-props]
    ; @note (tutorials#parametering)
    (fn [_ stepper-props]
        (let [stepper-props (pretty-presets.engine/apply-preset         stepper-id stepper-props)
              stepper-props (stepper.prototypes/stepper-props-prototype stepper-id stepper-props)]
-            [element-lifecycles stepper-id stepper-props]))))
+            [view-lifecycles stepper-id stepper-props]))))

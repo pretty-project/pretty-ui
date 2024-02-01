@@ -54,7 +54,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- input-lifecycles
+(defn- view-lifecycles
   ; @ignore
   ;
   ; @param (keyword) group-id
@@ -65,7 +65,7 @@
                        :component-will-unmount (fn [_ _] (pretty-inputs.engine/input-will-unmount group-id group-props))
                        :reagent-render         (fn [_ group-props] [chip-group group-id group-props])}))
 
-(defn input
+(defn view
   ; @param (keyword)(opt) group-id
   ; @param (map) group-props
   ; {:class (keyword or keywords in vector)(opt)
@@ -100,11 +100,11 @@
   ; @usage
   ; [chip-group :my-chip-group {...}]
   ([group-props]
-   [input (random/generate-keyword) group-props])
+   [view (random/generate-keyword) group-props])
 
   ([group-id group-props]
    ; @note (tutorials#parametering)
    (fn [_ group-props]
        (let [group-props (pretty-presets.engine/apply-preset          group-id group-props)
              group-props (chip-group.prototypes/group-props-prototype group-id group-props)]
-            [input-lifecycles group-id group-props]))))
+            [view-lifecycles group-id group-props]))))

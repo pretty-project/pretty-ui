@@ -7,7 +7,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn component
+(defn view
   ; @note
   ; For more information, check out the documentation of the ['label'](/pretty-ui/cljs/pretty-elements/api.html#label) element.
   ;
@@ -28,7 +28,7 @@
   ; @usage
   ; [section-description :my-section-description {...}]
   ([description-props]
-   [component (random/generate-keyword) description-props])
+   [view (random/generate-keyword) description-props])
 
   ([description-id description-props]
    ; @note (tutorials#parametering)

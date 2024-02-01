@@ -13,7 +13,7 @@
   [_ {:keys [color size]}]
   [:div {:class :c-spinner}])
 
-(defn component
+(defn view
   ; @param (keyword)(opt) spinner-id
   ; @param (map) spinner-props
   ; {:color (keyword)(opt)
@@ -29,7 +29,7 @@
   ; @usage
   ; [spinner :my-spinner {...}]
   ([spinner-props]
-   [component (random/generate-keyword) spinner-props])
+   [view (random/generate-keyword) spinner-props])
 
   ([spinner-id spinner-props]
    ; @note (tutorials#parametering)

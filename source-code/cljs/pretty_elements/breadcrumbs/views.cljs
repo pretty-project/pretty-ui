@@ -22,7 +22,7 @@
   [breadcrumbs-id breadcrumbs-props crumb-dex crumb-props]
   [:<> (if  (-> crumb-dex pos?) [:div {:class :pe-breadcrumbs--separator}])
        (let [crumb-props (breadcrumbs.prototypes/crumb-props-prototype crumb-dex crumb-props)]
-            [button.views/element crumb-props])])
+            [button.views/view crumb-props])])
 
 (defn breadcrumbs-crumb-list
   ; @ignore
@@ -47,7 +47,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- element-lifecycles
+(defn- view-lifecycles
   ; @ignore
   ;
   ; @param (keyword) breadcrumbs-id
@@ -58,7 +58,7 @@
                        :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount breadcrumbs-id breadcrumbs-props))
                        :reagent-render         (fn [_ breadcrumbs-props] [breadcrumbs breadcrumbs-id breadcrumbs-props])}))
 
-(defn element
+(defn view
   ; @note
   ; Crumbs take the same properties as the 'button' element.
   ;
@@ -83,11 +83,11 @@
   ; @usage
   ; [breadcrumbs :my-breadcrumbs {...}]
   ([breadcrumbs-props]
-   [element (random/generate-keyword) breadcrumbs-props])
+   [view (random/generate-keyword) breadcrumbs-props])
 
   ([breadcrumbs-id breadcrumbs-props]
    ; @note (tutorials#parametering)
    (fn [_ breadcrumbs-props]
        (let [breadcrumbs-props (pretty-presets.engine/apply-preset                 breadcrumbs-id breadcrumbs-props)
              breadcrumbs-props (breadcrumbs.prototypes/breadcrumbs-props-prototype breadcrumbs-id breadcrumbs-props)]
-            [element-lifecycles breadcrumbs-id breadcrumbs-props]))))
+            [view-lifecycles breadcrumbs-id breadcrumbs-props]))))

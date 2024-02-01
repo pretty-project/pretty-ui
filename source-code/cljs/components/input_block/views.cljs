@@ -18,7 +18,7 @@
                                     [metamorphic-content/compose label]]
        [:div.c-input-block--input   [metamorphic-content/compose input]]])
 
-(defn component
+(defn view
   ; @description
   ; When displaying a 'text-field' element in an 'input-block' by using the
   ; same ID for both the field and the block, the label of the block can targets the field.
@@ -34,7 +34,7 @@
   ; @usage
   ; [input-block :my-input-block {...}]
   ([block-props]
-   [component (random/generate-keyword) block-props])
+   [view (random/generate-keyword) block-props])
 
   ([block-id block-props]
    ; @note (tutorials#parametering)

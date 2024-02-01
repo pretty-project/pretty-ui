@@ -37,7 +37,7 @@
         ;                :icon             :copyright
         ;                :indent           {:horizontal :xs}]))
 
-(defn component
+(defn view
   ; @param (keyword)(opt) label-id
   ; @param (map) label-props
   ; {:font-size (keyword, px or string)(opt)
@@ -52,7 +52,7 @@
   ; @usage
   ; [copyright-label {...}]
   ([label-props]
-   [component (random/generate-keyword) label-props])
+   [view (random/generate-keyword) label-props])
 
   ([label-id label-props]
    ; @note (tutorials#parametering)

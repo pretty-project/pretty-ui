@@ -28,7 +28,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- element-lifecycles
+(defn- view-lifecycles
   ; @ignore
   ;
   ; @param (keyword) thumbnail-id
@@ -41,7 +41,7 @@
                        :component-did-update   (fn [%]   (pretty-elements.engine/element-did-update   thumbnail-id thumbnail-props %))
                        :reagent-render         (fn [_ thumbnail-props] [thumbnail thumbnail-id thumbnail-props])}))
 
-(defn element
+(defn view
   ; @param (keyword)(opt) thumbnail-id
   ; @param (map) thumbnail-props
   ; {:background-size (keyword)(opt)
@@ -91,7 +91,7 @@
   ; @usage
   ; [thumbnail :my-thumbnail {...}]
   ([thumbnail-props]
-   [element (random/generate-keyword) thumbnail-props])
+   [view (random/generate-keyword) thumbnail-props])
 
   ([thumbnail-id thumbnail-props]
    ; @note (tutorials#parametering)
@@ -99,4 +99,4 @@
        (let [thumbnail-props (pretty-presets.engine/apply-preset             thumbnail-id thumbnail-props)
              thumbnail-props (thumbnail.prototypes/thumbnail-props-prototype thumbnail-id thumbnail-props)
              thumbnail-props (pretty-elements.engine/element-timeout-props   thumbnail-id thumbnail-props)]
-            [element-lifecycles thumbnail-id thumbnail-props]))))
+            [view-lifecycles thumbnail-id thumbnail-props]))))

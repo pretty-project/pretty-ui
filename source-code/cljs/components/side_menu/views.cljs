@@ -22,7 +22,7 @@
                         [:div.c-side-menu--body (side-menu.helpers/menu-body-attributes menu-id menu-props)
                                                 [metamorphic-content/compose content]]]))
 
-(defn component
+(defn view
   ; @param (keyword)(opt) menu-id
   ; @param (map) menu-props
   ; {:border-color (keyword or string)(opt)
@@ -50,7 +50,7 @@
   ; @usage
   ; [side-menu :my-side-menu {...}]
   ([menu-props]
-   [component (random/generate-keyword) menu-props])
+   [view (random/generate-keyword) menu-props])
 
   ([menu-id menu-props]
    ; @note (tutorials#parametering)

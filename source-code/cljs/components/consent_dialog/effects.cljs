@@ -16,4 +16,4 @@
   [r/event-vector<-id]
   (fn [{:keys [db]} [_ dialog-id dialog-props]]
       [:x.ui/render-popup! :components.consent-dialog/view
-                           {:content [consent-dialog.views/component dialog-id dialog-props]}]))
+                           {:content [consent-dialog.views/view dialog-id dialog-props]}]))

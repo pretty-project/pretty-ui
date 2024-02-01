@@ -20,8 +20,8 @@
   ; @param (map) bubble-props
   ; {:secondary-button (map)(opt)}
   [bubble-id {{:keys [layout]} :secondary-button :keys [secondary-button] :as bubble-props}]
-  (if secondary-button (case layout :button [button.views/element      secondary-button]
-                                            [icon-button.views/element secondary-button])))
+  (if secondary-button (case layout :button [button.views/view      secondary-button]
+                                            [icon-button.views/view secondary-button])))
 
 (defn- notification-bubble-primary-button
   ; @ignore
@@ -30,8 +30,8 @@
   ; @param (map) bubble-props
   ; {:primary-button (map)(opt)}
   [bubble-id {{:keys [layout]} :primary-button :keys [primary-button] :as bubble-props}]
-  (if primary-button (case layout :button [button.views/element      primary-button]
-                                          [icon-button.views/element primary-button])))
+  (if primary-button (case layout :button [button.views/view      primary-button]
+                                          [icon-button.views/view primary-button])))
 
 (defn- notification-bubble
   ; @ignore
@@ -52,7 +52,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- element-lifecycles
+(defn- view-lifecycles
   ; @ignore
   ;
   ; @param (keyword) bubble-id
@@ -65,7 +65,7 @@
                        :component-did-update   (fn [%]   (pretty-elements.engine/element-did-update   bubble-id bubble-props %))
                        :reagent-render         (fn [_ bubble-props] [notification-bubble bubble-id bubble-props])}))
 
-(defn element
+(defn view
   ; @param (keyword) bubble-id
   ; @param (map) bubble-props
   ; {:border-color (keyword or string)(opt)
@@ -125,7 +125,7 @@
   ; @usage
   ; [notification-bubble :my-notification-bubble {...}]
   ([bubble-props]
-   [element (random/generate-keyword) bubble-props])
+   [view (random/generate-keyword) bubble-props])
 
   ([bubble-id bubble-props]
    ; @note (tutorials#parametering)
@@ -133,7 +133,7 @@
        (let [bubble-props (pretty-presets.engine/apply-preset                    bubble-id bubble-props)
              bubble-props (notification-bubble.prototypes/bubble-props-prototype bubble-id bubble-props)
              bubble-props (pretty-elements.engine/element-timeout-props          bubble-id bubble-props)]
-            [element-lifecycles bubble-id bubble-props]))))
+            [view-lifecycles bubble-id bubble-props]))))
 
             ; + hover-color, hover-effect, hover-pattern ...
             ; + href-uri, href-target ...

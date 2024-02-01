@@ -26,7 +26,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- element-lifecycles
+(defn- view-lifecycles
   ; @ignore
   ;
   ; @param (keyword) toggle-id
@@ -39,7 +39,7 @@
                        :component-did-update   (fn [%]   (pretty-elements.engine/element-did-update   toggle-id toggle-props %))
                        :reagent-render         (fn [_ toggle-props] [toggle toggle-id toggle-props])}))
 
-(defn element
+(defn view
   ; @param (keyword)(opt) toggle-id
   ; @param (map) toggle-props
   ; {:border-color (keyword or string)(opt)
@@ -88,7 +88,7 @@
   ; @usage
   ; [toggle :my-toggle {...}]
   ([toggle-props]
-   [element (random/generate-keyword) toggle-props])
+   [view (random/generate-keyword) toggle-props])
 
   ([toggle-id toggle-props]
    ; @note (tutorials#parametering)
@@ -96,4 +96,4 @@
        (let [toggle-props (pretty-presets.engine/apply-preset           toggle-id toggle-props)
              toggle-props (toggle.prototypes/toggle-props-prototype     toggle-id toggle-props)
              toggle-props (pretty-elements.engine/element-timeout-props toggle-id toggle-props)]
-            [element-lifecycles toggle-id toggle-props]))))
+            [view-lifecycles toggle-id toggle-props]))))

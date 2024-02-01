@@ -23,15 +23,15 @@
         [(pretty-elements.engine/clickable-auto-tag chip-id chip-props)
          (chip.attributes/chip-body-attributes      chip-id chip-props)
          (when (vector/not-empty? start-adornments)
-               [adornment-group.views/element {:adornments start-adornments}])
+               [adornment-group.views/view {:adornments start-adornments}])
          [:div (chip.attributes/chip-label-attributes chip-id chip-props) label]
          (when (vector/not-empty? end-adornments)
-               [adornment-group.views/element {:adornments end-adornments}])]])
+               [adornment-group.views/view {:adornments end-adornments}])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- element-lifecycles
+(defn- view-lifecycles
   ; @ignore
   ;
   ; @param (keyword) chip-id
@@ -44,7 +44,7 @@
                        :component-did-update   (fn [%]   (pretty-elements.engine/element-did-update   chip-id chip-props %))
                        :reagent-render         (fn [_ chip-props] [chip chip-id chip-props])}))
 
-(defn element
+(defn view
   ; @param (keyword)(opt) chip-id
   ; @param (map) chip-props
   ; {:border-color (keyword or string)(opt)
@@ -91,7 +91,7 @@
   ; @usage
   ; [chip :my-chip {...}]
   ([chip-props]
-   [element (random/generate-keyword) chip-props])
+   [view (random/generate-keyword) chip-props])
 
   ([chip-id chip-props]
    ; @note (tutorials#parametering)
@@ -99,4 +99,4 @@
        (let [chip-props (pretty-presets.engine/apply-preset           chip-id chip-props)
              chip-props (chip.prototypes/chip-props-prototype         chip-id chip-props)
              chip-props (pretty-elements.engine/element-timeout-props chip-id chip-props)]
-            [element-lifecycles chip-id chip-props]))))
+            [view-lifecycles chip-id chip-props]))))

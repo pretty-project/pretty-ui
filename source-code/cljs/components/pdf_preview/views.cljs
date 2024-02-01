@@ -14,7 +14,7 @@
   [_ {:keys [height src width]}]
   [:iframe {:src src :title "Preview" :style {:height height :width width :border-radius "var( --border-radius-m )"}}])
 
-(defn component
+(defn view
   ; @param (keyword)(opt) preview-id
   ; @param (map) preview-props
   ; {:height (string)
@@ -27,7 +27,7 @@
   ; @usage
   ; [pdf-preview :my-pdf-preview {...}]
   ([preview-props]
-   [component (random/generate-keyword) preview-props])
+   [view (random/generate-keyword) preview-props])
 
   ([preview-id preview-props]
    ; @note (tutorials#parametering)

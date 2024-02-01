@@ -28,7 +28,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- input-lifecycles
+(defn- view-lifecycles
   ; @ignore
   ;
   ; @param (keyword) slider-id
@@ -38,7 +38,7 @@
   (reagent/lifecycles {:component-did-mount (fn [_ _] (r/dispatch [:pretty-inputs.slider/slider-did-mount slider-id slider-props]))
                        :reagent-render      (fn [_ slider-props] [slider slider-id slider-props])}))
 
-(defn input
+(defn view
   ; @important
   ; This function is incomplete and may not behave as expected.
   ;
@@ -73,11 +73,11 @@
   ; @usage
   ; [slider :my-slider {...}]
   ([slider-props]
-   [input (random/generate-keyword) slider-props])
+   [view (random/generate-keyword) slider-props])
 
   ([slider-id slider-props]
    ; @note (tutorials#parametering)
    (fn [_ slider-props]
        (let [slider-props (pretty-presets.engine/apply-preset       slider-id slider-props)
              slider-props (slider.prototypes/slider-props-prototype slider-id slider-props)]
-            [input-lifecycles slider-id slider-props]))))
+            [view-lifecycles slider-id slider-props]))))

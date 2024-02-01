@@ -31,12 +31,12 @@
   [button-id button-props]
   [:div ...])
 
-(defn element
+(defn view
   ; @param (keyword)(opt) button-id
   ; @param (map) button-props
   ; {:on-click (function or Re-Frame metamorphic-event)}
   ([button-props]
-   [element (random/generate-keyword) button-props])
+   [view (random/generate-keyword) button-props])
 
   ([button-id button-props]
    (let [button-props (button.prototypes/button-props-prototype button-props)]

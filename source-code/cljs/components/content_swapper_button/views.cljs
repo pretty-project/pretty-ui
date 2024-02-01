@@ -8,7 +8,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn component
+(defn view
   ; @note
   ; For more information, check out the documentation of the ['button'](/pretty-ui/cljs/pretty-elements/api.html#button) element.
   ;
@@ -39,7 +39,7 @@
   ; @usage
   ; [content-swapper-button :my-content-swapper-button {...}]
   ([button-props]
-   [component (random/generate-keyword) button-props])
+   [view (random/generate-keyword) button-props])
 
   ([button-id button-props]
    ; @note (tutorials#parametering)

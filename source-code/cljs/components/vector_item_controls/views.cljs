@@ -104,7 +104,7 @@
               [duplicate-icon-button controls-id controls-props]
               [remove-icon-button    controls-id controls-props]]])
 
-(defn component
+(defn view
   ; @param (keyword)(opt) controls-id
   ; @param (map) controls-props
   ; {:disabled? (boolean)(opt)
@@ -120,7 +120,7 @@
   ; @usage
   ; [vector-item-controls :my-vector-item-controls {...}]
   ([controls-props]
-   [component (random/generate-keyword) controls-props])
+   [view (random/generate-keyword) controls-props])
 
   ([controls-id controls-props]
    ; @note (tutorials#parametering)

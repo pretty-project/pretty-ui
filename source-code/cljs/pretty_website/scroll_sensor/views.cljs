@@ -22,7 +22,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- component-lifecycles
+(defn- view-lifecycles
   ; @ignore
   ;
   ; @param (keyword) sensor-id
@@ -34,7 +34,7 @@
                        :reagent-render         (fn [_ sensor-props] [scroll-sensor sensor-id sensor-props])}))
                       ;on-mount? on-unmount?
 
-(defn component
+(defn view
   ; @param (keyword)(opt) sensor-id
   ; @param (map) sensor-props
   ; {:callback-f (function)
@@ -56,7 +56,7 @@
   ; (defn my-scroll-f [intersecting?] ...)
   ; [scroll-sensor {:callback-f my-scroll-f}]
   ([sensor-props]
-   [component (random/generate-keyword) sensor-props])
+   [view (random/generate-keyword) sensor-props])
 
   ([sensor-id sensor-props]
    ; @note (tutorials#parametering)

@@ -28,7 +28,7 @@
   [:div.c-item-list-row (item-list-row.helpers/row-attributes row-id row-props)
                         [row-cells row-id row-props]])
 
-(defn component
+(defn view
   ; @param (keyword)(opt) row-id
   ; @param (map) row-props
   ; {:border-color (keyword or string)(opt)
@@ -51,7 +51,7 @@
   ; @usage
   ; [item-list-row :my-item-list-row {:cells [[:div ]]}]
   ([row-props]
-   [component (random/generate-keyword) row-props])
+   [view (random/generate-keyword) row-props])
 
   ([row-id row-props]
    ; @note (tutorials#parametering)

@@ -54,7 +54,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- element-lifecycles
+(defn- view-lifecycles
   ; @ignore
   ;
   ; @param (keyword) bar-id
@@ -65,7 +65,7 @@
                        :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount bar-id bar-props))
                        :reagent-render         (fn [_ bar-props] [menu-bar bar-id bar-props])}))
 
-(defn element
+(defn view
   ; @description
   ; You can set the default menu item properties by using the ':item-default'
   ; property or you can specify the properties for each menu item separately.
@@ -139,11 +139,11 @@
   ; @usage
   ; [menu-bar :my-menu-bar {...}]
   ([bar-props]
-   [element (random/generate-keyword) bar-props])
+   [view (random/generate-keyword) bar-props])
 
   ([bar-id bar-props]
    ; @note (tutorials#parametering)
    (fn [_ bar-props]
        (let [bar-props (pretty-presets.engine/apply-preset      bar-id bar-props)
              bar-props (menu-bar.prototypes/bar-props-prototype bar-id bar-props)]
-            [element-lifecycles bar-id bar-props]))))
+            [view-lifecycles bar-id bar-props]))))

@@ -71,7 +71,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- element-lifecycles
+(defn- view-lifecycles
   ; @ignore
   ;
   ; @param (keyword) table-id
@@ -82,7 +82,7 @@
                        :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount table-id table-props))
                        :reagent-render         (fn [_ table-props] [data-table table-id table-props])}))
 
-(defn element
+(defn view
   ; @note
   ; Cells take the same properties as the 'text' element.
   ;
@@ -128,11 +128,11 @@
   ;              :horizontal-gap :xs
   ;              :vertical-gap :xs
   ([table-props]
-   [element (random/generate-keyword) table-props])
+   [view (random/generate-keyword) table-props])
 
   ([table-id table-props]
    ; @note (tutorials#parametering)
    (fn [_ table-props]
        (let [table-props (pretty-presets.engine/apply-preset          table-id table-props)
              table-props (data-table.prototypes/table-props-prototype table-id table-props)]
-            [element-lifecycles table-id table-props]))))
+            [view-lifecycles table-id table-props]))))

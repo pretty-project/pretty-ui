@@ -35,7 +35,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- input-lifecycles
+(defn- view-lifecycles
   ; @ignore
   ;
   ; @param (keyword) counter-id
@@ -45,7 +45,7 @@
   (reagent/lifecycles {:component-did-mount (fn [_ _] (r/dispatch [:pretty-inputs.counter/counter-did-mount counter-id counter-props]))
                        :reagent-render      (fn [_ counter-props] [counter counter-id counter-props])}))
 
-(defn input
+(defn view
   ; @param (keyword)(opt) counter-id
   ; @param (map) counter-props
   ; {:border-color (keyword or string)(opt)
@@ -82,11 +82,11 @@
   ; @usage
   ; [counter :my-counter {...}]
   ([counter-props]
-   [input (random/generate-keyword) counter-props])
+   [view (random/generate-keyword) counter-props])
 
   ([counter-id counter-props]
    ; @note (tutorials#parametering)
    (fn [_ counter-props]
        (let [counter-props (pretty-presets.engine/apply-preset         counter-id counter-props)
              counter-props (counter.prototypes/counter-props-prototype counter-id counter-props)]
-            [input-lifecycles counter-id counter-props]))))
+            [view-lifecycles counter-id counter-props]))))

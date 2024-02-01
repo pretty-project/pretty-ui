@@ -81,7 +81,7 @@
   [pretty-elements/blank {:content [ghost-view-body view-id view-props]
                           :indent  indent}])
 
-(defn component
+(defn view
   ; @param (keyword)(opt) view-id
   ; @param (map) view-props
   ; {:box-count (integer)(opt)
@@ -104,7 +104,7 @@
   ; @usage
   ; [ghost-view :my-ghost-view {...}]
   ([view-props]
-   [component (random/generate-keyword) view-props])
+   [view (random/generate-keyword) view-props])
 
   ([view-id view-props]
    ; @note (tutorials#parametering)

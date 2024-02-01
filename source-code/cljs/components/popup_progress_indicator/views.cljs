@@ -29,7 +29,7 @@
                            :indent           indent
                            :vertical-align   :center}])
 
-(defn component
+(defn view
   ; @param (keyword)(opt) indicator-id
   ; @param (map) indicator-props
   ; {:class (keyword or keywords in vector)(opt)
@@ -58,7 +58,7 @@
   ; @usage
   ; [popup-progress-indicator :my-popup-progress-indicator {...}]
   ([indicator-props]
-   [component (random/generate-keyword) indicator-props])
+   [view (random/generate-keyword) indicator-props])
 
   ([indicator-id indicator-props]
    ; @note (tutorials#parametering)

@@ -29,7 +29,7 @@
               (if primary-button   [pretty-elements/button primary-button]
                                    [:div {:class :c-popup-label-bar--placeholder}])]])
 
-(defn component
+(defn view
   ; @param (keyword)(opt) bar-id
   ; @param (map) bar-props
   ; {:label (map)(opt)
@@ -47,7 +47,7 @@
   ; @usage
   ; [popup-label-bar :my-popup-label-bar {...}]
   ([bar-props]
-   [component (random/generate-keyword) bar-props])
+   [view (random/generate-keyword) bar-props])
 
   ([bar-id bar-props]
    ; @note (tutorials#parametering)

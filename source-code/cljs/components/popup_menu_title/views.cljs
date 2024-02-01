@@ -7,7 +7,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn component
+(defn view
   ; @note
   ; For more information, check out the documentation of the ['label'](/pretty-ui/cljs/pretty-elements/api.html#label) element.
   ;
@@ -44,7 +44,7 @@
   ; @usage
   ; [popup-menu-title :my-popup-menu-title {...}]
   ([title-props]
-   [component (random/generate-keyword) title-props])
+   [view (random/generate-keyword) title-props])
 
   ([title-id title-props]
    ; @note (tutorials#parametering)

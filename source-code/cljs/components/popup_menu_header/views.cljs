@@ -18,7 +18,7 @@
                          [:div {:class :c-popup-menu-header--label-placeholder}])
         (if close-button [pretty-elements/icon-button ::close-button close-button])])
 
-(defn component
+(defn view
   ; @param (keyword) header-id
   ; @param (map) header-props
   ; {:close-button (map)(opt)
@@ -37,7 +37,7 @@
   ; @usage
   ; [popup-menu-header :my-popup-menu-header {...}]
   ([header-props]
-   [component (random/generate-keyword) header-props])
+   [view (random/generate-keyword) header-props])
 
   ([header-id header-props]
    ; @note (tutorials#parametering)

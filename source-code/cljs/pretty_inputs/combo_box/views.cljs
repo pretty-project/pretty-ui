@@ -57,12 +57,12 @@
   ; @param (map) box-props
   [box-id box-props]
   (let [box-props (assoc-in box-props [:surface :content] [combo-box-surface-content box-id box-props])]
-       [text-field.views/input box-id box-props]))
+       [text-field.views/view box-id box-props]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn input
+(defn view
   ; @note
   ; For more information, check out the documentation of the ['text-field'](#text-field) input.
   ;
@@ -90,7 +90,7 @@
   ; @usage
   ; [combo-box :my-combo-box {...}]
   ([box-props]
-   [input (random/generate-keyword) box-props])
+   [view (random/generate-keyword) box-props])
 
   ([box-id box-props]
    ; @note (tutorials#parametering)

@@ -22,7 +22,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- element-lifecycles
+(defn- view-lifecycles
   ; @ignore
   ;
   ; @param (keyword) line-id
@@ -33,7 +33,7 @@
                        :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount line-id line-props))
                        :reagent-render         (fn [_ line-props] [horizontal-line line-id line-props])}))
 
-(defn element
+(defn view
   ; @param (keyword)(opt) line-id
   ; @param (map) line-props
   ; {:class (keyword or keywords in vector)(opt)
@@ -60,11 +60,11 @@
   ; @usage
   ; [horizontal-line :my-horizontal-line {...}]
   ([line-props]
-   [element (random/generate-keyword) line-props])
+   [view (random/generate-keyword) line-props])
 
   ([line-id line-props]
    ; @note (tutorials#parametering)
    (fn [_ line-props]
        (let [line-props (pretty-presets.engine/apply-preset              line-id line-props)
              line-props (horizontal-line.prototypes/line-props-prototype line-id line-props)]
-            [element-lifecycles line-id line-props]))))
+            [view-lifecycles line-id line-props]))))

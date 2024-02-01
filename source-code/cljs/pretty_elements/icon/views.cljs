@@ -23,7 +23,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- element-lifecycles
+(defn- view-lifecycles
   ; @ignore
   ;
   ; @param (keyword) icon-id
@@ -34,7 +34,7 @@
                        :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount icon-id icon-props))
                        :reagent-render         (fn [_ icon-props] [icon icon-id icon-props])}))
 
-(defn element
+(defn view
   ; @param (keyword)(opt) icon-id
   ; @param (map) icon-props
   ; {:class (keyword or keywords in vector)(opt)
@@ -62,11 +62,11 @@
   ; @usage
   ; [icon :my-icon {...}]
   ([icon-props]
-   [element (random/generate-keyword) icon-props])
+   [view (random/generate-keyword) icon-props])
 
   ([icon-id icon-props]
    ; @note (tutorials#parametering)
    (fn [_ icon-props]
        (let [icon-props (pretty-presets.engine/apply-preset   icon-id icon-props)
              icon-props (icon.prototypes/icon-props-prototype icon-id icon-props)]
-            [element-lifecycles icon-id icon-props]))))
+            [view-lifecycles icon-id icon-props]))))

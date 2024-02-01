@@ -10,9 +10,9 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; @redirect (*/layout)
-(def box-popup     box-popup.views/layout)
-(def plain-popup   plain-popup.views/layout)
-(def plain-surface plain-surface.views/layout)
-(def struct-popup  struct-popup.views/layout)
-(def sidebar       sidebar.views/layout)
+; @redirect (*/view)
+(def box-popup     box-popup.views/view)
+(def plain-popup   plain-popup.views/view)
+(def plain-surface plain-surface.views/view)
+(def struct-popup  struct-popup.views/view)
+(def sidebar       sidebar.views/view)

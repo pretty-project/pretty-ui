@@ -8,6 +8,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; @redirect (*/element)
-(def data-cell  data-cell.views/element)
-(def data-table data-table.views/element)
+; @redirect (*/view)
+(def data-cell  data-cell.views/view)
+(def data-table data-table.views/view)

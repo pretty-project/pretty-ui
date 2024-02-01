@@ -13,11 +13,11 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; @redirect (*/component)
-(def contacts          contacts.views/component)
-(def follow-us-links   follow-us-links.views/component)
-(def language-selector language-selector.views/component)
-(def multi-menu        multi-menu.views/component)
-(def sidebar           sidebar.views/component)
-(def scroll-icon       scroll-icon.views/component)
-(def scroll-sensor     scroll-sensor.views/component)
+; @redirect (*/view)
+(def contacts          contacts.views/view)
+(def follow-us-links   follow-us-links.views/view)
+(def language-selector language-selector.views/view)
+(def multi-menu        multi-menu.views/view)
+(def sidebar           sidebar.views/view)
+(def scroll-icon       scroll-icon.views/view)
+(def scroll-sensor     scroll-sensor.views/view)

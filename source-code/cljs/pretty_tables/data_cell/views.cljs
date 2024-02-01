@@ -24,7 +24,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- element-lifecycles
+(defn- view-lifecycles
   ; @ignore
   ;
   ; @param (keyword) cell-id
@@ -35,7 +35,7 @@
                        :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount cell-id cell-props))
                        :reagent-render         (fn [_ cell-props] [data-cell cell-id cell-props])}))
 
-(defn element
+(defn view
   ; @param (keyword)(opt) cell-id
   ; @param (map) cell-props
   ; {:class (keyword or keywords in vector)(opt)
@@ -68,11 +68,11 @@
   ; @usage
   ; [data-cell :my-data-cell {...}]
   ([cell-props]
-   [element (random/generate-keyword) cell-props])
+   [view (random/generate-keyword) cell-props])
 
   ([cell-id cell-props]
    ; @note (tutorials#parametering)
    (fn [_ cell-props]
        (let [cell-props (pretty-presets.engine/apply-preset        cell-id cell-props)
              cell-props (data-cell.prototypes/cell-props-prototype cell-id cell-props)]
-            [element-lifecycles cell-id cell-props]))))
+            [view-lifecycles cell-id cell-props]))))

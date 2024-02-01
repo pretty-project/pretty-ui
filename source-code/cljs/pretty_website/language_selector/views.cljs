@@ -28,7 +28,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- component-lifecycles
+(defn- view-lifecycles
   ; @ignore
   ;
   ; @param (keyword) selector-id
@@ -39,7 +39,7 @@
                        :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount selector-id selector-props))
                        :reagent-render         (fn [_ selector-props] [language-selector selector-id selector-props])}))
 
-(defn component
+(defn view
   ; @param (keyword)(opt) selector-id
   ; @param (map) selector-props
   ; {:class (keyword or keywords in vector)(opt)
@@ -68,11 +68,11 @@
   ; @usage
   ; [language-selector {:languages [:en :hu]}]
   ([selector-props]
-   [component (random/generate-keyword) selector-props])
+   [view (random/generate-keyword) selector-props])
 
   ([selector-id selector-props]
    ; @note (tutorials#parametering)
    (fn [_ selector-props]
        (let [selector-props (pretty-presets.engine/apply-preset                    selector-id selector-props)
              selector-props (language-selector.prototypes/selector-props-prototype selector-id selector-props)]
-            [component-lifecycles selector-id selector-props]))))
+            [view-lifecycles selector-id selector-props]))))

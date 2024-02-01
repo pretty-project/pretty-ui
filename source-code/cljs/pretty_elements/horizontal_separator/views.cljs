@@ -29,7 +29,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- element-lifecycles
+(defn- view-lifecycles
   ; @ignore
   ;
   ; @param (keyword) separator-id
@@ -40,7 +40,7 @@
                        :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount separator-id separator-props))
                        :reagent-render         (fn [_ separator-props] [horizontal-separator separator-id separator-props])}))
 
-(defn element
+(defn view
   ; @param (keyword)(opt) separator-id
   ; @param (map) separator-props
   ; {:class (keyword or keywords in vector)(opt)
@@ -67,11 +67,11 @@
   ; @usage
   ; [horizontal-separator :my-horizontal-separator {...}]
   ([separator-props]
-   [element (random/generate-keyword) separator-props])
+   [view (random/generate-keyword) separator-props])
 
   ([separator-id separator-props]
    ; @note (tutorials#parametering)
    (fn [_ separator-props]
        (let [separator-props (pretty-presets.engine/apply-preset                        separator-id separator-props)
              separator-props (horizontal-separator.prototypes/separator-props-prototype separator-id separator-props)]
-            [element-lifecycles separator-id separator-props]))))
+            [view-lifecycles separator-id separator-props]))))

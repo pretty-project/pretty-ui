@@ -37,7 +37,7 @@
                       [:div.c-input-table--body (input-table.helpers/table-body-attributes table-id table-props)
                                                 [input-table-rows table-id table-props]]])
 
-(defn component
+(defn view
   ; @param (keyword)(opt) table-id
   ; @param (map) table-props
   ; {:border-color (keyword or string)(opt)
@@ -78,7 +78,7 @@
   ; [input-table {:input-params ["My param"]
   ;               :rows [["160px 1fr" [:name ::my-name-field #'my-name-field]]]}]
   ([table-props]
-   [component (random/generate-keyword) table-props])
+   [view (random/generate-keyword) table-props])
 
   ([table-id table-props]
    ; @note (tutorials#parametering)

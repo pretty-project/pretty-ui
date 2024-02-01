@@ -23,7 +23,7 @@
   [:div (dropdown-menu.attributes/menu-attributes menu-id menu-props)
         [:div (dropdown-menu.attributes/menu-body-attributes menu-id menu-props)
               (let [bar-props (dropdown-menu.prototypes/bar-props-prototype menu-props)]
-                   [menu-bar.views/element menu-id bar-props])
+                   [menu-bar.views/view menu-id bar-props])
               (if-let [surface-content (dropdown-menu.env/get-surface-content menu-id menu-props)]
                       [:div (dropdown-menu.attributes/menu-surface-attributes menu-id menu-props)
                             [:div (dropdown-menu.attributes/menu-surface-body-attributes menu-id menu-props)
@@ -32,7 +32,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- element-lifecycles
+(defn- view-lifecycles
   ; @ignore
   ;
   ; @param (keyword) menu-id
@@ -43,7 +43,7 @@
                        :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount menu-id menu-props))
                        :reagent-render         (fn [_ menu-props] [dropdown-menu menu-id menu-props])}))
 
-(defn element
+(defn view
   ; @note
   ; For more information, check out the documentation of the ['menu-bar'](/pretty-ui/cljs/pretty-elements/api.html#menu-bar) element.
   ;
@@ -57,7 +57,7 @@
   ;  :disabled? (boolean)(opt)
   ;  :on-mount-f (function)(opt)
   ;  :on-unmount-f (function)(opt)
-  
+
   ;  :surface (map)(opt)
   ;   {:border-color (keyword or string)(opt)
   ;    :border-position (keyword)(opt)
@@ -75,11 +75,11 @@
   ; @usage
   ; [dropdown-menu :my-dropdown-menu {...}]
   ([menu-props]
-   [element (random/generate-keyword) menu-props])
+   [view (random/generate-keyword) menu-props])
 
   ([menu-id menu-props]
    ; @note (tutorials#parametering)
    (fn [_ menu-props]
        (let [menu-props (pretty-presets.engine/apply-preset            menu-id menu-props)
              menu-props (dropdown-menu.prototypes/menu-props-prototype menu-id menu-props)]
-            [element-lifecycles menu-id menu-props]))))
+            [view-lifecycles menu-id menu-props]))))

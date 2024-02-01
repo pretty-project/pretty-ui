@@ -26,7 +26,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- layout-lifecycles
+(defn- view-lifecycles
   ; @ignore
   ;
   ; @param (keyword) surface-id
@@ -38,7 +38,7 @@
                        :component-will-unmount (fn [_ _] (r/dispatch on-unmount))
                        :reagent-render         (fn [_ surface-props] [plain-surface surface-id surface-props])}))
 
-(defn layout
+(defn view
   ; @param (keyword)(opt) surface-id
   ; @param (map) surface-props
   ; {:content (metamorphic-content)
@@ -60,11 +60,11 @@
   ; @usage
   ; [plain-surface :my-plain-surface {...}]
   ([surface-props]
-   [layout (random/generate-keyword) surface-props])
+   [view (random/generate-keyword) surface-props])
 
   ([surface-id surface-props]
    ; @note (tutorials#parametering)
    (fn [_ surface-props]
        (let [surface-props (pretty-presets.engine/apply-preset               surface-id surface-props)
              surface-props (plain-surface.prototypes/surface-props-prototype surface-id surface-props)]
-            [layout-lifecycles surface-id surface-props]))))
+            [view-lifecycles surface-id surface-props]))))

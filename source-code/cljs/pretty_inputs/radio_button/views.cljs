@@ -65,7 +65,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- input-lifecycles
+(defn- view-lifecycles
   ; @ignore
   ;
   ; @param (keyword) button-id
@@ -76,7 +76,7 @@
                        :component-will-unmount (fn [_ _] (pretty-inputs.engine/input-will-unmount button-id button-props))
                        :reagent-render         (fn [_ button-props] [radio-button button-id button-props])}))
 
-(defn input
+(defn view
   ; @param (keyword) button-id
   ; @param (map) button-props
   ; {:border-color (keyword or string)(opt)
@@ -136,11 +136,11 @@
   ; @usage
   ; [radio-button :my-radio-button {...}]
   ([button-props]
-   [input (random/generate-keyword) button-props])
+   [view (random/generate-keyword) button-props])
 
   ([button-id button-props]
    ; @note (tutorials#parametering)
    (fn [_ button-props]
        (let [button-props (pretty-presets.engine/apply-preset             button-id button-props)
              button-props (radio-button.prototypes/button-props-prototype button-id button-props)]
-            [input-lifecycles button-id button-props]))))
+            [view-lifecycles button-id button-props]))))

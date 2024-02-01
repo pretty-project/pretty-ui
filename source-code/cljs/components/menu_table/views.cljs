@@ -106,7 +106,7 @@
                      [menu-table-label                    table-id table-props]
                      [menu-table-body                     table-id table-props]])
 
-(defn component
+(defn view
   ; @param (keyword)(opt) table-id
   ; @param (map) table-props
   ; {:class (keyword or keywords in vector)(opt)
@@ -137,7 +137,7 @@
   ;                      {:content "Value #2" :color :muted}]
   ;                     [{...} {...}]]}]
   ([table-props]
-   [component (random/generate-keyword) table-props])
+   [view (random/generate-keyword) table-props])
 
   ([table-id table-props]
    ; @note (tutorials#parametering)

@@ -60,7 +60,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- component-lifecycles
+(defn- view-lifecycles
   ; @ignore
   ;
   ; @param (keyword) contacts-id
@@ -71,7 +71,7 @@
                        :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount contacts-id contacts-props))
                        :reagent-render         (fn [_ contacts-props] [contacts contacts-id contacts-props])}))
 
-(defn component
+(defn view
   ; @param (keyword)(opt) contacts-id
   ; @param (map) contacts-props
   ; {:contact-groups (maps in vector)(opt)
@@ -99,11 +99,11 @@
   ; @usage
   ; [contacts :my-contacts {...}]
   ([contacts-props]
-   [component (random/generate-keyword) contacts-props])
+   [view (random/generate-keyword) contacts-props])
 
   ([contacts-id contacts-props]
    ; @note (tutorials#parametering)
    (fn [_ contacts-props]
        (let [contacts-props (pretty-presets.engine/apply-preset           contacts-id contacts-props)
              contacts-props (contacts.prototypes/contacts-props-prototype contacts-id contacts-props)]
-            [component-lifecycles contacts-id contacts-props]))))
+            [view-lifecycles contacts-id contacts-props]))))

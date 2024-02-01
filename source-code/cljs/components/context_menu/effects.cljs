@@ -24,4 +24,4 @@
   [r/event-vector<-id]
   (fn [{:keys [db]} [_ menu-id menu-props]]
       [:x.ui/render-popup! :components.context-menu/view
-                           {:content [context-menu.views/component menu-id menu-props]}]))
+                           {:content [context-menu.views/view menu-id menu-props]}]))

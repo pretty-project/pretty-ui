@@ -19,7 +19,7 @@
   [:div.c-section-title [auto-title/sensor {:placeholder placeholder :title content :offset -12}]
                         [pretty-elements/label title-id title-props]])
 
-(defn component
+(defn view
   ; @note
   ; For more information, check out the documentation of the ['label'](/pretty-ui/cljs/pretty-elements/api.html#label) element.
   ;
@@ -36,7 +36,7 @@
   ; @usage
   ; [section-title :my-section-title {...}]
   ([title-props]
-   [component (random/generate-keyword) title-props])
+   [view (random/generate-keyword) title-props])
 
   ([title-id title-props]
    ; @note (tutorials#parametering)

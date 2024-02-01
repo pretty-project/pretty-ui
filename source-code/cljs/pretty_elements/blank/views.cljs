@@ -24,7 +24,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- element-lifecycles
+(defn- view-lifecycles
   ; @ignore
   ;
   ; @param (keyword) blank-id
@@ -35,7 +35,7 @@
                        :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount blank-id blank-props))
                        :reagent-render         (fn [_ blank-props] [blank blank-id blank-props])}))
 
-(defn element
+(defn view
   ; @param (keyword)(opt) blank-id
   ; @param (map) blank-props
   ; {:class (keyword or keywords in vector)(opt)
@@ -58,11 +58,11 @@
   ; @usage
   ; [blank :my-blank {...}]
   ([blank-props]
-   [element (random/generate-keyword) blank-props])
+   [view (random/generate-keyword) blank-props])
 
   ([blank-id blank-props]
    ; @note (tutorials#parametering)
    (fn [_ blank-props]
        (let [blank-props (pretty-presets.engine/apply-preset     blank-id blank-props)
              blank-props (blank.prototypes/blank-props-prototype blank-id blank-props)]
-            [element-lifecycles blank-id blank-props]))))
+            [view-lifecycles blank-id blank-props]))))

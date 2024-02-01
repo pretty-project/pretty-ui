@@ -17,9 +17,9 @@
   ; @param (map) footer-props
   [footer-id footer-props]
   [:div.c-side-menu-footer {:data-indent-bottom :xxs}
-                           [copyright-label.views/component {}]])
+                           [copyright-label.views/view {}]])
 
-(defn component
+(defn view
   ; @param (keyword)(opt) footer-id
   ; @param (map) footer-props
   ; {}
@@ -30,7 +30,7 @@
   ; @usage
   ; [side-menu-footer :my-side-menu-footer {...}]
   ([footer-props]
-   [component (random/generate-keyword) footer-props])
+   [view (random/generate-keyword) footer-props])
 
   ([footer-id footer-props]
    ; @note (tutorials#parametering)

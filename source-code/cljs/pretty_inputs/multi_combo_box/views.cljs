@@ -24,7 +24,7 @@
           (if (vector/not-empty? chips)
               (let [group-id    (pretty-inputs.engine/input-id->subitem-id        box-id :chip-group)
                     group-props (multi-combo-box.prototypes/group-props-prototype box-id box-props)]
-                   [chip-group.views/input group-id group-props]))))
+                   [chip-group.views/view group-id group-props]))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -57,7 +57,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- input-lifecycles
+(defn- view-lifecycles
   ; @ignore
   ;
   ; @param (keyword) box-id
@@ -68,7 +68,7 @@
                        :component-will-unmount (fn [_ _] (pretty-inputs.engine/input-will-unmount box-id box-props))
                        :reagent-render         (fn [_ box-props] [multi-combo-box box-id box-props])}))
 
-(defn input
+(defn view
   ; @note
   ; For more information, check out the documentation of the ['text-field'](#text-field) input.
   ;
@@ -100,11 +100,11 @@
   ; @usage
   ; [multi-combo-box :my-multi-combo-box {...}]
   ([box-props]
-   [input (random/generate-keyword) box-props])
+   [view (random/generate-keyword) box-props])
 
   ([box-id box-props]
    ; @note (tutorials#parametering)
    (fn [_ box-props]
        (let [box-props (multi-combo-box.prototypes/box-props-prototype box-id box-props)
              box-props (assoc-in box-props [:surface :content] [combo-box.views/combo-box-surface-content box-id box-props])]
-            [input-lifecycles box-id box-props]))))
+            [view-lifecycles box-id box-props]))))

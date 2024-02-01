@@ -34,7 +34,7 @@
   [:<> [error-occured-label content-id content-props]
        [error-message-label content-id content-props]])
 
-(defn component
+(defn view
   ; @param (keyword)(opt) content-id
   ; @param (map) content-props
   ; {:content (metamorphic-content)}
@@ -45,7 +45,7 @@
   ; @usage
   ; [error-content :my-error-content {...}]
   ([content-props]
-   [component (random/generate-keyword) content-props])
+   [view (random/generate-keyword) content-props])
 
   ([content-id content-props]
    ; @note (tutorials#parametering)

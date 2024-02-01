@@ -26,7 +26,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- element-lifecycles
+(defn- view-lifecycles
   ; @ignore
   ;
   ; @param (keyword) row-id
@@ -37,7 +37,7 @@
                        :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount row-id row-props))
                        :reagent-render         (fn [_ row-props] [row row-id row-props])}))
 
-(defn element
+(defn view
   ; @param (keyword)(opt) row-id
   ; @param (map) row-props
   ; {:border-color (keyword or string)(opt)
@@ -80,11 +80,11 @@
   ; @usage
   ; [row :my-row {...}]
   ([row-props]
-   [element (random/generate-keyword) row-props])
+   [view (random/generate-keyword) row-props])
 
   ([row-id row-props]
    ; @note (tutorials#parametering)
    (fn [_ row-props]
        (let [row-props (pretty-presets.engine/apply-preset row-id row-props)
              row-props (row.prototypes/row-props-prototype row-id row-props)]
-            [element-lifecycles row-id row-props]))))
+            [view-lifecycles row-id row-props]))))

@@ -21,13 +21,13 @@
   [group-id {:keys [adornments] :as group-props}]
   [:div (adornment-group.attributes/adornment-group-attributes group-id group-props)
         [:div (adornment-group.attributes/adornment-group-body-attributes group-id group-props)
-              (letfn [(f0 [_ adornment-props] [adornment.views/element adornment-props])]
+              (letfn [(f0 [_ adornment-props] [adornment.views/view adornment-props])]
                      (hiccup/put-with-indexed [:<>] adornments f0))]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- element-lifecycles
+(defn- view-lifecycles
   ; @ignore
   ;
   ; @param (keyword) group-id
@@ -38,7 +38,7 @@
                        :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount group-id group-props))
                        :reagent-render         (fn [_ group-props] [adornment-group group-id group-props])}))
 
-(defn element
+(defn view
   ; @param (keyword)(opt) group-id
   ; @param (map) group-props
   ; {:adornments (maps in vector)(opt)
@@ -65,11 +65,11 @@
   ; @usage
   ; [adornment-group :my-adornment-group {...}]
   ([group-props]
-   [element (random/generate-keyword) group-props])
+   [view (random/generate-keyword) group-props])
 
   ([group-id group-props]
    ; @note (tutorials#parametering)
    (fn [_ group-props]
        (let [group-props (pretty-presets.engine/apply-preset               group-id group-props)
              group-props (adornment-group.prototypes/group-props-prototype group-id group-props)]
-            [element-lifecycles group-id group-props]))))
+            [view-lifecycles group-id group-props]))))

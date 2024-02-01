@@ -121,7 +121,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- input-lifecycles
+(defn- view-lifecycles
   ; @ignore
   ;
   ; @param (keyword) label-id
@@ -132,7 +132,7 @@
                        :component-will-unmount (fn [_ _] (pretty-inputs.engine/input-will-unmount label-id label-props))
                        :reagent-render         (fn [_ label-props] [label label-id label-props])}))
 
-(defn input
+(defn view
   ; @param (keyword)(opt) label-id
   ; @param (map) label-props
   ; {:class (keyword or keywords in vector)(opt)
@@ -192,11 +192,11 @@
   ; @usage
   ; [label :my-label {...}]
   ([label-props]
-   [input (random/generate-keyword) label-props])
+   [view (random/generate-keyword) label-props])
 
   ([label-id label-props]
    ; @note (tutorials#parametering)
    (fn [_ label-props]
        (let [label-props (pretty-presets.engine/apply-preset     label-id label-props)
              label-props (label.prototypes/label-props-prototype label-id label-props)]
-            [input-lifecycles label-id label-props]))))
+            [view-lifecycles label-id label-props]))))

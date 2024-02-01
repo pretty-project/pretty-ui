@@ -7,7 +7,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn component
+(defn view
   ; @note
   ; For more information, check out the documentation of the ['label'](/pretty-ui/cljs/pretty-elements/api.html#label) element.
   ;
@@ -24,7 +24,7 @@
   ; @usage
   ; [error-label :my-error-label {...}]
   ([label-props]
-   [component (random/generate-keyword) label-props])
+   [view (random/generate-keyword) label-props])
 
   ([label-id label-props]
    ; @note (tutorials#parametering)

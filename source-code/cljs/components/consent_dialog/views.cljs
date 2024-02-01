@@ -60,7 +60,7 @@
                                 :header [consent-dialog-header dialog-id dialog-props]
                                 :min-width :xs}])
 
-(defn component
+(defn view
   ; @param (keyword)(opt) dialog-id
   ; @param (map) dialog-props
   ; {:content (metamorphic-content)
@@ -72,7 +72,7 @@
   ; @usage
   ; [consent-dialog :my-consent-dialog {...}]
   ([dialog-props]
-   [component (random/generate-keyword) dialog-props])
+   [view (random/generate-keyword) dialog-props])
 
   ([dialog-id dialog-props]
    ; @note (tutorials#parametering)
