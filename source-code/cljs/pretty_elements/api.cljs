@@ -1,6 +1,7 @@
 
 (ns pretty-elements.api
     (:require [pretty-elements.adornment-group.views      :as adornment-group.views]
+              [pretty-elements.surface.side-effects :as surface.side-effects]
               [pretty-elements.adornment.views            :as adornment.views]
               [pretty-elements.blank.views                :as blank.views]
               [pretty-elements.breadcrumbs.views          :as breadcrumbs.views]
@@ -11,6 +12,7 @@
               [pretty-elements.content-swapper.side-effects :as content-swapper.side-effects]
               [pretty-elements.content-swapper.views      :as content-swapper.views]
               [pretty-elements.dropdown-menu.views        :as dropdown-menu.views]
+              [pretty-elements.expandable.side-effects :as expandable.side-effects]
               [pretty-elements.expandable.views           :as expandable.views]
               [pretty-elements.ghost.views                :as ghost.views]
               [pretty-elements.horizontal-group.views     :as horizontal-group.views]
@@ -25,6 +27,7 @@
               [pretty-elements.notification-bubble.views  :as notification-bubble.views]
               [pretty-elements.row.views                  :as row.views]
               [pretty-elements.stepper.views              :as stepper.views]
+              [pretty-elements.surface.views              :as surface.views]
               [pretty-elements.text.views                 :as text.views]
               [pretty-elements.thumbnail.views            :as thumbnail.views]
               [pretty-elements.toggle.views               :as toggle.views]
@@ -37,6 +40,14 @@
 
 ; @redirect (pretty-elements.content-swapper.side-effects/*)
 (def swap-content! content-swapper.side-effects/swap-content!)
+
+; @redirect (pretty-elements.expandable.side-effects/*)
+(def expand-content!   expandable.side-effects/expand-content!)
+(def collapse-content! expandable.side-effects/collapse-content!)
+
+; @redirect (pretty-elements.surface.side-effects/*)
+(def show-surface! surface.side-effects/show-surface!)
+(def hide-surface! surface.side-effects/hide-surface!)
 
 ; @redirect (*/view)
 (def adornment            adornment.views/view)
@@ -63,6 +74,7 @@
 (def notification-bubble  notification-bubble.views/view)
 (def row                  row.views/view)
 (def stepper              stepper.views/view)
+(def surface              surface.views/view)
 (def text                 text.views/view)
 (def thumbnail            thumbnail.views/view)
 (def toggle               toggle.views/view)

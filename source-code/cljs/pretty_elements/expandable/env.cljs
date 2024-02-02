@@ -1,16 +1,16 @@
 
 (ns pretty-elements.expandable.env
-    (:require [fruits.logic.api                 :refer [not-false?]]
-              [pretty-elements.expandable.state :as expandable.state]))
+    (:require [pretty-elements.surface.env :as surface.env]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn expanded?
+(defn surface-visible?
   ; @ignore
   ;
   ; @param (keyword) expandable-id
-  ;
-  ; @return (boolean)
-  [expandable-id]
-  (-> @expandable.state/EXPANDED-ELEMENTS expandable-id not-false?))
+  ; @param (map) expandable-props
+  ; {:surface (map)(opt)
+  ;   {:visible? (boolean)(opt)}}
+  [expandable-id {:keys [surface]}]
+  (surface.env/surface-visible? expandable-id surface))

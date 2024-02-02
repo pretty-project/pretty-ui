@@ -1,52 +1,32 @@
 
 (ns pretty-tables.data-table.prototypes
-    (:require [fruits.css.api :as css]))
+    (:require [pretty-elements.properties.api :as pretty-elements.properties]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(defn cell-props-prototype
-  ; @ignore
-  ;
-  ; @param (map) cell-props
-  ;
-  ; @return (map)
-  ; {:font-size (keyword, px or string)
-  ;  :font-weight (keyword or integer)
-  ;  :line-height (keyword, px or string)
-  ;  :text-overflow (keyword)}
-  [cell-props]
-  (merge {:font-size     :s
-          :font-weight   :normal
-          :line-height   :text-block
-          :text-overflow :ellipsis}
-         (-> cell-props)))
 
 (defn column-props-prototype
   ; @ignore
   ;
+  ; @param (integer) column-dex
   ; @param (map) column-props
   ;
   ; @return (map)
-  ; {:template (string)
-  ;  :width (keyword, px or string)}
-  [{:keys [cells] :as column-props}]
-  (merge {:template (css/repeat (count cells) (css/fr 1))
-          :width :s}
-         (-> column-props)))
+  [_ column-props]
+  (-> column-props))
 
 (defn row-props-prototype
   ; @ignore
   ;
+  ; @param (integer) row-dex
   ; @param (map) row-props
   ;
   ; @return (map)
-  ; {:height (keyword, px or string)
-  ;  :template (string)}
-  [{:keys [cells] :as row-props}]
-  (merge {:height :s
-          :template (css/repeat (count cells) (css/fr 1))}
-         (-> row-props)))
+  [_ row-props]
+  (-> row-props))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn table-props-prototype
   ; @ignore
@@ -56,4 +36,4 @@
   ;
   ; @return (map)
   [_ table-props]
-  (-> table-props))
+  (-> table-props (pretty-elements.properties/default-size-props {:height :content :width :auto})))

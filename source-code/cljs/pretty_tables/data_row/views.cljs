@@ -12,6 +12,15 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn- data-row-cell
+  ; @ignore
+  ;
+  ; @param (integer) cell-dex
+  ; @param (map) cell-props
+  [cell-dex cell-props]
+  (let [cell-props (data-row.prototypes/cell-props-prototype cell-dex cell-props)]
+       [data-cell.views/view cell-props]))
+
 (defn- data-row
   ; @ignore
   ;
@@ -21,7 +30,7 @@
   [row-id {:keys [cells] :as row-props}]
   [:div (data-row.attributes/row-attributes row-id row-props)
         [:div (data-row.attributes/row-body-attributes row-id row-props)
-              (letfn [(f0 [_ cell-props] [data-cell.views/view cell-props])]
+              (letfn [(f0 [cell-dex cell-props] [data-row-cell cell-dex cell-props])]
                      (hiccup/put-with-indexed [:<>] cells f0))]])
 
 ;; ----------------------------------------------------------------------------
@@ -39,25 +48,28 @@
                        :reagent-render         (fn [_ row-props] [data-row row-id row-props])}))
 
 (defn view
-  ;     :template (string)(opt)
-  ;      Default: "repeat(*cell-count*, 1fr)"
-  ;     :width (keyword, px or string)(opt)
-  ;      Default: :s}]
-
   ; @param (keyword)(opt) row-id
   ; @param (map) row-props
-  ; {:cells (maps in vector)(opt)
+  ; {:cell-default (map)(opt)
+  ;  :cells (maps in vector)(opt)
   ;  :class (keyword or keywords in vector)(opt)
   ;  :disabled? (boolean)(opt)
+  ;  :height (keyword, px or string)(opt)
   ;  :indent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
+  ;  :max-height (keyword, px or string)(opt)
+  ;  :max-width (keyword, px or string)(opt)
+  ;  :min-height (keyword, px or string)(opt)
+  ;  :min-width (keyword, px or string)(opt)
   ;  :on-mount-f (function)(opt)
   ;  :on-unmount-f (function)(opt)
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :preset (keyword)(opt)
+  ;  :row-template (keyword or string)(opt)
   ;  :style (map)(opt)
-  ;  :theme (keyword)(opt)}
+  ;  :theme (keyword)(opt)
+  ;  :width (keyword, px or string)(opt)}
   ;
   ; @usage
   ; [data-row {...}]
@@ -70,6 +82,7 @@
   ([row-id row-props]
    ; @note (tutorials#parameterizing)
    (fn [_ row-props]
-       (let [row-props (pretty-presets.engine/apply-preset            row-id row-props)
-             row-props (data-row.prototypes/row-props-prototype row-id row-props)]
+       (let [row-props (pretty-presets.engine/apply-preset        row-id row-props)
+             row-props (data-row.prototypes/row-props-prototype   row-id row-props)
+             row-props (pretty-elements.engine/apply-item-default row-id row-props :cells :cell-default)]
             [view-lifecycles row-id row-props]))))

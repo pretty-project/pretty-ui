@@ -111,7 +111,8 @@
   ;     {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;    :text-color (keyword or string)(opt)
   ;     Default: :inherit}
-  ;  :menu-items (maps in vector)
+  ;  :menu-items-default (map)(opt)
+  ;  :menu-items (maps in vector)(opt)
   ;   [{:badge-color (keyword or string)(opt)
   ;      Default: :primary
   ;     :badge-content (metamorphic-content)(opt)
@@ -144,6 +145,7 @@
   ([bar-id bar-props]
    ; @note (tutorials#parameterizing)
    (fn [_ bar-props]
-       (let [bar-props (pretty-presets.engine/apply-preset      bar-id bar-props)
-             bar-props (menu-bar.prototypes/bar-props-prototype bar-id bar-props)]
+       (let [bar-props (pretty-presets.engine/apply-preset        bar-id bar-props)
+             bar-props (menu-bar.prototypes/bar-props-prototype   bar-id bar-props)
+             bar-props (pretty-elements.engine/apply-item-default bar-id bar-props :menu-items :menu-item-default)]
             [view-lifecycles bar-id bar-props]))))

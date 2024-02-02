@@ -16,5 +16,4 @@
   (-> header-props (pretty-inputs.properties/default-border-props {})
                    (pretty-inputs.properties/default-label-props  {})
                    (pretty-inputs.properties/default-guides-props {})
-                   (pretty-inputs.properties/default-font-props   {})
                    (pretty-inputs.properties/default-size-props   {:height :content :width :content})))

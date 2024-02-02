@@ -8,6 +8,9 @@
 ;; ----------------------------------------------------------------------------
 
 (defn swap-content!
+  ; @description
+  ; Changes the content of a specific 'content-swapper' element.
+  ;
   ; @param (keyword) swapper-id
   ; @param (metamorphic-content) content
   ; @param (map)(opt) options
@@ -23,5 +26,5 @@
 
   ([swapper-id content options]
    (let [content [:div {:class :pe-content-swapper--content} (metamorphic-content/compose content)]]
-        (pretty-elements.engine/update-element-dynamic-props! swapper-id         options)
-        (transition-controller/set-content!                   swapper-id content options))))
+        (pretty-elements.engine/update-element-dynamic-props! swapper-id options)
+        (transition-controller/set-content!                   swapper-id content))))

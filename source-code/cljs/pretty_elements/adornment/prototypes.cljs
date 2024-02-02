@@ -19,7 +19,7 @@
                       (pretty-elements.properties/default-effect-props       {})
                       (pretty-elements.properties/default-flex-props         {:orientation :horizontal})
                       (pretty-elements.properties/default-focus-props        {:focus-id adornment-id})
-                      (pretty-elements.properties/default-font-props         {:font-size :xxs})
+                      (pretty-elements.properties/default-font-props         {:font-size :xxs :font-weight :medium})
                       (pretty-elements.properties/default-icon-props         {})
                       (pretty-elements.properties/default-label-props        {})
                       (pretty-elements.properties/default-mouse-event-props  {})

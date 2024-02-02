@@ -49,7 +49,8 @@
   ;
   ; @param (keyword)(opt) menu-id
   ; @param (map) menu-props
-  ; {:menu-items (maps in vector)
+  ; {:menu-item-default (map)(opt)
+  ;  :menu-items (maps in vector)(opt)
   ;   [{:content (metamorphic-content)(opt)
   ;     :placeholder (metamorphic-content)(opt)
   ;     :preset (keyword)(opt)}]
@@ -81,5 +82,6 @@
    ; @note (tutorials#parameterizing)
    (fn [_ menu-props]
        (let [menu-props (pretty-presets.engine/apply-preset            menu-id menu-props)
-             menu-props (dropdown-menu.prototypes/menu-props-prototype menu-id menu-props)]
+             menu-props (dropdown-menu.prototypes/menu-props-prototype menu-id menu-props)
+             menu-props (pretty-elements.engine/apply-item-default     menu-id menu-props :menu-items :menu-item-default)]
             [view-lifecycles menu-id menu-props]))))

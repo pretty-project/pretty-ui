@@ -12,6 +12,15 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn- data-column-cell
+  ; @ignore
+  ;
+  ; @param (integer) cell-dex
+  ; @param (map) cell-props
+  [cell-dex cell-props]
+  (let [cell-props (data-column.prototypes/cell-props-prototype cell-dex cell-props)]
+       [data-cell.views/view cell-props]))
+
 (defn- data-column
   ; @ignore
   ;
@@ -21,7 +30,7 @@
   [column-id {:keys [cells] :as column-props}]
   [:div (data-column.attributes/column-attributes column-id column-props)
         [:div (data-column.attributes/column-body-attributes column-id column-props)
-              (letfn [(f0 [_ cell-props] [data-cell.views/view cell-props])]
+              (letfn [(f0 [cell-dex cell-props] [data-column-cell cell-dex cell-props])]
                      (hiccup/put-with-indexed [:<>] cells f0))]])
 
 ;; ----------------------------------------------------------------------------
@@ -39,25 +48,28 @@
                        :reagent-render         (fn [_ column-props] [data-column column-id column-props])}))
 
 (defn view
-  ;     :template (string)(opt)
-  ;      Default: "repeat(*cell-count*, 1fr)"
-  ;     :width (keyword, px or string)(opt)
-  ;      Default: :s}]
-
   ; @param (keyword)(opt) column-id
   ; @param (map) column-props
-  ; {:cells (maps in vector)(opt)
+  ; {:cell-default (map)(opt)
+  ;  :cells (maps in vector)(opt)
+  ;  :column-template (keyword or string)(opt)
   ;  :class (keyword or keywords in vector)(opt)
   ;  :disabled? (boolean)(opt)
+  ;  :height (keyword, px or string)(opt)
   ;  :indent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
+  ;  :max-height (keyword, px or string)(opt)
+  ;  :max-width (keyword, px or string)(opt)
+  ;  :min-height (keyword, px or string)(opt)
+  ;  :min-width (keyword, px or string)(opt)
   ;  :on-mount-f (function)(opt)
   ;  :on-unmount-f (function)(opt)
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :preset (keyword)(opt)
   ;  :style (map)(opt)
-  ;  :theme (keyword)(opt)}
+  ;  :theme (keyword)(opt)
+  ;  :width (keyword, px or string)(opt)}
   ;
   ; @usage
   ; [data-column {...}]
@@ -71,5 +83,6 @@
    ; @note (tutorials#parameterizing)
    (fn [_ column-props]
        (let [column-props (pretty-presets.engine/apply-preset            column-id column-props)
-             column-props (data-column.prototypes/column-props-prototype column-id column-props)]
+             column-props (data-column.prototypes/column-props-prototype column-id column-props)
+             column-props (pretty-elements.engine/apply-item-default     column-id column-props :cells :cell-default)]
             [view-lifecycles column-id column-props]))))

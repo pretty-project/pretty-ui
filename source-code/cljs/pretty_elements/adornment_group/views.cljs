@@ -12,6 +12,15 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn adornment-group-adornment
+  ; @ignore
+  ;
+  ; @param (integer) adornment-dex
+  ; @param (map) adornment-props
+  [adornment-dex adornment-props]
+  (let [adornment-props (adornment-group.prototypes/adornment-props-prototype adornment-dex adornment-props)]
+       [adornment.views/view adornment-props]))
+
 (defn- adornment-group
   ; @ignore
   ;
@@ -21,7 +30,7 @@
   [group-id {:keys [adornments] :as group-props}]
   [:div (adornment-group.attributes/adornment-group-attributes group-id group-props)
         [:div (adornment-group.attributes/adornment-group-body-attributes group-id group-props)
-              (letfn [(f0 [_ adornment-props] [adornment.views/view adornment-props])]
+              (letfn [(f0 [adornment-dex adornment-props] [adornment-group-adornment adornment-dex adornment-props])]
                      (hiccup/put-with-indexed [:<>] adornments f0))]])
 
 ;; ----------------------------------------------------------------------------
@@ -41,7 +50,8 @@
 (defn view
   ; @param (keyword)(opt) group-id
   ; @param (map) group-props
-  ; {:adornments (maps in vector)(opt)
+  ; {:adornment-default (map)(opt)
+  ;  :adornments (maps in vector)(opt)
   ;  :class (keyword or keywords in vector)(opt)
   ;  :disabled? (boolean)(opt)
   ;  :gap (keyword, px or string)(opt)
@@ -71,5 +81,6 @@
    ; @note (tutorials#parameterizing)
    (fn [_ group-props]
        (let [group-props (pretty-presets.engine/apply-preset               group-id group-props)
-             group-props (adornment-group.prototypes/group-props-prototype group-id group-props)]
+             group-props (adornment-group.prototypes/group-props-prototype group-id group-props)
+             group-props (pretty-elements.engine/apply-item-default        group-id group-props :adornments :adornment-default)]
             [view-lifecycles group-id group-props]))))

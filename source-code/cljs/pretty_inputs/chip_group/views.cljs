@@ -69,7 +69,7 @@
   ; @param (keyword)(opt) group-id
   ; @param (map) group-props
   ; {:class (keyword or keywords in vector)(opt)
-  ;  :chip (map)(opt)
+  ;  :chip-default (map)(opt)
   ;  :chips-deletable? (boolean)(opt)
   ;  :chip-label-f (function)(opt)
   ;  :disabled? (boolean)(opt)
@@ -107,4 +107,5 @@
    (fn [_ group-props]
        (let [group-props (pretty-presets.engine/apply-preset          group-id group-props)
              group-props (chip-group.prototypes/group-props-prototype group-id group-props)]
+             ;group-props (pretty-elements.engine/apply-item-default       group-id group-props :group-items :group-item-default)]
             [view-lifecycles group-id group-props]))))

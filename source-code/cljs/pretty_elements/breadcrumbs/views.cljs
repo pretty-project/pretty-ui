@@ -15,11 +15,9 @@
 (defn breadcrumbs-crumb
   ; @ignore
   ;
-  ; @param (keyword) breadcrumbs-id
-  ; @param (map) breadcrumbs-props
   ; @param (integer) crumb-dex
   ; @param (map) crumb-props
-  [breadcrumbs-id breadcrumbs-props crumb-dex crumb-props]
+  [crumb-dex crumb-props]
   [:<> (if  (-> crumb-dex pos?) [:div {:class :pe-breadcrumbs--separator}])
        (let [crumb-props (breadcrumbs.prototypes/crumb-props-prototype crumb-dex crumb-props)]
             [button.views/view crumb-props])])
@@ -33,7 +31,7 @@
   [breadcrumbs-id {:keys [crumbs] :as breadcrumbs-props}]
   [:div (breadcrumbs.attributes/breadcrumbs-attributes breadcrumbs-id breadcrumbs-props)
         [:div (breadcrumbs.attributes/breadcrumbs-body-attributes breadcrumbs-id breadcrumbs-props)
-              (letfn [(f0 [crumb-dex crumb-props] [breadcrumbs-crumb breadcrumbs-id breadcrumbs-props crumb-dex crumb-props])]
+              (letfn [(f0 [crumb-dex crumb-props] [breadcrumbs-crumb crumb-dex crumb-props])]
                      (hiccup/put-with-indexed [:<>] crumbs f0))]])
 
 ;; ----------------------------------------------------------------------------
@@ -57,7 +55,8 @@
   ; @param (keyword)(opt) breadcrumbs-id
   ; @param (map) breadcrumbs-props
   ; {:class (keyword or keywords in vector)(opt)
-  ;  :crumbs (maps in vector)
+  ;  :crumb-default (map)(opt)
+  ;  :crumbs (maps in vector)(opt)
   ;  :disabled? (boolean)(opt)
   ;  :indent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
@@ -81,5 +80,6 @@
    ; @note (tutorials#parameterizing)
    (fn [_ breadcrumbs-props]
        (let [breadcrumbs-props (pretty-presets.engine/apply-preset                 breadcrumbs-id breadcrumbs-props)
-             breadcrumbs-props (breadcrumbs.prototypes/breadcrumbs-props-prototype breadcrumbs-id breadcrumbs-props)]
+             breadcrumbs-props (breadcrumbs.prototypes/breadcrumbs-props-prototype breadcrumbs-id breadcrumbs-props)
+             breadcrumbs-props (pretty-elements.engine/apply-item-default          breadcrumbs-id breadcrumbs-props :crumbs :crumb-default)]
             [view-lifecycles breadcrumbs-id breadcrumbs-props]))))

@@ -5,6 +5,7 @@
               [pretty-css.basic.api                    :as pretty-css.basic]
               [pretty-css.content.api                  :as pretty-css.content]
               [pretty-css.layout.api                   :as pretty-css.layout]
+
               [pretty-elements.expandable.side-effects :as expandable.side-effects]))
 
 ;; ----------------------------------------------------------------------------
@@ -33,8 +34,8 @@
   ;
   ; @return (map)
   ; {}
-  [expandable-id {:keys [disabled?]}]
-  (let [on-click-f #(expandable.side-effects/toggle! expandable-id)]
+  [expandable-id {:keys [disabled?] :as expandable-props}]
+  (let [on-click-f #(expandable.side-effects/toggle-visibility! expandable-id expandable-props)]
        (if disabled? {:class                :pe-expandable--header
                       :disabled             true}
                      {:class                :pe-expandable--header

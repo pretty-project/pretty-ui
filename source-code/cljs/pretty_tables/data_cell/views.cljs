@@ -45,9 +45,14 @@
   ;  :fill-pattern (keyword)(opt)
   ;  :font-size (keyword, px or string)(opt)
   ;  :font-weight (keyword or integer)(opt)
+  ;  :height (keyword, px or string)(opt)
   ;  :indent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :line-height (keyword, px or string)(opt)
+  ;  :max-height (keyword, px or string)(opt)
+  ;  :max-width (keyword, px or string)(opt)
+  ;  :min-height (keyword, px or string)(opt)
+  ;  :min-width (keyword, px or string)(opt)
   ;  :on-mount-f (function)(opt)
   ;  :on-unmount-f (function)(opt)
   ;  :outdent (map)(opt)
@@ -60,7 +65,8 @@
   ;  :text-direction (keyword)(opt)
   ;  :text-overflow (keyword)(opt)
   ;  :text-selectable? (boolean)(opt)
-  ;  :theme (keyword)(opt)}
+  ;  :theme (keyword)(opt)
+  ;  :width (keyword, px or string)(opt)}
   ;
   ; @usage
   ; [data-cell {...}]

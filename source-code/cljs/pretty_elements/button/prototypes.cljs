@@ -18,7 +18,7 @@
                    (pretty-elements.properties/default-button-label-props {})
                    (pretty-elements.properties/default-effect-props       {})
                    (pretty-elements.properties/default-focus-props        {:focus-id button-id})
-                   (pretty-elements.properties/default-font-props         {})
+                   (pretty-elements.properties/default-font-props         {:font-size :s :font-weight :medium})
                    (pretty-elements.properties/default-label-icon-props   {})
                    (pretty-elements.properties/default-label-props        {})
                    (pretty-elements.properties/default-marker-props       {})
