@@ -18,9 +18,9 @@
   [group-id group-props]
   (-> {:class :pe-adornment-group--body}
       (pretty-css.basic/style-attributes            group-props)
+      (pretty-css.layout/flex-attributes            group-props)
       (pretty-css.layout/full-block-size-attributes group-props)
-      (pretty-css.layout/indent-attributes          group-props)
-      (pretty-css.layout/flex-attributes            group-props)))
+      (pretty-css.layout/indent-attributes          group-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

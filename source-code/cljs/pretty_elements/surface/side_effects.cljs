@@ -14,7 +14,6 @@
   ; @usage
   ; (show-surface! :my-surface)
   [surface-id]
-  (println "show" surface-id)
   (pretty-elements.engine/show-element-surface! surface-id {}))
 
 (defn hide-surface!

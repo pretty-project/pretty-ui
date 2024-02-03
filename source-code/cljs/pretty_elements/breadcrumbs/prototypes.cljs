@@ -13,9 +13,7 @@
   ;
   ; @return (map)
   [_ crumb-props]
-  (-> crumb-props (pretty-elements.properties/default-font-props {:font-size :xs :font-weight :semi-bold})
-                  (pretty-elements.properties/default-size-props {:max-width :s})
-                  (pretty-elements.properties/default-text-props {:text-overflow :ellipsis})))
+  (-> crumb-props))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -28,5 +26,6 @@
   ;
   ; @return (map)
   [_ breadcrumbs-props]
-  (-> breadcrumbs-props (pretty-elements.properties/default-flex-props {:gap :xs :orientation :horizontal :overflow :scroll})
-                        (pretty-elements.properties/default-size-props {:height :content :width :content})))
+  (-> breadcrumbs-props (pretty-elements.properties/default-bullet-props {:bullet-color :muted})
+                        (pretty-elements.properties/default-flex-props   {:gap :xs :orientation :horizontal :overflow :scroll})
+                        (pretty-elements.properties/default-size-props   {:height :content :width :content})))

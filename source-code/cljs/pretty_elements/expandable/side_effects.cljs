@@ -27,16 +27,3 @@
   ; (collapse-content! :my-expandable)
   [expandable-id]
   (surface.side-effects/hide-surface! expandable-id))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn toggle-visibility!
-  ; @ignore
-  ;
-  ; @param (keyword) expandable-id
-  ; @param (map) expandable-props
-  [expandable-id expandable-props]
-  (if (expandable.env/surface-visible? expandable-id expandable-props)
-      (collapse-content!               expandable-id)
-      (expand-content!                 expandable-id)))

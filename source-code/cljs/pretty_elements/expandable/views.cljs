@@ -45,8 +45,13 @@
   ; {:button (map)(opt)
   ;  :class (keywords or keywords in vector)(opt)
   ;  :disabled? (boolean)(opt)
+  ;  :height (keyword, px or string)(opt)
   ;  :indent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
+  ;  :max-height (keyword, px or string)(opt)
+  ;  :max-width (keyword, px or string)(opt)
+  ;  :min-height (keyword, px or string)(opt)
+  ;  :min-width (keyword, px or string)(opt)
   ;  :on-mount-f (function)(opt)
   ;  :on-unmount-f (function)(opt)
   ;  :outdent (map)(opt)
@@ -54,7 +59,8 @@
   ;  :preset (keyword)(opt)
   ;  :style (map)(opt)
   ;  :surface (map)(opt)
-  ;  :theme (keyword)(opt)}
+  ;  :theme (keyword)(opt)
+  ;  :width (keyword, px or string)(opt)}
   ;
   ; @usage
   ; [expandable {...}]

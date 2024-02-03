@@ -1,12 +1,10 @@
 
 (ns pretty-elements.dropdown-menu.views
     (:require [fruits.random.api                        :as random]
-              [metamorphic-content.api                  :as metamorphic-content]
               [pretty-elements.dropdown-menu.attributes :as dropdown-menu.attributes]
-              [pretty-elements.dropdown-menu.env        :as dropdown-menu.env]
               [pretty-elements.dropdown-menu.prototypes :as dropdown-menu.prototypes]
-              [pretty-elements.dropdown-menu.state      :as dropdown-menu.state]
               [pretty-elements.menu-bar.views           :as menu-bar.views]
+              [pretty-elements.surface.views           :as surface.views]
               [pretty-presets.engine.api :as pretty-presets.engine]
               [pretty-elements.engine.api :as pretty-elements.engine]
               [reagent.api                              :as reagent]))
@@ -22,12 +20,10 @@
   [menu-id menu-props]
   [:div (dropdown-menu.attributes/menu-attributes menu-id menu-props)
         [:div (dropdown-menu.attributes/menu-body-attributes menu-id menu-props)
-              (let [bar-props (dropdown-menu.prototypes/bar-props-prototype menu-props)]
+              (let [bar-props (dropdown-menu.prototypes/bar-props-prototype menu-id menu-props)]
                    [menu-bar.views/view menu-id bar-props])
-              (if-let [surface-content (dropdown-menu.env/get-surface-content menu-id menu-props)]
-                      [:div (dropdown-menu.attributes/menu-surface-attributes menu-id menu-props)
-                            [:div (dropdown-menu.attributes/menu-surface-body-attributes menu-id menu-props)
-                                  [metamorphic-content/compose surface-content]]])]])
+              (let [surface-props (dropdown-menu.prototypes/surface-props-prototype menu-id menu-props)]
+                   [surface.views/view menu-id surface-props])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -70,6 +66,9 @@
   ;    :outdent (map)(opt)
   ;    :preset (keyword)(opt)}}
   ;
+  ; :menu-bar (map)(opt)
+  ; :surface (map)(opt)
+  ;
   ; @usage
   ; [dropdown-menu {...}]
   ;
@@ -83,5 +82,6 @@
    (fn [_ menu-props]
        (let [menu-props (pretty-presets.engine/apply-preset            menu-id menu-props)
              menu-props (dropdown-menu.prototypes/menu-props-prototype menu-id menu-props)
-             menu-props (pretty-elements.engine/apply-item-default     menu-id menu-props :menu-items :menu-item-default)]
+             menu-props (pretty-elements.engine/apply-item-default     menu-id menu-props :menu-items :menu-item-default)
+             menu-props (pretty-elements.engine/inherit-element-state  menu-id menu-props :menu-items :menu-item-default)]
             [view-lifecycles menu-id menu-props]))))

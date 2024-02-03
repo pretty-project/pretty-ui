@@ -2,7 +2,23 @@
 (ns pretty-elements.breadcrumbs.attributes
     (:require [pretty-css.appearance.api :as pretty-css.appearance]
               [pretty-css.basic.api      :as pretty-css.basic]
+              [pretty-css.accessories.api      :as pretty-css.accessories]
               [pretty-css.layout.api     :as pretty-css.layout]))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn breadcrumbs-bullet-attributes
+  ; @ignore
+  ;
+  ; @param (keyword) breadcrumbs-id
+  ; @param (map) breadcrumbs-props
+  ;
+  ; @return (map)
+  ; {:class (keyword or keywords in vector)}
+  [_ breadcrumbs-props]
+  (-> {:class :pe-breadcrumbs--bullet}
+      (pretty-css.accessories/bullet-attributes breadcrumbs-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

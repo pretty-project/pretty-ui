@@ -16,9 +16,10 @@
   ;
   ; @return (map)
   [expandable-id {:keys [button] :as expandable-props}]
-  (let [on-click-f (fn [] (expandable.side-effects/toggle-visibility! expandable-id expandable-props))]
-       (if (expandable.env/surface-visible? expandable-id expandable-props)
-           (-> {:on-click-f on-click-f :icon :expand_less :icon-position :right} (merge button))
+  (if (expandable.env/surface-visible? expandable-id expandable-props)
+      (let [on-click-f (fn [] (expandable.side-effects/collapse-content! expandable-id))]
+           (-> {:on-click-f on-click-f :icon :expand_less :icon-position :right} (merge button)))
+      (let [on-click-f (fn [] (expandable.side-effects/expand-content! expandable-id))]
            (-> {:on-click-f on-click-f :icon :expand_more :icon-position :right} (merge button)))))
 
 (defn surface-props-prototype
@@ -43,4 +44,4 @@
   ;
   ; @return (map)
   [_ expandable-props]
-  (-> expandable-props))
+  (-> expandable-props (pretty-elements.properties/default-size-props {:height :content :width :content})))

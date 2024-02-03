@@ -84,5 +84,6 @@
    (fn [_ column-props]
        (let [column-props (pretty-presets.engine/apply-preset            column-id column-props)
              column-props (data-column.prototypes/column-props-prototype column-id column-props)
-             column-props (pretty-elements.engine/apply-item-default     column-id column-props :cells :cell-default)]
+             column-props (pretty-elements.engine/apply-item-default     column-id column-props :cells :cell-default)
+             column-props (pretty-elements.engine/inherit-element-state  column-id column-props :cells :cell-default)]
             [view-lifecycles column-id column-props]))))

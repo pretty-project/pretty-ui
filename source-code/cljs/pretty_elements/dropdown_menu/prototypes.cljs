@@ -64,14 +64,28 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn bar-props-prototype
+(defn surface-props-prototype
   ; @ignore
   ;
+  ; @param (keyword) menu-id
   ; @param (map) menu-props
   ;
   ; @return (map)
   ; {}
-  [menu-props]
+  [_ menu-props]
+  ; Filters the menu bar properties to avoid property duplications between the 'dropdown-menu'
+  ; element and the implemented 'menu-bar' element.
+  menu-props)
+
+(defn bar-props-prototype
+  ; @ignore
+  ;
+  ; @param (keyword) menu-id
+  ; @param (map) menu-props
+  ;
+  ; @return (map)
+  ; {}
+  [_ menu-props]
   ; Filters the menu bar properties to avoid property duplications between the 'dropdown-menu'
   ; element and the implemented 'menu-bar' element.
   (dissoc menu-props :class :indent :outdent :preset :style))

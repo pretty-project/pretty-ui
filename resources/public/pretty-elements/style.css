@@ -1,38 +1,15 @@
 
-/***** Breadcrumbs *****/
-/*** Separator ***/
-
-.pe-breadcrumbs--separator {
-  align-items: center;
-  display:     flex;
-  height:      24px;
-}
-
-.pe-breadcrumbs--separator::after {
-  background-color: var( --border-color-muted );
-  border-radius:    3px;
-  content:          '';
-  height:           6px;
-  opacity:          .6;
-  width:            6px;
-}
-
-/*** Separator ***/
-/***** Breadcrumbs *****/
-
-
-
 /***** Content swapper *****/
 /*** Content ***/
 
 .pe-content-swapper--content {
   animation-fill-mode: both;
-  animation-duration: 350ms;
-  height: 100%;
-  left: 0;
-  position: absolute;
-  top: 0;
-  width: 100%;
+  animation-duration:  350ms;
+  height:              100%;
+  left:                0;
+  position:            absolute;
+  top:                 0;
+  width:               100%;
 }
 
 [data-animation-direction="ltr"] .pe-content-swapper--content.tc-appear-active { animation-name: fade-in-ltr;  }
@@ -70,50 +47,6 @@
 
 /*** Surface ***/
 /***** Dropdown menu *****/
-
-
-
-/***** Expandable *****/
-/*** Wrapper ***/
-
-.pe-expandable {
-  /* XXX#6668 */
-  width: fit-content;
-}
-
-/*** Wrapper ***/
-
-/*** Header ***/
-
-.pe-expandable--header {
-  align-items:     center;
-  display:         flex;
-  justify-content: left;
-}
-
-/*** Header ***/
-
-/*** Icon ***/
-
-.pe-expandable--icon {
-  margin-right: 6px;
-}
-
-/*** Icon ***/
-
-/*** Label ***/
-
-.pe-expandable--label {
-  padding-right: 6px;
-}
-
-/*** Label ***/
-/***** Expandable *****/
-
-
-
-/***** Ghost *****/
-/***** Ghost *****/
 
 
 
@@ -244,7 +177,7 @@
 
 .pe-menu-bar {
   /* XXX#6669 The menu-bar body element is scrollable on its X axis. */
-  width: auto;
+  -width: auto;
 }
 
 /*** Wrapper ***/

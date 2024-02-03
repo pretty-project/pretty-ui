@@ -55,9 +55,14 @@
   ;  :class (keyword or keywords in vector)(opt)
   ;  :disabled? (boolean)(opt)
   ;  :gap (keyword, px or string)(opt)
+  ;  :height (keyword, px or string)(opt)
   ;  :horizontal-align (keyword)(opt)
   ;  :indent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
+  ;  :max-height (keyword, px or string)(opt)
+  ;  :max-width (keyword, px or string)(opt)
+  ;  :min-height (keyword, px or string)(opt)
+  ;  :min-width (keyword, px or string)(opt)
   ;  :on-mount-f (function)(opt)
   ;  :on-unmount-f (function)(opt)
   ;  :orientation (keyword)(opt)
@@ -67,7 +72,8 @@
   ;  :preset (keyword)(opt)
   ;  :style (map)(opt)
   ;  :theme (keyword)(opt)
-  ;  :vertical-align (keyword)(opt)}
+  ;  :vertical-align (keyword)(opt)
+  ;  :width (keyword, px or string)(opt)}
   ;
   ; @usage
   ; [adornment-group {...}]
@@ -82,5 +88,6 @@
    (fn [_ group-props]
        (let [group-props (pretty-presets.engine/apply-preset               group-id group-props)
              group-props (adornment-group.prototypes/group-props-prototype group-id group-props)
-             group-props (pretty-elements.engine/apply-item-default        group-id group-props :adornments :adornment-default)]
+             group-props (pretty-elements.engine/apply-item-default        group-id group-props :adornments :adornment-default)
+             group-props (pretty-elements.engine/inherit-element-state     group-id group-props :adornments :adornment-default)]
             [view-lifecycles group-id group-props]))))

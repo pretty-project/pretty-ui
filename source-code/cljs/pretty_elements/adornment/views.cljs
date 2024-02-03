@@ -16,7 +16,7 @@
   ; @param (keyword) adornment-id
   ; @param (map) adornment-props
   ; {:icon (keyword)(opt)
-  ;  :label (string)(opt)}
+  ;  :label (metamorphic-content)(opt)}
   [adornment-id {:keys [icon label] :as adornment-props}]
   [:div (adornment.attributes/adornment-attributes adornment-id adornment-props)
         [(pretty-elements.engine/clickable-auto-tag      adornment-id adornment-props)

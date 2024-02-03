@@ -15,10 +15,10 @@
   [card-id card-props]
   (-> card-props (pretty-elements.properties/default-badge-props       {})
                  (pretty-elements.properties/default-border-props      {})
+                 (pretty-elements.properties/default-mouse-event-props {})
                  (pretty-elements.properties/default-content-props     {})
                  (pretty-elements.properties/default-effect-props      {})
                  (pretty-elements.properties/default-flex-props        {:orientation :vertical :vertical-align :top})
                  (pretty-elements.properties/default-focus-props       {:focus-id card-id})
                  (pretty-elements.properties/default-marker-props      {})
-                 (pretty-elements.properties/default-mouse-event-props {})
                  (pretty-elements.properties/default-tooltip-props     {})))

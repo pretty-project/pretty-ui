@@ -69,6 +69,9 @@
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :keypress (map)(opt)
   ;  :label (metamorphic-content)(opt)
+  ;  :max-height (keyword, px or string)(opt)
+  ;  :max-width (keyword, px or string)(opt)
+  ;  :min-height (keyword, px or string)(opt)
   ;  :min-width (keyword, px or string)(opt)
   ;  :on-click-f (function)(opt)
   ;  :on-click-timeout (ms)(opt)

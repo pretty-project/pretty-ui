@@ -7,6 +7,7 @@
               [pretty-elements.breadcrumbs.views          :as breadcrumbs.views]
               [pretty-elements.button.views               :as button.views]
               [pretty-elements.card.views                 :as card.views]
+              [pretty-elements.crumb.views                :as crumb.views]
               [pretty-elements.chip.views                 :as chip.views]
               [pretty-elements.column.views               :as column.views]
               [pretty-elements.content-swapper.side-effects :as content-swapper.side-effects]
@@ -40,6 +41,8 @@
 
 ; @redirect (pretty-elements.content-swapper.side-effects/*)
 (def swap-content! content-swapper.side-effects/swap-content!)
+(def set-content!  content-swapper.side-effects/set-content!)
+(def hide-content! content-swapper.side-effects/hide-content!)
 
 ; @redirect (pretty-elements.expandable.side-effects/*)
 (def expand-content!   expandable.side-effects/expand-content!)
@@ -59,6 +62,7 @@
 (def chip                 chip.views/view)
 (def column               column.views/view)
 (def content-swapper      content-swapper.views/view)
+(def crumb                crumb.views/view)
 (def dropdown-menu        dropdown-menu.views/view)
 (def expandable           expandable.views/view)
 (def ghost                ghost.views/view)
