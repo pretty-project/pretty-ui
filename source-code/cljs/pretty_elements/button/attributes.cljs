@@ -19,7 +19,8 @@
   ; @param (map) button-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ button-props]
   (-> {:class :pe-button--icon}
       (pretty-css.content/icon-attributes button-props)))
@@ -31,7 +32,8 @@
   ; @param (map) button-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ button-props]
   (-> {:class :pe-button--label}
       (pretty-css.content/font-attributes              button-props)
@@ -47,7 +49,8 @@
   ; @param (map) button-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ button-props]
   (-> {:class :pe-button--body}
       (pretty-css.accessories/badge-attributes      button-props)
@@ -78,7 +81,8 @@
   ; @param (map) button-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ button-props]
   (-> {:class :pe-button}
       (pretty-css.appearance/theme-attributes    button-props)

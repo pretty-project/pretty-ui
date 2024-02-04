@@ -15,7 +15,8 @@
   ; @param (map) cell-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ cell-props]
   (-> {:class :pt-data-cell--body}
       (pretty-css.appearance/background-attributes   cell-props)
@@ -36,7 +37,8 @@
   ; @param (map) cell-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ cell-props]
   (-> {:class :pt-data-cell}
       (pretty-css.appearance/theme-attributes    cell-props)

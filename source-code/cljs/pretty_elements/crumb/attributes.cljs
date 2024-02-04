@@ -18,7 +18,8 @@
   ; @param (map) crumb-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ crumb-props]
   (-> {:class :pe-crumb--label}
       (pretty-css.content/font-attributes              crumb-props)
@@ -34,7 +35,8 @@
   ; @param (map) crumb-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [crumb-id crumb-props]
   (-> {:class :pe-crumb--body}
       (pretty-css.basic/style-attributes            crumb-props)
@@ -57,10 +59,12 @@
   ; @param (map) crumb-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ crumb-props]
   (-> {:class :pe-crumb}
-      (pretty-css.appearance/theme-attributes crumb-props)
-      (pretty-css.layout/outdent-attributes   crumb-props)
-      (pretty-css.basic/class-attributes      crumb-props)
-      (pretty-css.basic/state-attributes      crumb-props)))
+      (pretty-css.appearance/theme-attributes    crumb-props)
+      (pretty-css.layout/outdent-attributes      crumb-props)
+      (pretty-css.basic/class-attributes         crumb-props)
+      (pretty-css.basic/state-attributes         crumb-props)
+      (pretty-css.layout/wrapper-size-attributes crumb-props)))

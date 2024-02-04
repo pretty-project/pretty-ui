@@ -16,7 +16,8 @@
   ; {}
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ {:keys [surface]}]
   (-> {:class :pe-dropdown-menu--surface-body}
       (pretty-css.appearance/background-attributes  surface)
@@ -31,7 +32,8 @@
   ; {}
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ {:keys [surface]}]
   (-> {:class :pe-dropdown-menu--surface}
       (pretty-css.layout/outdent-attributes surface)))
@@ -46,7 +48,8 @@
   ; @param (map) menu-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ menu-props]
   (-> {:class :pe-dropdown-menu--body}
       (pretty-css.layout/indent-attributes menu-props)

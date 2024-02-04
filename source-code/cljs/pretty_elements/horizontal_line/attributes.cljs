@@ -35,7 +35,8 @@
   ; @param (map) line-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ line-props]
   (-> {:class :pe-horizontal-line}
       (pretty-css.basic/class-attributes        line-props)

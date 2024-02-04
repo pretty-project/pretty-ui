@@ -38,6 +38,9 @@
                        :reagent-render         (fn [_ crumb-props] [crumb crumb-id crumb-props])}))
 
 (defn view
+  ; @description
+  ; A simplified button element for breadcrumb style menus.
+  ;
   ; @param (keyword)(opt) crumb-id
   ; @param (map) crumb-props
   ; {:class (keyword or keywords in vector)(opt)

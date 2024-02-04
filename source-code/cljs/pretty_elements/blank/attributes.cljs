@@ -14,7 +14,8 @@
   ; @param (map) blank-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ blank-props]
   (-> {:class :pe-blank--body}
       (pretty-css.basic/style-attributes   blank-props)
@@ -30,7 +31,8 @@
   ; @param (map) blank-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ blank-props]
   (-> {:class :pe-blank}
       (pretty-css.appearance/theme-attributes blank-props)

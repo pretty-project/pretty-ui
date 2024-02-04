@@ -36,7 +36,8 @@
   ; @param (map) bubble-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ bubble-props]
   (-> {:class :pe-notification-bubble--body}
       (pretty-css.appearance/background-attributes        bubble-props)
@@ -61,7 +62,8 @@
   ; @param (map) bubble-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ bubble-props]
   (-> {:class :pe-notification-bubble}
       (pretty-css.basic/class-attributes        bubble-props)

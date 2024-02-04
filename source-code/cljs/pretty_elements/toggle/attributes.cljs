@@ -45,7 +45,8 @@
   ; @param (map) toggle-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ toggle-props]
   (-> {:class :pe-toggle}
       (pretty-css.basic/class-attributes        toggle-props)

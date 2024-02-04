@@ -111,7 +111,8 @@
   ; @param (map) contacts-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ contacts-props]
   (-> {:class :pw-contacts--body}
       (pretty-css.layout/indent-attributes contacts-props)
@@ -127,7 +128,8 @@
   ; @param (map) contacts-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ contacts-props]
   (-> {:class :pw-contacts}
       (pretty-css.basic/class-attributes   contacts-props)

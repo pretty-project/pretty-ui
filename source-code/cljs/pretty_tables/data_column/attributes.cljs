@@ -14,7 +14,8 @@
   ; @param (map) column-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ column-props]
   (-> {:class :pt-data-column--body}
       (pretty-css.layout/grid-attributes              column-props)
@@ -32,7 +33,8 @@
   ; @param (map) column-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ column-props]
   (-> {:class :pt-data-column}
       (pretty-css.appearance/theme-attributes    column-props)

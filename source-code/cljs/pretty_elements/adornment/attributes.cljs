@@ -18,7 +18,8 @@
   ; @param (map) adornment-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [adornment-id adornment-props]
   (-> {:class :pe-adornment--icon}
       (pretty-css.content/icon-attributes adornment-props)))
@@ -30,7 +31,8 @@
   ; @param (map) adornment-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ adornment-props]
   (-> {:class :pe-adornment--label}
       (pretty-css.content/font-attributes              adornment-props)
@@ -46,7 +48,8 @@
   ; @param (map) adornment-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [adornment-id adornment-props]
   (-> {:class :pe-adornment--body}
       (pretty-css.accessories/tooltip-attributes    adornment-props)
@@ -75,7 +78,8 @@
   ; @param (map) adornment-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ adornment-props]
   (-> {:class :pe-adornment}
       (pretty-css.appearance/theme-attributes adornment-props)

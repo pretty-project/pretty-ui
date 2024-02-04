@@ -34,7 +34,8 @@
   ; @param (map) sidebar-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ sidebar-props]
   (-> {:class :pl-sidebar--body}
       (pretty-css.appearance/background-attributes        sidebar-props)

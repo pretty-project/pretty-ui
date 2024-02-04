@@ -13,7 +13,8 @@
   ; @param (map) spacer-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ spacer-props]
   (-> {:class :pe-vertical-spacer}
       (pretty-css.basic/class-attributes      spacer-props)

@@ -20,7 +20,8 @@
   ; @param (*) datum
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [diagram-id {:keys [strength] :as diagram-props} datum-dex datum]
   (let [data-limit   (pretty-diagrams.engine/get-diagram-data-limit  diagram-id diagram-props)
         datum-color  (pretty-diagrams.engine/get-diagram-datum-color diagram-id diagram-props datum-dex datum)
@@ -42,7 +43,8 @@
   ; @param (map) diagram-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ diagram-props]
   (-> {:class :pd-line-diagram--body}
       (pretty-css.basic/style-attributes            diagram-props)
@@ -60,7 +62,8 @@
   ; @param (map) diagram-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ diagram-props]
   (-> {:class :pd-line-diagram}
       (pretty-css.appearance/theme-attributes    diagram-props)

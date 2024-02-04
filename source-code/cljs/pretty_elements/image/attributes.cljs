@@ -40,7 +40,8 @@
   ; @param (map) image-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ image-props]
   (-> {:class :pe-image}
       (pretty-css.basic/class-attributes        image-props)

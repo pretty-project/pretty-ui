@@ -81,7 +81,7 @@
    ; @note (tutorials#parameterizing)
    (fn [_ menu-props]
        (let [menu-props (pretty-presets.engine/apply-preset            menu-id menu-props)
-             menu-props (dropdown-menu.prototypes/menu-props-prototype menu-id menu-props)
-             menu-props (pretty-elements.engine/apply-item-default     menu-id menu-props :menu-items :menu-item-default)
-             menu-props (pretty-elements.engine/inherit-element-state  menu-id menu-props :menu-items :menu-item-default)]
+             menu-props (dropdown-menu.prototypes/menu-props-prototype menu-id menu-props)]
+             ;menu-props (pretty-elements.engine/apply-element-item-default     menu-id menu-props :menu-items :menu-item-default)
+             ;menu-props (pretty-elements.engine/inherit-element-disabled-state menu-id menu-props :menu-items :menu-item-default)
             [view-lifecycles menu-id menu-props]))))

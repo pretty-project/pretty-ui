@@ -14,7 +14,8 @@
   ; @param (map) group-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ group-props]
   (-> {:class :pe-vertical-group--body}
       (pretty-css.layout/full-block-size-attributes group-props)

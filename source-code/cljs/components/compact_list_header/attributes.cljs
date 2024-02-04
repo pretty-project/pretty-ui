@@ -12,7 +12,8 @@
   ; @param (map) header-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ header-props]
   (-> {:class :c-compact-list-header--body}
       (pretty-css.appearance/background-attributes header-props)
@@ -28,7 +29,8 @@
   ; @param (map) header-props
   ;
   ; @return (map)
-  ; {}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ header-props]
   (-> {:class :c-compact-list-header}
       (pretty-css.basic/class-attributes   header-props)

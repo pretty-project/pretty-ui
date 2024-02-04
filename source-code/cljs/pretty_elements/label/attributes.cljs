@@ -15,7 +15,8 @@
   ; @param (map) label-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ label-props]
   (-> {:class :pe-label--icon}
       (pretty-css.content/icon-attributes label-props)))
@@ -27,7 +28,8 @@
   ; @param (map) label-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ label-props]
   (-> {:class :pe-label--content}
       (pretty-css.content/font-attributes              label-props)
@@ -44,7 +46,8 @@
   ; {}
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ label-props]
   (-> {:class :pe-label--body}
       (pretty-css.appearance/background-attributes label-props)
@@ -64,7 +67,8 @@
   ; @param (map) label-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ label-props]
   (-> {:class :pe-label}
       (pretty-css.appearance/theme-attributes    label-props)

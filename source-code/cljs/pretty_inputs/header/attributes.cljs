@@ -16,7 +16,8 @@
   ; @param (map) header-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ _]
   (-> {:class :pi-header--error-text}
       (pretty-css.content/font-attributes {:font-size :xs :letter-spacing :auto :line-height :text-block :font-weight :normal})
@@ -29,7 +30,8 @@
   ; @param (map) header-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ _]
   (-> {:class :pi-header--helper-text}
       (pretty-css.content/font-attributes {:font-size :xs :letter-spacing :auto :line-height :text-block :font-weight :normal})
@@ -42,7 +44,8 @@
   ; @param (map) header-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ _]
   (-> {:class :pi-header--info-text}
       (pretty-css.content/font-attributes {:font-size :xs :letter-spacing :auto :line-height :text-block :font-weight :normal})
@@ -75,7 +78,8 @@
   ; @param (map) header-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ header-props]
   (-> {:class :pi-header--body}
       (pretty-css.basic/style-attributes            header-props)

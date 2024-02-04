@@ -107,6 +107,6 @@
    (fn [_ group-props]
        (let [group-props (pretty-presets.engine/apply-preset          group-id group-props)
              group-props (chip-group.prototypes/group-props-prototype group-id group-props)]
-             ;group-props (pretty-elements.engine/apply-item-default    group-id group-props :chips :chip-default)
-             ;group-props (pretty-elements.engine/inherit-element-state group-id group-props :chips :chip-default)
+             ;group-props (pretty-elements.engine/apply-element-item-default     group-id group-props :chips :chip-default)
+             ;group-props (pretty-elements.engine/inherit-element-disabled-state group-id group-props :chips :chip-default)
             [view-lifecycles group-id group-props]))))

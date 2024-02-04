@@ -30,7 +30,8 @@
   ; @param (map) diagram-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ diagram-props]
   (-> {:class :pd-bar-diagram--body}
       (pretty-css.basic/style-attributes            diagram-props)
@@ -47,7 +48,8 @@
   ; @param (map) diagram-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ diagram-props]
   (-> {:class :pd-bar-diagram}
       (pretty-css.appearance/theme-attributes    diagram-props)

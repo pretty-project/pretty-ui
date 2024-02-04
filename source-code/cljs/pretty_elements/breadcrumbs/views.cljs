@@ -89,8 +89,8 @@
   ([breadcrumbs-id breadcrumbs-props]
    ; @note (tutorials#parameterizing)
    (fn [_ breadcrumbs-props]
-       (let [breadcrumbs-props (pretty-presets.engine/apply-preset                 breadcrumbs-id breadcrumbs-props)
-             breadcrumbs-props (breadcrumbs.prototypes/breadcrumbs-props-prototype breadcrumbs-id breadcrumbs-props)
-             breadcrumbs-props (pretty-elements.engine/apply-item-default          breadcrumbs-id breadcrumbs-props :crumbs :crumb-default)
-             breadcrumbs-props (pretty-elements.engine/inherit-element-state       breadcrumbs-id breadcrumbs-props :crumbs :crumb-default)]
+       (let [breadcrumbs-props (pretty-presets.engine/apply-preset                    breadcrumbs-id breadcrumbs-props)
+             breadcrumbs-props (breadcrumbs.prototypes/breadcrumbs-props-prototype    breadcrumbs-id breadcrumbs-props)
+             breadcrumbs-props (pretty-elements.engine/apply-element-item-default     breadcrumbs-id breadcrumbs-props :crumbs :crumb-default)
+             breadcrumbs-props (pretty-elements.engine/inherit-element-disabled-state breadcrumbs-id breadcrumbs-props :crumbs :crumb-default)]
             [view-lifecycles breadcrumbs-id breadcrumbs-props]))))

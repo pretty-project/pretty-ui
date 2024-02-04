@@ -13,7 +13,8 @@
   ; @param (map) field-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ field-props]
   (-> {:class :pi-time-field--body}
       (pretty-css.layout/indent-attributes field-props)

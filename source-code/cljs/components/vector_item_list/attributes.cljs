@@ -13,7 +13,8 @@
   ; @param (map) list-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ list-props]
   (-> {:class :c-vector-item-list--body}
       (pretty-css.layout/indent-attributes list-props)
@@ -30,7 +31,8 @@
   ; @param (map) list-props
   ;
   ; @return (map)
-  ; {}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ list-props]
   (-> {:class :c-vector-item-list}
       (pretty-css.basic/class-attributes   list-props)

@@ -15,7 +15,8 @@
   ; @param (map) separator-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ separator-props]
   (-> {:class :pe-horizontal-separator--body}
       (pretty-css.appearance/background-attributes             separator-props)
@@ -34,7 +35,8 @@
   ; @param (map) separator-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ separator-props]
   (-> {:class :pe-horizontal-separator}
       (pretty-css.basic/class-attributes        separator-props)

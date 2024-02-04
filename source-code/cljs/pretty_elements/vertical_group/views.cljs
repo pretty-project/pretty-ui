@@ -76,8 +76,8 @@
   ([group-id group-props]
    ; @note (tutorials#parameterizing)
    (fn [_ group-props]
-       (let [group-props (pretty-presets.engine/apply-preset              group-id group-props)
-             group-props (vertical-group.prototypes/group-props-prototype group-id group-props)
-             group-props (pretty-elements.engine/apply-item-default       group-id group-props :group-items :group-item-default)
-             group-props (pretty-elements.engine/inherit-element-state    group-id group-props :group-items :group-item-default)]
+       (let [group-props (pretty-presets.engine/apply-preset                    group-id group-props)
+             group-props (vertical-group.prototypes/group-props-prototype       group-id group-props)
+             group-props (pretty-elements.engine/apply-element-item-default     group-id group-props :group-items :group-item-default)
+             group-props (pretty-elements.engine/inherit-element-disabled-state group-id group-props :group-items :group-item-default)]
             [view-lifecycles group-id group-props]))))

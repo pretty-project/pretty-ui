@@ -14,7 +14,8 @@
   ; @param (map) row-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ row-props]
   (-> {:class :pe-row--body}
       (pretty-css.appearance/background-attributes        row-props)

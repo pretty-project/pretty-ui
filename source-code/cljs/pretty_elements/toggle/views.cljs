@@ -57,6 +57,9 @@
   ;  :fill-pattern (keyword)(opt)
   ;   Default: :cover
   ;  :height (keyword, px or string)(opt)
+  ;  :highlighted? (boolean)(opt)
+  ;  :highlight-color (keyword or string)(opt)
+  ;  :highlight-pattern (keyword)(opt)
   ;  :hover-color (keyword or string)(opt)
   ;  :hover-effect (keyword)(opt)
   ;  :hover-pattern (keyword)(opt)

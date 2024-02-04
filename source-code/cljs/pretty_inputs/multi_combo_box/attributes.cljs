@@ -14,7 +14,8 @@
   ; @param (map) box-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ box-props]
   (-> {:class :pi-multi-combo-box--body}
       (pretty-css.layout/indent-attributes box-props)

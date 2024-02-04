@@ -18,7 +18,8 @@
   ; @param (map) card-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [card-id card-props]
   (-> {:class :pe-card--body}
       (pretty-css.accessories/badge-attributes        card-props)
@@ -48,7 +49,8 @@
   ; @param (map) card-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ card-props]
   (-> {:class :pe-card}
       (pretty-css.appearance/theme-attributes    card-props)

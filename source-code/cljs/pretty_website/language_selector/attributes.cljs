@@ -44,7 +44,8 @@
   ; @param (map) selector-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ selector-props]
   (-> {:class :pw-language-selector--body}
       (pretty-css.layout/indent-attributes selector-props)
@@ -61,7 +62,8 @@
   ; @param (map) selector-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ selector-props]
   (-> {:class :pw-language-selector}
       (pretty-css.basic/class-attributes   selector-props)

@@ -15,7 +15,8 @@
   ; @param (map) breadcrumbs-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ breadcrumbs-props]
   (-> {:class :pe-breadcrumbs--bullet}
       (pretty-css.accessories/bullet-attributes breadcrumbs-props)))
@@ -30,7 +31,8 @@
   ; @param (map) breadcrumbs-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ breadcrumbs-props]
   (-> {:class :pe-breadcrumbs--body}
       (pretty-css.basic/style-attributes            breadcrumbs-props)
@@ -48,7 +50,8 @@
   ; @param (map) breadcrumbs-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ breadcrumbs-props]
   (-> {:class :pe-breadcrumbs}
       (pretty-css.appearance/theme-attributes    breadcrumbs-props)

@@ -35,7 +35,8 @@
   ; @param (map) button-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [button-id button-props]
   (-> {:class :pe-icon-button--body}
       (pretty-css.accessories/badge-attributes      button-props)
@@ -66,7 +67,8 @@
   ; @param (map) button-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ button-props]
   (-> {:class :pe-icon-button}
       (pretty-css.basic/class-attributes   button-props)

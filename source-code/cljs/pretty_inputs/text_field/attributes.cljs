@@ -184,7 +184,8 @@
   ; {:disabled? (boolean)(opt)}
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ {:keys [disabled?] :as field-props}]
   (-> {:class        :pi-text-field
        :data-covered disabled?}

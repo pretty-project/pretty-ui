@@ -15,7 +15,8 @@
   ; @param (map) swapper-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [swapper-id swapper-props]
   (-> {:class :pe-content-swapper--body}
       (pretty-css.basic/style-attributes              swapper-props)
@@ -30,7 +31,8 @@
   ; @param (map) swapper-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ swapper-props]
   (-> {:class :pe-content-swapper}
       (pretty-css.appearance/theme-attributes    swapper-props)

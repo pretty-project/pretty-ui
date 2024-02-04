@@ -14,7 +14,8 @@
   ; @param (map) group-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [group-id group-props]
   (-> {:class :pe-adornment-group--body}
       (pretty-css.basic/style-attributes            group-props)
@@ -32,7 +33,8 @@
   ; @param (map) group-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ group-props]
   (-> {:class :pe-adornment-group}
       (pretty-css.appearance/theme-attributes    group-props)

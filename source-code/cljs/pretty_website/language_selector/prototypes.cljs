@@ -11,8 +11,9 @@
   ; @param (map) selector-props
   ;
   ; @return (map)
-  ; {:font-size (keyword, px or string)}
-  ; {:gap (keyword, px or string)}
+  ; {:font-size (keyword, px or string)
+  ;  :gap (keyword, px or string)
+  ;  ...}
   [_ selector-props]
   (merge {:font-size :s
           :gap       :xxs}

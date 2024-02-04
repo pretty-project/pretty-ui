@@ -15,7 +15,8 @@
   ; @param (map) table-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ table-props]
   (-> {:class :pe-data-table--body}
       (pretty-css.basic/style-attributes              table-props)
@@ -32,7 +33,8 @@
   ; @param (map) table-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ table-props]
   (-> {:class :pe-data-table}
       (pretty-css.appearance/theme-attributes    table-props)

@@ -35,7 +35,8 @@
   ; @param (map) links-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ links-props]
   (-> {:class :pw-follow-us-links--body}
       (pretty-css.layout/indent-attributes links-props)
@@ -51,7 +52,8 @@
   ; @param (map) links-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ links-props]
   (-> {:class :pw-follow-us-links}
       (pretty-css.basic/class-attributes   links-props)

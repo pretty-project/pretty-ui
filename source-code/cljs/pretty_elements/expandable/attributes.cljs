@@ -14,7 +14,8 @@
   ; @param (map) expandable-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ expandable-props]
   (-> {:class :pe-expandable--body}
       (pretty-css.basic/style-attributes              expandable-props)
@@ -31,7 +32,8 @@
   ; @param (map) expandable-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ expandable-props]
   (-> {:class :pe-expandable}
       (pretty-css.appearance/theme-attributes    expandable-props)

@@ -60,6 +60,9 @@
   ;  :disabled? (boolean)(opt)
   ;  :fill-color (keyword or string)(opt)
   ;  :fill-pattern (keyword)(opt)
+  ;  :highlighted? (boolean)(opt)
+  ;  :highlight-color (keyword or string)(opt)
+  ;  :highlight-pattern (keyword)(opt)
   ;  :hover-color (keyword or string)(opt)
   ;  :hover-pattern (keyword)(opt)
   ;  :hover-effect (keyword)(opt)
@@ -91,6 +94,8 @@
   ;  :theme (keyword)(opt)
   ;  :tooltip-content (metamorphic-content)(opt)
   ;  :tooltip-position (keyword)(opt)}
+
+  ; height, width, max-...????
   ;
   ; @usage
   ; [icon-button {...}]

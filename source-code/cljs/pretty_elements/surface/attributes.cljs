@@ -17,7 +17,8 @@
   ; @param (map) surface-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [surface-id surface-props]
   (-> {:class :pe-surface--body}
       (pretty-css.appearance/background-attributes    surface-props)
@@ -39,7 +40,8 @@
   ; @param (map) surface-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ surface-props]
   (-> {:class :pe-surface}
       (pretty-css.appearance/theme-attributes    surface-props)

@@ -31,7 +31,8 @@
   ; @param (map) group-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ group-props]
   (-> {:class :pi-chip-group--body}
       (pretty-css.layout/indent-attributes group-props)

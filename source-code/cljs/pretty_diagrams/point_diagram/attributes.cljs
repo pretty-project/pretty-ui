@@ -17,8 +17,10 @@
   ; @param (*) datum
   ;
   ; @return (map)
-  ; {}
-  [diagram-id diagram-props datum-dex datum])
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
+  [diagram-id diagram-props datum-dex datum]
+  (-> {:class :pd-point-diagram--datum}))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -30,7 +32,8 @@
   ; @param (map) diagram-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ diagram-props]
   (-> {:class :pd-point-diagram--body}
       (pretty-css.basic/style-attributes            diagram-props)
@@ -47,7 +50,8 @@
   ; @param (map) diagram-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ diagram-props]
   (-> {:class :pd-point-diagram}
       (pretty-css.appearance/theme-attributes    diagram-props)

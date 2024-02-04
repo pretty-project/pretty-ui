@@ -128,7 +128,8 @@
   ; @param (map) switch-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [switch-id switch-props]
   (let [on-blur-f  (fn [_] (pretty-inputs.engine/input-left    switch-id switch-props))
         on-focus-f (fn [_] (pretty-inputs.engine/input-focused switch-id switch-props))]

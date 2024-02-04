@@ -15,7 +15,8 @@
   ; @param (map) ghost-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ ghost-props]
   (-> {:class :pe-ghost--body}
       (pretty-css.live/animation-attributes ghost-props)
@@ -35,7 +36,8 @@
   ; @param (map) ghost-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ ghost-props]
   (-> {:class :pe-ghost}
       (pretty-css.basic/class-attributes        ghost-props)

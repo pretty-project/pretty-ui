@@ -28,15 +28,6 @@
   ; @param (map) bar-props
   ; {:buttons (maps in vector)(opt)}
   [bar-id {:keys [buttons] :as bar-props}]
-
-  ; For menu bars with horizontal orientation, the '{overflow-x: scroll}'
-  ; and '{display: flex}' properties can only used together (properly)
-  ; if the width of the scroll container element ('.pe-menu-bar--body') is not greater
-  ; than the total width of the elements within.
-  ; Therefore, the '{:horizontal-align :space-between}' setting cannot be implemented,
-  ; while keeping the '{overflow-x: scroll}' property.
-
-
   [:div (menu-bar.attributes/menu-bar-attributes bar-id bar-props)
         [:div (menu-bar.attributes/menu-bar-body-attributes bar-id bar-props)
               (letfn [(f0 [button-dex button-props] [menu-bar-button button-dex button-props])]
@@ -93,8 +84,8 @@
   ([bar-id bar-props]
    ; @note (tutorials#parameterizing)
    (fn [_ bar-props]
-       (let [bar-props (pretty-presets.engine/apply-preset           bar-id bar-props)
-             bar-props (menu-bar.prototypes/bar-props-prototype      bar-id bar-props)
-             bar-props (pretty-elements.engine/apply-item-default    bar-id bar-props :buttons :button-default)
-             bar-props (pretty-elements.engine/inherit-element-state bar-id bar-props :buttons :button-default)]
+       (let [bar-props (pretty-presets.engine/apply-preset                    bar-id bar-props)
+             bar-props (menu-bar.prototypes/bar-props-prototype               bar-id bar-props)
+             bar-props (pretty-elements.engine/apply-element-item-default     bar-id bar-props :buttons :button-default)
+             bar-props (pretty-elements.engine/inherit-element-disabled-state bar-id bar-props :buttons :button-default)]
             [view-lifecycles bar-id bar-props]))))

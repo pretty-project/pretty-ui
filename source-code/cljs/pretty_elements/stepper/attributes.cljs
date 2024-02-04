@@ -14,7 +14,8 @@
   ; @param (map) stepper-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ stepper-props]
   (-> {:class :pe-stepper--body}
       (pretty-css.layout/indent-attributes stepper-props)
@@ -30,7 +31,8 @@
   ; @param (map) stepper-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ stepper-props]
   (-> {:class :pe-stepper}
       (pretty-css.basic/class-attributes   stepper-props)

@@ -151,7 +151,8 @@
   ; @param (map) checkbox-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ checkbox-props]
   (-> {:class :pi-checkbox}
       (pretty-css.basic/class-attributes   checkbox-props)

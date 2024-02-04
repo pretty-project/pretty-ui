@@ -14,7 +14,8 @@
   ; @param (map) menu-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ menu-props]
   (-> {:class :pw-multi-menu--body}
       (pretty-css.layout/indent-attributes menu-props)
@@ -30,7 +31,8 @@
   ; @param (map) menu-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ menu-props]
   (-> {:class :pw-multi-menu}
       (pretty-css.basic/class-attributes   menu-props)

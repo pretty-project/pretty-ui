@@ -17,7 +17,9 @@
   ;
   ; @param (keyword) chip-id
   ; @param (map) chip-props
-  ; {}
+  ; {:end-adornments (maps in vector)(opt)
+  ;  :label (metamorphic-content)(opt)
+  ;  :start-adornments (maps in vector)(opt)}
   [chip-id {:keys [end-adornments label start-adornments] :as chip-props}]
   [:div (chip.attributes/chip-attributes chip-id chip-props)
         [(pretty-elements.engine/clickable-auto-tag chip-id chip-props)
@@ -60,6 +62,9 @@
   ;  :fill-pattern (keyword)(opt)
   ;   Default: :cover
   ;  :height (keyword, px or string)(opt)
+  ;  :highlighted? (boolean)(opt)
+  ;  :highlight-color (keyword or string)(opt)
+  ;  :highlight-pattern (keyword)(opt)
   ;  :hover-color (keyword or string)(opt)
   ;  :hover-effect (keyword)(opt)
   ;  :hover-pattern (keyword)(opt)

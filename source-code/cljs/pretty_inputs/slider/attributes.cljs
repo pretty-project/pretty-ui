@@ -73,7 +73,8 @@
   ; @param (map) slider-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ slider-props]
   (-> {:class :pi-slider--body}
       (pretty-css.layout/full-block-size-attributes slider-props)

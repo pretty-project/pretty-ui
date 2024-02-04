@@ -22,7 +22,8 @@
   ; @param (*) datum
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [diagram-id {:keys [strength] :as diagram-props} datum-dex datum]
   (let [datum-color     (pretty-diagrams.engine/get-diagram-datum-color diagram-id diagram-props datum-dex datum)
         datum-pattern   (circle-diagram.utils/diagram-datum-pattern     diagram-id diagram-props datum-dex datum)
@@ -42,7 +43,8 @@
   ; @param (map) diagram-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ diagram-props]
   (-> {:class :pd-circle-diagram--body}
       (pretty-css.basic/style-attributes            diagram-props)
@@ -59,7 +61,8 @@
   ; @param (map) diagram-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ diagram-props]
   (-> {:class :pd-circle-diagram}
       (pretty-css.appearance/theme-attributes    diagram-props)

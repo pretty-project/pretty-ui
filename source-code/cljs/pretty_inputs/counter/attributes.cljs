@@ -92,7 +92,8 @@
   ; @param (map) counter-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ counter-props]
   (-> {:class :pi-counter--body}
       (pretty-css.layout/indent-attributes counter-props)
