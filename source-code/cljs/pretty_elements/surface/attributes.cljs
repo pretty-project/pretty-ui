@@ -1,11 +1,9 @@
 
 (ns pretty-elements.surface.attributes
-    (:require [pretty-css.appearance.api  :as pretty-css.appearance]
-              [pretty-css.basic.api       :as pretty-css.basic]
-              [pretty-css.content.api     :as pretty-css.content]
-              [pretty-css.control.api     :as pretty-css.control]
-              [pretty-css.layout.api      :as pretty-css.layout]
-              [pretty-css.live.api        :as pretty-css.live]))
+    (:require [pretty-css.appearance.api             :as pretty-css.appearance]
+              [pretty-css.basic.api                  :as pretty-css.basic]
+              [pretty-css.layout.api                 :as pretty-css.layout]
+              [pretty-css.live.api                 :as pretty-css.live]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -24,14 +22,10 @@
       (pretty-css.appearance/background-attributes    surface-props)
       (pretty-css.appearance/border-attributes        surface-props)
       (pretty-css.basic/style-attributes              surface-props)
-      (pretty-css.content/cursor-attributes           surface-props)
-      (pretty-css.control/state-attributes            surface-props)
       (pretty-css.layout/double-block-size-attributes surface-props)
-      (pretty-css.layout/flex-attributes              surface-props)
-      (pretty-css.layout/indent-attributes            surface-props)))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
+      (pretty-css.layout/indent-attributes            surface-props)
+      (pretty-css.layout/position-attributes          surface-props)
+      (pretty-css.live/animation-attributes           surface-props)))
 
 (defn surface-attributes
   ; @ignore
@@ -48,4 +42,6 @@
       (pretty-css.basic/class-attributes         surface-props)
       (pretty-css.basic/state-attributes         surface-props)
       (pretty-css.layout/outdent-attributes      surface-props)
-      (pretty-css.layout/wrapper-size-attributes surface-props)))
+      (pretty-css.layout/wrapper-size-attributes surface-props)
+
+      (pretty-css.layout/layer-attributes surface-props)))

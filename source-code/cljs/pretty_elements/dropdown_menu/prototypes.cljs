@@ -15,8 +15,10 @@
   ; {:menu-bar (map)(opt)}
   ;
   ; @return (map)
-  [_ {:keys [menu-bar]}]
-  (-> menu-bar))
+  [menu-id {:keys [menu-bar]}]
+  ;(let [bar-id ()] ; (pretty-elements.engine/element-id->subitem-id menu-id :menu-bar)
+  (-> menu-bar
+         (assoc-in [:menu-item-default :menu-id] menu-id)))
 
 (defn surface-props-prototype
   ; @ignore
@@ -27,7 +29,12 @@
   ;
   ; @return (map)
   [_ {:keys [surface]}]
-  (-> surface))
+  (merge
+     { :visible? false
+           :positioning :absolute :layer :uppermost
+           :width :parent}
+     surface))
+                       ;:fill-color :warning :width :l :height :l)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -52,20 +59,6 @@
          ; the updated menu items vector.
          (vector/->items menu-items f2 {:provide-dex? true})))
 
-(defn surface-prototype
-  ; @ignore
-  ;
-  ; @param (keyword) menu-id
-  ; @param (map) menu-props
-  ; {}
-  ;
-  ; @return (map)
-  ; {}
-  [_ {{:keys [border-color]} :surface :keys [surface] :as menu-props}]
-  (merge (if border-color {:border-position :all
-                           :border-width    :xxs})
-         (-> surface)))
-
 (defn menu-props-prototype
   ; @ignore
   ;
@@ -76,34 +69,3 @@
   ; {}
   [menu-id menu-props]
   (-> menu-props))
-  ;(merge menu-props {:menu-items (menu-items-prototype menu-id menu-props)
-  ;                   :surface    (surface-prototype    menu-id menu-props)])
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn surface-props-prototype_
-  ; @ignore
-  ;
-  ; @param (keyword) menu-id
-  ; @param (map) menu-props
-  ;
-  ; @return (map)
-  ; {}
-  [_ menu-props]
-  ; Filters the menu bar properties to avoid property duplications between the 'dropdown-menu'
-  ; element and the implemented 'menu-bar' element.
-  menu-props)
-
-(defn bar-props-prototype_
-  ; @ignore
-  ;
-  ; @param (keyword) menu-id
-  ; @param (map) menu-props
-  ;
-  ; @return (map)
-  ; {}
-  [_ menu-props]
-  ; Filters the menu bar properties to avoid property duplications between the 'dropdown-menu'
-  ; element and the implemented 'menu-bar' element.
-  (dissoc menu-props :class :indent :outdent :preset :style))

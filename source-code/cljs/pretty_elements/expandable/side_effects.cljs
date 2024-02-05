@@ -1,29 +1,31 @@
 
 (ns pretty-elements.expandable.side-effects
     (:require [pretty-elements.surface.side-effects :as surface.side-effects]
-              [pretty-elements.expandable.env :as expandable.env]))
+              [pretty-elements.engine.api :as pretty-elements.engine]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn expand-content!
   ; @description
-  ; Turns on the visibility of the content of a specific 'expandable' element.
+  ; Turns on the content visibility of the 'expandable' element.
   ;
   ; @param (keyword) expandable-id
   ;
   ; @usage
   ; (expand-content! :my-expandable)
   [expandable-id]
-  (surface.side-effects/show-surface! expandable-id))
+  (let [surface-id (pretty-elements.engine/element-id->subitem-id expandable-id :surface)]
+       (surface.side-effects/show-surface! surface-id)))
 
 (defn collapse-content!
   ; @description
-  ; Turns off the visibility of the content of a specific 'expandable' element.
+  ; Turns off the content visibility of the 'expandable' element.
   ;
   ; @param (keyword) expandable-id
   ;
   ; @usage
   ; (collapse-content! :my-expandable)
   [expandable-id]
-  (surface.side-effects/hide-surface! expandable-id))
+  (let [surface-id (pretty-elements.engine/element-id->subitem-id expandable-id :surface)]
+       (surface.side-effects/hide-surface! surface-id)))

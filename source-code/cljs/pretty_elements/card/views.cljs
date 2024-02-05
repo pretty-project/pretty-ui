@@ -39,6 +39,9 @@
                        :reagent-render         (fn [_ card-props] [card card-id card-props])}))
 
 (defn view
+  ; @description
+  ; Optionally clickable card style element for displaying content.
+  ;
   ; @param (keyword)(opt) card-id
   ; @param (map) card-props
   ; {:badge-color (keyword or string)(opt)
@@ -103,5 +106,5 @@
    (fn [_ card-props]
        (let [card-props (pretty-presets.engine/apply-preset           card-id card-props)
              card-props (card.prototypes/card-props-prototype         card-id card-props)
-             card-props (pretty-elements.engine/element-timeout-props card-id card-props)]
+             card-props (pretty-elements.engine/element-timeout-props card-id card-props :content)]
             [view-lifecycles card-id card-props]))))

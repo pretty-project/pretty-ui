@@ -1,31 +1,31 @@
 
-(ns pretty-elements.button.views
+(ns pretty-elements.menu-item.views
     (:require [fruits.random.api                 :as random]
-              [pretty-elements.button.attributes :as button.attributes]
-              [pretty-elements.button.prototypes :as button.prototypes]
-              [pretty-elements.engine.api                 :as pretty-elements.engine]
+              [pretty-elements.menu-item.attributes :as menu-item.attributes]
+              [pretty-elements.menu-item.prototypes :as menu-item.prototypes]
+              [pretty-elements.engine.api :as pretty-elements.engine]
               [pretty-presets.engine.api :as pretty-presets.engine]
               [reagent.api                       :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- button
+(defn- menu-item
   ; @ignore
   ;
-  ; @param (keyword) button-id
-  ; @param (map) button-props
+  ; @param (keyword) item-id
+  ; @param (map) item-props
   ; {:icon (keyword)(opt)
   ;  :icon-position (keyword)(opt)
   ;  :label (metamorphic-content)(opt)}
-  [button-id {:keys [icon icon-position label] :as button-props}]
-  [:div (button.attributes/button-attributes button-id button-props)
-        [(pretty-elements.engine/clickable-auto-tag button-id button-props)
-         (button.attributes/button-body-attributes  button-id button-props)
-         (case icon-position :right [:<> (if label [:div (button.attributes/button-label-attributes button-id button-props) label])
-                                         (if icon  [:i   (button.attributes/button-icon-attributes  button-id button-props) icon])]
-                                    [:<> (if icon  [:i   (button.attributes/button-icon-attributes  button-id button-props) icon])
-                                         (if label [:div (button.attributes/button-label-attributes button-id button-props) label])])]])
+  [item-id {:keys [icon icon-position label] :as item-props}]
+  [:div (menu-item.attributes/menu-item-attributes item-id item-props)
+        [(pretty-elements.engine/clickable-auto-tag      item-id item-props)
+         (menu-item.attributes/menu-item-body-attributes item-id item-props)
+         (case icon-position :right [:<> (if label [:div (menu-item.attributes/menu-item-label-attributes item-id item-props) label])
+                                         (if icon  [:i   (menu-item.attributes/menu-item-icon-attributes  item-id item-props) icon])]
+                                    [:<> (if icon  [:i   (menu-item.attributes/menu-item-icon-attributes  item-id item-props) icon])
+                                         (if label [:div (menu-item.attributes/menu-item-label-attributes item-id item-props) label])])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -33,22 +33,19 @@
 (defn- view-lifecycles
   ; @ignore
   ;
-  ; @param (keyword) button-id
-  ; @param (map) button-props
-  [button-id button-props]
+  ; @param (keyword) item-id
+  ; @param (map) item-props
+  [item-id item-props]
   ; @note (tutorials#parameterizing)
   ; @note (pretty-elements.adornment.views#8097)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    button-id button-props))
-                       :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount button-id button-props))
-                       :component-did-update   (fn [%]   (pretty-elements.engine/element-did-update   button-id button-props %))
-                       :reagent-render         (fn [_ button-props] [button button-id button-props])}))
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    item-id item-props))
+                       :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount item-id item-props))
+                       :component-did-update   (fn [%]   (pretty-elements.engine/element-did-update   item-id item-props %))
+                       :reagent-render         (fn [_ item-props] [menu-item item-id item-props])}))
 
 (defn view
-  ; @description
-  ; Button element with optional keypress control, timeout lock, and progress display.
-  ;
-  ; @param (keyword)(opt) button-id
-  ; @param (map) button-props
+  ; @param (keyword)(opt) item-id
+  ; @param (map) item-props
   ; {:badge-color (keyword or string)(opt)
   ;  :badge-content (metamorphic-content)(opt)
   ;  :badge-position (keyword)(opt)
@@ -112,19 +109,21 @@
   ;  :tooltip-content (metamorphic-content)(opt)
   ;  :tooltip-position (keyword)(opt)
   ;  :width (keyword, px or string)(opt)}
-  ;
-  ; @usage
-  ; [button {...}]
-  ;
-  ; @usage
-  ; [button :my-button {...}]
-  ([button-props]
-   [view (random/generate-keyword) button-props])
 
-  ([button-id button-props]
+  ; + menu-id, dropdown-content
+  ;
+  ; @usage
+  ; [menu-item {...}]
+  ;
+  ; @usage
+  ; [menu-item :my-menu-item {...}]
+  ([item-props]
+   [view (random/generate-keyword) item-props])
+
+  ([item-id item-props]
    ; @note (tutorials#parameterizing)
-   (fn [_ button-props]
-       (let [button-props (pretty-presets.engine/apply-preset           button-id button-props)
-             button-props (button.prototypes/button-props-prototype     button-id button-props)
-             button-props (pretty-elements.engine/element-timeout-props button-id button-props :label)]
-            [view-lifecycles button-id button-props]))))
+   (fn [_ item-props]
+       (let [item-props (pretty-presets.engine/apply-preset           item-id item-props)
+             item-props (menu-item.prototypes/item-props-prototype    item-id item-props)
+             item-props (pretty-elements.engine/element-timeout-props item-id item-props :label)]
+            [view-lifecycles item-id item-props]))))

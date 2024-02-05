@@ -5,15 +5,15 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn button-props-prototype
+(defn item-props-prototype
   ; @ignore
   ;
-  ; @param (integer) button-dex
-  ; @param (map) button-props
+  ; @param (integer) item-dex
+  ; @param (map) item-props
   ;
   ; @return (map)
-  [_ button-props]
-  (-> button-props))
+  [_ item-props]
+  (-> item-props))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -25,6 +25,9 @@
   ; @param (map) bar-props
   ;
   ; @return (map)
-  [_ bar-props]
+  [bar-id bar-props]
   (-> bar-props (pretty-elements.properties/default-flex-props {:orientation :horizontal :overflow :scroll})
                 (pretty-elements.properties/default-size-props {:height :content :width :content})))
+
+
+                ;(assoc-in [:menu-item-default :menu-id] bar-id)))

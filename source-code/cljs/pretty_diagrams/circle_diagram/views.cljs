@@ -58,6 +58,9 @@
                        :reagent-render         (fn [_ diagram-props] [circle-diagram diagram-id diagram-props])}))
 
 (defn view
+  ; @description
+  ; Circle diagram for displaying values with colored circle sections.
+  ;
   ; @param (keyword)(opt) diagram-id
   ; @param (map) diagram-props
   ; {:class (keyword or keywords in vector)(opt)

@@ -1,5 +1,5 @@
 
-(ns pretty-elements.content-swapper.config)
+(ns pretty-elements.surface.config)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -7,4 +7,4 @@
 ; @ignore
 ;
 ; @constant (ms)
-(def TRANSITION-DURATION 350)
+(def TRANSITION-DURATION 500)

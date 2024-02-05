@@ -47,6 +47,9 @@
                        :reagent-render         (fn [_ chip-props] [chip chip-id chip-props])}))
 
 (defn view
+  ; @description
+  ; Optionally clickable chip style element with optional adornments.
+  ;
   ; @param (keyword)(opt) chip-id
   ; @param (map) chip-props
   ; {:border-color (keyword or string)(opt)
@@ -106,5 +109,5 @@
    (fn [_ chip-props]
        (let [chip-props (pretty-presets.engine/apply-preset           chip-id chip-props)
              chip-props (chip.prototypes/chip-props-prototype         chip-id chip-props)
-             chip-props (pretty-elements.engine/element-timeout-props chip-id chip-props)]
+             chip-props (pretty-elements.engine/element-timeout-props chip-id chip-props :label)]
             [view-lifecycles chip-id chip-props]))))

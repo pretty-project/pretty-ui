@@ -60,6 +60,9 @@
   ; @important
   ; This function is incomplete and may not behave as expected.
   ;
+  ; @description
+  ; Point diagram for displaying values with colored points.
+  ;
   ; @param (keyword)(opt) diagram-id
   ; @param (map) diagram-props
   ; {:class (keyword or keywords in vector)

@@ -59,6 +59,9 @@
   ; @important
   ; This function is incomplete and may not behave as expected.
   ;
+  ; @description
+  ; Bar diagram for displaying values with colored bars.
+  ;
   ; @param (keyword)(opt) diagram-id
   ; @param (map) diagram-props
   ; {:class (keyword or keywords in vector)

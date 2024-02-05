@@ -100,7 +100,7 @@
         popup-props (select.prototypes/popup-props-prototype   select-id select-props)
         popup-props (assoc popup-props :body   [select-popup-body   select-id select-props]
                                        :header [select-popup-header select-id select-props])]
-       (if (pretty-inputs.engine/input-popup-rendered? select-id select-props)
+       (if (pretty-inputs.engine/input-popup-visible? select-id select-props)
            [:div {:class :pi-select--popup}
                  [pretty-layouts/struct-popup popup-id popup-props]])))
 

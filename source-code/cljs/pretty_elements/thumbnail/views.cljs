@@ -98,5 +98,5 @@
    (fn [_ thumbnail-props]
        (let [thumbnail-props (pretty-presets.engine/apply-preset             thumbnail-id thumbnail-props)
              thumbnail-props (thumbnail.prototypes/thumbnail-props-prototype thumbnail-id thumbnail-props)
-             thumbnail-props (pretty-elements.engine/element-timeout-props   thumbnail-id thumbnail-props)]
+             thumbnail-props (pretty-elements.engine/element-timeout-props   thumbnail-id thumbnail-props :label)]  ; <- Nincs is label, de elférne egy ugy mint az icon-button alatt
             [view-lifecycles thumbnail-id thumbnail-props]))))

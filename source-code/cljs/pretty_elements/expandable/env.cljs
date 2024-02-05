@@ -1,6 +1,6 @@
 
 (ns pretty-elements.expandable.env
-    (:require [pretty-elements.surface.env :as surface.env]))
+    (:require [pretty-elements.engine.api :as pretty-elements.engine]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -10,7 +10,8 @@
   ;
   ; @param (keyword) expandable-id
   ; @param (map) expandable-props
-  ; {:surface (map)(opt)
-  ;   {:visible? (boolean)(opt)}}
-  [expandable-id {:keys [surface]}]
-  (surface.env/surface-visible? expandable-id surface))
+  ;
+  ; @return (boolean)
+  [expandable-id _]
+  (let [surface-id (pretty-elements.engine/element-id->subitem-id expandable-id :surface)]
+       (pretty-elements.engine/element-visible? surface-id)))

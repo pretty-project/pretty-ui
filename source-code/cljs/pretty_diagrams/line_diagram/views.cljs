@@ -56,6 +56,9 @@
                        :reagent-render         (fn [_ diagram-props] [line-diagram diagram-id diagram-props])}))
 
 (defn view
+  ; @description
+  ; Line diagram for displaying values with continuous colored lines.
+  ;
   ; @param (keyword)(opt) diagram-id
   ; @param (map) diagram-props
   ; {:class (keyword or keywords in vector)(opt)

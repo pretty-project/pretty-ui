@@ -98,5 +98,5 @@
    (fn [_ toggle-props]
        (let [toggle-props (pretty-presets.engine/apply-preset           toggle-id toggle-props)
              toggle-props (toggle.prototypes/toggle-props-prototype     toggle-id toggle-props)
-             toggle-props (pretty-elements.engine/element-timeout-props toggle-id toggle-props)]
+             toggle-props (pretty-elements.engine/element-timeout-props toggle-id toggle-props :content)]
             [view-lifecycles toggle-id toggle-props]))))

@@ -52,6 +52,9 @@
                        :reagent-render         (fn [_ breadcrumbs-props] [breadcrumbs breadcrumbs-id breadcrumbs-props])}))
 
 (defn view
+  ; @description
+  ; Breadcrumb style menu element.
+  ;
   ; @param (keyword)(opt) breadcrumbs-id
   ; @param (map) breadcrumbs-props
   ; {:bullet-color (keyword or string)(opt)

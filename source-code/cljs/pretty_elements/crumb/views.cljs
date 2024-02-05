@@ -39,7 +39,7 @@
 
 (defn view
   ; @description
-  ; A simplified button element for breadcrumb style menus.
+  ; Simplified button element for breadcrumb style menus.
   ;
   ; @param (keyword)(opt) crumb-id
   ; @param (map) crumb-props

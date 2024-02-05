@@ -3,7 +3,10 @@
     (:require [pretty-css.appearance.api           :as pretty-css.appearance]
               [pretty-css.basic.api                :as pretty-css.basic]
               [pretty-css.layout.api               :as pretty-css.layout]
-              [pretty-elements.dropdown-menu.state :as dropdown-menu.state]))
+              [pretty-elements.dropdown-menu.state :as dropdown-menu.state]
+
+              [pretty-elements.engine.api]
+              [pretty-elements.surface.side-effects :as surface.side-effects]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -76,8 +79,12 @@
   ; - https://www.geeksforgeeks.org/how-to-disable-mouseout-events-triggered-by-child-elements
   ;   According to this article using on-mouse-leave instead of the on-mouse-out event
   ;   solves the problem.
-  (-> {:class :pe-dropdown-menu
-       :on-mouse-leave #(swap! dropdown-menu.state/MENUS assoc-in [menu-id :active-dex] nil)}
-      (pretty-css.basic/class-attributes   menu-props)
-      (pretty-css.layout/outdent-attributes menu-props)
-      (pretty-css.basic/state-attributes   menu-props)))
+
+  (let [surface-id (pretty-elements.engine.api/element-id->subitem-id menu-id :surface)]
+
+       (-> {:class :pe-dropdown-menu
+            :on-mouse-leave ;#(swap! dropdown-menu.state/MENUS assoc-in [menu-id :active-dex] nil)}
+                             #(surface.side-effects/hide-surface! surface-id)}
+           (pretty-css.basic/class-attributes   menu-props)
+           (pretty-css.layout/outdent-attributes menu-props)
+           (pretty-css.basic/state-attributes   menu-props))))

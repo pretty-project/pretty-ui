@@ -2,7 +2,7 @@
 (ns pretty-elements.menu-bar.views
     (:require [fruits.hiccup.api                   :as hiccup]
               [fruits.random.api                   :as random]
-              [pretty-elements.button.views :as button.views]
+              [pretty-elements.menu-item.views :as menu-item.views]
               [pretty-elements.menu-bar.attributes :as menu-bar.attributes]
               [pretty-elements.menu-bar.prototypes :as menu-bar.prototypes]
               [pretty-elements.engine.api :as pretty-elements.engine]
@@ -12,26 +12,26 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn menu-bar-button
+(defn menu-bar-menu-item
   ; @ignore
   ;
-  ; @param (integer) button-dex
-  ; @param (map) button-props
-  [button-dex button-props]
-  (let [button-props (menu-bar.prototypes/button-props-prototype button-dex button-props)]
-       [button.views/view button-props]))
+  ; @param (integer) item-dex
+  ; @param (map) item-props
+  [item-dex item-props]
+  (let [item-props (menu-bar.prototypes/item-props-prototype item-dex item-props)]
+       [menu-item.views/view item-props]))
 
 (defn- menu-bar
   ; @ignore
   ;
   ; @param (keyword) bar-id
   ; @param (map) bar-props
-  ; {:buttons (maps in vector)(opt)}
-  [bar-id {:keys [buttons] :as bar-props}]
+  ; {:menu-items (maps in vector)(opt)}
+  [bar-id {:keys [menu-items] :as bar-props}]
   [:div (menu-bar.attributes/menu-bar-attributes bar-id bar-props)
         [:div (menu-bar.attributes/menu-bar-body-attributes bar-id bar-props)
-              (letfn [(f0 [button-dex button-props] [menu-bar-button button-dex button-props])]
-                     (hiccup/put-with-indexed [:<>] buttons f0))]])
+              (letfn [(f0 [item-dex item-props] [menu-bar-menu-item item-dex item-props])]
+                     (hiccup/put-with-indexed [:<>] menu-items f0))]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -50,9 +50,7 @@
 (defn view
   ; @param (keyword)(opt) bar-id
   ; @param (map) bar-props
-  ; {:button-default (map)(opt)
-  ;  :buttons (maps in vector)(opt)
-  ;  :class (keyword or keywords in vector)(opt)
+  ; {:class (keyword or keywords in vector)(opt)
   ;  :disabled? (boolean)(opt)
   ;  :gap (keyword, px or string)(opt)
   ;  :height (keyword, px or string)(opt)
@@ -60,6 +58,8 @@
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :max-height (keyword, px or string)(opt)
   ;  :max-width (keyword, px or string)(opt)
+  ;  :menu-item-default (map)(opt)
+  ;  :menu-items (maps in vector)(opt)
   ;  :min-height (keyword, px or string)(opt)
   ;  :min-width (keyword, px or string)(opt)
   ;  :on-mount-f (function)(opt)
@@ -86,6 +86,6 @@
    (fn [_ bar-props]
        (let [bar-props (pretty-presets.engine/apply-preset                    bar-id bar-props)
              bar-props (menu-bar.prototypes/bar-props-prototype               bar-id bar-props)
-             bar-props (pretty-elements.engine/apply-element-item-default     bar-id bar-props :buttons :button-default)
-             bar-props (pretty-elements.engine/inherit-element-disabled-state bar-id bar-props :buttons :button-default)]
+             bar-props (pretty-elements.engine/apply-element-item-default     bar-id bar-props :menu-items :menu-item-default)
+             bar-props (pretty-elements.engine/inherit-element-disabled-state bar-id bar-props :menu-items :menu-item-default)]
             [view-lifecycles bar-id bar-props]))))

@@ -1,31 +1,4 @@
 
-/***** Content swapper *****/
-/*** Content ***/
-
-.pe-content-swapper--content {
-  animation-fill-mode: both;
-  animation-duration:  350ms;
-  height:              100%;
-  left:                0;
-  position:            absolute;
-  top:                 0;
-  width:               100%;
-}
-
-[data-animation-direction="ltr"] .pe-content-swapper--content.tc-appear-active { animation-name: fade-in-ltr;  }
-[data-animation-direction="ltr"] .pe-content-swapper--content.tc-exit-active   { animation-name: fade-out-ltr; }
-[data-animation-direction="rtl"] .pe-content-swapper--content.tc-appear-active { animation-name: fade-in-rtl;  }
-[data-animation-direction="rtl"] .pe-content-swapper--content.tc-exit-active   { animation-name: fade-out-rtl; }
-[data-animation-direction="ttb"] .pe-content-swapper--content.tc-appear-active { animation-name: fade-in-ttb;  }
-[data-animation-direction="ttb"] .pe-content-swapper--content.tc-exit-active   { animation-name: fade-out-ttb; }
-[data-animation-direction="btt"] .pe-content-swapper--content.tc-appear-active { animation-name: fade-in-btt;  }
-[data-animation-direction="btt"] .pe-content-swapper--content.tc-exit-active   { animation-name: fade-out-btt; }
-
-/*** Content ***/
-/***** Content swapper *****/
-
-
-
 /***** Dropdown menu *****/
 /*** Wrapper ***/
 
@@ -173,15 +146,6 @@
 
 
 /***** Menu bar *****/
-/*** Wrapper ***/
-
-.pe-menu-bar {
-  /* XXX#6669 The menu-bar body element is scrollable on its X axis. */
-  -width: auto;
-}
-
-/*** Wrapper ***/
-
 /*** Item ***/
 
 /* */
@@ -244,6 +208,54 @@
 }
 
 /***** Spacer *****/
+
+
+/***** Surface *****/
+/*** Body ***/
+
+.pe-surface--body {
+  /* Fade animations use the translateX function; and the hidden overflow content setting makes
+   * the content appear/disappear within(!) the surface body. */
+  overflow: hidden;
+}
+
+/*** Body ***/
+
+/*** Content ***/
+
+.pe-surface--content {
+  animation-fill-mode: both;
+  animation-duration:  350ms;
+}
+
+:not(:only-child).pe-surface--content.tc-exit-active {
+  /* In case the surface already contains the new content; disappearing content must be absolutely positioned
+   * to make space for the new content. */
+  left:     0;
+  position: absolute;
+  top:      0;
+}
+
+:not([data-animation-direction]) .pe-surface--content.tc-exit-active {
+  /* Contents disappearing without animation must be transparent until they are unmounted from the React tree. */
+  opacity: 0
+}
+
+[data-animation-direction="ltr"] .pe-surface--content.tc-appear-active { animation-name: fade-in-ltr;  }
+[data-animation-direction="ltr"] .pe-surface--content.tc-enter-active  { animation-name: fade-in-ltr;  }
+[data-animation-direction="ltr"] .pe-surface--content.tc-exit-active   { animation-name: fade-out-ltr; }
+[data-animation-direction="rtl"] .pe-surface--content.tc-appear-active { animation-name: fade-in-rtl;  }
+[data-animation-direction="rtl"] .pe-surface--content.tc-enter-active  { animation-name: fade-in-rtl;  }
+[data-animation-direction="rtl"] .pe-surface--content.tc-exit-active   { animation-name: fade-out-rtl; }
+[data-animation-direction="ttb"] .pe-surface--content.tc-appear-active { animation-name: fade-in-ttb;  }
+[data-animation-direction="ttb"] .pe-surface--content.tc-enter-active  { animation-name: fade-in-ttb;  }
+[data-animation-direction="ttb"] .pe-surface--content.tc-exit-active   { animation-name: fade-out-ttb; }
+[data-animation-direction="btt"] .pe-surface--content.tc-appear-active { animation-name: fade-in-btt;  }
+[data-animation-direction="btt"] .pe-surface--content.tc-enter-active  { animation-name: fade-in-btt;  }
+[data-animation-direction="btt"] .pe-surface--content.tc-exit-active   { animation-name: fade-out-btt; }
+
+/*** Content ***/
+/***** Surface *****/
 
 
 

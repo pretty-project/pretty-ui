@@ -18,7 +18,7 @@
   ; @return (map)
   ; {}
   [select-id {:keys [button] :as select-props}]
-  (let [on-click-f (fn [_] (pretty-inputs.engine/render-input-popup! select-id select-props))
+  (let [on-click-f (fn [_] (pretty-inputs.engine/show-input-popup! select-id select-props))
         label      (select.env/select-button-label select-id select-props)]
        (merge button {:gap           :auto
                       :icon          :unfold_more
@@ -35,7 +35,7 @@
   ; @return (map)
   ; {}
   [select-id {:keys [button] :as select-props}]
-  (let [on-click-f (fn [_] (pretty-inputs.engine/render-input-popup! select-id select-props))]
+  (let [on-click-f (fn [_] (pretty-inputs.engine/show-input-popup! select-id select-props))]
        (merge button {:on-click-f on-click-f})))
 
 (defn button-props-prototype
@@ -47,7 +47,7 @@
   ; @return (map)
   ; {}
   [select-id {:keys [button] :as select-props}]
-  (let [on-click-f (fn [_] (pretty-inputs.engine/render-input-popup! select-id select-props))]
+  (let [on-click-f (fn [_] (pretty-inputs.engine/show-input-popup! select-id select-props))]
        (merge button {:on-click-f on-click-f})))
 
 ;; ----------------------------------------------------------------------------
@@ -89,7 +89,7 @@
   ; @return (map)
   ; {}
   [select-id {:keys [popup] :as select-props}]
-  (let [on-cover-f (fn [_] (pretty-inputs.engine/close-input-popup! select-id select-props))]
+  (let [on-cover-f (fn [_] (pretty-inputs.engine/hide-input-popup! select-id select-props))]
        (merge {:cover-color :black
                :fill-color  :default}
               (-> popup)

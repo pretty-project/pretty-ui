@@ -48,6 +48,9 @@
                        :reagent-render         (fn [_ group-props] [adornment-group group-id group-props])}))
 
 (defn view
+  ; @description
+  ; Group of downsized button elements.
+  ;
   ; @param (keyword)(opt) group-id
   ; @param (map) group-props
   ; {:adornment-default (map)(opt)

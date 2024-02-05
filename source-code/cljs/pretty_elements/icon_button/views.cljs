@@ -110,5 +110,5 @@
    (fn [_ button-props]
        (let [button-props (pretty-presets.engine/apply-preset            button-id button-props)
              button-props (icon-button.prototypes/button-props-prototype button-id button-props)
-             button-props (pretty-elements.engine/element-timeout-props  button-id button-props)]
+             button-props (pretty-elements.engine/element-timeout-props  button-id button-props :label)]
             [view-lifecycles button-id button-props]))))

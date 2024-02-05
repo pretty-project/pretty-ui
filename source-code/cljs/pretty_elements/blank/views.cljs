@@ -36,6 +36,9 @@
                        :reagent-render         (fn [_ blank-props] [blank blank-id blank-props])}))
 
 (defn view
+  ; @description
+  ; Simplified element for displaying content.
+  ;
   ; @param (keyword)(opt) blank-id
   ; @param (map) blank-props
   ; {:class (keyword or keywords in vector)(opt)

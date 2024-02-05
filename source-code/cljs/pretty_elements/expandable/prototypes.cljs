@@ -2,7 +2,8 @@
 (ns pretty-elements.expandable.prototypes
     (:require [pretty-elements.properties.api :as pretty-elements.properties]
               [pretty-elements.expandable.side-effects :as expandable.side-effects]
-              [pretty-elements.expandable.env :as expandable.env]))
+              [pretty-elements.expandable.env :as expandable.env]
+              [pretty-elements.engine.api :as pretty-elements.engine]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

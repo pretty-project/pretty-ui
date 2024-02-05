@@ -36,6 +36,9 @@
                        :reagent-render         (fn [_ column-props] [column column-id column-props])}))
 
 (defn view
+  ; @description
+  ; Vertical flex container element for displaying content.
+  ;
   ; @param (keyword)(opt) column-id
   ; @param (map) column-props
   ; {:border-color (keyword or string)(opt)

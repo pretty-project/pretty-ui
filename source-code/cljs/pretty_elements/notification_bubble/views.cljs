@@ -132,7 +132,7 @@
    (fn [_ bubble-props]
        (let [bubble-props (pretty-presets.engine/apply-preset                    bubble-id bubble-props)
              bubble-props (notification-bubble.prototypes/bubble-props-prototype bubble-id bubble-props)
-             bubble-props (pretty-elements.engine/element-timeout-props          bubble-id bubble-props)]
+             bubble-props (pretty-elements.engine/element-timeout-props          bubble-id bubble-props :content)]
             [view-lifecycles bubble-id bubble-props]))))
 
             ; + hover-color, hover-effect, hover-pattern, highlight-... ...

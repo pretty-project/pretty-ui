@@ -10,8 +10,6 @@
               [pretty-elements.crumb.views                :as crumb.views]
               [pretty-elements.chip.views                 :as chip.views]
               [pretty-elements.column.views               :as column.views]
-              [pretty-elements.content-swapper.side-effects :as content-swapper.side-effects]
-              [pretty-elements.content-swapper.views      :as content-swapper.views]
               [pretty-elements.dropdown-menu.views        :as dropdown-menu.views]
               [pretty-elements.expandable.side-effects :as expandable.side-effects]
               [pretty-elements.expandable.views           :as expandable.views]
@@ -25,6 +23,7 @@
               [pretty-elements.image.views                :as image.views]
               [pretty-elements.label.views                :as label.views]
               [pretty-elements.menu-bar.views             :as menu-bar.views]
+              [pretty-elements.menu-item.views             :as menu-item.views]
               [pretty-elements.notification-bubble.views  :as notification-bubble.views]
               [pretty-elements.row.views                  :as row.views]
               [pretty-elements.stepper.views              :as stepper.views]
@@ -39,18 +38,17 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; @redirect (pretty-elements.content-swapper.side-effects/*)
-(def swap-content! content-swapper.side-effects/swap-content!)
-(def set-content!  content-swapper.side-effects/set-content!)
-(def hide-content! content-swapper.side-effects/hide-content!)
-
 ; @redirect (pretty-elements.expandable.side-effects/*)
 (def expand-content!   expandable.side-effects/expand-content!)
 (def collapse-content! expandable.side-effects/collapse-content!)
 
 ; @redirect (pretty-elements.surface.side-effects/*)
-(def show-surface! surface.side-effects/show-surface!)
-(def hide-surface! surface.side-effects/hide-surface!)
+(def show-surface!         surface.side-effects/show-surface!)
+(def hide-surface!         surface.side-effects/hide-surface!)
+(def swap-surface-content! surface.side-effects/swap-surface-content!)
+(def set-surface-content!  surface.side-effects/set-surface-content!)
+(def show-surface-content! surface.side-effects/show-surface-content!)
+(def hide-surface-content! surface.side-effects/hide-surface-content!)
 
 ; @redirect (*/view)
 (def adornment            adornment.views/view)
@@ -61,7 +59,6 @@
 (def card                 card.views/view)
 (def chip                 chip.views/view)
 (def column               column.views/view)
-(def content-swapper      content-swapper.views/view)
 (def crumb                crumb.views/view)
 (def dropdown-menu        dropdown-menu.views/view)
 (def expandable           expandable.views/view)
@@ -75,6 +72,7 @@
 (def image                image.views/view)
 (def label                label.views/view)
 (def menu-bar             menu-bar.views/view)
+(def menu-item            menu-item.views/view)
 (def notification-bubble  notification-bubble.views/view)
 (def row                  row.views/view)
 (def stepper              stepper.views/view)

@@ -20,10 +20,12 @@
   [expandable-id expandable-props]
   [:div (expandable.attributes/expandable-attributes expandable-id expandable-props)
         [:div (expandable.attributes/expandable-body-attributes expandable-id expandable-props)
-              (let [button-props (expandable.prototypes/button-props-prototype expandable-id expandable-props)]
-                   [button.views/view expandable-id button-props])
-              (let [surface-props (expandable.prototypes/surface-props-prototype expandable-id expandable-props)]
-                   [surface.views/view expandable-id surface-props])]])
+              (let [button-id    (pretty-elements.engine/element-id->subitem-id expandable-id :button)
+                    button-props (expandable.prototypes/button-props-prototype  expandable-id expandable-props)]
+                   [button.views/view button-id button-props])
+              (let [surface-id    (pretty-elements.engine/element-id->subitem-id expandable-id :surface)
+                    surface-props (expandable.prototypes/surface-props-prototype expandable-id expandable-props)]
+                   [surface.views/view surface-id surface-props])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -40,6 +42,9 @@
                        :reagent-render         (fn [_ expandable-props] [expandable expandable-id expandable-props])}))
 
 (defn view
+  ; @description
+  ; Expandable content displaying element.
+  ;
   ; @param (keyword)(opt) expandable-id
   ; @param (map) expandable-props
   ; {:button (map)(opt)

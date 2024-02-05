@@ -42,6 +42,9 @@
                        :reagent-render         (fn [_ adornment-props] [adornment adornment-id adornment-props])}))
 
 (defn view
+  ; @description
+  ; Downsized button element for adornment groups.
+  ;
   ; @param (keyword)(opt) adornment-id
   ; @param (map) adornment-props
   ; {:border-color (keyword or string)(opt)
@@ -110,5 +113,5 @@
    (fn [_ adornment-props]
        (let [adornment-props (pretty-presets.engine/apply-preset             adornment-id adornment-props)
              adornment-props (adornment.prototypes/adornment-props-prototype adornment-id adornment-props)
-             adornment-props (pretty-elements.engine/element-timeout-props   adornment-id adornment-props)]
+             adornment-props (pretty-elements.engine/element-timeout-props   adornment-id adornment-props :label)]
             [view-lifecycles adornment-id adornment-props]))))

@@ -20,10 +20,12 @@
   [menu-id menu-props]
   [:div (dropdown-menu.attributes/menu-attributes menu-id menu-props)
         [:div (dropdown-menu.attributes/menu-body-attributes menu-id menu-props)
-              (let [bar-props (dropdown-menu.prototypes/bar-props-prototype menu-id menu-props)]
-                   [menu-bar.views/view menu-id bar-props])
-              (let [surface-props (dropdown-menu.prototypes/surface-props-prototype menu-id menu-props)]
-                   [surface.views/view menu-id surface-props])]])
+              (let [bar-id    (pretty-elements.engine/element-id->subitem-id menu-id :menu-bar)
+                    bar-props (dropdown-menu.prototypes/bar-props-prototype  menu-id menu-props)]
+                   [menu-bar.views/view bar-id bar-props])
+              (let [surface-id    (pretty-elements.engine/element-id->subitem-id    menu-id :surface)
+                    surface-props (dropdown-menu.prototypes/surface-props-prototype menu-id menu-props)]
+                   [surface.views/view surface-id surface-props])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -40,6 +42,8 @@
                        :reagent-render         (fn [_ menu-props] [dropdown-menu menu-id menu-props])}))
 
 (defn view
+  ; @description
+  ;
   ; @note
   ; For more information, check out the documentation of the ['menu-bar'](/pretty-ui/cljs/pretty-elements/api.html#menu-bar) element.
   ;
