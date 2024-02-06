@@ -78,6 +78,9 @@
   ([expandable-id expandable-props]
    ; @note (tutorials#parameterizing)
    (fn [_ expandable-props]
-       (let [expandable-props (pretty-presets.engine/apply-preset               expandable-id expandable-props)
-             expandable-props (expandable.prototypes/expandable-props-prototype expandable-id expandable-props)]
+       (let [expandable-props (pretty-presets.engine/apply-preset                     expandable-id expandable-props)
+             expandable-props (expandable.prototypes/expandable-props-prototype       expandable-id expandable-props)
+             expandable-props (pretty-elements.engine/element-subitem<-disabled-state expandable-id expandable-props :button)
+             expandable-props (pretty-elements.engine/element-subitem<-disabled-state expandable-id expandable-props :surface)
+             expandable-props (pretty-elements.engine/dissoc-element-disabled-state   expandable-id expandable-props)]
             [view-lifecycles expandable-id expandable-props]))))

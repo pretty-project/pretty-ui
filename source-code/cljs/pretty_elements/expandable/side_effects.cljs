@@ -16,7 +16,7 @@
   ; (expand-content! :my-expandable)
   [expandable-id]
   (let [surface-id (pretty-elements.engine/element-id->subitem-id expandable-id :surface)]
-       (surface.side-effects/show-surface! surface-id)))
+       (surface.side-effects/mount-surface! surface-id)))
 
 (defn collapse-content!
   ; @description
@@ -28,4 +28,4 @@
   ; (collapse-content! :my-expandable)
   [expandable-id]
   (let [surface-id (pretty-elements.engine/element-id->subitem-id expandable-id :surface)]
-       (surface.side-effects/hide-surface! surface-id)))
+       (surface.side-effects/unmount-surface! surface-id)))

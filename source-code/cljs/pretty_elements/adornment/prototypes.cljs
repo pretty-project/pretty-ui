@@ -14,6 +14,7 @@
   ; @return (map)
   [adornment-id adornment-props]
   (-> adornment-props (pretty-elements.properties/clickable-text-auto-props)
+                      (pretty-elements.properties/default-background-props  {})
                       (pretty-elements.properties/default-border-props      {})
                      ;(pretty-elements.properties/default-content-props     {}) ; <- Why was this here?
                       (pretty-elements.properties/default-effect-props      {})

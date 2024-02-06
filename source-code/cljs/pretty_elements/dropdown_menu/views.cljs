@@ -43,35 +43,23 @@
 
 (defn view
   ; @description
-  ;
-  ; @note
-  ; For more information, check out the documentation of the ['menu-bar'](/pretty-ui/cljs/pretty-elements/api.html#menu-bar) element.
+  ; Dropdown style menu.
   ;
   ; @param (keyword)(opt) menu-id
   ; @param (map) menu-props
-  ; {:menu-item-default (map)(opt)
-  ;  :menu-items (maps in vector)(opt)
-  ;   [{:content (metamorphic-content)(opt)
-  ;     :placeholder (metamorphic-content)(opt)
-  ;     :preset (keyword)(opt)}]
-
+  ; {:class (keyword or keywords in vector)(opt)
   ;  :disabled? (boolean)(opt)
+  ;  :indent (map)(opt)
+  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
+  ;  :menu-bar (map)(opt)
   ;  :on-mount-f (function)(opt)
   ;  :on-unmount-f (function)(opt)
-
+  ;  :outdent (map)(opt)
+  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
+  ;  :preset (keyword)(opt)
+  ;  :style (map)(opt)
   ;  :surface (map)(opt)
-  ;   {:border-color (keyword or string)(opt)
-  ;    :border-position (keyword)(opt)
-  ;    :border-radius (map)(opt)
-  ;     {:all, :tl, :tr, :br, :bl (keyword, px or string)(opt)}
-  ;    :border-width (keyword, px or string)(opt)
-  ;    :fill-color (keyword or string)
-  ;    :indent (map)(opt)
-  ;    :outdent (map)(opt)
-  ;    :preset (keyword)(opt)}}
-  ;
-  ; :menu-bar (map)(opt)
-  ; :surface (map)(opt)
+  ;  :theme (keyword)(opt)}
   ;
   ; @usage
   ; [dropdown-menu {...}]
@@ -84,8 +72,9 @@
   ([menu-id menu-props]
    ; @note (tutorials#parameterizing)
    (fn [_ menu-props]
-       (let [menu-props (pretty-presets.engine/apply-preset            menu-id menu-props)
-             menu-props (dropdown-menu.prototypes/menu-props-prototype menu-id menu-props)]
-             ;menu-props (pretty-elements.engine/apply-element-item-default     menu-id menu-props :menu-items :menu-item-default)
-             ;menu-props (pretty-elements.engine/inherit-element-disabled-state menu-id menu-props :menu-items :menu-item-default)
+       (let [menu-props (pretty-presets.engine/apply-preset                     menu-id menu-props)
+             menu-props (dropdown-menu.prototypes/menu-props-prototype          menu-id menu-props)
+             menu-props (pretty-elements.engine/element-subitem<-disabled-state menu-id menu-props :menu-bar)
+             menu-props (pretty-elements.engine/element-subitem<-disabled-state menu-id menu-props :surface)
+             menu-props (pretty-elements.engine/dissoc-element-disabled-state   menu-id menu-props)]
             [view-lifecycles menu-id menu-props]))))

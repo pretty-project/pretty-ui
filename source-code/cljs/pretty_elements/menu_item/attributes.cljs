@@ -5,7 +5,6 @@
               [pretty-css.basic.api       :as pretty-css.basic]
               [pretty-css.content.api     :as pretty-css.content]
               [pretty-css.control.api     :as pretty-css.control]
-              [pretty-css.control.api     :as pretty-css.control]
               [pretty-css.layout.api      :as pretty-css.layout]
               [pretty-css.live.api        :as pretty-css.live]))
 
@@ -55,7 +54,6 @@
   (-> {:class :pe-menu-item--body}
       (pretty-css.accessories/badge-attributes      item-props)
       (pretty-css.accessories/marker-attributes     item-props)
-      (pretty-css.accessories/tooltip-attributes    item-props)
       (pretty-css.appearance/background-attributes  item-props)
       (pretty-css.appearance/border-attributes      item-props)
       (pretty-css.basic/style-attributes            item-props)
@@ -68,8 +66,7 @@
       (pretty-css.layout/full-block-size-attributes item-props)
       (pretty-css.layout/flex-attributes            item-props)
       (pretty-css.layout/indent-attributes          item-props)
-      (pretty-css.live/effect-attributes            item-props)
-      (pretty-css.live/progress-attributes          item-props)))
+      (pretty-css.live/effect-attributes            item-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

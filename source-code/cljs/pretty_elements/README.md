@@ -1,5 +1,5 @@
 
-### Basic rules of making elements
+### Basic rules for making elements
 
 - Every element has its entry component named `element` in the `views.cljs` namespace.
 
@@ -8,7 +8,7 @@
   readers by using the `@ignore` tag in their headers.
 
 - Every element must take two arguments. An element ID (optional) and an element
-  properties map (required).
+  property map (required).
   The `fruits.random.api/generate-keyword` function provides the element ID in case of it
   is not passed.
 

@@ -1,11 +1,12 @@
 
 (ns pretty-elements.expandable.env
-    (:require [pretty-elements.engine.api :as pretty-elements.engine]))
+    (:require [pretty-elements.engine.api :as pretty-elements.engine]
+              [pretty-elements.surface.env :as surface.env]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn surface-visible?
+(defn surface-mounted?
   ; @ignore
   ;
   ; @param (keyword) expandable-id
@@ -14,4 +15,4 @@
   ; @return (boolean)
   [expandable-id _]
   (let [surface-id (pretty-elements.engine/element-id->subitem-id expandable-id :surface)]
-       (pretty-elements.engine/element-visible? surface-id)))
+       (surface.env/surface-mounted? surface-id)))

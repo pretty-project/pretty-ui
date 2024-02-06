@@ -96,10 +96,11 @@
   ([table-id table-props]
    ; @note (tutorials#parameterizing)
    (fn [_ table-props]
-       (let [table-props (pretty-presets.engine/apply-preset                    table-id table-props)
-             table-props (data-table.prototypes/table-props-prototype           table-id table-props)
-             table-props (pretty-elements.engine/apply-element-item-default     table-id table-props :columns :column-default)
-             table-props (pretty-elements.engine/apply-element-item-default     table-id table-props :rows    :row-default)
-             table-props (pretty-elements.engine/inherit-element-disabled-state table-id table-props :columns :column-default)
-             table-props (pretty-elements.engine/inherit-element-disabled-state table-id table-props :rows    :row-default)]
+       (let [table-props (pretty-presets.engine/apply-preset                            table-id table-props)
+             table-props (data-table.prototypes/table-props-prototype                   table-id table-props)
+             table-props (pretty-elements.engine/element-subitem-group<-subitem-default table-id table-props :columns :column-default)
+             table-props (pretty-elements.engine/element-subitem-group<-disabled-state  table-id table-props :rows    :row-default)
+             table-props (pretty-elements.engine/element-subitem-group<-subitem-default table-id table-props :columns :column-default)
+             table-props (pretty-elements.engine/element-subitem-group<-disabled-state  table-id table-props :rows    :row-default)
+             table-props (pretty-elements.engine/dissoc-element-disabled-state          table-id table-props)]
             [view-lifecycles table-id table-props]))))

@@ -82,8 +82,9 @@
   ([column-id column-props]
    ; @note (tutorials#parameterizing)
    (fn [_ column-props]
-       (let [column-props (pretty-presets.engine/apply-preset                    column-id column-props)
-             column-props (data-column.prototypes/column-props-prototype         column-id column-props)
-             column-props (pretty-elements.engine/apply-element-item-default     column-id column-props :cells :cell-default)
-             column-props (pretty-elements.engine/inherit-element-disabled-state column-id column-props :cells :cell-default)]
+       (let [column-props (pretty-presets.engine/apply-preset                            column-id column-props)
+             column-props (data-column.prototypes/column-props-prototype                 column-id column-props)
+             column-props (pretty-elements.engine/element-subitem-group<-subitem-default column-id column-props :cells :cell-default)
+             column-props (pretty-elements.engine/element-subitem-group<-disabled-state  column-id column-props :cells :cell-default)
+             column-props (pretty-elements.engine/dissoc-element-disabled-state          column-id column-props)]
             [view-lifecycles column-id column-props]))))

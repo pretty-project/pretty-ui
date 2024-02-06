@@ -26,8 +26,7 @@
   ;
   ; @return (map)
   [bar-id bar-props]
-  (-> bar-props (pretty-elements.properties/default-flex-props {:orientation :horizontal :overflow :scroll})
-                (pretty-elements.properties/default-size-props {:height :content :width :content})))
-
-
-                ;(assoc-in [:menu-item-default :menu-id] bar-id)))
+  (-> bar-props (pretty-elements.properties/default-background-props {})
+                (pretty-elements.properties/default-border-props     {})
+                (pretty-elements.properties/default-flex-props       {:orientation :horizontal :overflow :scroll})
+                (pretty-elements.properties/default-size-props       {:height :content :width :content})))

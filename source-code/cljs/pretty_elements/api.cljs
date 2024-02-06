@@ -2,6 +2,7 @@
 (ns pretty-elements.api
     (:require [pretty-elements.adornment-group.views      :as adornment-group.views]
               [pretty-elements.surface.side-effects :as surface.side-effects]
+              [pretty-elements.surface.env :as surface.env]
               [pretty-elements.adornment.views            :as adornment.views]
               [pretty-elements.blank.views                :as blank.views]
               [pretty-elements.breadcrumbs.views          :as breadcrumbs.views]
@@ -42,9 +43,12 @@
 (def expand-content!   expandable.side-effects/expand-content!)
 (def collapse-content! expandable.side-effects/collapse-content!)
 
+; @redirect (pretty-elements.surface.env/*)
+(def surface-mounted? surface.env/surface-mounted?)
+
 ; @redirect (pretty-elements.surface.side-effects/*)
-(def show-surface!         surface.side-effects/show-surface!)
-(def hide-surface!         surface.side-effects/hide-surface!)
+(def mount-surface!        surface.side-effects/mount-surface!)
+(def unmount-surface!      surface.side-effects/unmount-surface!)
 (def swap-surface-content! surface.side-effects/swap-surface-content!)
 (def set-surface-content!  surface.side-effects/set-surface-content!)
 (def show-surface-content! surface.side-effects/show-surface-content!)

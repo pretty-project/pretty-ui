@@ -36,3 +36,4 @@
 ; + activity-listener
 ; + countdown-timer
 ; + transition-controller
+; + dynamic-props

@@ -104,6 +104,7 @@
   ;  :class (keyword or keywords in vector)(opt)
   ;  :disabled? (boolean)(opt)
   ;  :emptiable? (boolean)(opt)
+  ;  :end-adornment-default (map)(opt)
   ;  :end-adornments (maps in vector)(opt)
   ;  :fill-color (keyword or string)(opt)
   ;  :fill-pattern (keyword)(opt)
@@ -143,6 +144,7 @@
   ;  :placeholder (metamorphic-content)(opt)
   ;  :preset (keyword)(opt)
   ;  :set-value-f (function)(opt)
+  ;  :start-adornment-default (map)(opt)
   ;  :start-adornments (maps in vector)(opt)
   ;  :style (map)(opt)
   ;  :surface (map)(opt)
@@ -175,4 +177,9 @@
    (fn [_ field-props]
        (let [field-props (pretty-presets.engine/apply-preset          field-id field-props)
              field-props (text-field.prototypes/field-props-prototype field-id field-props)]
+
+             ;field-props (pretty-elements.engine/element-subitem-field<-subitem-default field-id field-props :start-adornments :start-adornment-default)
+             ;field-props (pretty-elements.engine/element-subitem-field<-disabled-state  field-id field-props :end-adornments   :end-adornment-default)
+             ;field-props (pretty-elements.engine/element-subitem-field<-subitem-default field-id field-props :start-adornments :start-adornment-default)
+             ;field-props (pretty-elements.engine/element-subitem-field<-disabled-state  field-id field-props :end-adornments   :end-adornment-default)
             [view-lifecycles field-id field-props]))))

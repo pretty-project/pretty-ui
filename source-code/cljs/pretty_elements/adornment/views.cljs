@@ -35,7 +35,7 @@
   [adornment-id adornment-props]
   ; @note (tutorials#parameterizing)
   ; @note (#8097)
-  ; The 'element-did-update' function re-registers the keypress events when the element properties map gets changed.
+  ; The 'element-did-update' function re-registers the keypress events when the element property map gets changed.
   (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    adornment-id adornment-props))
                        :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount adornment-id adornment-props))
                        :component-did-update   (fn [%]   (pretty-elements.engine/element-did-update   adornment-id adornment-props %))

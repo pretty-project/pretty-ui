@@ -18,6 +18,8 @@
   ;  ...}
   [_ bar-props]
   (-> {:class :pe-menu-bar--body}
+      (pretty-css.appearance/background-attributes    bar-props)
+      (pretty-css.appearance/border-attributes        bar-props)
       (pretty-css.basic/style-attributes              bar-props)
       (pretty-css.layout/double-block-size-attributes bar-props)
       (pretty-css.layout/flex-attributes              bar-props)

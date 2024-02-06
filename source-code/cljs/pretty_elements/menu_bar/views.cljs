@@ -50,10 +50,18 @@
 (defn view
   ; @param (keyword)(opt) bar-id
   ; @param (map) bar-props
-  ; {:class (keyword or keywords in vector)(opt)
+  ; {:border-color (keyword or string)(opt)
+  ;  :border-position (keyword)(opt)
+  ;  :border-radius (map)(opt)
+  ;   {:all, :tl, :tr, :br, :bl (keyword, px or string)(opt)}
+  ;  :border-width (keyword, px or string)(opt)
+  ;  :class (keyword or keywords in vector)(opt)
   ;  :disabled? (boolean)(opt)
+  ;  :fill-color (keyword or string)(opt)
+  ;  :fill-pattern (keyword)(opt)
   ;  :gap (keyword, px or string)(opt)
   ;  :height (keyword, px or string)(opt)
+  ;  :horizontal-align (keyword)(opt)
   ;  :indent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :max-height (keyword, px or string)(opt)
@@ -65,12 +73,14 @@
   ;  :on-mount-f (function)(opt)
   ;  :on-unmount-f (function)(opt)
   ;  :orientation (keyword)(opt)
+  ;  :overflow (keyword)(opt)
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :overflow (keyword)(opt)
   ;  :preset (keyword)(opt)
   ;  :style (map)(opt)
   ;  :theme (keyword)(opt)
+  ;  :vertical-align (keyword)(opt)
   ;  :width (keyword, px or string)(opt)}
   ;
   ; @usage
@@ -84,8 +94,9 @@
   ([bar-id bar-props]
    ; @note (tutorials#parameterizing)
    (fn [_ bar-props]
-       (let [bar-props (pretty-presets.engine/apply-preset                    bar-id bar-props)
-             bar-props (menu-bar.prototypes/bar-props-prototype               bar-id bar-props)
-             bar-props (pretty-elements.engine/apply-element-item-default     bar-id bar-props :menu-items :menu-item-default)
-             bar-props (pretty-elements.engine/inherit-element-disabled-state bar-id bar-props :menu-items :menu-item-default)]
+       (let [bar-props (pretty-presets.engine/apply-preset                            bar-id bar-props)
+             bar-props (menu-bar.prototypes/bar-props-prototype                       bar-id bar-props)
+             bar-props (pretty-elements.engine/element-subitem-group<-subitem-default bar-id bar-props :menu-items :menu-item-default)
+             bar-props (pretty-elements.engine/element-subitem-group<-disabled-state  bar-id bar-props :menu-items :menu-item-default)
+             bar-props (pretty-elements.engine/dissoc-element-disabled-state          bar-id bar-props)]
             [view-lifecycles bar-id bar-props]))))

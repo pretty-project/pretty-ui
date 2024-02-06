@@ -16,6 +16,7 @@
   (-> button-props (pretty-elements.properties/inherit-icon-props)
                    (pretty-elements.properties/clickable-text-auto-props)
                    (pretty-elements.properties/default-badge-props       {})
+                   (pretty-elements.properties/default-background-props  {})
                    (pretty-elements.properties/default-border-props      {})
                    (pretty-elements.properties/default-effect-props      {})
                    (pretty-elements.properties/default-focus-props       {:focus-id button-id})

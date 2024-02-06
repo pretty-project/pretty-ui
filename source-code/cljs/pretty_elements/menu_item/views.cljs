@@ -1,11 +1,11 @@
 
 (ns pretty-elements.menu-item.views
-    (:require [fruits.random.api                 :as random]
+    (:require [fruits.random.api :as random]
               [pretty-elements.menu-item.attributes :as menu-item.attributes]
               [pretty-elements.menu-item.prototypes :as menu-item.prototypes]
               [pretty-elements.engine.api :as pretty-elements.engine]
               [pretty-presets.engine.api :as pretty-presets.engine]
-              [reagent.api                       :as reagent]))
+              [reagent.api :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -40,10 +40,12 @@
   ; @note (pretty-elements.adornment.views#8097)
   (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    item-id item-props))
                        :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount item-id item-props))
-                       :component-did-update   (fn [%]   (pretty-elements.engine/element-did-update   item-id item-props %))
                        :reagent-render         (fn [_ item-props] [menu-item item-id item-props])}))
 
 (defn view
+  ; @description
+  ; Button element for menu bars with optional dropdown content for dropdown menus.
+  ;
   ; @param (keyword)(opt) item-id
   ; @param (map) item-props
   ; {:badge-color (keyword or string)(opt)
@@ -57,6 +59,7 @@
   ;  :class (keyword or keywords in vector)(opt)
   ;  :click-effect (keyword)(opt)
   ;  :cursor (keyword or string)(opt)
+  ;  :dropdown-content (metamorphic-content)(opt)
   ;  :disabled? (boolean)(opt)
   ;  :fill-color (keyword or string)(opt)
   ;  :fill-pattern (keyword)(opt)
@@ -80,7 +83,6 @@
   ;  :icon-size (keyword, px or string)(opt)
   ;  :indent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :keypress (map)(opt)
   ;  :label (metamorphic-content)(opt)
   ;  :letter-spacing (keyword, px or string)(opt)
   ;  :line-height (keyword, px or string)(opt)
@@ -88,29 +90,21 @@
   ;  :marker-position (keyword)(opt)
   ;  :max-height (keyword, px or string)(opt)
   ;  :max-width (keyword, px or string)(opt)
+  ;  :menu-id (keyword)(opt)
   ;  :min-height (keyword, px or string)(opt)
   ;  :min-width (keyword, px or string)(opt)
   ;  :on-click-f (function)(opt)
-  ;  :on-click-timeout (ms)(opt)
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :placeholder (metamorphic-content)(opt)
   ;  :preset (keyword)(opt)
-  ;  :progress (percent)(opt)
-  ;  :progress-color (keyword or string)(opt)
-  ;  :progress-direction (keyword)(opt)
-  ;  :progress-duration (ms)(opt)
   ;  :style (map)(opt)
   ;  :tab-disabled? (boolean)(opt)
   ;  :text-color (keyword or string)(opt)
   ;  :text-overflow (keyword)(opt)
   ;  :text-transform (keyword)(opt)
   ;  :theme (keyword)(opt)
-  ;  :tooltip-content (metamorphic-content)(opt)
-  ;  :tooltip-position (keyword)(opt)
   ;  :width (keyword, px or string)(opt)}
-
-  ; + menu-id, dropdown-content
   ;
   ; @usage
   ; [menu-item {...}]
@@ -123,7 +117,6 @@
   ([item-id item-props]
    ; @note (tutorials#parameterizing)
    (fn [_ item-props]
-       (let [item-props (pretty-presets.engine/apply-preset           item-id item-props)
-             item-props (menu-item.prototypes/item-props-prototype    item-id item-props)
-             item-props (pretty-elements.engine/element-timeout-props item-id item-props :label)]
+       (let [item-props (pretty-presets.engine/apply-preset        item-id item-props)
+             item-props (menu-item.prototypes/item-props-prototype item-id item-props)]
             [view-lifecycles item-id item-props]))))

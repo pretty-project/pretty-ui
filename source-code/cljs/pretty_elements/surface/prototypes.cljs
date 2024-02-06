@@ -13,7 +13,9 @@
   ;
   ; @return (map)
   [_ surface-props]
-  (-> surface-props (pretty-elements.properties/default-animation-props {})
-                    (pretty-elements.properties/default-border-props    {})
-                    (pretty-elements.properties/default-content-props   {})
-                    (pretty-elements.properties/default-size-props      {})))
+  (-> surface-props (pretty-elements.properties/default-animation-props  {})
+                    (pretty-elements.properties/default-background-props {})
+                    (pretty-elements.properties/default-border-props     {})
+                    (pretty-elements.properties/default-content-props    {})
+                    (pretty-elements.properties/default-size-props       {})
+                    (pretty-elements.properties/default-visibility-props {:mounted? true})))

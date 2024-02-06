@@ -24,7 +24,6 @@
       (pretty-css.basic/style-attributes              surface-props)
       (pretty-css.layout/double-block-size-attributes surface-props)
       (pretty-css.layout/indent-attributes            surface-props)
-      (pretty-css.layout/position-attributes          surface-props)
       (pretty-css.live/animation-attributes           surface-props)))
 
 (defn surface-attributes
@@ -41,7 +40,7 @@
       (pretty-css.appearance/theme-attributes    surface-props)
       (pretty-css.basic/class-attributes         surface-props)
       (pretty-css.basic/state-attributes         surface-props)
+      (pretty-css.layout/layer-attributes        surface-props)
       (pretty-css.layout/outdent-attributes      surface-props)
-      (pretty-css.layout/wrapper-size-attributes surface-props)
-
-      (pretty-css.layout/layer-attributes surface-props)))
+      (pretty-css.layout/position-attributes     surface-props)
+      (pretty-css.layout/wrapper-size-attributes surface-props)))

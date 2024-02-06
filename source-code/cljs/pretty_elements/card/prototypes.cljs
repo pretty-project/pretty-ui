@@ -13,7 +13,8 @@
   ;
   ; @return (map)
   [card-id card-props]
-  (-> card-props (pretty-elements.properties/default-badge-props       {})
+  (-> card-props (pretty-elements.properties/default-background-props  {})
+                 (pretty-elements.properties/default-badge-props       {})
                  (pretty-elements.properties/default-border-props      {})
                  (pretty-elements.properties/default-mouse-event-props {})
                  (pretty-elements.properties/default-content-props     {})
