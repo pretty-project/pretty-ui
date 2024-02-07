@@ -1,11 +1,6 @@
 
 (ns pretty-elements.notification-bubble.attributes
-    (:require [pretty-css.appearance.api :as pretty-css.appearance]
-              [pretty-css.basic.api      :as pretty-css.basic]
-              [pretty-css.content.api    :as pretty-css.content]
-              [pretty-css.layout.api     :as pretty-css.layout]
-              [pretty-css.live.api :as pretty-css.live]
-              [pretty-css.control.api    :as pretty-css.control]))
+    (:require [pretty-attributes.api :as pretty-attributes]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -22,9 +17,9 @@
   [_ bubble-props]
   (-> {:class               :pe-notification-bubble--content
        :data-letter-spacing :auto}
-      (pretty-css.content/font-attributes              bubble-props)
-      (pretty-css.layout/indent-attributes            bubble-props)
-      (pretty-css.content/unselectable-text-attributes bubble-props)))
+      (pretty-attributes/font-attributes   bubble-props)
+      (pretty-attributes/indent-attributes bubble-props)
+      (pretty-attributes/text-attributes   bubble-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -40,17 +35,17 @@
   ;  ...}
   [_ bubble-props]
   (-> {:class :pe-notification-bubble--body}
-      (pretty-css.appearance/background-attributes        bubble-props)
-      (pretty-css.appearance/border-attributes       bubble-props)
-      (pretty-css.control/anchor-attributes        bubble-props)
-      (pretty-css.layout/full-block-size-attributes bubble-props)
-      (pretty-css.control/state-attributes         bubble-props)
-      (pretty-css.control/mouse-event-attributes    bubble-props)
-      (pretty-css.content/cursor-attributes       bubble-props)
-      (pretty-css.control/tab-attributes           bubble-props)
-      (pretty-css.live/effect-attributes           bubble-props)
-      (pretty-css.control/focus-attributes         bubble-props)
-      (pretty-css.basic/style-attributes        bubble-props)))
+      (pretty-attributes/background-attributes        bubble-props)
+      (pretty-attributes/border-attributes       bubble-props)
+      (pretty-attributes/anchor-attributes        bubble-props)
+      (pretty-attributes/full-block-size-attributes bubble-props)
+      (pretty-attributes/state-attributes        bubble-props)
+      (pretty-attributes/mouse-event-attributes    bubble-props)
+      (pretty-attributes/cursor-attributes       bubble-props)
+      (pretty-attributes/clickable-state-attributes          bubble-props)
+      (pretty-attributes/effect-attributes           bubble-props)
+      (pretty-attributes/focus-attributes         bubble-props)
+      (pretty-attributes/style-attributes        bubble-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -66,8 +61,8 @@
   ;  ...}
   [_ bubble-props]
   (-> {:class :pe-notification-bubble}
-      (pretty-css.basic/class-attributes        bubble-props)
-      (pretty-css.layout/outdent-attributes      bubble-props)
-      (pretty-css.basic/state-attributes        bubble-props)
-      (pretty-css.appearance/theme-attributes        bubble-props)
-      (pretty-css.layout/wrapper-size-attributes bubble-props)))
+      (pretty-attributes/class-attributes       bubble-props)
+      (pretty-attributes/outdent-attributes      bubble-props)
+      (pretty-attributes/state-attributes       bubble-props)
+      (pretty-attributes/theme-attributes        bubble-props)
+      (pretty-attributes/wrapper-size-attributes bubble-props)))

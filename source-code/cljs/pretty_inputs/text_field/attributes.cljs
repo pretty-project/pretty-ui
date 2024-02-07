@@ -1,15 +1,8 @@
 
 (ns pretty-inputs.text-field.attributes
     (:require [dom.api                               :as dom]
-              [pretty-css.accessories.api            :as pretty-css.accessories]
-              [pretty-css.appearance.api             :as pretty-css.appearance]
-              [pretty-css.basic.api                  :as pretty-css.basic]
-              [pretty-css.content.api                :as pretty-css.content]
-              [pretty-css.control.api                :as pretty-css.control]
-              [pretty-css.input.api                  :as pretty-css.input]
-              [pretty-css.layout.api                 :as pretty-css.layout]
-              [pretty-css.live.api                   :as pretty-css.live]
-              [pretty-inputs.engine.api                     :as pretty-inputs.engine]
+              [pretty-attributes.api                 :as pretty-attributes]
+              [pretty-inputs.engine.api              :as pretty-inputs.engine]
               [pretty-inputs.text-field.env          :as text-field.env]
               [pretty-inputs.text-field.side-effects :as text-field.side-effects]))
 
@@ -31,7 +24,7 @@
        :data-line-height     :text-block
        :data-text-overflow   :hidden
        :data-text-selectable false}
-      (pretty-css.live/effect-attributes field-props)))
+      (pretty-attributes/effect-attributes field-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -97,10 +90,10 @@
   (-> {:class                 :pi-text-field--surface
        :data-box-shadow-color :default
        :on-mouse-down         dom/prevent-default}
-      (pretty-css.appearance/border-attributes surface)
-      (pretty-css.layout/indent-attributes surface)
+      (pretty-attributes/border-attributes surface)
+      (pretty-attributes/indent-attributes surface)
       ; The field surface inherits the font settings of the field as its default.
-      (pretty-css.content/font-attributes field-props)))
+      (pretty-attributes/font-attributes field-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -146,11 +139,11 @@
                           :on-focus            on-focus-f
                           :on-change           on-change-f
                           :on-input            on-input-f})
-           (pretty-css.input/autofill-attributes     field-props)
-           (pretty-css.input/field-attributes        field-props)
-           (pretty-css.live/effect-attributes       field-props)
-           (pretty-css.layout/full-block-size-attributes field-props)
-           (pretty-css.control/focus-attributes        field-props))))
+           (pretty-attributes/input-autofill-attributes     field-props) ; + default-input-autofill-props !
+           (pretty-attributes/input-field-attributes        field-props)
+           (pretty-attributes/effect-attributes       field-props)
+           (pretty-attributes/full-block-size-attributes field-props)
+           (pretty-attributes/focus-attributes        field-props))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -166,12 +159,12 @@
   [_ field-props]
   (-> {:class               :pi-text-field--body
        :data-letter-spacing :auto}
-      (pretty-css.appearance/background-attributes  field-props)
-      (pretty-css.appearance/border-attributes field-props)
-      (pretty-css.content/font-attributes   field-props)
-      (pretty-css.layout/indent-attributes field-props)
-      (pretty-css.accessories/marker-attributes field-props)
-      (pretty-css.basic/style-attributes  field-props)))
+      (pretty-attributes/background-attributes  field-props)
+      (pretty-attributes/border-attributes field-props)
+      (pretty-attributes/font-attributes   field-props)
+      (pretty-attributes/indent-attributes field-props)
+      (pretty-attributes/marker-attributes field-props)
+      (pretty-attributes/style-attributes  field-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -189,8 +182,8 @@
   [_ {:keys [disabled?] :as field-props}]
   (-> {:class        :pi-text-field
        :data-covered disabled?}
-      (pretty-css.basic/class-attributes        field-props)
-      (pretty-css.layout/outdent-attributes      field-props)
-      (pretty-css.basic/state-attributes        field-props)
-      (pretty-css.appearance/theme-attributes        field-props)
-      (pretty-css.layout/wrapper-size-attributes field-props)))
+      (pretty-attributes/class-attributes       field-props)
+      (pretty-attributes/outdent-attributes      field-props)
+      (pretty-attributes/state-attributes       field-props)
+      (pretty-attributes/theme-attributes        field-props)
+      (pretty-attributes/wrapper-size-attributes field-props)))

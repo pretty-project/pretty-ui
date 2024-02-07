@@ -1,9 +1,6 @@
 
 (ns pretty-elements.label.attributes
-    (:require [pretty-css.appearance.api          :as pretty-css.appearance]
-              [pretty-css.basic.api               :as pretty-css.basic]
-              [pretty-css.content.api             :as pretty-css.content]
-              [pretty-css.layout.api              :as pretty-css.layout]))
+    (:require [pretty-attributes.api :as pretty-attributes]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -19,7 +16,7 @@
   ;  ...}
   [_ label-props]
   (-> {:class :pe-label--icon}
-      (pretty-css.content/icon-attributes label-props)))
+      (pretty-attributes/icon-attributes label-props)))
 
 (defn label-content-attributes
   ; @ignore
@@ -32,8 +29,8 @@
   ;  ...}
   [_ label-props]
   (-> {:class :pe-label--content}
-      (pretty-css.content/font-attributes              label-props)
-      (pretty-css.content/unselectable-text-attributes label-props)))
+      (pretty-attributes/font-attributes label-props)
+      (pretty-attributes/text-attributes label-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -50,12 +47,12 @@
   ;  ...}
   [_ label-props]
   (-> {:class :pe-label--body}
-      (pretty-css.appearance/background-attributes label-props)
-      (pretty-css.appearance/border-attributes     label-props)
-      (pretty-css.layout/full-block-size-attributes   label-props)
-      (pretty-css.layout/flex-attributes           label-props)
-      (pretty-css.layout/indent-attributes         label-props)
-      (pretty-css.basic/style-attributes           label-props)))
+      (pretty-attributes/background-attributes      label-props)
+      (pretty-attributes/border-attributes          label-props)
+      (pretty-attributes/flex-attributes            label-props)
+      (pretty-attributes/full-block-size-attributes label-props)
+      (pretty-attributes/indent-attributes          label-props)
+      (pretty-attributes/style-attributes           label-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -71,8 +68,8 @@
   ;  ...}
   [_ label-props]
   (-> {:class :pe-label}
-      (pretty-css.appearance/theme-attributes    label-props)
-      (pretty-css.basic/class-attributes         label-props)
-      (pretty-css.basic/state-attributes         label-props)
-      (pretty-css.layout/outdent-attributes      label-props)
-      (pretty-css.layout/wrapper-size-attributes label-props)))
+      (pretty-attributes/class-attributes        label-props)
+      (pretty-attributes/outdent-attributes      label-props)
+      (pretty-attributes/state-attributes        label-props)
+      (pretty-attributes/theme-attributes        label-props)
+      (pretty-attributes/wrapper-size-attributes label-props)))

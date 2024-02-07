@@ -1,14 +1,14 @@
 
 (ns pretty-elements.surface.views
-    (:require [fruits.random.api                          :as random]
-              [pretty-elements.surface.prototypes :as surface.prototypes]
+    (:require [dynamic-props.api                  :as dynamic-props]
+              [fruits.random.api                  :as random]
+              [pretty-elements.engine.api         :as pretty-elements.engine]
               [pretty-elements.surface.attributes :as surface.attributes]
-              [pretty-elements.surface.config      :as surface.config]
-              [pretty-elements.engine.api :as pretty-elements.engine]
-              [pretty-presets.engine.api :as pretty-presets.engine]
-              [reagent.api :as reagent]
-              [transition-controller.api :as transition-controller]
-              [dynamic-props.api :as dynamic-props]))
+              [pretty-elements.surface.config     :as surface.config]
+              [pretty-elements.surface.prototypes :as surface.prototypes]
+              [pretty-presets.engine.api          :as pretty-presets.engine]
+              [reagent.api                        :as reagent]
+              [transition-controller.api          :as transition-controller]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

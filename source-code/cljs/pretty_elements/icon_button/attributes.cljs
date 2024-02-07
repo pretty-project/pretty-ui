@@ -1,13 +1,6 @@
 
 (ns pretty-elements.icon-button.attributes
-    (:require [pretty-css.accessories.api        :as pretty-css.accessories]
-              [pretty-css.appearance.api         :as pretty-css.appearance]
-              [pretty-css.basic.api              :as pretty-css.basic]
-              [pretty-css.content.api            :as pretty-css.content]
-              [pretty-css.layout.api             :as pretty-css.layout]
-              [pretty-css.live.api       :as pretty-css.live]
-              [pretty-elements.button.attributes :as button.attributes]
-              [pretty-css.control.api    :as pretty-css.control]))
+    (:require [pretty-attributes.api :as pretty-attributes]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -17,13 +10,27 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  ; {}
   ;
   ; @return (map)
-  ; {}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ button-props]
   (-> {:class :pe-icon-button--icon}
-      (pretty-css.content/icon-attributes button-props)))
+      (pretty-attributes/icon-attributes button-props)))
+
+(defn button-label-attributes
+  ; @ignore
+  ;
+  ; @param (keyword) button-id
+  ; @param (map) button-props
+  ;
+  ; @return (map)
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
+  [_ button-props]
+  (-> {:class :pe-icon-button--label}
+      (pretty-attributes/font-attributes button-props)
+      (pretty-attributes/text-attributes button-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -39,23 +46,22 @@
   ;  ...}
   [button-id button-props]
   (-> {:class :pe-icon-button--body}
-      (pretty-css.accessories/badge-attributes      button-props)
-      (pretty-css.accessories/marker-attributes     button-props)
-      (pretty-css.accessories/tooltip-attributes    button-props)
-      (pretty-css.appearance/background-attributes  button-props)
-      (pretty-css.appearance/border-attributes      button-props)
-      (pretty-css.basic/style-attributes            button-props)
-      (pretty-css.control/anchor-attributes         button-props)
-      (pretty-css.control/focus-attributes          button-props)
-      (pretty-css.control/mouse-event-attributes    button-props)
-      (pretty-css.control/state-attributes          button-props)
-      (pretty-css.control/tab-attributes            button-props)
-      (pretty-css.content/cursor-attributes         button-props)
-      (pretty-css.layout/flex-attributes            button-props)
-      (pretty-css.layout/full-block-size-attributes button-props)
-      (pretty-css.layout/indent-attributes          button-props)
-      (pretty-css.live/effect-attributes            button-props)   ; <- ez a button-tol jött, kell ide?
-      (pretty-css.live/progress-attributes          button-props)))
+      (pretty-attributes/anchor-attributes          button-props)
+      (pretty-attributes/background-attributes      button-props)
+      (pretty-attributes/badge-attributes           button-props)
+      (pretty-attributes/border-attributes          button-props)
+      (pretty-attributes/clickable-state-attributes button-props)
+      (pretty-attributes/cursor-attributes          button-props)
+      (pretty-attributes/effect-attributes          button-props)
+      (pretty-attributes/indent-attributes          button-props)
+      (pretty-attributes/marker-attributes          button-props)
+      (pretty-attributes/focus-attributes           button-props)
+      (pretty-attributes/mouse-event-attributes     button-props)
+      (pretty-attributes/flex-attributes            button-props)
+      (pretty-attributes/full-block-size-attributes button-props)
+      (pretty-attributes/progress-attributes        button-props)
+      (pretty-attributes/style-attributes           button-props)
+      (pretty-attributes/tooltip-attributes         button-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -71,7 +77,8 @@
   ;  ...}
   [_ button-props]
   (-> {:class :pe-icon-button}
-      (pretty-css.basic/class-attributes   button-props)
-      (pretty-css.layout/outdent-attributes button-props)
-      (pretty-css.basic/state-attributes   button-props)
-      (pretty-css.appearance/theme-attributes   button-props)))
+      (pretty-attributes/class-attributes        button-props)
+      (pretty-attributes/outdent-attributes      button-props)
+      (pretty-attributes/state-attributes        button-props)
+      (pretty-attributes/theme-attributes        button-props)
+      (pretty-attributes/wrapper-size-attributes button-props)))

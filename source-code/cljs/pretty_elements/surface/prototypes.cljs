@@ -1,6 +1,6 @@
 
 (ns pretty-elements.surface.prototypes
-    (:require [pretty-elements.properties.api :as pretty-elements.properties]))
+    (:require [pretty-properties.api :as pretty-properties]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -13,9 +13,9 @@
   ;
   ; @return (map)
   [_ surface-props]
-  (-> surface-props (pretty-elements.properties/default-animation-props  {})
-                    (pretty-elements.properties/default-background-props {})
-                    (pretty-elements.properties/default-border-props     {})
-                    (pretty-elements.properties/default-content-props    {})
-                    (pretty-elements.properties/default-size-props       {})
-                    (pretty-elements.properties/default-visibility-props {:mounted? true})))
+  (-> surface-props (pretty-properties/default-animation-props  {})
+                    (pretty-properties/default-background-props {})
+                    (pretty-properties/default-border-props     {})
+                    (pretty-properties/default-content-props    {})
+                    (pretty-properties/default-size-props       {})
+                    (pretty-properties/default-state-props      {:mounted? true})))

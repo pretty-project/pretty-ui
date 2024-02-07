@@ -1,6 +1,6 @@
 
 (ns pretty-elements.breadcrumbs.prototypes
-    (:require [pretty-elements.properties.api :as pretty-elements.properties]))
+    (:require [pretty-properties.api :as pretty-properties]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -26,6 +26,6 @@
   ;
   ; @return (map)
   [_ breadcrumbs-props]
-  (-> breadcrumbs-props (pretty-elements.properties/default-bullet-props {:bullet-color :muted})
-                        (pretty-elements.properties/default-flex-props   {:gap :xs :orientation :horizontal :overflow :scroll})
-                        (pretty-elements.properties/default-size-props   {:height :content :width :content})))
+  (-> breadcrumbs-props (pretty-properties/default-bullet-props {:bullet-color :muted})
+                        (pretty-properties/default-flex-props   {:gap :xs :orientation :horizontal :overflow :scroll})
+                        (pretty-properties/default-size-props   {})))

@@ -1,9 +1,7 @@
 
 (ns pretty-inputs.slider.attributes
     (:require [fruits.css.api                    :as css]
-              [pretty-css.appearance.api         :as pretty-css.appearance]
-              [pretty-css.basic.api              :as pretty-css.basic]
-              [pretty-css.layout.api             :as pretty-css.layout]
+              [pretty-attributes.api             :as pretty-attributes]
               [pretty-inputs.slider.side-effects :as slider.side-effects]
               [pretty-inputs.slider.state        :as slider.state]
               [re-frame.api                      :as r]))
@@ -77,9 +75,9 @@
   ;  ...}
   [_ slider-props]
   (-> {:class :pi-slider--body}
-      (pretty-css.layout/full-block-size-attributes slider-props)
-      (pretty-css.layout/indent-attributes       slider-props)
-      (pretty-css.basic/style-attributes        slider-props)))
+      (pretty-attributes/full-block-size-attributes slider-props)
+      (pretty-attributes/indent-attributes       slider-props)
+      (pretty-attributes/style-attributes        slider-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -94,8 +92,8 @@
   ; {}
   [_ slider-props]
   (-> {:class :pi-slider}
-      (pretty-css.basic/class-attributes        slider-props)
-      (pretty-css.layout/outdent-attributes      slider-props)
-      (pretty-css.basic/state-attributes        slider-props)
-      (pretty-css.appearance/theme-attributes        slider-props)
-      (pretty-css.layout/wrapper-size-attributes slider-props)))
+      (pretty-attributes/class-attributes       slider-props)
+      (pretty-attributes/outdent-attributes      slider-props)
+      (pretty-attributes/state-attributes       slider-props)
+      (pretty-attributes/theme-attributes        slider-props)
+      (pretty-attributes/wrapper-size-attributes slider-props)))

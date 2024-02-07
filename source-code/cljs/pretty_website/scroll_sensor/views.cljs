@@ -1,11 +1,11 @@
 
 (ns pretty-website.scroll-sensor.views
     (:require [fruits.random.api                         :as random]
-              [pretty-elements.engine.api :as pretty-elements.engine]
-              [pretty-presets.engine.api :as pretty-presets.engine]
+              [pretty-elements.engine.api                :as pretty-elements.engine]
+              [pretty-presets.engine.api                 :as pretty-presets.engine]
               [pretty-website.scroll-sensor.attributes   :as scroll-sensor.attributes]
+              [pretty-website.scroll-sensor.prototypes   :as scroll-sensor.prototypes]
               [pretty-website.scroll-sensor.side-effects :as scroll-sensor.side-effects]
-              [pretty-website.scroll-sensor.prototypes :as scroll-sensor.prototypes]
               [reagent.api                               :as reagent]))
 
 ;; ----------------------------------------------------------------------------

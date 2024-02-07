@@ -1,13 +1,9 @@
 
 (ns pretty-diagrams.circle-diagram.attributes
-    (:require [pretty-css.appearance.api             :as pretty-css.appearance]
-              [pretty-css.basic.api                  :as pretty-css.basic]
-              [pretty-css.live.api :as pretty-css.live]
-              [pretty-css.layout.api                 :as pretty-css.layout]
-              [pretty-css.svg.api                    :as pretty-css.svg]
+    (:require [pretty-attributes.api                 :as pretty-attributes]
               [pretty-diagrams.circle-diagram.config :as circle-diagram.config]
-              [pretty-diagrams.circle-diagram.utils :as circle-diagram.utils]
-              [pretty-diagrams.engine.api :as pretty-diagrams.engine]))
+              [pretty-diagrams.circle-diagram.utils  :as circle-diagram.utils]
+              [pretty-diagrams.engine.api            :as pretty-diagrams.engine]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -29,9 +25,9 @@
         datum-pattern   (circle-diagram.utils/diagram-datum-pattern     diagram-id diagram-props datum-dex datum)
         datum-transform (circle-diagram.utils/diagram-datum-transform   diagram-id diagram-props datum-dex datum)]
        (-> {:class :pd-circle-diagram--datum}
-           (pretty-css.live/transform-attributes {:transform datum-transform})
-           (pretty-css.svg/circle-attributes     {:diameter circle-diagram.config/CIRCLE-DIAMETER         :stroke-width strength})
-           (pretty-css.svg/stroke-attributes     {:stroke-color datum-color :stroke-pattern datum-pattern :stroke-width strength}))))
+           (pretty-attributes/svg-circle-attributes {:diameter circle-diagram.config/CIRCLE-DIAMETER         :stroke-width strength})
+           (pretty-attributes/svg-stroke-attributes {:stroke-color datum-color :stroke-pattern datum-pattern :stroke-width strength})
+           (pretty-attributes/transform-attributes  {:transform datum-transform}))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -47,9 +43,9 @@
   ;  ...}
   [_ diagram-props]
   (-> {:class :pd-circle-diagram--body}
-      (pretty-css.basic/style-attributes            diagram-props)
-      (pretty-css.layout/full-block-size-attributes diagram-props)
-      (pretty-css.layout/indent-attributes          diagram-props)))
+      (pretty-attributes/full-block-size-attributes diagram-props)
+      (pretty-attributes/indent-attributes          diagram-props)
+      (pretty-attributes/style-attributes           diagram-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -65,8 +61,8 @@
   ;  ...}
   [_ diagram-props]
   (-> {:class :pd-circle-diagram}
-      (pretty-css.appearance/theme-attributes    diagram-props)
-      (pretty-css.basic/class-attributes         diagram-props)
-      (pretty-css.basic/state-attributes         diagram-props)
-      (pretty-css.layout/outdent-attributes      diagram-props)
-      (pretty-css.layout/wrapper-size-attributes diagram-props)))
+      (pretty-attributes/class-attributes        diagram-props)
+      (pretty-attributes/outdent-attributes      diagram-props)
+      (pretty-attributes/state-attributes        diagram-props)
+      (pretty-attributes/theme-attributes        diagram-props)
+      (pretty-attributes/wrapper-size-attributes diagram-props)))

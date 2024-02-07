@@ -3,12 +3,12 @@
     (:require [fruits.hiccup.api               :as hiccup]
               [fruits.random.api               :as random]
               [fruits.vector.api               :as vector]
-              [pretty-inputs.header.views :as header.views]
-              [pretty-inputs.engine.api               :as pretty-inputs.engine]
+              [metamorphic-content.api         :as metamorphic-content]
+              [pretty-inputs.engine.api        :as pretty-inputs.engine]
+              [pretty-inputs.header.views      :as header.views]
               [pretty-inputs.switch.attributes :as switch.attributes]
               [pretty-inputs.switch.prototypes :as switch.prototypes]
-              [metamorphic-content.api         :as metamorphic-content]
-              [pretty-presets.engine.api :as pretty-presets.engine]
+              [pretty-presets.engine.api       :as pretty-presets.engine]
               [reagent.api                     :as reagent]))
 
 ;; ----------------------------------------------------------------------------

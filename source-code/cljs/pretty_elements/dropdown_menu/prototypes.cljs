@@ -1,7 +1,7 @@
 
 (ns pretty-elements.dropdown-menu.prototypes
     (:require [pretty-elements.dropdown-menu.side-effects :as dropdown-menu.side-effects]
-              [pretty-elements.properties.api :as pretty-elements.properties]))
+              [pretty-properties.api                      :as pretty-properties]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -26,9 +26,9 @@
   ;
   ; @return (map)
   [_ {:keys [surface]}]
-  (-> surface (pretty-elements.properties/default-position-props   {:positioning :absolute :layer :uppermost})
-              (pretty-elements.properties/default-size-props       {:width :parent})
-              (pretty-elements.properties/default-visibility-props {:mounted? false})))
+  (-> surface (pretty-properties/default-position-props {:positioning :absolute :layer :uppermost})
+              (pretty-properties/default-size-props     {:width :parent})
+              (pretty-properties/default-state-props    {:mounted? false})))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -42,4 +42,4 @@
   ; @return (map)
   [menu-id menu-props]
   (let [on-mouse-leave-f (fn [_] (dropdown-menu.side-effects/on-mouse-leave-f menu-id menu-props))]
-       (-> menu-props (pretty-elements.properties/default-mouse-event-props {:on-mouse-leave-f on-mouse-leave-f}))))
+       (-> menu-props (pretty-properties/default-mouse-event-props {:on-mouse-leave-f on-mouse-leave-f}))))

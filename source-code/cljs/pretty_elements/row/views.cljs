@@ -2,10 +2,10 @@
 (ns pretty-elements.row.views
     (:require [fruits.random.api              :as random]
               [metamorphic-content.api        :as metamorphic-content]
+              [pretty-elements.engine.api     :as pretty-elements.engine]
               [pretty-elements.row.attributes :as row.attributes]
               [pretty-elements.row.prototypes :as row.prototypes]
-              [pretty-elements.engine.api              :as pretty-elements.engine]
-              [pretty-presets.engine.api :as pretty-presets.engine]
+              [pretty-presets.engine.api      :as pretty-presets.engine]
               [reagent.api                    :as reagent]))
 
 ;; ----------------------------------------------------------------------------

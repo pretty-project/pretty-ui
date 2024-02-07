@@ -1,12 +1,12 @@
 
 (ns pretty-diagrams.bar-diagram.views
-    (:require [fruits.random.api                        :as random]
-              [fruits.hiccup.api                        :as hiccup]
+    (:require [fruits.hiccup.api                      :as hiccup]
+              [fruits.random.api                      :as random]
               [pretty-diagrams.bar-diagram.attributes :as bar-diagram.attributes]
               [pretty-diagrams.bar-diagram.prototypes :as bar-diagram.prototypes]
-              [pretty-diagrams.engine.api :as pretty-diagrams.engine]
-              [pretty-presets.engine.api :as pretty-presets.engine]
-              [reagent.api :as reagent]))
+              [pretty-diagrams.engine.api             :as pretty-diagrams.engine]
+              [pretty-presets.engine.api              :as pretty-presets.engine]
+              [reagent.api                            :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

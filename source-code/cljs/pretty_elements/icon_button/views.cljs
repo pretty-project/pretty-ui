@@ -1,12 +1,10 @@
 
 (ns pretty-elements.icon-button.views
     (:require [fruits.random.api                      :as random]
-              [metamorphic-content.api                :as metamorphic-content]
+              [pretty-elements.engine.api             :as pretty-elements.engine]
               [pretty-elements.icon-button.attributes :as icon-button.attributes]
               [pretty-elements.icon-button.prototypes :as icon-button.prototypes]
-              [pretty-elements.engine.api                      :as pretty-elements.engine]
-              [pretty-presets.engine.api :as pretty-presets.engine]
-              [re-frame.api                           :as r]
+              [pretty-presets.engine.api              :as pretty-presets.engine]
               [reagent.api                            :as reagent]))
 
 ;; ----------------------------------------------------------------------------
@@ -17,15 +15,14 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  ; {:icon (keyword)
+  ; {:icon (keyword)(opt)
   ;  :label (metamorphic-content)(opt)}
   [button-id {:keys [icon label] :as button-props}]
   [:div (icon-button.attributes/button-attributes button-id button-props)
         [(pretty-elements.engine/clickable-auto-tag     button-id button-props)
          (icon-button.attributes/button-body-attributes button-id button-props)
-         [:i (icon-button.attributes/button-icon-attributes button-id button-props) icon]]
-        (if label [:div {:class :pe-icon-button--label :data-text-selectable false}
-                        (metamorphic-content/compose label)])])
+         (if icon  [:i   (icon-button.attributes/button-icon-attributes  button-id button-props) icon])
+         (if label [:div (icon-button.attributes/button-label-attributes button-id button-props) label])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -60,6 +57,7 @@
   ;  :disabled? (boolean)(opt)
   ;  :fill-color (keyword or string)(opt)
   ;  :fill-pattern (keyword)(opt)
+  ;  :height (keyword, px or string)(opt)
   ;  :highlighted? (boolean)(opt)
   ;  :highlight-color (keyword or string)(opt)
   ;  :highlight-pattern (keyword)(opt)
@@ -78,6 +76,10 @@
   ;  :label (metamorphic-content)(opt)
   ;  :marker-color (keyword or string)(opt)
   ;  :marker-position (keyword)(opt)
+  ;  :max-height (keyword, px or string)(opt)
+  ;  :max-width (keyword, px or string)(opt)
+  ;  :min-height (keyword, px or string)(opt)
+  ;  :min-width (keyword, px or string)(opt)
   ;  :on-click-f (function)(opt)
   ;  :on-click-timeout (ms)(opt)
   ;  :on-mount-f (function)(opt)
@@ -93,9 +95,8 @@
   ;  :tab-disabled? (boolean)(opt)
   ;  :theme (keyword)(opt)
   ;  :tooltip-content (metamorphic-content)(opt)
-  ;  :tooltip-position (keyword)(opt)}
-
-  ; height, width, max-...????
+  ;  :tooltip-position (keyword)(opt)
+  ;  :width (keyword, px or string)(opt)}
   ;
   ; @usage
   ; [icon-button {...}]

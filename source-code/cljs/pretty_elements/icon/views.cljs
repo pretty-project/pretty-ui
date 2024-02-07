@@ -1,10 +1,10 @@
 
 (ns pretty-elements.icon.views
     (:require [fruits.random.api               :as random]
+              [pretty-elements.engine.api      :as pretty-elements.engine]
               [pretty-elements.icon.attributes :as icon.attributes]
               [pretty-elements.icon.prototypes :as icon.prototypes]
-              [pretty-elements.engine.api               :as pretty-elements.engine]
-              [pretty-presets.engine.api :as pretty-presets.engine]
+              [pretty-presets.engine.api       :as pretty-presets.engine]
               [reagent.api                     :as reagent]))
 
 ;; ----------------------------------------------------------------------------
@@ -15,7 +15,7 @@
   ;
   ; @param (keyword) icon-id
   ; @param (map) icon-props
-  ; {:icon (keyword)}
+  ; {:icon (keyword)(opt)}
   [icon-id {:keys [icon] :as icon-props}]
   [:div (icon.attributes/icon-attributes icon-id icon-props)
         [:i (icon.attributes/icon-body-attributes icon-id icon-props) icon]])
@@ -39,13 +39,10 @@
   ; @param (map) icon-props
   ; {:class (keyword or keywords in vector)(opt)
   ;  :disabled? (boolean)(opt)
-  ;  :icon (keyword)
+  ;  :icon (keyword)(opt)
   ;  :icon-color (keyword or string)(opt)
-  ;   Default: :default
   ;  :icon-family (keyword)(opt)
-  ;   Default: :material-symbols-outlined
   ;  :icon-size (keyword, px or string)(opt)
-  ;   Default: :m
   ;  :indent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :on-mount-f (function)(opt)

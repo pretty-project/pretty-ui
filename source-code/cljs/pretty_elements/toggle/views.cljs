@@ -2,10 +2,10 @@
 (ns pretty-elements.toggle.views
     (:require [fruits.random.api                 :as random]
               [metamorphic-content.api           :as metamorphic-content]
+              [pretty-elements.engine.api        :as pretty-elements.engine]
               [pretty-elements.toggle.attributes :as toggle.attributes]
               [pretty-elements.toggle.prototypes :as toggle.prototypes]
-              [pretty-elements.engine.api                 :as pretty-elements.engine]
-              [pretty-presets.engine.api :as pretty-presets.engine]
+              [pretty-presets.engine.api         :as pretty-presets.engine]
               [reagent.api                       :as reagent]))
 
 ;; ----------------------------------------------------------------------------

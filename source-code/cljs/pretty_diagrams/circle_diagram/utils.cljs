@@ -3,7 +3,7 @@
     (:require [fruits.css.api                        :as css]
               [fruits.math.api                       :as math]
               [pretty-diagrams.circle-diagram.config :as circle-diagram.config]
-              [pretty-diagrams.engine.api :as pretty-diagrams.engine]))
+              [pretty-diagrams.engine.api            :as pretty-diagrams.engine]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

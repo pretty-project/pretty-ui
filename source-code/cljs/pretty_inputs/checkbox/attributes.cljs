@@ -1,13 +1,8 @@
 
 (ns pretty-inputs.checkbox.attributes
-    (:require [dom.api                   :as dom]
-              [pretty-css.appearance.api :as pretty-css.appearance]
-              [pretty-css.basic.api      :as pretty-css.basic]
-              [pretty-css.content.api    :as pretty-css.content]
-              [pretty-css.control.api    :as pretty-css.control]
-              [pretty-css.layout.api     :as pretty-css.layout]
-              [pretty-css.live.api       :as pretty-css.live]
-              [pretty-inputs.engine.api         :as pretty-inputs.engine]))
+    (:require [dom.api                  :as dom]
+              [pretty-attributes.api    :as pretty-attributes]
+              [pretty-inputs.engine.api :as pretty-inputs.engine]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -64,7 +59,8 @@
        :data-font-weight    :medium
        :data-letter-spacing :auto
        :data-line-height    :text-block}
-      (pretty-css.content/unselectable-text-attributes checkbox-props)))
+      (pretty-attributes/text-attributes checkbox-props)))
+      ; + :text-selectable? false
 
 (defn checkbox-option-button-attributes
   ; @ignore
@@ -79,8 +75,8 @@
   [checkbox-id checkbox-props option-dex option]
   (let [option-color (pretty-inputs.engine/get-input-option-color checkbox-id checkbox-props option-dex option)]
        (-> {:class :pi-checkbox--option-button}
-           (pretty-css.appearance/background-attributes {:fill-color option-color})
-           (pretty-css.appearance/border-attributes checkbox-props))))
+           (pretty-attributes/background-attributes {:fill-color option-color})
+           (pretty-attributes/border-attributes checkbox-props))))
 
 (defn checkbox-option-checkmark-attributes
   ; @ignore
@@ -115,8 +111,8 @@
        (-> {:class        :pi-checkbox--option
             :data-checked option-selected?
             :disabled     disabled?}
-           (pretty-css.live/effect-attributes checkbox-props)
-           (pretty-css.control/mouse-event-attributes {:on-click-f on-click-f :on-mouse-up-f dom/blur-active-element!}))))
+           (pretty-attributes/effect-attributes checkbox-props)
+           (pretty-attributes/mouse-event-attributes {:on-click-f on-click-f :on-mouse-up-f dom/blur-active-element!}))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -137,9 +133,9 @@
        (-> {:class    :pi-checkbox--body
             :on-blur  on-blur-f
             :on-focus on-focus-f}
-           (pretty-css.layout/indent-attributes      checkbox-props)
-           (pretty-css.layout/flex-attributes checkbox-props)
-           (pretty-css.basic/style-attributes       checkbox-props))))
+           (pretty-attributes/indent-attributes      checkbox-props)
+           (pretty-attributes/flex-attributes checkbox-props)
+           (pretty-attributes/style-attributes       checkbox-props))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -155,7 +151,7 @@
   ;  ...}
   [_ checkbox-props]
   (-> {:class :pi-checkbox}
-      (pretty-css.basic/class-attributes   checkbox-props)
-      (pretty-css.layout/outdent-attributes checkbox-props)
-      (pretty-css.basic/state-attributes   checkbox-props)
-      (pretty-css.appearance/theme-attributes   checkbox-props)))
+      (pretty-attributes/class-attributes  checkbox-props)
+      (pretty-attributes/outdent-attributes checkbox-props)
+      (pretty-attributes/state-attributes  checkbox-props)
+      (pretty-attributes/theme-attributes   checkbox-props)))

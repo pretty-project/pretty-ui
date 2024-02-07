@@ -1,9 +1,6 @@
 
 (ns pretty-elements.breadcrumbs.attributes
-    (:require [pretty-css.appearance.api :as pretty-css.appearance]
-              [pretty-css.basic.api      :as pretty-css.basic]
-              [pretty-css.accessories.api      :as pretty-css.accessories]
-              [pretty-css.layout.api     :as pretty-css.layout]))
+    (:require [pretty-attributes.api :as pretty-attributes]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -19,7 +16,7 @@
   ;  ...}
   [_ breadcrumbs-props]
   (-> {:class :pe-breadcrumbs--bullet}
-      (pretty-css.accessories/bullet-attributes breadcrumbs-props)))
+      (pretty-attributes/bullet-attributes breadcrumbs-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -35,10 +32,10 @@
   ;  ...}
   [_ breadcrumbs-props]
   (-> {:class :pe-breadcrumbs--body}
-      (pretty-css.basic/style-attributes            breadcrumbs-props)
-      (pretty-css.layout/flex-attributes            breadcrumbs-props)
-      (pretty-css.layout/full-block-size-attributes breadcrumbs-props)
-      (pretty-css.layout/indent-attributes          breadcrumbs-props)))
+      (pretty-attributes/flex-attributes            breadcrumbs-props)
+      (pretty-attributes/full-block-size-attributes breadcrumbs-props)
+      (pretty-attributes/indent-attributes          breadcrumbs-props)
+      (pretty-attributes/style-attributes           breadcrumbs-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -54,8 +51,8 @@
   ;  ...}
   [_ breadcrumbs-props]
   (-> {:class :pe-breadcrumbs}
-      (pretty-css.appearance/theme-attributes    breadcrumbs-props)
-      (pretty-css.basic/class-attributes         breadcrumbs-props)
-      (pretty-css.basic/state-attributes         breadcrumbs-props)
-      (pretty-css.layout/outdent-attributes      breadcrumbs-props)
-      (pretty-css.layout/wrapper-size-attributes breadcrumbs-props)))
+      (pretty-attributes/class-attributes        breadcrumbs-props)
+      (pretty-attributes/outdent-attributes      breadcrumbs-props)
+      (pretty-attributes/state-attributes        breadcrumbs-props)
+      (pretty-attributes/theme-attributes        breadcrumbs-props)
+      (pretty-attributes/wrapper-size-attributes breadcrumbs-props)))

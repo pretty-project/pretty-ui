@@ -2,12 +2,12 @@
 (ns pretty-elements.menu-bar.views
     (:require [fruits.hiccup.api                   :as hiccup]
               [fruits.random.api                   :as random]
-              [pretty-elements.menu-item.views :as menu-item.views]
+              [pretty-elements.engine.api          :as pretty-elements.engine]
               [pretty-elements.menu-bar.attributes :as menu-bar.attributes]
               [pretty-elements.menu-bar.prototypes :as menu-bar.prototypes]
-              [pretty-elements.engine.api :as pretty-elements.engine]
-              [pretty-presets.engine.api :as pretty-presets.engine]
-              [reagent.api :as reagent]))
+              [pretty-elements.menu-item.views     :as menu-item.views]
+              [pretty-presets.engine.api           :as pretty-presets.engine]
+              [reagent.api                         :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

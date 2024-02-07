@@ -1,9 +1,6 @@
 
 (ns pretty-elements.ghost.attributes
-    (:require [pretty-css.appearance.api :as pretty-css.appearance]
-              [pretty-css.basic.api      :as pretty-css.basic]
-              [pretty-css.layout.api     :as pretty-css.layout]
-              [pretty-css.live.api       :as pretty-css.live]))
+    (:require [pretty-attributes.api :as pretty-attributes]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -19,12 +16,12 @@
   ;  ...}
   [_ ghost-props]
   (-> {:class :pe-ghost--body}
-      (pretty-css.live/animation-attributes ghost-props)
-      (pretty-css.appearance/background-attributes     ghost-props)
-      (pretty-css.appearance/border-attributes    ghost-props)
-      (pretty-css.layout/indent-attributes    ghost-props)
-      (pretty-css.basic/style-attributes     ghost-props)
-      (pretty-css.layout/full-block-size-attributes ghost-props)))
+      (pretty-attributes/animation-attributes       ghost-props)
+      (pretty-attributes/background-attributes      ghost-props)
+      (pretty-attributes/border-attributes          ghost-props)
+      (pretty-attributes/indent-attributes          ghost-props)
+      (pretty-attributes/full-block-size-attributes ghost-props)
+      (pretty-attributes/style-attributes           ghost-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -40,8 +37,8 @@
   ;  ...}
   [_ ghost-props]
   (-> {:class :pe-ghost}
-      (pretty-css.basic/class-attributes        ghost-props)
-      (pretty-css.layout/outdent-attributes      ghost-props)
-      (pretty-css.basic/state-attributes        ghost-props)
-      (pretty-css.appearance/theme-attributes        ghost-props)
-      (pretty-css.layout/wrapper-size-attributes ghost-props)))
+      (pretty-attributes/class-attributes        ghost-props)
+      (pretty-attributes/outdent-attributes      ghost-props)
+      (pretty-attributes/state-attributes        ghost-props)
+      (pretty-attributes/theme-attributes        ghost-props)
+      (pretty-attributes/wrapper-size-attributes ghost-props)))

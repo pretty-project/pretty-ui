@@ -1,8 +1,6 @@
 
 (ns pretty-layouts.box-popup.attributes
-    (:require [pretty-css.appearance.api             :as pretty-css.appearance]
-              [pretty-css.basic.api                  :as pretty-css.basic]
-              [pretty-css.layout.api                 :as pretty-css.layout]
+    (:require [pretty-attributes.api                 :as pretty-attributes]
               [pretty-layouts.plain-popup.attributes :as plain-popup.attributes]))
 
 ;; ----------------------------------------------------------------------------
@@ -30,10 +28,10 @@
   ; {}
   [_ popup-props]
   (-> {:class :pl-box-popup--structure}
-      (pretty-css.appearance/background-attributes  popup-props)
-      (pretty-css.appearance/border-attributes popup-props)
-      (pretty-css.layout/indent-attributes popup-props)
-      (pretty-css.basic/style-attributes  popup-props)))
+      (pretty-attributes/background-attributes  popup-props)
+      (pretty-attributes/border-attributes popup-props)
+      (pretty-attributes/indent-attributes popup-props)
+      (pretty-attributes/style-attributes  popup-props)))
 
 (defn popup-wrapper-attributes
   ; @ignore
@@ -45,9 +43,9 @@
   ; {}
   [_ popup-props]
   (-> {:class :pl-box-popup--wrapper}
-      (pretty-css.layout/content-size-attributes popup-props)
-      (pretty-css.layout/outdent-attributes      popup-props)
-      (pretty-css.appearance/theme-attributes        popup-props)))
+      (pretty-attributes/content-size-attributes popup-props)
+      (pretty-attributes/outdent-attributes      popup-props)
+      (pretty-attributes/theme-attributes        popup-props)))
 
 (defn popup-attributes
   ; @ignore

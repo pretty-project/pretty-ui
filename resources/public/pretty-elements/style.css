@@ -1,131 +1,13 @@
 
-/***** Dropdown menu *****/
-/*** Wrapper ***/
-
-.pe-dropdown-menu {
-  /* XXX#6668 */
-  width: fit-content;
-}
-
-/*** Wrapper ***/
-
-/*** Surface ***/
-
-.pe-dropdown-menu--surface {
-  left: 0;
-  min-width: 100%;
-  position: absolute;
-  z-index: 9999;
-}
-
-/*** Surface ***/
-/***** Dropdown menu *****/
-
-
-
-/***** Horizontal group *****/
-/*** Body ***/
-
-.pe-horizontal-group--body {
-  display: flex;
-  flex-direction: row;
-}
-
-/*** Body ***/
-/***** Horizontal group *****/
-
-
-
 /***** Horizontal separator *****/
-/*** Body ***/
-
-.pe-horizontal-separator--body {
-  align-items: center;
-  display:     flex;
-}
-
-/*** Body ***/
-
 /*** Line ***/
 
 .pe-horizontal-separator--line {
-  border-bottom-style: solid;
-  border-bottom-width: 1px;
-  height:              0px;
-  flex-grow:           1;
+  flex-grow: 1;
 }
 
 /*** Line ***/
-
-/*** Label ***/
-
-.pe-horizontal-separator--label {
-  font-weight: 500;
-  padding:     0 18px;
-}
-
-/*** Label ***/
 /***** Horizontal separator *****/
-
-
-
-/***** Icon *****/
-/*** Wrapper ***/
-
-.pe-icon {
-  /* XXX#6668 */
-  width: fit-content;
-}
-
-/*** Wrapper ***/
-/***** Icon *****/
-
-
-
-/***** Icon-button *****/
-/*** Wrapper ***/
-
-.pe-icon-button {
-  align-items:    center;
-  display:        flex;
-  flex-direction: column;
-
-  /* XXX#6668 */
-  width: fit-content;
-}
-
-/*** Wrapper ***/
-
-/*** Body ***/
-
-.pe-icon-button--body {
-  display:         flex;
-  justify-content: center;
-}
-
-/*** Body ***/
-
-/*** Icon-button label ***/
-
-.pe-icon-button--label {
-  font-size:      var( --font-size-micro      );
-  font-weight:    var( --font-weight-medium   );
-  letter-spacing: var( --letter-spacing-micro );
-  line-height:    var( --line-height-micro    );
-}
-
-/*** Icon-button label ***/
-/***** Icon-button *****/
-
-
-
-/***** Image *****/
-/*** Body ***/
-
-.pe-image--body {}
-
-/*** Body ***/
-/***** Image *****/
 
 
 
@@ -358,21 +240,12 @@
 
 
 
-/***** Vertical line *****/
-/*** Wrapper ***/
+/***** Vertical separator *****/
+/*** Line ***/
 
-.pe-vertical-line {
-  /* XXX#6668 */
-  width: fit-content;
+.pe-vertical-separator--line {
+  flex-grow: 1;
 }
 
-/*** Wrapper ***/
-
-/*** Body ***/
-
-.pe-vertical-line--body {
-  height: 100%;
-}
-
-/*** Body ***/
-/***** Vertical line *****/
+/*** Line ***/
+/***** Vertical separator *****/

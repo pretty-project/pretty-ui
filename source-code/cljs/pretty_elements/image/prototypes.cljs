@@ -1,5 +1,6 @@
 
-(ns pretty-elements.image.prototypes)
+(ns pretty-elements.image.prototypes
+    (:require [pretty-properties.api :as pretty-properties]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -12,4 +13,4 @@
   ;
   ; @return (map)
   [_ image-props]
-  (-> image-props))
+  (-> image-props (pretty-properties/default-size-props {:height :s :width :s})))

@@ -5,11 +5,11 @@
               [fruits.vector.api                   :as vector]
               [metamorphic-content.api             :as metamorphic-content]
               [pretty-elements.api                 :as pretty-elements]
-              [pretty-inputs.header.views :as header.views]
-              [pretty-inputs.engine.api                   :as pretty-inputs.engine]
               [pretty-inputs.chip-group.attributes :as chip-group.attributes]
               [pretty-inputs.chip-group.prototypes :as chip-group.prototypes]
-              [pretty-presets.engine.api :as pretty-presets.engine]
+              [pretty-inputs.engine.api            :as pretty-inputs.engine]
+              [pretty-inputs.header.views          :as header.views]
+              [pretty-presets.engine.api           :as pretty-presets.engine]
               [reagent.api                         :as reagent]))
 
 ;; ----------------------------------------------------------------------------

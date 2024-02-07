@@ -1,6 +1,6 @@
 
 (ns pretty-elements.menu-bar.prototypes
-    (:require [pretty-elements.properties.api :as pretty-elements.properties]))
+    (:require [pretty-properties.api :as pretty-properties]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -26,7 +26,7 @@
   ;
   ; @return (map)
   [bar-id bar-props]
-  (-> bar-props (pretty-elements.properties/default-background-props {})
-                (pretty-elements.properties/default-border-props     {})
-                (pretty-elements.properties/default-flex-props       {:orientation :horizontal :overflow :scroll})
-                (pretty-elements.properties/default-size-props       {:height :content :width :content})))
+  (-> bar-props (pretty-properties/default-background-props {})
+                (pretty-properties/default-border-props     {})
+                (pretty-properties/default-flex-props       {:orientation :horizontal :overflow :scroll})
+                (pretty-properties/default-size-props       {:height :content :width :content})))

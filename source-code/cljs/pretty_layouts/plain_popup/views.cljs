@@ -2,10 +2,10 @@
 (ns pretty-layouts.plain-popup.views
     (:require [fruits.random.api                     :as random]
               [metamorphic-content.api               :as metamorphic-content]
-              [pretty-layouts.engine.api                     :as pretty-layouts.engine]
+              [pretty-layouts.engine.api             :as pretty-layouts.engine]
               [pretty-layouts.plain-popup.attributes :as plain-popup.attributes]
               [pretty-layouts.plain-popup.prototypes :as plain-popup.prototypes]
-              [pretty-presets.engine.api :as pretty-presets.engine]
+              [pretty-presets.engine.api             :as pretty-presets.engine]
               [re-frame.api                          :as r]
               [reagent.api                           :as reagent]
               [scroll-lock.api                       :as scroll-lock]))

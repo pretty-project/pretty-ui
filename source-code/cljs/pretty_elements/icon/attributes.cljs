@@ -1,9 +1,6 @@
 
 (ns pretty-elements.icon.attributes
-    (:require [pretty-css.appearance.api :as pretty-css.appearance]
-              [pretty-css.basic.api      :as pretty-css.basic]
-              [pretty-css.content.api    :as pretty-css.content]
-              [pretty-css.layout.api     :as pretty-css.layout]))
+    (:require [pretty-attributes.api :as pretty-attributes]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -15,12 +12,13 @@
   ; @param (map) icon-props
   ;
   ; @return (map)
-  ; {}
-  [icon-id icon-props]
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
+  [_ icon-props]
   (-> {:class :pe-icon--body}
-      (pretty-css.content/icon-attributes   icon-props)
-      (pretty-css.layout/indent-attributes icon-props)
-      (pretty-css.basic/style-attributes  icon-props)))
+      (pretty-attributes/icon-attributes   icon-props)
+      (pretty-attributes/indent-attributes icon-props)
+      (pretty-attributes/style-attributes  icon-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -32,10 +30,11 @@
   ; @param (map) icon-props
   ;
   ; @return (map)
-  ; {}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ icon-props]
   (-> {:class :pe-icon}
-      (pretty-css.basic/class-attributes   icon-props)
-      (pretty-css.layout/outdent-attributes icon-props)
-      (pretty-css.basic/state-attributes   icon-props)
-      (pretty-css.appearance/theme-attributes   icon-props)))
+      (pretty-attributes/class-attributes   icon-props)
+      (pretty-attributes/outdent-attributes icon-props)
+      (pretty-attributes/state-attributes   icon-props)
+      (pretty-attributes/theme-attributes   icon-props)))

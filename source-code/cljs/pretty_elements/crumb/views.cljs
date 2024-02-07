@@ -1,11 +1,11 @@
 
 (ns pretty-elements.crumb.views
-    (:require [fruits.random.api :as random]
+    (:require [fruits.random.api                :as random]
               [pretty-elements.crumb.attributes :as crumb.attributes]
               [pretty-elements.crumb.prototypes :as crumb.prototypes]
-              [pretty-elements.engine.api :as pretty-elements.engine]
-              [pretty-presets.engine.api :as pretty-presets.engine]
-              [reagent.api :as reagent]))
+              [pretty-elements.engine.api       :as pretty-elements.engine]
+              [pretty-presets.engine.api        :as pretty-presets.engine]
+              [reagent.api                      :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -1,15 +1,10 @@
 
 (ns pretty-inputs.radio-button.attributes
-    (:require [dom.api                   :as dom]
-              [metamorphic-content.api   :as metamorphic-content]
-              [pretty-css.appearance.api :as pretty-css.appearance]
-              [pretty-css.basic.api      :as pretty-css.basic]
-              [pretty-css.content.api    :as pretty-css.content]
-              [pretty-css.control.api    :as pretty-css.control]
-              [pretty-css.layout.api     :as pretty-css.layout]
-              [pretty-css.live.api       :as pretty-css.live]
-              [pretty-inputs.engine.api         :as pretty-inputs.engine]
-              [re-frame.api              :as r]))
+    (:require [dom.api                  :as dom]
+              [metamorphic-content.api  :as metamorphic-content]
+              [pretty-attributes.api    :as pretty-attributes]
+              [pretty-inputs.engine.api :as pretty-inputs.engine]
+              [re-frame.api             :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -66,7 +61,8 @@
        :data-font-weight    :medium
        :data-letter-spacing :auto
        :data-line-height    :text-block}
-      (pretty-css.content/unselectable-text-attributes button-props)))
+      (pretty-attributes/text-attributes button-props)))
+      ; + :text-selectable? false
 
 (defn radio-button-option-thumb-attributes
   ; @ignore
@@ -80,7 +76,7 @@
   ; {}
   [_ button-props _ _]
   (-> {:class :pi-radio-button--option-thumb}
-      (pretty-css.appearance/adaptive-border-attributes button-props 0.3)))
+      (pretty-attributes/adaptive-border-attributes button-props 0.3)))
 
 (defn radio-button-option-button-attributes
   ; @ignore
@@ -95,8 +91,8 @@
   [button-id button-props option-dex option]
   (let [option-color (pretty-inputs.engine/get-input-option-color button-id button-props option-dex option)]
        (-> {:class :pi-radio-button--option-button}
-           (pretty-css.appearance/background-attributes {:fill-color option-color})
-           (pretty-css.appearance/border-attributes button-props))))
+           (pretty-attributes/background-attributes {:fill-color option-color})
+           (pretty-attributes/border-attributes button-props))))
 
 (defn radio-button-option-attributes
   ; @ignore
@@ -115,8 +111,8 @@
        (-> {:class         :pi-radio-button--option
             :data-selected option-selected?
             :disabled      disabled?}
-           (pretty-css.live/effect-attributes button-props)
-           (pretty-css.control/mouse-event-attributes {:on-click-f on-click-f :on-mouse-up-f dom/blur-active-element!}))))
+           (pretty-attributes/effect-attributes button-props)
+           (pretty-attributes/mouse-event-attributes {:on-click-f on-click-f :on-mouse-up-f dom/blur-active-element!}))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -135,9 +131,9 @@
        (-> {:class :pi-radio-button--body
             :on-blur  on-blur-f
             :on-focus on-focus-f}
-           (pretty-css.layout/indent-attributes button-props)
-           (pretty-css.layout/flex-attributes   button-props)
-           (pretty-css.basic/style-attributes         button-props))))
+           (pretty-attributes/indent-attributes button-props)
+           (pretty-attributes/flex-attributes   button-props)
+           (pretty-attributes/style-attributes         button-props))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -152,7 +148,7 @@
   ; {}
   [_ button-props]
   (-> {:class :pi-radio-button}
-      (pretty-css.basic/class-attributes   button-props)
-      (pretty-css.layout/outdent-attributes button-props)
-      (pretty-css.basic/state-attributes   button-props)
-      (pretty-css.appearance/theme-attributes   button-props)))
+      (pretty-attributes/class-attributes  button-props)
+      (pretty-attributes/outdent-attributes button-props)
+      (pretty-attributes/state-attributes  button-props)
+      (pretty-attributes/theme-attributes   button-props)))

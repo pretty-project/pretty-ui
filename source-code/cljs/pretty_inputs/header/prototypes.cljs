@@ -1,6 +1,6 @@
 
 (ns pretty-inputs.header.prototypes
-    (:require [pretty-inputs.properties.api :as pretty-inputs.properties]))
+    (:require [pretty-properties.api :as pretty-properties]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -13,7 +13,7 @@
   ;
   ; @return (map)
   [_ header-props]
-  (-> header-props (pretty-inputs.properties/default-border-props {})
-                   (pretty-inputs.properties/default-label-props  {})
-                   (pretty-inputs.properties/default-guides-props {})
-                   (pretty-inputs.properties/default-size-props   {:height :content :width :content})))
+  (-> header-props (pretty-properties/default-border-props      {})
+                   (pretty-properties/default-label-props       {})
+                   (pretty-properties/default-input-guide-props {})
+                   (pretty-properties/default-size-props        {:height :content :width :content})))

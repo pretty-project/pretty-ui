@@ -1,9 +1,7 @@
 
 (ns pretty-website.follow-us-links.attributes
     (:require [fruits.href.api                      :as href]
-              [pretty-css.appearance.api            :as pretty-css.appearance]
-              [pretty-css.basic.api                 :as pretty-css.basic]
-              [pretty-css.layout.api                :as pretty-css.layout]
+              [pretty-attributes.api                :as pretty-attributes]
               [pretty-website.follow-us-links.utils :as follow-us-links.utils]))
 
 ;; ----------------------------------------------------------------------------
@@ -39,8 +37,8 @@
   ;  ...}
   [_ links-props]
   (-> {:class :pw-follow-us-links--body}
-      (pretty-css.layout/indent-attributes links-props)
-      (pretty-css.basic/style-attributes  links-props)))
+      (pretty-attributes/indent-attributes links-props)
+      (pretty-attributes/style-attributes  links-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -56,7 +54,7 @@
   ;  ...}
   [_ links-props]
   (-> {:class :pw-follow-us-links}
-      (pretty-css.basic/class-attributes   links-props)
-      (pretty-css.layout/outdent-attributes links-props)
-      (pretty-css.basic/state-attributes   links-props)
-      (pretty-css.appearance/theme-attributes   links-props)))
+      (pretty-attributes/class-attributes  links-props)
+      (pretty-attributes/outdent-attributes links-props)
+      (pretty-attributes/state-attributes  links-props)
+      (pretty-attributes/theme-attributes   links-props)))

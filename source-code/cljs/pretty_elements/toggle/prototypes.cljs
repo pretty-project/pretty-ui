@@ -31,3 +31,4 @@
          (-> toggle-props)
          (if href       {:on-mouse-up dom/blur-active-element!})
          (if on-click-f {:on-mouse-up dom/blur-active-element!})))
+         ; :text-selectable? false

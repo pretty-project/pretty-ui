@@ -1,14 +1,14 @@
 
 (ns pretty-inputs.header.views
-    (:require [fruits.random.api :as random]
+    (:require [fruits.random.api               :as random]
+              [pretty-elements.api             :as pretty-elements]
+              [pretty-elements.engine.api      :as pretty-elements.engine]
+              [pretty-inputs.engine.api        :as pretty-inputs.engine]
               [pretty-inputs.header.adornments :as header.adornments]
               [pretty-inputs.header.attributes :as header.attributes]
               [pretty-inputs.header.prototypes :as header.prototypes]
-              [pretty-elements.api :as pretty-elements]
-              [pretty-elements.engine.api :as pretty-elements.engine]
-              [pretty-inputs.engine.api :as pretty-inputs.engine]
-              [pretty-presets.engine.api :as pretty-presets.engine]
-              [reagent.api :as reagent]))
+              [pretty-presets.engine.api       :as pretty-presets.engine]
+              [reagent.api                     :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

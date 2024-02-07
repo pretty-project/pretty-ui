@@ -1,6 +1,6 @@
 
 (ns pretty-elements.chip.prototypes
-    (:require [pretty-elements.properties.api :as pretty-elements.properties]))
+    (:require [pretty-properties.api :as pretty-properties]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -13,13 +13,16 @@
   ;
   ; @return (map)
   [chip-id chip-props]
-  (-> chip-props (pretty-elements.properties/default-background-props  {:fill-color :primary})
-                 (pretty-elements.properties/default-border-props      {})
-                 (pretty-elements.properties/default-effect-props      {})
-                 (pretty-elements.properties/default-flex-props        {:orientation :horizontal})
-                 (pretty-elements.properties/default-focus-props       {:focus-id chip-id})
-                 (pretty-elements.properties/default-font-props        {:font-size :xxs :font-weight :medium})
-                 (pretty-elements.properties/default-label-props       {})
-                 (pretty-elements.properties/default-mouse-event-props {})
-                 (pretty-elements.properties/default-space-props       {})
-                 (pretty-elements.properties/default-text-props        {:text-overflow :ellipsis})))
+  (-> chip-props (pretty-properties/clickable-text-auto-props)
+                 (pretty-properties/default-anchor-props      {})
+                 (pretty-properties/default-background-props  {:fill-color :primary})
+                 (pretty-properties/default-border-props      {})
+                 (pretty-properties/default-effect-props      {})
+                 (pretty-properties/default-flex-props        {:orientation :horizontal})
+                 (pretty-properties/default-focus-props       {:focus-id chip-id})
+                 (pretty-properties/default-font-props        {:font-size :xxs :font-weight :medium})
+                 (pretty-properties/default-label-props       {})
+                 (pretty-properties/default-mouse-event-props {})
+                 (pretty-properties/default-space-props       {})
+                 (pretty-properties/default-size-props        {})
+                 (pretty-properties/default-text-props        {:text-overflow :ellipsis :text-selectable? false})))

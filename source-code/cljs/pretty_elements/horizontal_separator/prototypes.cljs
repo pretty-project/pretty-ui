@@ -1,5 +1,6 @@
 
-(ns pretty-elements.horizontal-separator.prototypes)
+(ns pretty-elements.horizontal-separator.prototypes
+    (:require [pretty-properties.api :as pretty-properties]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -11,9 +12,10 @@
   ; @param (map) separator-props
   ;
   ; @return (map)
-  ; {:color (keyword)
-  ;  :width (keyword, px or string)}
   [_ separator-props]
-  (merge {:color :default
-          :width :auto}
-         (-> separator-props)))
+  (-> separator-props (pretty-properties/default-line-props  {:line-orientation :horizontal})
+                      (pretty-properties/default-font-props  {:font-size :micro :font-weight :medium})
+                      (pretty-properties/default-flex-props  {:gap :xs :orientation :horizontal})
+                      (pretty-properties/default-label-props {})
+                      (pretty-properties/default-size-props  {:height :content :width :auto})
+                      (pretty-properties/default-text-props  {:text-transform :uppercase :text-selectable? false})))

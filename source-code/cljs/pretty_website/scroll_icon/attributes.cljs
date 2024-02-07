@@ -1,8 +1,6 @@
 
 (ns pretty-website.scroll-icon.attributes
-    (:require [pretty-css.appearance.api        :as pretty-css.appearance]
-              [pretty-css.basic.api             :as pretty-css.basic]
-              [pretty-css.layout.api            :as pretty-css.layout]
+    (:require [pretty-attributes.api            :as pretty-attributes]
               [pretty-website.scroll-icon.state :as scroll-icon.state]))
 
 ;; ----------------------------------------------------------------------------
@@ -36,7 +34,7 @@
   [_ {:keys [color] :as icon-props}]
   (-> {:class :pw-scroll-icon--body
        :style {"--icon-color" color}}
-      (pretty-css.basic/style-attributes icon-props)))
+      (pretty-attributes/style-attributes icon-props)))
 
       ; indent?
 
@@ -55,7 +53,7 @@
   [icon-id icon-props]
   (-> {:class        :pw-scroll-icon
        :data-visible (icon-id @scroll-icon.state/ICON-VISIBLE?)}
-      (pretty-css.basic/class-attributes   icon-props)
-      (pretty-css.layout/outdent-attributes icon-props)
-      (pretty-css.basic/state-attributes   icon-props)
-      (pretty-css.appearance/theme-attributes   icon-props)))
+      (pretty-attributes/class-attributes  icon-props)
+      (pretty-attributes/outdent-attributes icon-props)
+      (pretty-attributes/state-attributes  icon-props)
+      (pretty-attributes/theme-attributes   icon-props)))

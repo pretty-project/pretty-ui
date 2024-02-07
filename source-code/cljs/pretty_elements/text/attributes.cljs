@@ -1,10 +1,7 @@
 
 (ns pretty-elements.text.attributes
     (:require [fruits.css.api                   :as css]
-              [pretty-css.appearance.api        :as pretty-css.appearance]
-              [pretty-css.basic.api             :as pretty-css.basic]
-              [pretty-css.content.api           :as pretty-css.content]
-              [pretty-css.layout.api            :as pretty-css.layout]
+              [pretty-attributes.api            :as pretty-attributes]
               [pretty-elements.label.attributes :as label.attributes]))
 
 ;; ----------------------------------------------------------------------------
@@ -62,14 +59,14 @@
                           :style               {:max-height height-calc}}
                          {:class               :pe-text--body
                           :data-letter-spacing :auto})
-           (pretty-css.appearance/background-attributes           text-props)
-           (pretty-css.appearance/border-attributes          text-props)
-           (pretty-css.layout/flex-attributes          text-props)
-           (pretty-css.layout/full-block-size-attributes    text-props)
-           (pretty-css.content/font-attributes            text-props)
-           (pretty-css.layout/indent-attributes          text-props)
-           (pretty-css.content/selectable-text-attributes text-props)
-           (pretty-css.basic/style-attributes           text-props))))
+           (pretty-attributes/background-attributes           text-props)
+           (pretty-attributes/border-attributes          text-props)
+           (pretty-attributes/flex-attributes          text-props)
+           (pretty-attributes/full-block-size-attributes    text-props)
+           (pretty-attributes/font-attributes            text-props)
+           (pretty-attributes/indent-attributes          text-props)
+           (pretty-attributes/text-attributes text-props)
+           (pretty-attributes/style-attributes           text-props))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -84,8 +81,8 @@
   ; {}
   [_ text-props]
   (-> {:class :pe-text}
-      (pretty-css.basic/class-attributes        text-props)
-      (pretty-css.layout/outdent-attributes      text-props)
-      (pretty-css.basic/state-attributes        text-props)
-      (pretty-css.appearance/theme-attributes        text-props)
-      (pretty-css.layout/wrapper-size-attributes text-props)))
+      (pretty-attributes/class-attributes       text-props)
+      (pretty-attributes/outdent-attributes      text-props)
+      (pretty-attributes/state-attributes       text-props)
+      (pretty-attributes/theme-attributes        text-props)
+      (pretty-attributes/wrapper-size-attributes text-props)))

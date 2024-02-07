@@ -2,10 +2,10 @@
 (ns pretty-elements.thumbnail.views
     (:require [fruits.css.api                       :as css]
               [fruits.random.api                    :as random]
+              [pretty-elements.engine.api           :as pretty-elements.engine]
               [pretty-elements.thumbnail.attributes :as thumbnail.attributes]
               [pretty-elements.thumbnail.prototypes :as thumbnail.prototypes]
-              [pretty-elements.engine.api                    :as pretty-elements.engine]
-              [pretty-presets.engine.api :as pretty-presets.engine]
+              [pretty-presets.engine.api            :as pretty-presets.engine]
               [reagent.api                          :as reagent]))
 
 ;; ----------------------------------------------------------------------------

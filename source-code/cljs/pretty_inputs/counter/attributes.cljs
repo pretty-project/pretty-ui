@@ -1,11 +1,8 @@
 
 (ns pretty-inputs.counter.attributes
-    (:require [dom.api                   :as dom]
-              [pretty-css.appearance.api :as pretty-css.appearance]
-              [pretty-css.basic.api      :as pretty-css.basic]
-              [pretty-css.content.api    :as pretty-css.content]
-              [pretty-css.layout.api     :as pretty-css.layout]
-              [re-frame.api              :as r]))
+    (:require [dom.api               :as dom]
+              [pretty-attributes.api :as pretty-attributes]
+              [re-frame.api          :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -36,7 +33,7 @@
                 :data-click-effect :opacity
                 :on-click          #(r/dispatch [:pretty-inputs.counter/increase-value! counter-id counter-props])
                 :on-mouse-up       #(dom/blur-active-element!)})
-           (pretty-css.appearance/border-attributes counter-props))))
+           (pretty-attributes/border-attributes counter-props))))
 
 (defn decrease-button-attributes
   ; @ignore
@@ -64,7 +61,7 @@
                 :data-click-effect :opacity
                 :on-click          #(r/dispatch [:pretty-inputs.counter/decrease-value! counter-id counter-props])
                 :on-mouse-up       #(dom/blur-active-element!)})
-           (pretty-css.appearance/border-attributes counter-props))))
+           (pretty-attributes/border-attributes counter-props))))
 
 (defn reset-button-attributes
   ; @ignore
@@ -79,7 +76,7 @@
   ; The reset button border color is independent from the increase and decrease
   ; buttons border color.
   (-> {:class :pi-counter--reset-button}
-      (pretty-css.appearance/border-attributes counter-props)
+      (pretty-attributes/border-attributes counter-props)
       (merge {:data-border-color :default})))
 
 ;; ----------------------------------------------------------------------------
@@ -96,11 +93,12 @@
   ;  ...}
   [_ counter-props]
   (-> {:class :pi-counter--body}
-      (pretty-css.layout/indent-attributes counter-props)
-      (pretty-css.basic/style-attributes  counter-props)
+      (pretty-attributes/indent-attributes counter-props)
+      (pretty-attributes/style-attributes  counter-props)
 
       ; nem elég ha a value-n van csak alkalmazva a text-attributes?
-      (pretty-css.content/unselectable-text-attributes counter-props)))
+      (pretty-attributes/text-attributes counter-props)))
+      ; + :text-selectable? false
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -114,7 +112,7 @@
   ; @return (map)
   [_ counter-props]
   (-> {:class :pi-counter}
-      (pretty-css.basic/class-attributes   counter-props)
-      (pretty-css.layout/outdent-attributes counter-props)
-      (pretty-css.basic/state-attributes   counter-props)
-      (pretty-css.appearance/theme-attributes   counter-props)))
+      (pretty-attributes/class-attributes  counter-props)
+      (pretty-attributes/outdent-attributes counter-props)
+      (pretty-attributes/state-attributes  counter-props)
+      (pretty-attributes/theme-attributes   counter-props)))

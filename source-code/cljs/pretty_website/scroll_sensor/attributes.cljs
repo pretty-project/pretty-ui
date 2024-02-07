@@ -1,7 +1,7 @@
 
 (ns pretty-website.scroll-sensor.attributes
-    (:require [fruits.hiccup.api    :as hiccup]
-              [pretty-css.basic.api :as pretty-css.basic]))
+    (:require [fruits.hiccup.api     :as hiccup]
+              [pretty-attributes.api :as pretty-attributes]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -16,6 +16,6 @@
   [sensor-id sensor-props]
   (-> {:class :pw-scroll-sensor
        :id (hiccup/value sensor-id)}
-      (pretty-css.basic/style-attributes sensor-props)))
+      (pretty-attributes/style-attributes sensor-props)))
  ; class-attributes?
  ; + disabled? state attributes

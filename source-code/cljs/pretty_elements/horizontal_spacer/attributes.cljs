@@ -1,7 +1,24 @@
 
 (ns pretty-elements.horizontal-spacer.attributes
-    (:require [pretty-css.basic.api  :as pretty-css.basic]
-              [pretty-css.layout.api :as pretty-css.layout]))
+    (:require [pretty-attributes.api :as pretty-attributes]))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn spacer-body-attributes
+  ; @ignore
+  ;
+  ; @param (keyword) spacer-id
+  ; @param (map) spacer-props
+  ;
+  ; @return (map)
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
+  [_ spacer-props]
+  (-> {:class :pe-horizontal-spacer--body}
+      (pretty-attributes/indent-attributes             spacer-props)
+      (pretty-attributes/quarter-block-size-attributes spacer-props)
+      (pretty-attributes/style-attributes              spacer-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -14,9 +31,11 @@
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
+  ;  ...}
   [_ spacer-props]
   (-> {:class :pe-horizontal-spacer}
-      (pretty-css.basic/class-attributes      spacer-props)
-      (pretty-css.basic/state-attributes      spacer-props)
-      (pretty-css.basic/style-attributes      spacer-props)
-      (pretty-css.layout/quarter-block-size-attributes spacer-props)))
+      (pretty-attributes/class-attributes        spacer-props)
+      (pretty-attributes/outdent-attributes      spacer-props)
+      (pretty-attributes/state-attributes        spacer-props)
+      (pretty-attributes/theme-attributes        spacer-props)
+      (pretty-attributes/wrapper-size-attributes spacer-props)))

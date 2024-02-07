@@ -1,6 +1,6 @@
 
 (ns pretty-elements.column.prototypes
-    (:require [pretty-elements.properties.api :as pretty-elements.properties]))
+    (:require [pretty-properties.api :as pretty-properties]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -13,7 +13,8 @@
   ;
   ; @return (map)
   [_ column-props]
-  (-> column-props (pretty-elements.properties/default-background-props {})
-                   (pretty-elements.properties/default-border-props     {})
-                   (pretty-elements.properties/default-content-props    {})
-                   (pretty-elements.properties/default-flex-props       {:orientation :vertical :vertical-align :top})))
+  (-> column-props (pretty-properties/default-background-props {})
+                   (pretty-properties/default-border-props     {})
+                   (pretty-properties/default-content-props    {})
+                   (pretty-properties/default-flex-props       {:orientation :vertical :vertical-align :top})
+                   (pretty-properties/default-size-props       {})))

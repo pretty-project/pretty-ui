@@ -7,10 +7,10 @@
               [pretty-inputs.digit-field.attributes :as digit-field.attributes]
               [pretty-inputs.digit-field.prototypes :as digit-field.prototypes]
               [pretty-inputs.digit-field.utils      :as digit-field.utils]
+              [pretty-inputs.engine.api             :as pretty-inputs.engine]
+              [pretty-presets.engine.api            :as pretty-presets.engine]
               [re-frame.api                         :as r]
-              [reagent.api :as reagent]
-              [pretty-presets.engine.api :as pretty-presets.engine]
-              [pretty-inputs.engine.api :as pretty-inputs.engine]))
+              [reagent.api                          :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

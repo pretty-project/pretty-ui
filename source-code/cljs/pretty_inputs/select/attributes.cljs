@@ -1,13 +1,8 @@
 
 (ns pretty-inputs.select.attributes
-    (:require [dom.api                   :as dom]
-              [pretty-css.appearance.api :as pretty-css.appearance]
-              [pretty-css.basic.api      :as pretty-css.basic]
-              [pretty-css.content.api    :as pretty-css.content]
-              [pretty-css.control.api    :as pretty-css.control]
-              [pretty-css.layout.api     :as pretty-css.layout]
-              [pretty-css.live.api       :as pretty-css.live]
-              [pretty-inputs.engine.api         :as pretty-inputs.engine]))
+    (:require [dom.api                  :as dom]
+              [pretty-attributes.api    :as pretty-attributes]
+              [pretty-inputs.engine.api :as pretty-inputs.engine]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -65,7 +60,8 @@
             :data-font-weight    (if option-selected? :semi-bold :medium)
             :data-letter-spacing :auto
             :data-line-height    :text-block}
-         (pretty-css.content/unselectable-text-attributes select-props))))
+         (pretty-attributes/text-attributes select-props))))
+         ; + :text-selectable? false
 
 (defn select-option-checkmark-attributes
   ; @ignore
@@ -101,9 +97,9 @@
             :data-selected option-selected?
             :disabled      disabled?}
            (merge (if-not option-color-f {:data-hover-color :highlight}))
-           (pretty-css.live/effect-attributes select-props)
-           (pretty-css.appearance/background-attributes       {:fill-color option-color})
-           (pretty-css.control/mouse-event-attributes {:on-click-f on-click-f :on-mouse-up-f dom/blur-active-element!}))))
+           (pretty-attributes/effect-attributes select-props)
+           (pretty-attributes/background-attributes       {:fill-color option-color})
+           (pretty-attributes/mouse-event-attributes {:on-click-f on-click-f :on-mouse-up-f dom/blur-active-element!}))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -135,8 +131,8 @@
   ; {}
   [_ select-props]
   (-> {:class :pi-select--body}
-      (pretty-css.layout/indent-attributes select-props)
-      (pretty-css.basic/style-attributes  select-props)))
+      (pretty-attributes/indent-attributes select-props)
+      (pretty-attributes/style-attributes  select-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -151,7 +147,7 @@
   ; {}
   [_ select-props]
   (-> {:class :pi-select}
-      (pretty-css.basic/class-attributes   select-props)
-      (pretty-css.layout/outdent-attributes select-props)
-      (pretty-css.basic/state-attributes   select-props)
-      (pretty-css.appearance/theme-attributes   select-props)))
+      (pretty-attributes/class-attributes  select-props)
+      (pretty-attributes/outdent-attributes select-props)
+      (pretty-attributes/state-attributes  select-props)
+      (pretty-attributes/theme-attributes   select-props)))

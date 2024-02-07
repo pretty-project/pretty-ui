@@ -2,7 +2,7 @@
 (ns pretty-inputs.select.prototypes
     (:require [fruits.noop.api                   :refer [none return]]
               [fruits.vector.api                 :as vector]
-              [pretty-inputs.engine.api                 :as pretty-inputs.engine]
+              [pretty-inputs.engine.api          :as pretty-inputs.engine]
               [pretty-inputs.select.env          :as select.env]
               [pretty-inputs.select.side-effects :as select.side-effects]))
 

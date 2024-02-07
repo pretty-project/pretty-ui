@@ -20,3 +20,4 @@
          (if border-color {:border-position :all
                            :border-width    :xxs})
          (-> bubble-props)))
+         ; text unselectable

@@ -1,8 +1,6 @@
 
 (ns pretty-elements.column.attributes
-    (:require [pretty-css.appearance.api :as pretty-css.appearance]
-              [pretty-css.basic.api      :as pretty-css.basic]
-              [pretty-css.layout.api     :as pretty-css.layout]))
+    (:require [pretty-attributes.api :as pretty-attributes]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -18,12 +16,12 @@
   ;  ...}
   [_ column-props]
   (-> {:class :pe-column--body}
-      (pretty-css.appearance/background-attributes    column-props)
-      (pretty-css.appearance/border-attributes        column-props)
-      (pretty-css.basic/style-attributes              column-props)
-      (pretty-css.layout/flex-attributes              column-props)
-      (pretty-css.layout/double-block-size-attributes column-props)
-      (pretty-css.layout/indent-attributes            column-props)))
+      (pretty-attributes/background-attributes        column-props)
+      (pretty-attributes/border-attributes            column-props)
+      (pretty-attributes/double-block-size-attributes column-props)
+      (pretty-attributes/flex-attributes              column-props)
+      (pretty-attributes/indent-attributes            column-props)
+      (pretty-attributes/style-attributes             column-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -39,8 +37,8 @@
   ;  ...}
   [_ column-props]
   (-> {:class :pe-column}
-      (pretty-css.appearance/theme-attributes    column-props)
-      (pretty-css.basic/class-attributes         column-props)
-      (pretty-css.basic/state-attributes         column-props)
-      (pretty-css.layout/outdent-attributes      column-props)
-      (pretty-css.layout/wrapper-size-attributes column-props)))
+      (pretty-attributes/class-attributes        column-props)
+      (pretty-attributes/outdent-attributes      column-props)
+      (pretty-attributes/state-attributes        column-props)
+      (pretty-attributes/theme-attributes        column-props)
+      (pretty-attributes/wrapper-size-attributes column-props)))

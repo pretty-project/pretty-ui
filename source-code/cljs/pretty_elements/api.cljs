@@ -1,22 +1,18 @@
 
 (ns pretty-elements.api
     (:require [pretty-elements.adornment-group.views      :as adornment-group.views]
-              [pretty-elements.surface.side-effects :as surface.side-effects]
-              [pretty-elements.surface.env :as surface.env]
               [pretty-elements.adornment.views            :as adornment.views]
               [pretty-elements.blank.views                :as blank.views]
               [pretty-elements.breadcrumbs.views          :as breadcrumbs.views]
               [pretty-elements.button.views               :as button.views]
               [pretty-elements.card.views                 :as card.views]
-              [pretty-elements.crumb.views                :as crumb.views]
               [pretty-elements.chip.views                 :as chip.views]
               [pretty-elements.column.views               :as column.views]
+              [pretty-elements.crumb.views                :as crumb.views]
               [pretty-elements.dropdown-menu.views        :as dropdown-menu.views]
-              [pretty-elements.expandable.side-effects :as expandable.side-effects]
+              [pretty-elements.expandable.side-effects    :as expandable.side-effects]
               [pretty-elements.expandable.views           :as expandable.views]
               [pretty-elements.ghost.views                :as ghost.views]
-              [pretty-elements.horizontal-group.views     :as horizontal-group.views]
-              [pretty-elements.horizontal-line.views      :as horizontal-line.views]
               [pretty-elements.horizontal-separator.views :as horizontal-separator.views]
               [pretty-elements.horizontal-spacer.views    :as horizontal-spacer.views]
               [pretty-elements.icon-button.views          :as icon-button.views]
@@ -24,16 +20,17 @@
               [pretty-elements.image.views                :as image.views]
               [pretty-elements.label.views                :as label.views]
               [pretty-elements.menu-bar.views             :as menu-bar.views]
-              [pretty-elements.menu-item.views             :as menu-item.views]
+              [pretty-elements.menu-item.views            :as menu-item.views]
               [pretty-elements.notification-bubble.views  :as notification-bubble.views]
               [pretty-elements.row.views                  :as row.views]
               [pretty-elements.stepper.views              :as stepper.views]
+              [pretty-elements.surface.env                :as surface.env]
+              [pretty-elements.surface.side-effects       :as surface.side-effects]
               [pretty-elements.surface.views              :as surface.views]
               [pretty-elements.text.views                 :as text.views]
               [pretty-elements.thumbnail.views            :as thumbnail.views]
               [pretty-elements.toggle.views               :as toggle.views]
-              [pretty-elements.vertical-group.views       :as vertical-group.views]
-              [pretty-elements.vertical-line.views        :as vertical-line.views]
+              [pretty-elements.vertical-separator.views   :as vertical-separator.views]
               [pretty-elements.vertical-spacer.views      :as vertical-spacer.views]))
 
 ;; ----------------------------------------------------------------------------
@@ -67,8 +64,6 @@
 (def dropdown-menu        dropdown-menu.views/view)
 (def expandable           expandable.views/view)
 (def ghost                ghost.views/view)
-(def horizontal-group     horizontal-group.views/view)
-(def horizontal-line      horizontal-line.views/view)
 (def horizontal-separator horizontal-separator.views/view)
 (def horizontal-spacer    horizontal-spacer.views/view)
 (def icon                 icon.views/view)
@@ -84,6 +79,5 @@
 (def text                 text.views/view)
 (def thumbnail            thumbnail.views/view)
 (def toggle               toggle.views/view)
-(def vertical-group       vertical-group.views/view)
-(def vertical-line        vertical-line.views/view)
+(def vertical-separator   vertical-separator.views/view)
 (def vertical-spacer      vertical-spacer.views/view)

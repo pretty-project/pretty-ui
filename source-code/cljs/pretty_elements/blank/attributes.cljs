@@ -1,8 +1,6 @@
 
 (ns pretty-elements.blank.attributes
-    (:require [pretty-css.appearance.api :as pretty-css.appearance]
-              [pretty-css.basic.api      :as pretty-css.basic]
-              [pretty-css.layout.api     :as pretty-css.layout]))
+    (:require [pretty-attributes.api :as pretty-attributes]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -18,8 +16,8 @@
   ;  ...}
   [_ blank-props]
   (-> {:class :pe-blank--body}
-      (pretty-css.basic/style-attributes   blank-props)
-      (pretty-css.layout/indent-attributes blank-props)))
+      (pretty-attributes/indent-attributes blank-props)
+      (pretty-attributes/style-attributes  blank-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -35,7 +33,7 @@
   ;  ...}
   [_ blank-props]
   (-> {:class :pe-blank}
-      (pretty-css.appearance/theme-attributes blank-props)
-      (pretty-css.basic/class-attributes      blank-props)
-      (pretty-css.basic/state-attributes      blank-props)
-      (pretty-css.layout/outdent-attributes   blank-props)))
+      (pretty-attributes/class-attributes   blank-props)
+      (pretty-attributes/outdent-attributes blank-props)
+      (pretty-attributes/state-attributes   blank-props)
+      (pretty-attributes/theme-attributes   blank-props)))

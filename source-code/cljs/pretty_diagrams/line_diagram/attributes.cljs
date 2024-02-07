@@ -1,10 +1,8 @@
 
 (ns pretty-diagrams.line-diagram.attributes
-    (:require [fruits.css.api                     :as css]
-              [fruits.math.api :as math]
-              [pretty-css.appearance.api          :as pretty-css.appearance]
-              [pretty-css.basic.api               :as pretty-css.basic]
-              [pretty-css.layout.api              :as pretty-css.layout]
+    (:require [fruits.css.api             :as css]
+              [fruits.math.api            :as math]
+              [pretty-attributes.api      :as pretty-attributes]
               [pretty-diagrams.engine.api :as pretty-diagrams.engine]))
 
 ;; ----------------------------------------------------------------------------
@@ -30,8 +28,8 @@
         datum-height (css/percent  strength)
         datum-width  (css/percent  datum-ratio)]
        (-> {:class :pd-line-diagram--datum}
-           (pretty-css.appearance/background-attributes     {:fill-color datum-color})
-           (pretty-css.layout/quarter-block-size-attributes {:height     datum-height :width datum-width}))))
+           (pretty-attributes/background-attributes         {:fill-color datum-color})
+           (pretty-attributes/quarter-block-size-attributes {:height     datum-height :width datum-width}))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -47,10 +45,10 @@
   ;  ...}
   [_ diagram-props]
   (-> {:class :pd-line-diagram--body}
-      (pretty-css.basic/style-attributes            diagram-props)
-      (pretty-css.layout/full-block-size-attributes diagram-props)
-      (pretty-css.layout/flex-attributes            diagram-props)
-      (pretty-css.layout/indent-attributes          diagram-props)))
+      (pretty-attributes/full-block-size-attributes diagram-props)
+      (pretty-attributes/flex-attributes            diagram-props)
+      (pretty-attributes/indent-attributes          diagram-props)
+      (pretty-attributes/style-attributes           diagram-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -66,8 +64,8 @@
   ;  ...}
   [_ diagram-props]
   (-> {:class :pd-line-diagram}
-      (pretty-css.appearance/theme-attributes    diagram-props)
-      (pretty-css.basic/class-attributes         diagram-props)
-      (pretty-css.basic/state-attributes         diagram-props)
-      (pretty-css.layout/outdent-attributes      diagram-props)
-      (pretty-css.layout/wrapper-size-attributes diagram-props)))
+      (pretty-attributes/class-attributes        diagram-props)
+      (pretty-attributes/outdent-attributes      diagram-props)
+      (pretty-attributes/state-attributes        diagram-props)
+      (pretty-attributes/theme-attributes        diagram-props)
+      (pretty-attributes/wrapper-size-attributes diagram-props)))

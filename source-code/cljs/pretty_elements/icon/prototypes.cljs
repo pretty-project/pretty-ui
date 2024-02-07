@@ -1,5 +1,6 @@
 
-(ns pretty-elements.icon.prototypes)
+(ns pretty-elements.icon.prototypes
+    (:require [pretty-properties.api :as pretty-properties]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -11,11 +12,5 @@
   ; @param (map) icon-props
   ;
   ; @return (map)
-  ; {:icon-color (keyword or string)
-  ;  :icon-family (keyword)
-  ;  :icon-size (keyword, px or string)}
   [_ icon-props]
-  (merge {:icon-color  :default
-          :icon-family :material-symbols-outlined
-          :icon-size   :m}
-         (-> icon-props)))
+  (-> icon-props (pretty-properties/default-icon-props {:icon-size :m})))

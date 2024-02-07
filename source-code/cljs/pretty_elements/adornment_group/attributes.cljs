@@ -1,13 +1,11 @@
 
 (ns pretty-elements.adornment-group.attributes
-    (:require [pretty-css.appearance.api :as pretty-css.appearance]
-              [pretty-css.basic.api      :as pretty-css.basic]
-              [pretty-css.layout.api     :as pretty-css.layout]))
+    (:require [pretty-attributes.api :as pretty-attributes]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn adornment-group-body-attributes
+(defn group-body-attributes
   ; @ignore
   ;
   ; @param (keyword) group-id
@@ -18,15 +16,15 @@
   ;  ...}
   [group-id group-props]
   (-> {:class :pe-adornment-group--body}
-      (pretty-css.basic/style-attributes            group-props)
-      (pretty-css.layout/flex-attributes            group-props)
-      (pretty-css.layout/full-block-size-attributes group-props)
-      (pretty-css.layout/indent-attributes          group-props)))
+      (pretty-attributes/flex-attributes            group-props)
+      (pretty-attributes/full-block-size-attributes group-props)
+      (pretty-attributes/indent-attributes          group-props)
+      (pretty-attributes/style-attributes           group-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn adornment-group-attributes
+(defn group-attributes
   ; @ignore
   ;
   ; @param (keyword) group-id
@@ -37,8 +35,8 @@
   ;  ...}
   [_ group-props]
   (-> {:class :pe-adornment-group}
-      (pretty-css.appearance/theme-attributes    group-props)
-      (pretty-css.basic/class-attributes         group-props)
-      (pretty-css.basic/state-attributes         group-props)
-      (pretty-css.layout/outdent-attributes      group-props)
-      (pretty-css.layout/wrapper-size-attributes group-props)))
+      (pretty-attributes/class-attributes        group-props)
+      (pretty-attributes/outdent-attributes      group-props)
+      (pretty-attributes/state-attributes        group-props)
+      (pretty-attributes/theme-attributes        group-props)
+      (pretty-attributes/wrapper-size-attributes group-props)))

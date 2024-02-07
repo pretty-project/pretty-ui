@@ -1,7 +1,7 @@
 
 (ns pretty-inputs.time-field.attributes
-    (:require [pretty-css.basic.api  :as pretty-css.basic]
-              [pretty-css.layout.api :as pretty-css.layout]))
+    (:require [pretty-attributes.basic.api  :as pretty-attributes.basic]
+              [pretty-attributes.layout.api :as pretty-attributes.layout]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -17,8 +17,8 @@
   ;  ...}
   [_ field-props]
   (-> {:class :pi-time-field--body}
-      (pretty-css.layout/indent-attributes field-props)
-      (pretty-css.basic/style-attributes  field-props)))
+      (pretty-attributes/indent-attributes field-props)
+      (pretty-attributes/style-attributes  field-props)))
 
 (defn field-attributes
   ; @ignore
@@ -30,6 +30,6 @@
   ; {}
   [_ field-props]
   (-> {:class :pi-time-field}
-      (pretty-css.basic/class-attributes   field-props)
-      (pretty-css.layout/outdent-attributes field-props)
-      (pretty-css.basic/state-attributes   field-props)))
+      (pretty-attributes/class-attributes  field-props)
+      (pretty-attributes/outdent-attributes field-props)
+      (pretty-attributes/state-attributes  field-props)))

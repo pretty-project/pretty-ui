@@ -2,8 +2,8 @@
 (ns pretty-website.follow-us-links.views
     (:require [fruits.hiccup.api                         :as hiccup]
               [fruits.random.api                         :as random]
-              [pretty-elements.engine.api                         :as pretty-elements.engine]
-              [pretty-presets.engine.api :as pretty-presets.engine]
+              [pretty-elements.engine.api                :as pretty-elements.engine]
+              [pretty-presets.engine.api                 :as pretty-presets.engine]
               [pretty-website.follow-us-links.attributes :as follow-us-links.attributes]
               [pretty-website.follow-us-links.prototypes :as follow-us-links.prototypes]
               [reagent.api                               :as reagent]))

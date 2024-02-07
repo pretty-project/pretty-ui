@@ -1,9 +1,6 @@
 
 (ns pretty-elements.surface.attributes
-    (:require [pretty-css.appearance.api             :as pretty-css.appearance]
-              [pretty-css.basic.api                  :as pretty-css.basic]
-              [pretty-css.layout.api                 :as pretty-css.layout]
-              [pretty-css.live.api                 :as pretty-css.live]))
+    (:require [pretty-attributes.api :as pretty-attributes]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -19,12 +16,12 @@
   ;  ...}
   [surface-id surface-props]
   (-> {:class :pe-surface--body}
-      (pretty-css.appearance/background-attributes    surface-props)
-      (pretty-css.appearance/border-attributes        surface-props)
-      (pretty-css.basic/style-attributes              surface-props)
-      (pretty-css.layout/double-block-size-attributes surface-props)
-      (pretty-css.layout/indent-attributes            surface-props)
-      (pretty-css.live/animation-attributes           surface-props)))
+      (pretty-attributes/animation-attributes         surface-props)
+      (pretty-attributes/background-attributes        surface-props)
+      (pretty-attributes/border-attributes            surface-props)
+      (pretty-attributes/double-block-size-attributes surface-props)
+      (pretty-attributes/indent-attributes            surface-props)
+      (pretty-attributes/style-attributes             surface-props)))
 
 (defn surface-attributes
   ; @ignore
@@ -37,10 +34,10 @@
   ;  ...}
   [_ surface-props]
   (-> {:class :pe-surface}
-      (pretty-css.appearance/theme-attributes    surface-props)
-      (pretty-css.basic/class-attributes         surface-props)
-      (pretty-css.basic/state-attributes         surface-props)
-      (pretty-css.layout/layer-attributes        surface-props)
-      (pretty-css.layout/outdent-attributes      surface-props)
-      (pretty-css.layout/position-attributes     surface-props)
-      (pretty-css.layout/wrapper-size-attributes surface-props)))
+      (pretty-attributes/class-attributes        surface-props)
+      (pretty-attributes/layer-attributes        surface-props)
+      (pretty-attributes/outdent-attributes      surface-props)
+      (pretty-attributes/position-attributes     surface-props)
+      (pretty-attributes/state-attributes        surface-props)
+      (pretty-attributes/theme-attributes        surface-props)
+      (pretty-attributes/wrapper-size-attributes surface-props)))

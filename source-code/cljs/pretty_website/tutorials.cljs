@@ -10,7 +10,7 @@
 
 
 
-; link a pretty-css properties doksikhoz
+; link a pretty-attributes properties doksikhoz
 ; link a pretty-elements.engines properties doksikhoz
 
 

@@ -1,6 +1,6 @@
 
 (ns pretty-tables.data-column.prototypes
-    (:require [pretty-elements.properties.api :as pretty-elements.properties]))
+    (:require [pretty-properties.api :as pretty-properties]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -27,5 +27,5 @@
   ;
   ; @return (map)
   [_ {:keys [cells] :as column-props}]
-  (-> column-props (pretty-elements.properties/default-grid-props {:column-template :even :column-count (count cells)})
-                   (pretty-elements.properties/default-size-props {:height :content :width :auto})))
+  (-> column-props (pretty-properties/default-grid-props {:column-template :even :column-count (count cells)})
+                   (pretty-properties/default-size-props {:height :content :width :auto})))

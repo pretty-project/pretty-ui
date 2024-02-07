@@ -3,10 +3,10 @@
     (:require [fruits.hiccup.api               :as hiccup]
               [fruits.random.api               :as random]
               [metamorphic-content.api         :as metamorphic-content]
+              [pretty-elements.engine.api      :as pretty-elements.engine]
               [pretty-elements.text.attributes :as text.attributes]
               [pretty-elements.text.prototypes :as text.prototypes]
-              [pretty-elements.engine.api               :as pretty-elements.engine]
-              [pretty-presets.engine.api :as pretty-presets.engine]
+              [pretty-presets.engine.api       :as pretty-presets.engine]
               [reagent.api                     :as reagent]))
 
 ;; ----------------------------------------------------------------------------

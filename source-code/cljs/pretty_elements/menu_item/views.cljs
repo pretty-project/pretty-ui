@@ -1,11 +1,11 @@
 
 (ns pretty-elements.menu-item.views
-    (:require [fruits.random.api :as random]
+    (:require [fruits.random.api                    :as random]
+              [pretty-elements.engine.api           :as pretty-elements.engine]
               [pretty-elements.menu-item.attributes :as menu-item.attributes]
               [pretty-elements.menu-item.prototypes :as menu-item.prototypes]
-              [pretty-elements.engine.api :as pretty-elements.engine]
-              [pretty-presets.engine.api :as pretty-presets.engine]
-              [reagent.api :as reagent]))
+              [pretty-presets.engine.api            :as pretty-presets.engine]
+              [reagent.api                          :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

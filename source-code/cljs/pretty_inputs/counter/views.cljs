@@ -1,11 +1,11 @@
 
 (ns pretty-inputs.counter.views
     (:require [fruits.random.api                :as random]
-              [pretty-inputs.header.views :as header.views]
-              [pretty-inputs.engine.api                :as pretty-inputs.engine]
               [pretty-inputs.counter.attributes :as counter.attributes]
               [pretty-inputs.counter.prototypes :as counter.prototypes]
-              [pretty-presets.engine.api :as pretty-presets.engine]
+              [pretty-inputs.engine.api         :as pretty-inputs.engine]
+              [pretty-inputs.header.views       :as header.views]
+              [pretty-presets.engine.api        :as pretty-presets.engine]
               [re-frame.api                     :as r]
               [reagent.api                      :as reagent]))
 
@@ -64,6 +64,8 @@
   ;  :marker-color (keyword or string)(opt)
   ;  :max-value (integer)(opt)
   ;  :min-value (integer)(opt)
+  ;  :on-mount-f (function)(opt)
+  ;  :on-unmount-f (function)(opt)
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :preset (keyword)(opt)

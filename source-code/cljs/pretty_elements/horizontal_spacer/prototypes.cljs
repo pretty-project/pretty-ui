@@ -1,5 +1,6 @@
 
-(ns pretty-elements.horizontal-spacer.prototypes)
+(ns pretty-elements.horizontal-spacer.prototypes
+    (:require [pretty-properties.api :as pretty-properties]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -11,9 +12,5 @@
   ; @param (map) spacer-props
   ;
   ; @return (map)
-  ; {:height (keyword, px or string)
-  ;  :width (keyword, px or string)}
   [_ spacer-props]
-  (merge {:height :s
-          :width  :auto}
-         (-> spacer-props)))
+  (-> spacer-props (pretty-properties/default-size-props {:height :s :width :auto})))

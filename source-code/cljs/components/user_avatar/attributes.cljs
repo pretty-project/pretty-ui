@@ -1,9 +1,8 @@
 
 (ns components.user-avatar.attributes
-    (:require [fruits.css.api        :as css]
-              [fruits.math.api       :as math]
-              [pretty-css.basic.api  :as pretty-css.basic]
-              [pretty-css.layout.api :as pretty-css.layout]))
+    (:require [fruits.css.api               :as css]
+              [fruits.math.api              :as math]
+              [pretty-attributes.api  :as pretty-attributes]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -62,8 +61,8 @@
   (-> {:class :c-user-avatar--body
        :style {:height (css/px size)
                :width  (css/px size)}}
-      (pretty-css.layout/indent-attributes avatar-props)
-      (pretty-css.basic/style-attributes  avatar-props)))
+      (pretty-attributes/indent-attributes avatar-props)
+      (pretty-attributes/style-attributes  avatar-props)))
 
 
 ;; ----------------------------------------------------------------------------
@@ -79,6 +78,6 @@
   ; {}
   [_ avatar-props]
   (-> {:class :c-user-avatar}
-      (pretty-css.basic/class-attributes   avatar-props)
-      (pretty-css.layout/outdent-attributes avatar-props)
-      (pretty-css.basic/state-attributes   avatar-props)))
+      (pretty-attributes/class-attributes  avatar-props)
+      (pretty-attributes/outdent-attributes avatar-props)
+      (pretty-attributes/state-attributes  avatar-props)))

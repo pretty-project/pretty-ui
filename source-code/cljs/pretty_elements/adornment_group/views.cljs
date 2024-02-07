@@ -5,8 +5,8 @@
               [pretty-elements.adornment-group.attributes :as adornment-group.attributes]
               [pretty-elements.adornment-group.prototypes :as adornment-group.prototypes]
               [pretty-elements.adornment.views            :as adornment.views]
-              [pretty-elements.engine.api                          :as pretty-elements.engine]
-              [pretty-presets.engine.api :as pretty-presets.engine]
+              [pretty-elements.engine.api                 :as pretty-elements.engine]
+              [pretty-presets.engine.api                  :as pretty-presets.engine]
               [reagent.api                                :as reagent]))
 
 ;; ----------------------------------------------------------------------------
@@ -28,8 +28,8 @@
   ; @param (map) group-props
   ; {:adornments (maps in vector)(opt)}
   [group-id {:keys [adornments] :as group-props}]
-  [:div (adornment-group.attributes/adornment-group-attributes group-id group-props)
-        [:div (adornment-group.attributes/adornment-group-body-attributes group-id group-props)
+  [:div (adornment-group.attributes/group-attributes group-id group-props)
+        [:div (adornment-group.attributes/group-body-attributes group-id group-props)
               (letfn [(f0 [adornment-dex adornment-props] [adornment-group-adornment adornment-dex adornment-props])]
                      (hiccup/put-with-indexed [:<>] adornments f0))]])
 

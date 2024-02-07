@@ -2,10 +2,10 @@
 (ns pretty-layouts.sidebar.views
     (:require [fruits.random.api                 :as random]
               [metamorphic-content.api           :as metamorphic-content]
-              [pretty-layouts.engine.api                 :as pretty-layouts.engine]
+              [pretty-layouts.engine.api         :as pretty-layouts.engine]
               [pretty-layouts.sidebar.attributes :as sidebar.attributes]
               [pretty-layouts.sidebar.prototypes :as sidebar.prototypes]
-              [pretty-presets.engine.api :as pretty-presets.engine]
+              [pretty-presets.engine.api         :as pretty-presets.engine]
               [re-frame.api                      :as r]
               [reagent.api                       :as reagent]
               [window-observer.api               :as window-observer]))

@@ -1,12 +1,12 @@
 
 (ns pretty-diagrams.point-diagram.views
-    (:require [fruits.random.api                        :as random]
-              [fruits.hiccup.api                        :as hiccup]
+    (:require [fruits.hiccup.api                        :as hiccup]
+              [fruits.random.api                        :as random]
+              [pretty-diagrams.engine.api               :as pretty-diagrams.engine]
               [pretty-diagrams.point-diagram.attributes :as point-diagram.attributes]
               [pretty-diagrams.point-diagram.prototypes :as point-diagram.prototypes]
-              [pretty-diagrams.engine.api :as pretty-diagrams.engine]
-              [pretty-presets.engine.api :as pretty-presets.engine]
-              [reagent.api :as reagent]))
+              [pretty-presets.engine.api                :as pretty-presets.engine]
+              [reagent.api                              :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

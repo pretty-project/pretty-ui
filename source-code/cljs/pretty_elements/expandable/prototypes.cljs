@@ -1,8 +1,8 @@
 
 (ns pretty-elements.expandable.prototypes
-    (:require [pretty-elements.properties.api :as pretty-elements.properties]
+    (:require [pretty-elements.expandable.env          :as expandable.env]
               [pretty-elements.expandable.side-effects :as expandable.side-effects]
-              [pretty-elements.expandable.env :as expandable.env]))
+              [pretty-properties.api                   :as pretty-properties]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -44,4 +44,4 @@
   ;
   ; @return (map)
   [_ expandable-props]
-  (-> expandable-props (pretty-elements.properties/default-size-props {:height :content :width :content})))
+  (-> expandable-props))

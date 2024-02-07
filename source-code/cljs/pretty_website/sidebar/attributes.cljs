@@ -1,8 +1,6 @@
 
 (ns pretty-website.sidebar.attributes
-    (:require [pretty-css.appearance.api           :as pretty-css.appearance]
-              [pretty-css.basic.api                :as pretty-css.basic]
-              [pretty-css.layout.api               :as pretty-css.layout]
+    (:require [pretty-attributes.api               :as pretty-attributes]
               [pretty-website.sidebar.side-effects :as sidebar.side-effects]))
 
 ;; ----------------------------------------------------------------------------
@@ -39,10 +37,10 @@
   [_ sidebar-props]
   (-> {:class            :pw-sidebar--body
        :data-scroll-axis :y}
-      (pretty-css.appearance/background-attributes  sidebar-props)
-      (pretty-css.appearance/border-attributes sidebar-props)
-      (pretty-css.layout/indent-attributes sidebar-props)
-      (pretty-css.basic/style-attributes  sidebar-props)))
+      (pretty-attributes/background-attributes  sidebar-props)
+      (pretty-attributes/border-attributes sidebar-props)
+      (pretty-attributes/indent-attributes sidebar-props)
+      (pretty-attributes/style-attributes  sidebar-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -60,7 +58,7 @@
   [_ {:keys [position] :as sidebar-props}]
   (-> {:class         :pw-sidebar
        :data-position position}
-      (pretty-css.basic/class-attributes   sidebar-props)
-      (pretty-css.layout/outdent-attributes sidebar-props)
-      (pretty-css.basic/state-attributes   sidebar-props)
-      (pretty-css.appearance/theme-attributes   sidebar-props)))
+      (pretty-attributes/class-attributes  sidebar-props)
+      (pretty-attributes/outdent-attributes sidebar-props)
+      (pretty-attributes/state-attributes  sidebar-props)
+      (pretty-attributes/theme-attributes   sidebar-props)))

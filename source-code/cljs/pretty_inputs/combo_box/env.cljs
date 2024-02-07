@@ -4,8 +4,8 @@
               [fruits.hiccup.api             :as hiccup]
               [fruits.string.api             :as string]
               [fruits.vector.api             :as vector]
-              [pretty-inputs.engine.api             :as pretty-inputs.engine]
-              [pretty-inputs.combo-box.state :as combo-box.state]))
+              [pretty-inputs.combo-box.state :as combo-box.state]
+              [pretty-inputs.engine.api      :as pretty-inputs.engine]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -4,7 +4,7 @@
               [dom.api                         :as dom]
               [fruits.hiccup.api               :as hiccup]
               [keypress-handler.api            :as keypress-handler]
-              [pretty-inputs.engine.api               :as pretty-inputs.engine]
+              [pretty-inputs.engine.api        :as pretty-inputs.engine]
               [pretty-inputs.text-field.config :as text-field.config]
               [pretty-inputs.text-field.env    :as text-field.env]
               [pretty-inputs.text-field.utils  :as text-field.utils]

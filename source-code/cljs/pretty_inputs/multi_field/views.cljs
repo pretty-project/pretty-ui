@@ -9,7 +9,7 @@
               [pretty-inputs.multi-field.utils      :as multi-field.utils]
               [pretty-inputs.text-field.views       :as text-field.views]
               [re-frame.api                         :as r]
-              [reagent.api :as reagent]))
+              [reagent.api                          :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -1,6 +1,6 @@
 
 (ns pretty-diagrams.point-diagram.prototypes
-    (:require [pretty-diagrams.properties.api :as pretty-diagrams.properties]))
+    (:require [pretty-properties.api :as pretty-properties]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -13,5 +13,5 @@
   ;
   ; @return (map)
   [_ diagram-props]
-  (-> diagram-props (pretty-diagrams.properties/default-data-props  {})
-                    (pretty-diagrams.properties/default-shape-props {})))
+  (-> diagram-props (pretty-properties/default-data-props  {})
+                    (pretty-properties/default-shape-props {})))

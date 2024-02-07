@@ -2,11 +2,11 @@
 (ns pretty-diagrams.line-diagram.views
     (:require [fruits.hiccup.api                       :as hiccup]
               [fruits.random.api                       :as random]
+              [pretty-diagrams.engine.api              :as pretty-diagrams.engine]
               [pretty-diagrams.line-diagram.attributes :as line-diagram.attributes]
               [pretty-diagrams.line-diagram.prototypes :as line-diagram.prototypes]
-              [pretty-diagrams.engine.api :as pretty-diagrams.engine]
-              [pretty-presets.engine.api :as pretty-presets.engine]
-              [reagent.api :as reagent]))
+              [pretty-presets.engine.api               :as pretty-presets.engine]
+              [reagent.api                             :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

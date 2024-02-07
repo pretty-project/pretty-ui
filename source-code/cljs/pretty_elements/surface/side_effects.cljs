@@ -1,9 +1,9 @@
 
 (ns pretty-elements.surface.side-effects
-    (:require [transition-controller.api :as transition-controller]
-              [metamorphic-content.api :as metamorphic-content]
-              [dynamic-props.api :as dynamic-props]
-              [pretty-elements.surface.env :as surface.env]))
+    (:require [dynamic-props.api           :as dynamic-props]
+              [metamorphic-content.api     :as metamorphic-content]
+              [pretty-elements.surface.env :as surface.env]
+              [transition-controller.api   :as transition-controller]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

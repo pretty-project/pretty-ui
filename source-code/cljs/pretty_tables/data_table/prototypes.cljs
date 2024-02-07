@@ -1,6 +1,6 @@
 
 (ns pretty-tables.data-table.prototypes
-    (:require [pretty-elements.properties.api :as pretty-elements.properties]))
+    (:require [pretty-properties.api :as pretty-properties]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -36,4 +36,4 @@
   ;
   ; @return (map)
   [_ table-props]
-  (-> table-props (pretty-elements.properties/default-size-props {:height :content :width :auto})))
+  (-> table-props (pretty-properties/default-size-props {:height :content :width :auto})))

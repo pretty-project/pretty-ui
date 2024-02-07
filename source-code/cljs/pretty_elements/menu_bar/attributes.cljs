@@ -1,8 +1,6 @@
 
 (ns pretty-elements.menu-bar.attributes
-    (:require [pretty-css.appearance.api  :as pretty-css.appearance]
-              [pretty-css.basic.api       :as pretty-css.basic]
-              [pretty-css.layout.api      :as pretty-css.layout]))
+    (:require [pretty-attributes.api :as pretty-attributes]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -18,12 +16,12 @@
   ;  ...}
   [_ bar-props]
   (-> {:class :pe-menu-bar--body}
-      (pretty-css.appearance/background-attributes    bar-props)
-      (pretty-css.appearance/border-attributes        bar-props)
-      (pretty-css.basic/style-attributes              bar-props)
-      (pretty-css.layout/double-block-size-attributes bar-props)
-      (pretty-css.layout/flex-attributes              bar-props)
-      (pretty-css.layout/indent-attributes            bar-props)))
+      (pretty-attributes/background-attributes        bar-props)
+      (pretty-attributes/border-attributes            bar-props)
+      (pretty-attributes/double-block-size-attributes bar-props)
+      (pretty-attributes/flex-attributes              bar-props)
+      (pretty-attributes/indent-attributes            bar-props)
+      (pretty-attributes/style-attributes             bar-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -39,8 +37,8 @@
   ;  ...}
   [_ bar-props]
   (-> {:class :pe-menu-bar}
-      (pretty-css.appearance/theme-attributes    bar-props)
-      (pretty-css.basic/class-attributes         bar-props)
-      (pretty-css.basic/state-attributes         bar-props)
-      (pretty-css.layout/outdent-attributes      bar-props)
-      (pretty-css.layout/wrapper-size-attributes bar-props)))
+      (pretty-attributes/class-attributes        bar-props)
+      (pretty-attributes/outdent-attributes      bar-props)
+      (pretty-attributes/state-attributes        bar-props)
+      (pretty-attributes/theme-attributes        bar-props)
+      (pretty-attributes/wrapper-size-attributes bar-props)))

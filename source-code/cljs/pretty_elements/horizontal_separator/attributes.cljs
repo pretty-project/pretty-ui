@@ -1,9 +1,36 @@
 
 (ns pretty-elements.horizontal-separator.attributes
-    (:require [pretty-css.appearance.api :as pretty-css.appearance]
-              [pretty-css.basic.api      :as pretty-css.basic]
-              [pretty-css.content.api    :as pretty-css.content]
-              [pretty-css.layout.api     :as pretty-css.layout]))
+    (:require [pretty-attributes.api :as pretty-attributes]))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn separator-label-attributes
+  ; @ignore
+  ;
+  ; @param (keyword) separator-id
+  ; @param (map) separator-props
+  ;
+  ; @return (map)
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
+  [_ separator-props]
+  (-> {:class :pe-horizontal-separator--label}
+      (pretty-attributes/font-attributes separator-props)
+      (pretty-attributes/text-attributes separator-props)))
+
+(defn separator-line-attributes
+  ; @ignore
+  ;
+  ; @param (keyword) separator-id
+  ; @param (map) separator-props
+  ;
+  ; @return (map)
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
+  [_ separator-props]
+  (-> {:class :pe-horizontal-separator--line}
+      (pretty-attributes/line-attributes separator-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -19,11 +46,10 @@
   ;  ...}
   [_ separator-props]
   (-> {:class :pe-horizontal-separator--body}
-      (pretty-css.appearance/background-attributes             separator-props)
-      (pretty-css.layout/indent-attributes            separator-props)
-      (pretty-css.layout/full-block-size-attributes      separator-props)
-      (pretty-css.basic/style-attributes             separator-props)
-      (pretty-css.content/unselectable-text-attributes separator-props)))
+      (pretty-attributes/flex-attributes            separator-props)
+      (pretty-attributes/full-block-size-attributes separator-props)
+      (pretty-attributes/indent-attributes          separator-props)
+      (pretty-attributes/style-attributes           separator-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -39,8 +65,8 @@
   ;  ...}
   [_ separator-props]
   (-> {:class :pe-horizontal-separator}
-      (pretty-css.basic/class-attributes        separator-props)
-      (pretty-css.layout/outdent-attributes      separator-props)
-      (pretty-css.basic/state-attributes        separator-props)
-      (pretty-css.appearance/theme-attributes        separator-props)
-      (pretty-css.layout/wrapper-size-attributes separator-props)))
+      (pretty-attributes/class-attributes        separator-props)
+      (pretty-attributes/outdent-attributes      separator-props)
+      (pretty-attributes/state-attributes        separator-props)
+      (pretty-attributes/theme-attributes        separator-props)
+      (pretty-attributes/wrapper-size-attributes separator-props)))

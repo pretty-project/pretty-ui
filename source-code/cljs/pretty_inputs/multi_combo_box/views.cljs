@@ -2,13 +2,13 @@
 (ns pretty-inputs.multi-combo-box.views
     (:require [fruits.random.api                        :as random]
               [fruits.vector.api                        :as vector]
-              [pretty-inputs.engine.api                        :as pretty-inputs.engine]
               [pretty-inputs.chip-group.views           :as chip-group.views]
               [pretty-inputs.combo-box.views            :as combo-box.views]
+              [pretty-inputs.engine.api                 :as pretty-inputs.engine]
               [pretty-inputs.multi-combo-box.attributes :as multi-combo-box.attributes]
               [pretty-inputs.multi-combo-box.prototypes :as multi-combo-box.prototypes]
               [re-frame.api                             :as r]
-              [reagent.api :as reagent]))
+              [reagent.api                              :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

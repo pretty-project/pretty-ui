@@ -1,7 +1,7 @@
 
 (ns pretty-inputs.multi-combo-box.effects
-    (:require [pretty-inputs.engine.api                        :as pretty-inputs.engine]
-              [pretty-inputs.combo-box.env              :as combo-box.env]
+    (:require [pretty-inputs.combo-box.env              :as combo-box.env]
+              [pretty-inputs.engine.api                 :as pretty-inputs.engine]
               [pretty-inputs.multi-combo-box.events     :as multi-combo-box.events]
               [pretty-inputs.multi-combo-box.prototypes :as multi-combo-box.prototypes]
               [pretty-inputs.text-field.env             :as text-field.env]

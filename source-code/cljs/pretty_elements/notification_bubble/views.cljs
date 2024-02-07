@@ -3,11 +3,11 @@
     (:require [fruits.random.api                              :as random]
               [metamorphic-content.api                        :as metamorphic-content]
               [pretty-elements.button.views                   :as button.views]
+              [pretty-elements.engine.api                     :as pretty-elements.engine]
               [pretty-elements.icon-button.views              :as icon-button.views]
               [pretty-elements.notification-bubble.attributes :as notification-bubble.attributes]
               [pretty-elements.notification-bubble.prototypes :as notification-bubble.prototypes]
-              [pretty-elements.engine.api                              :as pretty-elements.engine]
-              [pretty-presets.engine.api :as pretty-presets.engine]
+              [pretty-presets.engine.api                      :as pretty-presets.engine]
               [reagent.api                                    :as reagent]))
 
 ;; ----------------------------------------------------------------------------

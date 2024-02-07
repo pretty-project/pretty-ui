@@ -1,10 +1,10 @@
 
 (ns pretty-elements.image.views
     (:require [fruits.random.api                :as random]
+              [pretty-elements.engine.api       :as pretty-elements.engine]
               [pretty-elements.image.attributes :as image.attributes]
               [pretty-elements.image.prototypes :as image.prototypes]
-              [pretty-elements.engine.api                :as pretty-elements.engine]
-              [pretty-presets.engine.api :as pretty-presets.engine]
+              [pretty-presets.engine.api        :as pretty-presets.engine]
               [reagent.api                      :as reagent]))
 
 ;; ----------------------------------------------------------------------------
@@ -60,9 +60,9 @@
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :preset (keyword)(opt)
-  ;  :src (string)(opt)
   ;  :style (map)(opt)
   ;  :theme (keyword)(opt)
+  ;  :uri (string)(opt)
   ;  :width (keyword, px or string)(opt)}
   ;
   ; +fill-color, border ...

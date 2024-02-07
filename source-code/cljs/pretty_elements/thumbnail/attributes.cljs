@@ -1,11 +1,6 @@
 
 (ns pretty-elements.thumbnail.attributes
-    (:require [pretty-css.appearance.api :as pretty-css.appearance]
-              [pretty-css.basic.api      :as pretty-css.basic]
-              [pretty-css.content.api    :as pretty-css.content]
-              [pretty-css.control.api    :as pretty-css.control]
-              [pretty-css.layout.api     :as pretty-css.layout]
-              [pretty-css.live.api       :as pretty-css.live]))
+    (:require [pretty-attributes.api :as pretty-attributes]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -25,22 +20,22 @@
                      :data-background-size background-size}
                     {:class                :pe-thumbnail--body
                      :data-background-size background-size})
-      (pretty-css.appearance/border-attributes         thumbnail-props)
-      (pretty-css.live/effect-attributes         thumbnail-props)
-      (pretty-css.layout/indent-attributes         thumbnail-props)
-      (pretty-css.control/anchor-attributes           thumbnail-props)
-      (pretty-css.control/focus-attributes         thumbnail-props)
-      (pretty-css.control/mouse-event-attributes    thumbnail-props)
-      (pretty-css.content/cursor-attributes       thumbnail-props)
-      (pretty-css.control/state-attributes    thumbnail-props)
-      (pretty-css.control/tab-attributes           thumbnail-props)
-      (pretty-css.basic/style-attributes          thumbnail-props)
-      (pretty-css.layout/full-block-size-attributes thumbnail-props)
+      (pretty-attributes/border-attributes         thumbnail-props)
+      (pretty-attributes/effect-attributes         thumbnail-props)
+      (pretty-attributes/indent-attributes         thumbnail-props)
+      (pretty-attributes/anchor-attributes           thumbnail-props)
+      (pretty-attributes/focus-attributes         thumbnail-props)
+      (pretty-attributes/mouse-event-attributes    thumbnail-props)
+      (pretty-attributes/cursor-attributes       thumbnail-props)
+      (pretty-attributes/clickable-state-attributes          thumbnail-props)
+      (pretty-attributes/style-attributes          thumbnail-props)
+      (pretty-attributes/full-block-size-attributes thumbnail-props)
 
       ; i think this text attributes fn is only applied because of the text-selection property
-      ; so maybe find a solution for images to make the unselectable just as the icon-attributes fn
+      ; so maybe find a solution for images to make them unselectable just like the icon-attributes fn
       ; makes the icons unselectable.
-      (pretty-css.content/unselectable-text-attributes thumbnail-props)))
+      (pretty-attributes/text-attributes thumbnail-props)))
+      ; + :text-selectable? false
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -55,8 +50,8 @@
   ; {}
   [_ thumbnail-props]
   (-> {:class :pe-thumbnail}
-      (pretty-css.basic/class-attributes        thumbnail-props)
-      (pretty-css.layout/outdent-attributes      thumbnail-props)
-      (pretty-css.basic/state-attributes        thumbnail-props)
-      (pretty-css.appearance/theme-attributes        thumbnail-props)
-      (pretty-css.layout/wrapper-size-attributes thumbnail-props)))
+      (pretty-attributes/class-attributes       thumbnail-props)
+      (pretty-attributes/outdent-attributes      thumbnail-props)
+      (pretty-attributes/state-attributes       thumbnail-props)
+      (pretty-attributes/theme-attributes        thumbnail-props)
+      (pretty-attributes/wrapper-size-attributes thumbnail-props)))

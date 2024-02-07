@@ -1,11 +1,11 @@
 
 (ns pretty-tables.data-cell.views
-    (:require [fruits.random.api                     :as random]
+    (:require [fruits.random.api                  :as random]
+              [pretty-elements.engine.api         :as pretty-elements.engine]
+              [pretty-presets.engine.api          :as pretty-presets.engine]
               [pretty-tables.data-cell.attributes :as data-cell.attributes]
               [pretty-tables.data-cell.prototypes :as data-cell.prototypes]
-              [pretty-elements.engine.api :as pretty-elements.engine]
-              [pretty-presets.engine.api :as pretty-presets.engine]
-              [reagent.api :as reagent]))
+              [reagent.api                        :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

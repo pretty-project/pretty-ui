@@ -1,7 +1,7 @@
 
 (ns pretty-elements.expandable.side-effects
-    (:require [pretty-elements.surface.side-effects :as surface.side-effects]
-              [pretty-elements.engine.api :as pretty-elements.engine]))
+    (:require [pretty-elements.engine.api           :as pretty-elements.engine]
+              [pretty-elements.surface.side-effects :as surface.side-effects]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

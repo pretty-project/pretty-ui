@@ -1,12 +1,6 @@
 
 (ns pretty-elements.menu-item.attributes
-    (:require [pretty-css.accessories.api :as pretty-css.accessories]
-              [pretty-css.appearance.api  :as pretty-css.appearance]
-              [pretty-css.basic.api       :as pretty-css.basic]
-              [pretty-css.content.api     :as pretty-css.content]
-              [pretty-css.control.api     :as pretty-css.control]
-              [pretty-css.layout.api      :as pretty-css.layout]
-              [pretty-css.live.api        :as pretty-css.live]))
+    (:require [pretty-attributes.api :as pretty-attributes]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -22,7 +16,7 @@
   ;  ...}
   [_ item-props]
   (-> {:class :pe-menu-item--icon}
-      (pretty-css.content/icon-attributes item-props)))
+      (pretty-attributes/icon-attributes item-props)))
 
 (defn menu-item-label-attributes
   ; @ignore
@@ -35,8 +29,8 @@
   ;  ...}
   [_ item-props]
   (-> {:class :pe-menu-item--label}
-      (pretty-css.content/font-attributes              item-props)
-      (pretty-css.content/unselectable-text-attributes item-props)))
+      (pretty-attributes/font-attributes item-props)
+      (pretty-attributes/text-attributes item-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -52,21 +46,20 @@
   ;  ...}
   [_ item-props]
   (-> {:class :pe-menu-item--body}
-      (pretty-css.accessories/badge-attributes      item-props)
-      (pretty-css.accessories/marker-attributes     item-props)
-      (pretty-css.appearance/background-attributes  item-props)
-      (pretty-css.appearance/border-attributes      item-props)
-      (pretty-css.basic/style-attributes            item-props)
-      (pretty-css.control/anchor-attributes         item-props)
-      (pretty-css.control/focus-attributes          item-props)
-      (pretty-css.control/mouse-event-attributes    item-props)
-      (pretty-css.control/state-attributes          item-props)
-      (pretty-css.control/tab-attributes            item-props)
-      (pretty-css.content/cursor-attributes         item-props)
-      (pretty-css.layout/full-block-size-attributes item-props)
-      (pretty-css.layout/flex-attributes            item-props)
-      (pretty-css.layout/indent-attributes          item-props)
-      (pretty-css.live/effect-attributes            item-props)))
+      (pretty-attributes/anchor-attributes          item-props)
+      (pretty-attributes/background-attributes      item-props)
+      (pretty-attributes/badge-attributes           item-props)
+      (pretty-attributes/border-attributes          item-props)
+      (pretty-attributes/clickable-state-attributes item-props)
+      (pretty-attributes/cursor-attributes          item-props)
+      (pretty-attributes/effect-attributes          item-props)
+      (pretty-attributes/flex-attributes            item-props)
+      (pretty-attributes/focus-attributes           item-props)
+      (pretty-attributes/full-block-size-attributes item-props)
+      (pretty-attributes/indent-attributes          item-props)
+      (pretty-attributes/marker-attributes          item-props)
+      (pretty-attributes/mouse-event-attributes     item-props)
+      (pretty-attributes/style-attributes           item-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -82,8 +75,8 @@
   ;  ...}
   [_ item-props]
   (-> {:class :pe-menu-item}
-      (pretty-css.appearance/theme-attributes    item-props)
-      (pretty-css.basic/class-attributes         item-props)
-      (pretty-css.basic/state-attributes         item-props)
-      (pretty-css.layout/outdent-attributes      item-props)
-      (pretty-css.layout/wrapper-size-attributes item-props)))
+      (pretty-attributes/class-attributes        item-props)
+      (pretty-attributes/outdent-attributes      item-props)
+      (pretty-attributes/state-attributes        item-props)
+      (pretty-attributes/theme-attributes        item-props)
+      (pretty-attributes/wrapper-size-attributes item-props)))

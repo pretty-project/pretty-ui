@@ -1,11 +1,11 @@
 
 (ns pretty-elements.label.views
     (:require [fruits.random.api                :as random]
+              [pretty-elements.engine.api       :as pretty-elements.engine]
               [pretty-elements.label.attributes :as label.attributes]
               [pretty-elements.label.prototypes :as label.prototypes]
-              [pretty-elements.engine.api :as pretty-elements.engine]
-              [pretty-presets.engine.api :as pretty-presets.engine]
-              [reagent.api :as reagent]))
+              [pretty-presets.engine.api        :as pretty-presets.engine]
+              [reagent.api                      :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

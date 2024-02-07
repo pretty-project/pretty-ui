@@ -1,10 +1,10 @@
 
 (ns pretty-elements.horizontal-spacer.views
     (:require [fruits.random.api                            :as random]
+              [pretty-elements.engine.api                   :as pretty-elements.engine]
               [pretty-elements.horizontal-spacer.attributes :as horizontal-spacer.attributes]
               [pretty-elements.horizontal-spacer.prototypes :as horizontal-spacer.prototypes]
-              [pretty-elements.engine.api                            :as pretty-elements.engine]
-              [pretty-presets.engine.api :as pretty-presets.engine]
+              [pretty-presets.engine.api                    :as pretty-presets.engine]
               [reagent.api                                  :as reagent]))
 
 ;; ----------------------------------------------------------------------------
@@ -16,7 +16,8 @@
   ; @param (keyword) spacer-id
   ; @param (map) spacer-props
   [spacer-id spacer-props]
-  [:div (horizontal-spacer.attributes/spacer-attributes spacer-id spacer-props)])
+  [:div (horizontal-spacer.attributes/spacer-attributes spacer-id spacer-props)
+        [:div (horizontal-spacer.attributes/spacer-body-attributes spacer-id spacer-props)]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -38,13 +39,16 @@
   ; {:class (keyword or keywords in vector)(opt)
   ;  :disabled? (boolean)(opt)
   ;  :height (keyword, px or string)(opt)
-  ;   Default: :s
+  ;  :max-height (keyword, px or string)(opt)
+  ;  :max-width (keyword, px or string)(opt)
+  ;  :min-height (keyword, px or string)(opt)
+  ;  :min-width (keyword, px or string)(opt)
   ;  :on-mount-f (function)(opt)
   ;  :on-unmount-f (function)(opt)
   ;  :preset (keyword)(opt)
   ;  :style (map)(opt)
-  ;  :width (keyword, px or string)(opt)
-  ;   Default: :auto}
+  ;  :theme (keyword)(opt)
+  ;  :width (keyword, px or string)(opt)}
   ;
   ; @usage
   ; [horizontal-spacer {...}]

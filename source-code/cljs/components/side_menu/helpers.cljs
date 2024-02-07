@@ -1,8 +1,6 @@
 
 (ns components.side-menu.helpers
-    (:require [pretty-css.appearance.api :as pretty-css.appearance]
-              [pretty-css.basic.api      :as pretty-css.basic]
-              [pretty-css.layout.api     :as pretty-css.layout]))
+    (:require [pretty-attributes.api        :as pretty-attributes]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -16,10 +14,10 @@
   ; {:data-element-min-width (keyword, px or string)}
   [_ {:keys [min-width] :as menu-props}]
   (-> {:data-element-min-width min-width}
-      (pretty-css.appearance/background-attributes menu-props)
-      (pretty-css.appearance/border-attributes     menu-props)
-      (pretty-css.layout/indent-attributes menu-props)
-      (pretty-css.basic/style-attributes  menu-props)))
+      (pretty-attributes/background-attributes menu-props)
+      (pretty-attributes/border-attributes     menu-props)
+      (pretty-attributes/indent-attributes menu-props)
+      (pretty-attributes/style-attributes  menu-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -30,6 +28,6 @@
   ;
   ; @return (map)
   [_ menu-props]
-  (-> {} (pretty-css.basic/class-attributes   menu-props)
-         (pretty-css.layout/outdent-attributes menu-props)
-         (pretty-css.basic/state-attributes   menu-props)))
+  (-> {} (pretty-attributes/class-attributes  menu-props)
+         (pretty-attributes/outdent-attributes menu-props)
+         (pretty-attributes/state-attributes  menu-props)))

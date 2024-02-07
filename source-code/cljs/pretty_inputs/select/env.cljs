@@ -1,7 +1,7 @@
 
 (ns pretty-inputs.select.env
-    (:require [metamorphic-content.api :as metamorphic-content]
-              [pretty-inputs.engine.api       :as pretty-inputs.engine]))
+    (:require [metamorphic-content.api  :as metamorphic-content]
+              [pretty-inputs.engine.api :as pretty-inputs.engine]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

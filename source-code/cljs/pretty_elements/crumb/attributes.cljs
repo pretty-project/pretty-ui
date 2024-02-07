@@ -1,12 +1,6 @@
 
 (ns pretty-elements.crumb.attributes
-    (:require [pretty-css.appearance.api :as pretty-css.appearance]
-              [pretty-css.accessories.api :as pretty-css.accessories]
-              [pretty-css.basic.api      :as pretty-css.basic]
-              [pretty-css.content.api    :as pretty-css.content]
-              [pretty-css.control.api    :as pretty-css.control]
-              [pretty-css.layout.api     :as pretty-css.layout]
-              [pretty-css.live.api       :as pretty-css.live]))
+    (:require [pretty-attributes.api :as pretty-attributes]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -22,8 +16,8 @@
   ;  ...}
   [_ crumb-props]
   (-> {:class :pe-crumb--label}
-      (pretty-css.content/font-attributes              crumb-props)
-      (pretty-css.content/unselectable-text-attributes crumb-props)))
+      (pretty-attributes/font-attributes crumb-props)
+      (pretty-attributes/text-attributes crumb-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -39,15 +33,15 @@
   ;  ...}
   [crumb-id crumb-props]
   (-> {:class :pe-crumb--body}
-      (pretty-css.basic/style-attributes            crumb-props)
-      (pretty-css.control/anchor-attributes         crumb-props)
-      (pretty-css.control/mouse-event-attributes    crumb-props)
-      (pretty-css.control/state-attributes          crumb-props)
-      (pretty-css.control/tab-attributes            crumb-props)
-      (pretty-css.layout/flex-attributes            crumb-props)
-      (pretty-css.layout/full-block-size-attributes crumb-props)
-      (pretty-css.layout/indent-attributes          crumb-props)
-      (pretty-css.live/effect-attributes            crumb-props)))
+      (pretty-attributes/anchor-attributes          crumb-props)
+      (pretty-attributes/clickable-state-attributes crumb-props)
+      (pretty-attributes/effect-attributes          crumb-props)
+      (pretty-attributes/flex-attributes            crumb-props)
+      (pretty-attributes/full-block-size-attributes crumb-props)
+      (pretty-attributes/indent-attributes          crumb-props)
+      (pretty-attributes/mouse-event-attributes     crumb-props)
+      (pretty-attributes/state-attributes           crumb-props)
+      (pretty-attributes/style-attributes           crumb-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -63,8 +57,8 @@
   ;  ...}
   [_ crumb-props]
   (-> {:class :pe-crumb}
-      (pretty-css.appearance/theme-attributes    crumb-props)
-      (pretty-css.layout/outdent-attributes      crumb-props)
-      (pretty-css.basic/class-attributes         crumb-props)
-      (pretty-css.basic/state-attributes         crumb-props)
-      (pretty-css.layout/wrapper-size-attributes crumb-props)))
+      (pretty-attributes/outdent-attributes      crumb-props)
+      (pretty-attributes/class-attributes        crumb-props)
+      (pretty-attributes/state-attributes        crumb-props)
+      (pretty-attributes/theme-attributes        crumb-props)
+      (pretty-attributes/wrapper-size-attributes crumb-props)))

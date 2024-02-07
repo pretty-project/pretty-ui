@@ -1,13 +1,13 @@
 
 (ns pretty-elements.expandable.views
-    (:require [fruits.random.api :as random]
+    (:require [fruits.random.api                     :as random]
+              [pretty-elements.button.views          :as button.views]
+              [pretty-elements.engine.api            :as pretty-elements.engine]
               [pretty-elements.expandable.attributes :as expandable.attributes]
-              [pretty-elements.button.views :as button.views]
-              [pretty-elements.surface.views :as surface.views]
               [pretty-elements.expandable.prototypes :as expandable.prototypes]
-              [pretty-elements.engine.api :as pretty-elements.engine]
-              [pretty-presets.engine.api :as pretty-presets.engine]
-              [reagent.api :as reagent]))
+              [pretty-elements.surface.views         :as surface.views]
+              [pretty-presets.engine.api             :as pretty-presets.engine]
+              [reagent.api                           :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -50,13 +50,8 @@
   ; {:button (map)(opt)
   ;  :class (keywords or keywords in vector)(opt)
   ;  :disabled? (boolean)(opt)
-  ;  :height (keyword, px or string)(opt)
   ;  :indent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :max-height (keyword, px or string)(opt)
-  ;  :max-width (keyword, px or string)(opt)
-  ;  :min-height (keyword, px or string)(opt)
-  ;  :min-width (keyword, px or string)(opt)
   ;  :on-mount-f (function)(opt)
   ;  :on-unmount-f (function)(opt)
   ;  :outdent (map)(opt)
@@ -64,8 +59,7 @@
   ;  :preset (keyword)(opt)
   ;  :style (map)(opt)
   ;  :surface (map)(opt)
-  ;  :theme (keyword)(opt)
-  ;  :width (keyword, px or string)(opt)}
+  ;  :theme (keyword)(opt)}
   ;
   ; @usage
   ; [expandable {...}]

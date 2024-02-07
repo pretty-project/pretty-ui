@@ -1,8 +1,6 @@
 
 (ns pretty-tables.data-row.attributes
-    (:require [pretty-css.appearance.api :as pretty-css.appearance]
-              [pretty-css.basic.api      :as pretty-css.basic]
-              [pretty-css.layout.api     :as pretty-css.layout]))
+    (:require [pretty-attributes.api :as pretty-attributes]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -18,10 +16,10 @@
   ;  ...}
   [_ row-props]
   (-> {:class :pt-data-row--body}
-      (pretty-css.layout/grid-attributes              row-props)
-      (pretty-css.layout/double-block-size-attributes row-props)
-      (pretty-css.layout/indent-attributes            row-props)
-      (pretty-css.basic/style-attributes              row-props)))
+      (pretty-attributes/double-block-size-attributes row-props)
+      (pretty-attributes/grid-attributes              row-props)
+      (pretty-attributes/indent-attributes            row-props)
+      (pretty-attributes/style-attributes             row-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -37,8 +35,8 @@
   ;  ...}
   [_ row-props]
   (-> {:class :pt-data-row}
-      (pretty-css.appearance/theme-attributes    row-props)
-      (pretty-css.basic/class-attributes         row-props)
-      (pretty-css.basic/state-attributes         row-props)
-      (pretty-css.layout/outdent-attributes      row-props)
-      (pretty-css.layout/wrapper-size-attributes row-props)))
+      (pretty-attributes/class-attributes        row-props)
+      (pretty-attributes/outdent-attributes      row-props)
+      (pretty-attributes/state-attributes        row-props)
+      (pretty-attributes/theme-attributes        row-props)
+      (pretty-attributes/wrapper-size-attributes row-props)))

@@ -3,10 +3,10 @@
     (:require [fruits.random.api                        :as random]
               [pretty-elements.dropdown-menu.attributes :as dropdown-menu.attributes]
               [pretty-elements.dropdown-menu.prototypes :as dropdown-menu.prototypes]
+              [pretty-elements.engine.api               :as pretty-elements.engine]
               [pretty-elements.menu-bar.views           :as menu-bar.views]
-              [pretty-elements.surface.views           :as surface.views]
-              [pretty-presets.engine.api :as pretty-presets.engine]
-              [pretty-elements.engine.api :as pretty-elements.engine]
+              [pretty-elements.surface.views            :as surface.views]
+              [pretty-presets.engine.api                :as pretty-presets.engine]
               [reagent.api                              :as reagent]))
 
 ;; ----------------------------------------------------------------------------

@@ -1,5 +1,6 @@
 
-(ns pretty-elements.ghost.prototypes)
+(ns pretty-elements.ghost.prototypes
+    (:require [pretty-properties.api :as pretty-properties]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -11,18 +12,8 @@
   ; @param (map) ghost-props
   ;
   ; @return (map)
-  ; {:fill-color (keyword or string)
-  ;  :height (keyword, px or string)
-  ;  :width (keyword, px or string)}
   [_ ghost-props]
-  (merge {
-
-          :animation-duration 2000
-          :animation-name     :opacity-1-05-1
-
-
-
-          :fill-color :highlight
-          :height     :s
-          :width      :s}
-         (-> ghost-props)))
+  (-> ghost-props (pretty-properties/default-animation-props  {:animation-duration 2000 :animation-mode :repeat :animation-name :pulse})
+                  (pretty-properties/default-background-props {:fill-color :highlight})
+                  (pretty-properties/default-border-props     {})
+                  (pretty-properties/default-size-props       {:height :s :width :s})))
