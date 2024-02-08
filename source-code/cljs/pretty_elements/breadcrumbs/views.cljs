@@ -6,11 +6,22 @@
               [pretty-elements.breadcrumbs.prototypes :as breadcrumbs.prototypes]
               [pretty-elements.crumb.views            :as crumb.views]
               [pretty-elements.engine.api             :as pretty-elements.engine]
+              [pretty-accessories.api :as pretty-accessories]
               [pretty-presets.engine.api              :as pretty-presets.engine]
               [reagent.api                            :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+(defn breadcrumbs-bullet
+  ; @ignore
+  ;
+  ; @param (integer) bullet-dex
+  ; @param (map) bullet-props
+  [bullet-dex bullet-props]
+  (if (-> bullet-dex pos?)
+      (let [bullet-props (breadcrumbs.prototypes/bullet-props-prototype bullet-dex bullet-props)]
+           [pretty-accessories/bullet bullet-props])))
 
 (defn breadcrumbs-crumb
   ; @ignore
@@ -27,14 +38,12 @@
   ; @param (keyword) breadcrumbs-id
   ; @param (map) breadcrumbs-props
   ; {:crumbs (maps in vector)(opt)}
-  [breadcrumbs-id {:keys [crumbs] :as breadcrumbs-props}]
+  [breadcrumbs-id {:keys [bullet crumbs] :as breadcrumbs-props}]
   [:div (breadcrumbs.attributes/breadcrumbs-attributes breadcrumbs-id breadcrumbs-props)
         [:div (breadcrumbs.attributes/breadcrumbs-body-attributes breadcrumbs-id breadcrumbs-props)
               (letfn [(f0 [crumb-dex crumb-props]
-                          (if (-> crumb-dex zero?)
-                              [:<> [breadcrumbs-crumb crumb-dex crumb-props]]
-                              [:<> [:div (breadcrumbs.attributes/breadcrumbs-bullet-attributes breadcrumbs-id breadcrumbs-props)]
-                                   [breadcrumbs-crumb crumb-dex crumb-props]]))]
+                          [:<> [breadcrumbs-bullet crumb-dex bullet]
+                               [breadcrumbs-crumb  crumb-dex crumb-props]])]
                      (hiccup/put-with-indexed [:<>] crumbs f0))]])
 
 ;; ----------------------------------------------------------------------------

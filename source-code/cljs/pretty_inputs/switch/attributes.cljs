@@ -89,7 +89,7 @@
   [switch-id switch-props option-dex option]
   (let [option-color (pretty-inputs.engine/get-input-option-color switch-id switch-props option-dex option)]
        (-> {:class :pi-switch--option-track}
-           (pretty-attributes/background-attributes {:fill-color option-color})
+           (pretty-attributes/background-color-attributes {:fill-color option-color})
            (pretty-attributes/border-attributes switch-props))))
 
 (defn switch-option-attributes

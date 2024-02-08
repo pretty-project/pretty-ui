@@ -61,7 +61,7 @@
   ;  :initial-value (integer)(opt)
   ;   Default: 0
   ;  :label (metamorphic-content)(opt)
-  ;  :marker-color (keyword or string)(opt)
+  ;  :marker (map)(opt)
   ;  :max-value (integer)(opt)
   ;  :min-value (integer)(opt)
   ;  :on-mount-f (function)(opt)

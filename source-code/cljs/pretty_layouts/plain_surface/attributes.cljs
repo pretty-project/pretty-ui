@@ -18,7 +18,7 @@
   [_ {:keys [content-orientation] :as surface-props}]
   (-> {:class            :pl-plain-surface--body
        :data-orientation content-orientation}
-      (pretty-attributes/background-attributes surface-props)
+      (pretty-attributes/background-color-attributes surface-props)
       (pretty-attributes/style-attributes surface-props)
       (pretty-attributes/theme-attributes surface-props)))
       ; + class-attributes, state-attributes, style-attributes, theme-attributes

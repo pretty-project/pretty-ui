@@ -13,10 +13,13 @@
   ; @param (map) field-props
   ;
   ; @return (map)
+  ; {}
   [field-id field-props]
-  (let [password-visible? (password-field.env/password-visible? field-id field-props)
-        on-click-f        (fn [] (password-field.side-effects/toggle-password-visibility! field-id field-props))]
-       {:icon-family     :material-symbols-filled
-        :on-click-f      on-click-f
-        :icon            (if password-visible? :visibility_off :visibility)
-        :tooltip-content (if password-visible? :hide-password! :show-password!)}))
+  (let [on-click-f (fn [] (password-field.side-effects/toggle-password-visibility! field-id field-props))]
+       (if (password-field.env/password-visible? field-id field-props)
+           {:icon        :visibility_off
+            :icon-family :material-symbols-filled
+            :on-click-f  on-click-f}
+           {:icon        :visibility
+            :icon-family :material-symbols-filled
+            :on-click-f  on-click-f})))

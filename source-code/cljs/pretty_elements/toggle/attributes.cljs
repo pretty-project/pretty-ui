@@ -17,7 +17,7 @@
   [_ toggle-props]
   (-> {:class              :pe-toggle--body
        :data-text-overflow :hidden}
-      (pretty-attributes/background-attributes             toggle-props)
+      (pretty-attributes/background-color-attributes             toggle-props)
       (pretty-attributes/border-attributes            toggle-props)
       (pretty-attributes/cursor-attributes            toggle-props)
       (pretty-attributes/full-block-size-attributes      toggle-props)

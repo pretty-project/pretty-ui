@@ -35,7 +35,7 @@
   ;  ...}
   [_ bubble-props]
   (-> {:class :pe-notification-bubble--body}
-      (pretty-attributes/background-attributes        bubble-props)
+      (pretty-attributes/background-color-attributes        bubble-props)
       (pretty-attributes/border-attributes       bubble-props)
       (pretty-attributes/anchor-attributes        bubble-props)
       (pretty-attributes/full-block-size-attributes bubble-props)

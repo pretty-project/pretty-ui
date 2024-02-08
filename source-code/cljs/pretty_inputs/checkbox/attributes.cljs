@@ -75,7 +75,7 @@
   [checkbox-id checkbox-props option-dex option]
   (let [option-color (pretty-inputs.engine/get-input-option-color checkbox-id checkbox-props option-dex option)]
        (-> {:class :pi-checkbox--option-button}
-           (pretty-attributes/background-attributes {:fill-color option-color})
+           (pretty-attributes/background-color-attributes {:fill-color option-color})
            (pretty-attributes/border-attributes checkbox-props))))
 
 (defn checkbox-option-checkmark-attributes

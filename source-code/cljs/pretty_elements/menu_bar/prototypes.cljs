@@ -26,7 +26,6 @@
   ;
   ; @return (map)
   [bar-id bar-props]
-  (-> bar-props (pretty-properties/default-background-props {})
-                (pretty-properties/default-border-props     {})
-                (pretty-properties/default-flex-props       {:orientation :horizontal :overflow :scroll})
-                (pretty-properties/default-size-props       {:height :content :width :content})))
+  (-> bar-props (pretty-properties/default-border-props {})
+                (pretty-properties/default-flex-props   {:orientation :horizontal :overflow :scroll})
+                (pretty-properties/default-size-props   {:height :content :width :content})))

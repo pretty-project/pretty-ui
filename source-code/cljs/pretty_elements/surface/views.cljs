@@ -81,7 +81,8 @@
   ;  :on-unmount-f (function)(opt)
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :positioning (keyword)(opt)
+  ;  :position-base (keyword)(opt)
+  ;  :position-method (keyword)(opt)
   ;  :preset (keyword)(opt)
   ;  :style (map)(opt)
   ;  :theme (keyword)(opt)

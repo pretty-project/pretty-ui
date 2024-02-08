@@ -16,7 +16,7 @@
   ;  ...}
   [_ row-props]
   (-> {:class :pe-row--body}
-      (pretty-attributes/background-attributes        row-props)
+      (pretty-attributes/background-color-attributes  row-props)
       (pretty-attributes/border-attributes            row-props)
       (pretty-attributes/double-block-size-attributes row-props)
       (pretty-attributes/flex-attributes              row-props)

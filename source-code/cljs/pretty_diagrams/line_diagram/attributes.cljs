@@ -28,7 +28,7 @@
         datum-height (css/percent  strength)
         datum-width  (css/percent  datum-ratio)]
        (-> {:class :pd-line-diagram--datum}
-           (pretty-attributes/background-attributes         {:fill-color datum-color})
+           (pretty-attributes/background-color-attributes   {:fill-color datum-color})
            (pretty-attributes/quarter-block-size-attributes {:height     datum-height :width datum-width}))))
 
 ;; ----------------------------------------------------------------------------

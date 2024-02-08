@@ -5,22 +5,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn breadcrumbs-bullet-attributes
-  ; @ignore
-  ;
-  ; @param (keyword) breadcrumbs-id
-  ; @param (map) breadcrumbs-props
-  ;
-  ; @return (map)
-  ; {:class (keyword or keywords in vector)
-  ;  ...}
-  [_ breadcrumbs-props]
-  (-> {:class :pe-breadcrumbs--bullet}
-      (pretty-attributes/bullet-attributes breadcrumbs-props)))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (defn breadcrumbs-body-attributes
   ; @ignore
   ;

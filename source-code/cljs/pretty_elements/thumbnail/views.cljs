@@ -1,12 +1,13 @@
 
 (ns pretty-elements.thumbnail.views
-    (:require [fruits.css.api                       :as css]
-              [fruits.random.api                    :as random]
+    (:require [fruits.random.api                    :as random]
               [pretty-elements.engine.api           :as pretty-elements.engine]
               [pretty-elements.thumbnail.attributes :as thumbnail.attributes]
               [pretty-elements.thumbnail.prototypes :as thumbnail.prototypes]
               [pretty-presets.engine.api            :as pretty-presets.engine]
-              [reagent.api                          :as reagent]))
+              [pretty-accessories.api :as pretty-accessories]
+              [reagent.api                          :as reagent]
+              [pretty-accessories.api :as pretty-accessories]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -16,14 +17,21 @@
   ;
   ; @param (keyword) thumbnail-id
   ; @param (map) thumbnail-props
-  ; {:background-size (keyword)
-  ;  :uri (string)(opt)}
-  [thumbnail-id {:keys [background-size uri] :as thumbnail-props}]
+  ; {:badge (map)(opt)
+  ;  :cover (map)(opt)
+  ;  :icon (keyword)(opt)
+  ;  :label (metamorphic-content)(opt)
+  ;  :marker (map)(opt)}
+  [thumbnail-id {:keys [badge cover icon label marker] :as thumbnail-props}]
   [:div (thumbnail.attributes/thumbnail-attributes thumbnail-id thumbnail-props)
         [(pretty-elements.engine/clickable-auto-tag      thumbnail-id thumbnail-props)
          (thumbnail.attributes/thumbnail-body-attributes thumbnail-id thumbnail-props)
-         [:i   {:class :pe-thumbnail--icon :data-icon-family :material-symbols-outlined :data-icon-size :s} :image]
-         [:div {:class :pe-thumbnail--image :style {:background-image (css/url uri) :background-size background-size}}]]])
+         (if icon  [:i   (thumbnail.attributes/thumbnail-icon-attributes  thumbnail-id thumbnail-props) icon])
+         (if :yes  [:div (thumbnail.attributes/thumbnail-image-attributes thumbnail-id thumbnail-props)])
+         (if label [:div (thumbnail.attributes/thumbnail-label-attributes thumbnail-id thumbnail-props) label])
+         (if badge  [pretty-accessories/badge  badge])
+         (if marker [pretty-accessories/marker marker])
+         (if cover  [pretty-accessories/cover  cover])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -45,30 +53,29 @@
   ; @param (keyword)(opt) thumbnail-id
   ; @param (map) thumbnail-props
   ; {:background-size (keyword)(opt)
-  ;   :contain, :cover
-  ;   Default: :contain
+  ;  :background-uri (string)(opt)
+  ;  :badge (map)(opt)
   ;  :border-color (keyword or string)(opt)
   ;  :border-position (keyword)(opt)
   ;  :border-radius (map)(opt)
   ;   {:all, :tl, :tr, :br, :bl (keyword, px or string)(opt)}
-  ;   Default: {:all :m}
   ;  :border-width (keyword, px or string)(opt)
   ;  :class (keyword or keywords in vector)(opt)
+  ;  :cover (map)(opt)
   ;  :cursor (keyword or string)(opt)
   ;  :disabled? (boolean)(opt)
   ;  :height (keyword, px or string)(opt)
-  ;   Default: :s
-  ;  :helper (metamorphic-content)(opt)
   ;  :href-target (keyword)(opt)
   ;  :href-uri (string)(opt)
   ;  :icon (keyword)(opt)
-  ;   Default: :icon
+  ;  :icon-color (keyword or string)(opt)
   ;  :icon-family (keyword)(opt)
-  ;   Default: :material-symbols-outlined
+  ;  :icon-size (keyword, px or string)(opt)
   ;  :indent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :info-text (metamorphic-content)(opt)
   ;  :keypress (map)(opt)
+  ;  :marker (map)(opt)
   ;  :on-click-f (function)(opt)
   ;  :on-click-timeout (ms)(opt)
   ;  :on-mount-f (function)(opt)
@@ -79,11 +86,12 @@
   ;  :style (map)(opt)
   ;  :tab-disabled? (boolean)(opt)
   ;  :theme (keyword)(opt)
-  ;  :uri (string)(opt)
-  ;  :width (keyword, px or string)(opt)
-  ;   Default: :s}
+  ;  :tooltip (map)(opt)
+  ;  :width (keyword, px or string)(opt)}
+
   ;
-  ; + keypress?
+  ; + keypress?, label, placeholder, icon
+  ; text, font props
   ;
   ; @usage
   ; [thumbnail {...}]
@@ -98,5 +106,5 @@
    (fn [_ thumbnail-props]
        (let [thumbnail-props (pretty-presets.engine/apply-preset             thumbnail-id thumbnail-props)
              thumbnail-props (thumbnail.prototypes/thumbnail-props-prototype thumbnail-id thumbnail-props)
-             thumbnail-props (pretty-elements.engine/element-timeout-props   thumbnail-id thumbnail-props :label)]  ; <- Nincs is label, de elférne egy ugy mint az icon-button alatt
+             thumbnail-props (pretty-elements.engine/element-timeout-props   thumbnail-id thumbnail-props)]
             [view-lifecycles thumbnail-id thumbnail-props]))))

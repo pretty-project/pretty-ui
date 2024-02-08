@@ -20,7 +20,7 @@
   ; because, the sidebar might get a border-color value which is unwanted on
   ; the sensor!
   (-> {:class :pl-sidebar--sensor}
-      (pretty-attributes/background-attributes {:fill-color fill-color})))
+      (pretty-attributes/background-color-attributes {:fill-color fill-color})))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -36,7 +36,7 @@
   ;  ...}
   [_ sidebar-props]
   (-> {:class :pl-sidebar--body}
-      (pretty-attributes/background-attributes        sidebar-props)
+      (pretty-attributes/background-color-attributes        sidebar-props)
       (pretty-attributes/border-attributes       sidebar-props)
       (pretty-attributes/double-block-size-attributes sidebar-props)
       (pretty-attributes/indent-attributes       sidebar-props)

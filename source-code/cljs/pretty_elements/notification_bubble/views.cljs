@@ -8,7 +8,8 @@
               [pretty-elements.notification-bubble.attributes :as notification-bubble.attributes]
               [pretty-elements.notification-bubble.prototypes :as notification-bubble.prototypes]
               [pretty-presets.engine.api                      :as pretty-presets.engine]
-              [reagent.api                                    :as reagent]))
+              [reagent.api                                    :as reagent]
+              [pretty-accessories.api :as pretty-accessories]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -48,6 +49,8 @@
                [metamorphic-content/compose content placeholder]]
          [notification-bubble-secondary-button bubble-id bubble-props]
          [notification-bubble-primary-button   bubble-id bubble-props]]])
+
+         ; badge, marker, cover
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -117,7 +120,7 @@
   ;  :width (keyword, px or string)(opt)}
   ;
   ; + end-adornments, start-adornments
-  ; + keypress?
+  ; + keypress? cover, badge, marker
   ;
   ; @usage
   ; [notification-bubble {...}]
@@ -132,7 +135,7 @@
    (fn [_ bubble-props]
        (let [bubble-props (pretty-presets.engine/apply-preset                    bubble-id bubble-props)
              bubble-props (notification-bubble.prototypes/bubble-props-prototype bubble-id bubble-props)
-             bubble-props (pretty-elements.engine/element-timeout-props          bubble-id bubble-props :content)]
+             bubble-props (pretty-elements.engine/element-timeout-props          bubble-id bubble-props)]
             [view-lifecycles bubble-id bubble-props]))))
 
             ; + hover-color, hover-effect, hover-pattern, highlight-... ...

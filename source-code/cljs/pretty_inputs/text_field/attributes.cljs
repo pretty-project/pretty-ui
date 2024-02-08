@@ -159,11 +159,10 @@
   [_ field-props]
   (-> {:class               :pi-text-field--body
        :data-letter-spacing :auto}
-      (pretty-attributes/background-attributes  field-props)
+      (pretty-attributes/background-color-attributes  field-props)
       (pretty-attributes/border-attributes field-props)
       (pretty-attributes/font-attributes   field-props)
       (pretty-attributes/indent-attributes field-props)
-      (pretty-attributes/marker-attributes field-props)
       (pretty-attributes/style-attributes  field-props)))
 
 ;; ----------------------------------------------------------------------------

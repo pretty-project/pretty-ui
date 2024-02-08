@@ -5,6 +5,16 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn bullet-props-prototype
+  ; @ignore
+  ;
+  ; @param (integer) bullet-dex
+  ; @param (map) bullet-props
+  ;
+  ; @return (map)
+  [_ bullet-props]
+  (-> bullet-props (pretty-properties/default-background-color-props {:fill-color :muted})))
+
 (defn crumb-props-prototype
   ; @ignore
   ;
@@ -26,6 +36,4 @@
   ;
   ; @return (map)
   [_ breadcrumbs-props]
-  (-> breadcrumbs-props (pretty-properties/default-bullet-props {:bullet-color :muted})
-                        (pretty-properties/default-flex-props   {:gap :xs :orientation :horizontal :overflow :scroll})
-                        (pretty-properties/default-size-props   {})))
+  (-> breadcrumbs-props (pretty-properties/default-flex-props {:gap :xs :orientation :horizontal :overflow :scroll})))

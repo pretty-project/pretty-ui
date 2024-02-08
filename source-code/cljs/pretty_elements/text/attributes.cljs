@@ -59,7 +59,7 @@
                           :style               {:max-height height-calc}}
                          {:class               :pe-text--body
                           :data-letter-spacing :auto})
-           (pretty-attributes/background-attributes           text-props)
+           (pretty-attributes/background-color-attributes           text-props)
            (pretty-attributes/border-attributes          text-props)
            (pretty-attributes/flex-attributes          text-props)
            (pretty-attributes/full-block-size-attributes    text-props)

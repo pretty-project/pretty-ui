@@ -16,6 +16,5 @@
   ; @return (map)
   [group-id group-props chip-dex chip-value]
   (let [on-click-f #(chip-group.side-effects/delete-chip! group-id group-props chip-dex chip-value)]
-       {:icon            :close
-        :tooltip-content :delete!
-        :on-click-f      on-click-f}))
+       {:icon       :close
+        :on-click-f on-click-f}))

@@ -5,7 +5,8 @@
               [pretty-elements.menu-item.attributes :as menu-item.attributes]
               [pretty-elements.menu-item.prototypes :as menu-item.prototypes]
               [pretty-presets.engine.api            :as pretty-presets.engine]
-              [reagent.api                          :as reagent]))
+              [reagent.api                          :as reagent]
+              [pretty-accessories.api :as pretty-accessories]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -15,17 +16,23 @@
   ;
   ; @param (keyword) item-id
   ; @param (map) item-props
-  ; {:icon (keyword)(opt)
+  ; {:badge (map)(opt)
+  ;  :cover (map)(opt)
+  ;  :icon (keyword)(opt)
   ;  :icon-position (keyword)(opt)
-  ;  :label (metamorphic-content)(opt)}
-  [item-id {:keys [icon icon-position label] :as item-props}]
+  ;  :label (metamorphic-content)(opt)
+  ;  :marker (map)(opt)}
+  [item-id {:keys [badge cover icon icon-position label marker] :as item-props}]
   [:div (menu-item.attributes/menu-item-attributes item-id item-props)
         [(pretty-elements.engine/clickable-auto-tag      item-id item-props)
          (menu-item.attributes/menu-item-body-attributes item-id item-props)
          (case icon-position :right [:<> (if label [:div (menu-item.attributes/menu-item-label-attributes item-id item-props) label])
                                          (if icon  [:i   (menu-item.attributes/menu-item-icon-attributes  item-id item-props) icon])]
                                     [:<> (if icon  [:i   (menu-item.attributes/menu-item-icon-attributes  item-id item-props) icon])
-                                         (if label [:div (menu-item.attributes/menu-item-label-attributes item-id item-props) label])])]])
+                                         (if label [:div (menu-item.attributes/menu-item-label-attributes item-id item-props) label])])
+         (if badge  [pretty-accessories/badge  badge])
+         (if marker [pretty-accessories/marker marker])
+         (if cover  [pretty-accessories/cover  cover])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -48,9 +55,7 @@
   ;
   ; @param (keyword)(opt) item-id
   ; @param (map) item-props
-  ; {:badge-color (keyword or string)(opt)
-  ;  :badge-content (metamorphic-content)(opt)
-  ;  :badge-position (keyword)(opt)
+  ; {:badge (map)(opt)
   ;  :border-color (keyword or string)(opt)
   ;  :border-position (keyword)(opt)
   ;  :border-radius (map)(opt)
@@ -58,6 +63,7 @@
   ;  :border-width (keyword, px or string)(opt)
   ;  :class (keyword or keywords in vector)(opt)
   ;  :click-effect (keyword)(opt)
+  ;  :cover (map)(opt)
   ;  :cursor (keyword or string)(opt)
   ;  :dropdown-content (metamorphic-content)(opt)
   ;  :disabled? (boolean)(opt)
@@ -86,8 +92,7 @@
   ;  :label (metamorphic-content)(opt)
   ;  :letter-spacing (keyword, px or string)(opt)
   ;  :line-height (keyword, px or string)(opt)
-  ;  :marker-color (keyword or string)(opt)
-  ;  :marker-position (keyword)(opt)
+  ;  :marker (map)(opt)
   ;  :max-height (keyword, px or string)(opt)
   ;  :max-width (keyword, px or string)(opt)
   ;  :menu-id (keyword)(opt)

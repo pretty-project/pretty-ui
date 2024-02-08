@@ -14,12 +14,10 @@
   ; @return (map)
   ; {:disabled? (boolean)
   ;  :icon (keyword)
-  ;  :on-click-f (function)
-  ;  :tooltip (metamorphic-content)}
+  ;  :on-click-f (function)}
   [field-id field-props]
   (let [input-empty? (pretty-inputs.engine/input-empty? field-id field-props)
         on-click-f   (fn [] (pretty-inputs.engine/empty-input! field-id field-props))]
-       {:disabled?       input-empty?
-        :on-click-f      on-click-f
-        :icon            :close
-        :tooltip-content :empty-field!}))
+       {:disabled?  input-empty?
+        :on-click-f on-click-f
+        :icon       :close}))

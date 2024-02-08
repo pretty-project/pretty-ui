@@ -17,6 +17,6 @@
   [_ {:keys [disabled? drag-attributes template] :as row-props}]
   (-> (if drag-attributes (-> drag-attributes (update :style merge {:grid-template-columns template}))
                           {:style {:grid-template-columns template :opacity (if disabled? ".5")}})
-      (pretty-attributes/marker-attributes    row-props)
-      (pretty-attributes/background-attributes row-props)
+      ;(pretty-attributes/marker-attributes    row-props)
+      (pretty-attributes/background-color-attributes row-props)
       (pretty-attributes/border-attributes     row-props)))

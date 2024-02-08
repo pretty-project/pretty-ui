@@ -1,12 +1,12 @@
 
 (ns pretty-elements.chip.views
     (:require [fruits.random.api                     :as random]
-              [fruits.vector.api                     :as vector]
               [pretty-elements.adornment-group.views :as adornment-group.views]
               [pretty-elements.chip.attributes       :as chip.attributes]
               [pretty-elements.chip.prototypes       :as chip.prototypes]
               [pretty-elements.engine.api            :as pretty-elements.engine]
               [pretty-presets.engine.api             :as pretty-presets.engine]
+              [pretty-accessories.api             :as pretty-accessories]
               [reagent.api                           :as reagent]))
 
 ;; ----------------------------------------------------------------------------
@@ -17,18 +17,18 @@
   ;
   ; @param (keyword) chip-id
   ; @param (map) chip-props
-  ; {:end-adornments (maps in vector)(opt)
+  ; {:cover (map)(opt)
+  ;  :end-adornments (maps in vector)(opt)
   ;  :label (metamorphic-content)(opt)
   ;  :start-adornments (maps in vector)(opt)}
-  [chip-id {:keys [end-adornments label start-adornments] :as chip-props}]
+  [chip-id {:keys [cover end-adornments label start-adornments] :as chip-props}]
   [:div (chip.attributes/chip-attributes chip-id chip-props)
         [(pretty-elements.engine/clickable-auto-tag chip-id chip-props)
          (chip.attributes/chip-body-attributes      chip-id chip-props)
-         (when (vector/not-empty? start-adornments)
-               [adornment-group.views/view {:adornments start-adornments}])
-         [:div (chip.attributes/chip-label-attributes chip-id chip-props) label]
-         (when (vector/not-empty? end-adornments)
-               [adornment-group.views/view {:adornments end-adornments}])]])
+         (when start-adornments [adornment-group.views/view {:adornments start-adornments}])
+         (when :always          [:div (chip.attributes/chip-label-attributes chip-id chip-props) label])
+         (when end-adornments   [adornment-group.views/view {:adornments end-adornments}])
+         (when cover            [pretty-accessories/cover cover])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -58,13 +58,13 @@
   ;   {:all, :tl, :tr, :br, :bl (keyword, px or string)(opt)}
   ;  :class (keyword or keywords in vector)(opt)
   ;  :click-effect (keyword)(opt)
+  ;  :cover (map)(opt)
   ;  :cursor (keyword or string)(opt)
   ;  :disabled? (boolean)(opt)
   ;  :end-adornment-default (map)(opt)
   ;  :end-adornments (maps in vector)(opt)
   ;  :fill-color (keyword or string)(opt)
   ;  :fill-pattern (keyword)(opt)
-  ;   Default: :cover
   ;  :height (keyword, px or string)(opt)
   ;  :highlighted? (boolean)(opt)
   ;  :highlight-color (keyword or string)(opt)
@@ -111,7 +111,7 @@
    (fn [_ chip-props]
        (let [chip-props (pretty-presets.engine/apply-preset                            chip-id chip-props)
              chip-props (chip.prototypes/chip-props-prototype                          chip-id chip-props)
-             chip-props (pretty-elements.engine/element-timeout-props                  chip-id chip-props :label)
+             chip-props (pretty-elements.engine/element-timeout-props                  chip-id chip-props)
              chip-props (pretty-elements.engine/element-subitem-group<-subitem-default chip-id chip-props :start-adornments :start-adornment-default)
              chip-props (pretty-elements.engine/element-subitem-group<-disabled-state  chip-id chip-props :end-adornments   :end-adornment-default)
              chip-props (pretty-elements.engine/element-subitem-group<-subitem-default chip-id chip-props :start-adornments :start-adornment-default)

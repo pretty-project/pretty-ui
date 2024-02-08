@@ -5,6 +5,7 @@
               [pretty-elements.adornment.prototypes :as adornment.prototypes]
               [pretty-elements.engine.api           :as pretty-elements.engine]
               [pretty-presets.engine.api            :as pretty-presets.engine]
+              [pretty-accessories.api            :as pretty-accessories]
               [reagent.api                          :as reagent]))
 
 ;; ----------------------------------------------------------------------------
@@ -15,14 +16,16 @@
   ;
   ; @param (keyword) adornment-id
   ; @param (map) adornment-props
-  ; {:icon (keyword)(opt)
+  ; {:cover (keyword)(opt)
+  ;  :icon (keyword)(opt)
   ;  :label (metamorphic-content)(opt)}
-  [adornment-id {:keys [icon label] :as adornment-props}]
+  [adornment-id {:keys [cover icon label] :as adornment-props}]
   [:div (adornment.attributes/adornment-attributes adornment-id adornment-props)
         [(pretty-elements.engine/clickable-auto-tag      adornment-id adornment-props)
          (adornment.attributes/adornment-body-attributes adornment-id adornment-props)
          (cond label [:div (adornment.attributes/adornment-label-attributes adornment-id adornment-props) label]
-               icon  [:i   (adornment.attributes/adornment-icon-attributes  adornment-id adornment-props) icon])]])
+               icon  [:i   (adornment.attributes/adornment-icon-attributes  adornment-id adornment-props) icon])
+         (when cover [:<>  [pretty-accessories/cover cover]])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -54,6 +57,7 @@
   ;  :border-width (keyword, px or string)(opt)
   ;  :class (keyword or keywords in vector)(opt)
   ;  :click-effect (keyword)(opt)
+  ;  :cover (map)(opt)
   ;  :cursor (keyword or string)(opt)
   ;  :disabled? (boolean)(opt)
   ;  :fill-color (keyword or string)(opt)
@@ -96,8 +100,7 @@
   ;  :text-overflow (keyword)(opt)
   ;  :text-transform (keyword)(opt)
   ;  :theme (keyword)(opt)
-  ;  :tooltip-content (metamorphic-content)(opt)
-  ;  :tooltip-position (keyword)(opt)
+  ;  :tooltip (map)(opt)
   ;  :width (keyword, px or string)(opt)}
   ;
   ; @usage
@@ -113,5 +116,5 @@
    (fn [_ adornment-props]
        (let [adornment-props (pretty-presets.engine/apply-preset             adornment-id adornment-props)
              adornment-props (adornment.prototypes/adornment-props-prototype adornment-id adornment-props)
-             adornment-props (pretty-elements.engine/element-timeout-props   adornment-id adornment-props :label)]
+             adornment-props (pretty-elements.engine/element-timeout-props   adornment-id adornment-props)]
             [view-lifecycles adornment-id adornment-props]))))

@@ -5,7 +5,8 @@
               [pretty-elements.button.prototypes :as button.prototypes]
               [pretty-elements.engine.api        :as pretty-elements.engine]
               [pretty-presets.engine.api         :as pretty-presets.engine]
-              [reagent.api                       :as reagent]))
+              [reagent.api                       :as reagent]
+              [pretty-accessories.api :as pretty-accessories]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -15,17 +16,21 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  ; {:icon (keyword)(opt)
+  ; {:badge (map)(opt)
+  ;  :icon (keyword)(opt)
   ;  :icon-position (keyword)(opt)
   ;  :label (metamorphic-content)(opt)}
-  [button-id {:keys [icon icon-position label] :as button-props}]
+  [button-id {:keys [badge cover icon icon-position label marker] :as button-props}]
   [:div (button.attributes/button-attributes button-id button-props)
         [(pretty-elements.engine/clickable-auto-tag button-id button-props)
          (button.attributes/button-body-attributes  button-id button-props)
          (case icon-position :right [:<> (if label [:div (button.attributes/button-label-attributes button-id button-props) label])
                                          (if icon  [:i   (button.attributes/button-icon-attributes  button-id button-props) icon])]
                                     [:<> (if icon  [:i   (button.attributes/button-icon-attributes  button-id button-props) icon])
-                                         (if label [:div (button.attributes/button-label-attributes button-id button-props) label])])]])
+                                         (if label [:div (button.attributes/button-label-attributes button-id button-props) label])])
+         (if badge  [pretty-accessories/badge  badge])
+         (if marker [pretty-accessories/marker marker])
+         (if cover  [pretty-accessories/cover  cover])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -49,9 +54,7 @@
   ;
   ; @param (keyword)(opt) button-id
   ; @param (map) button-props
-  ; {:badge-color (keyword or string)(opt)
-  ;  :badge-content (metamorphic-content)(opt)
-  ;  :badge-position (keyword)(opt)
+  ; {:badge (map)(opt)
   ;  :border-color (keyword or string)(opt)
   ;  :border-position (keyword)(opt)
   ;  :border-radius (map)(opt)
@@ -59,6 +62,7 @@
   ;  :border-width (keyword, px or string)(opt)
   ;  :class (keyword or keywords in vector)(opt)
   ;  :click-effect (keyword)(opt)
+  ;  :cover (map)(opt)
   ;  :cursor (keyword or string)(opt)
   ;  :disabled? (boolean)(opt)
   ;  :fill-color (keyword or string)(opt)
@@ -87,8 +91,7 @@
   ;  :label (metamorphic-content)(opt)
   ;  :letter-spacing (keyword, px or string)(opt)
   ;  :line-height (keyword, px or string)(opt)
-  ;  :marker-color (keyword or string)(opt)
-  ;  :marker-position (keyword)(opt)
+  ;  :marker (map)(opt)
   ;  :max-height (keyword, px or string)(opt)
   ;  :max-width (keyword, px or string)(opt)
   ;  :min-height (keyword, px or string)(opt)
@@ -111,8 +114,7 @@
   ;  :text-overflow (keyword)(opt)
   ;  :text-transform (keyword)(opt)
   ;  :theme (keyword)(opt)
-  ;  :tooltip-content (metamorphic-content)(opt)
-  ;  :tooltip-position (keyword)(opt)
+  ;  :tooltip (map)(opt)
   ;  :width (keyword, px or string)(opt)}
   ;
   ; @usage
@@ -128,5 +130,5 @@
    (fn [_ button-props]
        (let [button-props (pretty-presets.engine/apply-preset           button-id button-props)
              button-props (button.prototypes/button-props-prototype     button-id button-props)
-             button-props (pretty-elements.engine/element-timeout-props button-id button-props :label)]
+             button-props (pretty-elements.engine/element-timeout-props button-id button-props)]
             [view-lifecycles button-id button-props]))))

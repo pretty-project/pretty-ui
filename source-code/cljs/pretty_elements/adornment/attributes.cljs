@@ -46,20 +46,19 @@
   ;  ...}
   [adornment-id adornment-props]
   (-> {:class :pe-adornment--body}
-      (pretty-attributes/anchor-attributes          adornment-props)
-      (pretty-attributes/background-attributes      adornment-props)
-      (pretty-attributes/border-attributes          adornment-props)
-      (pretty-attributes/clickable-state-attributes adornment-props)
-      (pretty-attributes/cursor-attributes          adornment-props)
-      (pretty-attributes/effect-attributes          adornment-props)
-      (pretty-attributes/flex-attributes            adornment-props)
-      (pretty-attributes/focus-attributes           adornment-props)
-      (pretty-attributes/half-block-size-attributes adornment-props)
-      (pretty-attributes/indent-attributes          adornment-props)
-      (pretty-attributes/mouse-event-attributes     adornment-props)
-      (pretty-attributes/progress-attributes        adornment-props)
-      (pretty-attributes/style-attributes           adornment-props)
-      (pretty-attributes/tooltip-attributes         adornment-props)))
+      (pretty-attributes/anchor-attributes           adornment-props)
+      (pretty-attributes/background-color-attributes adornment-props)
+      (pretty-attributes/border-attributes           adornment-props)
+      (pretty-attributes/clickable-state-attributes  adornment-props)
+      (pretty-attributes/cursor-attributes           adornment-props)
+      (pretty-attributes/effect-attributes           adornment-props)
+      (pretty-attributes/flex-attributes             adornment-props)
+      (pretty-attributes/focus-attributes            adornment-props)
+      (pretty-attributes/half-block-size-attributes  adornment-props)
+      (pretty-attributes/indent-attributes           adornment-props)
+      (pretty-attributes/mouse-event-attributes      adornment-props)
+      (pretty-attributes/progress-attributes         adornment-props)
+      (pretty-attributes/style-attributes            adornment-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

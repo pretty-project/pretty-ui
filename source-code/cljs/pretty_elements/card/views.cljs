@@ -5,7 +5,8 @@
               [pretty-elements.card.prototypes :as card.prototypes]
               [pretty-elements.engine.api      :as pretty-elements.engine]
               [pretty-presets.engine.api       :as pretty-presets.engine]
-              [reagent.api                     :as reagent]))
+              [reagent.api                     :as reagent]
+              [pretty-accessories.api :as pretty-accessories]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -15,12 +16,18 @@
   ;
   ; @param (keyword) card-id
   ; @param (map) card-props
-  ; {:content (metamorphic-content)(opt)}
-  [card-id {:keys [content] :as card-props}]
+  ; {:badge (map)(opt)
+  ;  :content (metamorphic-content)(opt)
+  ;  :cover (map)(opt)
+  ;  :marker (map)(opt)}
+  [card-id {:keys [badge content cover marker] :as card-props}]
   [:div (card.attributes/card-attributes card-id card-props)
         [(pretty-elements.engine/clickable-auto-tag card-id card-props)
          (card.attributes/card-body-attributes      card-id card-props)
-         (-> content)]])
+         (-> content)
+         (if badge  [pretty-accessories/badge  badge])
+         (if marker [pretty-accessories/marker marker])
+         (if cover  [pretty-accessories/cover  cover])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -44,9 +51,7 @@
   ;
   ; @param (keyword)(opt) card-id
   ; @param (map) card-props
-  ; {:badge-color (keyword or string)(opt)
-  ;  :badge-content (metamorphic-content)(opt)
-  ;  :badge-position (keyword)(opt)
+  ; {:badge (map)(opt)
   ;  :border-color (keyword or string)(opt)
   ;  :border-position (keyword)(opt)
   ;  :border-radius (map)(opt)
@@ -55,6 +60,7 @@
   ;  :class (keyword or keywords in vector)(opt)
   ;  :click-effect (keyword)(opt)
   ;  :content (metamorphic-content)(opt)
+  ;  :cover (map)(opt)
   ;  :cursor (keyword or string)(opt)
   ;  :disabled? (boolean)(opt)
   ;  :fill-color (keyword or string)(opt)
@@ -72,8 +78,7 @@
   ;  :indent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :keypress (map)(opt)
-  ;  :marker-color (keyword or string)(opt)
-  ;  :marker-position (keyword)(opt)
+  ;  :marker (map)(opt)
   ;  :max-height (keyword, px or string)(opt)
   ;  :max-width (keyword, px or string)(opt)
   ;  :min-height (keyword, px or string)(opt)
@@ -90,8 +95,7 @@
   ;  :style (map)(opt)
   ;  :tab-disabled? (boolean)(opt)
   ;  :theme (keyword)(opt)
-  ;  :tooltip-content (metamorphic-content)(opt)
-  ;  :tooltip-position (keyword)(opt)
+  ;  :tooltip (map)(opt)
   ;  :vertical-align (keyword)(opt)
   ;  :width (keyword, px or string)(opt)}
   ;
@@ -108,5 +112,5 @@
    (fn [_ card-props]
        (let [card-props (pretty-presets.engine/apply-preset           card-id card-props)
              card-props (card.prototypes/card-props-prototype         card-id card-props)
-             card-props (pretty-elements.engine/element-timeout-props card-id card-props :content)]
+             card-props (pretty-elements.engine/element-timeout-props card-id card-props)]
             [view-lifecycles card-id card-props]))))

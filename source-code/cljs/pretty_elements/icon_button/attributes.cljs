@@ -46,22 +46,19 @@
   ;  ...}
   [button-id button-props]
   (-> {:class :pe-icon-button--body}
-      (pretty-attributes/anchor-attributes          button-props)
-      (pretty-attributes/background-attributes      button-props)
-      (pretty-attributes/badge-attributes           button-props)
-      (pretty-attributes/border-attributes          button-props)
-      (pretty-attributes/clickable-state-attributes button-props)
-      (pretty-attributes/cursor-attributes          button-props)
-      (pretty-attributes/effect-attributes          button-props)
-      (pretty-attributes/indent-attributes          button-props)
-      (pretty-attributes/marker-attributes          button-props)
-      (pretty-attributes/focus-attributes           button-props)
-      (pretty-attributes/mouse-event-attributes     button-props)
-      (pretty-attributes/flex-attributes            button-props)
-      (pretty-attributes/full-block-size-attributes button-props)
-      (pretty-attributes/progress-attributes        button-props)
-      (pretty-attributes/style-attributes           button-props)
-      (pretty-attributes/tooltip-attributes         button-props)))
+      (pretty-attributes/anchor-attributes           button-props)
+      (pretty-attributes/background-color-attributes button-props)
+      (pretty-attributes/border-attributes           button-props)
+      (pretty-attributes/clickable-state-attributes  button-props)
+      (pretty-attributes/cursor-attributes           button-props)
+      (pretty-attributes/effect-attributes           button-props)
+      (pretty-attributes/indent-attributes           button-props)
+      (pretty-attributes/focus-attributes            button-props)
+      (pretty-attributes/mouse-event-attributes      button-props)
+      (pretty-attributes/flex-attributes             button-props)
+      (pretty-attributes/full-block-size-attributes  button-props)
+      (pretty-attributes/progress-attributes         button-props)
+      (pretty-attributes/style-attributes            button-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

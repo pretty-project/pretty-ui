@@ -125,8 +125,7 @@
   ;  :label (metamorphic-content)(opt)
   ;  :line-height (keyword, px or string)(opt)
   ;   Default: :text-block
-  ;  :marker-color (keyword or string)(opt)
-  ;  :marker-position (keyword)(opt)
+  ;  :marker (map)(opt)
   ;  :max-length (integer)(opt)
   ;  :modifier-f (function)(opt)
   ;  :on-blur-f (function)(opt)

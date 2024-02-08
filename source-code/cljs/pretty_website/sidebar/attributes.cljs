@@ -37,7 +37,7 @@
   [_ sidebar-props]
   (-> {:class            :pw-sidebar--body
        :data-scroll-axis :y}
-      (pretty-attributes/background-attributes  sidebar-props)
+      (pretty-attributes/background-color-attributes  sidebar-props)
       (pretty-attributes/border-attributes sidebar-props)
       (pretty-attributes/indent-attributes sidebar-props)
       (pretty-attributes/style-attributes  sidebar-props)))

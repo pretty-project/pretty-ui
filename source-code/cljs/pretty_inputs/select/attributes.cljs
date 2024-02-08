@@ -98,7 +98,7 @@
             :disabled      disabled?}
            (merge (if-not option-color-f {:data-hover-color :highlight}))
            (pretty-attributes/effect-attributes select-props)
-           (pretty-attributes/background-attributes       {:fill-color option-color})
+           (pretty-attributes/background-color-attributes       {:fill-color option-color})
            (pretty-attributes/mouse-event-attributes {:on-click-f on-click-f :on-mouse-up-f dom/blur-active-element!}))))
 
 ;; ----------------------------------------------------------------------------

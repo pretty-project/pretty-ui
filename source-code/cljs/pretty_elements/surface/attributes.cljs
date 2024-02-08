@@ -17,7 +17,7 @@
   [surface-id surface-props]
   (-> {:class :pe-surface--body}
       (pretty-attributes/animation-attributes         surface-props)
-      (pretty-attributes/background-attributes        surface-props)
+      (pretty-attributes/background-color-attributes  surface-props)
       (pretty-attributes/border-attributes            surface-props)
       (pretty-attributes/double-block-size-attributes surface-props)
       (pretty-attributes/indent-attributes            surface-props)
@@ -35,7 +35,6 @@
   [_ surface-props]
   (-> {:class :pe-surface}
       (pretty-attributes/class-attributes        surface-props)
-      (pretty-attributes/layer-attributes        surface-props)
       (pretty-attributes/outdent-attributes      surface-props)
       (pretty-attributes/position-attributes     surface-props)
       (pretty-attributes/state-attributes        surface-props)

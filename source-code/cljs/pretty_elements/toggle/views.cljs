@@ -6,7 +6,8 @@
               [pretty-elements.toggle.attributes :as toggle.attributes]
               [pretty-elements.toggle.prototypes :as toggle.prototypes]
               [pretty-presets.engine.api         :as pretty-presets.engine]
-              [reagent.api                       :as reagent]))
+              [reagent.api                       :as reagent]
+              [pretty-accessories.api :as pretty-accessories]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -55,7 +56,6 @@
   ;  :disabled? (boolean)(opt)
   ;  :fill-color (keyword or string)(opt)
   ;  :fill-pattern (keyword)(opt)
-  ;   Default: :cover
   ;  :height (keyword, px or string)(opt)
   ;  :highlighted? (boolean)(opt)
   ;  :highlight-color (keyword or string)(opt)
@@ -68,8 +68,7 @@
   ;  :indent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :keypress (map)(opt)
-  ;  :marker-color (keyword or string)(opt)
-  ;  :marker-position (keyword)(opt)
+  ;  :marker (map)(opt)
   ;  :on-click-f (function)(opt)
   ;  :on-click-timeout (ms)(opt)
   ;  :on-mount-f (function)(opt)
@@ -84,6 +83,7 @@
   ;  :width (keyword, px or string)(opt)}
   ;
   ; + keypress?
+  ; badge, marker, cover, tooltip
   ;
   ; @usage
   ; [toggle {...}]
@@ -98,5 +98,5 @@
    (fn [_ toggle-props]
        (let [toggle-props (pretty-presets.engine/apply-preset           toggle-id toggle-props)
              toggle-props (toggle.prototypes/toggle-props-prototype     toggle-id toggle-props)
-             toggle-props (pretty-elements.engine/element-timeout-props toggle-id toggle-props :content)]
+             toggle-props (pretty-elements.engine/element-timeout-props toggle-id toggle-props)]
             [view-lifecycles toggle-id toggle-props]))))

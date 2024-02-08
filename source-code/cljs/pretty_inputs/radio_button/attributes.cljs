@@ -91,7 +91,7 @@
   [button-id button-props option-dex option]
   (let [option-color (pretty-inputs.engine/get-input-option-color button-id button-props option-dex option)]
        (-> {:class :pi-radio-button--option-button}
-           (pretty-attributes/background-attributes {:fill-color option-color})
+           (pretty-attributes/background-color-attributes {:fill-color option-color})
            (pretty-attributes/border-attributes button-props))))
 
 (defn radio-button-option-attributes

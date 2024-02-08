@@ -26,7 +26,7 @@
   ;
   ; @return (map)
   [_ {:keys [surface]}]
-  (-> surface (pretty-properties/default-position-props {:positioning :absolute :layer :uppermost})
+  (-> surface (pretty-properties/default-position-props {:layer :uppermost :position-method :absolute})
               (pretty-properties/default-size-props     {:width :parent})
               (pretty-properties/default-state-props    {:mounted? false})))
 

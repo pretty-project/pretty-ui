@@ -28,10 +28,16 @@
   ; {}
   [_ popup-props]
   (-> {:class :pl-box-popup--structure}
-      (pretty-attributes/background-attributes  popup-props)
+      (pretty-attributes/background-color-attributes  popup-props)
       (pretty-attributes/border-attributes popup-props)
       (pretty-attributes/indent-attributes popup-props)
       (pretty-attributes/style-attributes  popup-props)))
+
+      ; a popup-ok cover-je
+      ; lehetne a cover-attributes-al
+      ; és akkor lehetne covered? cover-color (:light, :dark) prop-al szabályozni a covereket
+      ; és amugy lehetne pluszba cover-content ami a cover közepén egy kisméretű szöveg (dark-cover nél világos betüszin & vica-versa)
+      ; és akkor ez a cover mehetne az on-click-timeout gombokra, mert a visszaszámláló 'rángatja a szöveget'
 
 (defn popup-wrapper-attributes
   ; @ignore

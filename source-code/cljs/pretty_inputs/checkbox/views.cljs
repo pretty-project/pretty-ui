@@ -97,7 +97,7 @@
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :initial-value (*)(opt)
   ;  :label (metamorphic-content)(opt)
-  ;  :marker-color (keyword or string)(opt)
+  ;  :marker (map)(opt)
   ;  :max-selection (integer)(opt)
   ;  :on-changed-f (function)(opt)
   ;  :on-empty-f (function)(opt)
