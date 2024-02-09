@@ -1,5 +1,5 @@
 
-{:paths ["plugins/cljs" "resources" "source-code/cljs"]
+{:paths ["resources" "source-code/cljs"]
  :deps  {bithandshake/cljc-fruits                {:git/url "https://github.com/bithandshake/cljc-fruits"
                                                   :sha     "7ba2b1c7fc855bb8910a57cc85db950de68c1d1e"}
          bithandshake/cljc-time                  {:git/url "https://github.com/bithandshake/cljc-time"
@@ -37,3 +37,5 @@
 ; + countdown-timer
 ; + transition-controller
 ; + dynamic-props
+; + react-references
+; + lazy-loader

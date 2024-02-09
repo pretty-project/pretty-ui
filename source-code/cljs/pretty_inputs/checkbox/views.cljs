@@ -39,13 +39,13 @@
   ;
   ; @param (keyword) checkbox-id
   ; @param (map) checkbox-props
-  ; {:placeholder (metamorphic-content)(opt)}
-  [checkbox-id {:keys [placeholder] :as checkbox-props}]
+  ; {:options-placeholder (metamorphic-content)(opt)}
+  [checkbox-id {:keys [options-placeholder] :as checkbox-props}]
   (letfn [(f0 [option-dex option] [checkbox-option checkbox-id checkbox-props option-dex option])]
          (let [options (pretty-inputs.engine/get-input-options checkbox-id checkbox-props)]
               (cond (-> options vector/not-empty?) (hiccup/put-with-indexed [:<>] options f0)
-                    (-> placeholder) [:div (checkbox.attributes/checkbox-placeholder-attributes checkbox-id checkbox-props)
-                                           (metamorphic-content/compose placeholder)]))))
+                    (-> options-placeholder) [:div (checkbox.attributes/checkbox-options-placeholder-attributes checkbox-id checkbox-props)
+                                                   (metamorphic-content/compose options-placeholder)]))))
 
 (defn- checkbox
   ; @ignore

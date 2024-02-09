@@ -441,7 +441,7 @@
 ; @title :progress
 ;
 ; @code Usage
-; [pretty-elements/button {:progress (percent)}]
+; [pretty-elements/button {:progress (percentage)}]
 ; [pretty-elements/button {:progress 42}]
 ;
 ;

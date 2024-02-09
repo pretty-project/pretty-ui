@@ -28,9 +28,9 @@
                                          (if icon  [:i   (button.attributes/button-icon-attributes  button-id button-props) icon])]
                                     [:<> (if icon  [:i   (button.attributes/button-icon-attributes  button-id button-props) icon])
                                          (if label [:div (button.attributes/button-label-attributes button-id button-props) label])])
-         (if badge  [pretty-accessories/badge  badge])
-         (if marker [pretty-accessories/marker marker])
-         (if cover  [pretty-accessories/cover  cover])]])
+         (if badge  [pretty-accessories/badge  button-id badge])
+         (if marker [pretty-accessories/marker button-id marker])
+         (if cover  [pretty-accessories/cover  button-id cover])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -89,6 +89,7 @@
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :keypress (map)(opt)
   ;  :label (metamorphic-content)(opt)
+  ;  :label-placeholder (metamorphic-content)(opt)
   ;  :letter-spacing (keyword, px or string)(opt)
   ;  :line-height (keyword, px or string)(opt)
   ;  :marker (map)(opt)
@@ -102,9 +103,8 @@
   ;  :on-unmount-f (function)(opt)
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :placeholder (metamorphic-content)(opt)
   ;  :preset (keyword)(opt)
-  ;  :progress (percent)(opt)
+  ;  :progress (percentage)(opt)
   ;  :progress-color (keyword or string)(opt)
   ;  :progress-direction (keyword)(opt)
   ;  :progress-duration (ms)(opt)

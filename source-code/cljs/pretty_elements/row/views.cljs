@@ -17,11 +17,11 @@
   ; @param (keyword) row-id
   ; @param (map) row-props
   ; {:content (metamorphic-content)(opt)
-  ;  :placeholder (metamorphic-content)(opt)}
-  [row-id {:keys [content placeholder] :as row-props}]
+  ;  :content-placeholder (metamorphic-content)(opt)}
+  [row-id {:keys [content content-placeholder] :as row-props}]
   [:div (row.attributes/row-attributes row-id row-props)
         [:div (row.attributes/row-body-attributes row-id row-props)
-              [metamorphic-content/compose content placeholder]]])
+              [metamorphic-content/compose content content-placeholder]]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -47,6 +47,7 @@
   ;  :border-width (keyword, px or string)(opt)
   ;  :class (keyword or keywords in vector)(opt)
   ;  :content (metamorphic-content)(opt)
+  ;  :content-placeholder (metamorphic-content)(opt)
   ;  :disabled? (boolean)(opt)
   ;  :fill-color (keyword or string)(opt)
   ;  :fill-pattern (keyword)(opt)
@@ -66,7 +67,6 @@
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :overflow (keyword)(opt)
-  ;  :placeholder (metamorphic-content)(opt)
   ;  :preset (keyword)(opt)
   ;  :style (map)(opt)
   ;  :theme (keyword)(opt)

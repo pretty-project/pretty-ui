@@ -40,6 +40,7 @@
   ; @param (map) cell-props
   ; {:class (keyword or keywords in vector)(opt)
   ;  :content (metamorphic-content)(opt)
+  ;  :content-placeholder (metamorphic-content)(opt)
   ;  :disabled? (boolean)(opt)
   ;  :fill-color (keyword or string)(opt)
   ;  :fill-pattern (keyword)(opt)
@@ -57,7 +58,6 @@
   ;  :on-unmount-f (function)(opt)
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :placeholder (metamorphic-content)(opt)
   ;  :preset (keyword)(opt)
   ;  :style (map)(opt)
   ;  :text-align (keyword)(opt)

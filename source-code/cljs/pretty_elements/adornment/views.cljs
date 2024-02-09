@@ -25,7 +25,7 @@
          (adornment.attributes/adornment-body-attributes adornment-id adornment-props)
          (cond label [:div (adornment.attributes/adornment-label-attributes adornment-id adornment-props) label]
                icon  [:i   (adornment.attributes/adornment-icon-attributes  adornment-id adornment-props) icon])
-         (when cover [:<>  [pretty-accessories/cover cover]])]])
+         (when cover [:<>  [pretty-accessories/cover adornment-id cover]])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -78,6 +78,7 @@
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :keypress (map)(opt)
   ;  :label (metamorphic-content)(opt)
+  ;  :label-placeholder (metamorphic-content)(opt)
   ;  :max-height (keyword, px or string)(opt)
   ;  :max-width (keyword, px or string)(opt)
   ;  :min-height (keyword, px or string)(opt)
@@ -88,9 +89,8 @@
   ;  :on-unmount-f (function)(opt)
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :placeholder (metamorphic-content)(opt)
   ;  :preset (keyword)(opt)
-  ;  :progress (percent)(opt)
+  ;  :progress (percentage)(opt)
   ;  :progress-color (keyword or string)(opt)
   ;  :progress-direction (keyword)(opt)
   ;  :progress-duration (ms)(opt)

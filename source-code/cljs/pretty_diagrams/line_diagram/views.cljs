@@ -76,7 +76,7 @@
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :preset (keyword)(opt)
-  ;  :strength (percent)(opt)
+  ;  :strength (percentage)(opt)
   ;  :style (map)(opt)
   ;  :theme (keyword)(opt)
   ;  :width (keyword, px or string)(opt)}

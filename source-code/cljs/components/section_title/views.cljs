@@ -12,11 +12,11 @@
   ; @param (keyword) title-id
   ; @param (map) title-props
   ; {:content (metamorphic-content)(opt)
-  ;  :placeholder (metamorphic-content)(opt)}
-  [title-id {:keys [content placeholder] :as title-props}]
+  ;  :content-placeholder (metamorphic-content)(opt)}
+  [title-id {:keys [content content-placeholder] :as title-props}]
   ; The sensor and title must be placed in a common element.
   ; Otherwise, in some cases the sensor would be in a wrong position!
-  [:div.c-section-title [auto-title/sensor {:placeholder placeholder :title content :offset -12}]
+  [:div.c-section-title [auto-title/sensor {:title-placeholder content-placeholder :title content :offset -12}]
                         [pretty-elements/label title-id title-props]])
 
 (defn view

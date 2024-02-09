@@ -5,6 +5,20 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn thumbnail-canvas-attributes
+  ; @ignore
+  ;
+  ; @param (keyword) thumbnail-id
+  ; @param (map) thumbnail-props
+  ;
+  ; @return (map)
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
+  [_ thumbnail-props]
+  (-> {:class :pe-thumbnail--canvas}
+      (pretty-attributes/background-image-attributes thumbnail-props)
+      (pretty-attributes/canvas-attributes           thumbnail-props)))
+
 (defn thumbnail-icon-attributes
   ; @ignore
   ;
@@ -16,20 +30,9 @@
   ;  ...}
   [_ thumbnail-props]
   (-> {:class :pe-thumbnail--icon}
-      (pretty-attributes/icon-attributes thumbnail-props)))
-
-(defn thumbnail-image-attributes
-  ; @ignore
-  ;
-  ; @param (keyword) thumbnail-id
-  ; @param (map) thumbnail-props
-  ;
-  ; @return (map)
-  ; {:class (keyword or keywords in vector)
-  ;  ...}
-  [_ thumbnail-props]
-  (-> {:class :pe-thumbnail--image}
-      (pretty-attributes/background-image-attributes thumbnail-props)))
+      (pretty-attributes/animation-attributes thumbnail-props)
+      (pretty-attributes/canvas-attributes    thumbnail-props)
+      (pretty-attributes/icon-attributes      thumbnail-props)))
 
 (defn thumbnail-label-attributes
   ; @ignore
@@ -68,9 +71,9 @@
       (pretty-attributes/flex-attributes             thumbnail-props)
       (pretty-attributes/full-block-size-attributes  thumbnail-props)
       (pretty-attributes/effect-attributes           thumbnail-props)
-      (pretty-attributes/focus-attributes            thumbnail-props)
-      (pretty-attributes/mouse-event-attributes      thumbnail-props)
       (pretty-attributes/indent-attributes           thumbnail-props)
+      (pretty-attributes/mouse-event-attributes      thumbnail-props)
+      (pretty-attributes/react-attributes            thumbnail-props)
       (pretty-attributes/style-attributes            thumbnail-props)))
 
 ;; ----------------------------------------------------------------------------
@@ -87,8 +90,8 @@
   ;  ...}
   [_ thumbnail-props]
   (-> {:class :pe-thumbnail}
-      (pretty-attributes/class-attributes       thumbnail-props)
+      (pretty-attributes/class-attributes        thumbnail-props)
       (pretty-attributes/outdent-attributes      thumbnail-props)
-      (pretty-attributes/state-attributes       thumbnail-props)
+      (pretty-attributes/state-attributes        thumbnail-props)
       (pretty-attributes/theme-attributes        thumbnail-props)
       (pretty-attributes/wrapper-size-attributes thumbnail-props)))

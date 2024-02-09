@@ -183,31 +183,6 @@
 
 
 
-/***** Thumbnail *****/
-/*** Icon ***/
-
-.pe-thumbnail--icon {
-  height:   100%;
-  left:     0;
-  position: absolute;
-  top:      0;
-  width:    100%;
-}
-
-/*** Icon ***/
-
-/*** Image ***/
-
-.pe-thumbnail--image {
-  flex-grow: 1;
-  width:     100%;
-}
-
-/*** Image ***/
-/***** Thumbnail *****/
-
-
-
 /***** Toggle *****/
 /*** Body ***/
 

@@ -54,10 +54,10 @@
       (pretty-attributes/flex-attributes             button-props)
       (pretty-attributes/full-block-size-attributes  button-props)
       (pretty-attributes/effect-attributes           button-props)
-      (pretty-attributes/focus-attributes            button-props)
       (pretty-attributes/mouse-event-attributes      button-props)
       (pretty-attributes/indent-attributes           button-props)
       (pretty-attributes/progress-attributes         button-props)
+      (pretty-attributes/react-attributes            button-props)
       (pretty-attributes/style-attributes            button-props)))
 
 ;; ----------------------------------------------------------------------------

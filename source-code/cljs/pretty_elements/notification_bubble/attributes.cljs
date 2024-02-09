@@ -44,7 +44,7 @@
       (pretty-attributes/cursor-attributes       bubble-props)
       (pretty-attributes/clickable-state-attributes          bubble-props)
       (pretty-attributes/effect-attributes           bubble-props)
-      (pretty-attributes/focus-attributes         bubble-props)
+      (pretty-attributes/react-attributes         bubble-props)
       (pretty-attributes/style-attributes        bubble-props)))
 
 ;; ----------------------------------------------------------------------------

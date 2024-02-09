@@ -25,9 +25,9 @@
         [(pretty-elements.engine/clickable-auto-tag card-id card-props)
          (card.attributes/card-body-attributes      card-id card-props)
          (-> content)
-         (if badge  [pretty-accessories/badge  badge])
-         (if marker [pretty-accessories/marker marker])
-         (if cover  [pretty-accessories/cover  cover])]])
+         (if badge  [pretty-accessories/badge  card-id badge])
+         (if marker [pretty-accessories/marker card-id marker])
+         (if cover  [pretty-accessories/cover  card-id cover])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -60,6 +60,7 @@
   ;  :class (keyword or keywords in vector)(opt)
   ;  :click-effect (keyword)(opt)
   ;  :content (metamorphic-content)(opt)
+  ;  :content-placeholder (metamorphic-content)(opt)
   ;  :cover (map)(opt)
   ;  :cursor (keyword or string)(opt)
   ;  :disabled? (boolean)(opt)
@@ -90,7 +91,6 @@
   ;  :orientation (keyword)(opt)
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :placeholder (metamorphic-content)(opt)
   ;  :preset (keyword)(opt)
   ;  :style (map)(opt)
   ;  :tab-disabled? (boolean)(opt)

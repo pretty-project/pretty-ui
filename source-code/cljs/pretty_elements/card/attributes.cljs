@@ -22,11 +22,11 @@
       (pretty-attributes/clickable-state-attributes   card-props)
       (pretty-attributes/cursor-attributes            card-props)
       (pretty-attributes/double-block-size-attributes card-props)
-      (pretty-attributes/focus-attributes             card-props)
       (pretty-attributes/effect-attributes            card-props)
-      (pretty-attributes/mouse-event-attributes       card-props)
       (pretty-attributes/flex-attributes              card-props)
       (pretty-attributes/indent-attributes            card-props)
+      (pretty-attributes/mouse-event-attributes       card-props)
+      (pretty-attributes/react-attributes             card-props)
       (pretty-attributes/style-attributes             card-props)))
 
 ;; ----------------------------------------------------------------------------

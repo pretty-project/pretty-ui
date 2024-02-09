@@ -35,10 +35,10 @@
   ;   [{:color (keyword or string)(opt)
   ;      Default: :default
   ;     :content (metamorphic-content)
+  ;     :content-placeholder (metamorphic-content)(opt)
   ;     :font-size (keyword, px or string)(opt)
   ;       Default: :s
-  ;     :font-weight (keyword or integer)(opt)
-  ;     :placeholder (metamorphic-content)(opt)}]}
+  ;     :font-weight (keyword or integer)(opt)}]}
   ;
   ; @usage
   ; [list-item-cell {...}]

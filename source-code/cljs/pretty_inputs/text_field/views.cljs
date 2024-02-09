@@ -25,7 +25,7 @@
   (let [end-adornments (text-field.prototypes/end-adornments-prototype field-id field-props)]
        (if (vector/not-empty? end-adornments)
            [:div (text-field.attributes/field-adornments-attributes field-id field-props)
-                 [pretty-elements/adornment-group {:adornments end-adornments}]]
+                 [pretty-elements/adornment-group field-id {:adornments end-adornments}]]
            [:div (text-field.attributes/field-adornments-placeholder-attributes field-id field-props)])))
 
 (defn field-start-adornments
@@ -38,7 +38,7 @@
   (let [start-adornments (text-field.prototypes/start-adornments-prototype field-id field-props)]
        (if (vector/not-empty? start-adornments)
            [:div (text-field.attributes/field-adornments-attributes field-id field-props)
-                 [pretty-elements/adornment-group {:adornments start-adornments}]]
+                 [pretty-elements/adornment-group field-id {:adornments start-adornments}]]
            [:div (text-field.attributes/field-adornments-placeholder-attributes field-id field-props)])))
 
 ;; ----------------------------------------------------------------------------

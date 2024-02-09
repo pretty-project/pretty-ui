@@ -15,16 +15,16 @@
   ; {:color (keyword or string)(opt)
   ;   Default: :default
   ;  :label (metamorphic-content)(opt)
+  ;  :label-placeholder (metamorphic-content)(opt)}
   ;  :on-click (function or Re-Frame metamorphic-event)(opt)
-  ;  :placeholder (metamorphic-content)(opt)}
-  [_ _ {:keys [color label on-click placeholder]}]
-  [pretty-elements/button {:color            (or color :default)
-                           :horizontal-align :left
-                           :hover-color      :highlight
-                           :indent           {:vertical :xs}
-                           :label            label
-                           :on-click         {:dispatch-n [[:x.ui/remove-popup! :components.context-menu/view] on-click]}
-                           :placeholder      placeholder}])
+  [_ _ {:keys [color label label-placeholder on-click]}]
+  [pretty-elements/button {:color             (or color :default)
+                           :horizontal-align  :left
+                           :hover-color       :highlight
+                           :indent            {:vertical :xs}
+                           :label             label
+                           :label-placeholder label-placeholder
+                           :on-click          {:dispatch-n [[:x.ui/remove-popup! :components.context-menu/view] on-click]}}])
 
 (defn- context-menu-body
   ; @param (keyword) menu-id
@@ -52,14 +52,14 @@
   ; @param (keyword) menu-id
   ; @param (map) menu-props
   ; {:label (metamorphic-content)(opt)
-  ;  :placeholder (metamorphic-content)(opt)}
-  [_ {:keys [label placeholder]}]
+  ;  :label-placeholder (metamorphic-content)(opt)}
+  [_ {:keys [label label-placeholder]}]
   [pretty-elements/label ::header-label
-                         {:color       :muted
-                          :content     label
-                          :font-size   :xs
-                          :indent      {:horizontal :xs :left :s}
-                          :placeholder placeholder}])
+                         {:color               :muted
+                          :content             label
+                          :content-placeholder label-placeholder
+                          :font-size           :xs
+                          :indent              {:horizontal :xs :left :s}}])
 
 (defn- context-menu-header
   ; @param (keyword) menu-id
@@ -86,13 +86,13 @@
   ; @param (keyword)(opt) menu-id
   ; @param (map) menu-props
   ; {:label (metamorphic-content)(opt)
+  ;  :label-placeholder (metamorphic-content)(opt)
   ;  :menu-items (maps in vector)
   ;   [{:color (keyword or string)(opt)
   ;      Default: :default
   ;     :label (metamorphic-content)(opt)
-  ;     :on-click (function or Re-Frame metamorphic-event)(opt)
-  ;     :placeholder (metamorphic-content)(opt)}]
-  ;  :placeholder (metamorphic-content)(opt)}
+  ;     :label-placeholder (metamorphic-content)(opt)
+  ;     :on-click (function or Re-Frame metamorphic-event)(opt)}]}
   ;
   ; @usage
   ; [context-menu {...}]

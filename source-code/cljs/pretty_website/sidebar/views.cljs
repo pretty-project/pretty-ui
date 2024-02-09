@@ -8,7 +8,7 @@
               [pretty-website.sidebar.attributes :as sidebar.attributes]
               [pretty-website.sidebar.prototypes :as sidebar.prototypes]
               [pretty-website.sidebar.state      :as sidebar.state]
-              [react.api                         :as react]
+              ;[react.api                         :as react]
               [reagent.api                       :as reagent]))
 
 ;; ----------------------------------------------------------------------------
@@ -22,13 +22,15 @@
   ; {:content (metamorphic-content)(opt)
   ;  :placeholder (metamorphic-content)(opt)}
   [sidebar-id {:keys [content placeholder] :as sidebar-props}]
-  [:<> [pretty-elements/icon-button (sidebar.prototypes/menu-button-props-prototype sidebar-id sidebar-props)]
-       [react/mount-animation {:mounted? (= sidebar-id @sidebar.state/VISIBLE-SIDEBAR)}
-                              [:div (sidebar.attributes/sidebar-attributes sidebar-id sidebar-props)
-                                    [:div (sidebar.attributes/sidebar-cover-attributes sidebar-id sidebar-props)]
-                                    [:div (sidebar.attributes/sidebar-body-attributes sidebar-id sidebar-props)
-                                          [:div {:class :pw-sidebar--content}
-                                                [metamorphic-content/compose content placeholder]]]]]])
+  [:<> [pretty-elements/icon-button (sidebar.prototypes/menu-button-props-prototype sidebar-id sidebar-props)]])
+
+       ; surface element replaces deprecated mount-animation component
+       ;[react/mount-animation {:mounted? (= sidebar-id @sidebar.state/VISIBLE-SIDEBAR)}
+        ;                      [:div (sidebar.attributes/sidebar-attributes sidebar-id sidebar-props)
+        ;                            [:div (sidebar.attributes/sidebar-cover-attributes sidebar-id sidebar-props)]
+        ;                            [:div (sidebar.attributes/sidebar-body-attributes sidebar-id sidebar-props)
+        ;                                  [:div {:class :pw-sidebar--content}
+        ;                                        [metamorphic-content/compose content placeholder])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

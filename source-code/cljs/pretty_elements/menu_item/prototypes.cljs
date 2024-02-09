@@ -20,7 +20,6 @@
                       (pretty-properties/default-anchor-props      {})
                       (pretty-properties/default-border-props      {})
                       (pretty-properties/default-effect-props      {})
-                      (pretty-properties/default-focus-props       {:focus-id item-id})
                       (pretty-properties/default-font-props        {:font-size :s :font-weight :medium})
                       (pretty-properties/default-icon-props        {})
                       (pretty-properties/default-label-props       {})

@@ -1,6 +1,7 @@
 
 (ns pretty-elements.toggle.prototypes
-    (:require [dom.api :as dom]))
+    (:require [dom.api :as dom]
+              [react-references.api :as react-references]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -22,6 +23,7 @@
   ;  :focus-id (keyword)
   ;  :marker-position (keyword)}
   [toggle-id {:keys [border-color href marker-color on-click-f] :as toggle-props}]
+  (let [set-reference-f (react-references/set-reference-f toggle-id)])
   (merge {:focus-id toggle-id}
          (if marker-color {:marker-position :tr})
          (if border-color {:border-position :all

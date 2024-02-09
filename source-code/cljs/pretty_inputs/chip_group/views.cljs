@@ -31,13 +31,13 @@
   ;
   ; @param (keyword) group-id
   ; @param (map) group-props
-  ; {:placeholder (metamorphic-content)(opt)}
-  [group-id {:keys [placeholder] :as group-props}]
+  ; {:chips-placeholder (metamorphic-content)(opt)}
+  [group-id {:keys [chips-placeholder] :as group-props}]
   (letfn [(f0 [chip-dex chip-value] [chip-group-chip group-id group-props chip-dex chip-value])]
          (let [chips (pretty-inputs.engine/get-input-displayed-value group-id group-props)]
               (cond (-> chips vector/not-empty?) (hiccup/put-with-indexed [:<>] chips f0)
-                    (-> placeholder) [:div (chip-group.attributes/chip-group-placeholder-attributes group-id group-props)
-                                           (metamorphic-content/compose placeholder)]))))
+                    (-> chips-placeholder) [:div (chip-group.attributes/chip-group-chips-placeholder-attributes group-id group-props)
+                                                 (metamorphic-content/compose chips-placeholder)]))))
 
 (defn- chip-group
   ; @ignore
@@ -70,8 +70,9 @@
   ; @param (map) group-props
   ; {:class (keyword or keywords in vector)(opt)
   ;  :chip-default (map)(opt)
-  ;  :chips-deletable? (boolean)(opt)
   ;  :chip-label-f (function)(opt)
+  ;  :chips-deletable? (boolean)(opt)
+  ;  :chips-placeholder (metamorphic-content)(opt)
   ;  :disabled? (boolean)(opt)
   ;  :get-value-f (function)(opt)
   ;  :helper (metamorphic-content)(opt)
@@ -87,7 +88,6 @@
   ;  :on-unselected-f (function)(opt)
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :placeholder (metamorphic-content)(opt)
   ;  :preset (keyword)(opt)
   ;  :projected-value (vector)(opt)
   ;  :set-value-f (function)(opt)

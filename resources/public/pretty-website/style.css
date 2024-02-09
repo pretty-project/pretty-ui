@@ -172,6 +172,7 @@
 /***** Scroll-sensor *****/
 
 .pw-scroll-sensor {
+  /* Ezt most már az intersection-observer/sensor komponens tudja helyettesíteni! */
   height: 1px;
   width:  100%;
 }

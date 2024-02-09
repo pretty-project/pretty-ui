@@ -18,16 +18,16 @@
   ; @param (keyword) text-id
   ; @param (map) text-props
   ; {:content (metamorphic-content)(opt)
-  ;  :on-copy-f (function)(opt)
-  ;  :placeholder (metamorphic-content)(opt)}
-  [text-id {:keys [content on-copy-f placeholder] :as text-props}]
+  ;  :content-placeholder (metamorphic-content)(opt)
+  ;  :on-copy-f (function)(opt)}
+  [text-id {:keys [content content-placeholder on-copy-f] :as text-props}]
   [:div (text.attributes/text-attributes text-id text-props)
         [:div (text.attributes/text-body-attributes text-id text-props)
               (if on-copy-f [:div (text.attributes/copyable-attributes text-id text-props)
                                   [:div (text.attributes/content-attributes text-id text-props)
-                                        (hiccup/parse-newlines [:<> (metamorphic-content/compose content placeholder)])]]
+                                        (hiccup/parse-newlines [:<> (metamorphic-content/compose content content-placeholder)])]]
                             [:<>  [:div (text.attributes/content-attributes text-id text-props)
-                                        (hiccup/parse-newlines [:<> (metamorphic-content/compose content placeholder)])]])]])
+                                        (hiccup/parse-newlines [:<> (metamorphic-content/compose content content-placeholder)])]])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -53,6 +53,7 @@
   ;  :border-width (keyword, px or string)(opt)
   ;  :class (keyword or keywords in vector)(opt)
   ;  :content (metamorphic-content)(opt)
+  ;  :content-placeholder (metamorphic-content)(opt)
   ;  :disabled? (boolean)(opt)
   ;  :fill-color (keyword or string)(opt)
   ;  :fill-pattern (keyword)(opt)
@@ -77,8 +78,6 @@
   ;  :on-unmount-f (function)(opt)
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :placeholder (metamorphic-content)(opt)
-  ;   Default: "\u00A0"
   ;  :preset (keyword)(opt)
   ;  :style (map)(opt)
   ;  :text-align (keyword)(opt)

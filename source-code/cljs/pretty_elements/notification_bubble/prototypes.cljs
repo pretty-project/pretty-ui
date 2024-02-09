@@ -1,6 +1,7 @@
 
-(ns pretty-elements.notification-bubble.prototypes)
-
+(ns pretty-elements.notification-bubble.prototypes
+    (:require [react-references.api :as react-references]))
+    
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -13,7 +14,8 @@
   ;
   ; @return (map)
   ; {}
-  [_ {:keys [border-color] :as bubble-props}]
+  [bubble-id {:keys [border-color] :as bubble-props}]
+  (let [set-reference-f (react-references/set-reference-f bubble-id)])
   (merge {:font-size   :s
           :font-weight :medium
           :text-color  :default}

@@ -143,7 +143,7 @@
            (pretty-attributes/input-field-attributes        field-props)
            (pretty-attributes/effect-attributes       field-props)
            (pretty-attributes/full-block-size-attributes field-props)
-           (pretty-attributes/focus-attributes        field-props))))
+           (pretty-attributes/react-attributes        field-props))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

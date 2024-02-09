@@ -7,7 +7,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn checkbox-placeholder-attributes
+(defn checkbox-options-placeholder-attributes
   ; @ignore
   ;
   ; @param (keyword) checkbox-id
@@ -16,7 +16,7 @@
   ; @return (map)
   ; {}
   [_ _]
-  {:class               :pi-checkbox--placeholder
+  {:class               :pi-checkbox--options-placeholder
    :data-font-size      :s
    :data-letter-spacing :auto
    :data-line-height    :text-block

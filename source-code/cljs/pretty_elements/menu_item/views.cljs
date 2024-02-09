@@ -30,9 +30,9 @@
                                          (if icon  [:i   (menu-item.attributes/menu-item-icon-attributes  item-id item-props) icon])]
                                     [:<> (if icon  [:i   (menu-item.attributes/menu-item-icon-attributes  item-id item-props) icon])
                                          (if label [:div (menu-item.attributes/menu-item-label-attributes item-id item-props) label])])
-         (if badge  [pretty-accessories/badge  badge])
-         (if marker [pretty-accessories/marker marker])
-         (if cover  [pretty-accessories/cover  cover])]])
+         (if badge  [pretty-accessories/badge  item-id badge])
+         (if marker [pretty-accessories/marker item-id marker])
+         (if cover  [pretty-accessories/cover  item-id cover])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -90,6 +90,7 @@
   ;  :indent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :label (metamorphic-content)(opt)
+  ;  :label-placeholder (metamorphic-content)(opt)
   ;  :letter-spacing (keyword, px or string)(opt)
   ;  :line-height (keyword, px or string)(opt)
   ;  :marker (map)(opt)
@@ -101,7 +102,6 @@
   ;  :on-click-f (function)(opt)
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :placeholder (metamorphic-content)(opt)
   ;  :preset (keyword)(opt)
   ;  :style (map)(opt)
   ;  :tab-disabled? (boolean)(opt)

@@ -18,11 +18,11 @@
   ; @param (keyword) toggle-id
   ; @param (map) toggle-props
   ; {}
-  [toggle-id {:keys [content placeholder] :as toggle-props}]
+  [toggle-id {:keys [content content-placeholder] :as toggle-props}]
   [:div (toggle.attributes/toggle-attributes toggle-id toggle-props)
         [(pretty-elements.engine/clickable-auto-tag toggle-id toggle-props)
          (toggle.attributes/toggle-body-attributes  toggle-id toggle-props)
-         [metamorphic-content/compose content placeholder]]])
+         [metamorphic-content/compose content content-placeholder]]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -50,6 +50,7 @@
   ;  :border-width (keyword, px or string)(opt)
   ;  :class (keyword or keywords in vector)(opt)
   ;  :content (metamorphic-content)(opt)
+  ;  :content-placeholder (metamorphic-content)(opt)
   ;  :click-effect (keyword)(opt)
   ;  :cursor (keyword or string)(opt)
   ;   Default: :pointer
@@ -75,7 +76,6 @@
   ;  :on-unmount-f (function)(opt)
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :placeholder (metamorphic-content)(opt)
   ;  :preset (keyword)(opt)
   ;  :style (map)(opt)
   ;  :tab-disabled? (boolean)(opt)

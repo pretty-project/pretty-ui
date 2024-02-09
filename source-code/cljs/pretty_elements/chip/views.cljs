@@ -25,10 +25,10 @@
   [:div (chip.attributes/chip-attributes chip-id chip-props)
         [(pretty-elements.engine/clickable-auto-tag chip-id chip-props)
          (chip.attributes/chip-body-attributes      chip-id chip-props)
-         (when start-adornments [adornment-group.views/view {:adornments start-adornments}])
+         (when start-adornments [adornment-group.views/view chip-id {:adornments start-adornments}])
          (when :always          [:div (chip.attributes/chip-label-attributes chip-id chip-props) label])
-         (when end-adornments   [adornment-group.views/view {:adornments end-adornments}])
-         (when cover            [pretty-accessories/cover cover])]])
+         (when end-adornments   [adornment-group.views/view chip-id {:adornments end-adornments}])
+         (when cover            [pretty-accessories/cover   chip-id cover])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -78,6 +78,7 @@
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :keypress (map)(opt)
   ;  :label (metamorphic-content)(opt)
+  ;  :label-placeholder (metamorphic-content)(opt)
   ;  :max-height (keyword, px or string)(opt)
   ;  :max-width (keyword, px or string)(opt)
   ;  :min-height (keyword, px or string)(opt)
@@ -88,7 +89,6 @@
   ;  :on-unmount-f (function)(opt)
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :placeholder (metamorphic-content)(opt)
   ;  :preset (keyword)(opt)
   ;  :start-adornment-default (map)(opt)
   ;  :start-adornments (maps in vector)(opt)

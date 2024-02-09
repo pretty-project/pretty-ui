@@ -10,11 +10,11 @@
   ; @param (keyword)(opt) menu-id
   ; @param (map) menu-props
   ; {:label (metamorphic-content)(opt)
+  ;  :label-placeholder (metamorphic-content)(opt)
   ;  :menu-items (maps in vector)
   ;   [{:label (metamorphic-content)
-  ;     :on-click (function or Re-Frame metamorphic-event)(opt)
-  ;     :placeholder (metamorphic-content)(opt)}]
-  ;  :placeholder (metamorphic-content)(opt)}
+  ;     :label-placeholder (metamorphic-content)(opt)
+  ;     :on-click (function or Re-Frame metamorphic-event)(opt)}]}
   ;
   ; @usage
   ; [:components.context-menu/render-menu! {...}]

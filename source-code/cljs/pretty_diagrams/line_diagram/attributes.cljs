@@ -13,7 +13,7 @@
   ;
   ; @param (keyword) diagram-id
   ; @param (map) diagram-props
-  ; {:strength (percent)}
+  ; {:strength (percentage)}
   ; @param (integer) datum-dex
   ; @param (*) datum
   ;

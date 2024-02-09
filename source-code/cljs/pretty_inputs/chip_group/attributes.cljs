@@ -5,7 +5,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn chip-group-placeholder-attributes
+(defn chip-group-chips-placeholder-attributes
   ; @ignore
   ;
   ; @param (keyword) group-id
@@ -14,7 +14,7 @@
   ; @return (map)
   ; {}
   [_ _]
-  {:class               :pi-chip-group--placeholder
+  {:class               :pi-chip-group--chips-placeholder
    :data-font-size      :s
    :data-letter-spacing :auto
    :data-line-height    :text-block

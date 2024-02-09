@@ -3,7 +3,8 @@
     (:require [fruits.loop.api                     :refer [<-walk]]
               [fruits.vector.api                   :as vector]
               [pretty-inputs.engine.api            :as pretty-inputs.engine]
-              [pretty-inputs.text-field.adornments :as text-field.adornments]))
+              [pretty-inputs.text-field.adornments :as text-field.adornments]
+              [react-references.api :as react-references]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -73,11 +74,12 @@
   ;  :type (keyword)
   ;  :value-path (Re-Frame path vector)}
   [field-id {:keys [border-color marker-color] :as field-props}]
+  (let [set-reference-f (react-references/set-reference-f field-id)])
   ; XXX#5068
   ; By using the '<-walk' function the ':on-blur', ':on-type-ended' and ':on-focus'
   ; events take the 'field-props' map AFTER it gets merged with the default values!
   (<-walk {:font-size   :s
-           :focus-id    field-id
+           ;:focus-id    field-id
            :form-id     field-id
            :font-weight :normal
            :line-height :text-block

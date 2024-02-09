@@ -32,17 +32,17 @@
   ; {:copyable? (boolean)(opt)
   ;  :disabled? (boolean)(opt)
   ;  :font-size (keyword, px or string)
-  ;  :placeholder (metamorphic-content)(opt)}
+  ;  :value-placeholder (metamorphic-content)(opt)}
   ; @param (metamorphic-content) value
-  [_ {:keys [copyable? disabled? font-size placeholder]} value]
-  [pretty-elements/text {:copyable?        copyable?
-                         :color            :muted
-                         :content          value
-                         :disabled?        disabled?
-                         :font-size        font-size
-                         :line-height      :text-block
-                         :placeholder      placeholder
-                         :text-selectable? true}])
+  [_ {:keys [copyable? disabled? font-size value-placeholder]} value]
+  [pretty-elements/text {:copyable?           copyable?
+                         :color               :muted
+                         :content             value
+                         :content-placeholder value-placeholder
+                         :disabled?           disabled?
+                         :font-size           font-size
+                         :line-height         :text-block
+                         :text-selectable?    true}])
 
 (defn- data-element-values
   ; @param (keyword) element-id
@@ -78,8 +78,8 @@
   ;  :label (metamorphic-content)(opt)
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :placeholder (metamorphic-content)(opt)
-  ;  :value (metamorphic-content or metamorphic-contents in vector)(opt)}
+  ;  :value (metamorphic-content or metamorphic-contents in vector)(opt)
+  ;  :value-placeholder (metamorphic-content)(opt)}
   ;
   ; @usage
   ; [data-element {...}]
