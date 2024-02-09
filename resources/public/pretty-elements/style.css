@@ -11,62 +11,6 @@
 
 
 
-/***** Label *****/
-/*** Wrapper ***/
-
-.pe-label {
-  /* TEMP
-   * 2022.11.26
-   * A bubble elemen megjelenített hosszu feliratok kilogtak a bubble elemből.
-   * Ha nem okoz máshol gondot, akkor a max-width beállítása maradhat véglegesen is majd! */
-
-   /* text-overflow pretty attribute szabályozza már natívan */
-  -max-width: 100%;
-}
-
-/*** Wrapper ***/
-/***** Label *****/
-
-
-
-/***** Menu bar *****/
-/*** Item ***/
-
-/* */
-/* Az .pe-menu-bar--menu-item elemben alkalmazott esztétikai távolságok (margin, padding),
- * meg kell feleljenek a felsorolt felhasználási módoknak:
- * 1. A menü-elemek kizárólag ikonokat jelenítenek meg
- * 2. A menü-elemek kizárólag feliratokat jelenítenek meg
- * 3. A menü-elemek ikonokat és feliratokat jelenítenek meg */
-/* TODO
- * Az 1.-es és 3.-as (ikon-gomb és ikon-gomb felirattal) legyen egy külön elemtípus! */
-.pe-menu-bar--menu-item-body {
-  align-items: center;
-  display:     flex;
-
-  /* Sets the distance between item labels and icons.  */
-  column-gap: 6px;
-}
-
-/*** Item ***/
-/***** Menu bar *****/
-
-
-
-/***** Notification bubble *****/
-/*** Body ***/
-
-.pe-notification-bubble--body {
-  align-items:     center;
-  display:         flex;
-  justify-content: space-between;
-}
-
-/*** Body ***/
-/***** Notification bubble *****/
-
-
-
 /***** Row *****/
 /*** Body ***/
 

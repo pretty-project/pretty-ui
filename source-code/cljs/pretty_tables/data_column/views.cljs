@@ -85,6 +85,6 @@
        (let [column-props (pretty-presets.engine/apply-preset                            column-id column-props)
              column-props (data-column.prototypes/column-props-prototype                 column-id column-props)
              column-props (pretty-elements.engine/element-subitem-group<-subitem-default column-id column-props :cells :cell-default)
-             column-props (pretty-elements.engine/element-subitem-group<-disabled-state  column-id column-props :cells :cell-default)
-             column-props (pretty-elements.engine/dissoc-element-disabled-state          column-id column-props)]
+             column-props (pretty-elements.engine/element-subitem-group<-disabled-state  column-id column-props :cells)
+             column-props (pretty-elements.engine/leave-element-disabled-state           column-id column-props :cells)]
             [view-lifecycles column-id column-props]))))

@@ -13,7 +13,7 @@
   ;
   ; @return (map)
   [_ bullet-props]
-  (-> bullet-props (pretty-properties/default-background-color-props {:fill-color :muted})))
+  (-> bullet-props))
 
 (defn crumb-props-prototype
   ; @ignore

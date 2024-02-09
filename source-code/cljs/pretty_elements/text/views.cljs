@@ -89,6 +89,15 @@
   ;  :text-overflow (keyword)(opt)
   ;   Default: :wrap
   ;  :text-selectable? (boolean)(opt)
+
+  ;  :text-align (keyword)(opt)
+  ;  :text-color (keyword or string)(opt)
+  ;  :text-direction (keyword)(opt)
+  ;  :text-overflow (keyword)(opt)
+  ;  :text-selectable? (boolean)(opt)
+  ;  :text-transform (keyword)(opt)
+
+  
   ;  :theme (keyword)(opt)
   ;  :vertical-align (keyword)(opt)
   ;  :width (keyword, px or string)(opt)}

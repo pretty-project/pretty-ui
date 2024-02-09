@@ -66,8 +66,11 @@
   ;  :preset (keyword)(opt)
   ;  :style (map)(opt)
   ;  :tab-disabled? (boolean)(opt)
+  ;  :text-align (keyword)(opt)
   ;  :text-color (keyword or string)(opt)
+  ;  :text-direction (keyword)(opt)
   ;  :text-overflow (keyword)(opt)
+  ;  :text-selectable? (boolean)(opt)
   ;  :text-transform (keyword)(opt)
   ;  :theme (keyword)(opt)
   ;  :width (keyword, px or string)(opt)}

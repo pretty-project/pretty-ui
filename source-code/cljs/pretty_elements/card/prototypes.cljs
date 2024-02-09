@@ -21,6 +21,8 @@
                       (pretty-properties/default-content-props      {})
                       (pretty-properties/default-effect-props       {})
                       (pretty-properties/default-flex-props         {:orientation :vertical :vertical-align :top})
+                      (pretty-properties/default-font-props         {:font-size :s :font-weight :medium})
                       (pretty-properties/default-react-props        {:set-reference-f set-reference-f})
                       (pretty-properties/default-size-props         {:size-unit :double-block})
+                      (pretty-properties/default-text-props         {:text-overflow :wrap :text-selectable? false})
                       (pretty-properties/default-wrapper-size-props {}))))

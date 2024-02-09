@@ -76,5 +76,6 @@
              expandable-props (expandable.prototypes/expandable-props-prototype       expandable-id expandable-props)
              expandable-props (pretty-elements.engine/element-subitem<-disabled-state expandable-id expandable-props :button)
              expandable-props (pretty-elements.engine/element-subitem<-disabled-state expandable-id expandable-props :surface)
-             expandable-props (pretty-elements.engine/dissoc-element-disabled-state   expandable-id expandable-props)]
+             expandable-props (pretty-elements.engine/leave-element-disabled-state    expandable-id expandable-props :button)
+             expandable-props (pretty-elements.engine/leave-element-disabled-state    expandable-id expandable-props :surface)]
             [view-lifecycles expandable-id expandable-props]))))

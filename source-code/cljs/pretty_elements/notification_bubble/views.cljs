@@ -1,38 +1,16 @@
 
 (ns pretty-elements.notification-bubble.views
     (:require [fruits.random.api                              :as random]
-              [metamorphic-content.api                        :as metamorphic-content]
-              [pretty-elements.button.views                   :as button.views]
               [pretty-elements.engine.api                     :as pretty-elements.engine]
-              [pretty-elements.icon-button.views              :as icon-button.views]
+              [pretty-elements.adornment-group.views :as adornment-group.views]
               [pretty-elements.notification-bubble.attributes :as notification-bubble.attributes]
               [pretty-elements.notification-bubble.prototypes :as notification-bubble.prototypes]
-              [pretty-presets.engine.api                      :as pretty-presets.engine]
-              [reagent.api                                    :as reagent]
+              [pretty-presets.engine.api :as pretty-presets.engine]
+              [reagent.api :as reagent]
               [pretty-accessories.api :as pretty-accessories]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(defn- notification-bubble-secondary-button
-  ; @ignore
-  ;
-  ; @param (keyword) bubble-id
-  ; @param (map) bubble-props
-  ; {:secondary-button (map)(opt)}
-  [bubble-id {{:keys [layout]} :secondary-button :keys [secondary-button] :as bubble-props}]
-  (if secondary-button (case layout :button [button.views/view      secondary-button]
-                                            [icon-button.views/view secondary-button])))
-
-(defn- notification-bubble-primary-button
-  ; @ignore
-  ;
-  ; @param (keyword) bubble-id
-  ; @param (map) bubble-props
-  ; {:primary-button (map)(opt)}
-  [bubble-id {{:keys [layout]} :primary-button :keys [primary-button] :as bubble-props}]
-  (if primary-button (case layout :button [button.views/view      primary-button]
-                                          [icon-button.views/view primary-button])))
 
 (defn- notification-bubble
   ; @ignore
@@ -40,17 +18,17 @@
   ; @param (keyword) bubble-id
   ; @param (map) bubble-props
   ; {:content (metamorphic-content)(opt)
-  ;  :content-placeholder (metamorphic-content)(opt)}
-  [bubble-id {:keys [content content-placeholder] :as bubble-props}]
+  ;  :cover (map)(opt)
+  ;  :end-adornments (map)(opt)
+  ;  :start-adornments (map)(opt)}
+  [bubble-id {:keys [content cover end-adornments start-adornments] :as bubble-props}]
   [:div (notification-bubble.attributes/bubble-attributes bubble-id bubble-props)
         [(pretty-elements.engine/clickable-auto-tag             bubble-id bubble-props)
          (notification-bubble.attributes/bubble-body-attributes bubble-id bubble-props)
-         [:div (notification-bubble.attributes/bubble-content-attributes bubble-id bubble-props)
-               [metamorphic-content/compose content content-placeholder]]
-         [notification-bubble-secondary-button bubble-id bubble-props]
-         [notification-bubble-primary-button   bubble-id bubble-props]]])
-
-         ; badge, marker, cover
+         (when start-adornments [adornment-group.views/view bubble-id {:adornments start-adornments}])
+         (when :always          [:div (notification-bubble.attributes/bubble-content-attributes bubble-id bubble-props) content])
+         (when end-adornments   [adornment-group.views/view bubble-id {:adornments end-adornments}])
+         (when cover            [pretty-accessories/cover   bubble-id cover])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -77,23 +55,25 @@
   ;   {:all, :tl, :tr, :br, :bl (keyword, px or string)(opt)}
   ;  :border-width (keyword, px or string)(opt)
   ;  :class (keyword or keywords in vector)(opt)
+  ;  :cover (map)(opt)
   ;  :cursor (keyword or string)(opt)
   ;  :content (metamorphic-content)(opt)
   ;  :content-placeholder (metamorphic-content)(opt)
   ;  :disabled? (boolean)(opt)
+  ;  :end-adornment-default (map)(opt)
+  ;  :end-adornments (maps in vector)(opt)
   ;  :font-size (keyword, px or string)(opt)
-  ;   Default: :s
   ;  :font-weight (keyword or integer)(opt)
-  ;   Default :medium
   ;  :fill-color (keyword or string)(opt)
   ;  :fill-pattern (keyword)(opt)
-  ;   Default: :cover
   ;  :height (keyword, px or string)(opt)
   ;  :href-target (string)(opt)
   ;  :href-uri (string)(opt)
   ;  :indent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :keypress (map)(opt)
+  ;  :letter-spacing (keyword, px or string)(opt)
+  ;  :line-height (keyword, px or string)(opt)
   ;  :max-height (keyword, px or string)(opt)
   ;  :max-width (keyword, px or string)(opt)
   ;  :min-height (keyword, px or string)(opt)
@@ -103,24 +83,27 @@
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :preset (keyword)(opt)
-  ;  :primary-button (map)(opt)
-  ;   {:layout (keyword)
-  ;     :button, :icon-button
-  ;     Default: :icon-button}
-  ;  :secondary-button (map)(opt)
-  ;   {:layout (keyword)
-  ;     :button, :icon-button
-  ;     Default: :icon-button}
+  ;  :progress (percentage)(opt)
+  ;  :progress-color (keyword or string)(opt)
+  ;  :progress-direction (keyword)(opt)
+  ;  :progress-duration (ms)(opt)
+  ;  :start-adornment-default (map)(opt)
+  ;  :start-adornments (maps in vector)(opt)
   ;  :style (map)(opt)
   ;  :tab-disabled? (boolean)(opt)
+  ;  :text-align (keyword)(opt)
   ;  :text-color (keyword or string)(opt)
-  ;   Default: :default
+  ;  :text-direction (keyword)(opt)
+  ;  :text-overflow (keyword)(opt)
   ;  :text-selectable? (boolean)(opt)
+  ;  :text-transform (keyword)(opt)
   ;  :theme (keyword)(opt)
   ;  :width (keyword, px or string)(opt)}
   ;
-  ; + end-adornments, start-adornments
-  ; + keypress? cover, badge, marker
+  ; flex props
+  ; + hover-color, hover-effect, hover-pattern, highlight-... ...
+  ; + href-uri, href-target ...
+  ; + on-click-f, on-click-timeout ...
   ;
   ; @usage
   ; [notification-bubble {...}]
@@ -133,11 +116,11 @@
   ([bubble-id bubble-props]
    ; @note (tutorials#parameterizing)
    (fn [_ bubble-props]
-       (let [bubble-props (pretty-presets.engine/apply-preset                    bubble-id bubble-props)
-             bubble-props (notification-bubble.prototypes/bubble-props-prototype bubble-id bubble-props)
-             bubble-props (pretty-elements.engine/element-timeout-props          bubble-id bubble-props)]
+       (let [bubble-props (pretty-presets.engine/apply-preset                            bubble-id bubble-props)
+             bubble-props (notification-bubble.prototypes/bubble-props-prototype         bubble-id bubble-props)
+             bubble-props (pretty-elements.engine/element-timeout-props                  bubble-id bubble-props)
+             bubble-props (pretty-elements.engine/element-subitem-group<-subitem-default bubble-id bubble-props :start-adornments :start-adornment-default)
+             bubble-props (pretty-elements.engine/element-subitem-group<-subitem-default bubble-id bubble-props :start-adornments :start-adornment-default)
+             bubble-props (pretty-elements.engine/element-subitem-group<-disabled-state  bubble-id bubble-props :end-adornments)
+             bubble-props (pretty-elements.engine/element-subitem-group<-disabled-state  bubble-id bubble-props :end-adornments)]
             [view-lifecycles bubble-id bubble-props]))))
-
-            ; + hover-color, hover-effect, hover-pattern, highlight-... ...
-            ; + href-uri, href-target ...
-            ; + on-click-f, on-click-timeout ...

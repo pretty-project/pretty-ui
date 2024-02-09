@@ -48,6 +48,28 @@
   ; @description
   ; Downsized button element for adornment groups.
   ;
+  ; @note
+  ; The 'adornment' element implements ...
+  ; ... the Pretty [anchor](pretty-core/cljs/pretty-properties/api.html#anchor-properties) properties.
+  ; ... the Pretty [background color](pretty-core/cljs/pretty-properties/api.html#background-color-properties) properties.
+  ; ... the Pretty [border](pretty-core/cljs/pretty-properties/api.html#border-properties) properties.
+  ; ... the Pretty [class](pretty-core/cljs/pretty-properties/api.html#class-properties) properties.
+  ; ... the Pretty [clickable state](pretty-core/cljs/pretty-properties/api.html#clickable-state-properties) properties.
+  ; ... the Pretty [cursor](pretty-core/cljs/pretty-properties/api.html#cursor-properties) properties.
+  ; ... the Pretty [effect](pretty-core/cljs/pretty-properties/api.html#effect-properties) properties.
+  ; ... the Pretty [icon](pretty-core/cljs/pretty-properties/api.html#icon-properties) properties.
+  ; ... the Pretty [keypress](pretty-core/cljs/pretty-properties/api.html#keypress-properties) properties.
+  ; ... the Pretty [label](pretty-core/cljs/pretty-properties/api.html#label-properties) properties.
+  ; ... the Pretty [lifecycle](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties) properties.
+  ; ... the Pretty [mouse event](pretty-core/cljs/pretty-properties/api.html#mouse-event-properties) properties.
+  ; ... the Pretty [preset](pretty-core/cljs/pretty-properties/api.html#preset-properties) properties.
+  ; ... the Pretty [progress](pretty-core/cljs/pretty-properties/api.html#progress-properties) properties.
+  ; ... the Pretty [size](pretty-core/cljs/pretty-properties/api.html#size-properties) properties.
+  ; ... the Pretty [space](pretty-core/cljs/pretty-properties/api.html#space-properties) properties.
+  ; ... the Pretty [style](pretty-core/cljs/pretty-properties/api.html#style-properties) properties.
+  ; ... the Pretty [text](pretty-core/cljs/pretty-properties/api.html#text-properties) properties.
+  ; ... the Pretty [theme](pretty-core/cljs/pretty-properties/api.html#theme-properties) properties.
+  ;
   ; @param (keyword)(opt) adornment-id
   ; @param (map) adornment-props
   ; {:border-color (keyword or string)(opt)
@@ -60,6 +82,8 @@
   ;  :cover (map)(opt)
   ;  :cursor (keyword or string)(opt)
   ;  :disabled? (boolean)(opt)
+  ;  :font-size (keyword, px or string)(opt)
+  ;  :font-weight (keyword or integer)(opt)
   ;  :fill-color (keyword or string)(opt)
   ;  :fill-pattern (keyword)(opt)
   ;  :height (keyword, px or string)(opt)
@@ -79,6 +103,8 @@
   ;  :keypress (map)(opt)
   ;  :label (metamorphic-content)(opt)
   ;  :label-placeholder (metamorphic-content)(opt)
+  ;  :letter-spacing (keyword, px or string)(opt)
+  ;  :line-height (keyword, px or string)(opt)
   ;  :max-height (keyword, px or string)(opt)
   ;  :max-width (keyword, px or string)(opt)
   ;  :min-height (keyword, px or string)(opt)
@@ -96,8 +122,11 @@
   ;  :progress-duration (ms)(opt)
   ;  :style (map)(opt)
   ;  :tab-disabled? (boolean)(opt)
+  ;  :text-align (keyword)(opt)
   ;  :text-color (keyword or string)(opt)
+  ;  :text-direction (keyword)(opt)
   ;  :text-overflow (keyword)(opt)
+  ;  :text-selectable? (boolean)(opt)
   ;  :text-transform (keyword)(opt)
   ;  :theme (keyword)(opt)
   ;  :tooltip (map)(opt)

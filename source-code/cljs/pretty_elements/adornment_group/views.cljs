@@ -92,6 +92,6 @@
        (let [group-props (pretty-presets.engine/apply-preset                            group-id group-props)
              group-props (adornment-group.prototypes/group-props-prototype              group-id group-props)
              group-props (pretty-elements.engine/element-subitem-group<-subitem-default group-id group-props :adornments :adornment-default)
-             group-props (pretty-elements.engine/element-subitem-group<-disabled-state  group-id group-props :adornments :adornment-default)
-             group-props (pretty-elements.engine/dissoc-element-disabled-state          group-id group-props)]
+             group-props (pretty-elements.engine/element-subitem-group<-disabled-state  group-id group-props :adornments)
+             group-props (pretty-elements.engine/leave-element-disabled-state           group-id group-props :adornments)]
             [view-lifecycles group-id group-props]))))

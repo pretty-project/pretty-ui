@@ -76,5 +76,6 @@
              menu-props (dropdown-menu.prototypes/menu-props-prototype          menu-id menu-props)
              menu-props (pretty-elements.engine/element-subitem<-disabled-state menu-id menu-props :menu-bar)
              menu-props (pretty-elements.engine/element-subitem<-disabled-state menu-id menu-props :surface)
-             menu-props (pretty-elements.engine/dissoc-element-disabled-state   menu-id menu-props)]
+             menu-props (pretty-elements.engine/leave-element-disabled-state    menu-id menu-props :menu-bar)
+             menu-props (pretty-elements.engine/leave-element-disabled-state    menu-id menu-props :surface)]
             [view-lifecycles menu-id menu-props]))))

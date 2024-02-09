@@ -20,6 +20,5 @@
                   (pretty-properties/default-label-props            {})
                   (pretty-properties/default-position-props         {:position :br :position-method :absolute})
                   (pretty-properties/default-size-props             {:size-unit :quarter-block})
-                  (pretty-properties/default-space-props            {:indent {:all :xxs}})
                   (pretty-properties/default-text-props             {:text-selectable? false})
                   (pretty-properties/default-wrapper-size-props     {})))

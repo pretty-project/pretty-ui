@@ -99,8 +99,9 @@
        (let [table-props (pretty-presets.engine/apply-preset                            table-id table-props)
              table-props (data-table.prototypes/table-props-prototype                   table-id table-props)
              table-props (pretty-elements.engine/element-subitem-group<-subitem-default table-id table-props :columns :column-default)
-             table-props (pretty-elements.engine/element-subitem-group<-disabled-state  table-id table-props :rows    :row-default)
-             table-props (pretty-elements.engine/element-subitem-group<-subitem-default table-id table-props :columns :column-default)
-             table-props (pretty-elements.engine/element-subitem-group<-disabled-state  table-id table-props :rows    :row-default)
-             table-props (pretty-elements.engine/dissoc-element-disabled-state          table-id table-props)]
+             table-props (pretty-elements.engine/element-subitem-group<-subitem-default table-id table-props :rows    :row-default)
+             table-props (pretty-elements.engine/element-subitem-group<-disabled-state  table-id table-props :columns)
+             table-props (pretty-elements.engine/element-subitem-group<-disabled-state  table-id table-props :rows)
+             table-props (pretty-elements.engine/leave-element-disabled-state           table-id table-props :columns)
+             table-props (pretty-elements.engine/leave-element-disabled-state           table-id table-props :rows)]
             [view-lifecycles table-id table-props]))))
