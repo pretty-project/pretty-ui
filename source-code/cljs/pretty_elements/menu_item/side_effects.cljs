@@ -8,9 +8,14 @@
 (defn on-mouse-over-f
   ; @ignore
   ;
+  ; @description
+  ; In case the ':dropdown-content' and ':dropdown-menu-id' properties are provided,
+  ; the mouse over event of the menu item sets the given dropdown content
+  ; on the dropdown menu (identified by the given menu ID).
+  ;
   ; @param (keyword) item-id
   ; @param (map) item-props
   ; {:dropdown-content (metamorphic-content)(opt)
-  ;  :menu-id (keyword)(opt)}
-  [_ {:keys [dropdown-content menu-id]}]
-  (and dropdown-content menu-id (dropdown-menu.side-effects/set-dropdown-content! menu-id dropdown-content)))
+  ;  :dropdown-menu-id (keyword)(opt)}
+  [_ {:keys [dropdown-content dropdown-menu-id]}]
+  (and dropdown-content dropdown-menu-id (dropdown-menu.side-effects/set-dropdown-content! dropdown-menu-id dropdown-content)))

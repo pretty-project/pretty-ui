@@ -16,12 +16,12 @@
   ;  ...}
   [surface-id surface-props]
   (-> {:class :pe-surface--body}
-      (pretty-attributes/animation-attributes         surface-props)
-      (pretty-attributes/background-color-attributes  surface-props)
-      (pretty-attributes/border-attributes            surface-props)
-      (pretty-attributes/double-block-size-attributes surface-props)
-      (pretty-attributes/indent-attributes            surface-props)
-      (pretty-attributes/style-attributes             surface-props)))
+      (pretty-attributes/animation-attributes        surface-props)
+      (pretty-attributes/background-color-attributes surface-props)
+      (pretty-attributes/border-attributes           surface-props)
+      (pretty-attributes/indent-attributes           surface-props)
+      (pretty-attributes/size-attributes             surface-props)
+      (pretty-attributes/style-attributes            surface-props)))
 
 (defn surface-attributes
   ; @ignore

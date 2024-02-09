@@ -13,6 +13,8 @@
   ;
   ; @return (map)
   [_ column-props]
-  (-> column-props (pretty-properties/default-border-props  {})
-                   (pretty-properties/default-content-props {})
-                   (pretty-properties/default-flex-props    {:orientation :vertical :vertical-align :top})))
+  (-> column-props (pretty-properties/default-border-props       {})
+                   (pretty-properties/default-content-props      {})
+                   (pretty-properties/default-flex-props         {:orientation :vertical :vertical-align :top})
+                   (pretty-properties/default-size-props         {:size-unit :double-block})
+                   (pretty-properties/default-wrapper-size-props {})))

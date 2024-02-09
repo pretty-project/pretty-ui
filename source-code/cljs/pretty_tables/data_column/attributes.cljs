@@ -16,10 +16,10 @@
   ;  ...}
   [_ column-props]
   (-> {:class :pt-data-column--body}
-      (pretty-attributes/grid-attributes              column-props)
-      (pretty-attributes/double-block-size-attributes column-props)
-      (pretty-attributes/indent-attributes            column-props)
-      (pretty-attributes/style-attributes             column-props)))
+      (pretty-attributes/grid-attributes   column-props)
+      (pretty-attributes/indent-attributes column-props)
+      (pretty-attributes/size-attributes   column-props)
+      (pretty-attributes/style-attributes  column-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

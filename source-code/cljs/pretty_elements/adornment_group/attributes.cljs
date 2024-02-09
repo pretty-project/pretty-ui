@@ -16,10 +16,10 @@
   ;  ...}
   [group-id group-props]
   (-> {:class :pe-adornment-group--body}
-      (pretty-attributes/flex-attributes            group-props)
-      (pretty-attributes/full-block-size-attributes group-props)
-      (pretty-attributes/indent-attributes          group-props)
-      (pretty-attributes/style-attributes           group-props)))
+      (pretty-attributes/flex-attributes   group-props)
+      (pretty-attributes/indent-attributes group-props)
+      (pretty-attributes/size-attributes   group-props)
+      (pretty-attributes/style-attributes  group-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

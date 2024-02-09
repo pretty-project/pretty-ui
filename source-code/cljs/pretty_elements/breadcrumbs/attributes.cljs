@@ -16,10 +16,10 @@
   ;  ...}
   [_ breadcrumbs-props]
   (-> {:class :pe-breadcrumbs--body}
-      (pretty-attributes/flex-attributes            breadcrumbs-props)
-      (pretty-attributes/full-block-size-attributes breadcrumbs-props)
-      (pretty-attributes/indent-attributes          breadcrumbs-props)
-      (pretty-attributes/style-attributes           breadcrumbs-props)))
+      (pretty-attributes/flex-attributes   breadcrumbs-props)
+      (pretty-attributes/indent-attributes breadcrumbs-props)
+      (pretty-attributes/size-attributes   breadcrumbs-props)
+      (pretty-attributes/style-attributes  breadcrumbs-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

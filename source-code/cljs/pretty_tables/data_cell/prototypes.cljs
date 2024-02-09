@@ -13,8 +13,9 @@
   ;
   ; @return (map)
   [_ cell-props]
-  (-> cell-props (pretty-properties/default-font-props    {:font-size :xxs :font-weight :normal})
-                 (pretty-properties/default-content-props {})
-                 (pretty-properties/default-flex-props    {:horizontal-align :left :orientation :horizontal})
-                 (pretty-properties/default-size-props    {:height :parent :width :parent})
-                 (pretty-properties/default-text-props    {:text-overflow :ellipsis})))
+  (-> cell-props (pretty-properties/default-font-props         {:font-size :xxs :font-weight :normal})
+                 (pretty-properties/default-content-props      {})
+                 (pretty-properties/default-flex-props         {:horizontal-align :left :orientation :horizontal})
+                 (pretty-properties/default-size-props         {:height :parent :width :parent :size-unit :full-block})
+                 (pretty-properties/default-text-props         {:text-overflow :ellipsis})
+                 (pretty-properties/default-wrapper-size-props {})))

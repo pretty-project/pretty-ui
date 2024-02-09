@@ -15,4 +15,5 @@
   [_ bullet-props]
   (-> bullet-props (pretty-properties/default-background-color-props {:fill-color :muted})
                    (pretty-properties/default-border-props           {})
-                   (pretty-properties/default-size-props             {:height :xxs :width :xxs})))
+                   (pretty-properties/default-size-props             {:height :xxs :width :xxs :size-unit :quarter-block})
+                   (pretty-properties/default-wrapper-size-props     {})))

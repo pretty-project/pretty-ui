@@ -53,10 +53,10 @@
       (pretty-attributes/cursor-attributes           item-props)
       (pretty-attributes/effect-attributes           item-props)
       (pretty-attributes/flex-attributes             item-props)
-      (pretty-attributes/full-block-size-attributes  item-props)
       (pretty-attributes/indent-attributes           item-props)
       (pretty-attributes/mouse-event-attributes      item-props)
-      (pretty-attributes/style-attributes            item-props)))
+      (pretty-attributes/style-attributes            item-props)
+      (pretty-attributes/size-attributes             item-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

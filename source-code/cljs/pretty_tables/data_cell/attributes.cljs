@@ -19,9 +19,9 @@
       (pretty-attributes/background-color-attributes cell-props)
       (pretty-attributes/flex-attributes             cell-props)
       (pretty-attributes/font-attributes             cell-props)
-      (pretty-attributes/full-block-size-attributes  cell-props)
       (pretty-attributes/indent-attributes           cell-props)
       (pretty-attributes/style-attributes            cell-props)
+      (pretty-attributes/size-attributes             cell-props)
       (pretty-attributes/text-attributes             cell-props)))
 
 ;; ----------------------------------------------------------------------------

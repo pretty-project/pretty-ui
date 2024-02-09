@@ -16,12 +16,12 @@
   ;  ...}
   [_ column-props]
   (-> {:class :pe-column--body}
-      (pretty-attributes/background-color-attributes  column-props)
-      (pretty-attributes/border-attributes            column-props)
-      (pretty-attributes/double-block-size-attributes column-props)
-      (pretty-attributes/flex-attributes              column-props)
-      (pretty-attributes/indent-attributes            column-props)
-      (pretty-attributes/style-attributes             column-props)))
+      (pretty-attributes/background-color-attributes column-props)
+      (pretty-attributes/border-attributes           column-props)
+      (pretty-attributes/flex-attributes             column-props)
+      (pretty-attributes/indent-attributes           column-props)
+      (pretty-attributes/size-attributes             column-props)
+      (pretty-attributes/style-attributes            column-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

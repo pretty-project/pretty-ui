@@ -49,9 +49,9 @@
   ; {}
   [_ popup-props]
   (-> {:class :pl-box-popup--wrapper}
-      (pretty-attributes/content-size-attributes popup-props)
-      (pretty-attributes/outdent-attributes      popup-props)
-      (pretty-attributes/theme-attributes        popup-props)))
+      (pretty-attributes/outdent-attributes popup-props)
+      (pretty-attributes/size-attributes    popup-props)
+      (pretty-attributes/theme-attributes   popup-props)))
 
 (defn popup-attributes
   ; @ignore

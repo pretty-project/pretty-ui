@@ -16,18 +16,18 @@
   ;  ...}
   [card-id card-props]
   (-> {:class :pe-card--body}
-      (pretty-attributes/anchor-attributes            card-props)
-      (pretty-attributes/background-color-attributes  card-props)
-      (pretty-attributes/border-attributes            card-props)
-      (pretty-attributes/clickable-state-attributes   card-props)
-      (pretty-attributes/cursor-attributes            card-props)
-      (pretty-attributes/double-block-size-attributes card-props)
-      (pretty-attributes/effect-attributes            card-props)
-      (pretty-attributes/flex-attributes              card-props)
-      (pretty-attributes/indent-attributes            card-props)
-      (pretty-attributes/mouse-event-attributes       card-props)
-      (pretty-attributes/react-attributes             card-props)
-      (pretty-attributes/style-attributes             card-props)))
+      (pretty-attributes/anchor-attributes           card-props)
+      (pretty-attributes/background-color-attributes card-props)
+      (pretty-attributes/border-attributes           card-props)
+      (pretty-attributes/clickable-state-attributes  card-props)
+      (pretty-attributes/cursor-attributes           card-props)
+      (pretty-attributes/effect-attributes           card-props)
+      (pretty-attributes/flex-attributes             card-props)
+      (pretty-attributes/indent-attributes           card-props)
+      (pretty-attributes/mouse-event-attributes      card-props)
+      (pretty-attributes/react-attributes            card-props)
+      (pretty-attributes/size-attributes             card-props)
+      (pretty-attributes/style-attributes            card-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

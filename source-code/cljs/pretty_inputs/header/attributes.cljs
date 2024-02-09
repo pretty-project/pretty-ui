@@ -79,9 +79,9 @@
   ;  ...}
   [_ header-props]
   (-> {:class :pi-header--body}
-      (pretty-attributes/full-block-size-attributes header-props)
-      (pretty-attributes/indent-attributes          header-props)
-      (pretty-attributes/style-attributes           header-props)))
+      (pretty-attributes/indent-attributes header-props)
+      (pretty-attributes/size-attributes   header-props)
+      (pretty-attributes/style-attributes  header-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

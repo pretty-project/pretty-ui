@@ -13,7 +13,9 @@
   ;
   ; @return (map)
   [_ surface-props]
-  (-> surface-props (pretty-properties/default-animation-props {})
-                    (pretty-properties/default-border-props    {})
-                    (pretty-properties/default-content-props   {})
-                    (pretty-properties/default-state-props     {:mounted? true})))
+  (-> surface-props (pretty-properties/default-animation-props    {})
+                    (pretty-properties/default-border-props       {})
+                    (pretty-properties/default-content-props      {})
+                    (pretty-properties/default-size-props         {:size-unit :double-block})
+                    (pretty-properties/default-state-props        {:mounted? true})
+                    (pretty-properties/default-wrapper-size-props {})))

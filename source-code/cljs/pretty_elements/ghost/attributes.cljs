@@ -20,7 +20,7 @@
       (pretty-attributes/background-color-attributes ghost-props)
       (pretty-attributes/border-attributes           ghost-props)
       (pretty-attributes/indent-attributes           ghost-props)
-      (pretty-attributes/full-block-size-attributes  ghost-props)
+      (pretty-attributes/size-attributes             ghost-props)
       (pretty-attributes/style-attributes            ghost-props)))
 
 ;; ----------------------------------------------------------------------------

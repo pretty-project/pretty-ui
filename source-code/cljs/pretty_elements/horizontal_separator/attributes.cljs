@@ -46,10 +46,10 @@
   ;  ...}
   [_ separator-props]
   (-> {:class :pe-horizontal-separator--body}
-      (pretty-attributes/flex-attributes            separator-props)
-      (pretty-attributes/full-block-size-attributes separator-props)
-      (pretty-attributes/indent-attributes          separator-props)
-      (pretty-attributes/style-attributes           separator-props)))
+      (pretty-attributes/flex-attributes   separator-props)
+      (pretty-attributes/indent-attributes separator-props)
+      (pretty-attributes/size-attributes   separator-props)
+      (pretty-attributes/style-attributes  separator-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

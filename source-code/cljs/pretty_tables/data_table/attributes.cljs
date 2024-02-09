@@ -16,9 +16,9 @@
   ;  ...}
   [_ table-props]
   (-> {:class :pe-data-table--body}
-      (pretty-attributes/double-block-size-attributes table-props)
-      (pretty-attributes/indent-attributes            table-props)
-      (pretty-attributes/style-attributes             table-props)))
+      (pretty-attributes/indent-attributes table-props)
+      (pretty-attributes/size-attributes   table-props)
+      (pretty-attributes/style-attributes  table-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

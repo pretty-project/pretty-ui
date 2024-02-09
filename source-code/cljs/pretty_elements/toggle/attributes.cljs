@@ -23,10 +23,10 @@
       (pretty-attributes/clickable-state-attributes          toggle-props)
       (pretty-attributes/cursor-attributes            toggle-props)
       (pretty-attributes/effect-attributes           toggle-props)
-      (pretty-attributes/full-block-size-attributes      toggle-props)
       (pretty-attributes/indent-attributes            toggle-props)
       (pretty-attributes/mouse-event-attributes       toggle-props)
       (pretty-attributes/react-attributes             toggle-props)
+      (pretty-attributes/size-attributes                 toggle-props)
       (pretty-attributes/text-attributes toggle-props)))
 
 ;; ----------------------------------------------------------------------------

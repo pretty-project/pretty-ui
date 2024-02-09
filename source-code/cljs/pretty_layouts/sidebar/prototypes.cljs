@@ -20,3 +20,4 @@
           :threshold 720}
          (if border-color {:border-width :xxs})
          (-> sidebar-props)))
+; size-unit :screen

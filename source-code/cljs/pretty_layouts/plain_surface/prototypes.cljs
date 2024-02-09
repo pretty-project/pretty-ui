@@ -15,3 +15,4 @@
   [_ surface-props]
   (merge {:content-orientation :vertical}
          (-> surface-props)))
+; size-unit :screen

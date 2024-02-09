@@ -25,7 +25,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- image-sensor
+(defn- image-load-sensor
   ; @ignore
   ;
   ; @param (keyword) image-id
@@ -47,7 +47,7 @@
   ;  :marker (map)(opt)}
   [image-id {:keys [badge cover icon label loaded? marker] :as image-props}]
   [:div (image.attributes/image-attributes image-id image-props)
-        [image-sensor                      image-id image-props]
+        [image-load-sensor                 image-id image-props]
         [(pretty-elements.engine/clickable-auto-tag image-id image-props)
          (image.attributes/image-body-attributes    image-id image-props)
          (if loaded? [:div (image.attributes/image-canvas-attributes image-id image-props)]
@@ -74,6 +74,9 @@
                        :reagent-render         (fn [_ image-props] [image image-id image-props])}))
 
 (defn view
+  ; @description
+  ; Optionally clickable image element with built-in lazy loader and animated loading icon.
+  ;
   ; @param (keyword)(opt) image-id
   ; @param (map) image-props
   ; {:animation-duration (ms)(opt)

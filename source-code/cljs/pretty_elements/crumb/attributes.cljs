@@ -37,10 +37,10 @@
       (pretty-attributes/clickable-state-attributes crumb-props)
       (pretty-attributes/effect-attributes          crumb-props)
       (pretty-attributes/flex-attributes            crumb-props)
-      (pretty-attributes/full-block-size-attributes crumb-props)
       (pretty-attributes/indent-attributes          crumb-props)
       (pretty-attributes/mouse-event-attributes     crumb-props)
       (pretty-attributes/state-attributes           crumb-props)
+      (pretty-attributes/size-attributes            crumb-props)
       (pretty-attributes/style-attributes           crumb-props)))
 
 ;; ----------------------------------------------------------------------------

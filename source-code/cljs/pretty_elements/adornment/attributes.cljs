@@ -53,11 +53,11 @@
       (pretty-attributes/cursor-attributes           adornment-props)
       (pretty-attributes/effect-attributes           adornment-props)
       (pretty-attributes/flex-attributes             adornment-props)
-      (pretty-attributes/half-block-size-attributes  adornment-props)
       (pretty-attributes/indent-attributes           adornment-props)
       (pretty-attributes/mouse-event-attributes      adornment-props)
       (pretty-attributes/progress-attributes         adornment-props)
       (pretty-attributes/react-attributes            adornment-props)
+      (pretty-attributes/size-attributes             adornment-props)
       (pretty-attributes/style-attributes            adornment-props)))
 
 ;; ----------------------------------------------------------------------------

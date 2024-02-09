@@ -16,9 +16,9 @@
   ;  ...}
   [_ spacer-props]
   (-> {:class :pe-horizontal-spacer--body}
-      (pretty-attributes/indent-attributes             spacer-props)
-      (pretty-attributes/quarter-block-size-attributes spacer-props)
-      (pretty-attributes/style-attributes              spacer-props)))
+      (pretty-attributes/indent-attributes spacer-props)
+      (pretty-attributes/size-attributes   spacer-props)
+      (pretty-attributes/style-attributes  spacer-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

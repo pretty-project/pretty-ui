@@ -16,10 +16,10 @@
   ;  ...}
   [_ row-props]
   (-> {:class :pt-data-row--body}
-      (pretty-attributes/double-block-size-attributes row-props)
-      (pretty-attributes/grid-attributes              row-props)
-      (pretty-attributes/indent-attributes            row-props)
-      (pretty-attributes/style-attributes             row-props)))
+      (pretty-attributes/grid-attributes   row-props)
+      (pretty-attributes/indent-attributes row-props)
+      (pretty-attributes/size-attributes   row-props)
+      (pretty-attributes/style-attributes  row-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

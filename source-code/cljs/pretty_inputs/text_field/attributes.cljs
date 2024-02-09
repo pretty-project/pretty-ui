@@ -142,8 +142,8 @@
            (pretty-attributes/input-autofill-attributes     field-props) ; + default-input-autofill-props !
            (pretty-attributes/input-field-attributes        field-props)
            (pretty-attributes/effect-attributes       field-props)
-           (pretty-attributes/full-block-size-attributes field-props)
-           (pretty-attributes/react-attributes        field-props))))
+           (pretty-attributes/react-attributes        field-props)
+           (pretty-attributes/size-attributes            field-props))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

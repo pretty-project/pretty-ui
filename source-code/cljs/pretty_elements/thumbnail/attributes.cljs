@@ -17,7 +17,7 @@
   [_ thumbnail-props]
   (-> {:class :pe-thumbnail--canvas}
       (pretty-attributes/background-image-attributes thumbnail-props)
-      (pretty-attributes/canvas-attributes           thumbnail-props)))
+      (pretty-attributes/canvas-size-attributes      thumbnail-props)))
 
 (defn thumbnail-icon-attributes
   ; @ignore
@@ -30,9 +30,9 @@
   ;  ...}
   [_ thumbnail-props]
   (-> {:class :pe-thumbnail--icon}
-      (pretty-attributes/animation-attributes thumbnail-props)
-      (pretty-attributes/canvas-attributes    thumbnail-props)
-      (pretty-attributes/icon-attributes      thumbnail-props)))
+      (pretty-attributes/animation-attributes   thumbnail-props)
+      (pretty-attributes/canvas-size-attributes thumbnail-props)
+      (pretty-attributes/icon-attributes        thumbnail-props)))
 
 (defn thumbnail-label-attributes
   ; @ignore
@@ -69,11 +69,11 @@
       (pretty-attributes/clickable-state-attributes  thumbnail-props)
       (pretty-attributes/cursor-attributes           thumbnail-props)
       (pretty-attributes/flex-attributes             thumbnail-props)
-      (pretty-attributes/full-block-size-attributes  thumbnail-props)
       (pretty-attributes/effect-attributes           thumbnail-props)
       (pretty-attributes/indent-attributes           thumbnail-props)
       (pretty-attributes/mouse-event-attributes      thumbnail-props)
       (pretty-attributes/react-attributes            thumbnail-props)
+      (pretty-attributes/size-attributes             thumbnail-props)
       (pretty-attributes/style-attributes            thumbnail-props)))
 
 ;; ----------------------------------------------------------------------------

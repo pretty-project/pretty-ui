@@ -32,9 +32,9 @@
   ;  ...}
   [_ diagram-props]
   (-> {:class :pd-bar-diagram--body}
-      (pretty-attributes/full-block-size-attributes diagram-props)
-      (pretty-attributes/indent-attributes          diagram-props)
-      (pretty-attributes/style-attributes           diagram-props)))
+      (pretty-attributes/indent-attributes diagram-props)
+      (pretty-attributes/size-attributes   diagram-props)
+      (pretty-attributes/style-attributes  diagram-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

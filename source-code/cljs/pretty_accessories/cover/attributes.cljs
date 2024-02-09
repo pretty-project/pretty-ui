@@ -46,13 +46,13 @@
   ;  ...}
   [cover-id cover-props]
   (-> {:class :pa-cover--body}
-      (pretty-attributes/background-color-attributes   cover-props)
-      (pretty-attributes/border-attributes             cover-props)
-      (pretty-attributes/flex-attributes               cover-props)
-      (pretty-attributes/quarter-block-size-attributes cover-props)
-      (pretty-attributes/indent-attributes             cover-props)
-      (pretty-attributes/style-attributes              cover-props)
-      (pretty-attributes/visibility-attributes         cover-props)))
+      (pretty-attributes/background-color-attributes cover-props)
+      (pretty-attributes/border-attributes           cover-props)
+      (pretty-attributes/flex-attributes             cover-props)
+      (pretty-attributes/indent-attributes           cover-props)
+      (pretty-attributes/style-attributes            cover-props)
+      (pretty-attributes/size-attributes             cover-props)
+      (pretty-attributes/visibility-attributes       cover-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

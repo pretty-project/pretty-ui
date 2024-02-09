@@ -13,5 +13,7 @@
   ;
   ; @return (map)
   [_ diagram-props]
-  (-> diagram-props (pretty-properties/default-data-props  {})
-                    (pretty-properties/default-shape-props {})))
+  (-> diagram-props (pretty-properties/default-data-props         {})
+                    (pretty-properties/default-shape-props        {})
+                    (pretty-properties/default-size-props         {:size-unit :full-block})
+                    (pretty-properties/default-wrapper-size-props {})))

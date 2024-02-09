@@ -36,4 +36,5 @@
   ;
   ; @return (map)
   [_ table-props]
-  (-> table-props (pretty-properties/default-size-props {:height :content :width :auto})))
+  (-> table-props (pretty-properties/default-size-props         {:height :content :width :auto :size-unit :double-block})
+                  (pretty-properties/default-wrapper-size-props {})))

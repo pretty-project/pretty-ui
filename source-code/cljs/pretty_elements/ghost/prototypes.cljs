@@ -16,4 +16,5 @@
   (-> ghost-props (pretty-properties/default-animation-props        {:animation-duration 2000 :animation-mode :repeat :animation-name :pulse})
                   (pretty-properties/default-background-color-props {:fill-color :highlight})
                   (pretty-properties/default-border-props           {})
-                  (pretty-properties/default-size-props             {:height :s :width :s})))
+                  (pretty-properties/default-size-props             {:height :s :width :s :size-unit :full-block})
+                  (pretty-properties/default-wrapper-size-props     {})))

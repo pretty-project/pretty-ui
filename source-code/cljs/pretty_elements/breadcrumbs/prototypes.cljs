@@ -36,4 +36,6 @@
   ;
   ; @return (map)
   [_ breadcrumbs-props]
-  (-> breadcrumbs-props (pretty-properties/default-flex-props {:gap :xs :orientation :horizontal :overflow :scroll})))
+  (-> breadcrumbs-props (pretty-properties/default-flex-props         {:gap :xs :orientation :horizontal :overflow :scroll})
+                        (pretty-properties/default-size-props         {:size-unit :full-block})
+                        (pretty-properties/default-wrapper-size-props {})))

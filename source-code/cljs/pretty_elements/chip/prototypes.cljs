@@ -25,4 +25,6 @@
                       (pretty-properties/default-label-props            {})
                       (pretty-properties/default-mouse-event-props      {})
                       (pretty-properties/default-react-props            {:set-reference-f set-reference-f})
-                      (pretty-properties/default-text-props             {:text-overflow :ellipsis :text-selectable? false}))))
+                      (pretty-properties/default-size-props             {:size-unit :full-block})
+                      (pretty-properties/default-text-props             {:text-overflow :ellipsis :text-selectable? false})
+                      (pretty-properties/default-wrapper-size-props     {}))))

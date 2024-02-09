@@ -19,5 +19,7 @@
                     (pretty-properties/default-icon-props             {})
                     (pretty-properties/default-label-props            {})
                     (pretty-properties/default-position-props         {:position :right :position-base :outer :position-method :absolute :layer :uppermost})
+                    (pretty-properties/default-size-props             {:size-unit :quarter-block})
                     (pretty-properties/default-space-props            {:indent {:all :xxs}})
-                    (pretty-properties/default-text-props             {:text-color :invert :text-selectable? false})))
+                    (pretty-properties/default-text-props             {:text-color :invert :text-selectable? false})
+                    (pretty-properties/default-wrapper-size-props     {})))

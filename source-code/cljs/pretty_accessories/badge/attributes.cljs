@@ -46,11 +46,11 @@
   ;  ...}
   [badge-id badge-props]
   (-> {:class :pa-badge--body}
-      (pretty-attributes/background-color-attributes   badge-props)
-      (pretty-attributes/border-attributes             badge-props)
-      (pretty-attributes/quarter-block-size-attributes badge-props)
-      (pretty-attributes/indent-attributes             badge-props)
-      (pretty-attributes/style-attributes              badge-props)))
+      (pretty-attributes/background-color-attributes badge-props)
+      (pretty-attributes/border-attributes           badge-props)
+      (pretty-attributes/indent-attributes           badge-props)
+      (pretty-attributes/size-attributes             badge-props)
+      (pretty-attributes/style-attributes            badge-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

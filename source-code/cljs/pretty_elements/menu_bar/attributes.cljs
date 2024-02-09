@@ -16,12 +16,12 @@
   ;  ...}
   [_ bar-props]
   (-> {:class :pe-menu-bar--body}
-      (pretty-attributes/background-color-attributes  bar-props)
-      (pretty-attributes/border-attributes            bar-props)
-      (pretty-attributes/double-block-size-attributes bar-props)
-      (pretty-attributes/flex-attributes              bar-props)
-      (pretty-attributes/indent-attributes            bar-props)
-      (pretty-attributes/style-attributes             bar-props)))
+      (pretty-attributes/background-color-attributes bar-props)
+      (pretty-attributes/border-attributes           bar-props)
+      (pretty-attributes/flex-attributes             bar-props)
+      (pretty-attributes/indent-attributes           bar-props)
+      (pretty-attributes/size-attributes             bar-props)
+      (pretty-attributes/style-attributes            bar-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

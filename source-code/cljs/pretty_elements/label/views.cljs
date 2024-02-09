@@ -1,11 +1,11 @@
 
 (ns pretty-elements.label.views
-    (:require [fruits.random.api                :as random]
-              [pretty-elements.engine.api       :as pretty-elements.engine]
+    (:require [fruits.random.api                 :as random]
               [pretty-elements.label.attributes :as label.attributes]
               [pretty-elements.label.prototypes :as label.prototypes]
-              [pretty-presets.engine.api        :as pretty-presets.engine]
-              [reagent.api                      :as reagent]))
+              [pretty-elements.engine.api        :as pretty-elements.engine]
+              [pretty-presets.engine.api         :as pretty-presets.engine]
+              [reagent.api                       :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -15,8 +15,8 @@
   ;
   ; @param (keyword) label-id
   ; @param (map) label-props
-  ; {:content (string)(opt)
-  ;  :icon (keyword)(opt)}
+  ; {:label (metamorphic-content)(opt)
+  ;  :icon (keyword)(opt)
   ;  :icon-position (keyword)(opt)}
   [label-id {:keys [content icon icon-position] :as label-props}]
   [:div (label.attributes/label-attributes label-id label-props)
@@ -36,11 +36,15 @@
   ; @param (map) label-props
   [label-id label-props]
   ; @note (tutorials#parameterizing)
+  ; @note (pretty-elements.adornment.views#8097)
   (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    label-id label-props))
                        :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount label-id label-props))
                        :reagent-render         (fn [_ label-props] [label label-id label-props])}))
 
 (defn view
+  ; @description
+  ; Label element with
+  ;
   ; @param (keyword)(opt) label-id
   ; @param (map) label-props
   ; {:border-color (keyword or string)(opt)
@@ -54,7 +58,6 @@
   ;  :disabled? (boolean)(opt)
   ;  :fill-color (keyword or string)(opt)
   ;  :fill-pattern (keyword)(opt)
-  ;   Default: :cover
   ;  :font-size (keyword, px or string)(opt)
   ;  :font-weight (keyword or integer)(opt)
   ;  :gap (keyword, px or string)(opt)
@@ -67,7 +70,10 @@
   ;  :icon-size (keyword, px or string)(opt)
   ;  :indent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
+  ;  :letter-spacing (keyword, px or string)(opt)
   ;  :line-height (keyword, px or string)(opt)
+  ;  :max-height (keyword, px or string)(opt)
+  ;  :max-width (keyword, px or string)(opt)
   ;  :min-height (keyword, px or string)(opt)
   ;  :min-width (keyword, px or string)(opt)
   ;  :on-mount-f (function)(opt)
@@ -77,12 +83,9 @@
   ;  :preset (keyword)(opt)
   ;  :style (map)(opt)
   ;  :text-color (keyword or string)(opt)
-  ;  :text-direction (keyword)(opt)
   ;  :text-overflow (keyword)(opt)
-  ;  :text-selectable? (boolean)(opt)
   ;  :text-transform (keyword)(opt)
   ;  :theme (keyword)(opt)
-  ;  :vertical-align (keyword)(opt)
   ;  :width (keyword, px or string)(opt)}
   ;
   ; @usage

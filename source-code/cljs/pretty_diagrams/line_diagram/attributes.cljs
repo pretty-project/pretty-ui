@@ -28,8 +28,8 @@
         datum-height (css/percent  strength)
         datum-width  (css/percent  datum-ratio)]
        (-> {:class :pd-line-diagram--datum}
-           (pretty-attributes/background-color-attributes   {:fill-color datum-color})
-           (pretty-attributes/quarter-block-size-attributes {:height     datum-height :width datum-width}))))
+           (pretty-attributes/background-color-attributes {:fill-color datum-color})
+           (pretty-attributes/size-attributes             {:height     datum-height :width datum-width}))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -45,10 +45,10 @@
   ;  ...}
   [_ diagram-props]
   (-> {:class :pd-line-diagram--body}
-      (pretty-attributes/full-block-size-attributes diagram-props)
-      (pretty-attributes/flex-attributes            diagram-props)
-      (pretty-attributes/indent-attributes          diagram-props)
-      (pretty-attributes/style-attributes           diagram-props)))
+      (pretty-attributes/flex-attributes   diagram-props)
+      (pretty-attributes/indent-attributes diagram-props)
+      (pretty-attributes/size-attributes   diagram-props)
+      (pretty-attributes/style-attributes  diagram-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

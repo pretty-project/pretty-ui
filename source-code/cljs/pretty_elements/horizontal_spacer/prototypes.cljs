@@ -13,4 +13,5 @@
   ;
   ; @return (map)
   [_ spacer-props]
-  (-> spacer-props (pretty-properties/default-size-props {:height :s :width :auto})))
+  (-> spacer-props (pretty-properties/default-size-props         {:height :s :width :auto :size-unit :quarter-block})
+                   (pretty-properties/default-wrapper-size-props {})))

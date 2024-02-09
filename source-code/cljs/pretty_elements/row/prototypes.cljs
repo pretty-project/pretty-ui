@@ -22,3 +22,5 @@
          (if border-color {:border-position :all
                            :border-width    :xxs})
          (-> row-props)))
+         ;(pretty-properties/default-size-props {:size-unit :double-block})))
+         ;(pretty-properties/default-wrapper-size-props {})))

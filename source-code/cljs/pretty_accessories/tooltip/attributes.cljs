@@ -46,11 +46,11 @@
   ;  ...}
   [tooltip-id tooltip-props]
   (-> {:class :pa-tooltip--body}
-      (pretty-attributes/background-color-attributes   tooltip-props)
-      (pretty-attributes/border-attributes             tooltip-props)
-      (pretty-attributes/quarter-block-size-attributes tooltip-props)
-      (pretty-attributes/indent-attributes             tooltip-props)
-      (pretty-attributes/style-attributes              tooltip-props)))
+      (pretty-attributes/background-color-attributes tooltip-props)
+      (pretty-attributes/border-attributes           tooltip-props)
+      (pretty-attributes/indent-attributes           tooltip-props)
+      (pretty-attributes/size-attributes             tooltip-props)
+      (pretty-attributes/style-attributes            tooltip-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

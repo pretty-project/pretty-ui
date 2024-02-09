@@ -34,3 +34,5 @@
          (if href       {:on-mouse-up dom/blur-active-element!})
          (if on-click-f {:on-mouse-up dom/blur-active-element!})))
          ; :text-selectable? false
+         ;(pretty-properties/default-size-props {:size-unit :full-block})
+         ;(pretty-properties/default-wrapper-size-props {})))

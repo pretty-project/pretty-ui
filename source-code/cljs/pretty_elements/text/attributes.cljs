@@ -62,10 +62,10 @@
            (pretty-attributes/background-color-attributes           text-props)
            (pretty-attributes/border-attributes          text-props)
            (pretty-attributes/flex-attributes          text-props)
-           (pretty-attributes/full-block-size-attributes    text-props)
            (pretty-attributes/font-attributes            text-props)
            (pretty-attributes/indent-attributes          text-props)
            (pretty-attributes/text-attributes text-props)
+           (pretty-attributes/size-attributes               text-props)
            (pretty-attributes/style-attributes           text-props))))
 
 ;; ----------------------------------------------------------------------------

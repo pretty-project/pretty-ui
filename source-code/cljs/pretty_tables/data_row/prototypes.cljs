@@ -27,5 +27,6 @@
   ;
   ; @return (map)
   [_ {:keys [cells] :as row-props}]
-  (-> row-props (pretty-properties/default-grid-props {:row-template :even :row-count (count cells)})
-                (pretty-properties/default-size-props {:height :content :width :auto})))
+  (-> row-props (pretty-properties/default-grid-props         {:row-template :even :row-count (count cells)})
+                (pretty-properties/default-size-props         {:height :content :width :auto :size-unit :double-block})
+                (pretty-properties/default-wrapper-size-props {})))

@@ -75,9 +75,9 @@
   ;  ...}
   [_ slider-props]
   (-> {:class :pi-slider--body}
-      (pretty-attributes/full-block-size-attributes slider-props)
-      (pretty-attributes/indent-attributes       slider-props)
-      (pretty-attributes/style-attributes        slider-props)))
+      (pretty-attributes/indent-attributes slider-props)
+      (pretty-attributes/size-attributes   slider-props)
+      (pretty-attributes/style-attributes  slider-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

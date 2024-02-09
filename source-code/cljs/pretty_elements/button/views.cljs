@@ -17,9 +17,11 @@
   ; @param (keyword) button-id
   ; @param (map) button-props
   ; {:badge (map)(opt)
+  ;  :cover (map)(opt)
   ;  :icon (keyword)(opt)
   ;  :icon-position (keyword)(opt)
-  ;  :label (metamorphic-content)(opt)}
+  ;  :label (metamorphic-content)(opt)
+  ;  :marker (map)(opt)}
   [button-id {:keys [badge cover icon icon-position label marker] :as button-props}]
   [:div (button.attributes/button-attributes button-id button-props)
         [(pretty-elements.engine/clickable-auto-tag button-id button-props)

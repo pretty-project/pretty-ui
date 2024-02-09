@@ -16,11 +16,11 @@
   ;  ...}
   [bullet-id bullet-props]
   (-> {:class :pa-bullet--body}
-      (pretty-attributes/background-color-attributes   bullet-props)
-      (pretty-attributes/border-attributes             bullet-props)
-      (pretty-attributes/quarter-block-size-attributes bullet-props)
-      (pretty-attributes/indent-attributes             bullet-props)
-      (pretty-attributes/style-attributes              bullet-props)))
+      (pretty-attributes/background-color-attributes bullet-props)
+      (pretty-attributes/border-attributes           bullet-props)
+      (pretty-attributes/indent-attributes           bullet-props)
+      (pretty-attributes/size-attributes             bullet-props)
+      (pretty-attributes/style-attributes            bullet-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

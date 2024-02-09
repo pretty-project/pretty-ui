@@ -25,3 +25,5 @@
           :content-placeholder   "\u00A0"
           :text-overflow :wrap}
          (-> text-props)))
+         ;(pretty-properties/default-size-props {:size-unit :full-block})))
+         ;(pretty-properties/default-wrapper-size-props {})))

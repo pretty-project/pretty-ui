@@ -26,4 +26,6 @@
   ;
   ; @return (map)
   [_ group-props]
-  (-> group-props (pretty-properties/default-flex-props {:orientation :horizontal :overflow :scroll})))
+  (-> group-props (pretty-properties/default-flex-props         {:orientation :horizontal :overflow :scroll})
+                  (pretty-properties/default-size-props         {:size-unit :full-block})
+                  (pretty-properties/default-wrapper-size-props {})))

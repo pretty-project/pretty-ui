@@ -14,7 +14,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- thumbnail-sensor
+(defn- thumbnail-load-sensor
   ; @ignore
   ;
   ; @param (keyword) thumbnail-id
@@ -36,7 +36,7 @@
   ;  :marker (map)(opt)}
   [thumbnail-id {:keys [badge cover icon label loaded? marker] :as thumbnail-props}]
   [:div (thumbnail.attributes/thumbnail-attributes thumbnail-id thumbnail-props)
-        [thumbnail-sensor                          thumbnail-id thumbnail-props]
+        [thumbnail-load-sensor                     thumbnail-id thumbnail-props]
         [(pretty-elements.engine/clickable-auto-tag      thumbnail-id thumbnail-props)
          (thumbnail.attributes/thumbnail-body-attributes thumbnail-id thumbnail-props)
          (if loaded? [:div (thumbnail.attributes/thumbnail-canvas-attributes thumbnail-id thumbnail-props)]
@@ -63,6 +63,9 @@
                        :reagent-render         (fn [_ thumbnail-props] [thumbnail thumbnail-id thumbnail-props])}))
 
 (defn view
+  ; @description
+  ; Optionally clickable thumbnail element with built-in lazy loader and animated loading icon.
+  ;
   ; @param (keyword)(opt) thumbnail-id
   ; @param (map) thumbnail-props
   ; {:animation-duration (ms)(opt)

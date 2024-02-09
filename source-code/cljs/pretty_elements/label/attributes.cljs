@@ -50,9 +50,9 @@
       (pretty-attributes/background-color-attributes label-props)
       (pretty-attributes/border-attributes           label-props)
       (pretty-attributes/flex-attributes             label-props)
-      (pretty-attributes/full-block-size-attributes  label-props)
       (pretty-attributes/indent-attributes           label-props)
-      (pretty-attributes/style-attributes            label-props)))
+      (pretty-attributes/style-attributes            label-props)
+      (pretty-attributes/size-attributes             label-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

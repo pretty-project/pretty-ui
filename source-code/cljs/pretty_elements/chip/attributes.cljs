@@ -40,10 +40,10 @@
       (pretty-attributes/cursor-attributes           chip-props)
       (pretty-attributes/effect-attributes           chip-props)
       (pretty-attributes/flex-attributes             chip-props)
-      (pretty-attributes/full-block-size-attributes  chip-props)
       (pretty-attributes/indent-attributes           chip-props)
       (pretty-attributes/mouse-event-attributes      chip-props)
       (pretty-attributes/react-attributes            chip-props)
+      (pretty-attributes/size-attributes             chip-props)
       (pretty-attributes/style-attributes            chip-props)))
 
 ;; ----------------------------------------------------------------------------
