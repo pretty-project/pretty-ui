@@ -1,29 +1,29 @@
 
 {:paths ["resources" "source-code/cljs"]
  :deps  {bithandshake/cljc-fruits                {:git/url "https://github.com/bithandshake/cljc-fruits"
-                                                  :sha     "bc37e640902d57e32e49c6b24b9d440dd077f2f1"}
+                                                  :sha     "e94a7762c9aeaea846ec58c22f11154cc8623ea2"}
          bithandshake/cljc-time                  {:git/url "https://github.com/bithandshake/cljc-time"
-                                                  :sha     "ecc676f588b2c0f3c34792917c436dead7574cb1"}
+                                                  :sha     "f5700a2e6a956df720f6b01f1a8097f375f758ac"}
          bithandshake/cljs-auto-title            {:git/url "https://github.com/bithandshake/cljs-auto-title"
-                                                  :sha     "ecc676f588b2c0f3c34792917c436dead7574cb1"}
+                                                  :sha     "f5700a2e6a956df720f6b01f1a8097f375f758ac"}
          bithandshake/cljs-dom                   {:git/url "https://github.com/bithandshake/cljs-dom"
-                                                  :sha     "711117ad5f9a8c475b2eeeec316711c9db290ade"}
+                                                  :sha     "813c837b6324486b73cca5397632f8525e4878b1"}
          bithandshake/cljs-intersection-observer {:git/url "https://github.com/bithandshake/cljs-intersection-observer"
-                                                  :sha     "711117ad5f9a8c475b2eeeec316711c9db290ade"}
+                                                  :sha     "813c837b6324486b73cca5397632f8525e4878b1"}
          bithandshake/cljs-scroll-lock           {:git/url "https://github.com/bithandshake/cljs-scroll-lock"
-                                                  :sha     "711117ad5f9a8c475b2eeeec316711c9db290ade"}
+                                                  :sha     "813c837b6324486b73cca5397632f8525e4878b1"}
          bithandshake/re-frame-api               {:git/url "https://github.com/bithandshake/re-frame-api"
-                                                  :sha     "711117ad5f9a8c475b2eeeec316711c9db290ade"}
+                                                  :sha     "813c837b6324486b73cca5397632f8525e4878b1"}
          bithandshake/reagent-api                {:git/url "https://github.com/bithandshake/reagent-api"
-                                                  :sha     "711117ad5f9a8c475b2eeeec316711c9db290ade"}
+                                                  :sha     "813c837b6324486b73cca5397632f8525e4878b1"}
          mt-app-kit/cljc-app-dictionary          {:git/url "https://github.com/mt-app-kit/cljc-app-dictionary"
-                                                  :sha     "711117ad5f9a8c475b2eeeec316711c9db290ade"}
+                                                  :sha     "813c837b6324486b73cca5397632f8525e4878b1"}
          mt-app-kit/cljc-metamorphic-content     {:git/url "https://github.com/mt-app-kit/cljc-metamorphic-content"
-                                                  :sha     "711117ad5f9a8c475b2eeeec316711c9db290ade"}
+                                                  :sha     "813c837b6324486b73cca5397632f8525e4878b1"}
          mt-app-kit/cljs-keypress-handler        {:git/url "https://github.com/mt-app-kit/cljs-keypress-handler"
-                                                  :sha     "dde8236309ba3b0bfc0bbd520f5f480275686e91"}
+                                                  :sha     "90b555ebf692dcfc263c5e692bba9051154219b0"}
          mt-app-kit/cljs-window-observer         {:git/url "https://github.com/mt-app-kit/cljs-window-observer"
-                                                  :sha     "711117ad5f9a8c475b2eeeec316711c9db290ade"}
+                                                  :sha     "813c837b6324486b73cca5397632f8525e4878b1"}
          org.clojure/clojurescript               {:mvn/version "1.10.891"}
          pretty-project/pretty-css               {:git/url "https://github.com/pretty-project/pretty-css"
                                                   :sha     "0f55e294271b5609ff53da5c5b4f2d51d9889614"}
