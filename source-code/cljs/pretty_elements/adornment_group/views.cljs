@@ -51,38 +51,34 @@
   ; @description
   ; Group of downsized button elements.
   ;
+  ; @links Implemented elements
+  ; [Adornment](pretty-ui/cljs/pretty-elements/api.html#adornment)
+  ;
+  ; @links Implemented properties
+  ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
+  ; [Flex properties](pretty-core/cljs/pretty-properties/api.html#flex-properties)
+  ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
+  ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
+  ; [Size properties](pretty-core/cljs/pretty-properties/api.html#size-properties)
+  ; [Space properties](pretty-core/cljs/pretty-properties/api.html#space-properties)
+  ; [State properties](pretty-core/cljs/pretty-properties/api.html#State-properties)
+  ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
+  ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
+  ;
   ; @param (keyword)(opt) group-id
   ; @param (map) group-props
-  ; {:adornment-default (map)(opt)
-  ;  :adornments (maps in vector)(opt)
-  ;  :class (keyword or keywords in vector)(opt)
-  ;  :disabled? (boolean)(opt)
-  ;  :gap (keyword, px or string)(opt)
-  ;  :height (keyword, px or string)(opt)
-  ;  :horizontal-align (keyword)(opt)
-  ;  :indent (map)(opt)
-  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :max-height (keyword, px or string)(opt)
-  ;  :max-width (keyword, px or string)(opt)
-  ;  :min-height (keyword, px or string)(opt)
-  ;  :min-width (keyword, px or string)(opt)
-  ;  :on-mount-f (function)(opt)
-  ;  :on-unmount-f (function)(opt)
-  ;  :orientation (keyword)(opt)
-  ;  :outdent (map)(opt)
-  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :overflow (keyword)(opt)
-  ;  :preset (keyword)(opt)
-  ;  :style (map)(opt)
-  ;  :theme (keyword)(opt)
-  ;  :vertical-align (keyword)(opt)
-  ;  :width (keyword, px or string)(opt)}
+  ; Check out the implemented elements below.
+  ; Check out the implemented properties below.
   ;
-  ; @usage
-  ; [adornment-group {...}]
-  ;
-  ; @usage
-  ; [adornment-group :my-adornment-group {...}]
+  ; @usage (adornment-group.png)
+  ; [adornment-group {:adornment-default {:fill-color :highlight :border-radius {:all :s}}
+  ;                   :adornments [{:icon :home}
+  ;                                {:icon :settings}
+  ;                                {:icon :star}
+  ;                                {:icon :delete}
+  ;                                {:icon :add}
+  ;                                {:icon :favorite :icon-color :warning :icon-family :material-symbols-filled}]
+  ;                   :gap :xs}]
   ([group-props]
    [view (random/generate-keyword) group-props])
 

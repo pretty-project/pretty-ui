@@ -115,6 +115,6 @@
   [field-id field-props event]
   (let [field-content (text-field.utils/on-change-event->field-content field-id field-props event)]
        (pretty-inputs.engine/input-value-changed field-id field-props field-content)
-       (activity-listener/reg-last-activity!  field-id)
+       (activity-listener/reg-activity! field-id)
        (letfn [(f0 [] (type-ended field-id field-props))]
               (time/set-timeout! f0 text-field.config/TYPE-ENDED-AFTER))))

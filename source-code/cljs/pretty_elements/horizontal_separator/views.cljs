@@ -40,46 +40,32 @@
                        :reagent-render         (fn [_ separator-props] [horizontal-separator separator-id separator-props])}))
 
 (defn view
+  ; @description
+  ; Horizontal line element with optional label.
+  ;
+  ; @links Implemented properties
+  ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
+  ; [Flex properties](pretty-core/cljs/pretty-properties/api.html#flex-properties)
+  ; [Font properties](pretty-core/cljs/pretty-properties/api.html#font-properties)
+  ; [Label properties](pretty-core/cljs/pretty-properties/api.html#label-properties)
+  ; [Line properties](pretty-core/cljs/pretty-properties/api.html#line-properties)
+  ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
+  ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
+  ; [Size properties](pretty-core/cljs/pretty-properties/api.html#size-properties)
+  ; [Space properties](pretty-core/cljs/pretty-properties/api.html#space-properties)
+  ; [State properties](pretty-core/cljs/pretty-properties/api.html#state-properties)
+  ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
+  ; [Text properties](pretty-core/cljs/pretty-properties/api.html#text-properties)
+  ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
+  ;
   ; @param (keyword)(opt) separator-id
   ; @param (map) separator-props
-  ; {:class (keyword or keywords in vector)(opt)
-  ;  :disabled? (boolean)(opt)
-  ;  :font-size (keyword, px or string)(opt)
-  ;  :font-weight (keyword or integer)(opt)
-  ;  :gap (keyword, px or string)(opt)
-  ;  :height (keyword, px or string)(opt)
-  ;  :indent (map)(opt)
-  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :label (metamorphic-content)(opt)
-  ;  :label-placeholder (metamorphic-content)(opt)
-  ;  :letter-spacing (keyword, px or string)(opt)
-  ;  :line-color (keyword or string)(opt)
-  ;  :line-height (keyword, px or string)(opt)
-  ;  :line-strength (keyword, px or string)(opt)
-  ;  :max-height (keyword, px or string)(opt)
-  ;  :max-width (keyword, px or string)(opt)
-  ;  :min-height (keyword, px or string)(opt)
-  ;  :min-width (keyword, px or string)(opt)
-  ;  :on-mount-f (function)(opt)
-  ;  :on-unmount-f (function)(opt)
-  ;  :outdent (map)(opt)
-  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :preset (keyword)(opt)
-  ;  :style (map)(opt)
-  ;  :text-align (keyword)(opt)
-  ;  :text-color (keyword or string)(opt)
-  ;  :text-direction (keyword)(opt)
-  ;  :text-overflow (keyword)(opt)
-  ;  :text-selectable? (boolean)(opt)
-  ;  :text-transform (keyword)(opt)
-  ;  :theme (keyword)(opt)
-  ;  :width (keyword, px or string)(opt)}
+  ; Check out the implemented accessories below.
+  ; Check out the implemented elements below.
+  ; Check out the implemented properties below.
   ;
-  ; @usage
-  ; [horizontal-separator {...}]
-  ;
-  ; @usage
-  ; [horizontal-separator :my-horizontal-separator {...}]
+  ; @usage (horizontal-separator.png)
+  ; ...
   ([separator-props]
    [view (random/generate-keyword) separator-props])
 

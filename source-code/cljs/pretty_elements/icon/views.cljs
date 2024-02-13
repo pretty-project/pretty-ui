@@ -35,29 +35,25 @@
                        :reagent-render         (fn [_ icon-props] [icon icon-id icon-props])}))
 
 (defn view
+  ; @description
+  ; Icon element.
+  ;
+  ; @links Implemented properties
+  ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
+  ; [Icon properties](pretty-core/cljs/pretty-properties/api.html#icon-properties)
+  ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
+  ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
+  ; [Space properties](pretty-core/cljs/pretty-properties/api.html#space-properties)
+  ; [State properties](pretty-core/cljs/pretty-properties/api.html#state-properties)
+  ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
+  ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
+  ;
   ; @param (keyword)(opt) icon-id
   ; @param (map) icon-props
-  ; {:class (keyword or keywords in vector)(opt)
-  ;  :disabled? (boolean)(opt)
-  ;  :icon (keyword)(opt)
-  ;  :icon-color (keyword or string)(opt)
-  ;  :icon-family (keyword)(opt)
-  ;  :icon-size (keyword, px or string)(opt)
-  ;  :indent (map)(opt)
-  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :on-mount-f (function)(opt)
-  ;  :on-unmount-f (function)(opt)
-  ;  :outdent (map)(opt)
-  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :preset (keyword)(opt)
-  ;  :style (map)(opt)
-  ;  :theme (keyword)(opt)}
+  ; Check out the implemented properties below.
   ;
-  ; @usage
-  ; [icon {...}]
-  ;
-  ; @usage
-  ; [icon :my-icon {...}]
+  ; @usage (icon.png)
+  ; ...
   ([icon-props]
    [view (random/generate-keyword) icon-props])
 

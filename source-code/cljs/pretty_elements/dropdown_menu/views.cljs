@@ -45,27 +45,27 @@
   ; @description
   ; Dropdown style menu.
   ;
+  ; @links Implemented elements
+  ; [Menu-bar](pretty-ui/cljs/pretty-elements/api.html#menu-bar)
+  ; [Surface](pretty-ui/cljs/pretty-elements/api.html#surface)
+  ;
+  ; @links Implemented properties
+  ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
+  ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
+  ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
+  ; [Progress properties](pretty-core/cljs/pretty-properties/api.html#progress-properties)
+  ; [Space properties](pretty-core/cljs/pretty-properties/api.html#space-properties)
+  ; [State properties](pretty-core/cljs/pretty-properties/api.html#state-properties)
+  ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
+  ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
+  ;
   ; @param (keyword)(opt) menu-id
   ; @param (map) menu-props
-  ; {:class (keyword or keywords in vector)(opt)
-  ;  :disabled? (boolean)(opt)
-  ;  :indent (map)(opt)
-  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :menu-bar (map)(opt)
-  ;  :on-mount-f (function)(opt)
-  ;  :on-unmount-f (function)(opt)
-  ;  :outdent (map)(opt)
-  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :preset (keyword)(opt)
-  ;  :style (map)(opt)
-  ;  :surface (map)(opt)
-  ;  :theme (keyword)(opt)}
+  ; Check out the implemented elements below.
+  ; Check out the implemented properties below.
   ;
-  ; @usage
-  ; [dropdown-menu {...}]
-  ;
-  ; @usage
-  ; [dropdown-menu :my-dropdown-menu {...}]
+  ; @usage (dropdown-menu.png)
+  ; ...
   ([menu-props]
    [view (random/generate-keyword) menu-props])
 

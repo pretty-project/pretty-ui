@@ -15,7 +15,7 @@
   ; @return (map)
   [chip-id chip-props]
   (let [set-reference-f (react-references/set-reference-f chip-id)]
-       (-> chip-props (pretty-properties/clickable-text-auto-props)
+       (-> chip-props ;(pretty-properties/clickable-text-auto-props) 
                       (pretty-properties/default-anchor-props           {})
                       (pretty-properties/default-background-color-props {:fill-color :primary})
                       (pretty-properties/default-border-props           {})

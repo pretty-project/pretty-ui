@@ -41,45 +41,28 @@
   ; @description
   ; Simplified button element for breadcrumb style menus.
   ;
+  ; @links Implemented properties
+  ; [Anchor properties](pretty-core/cljs/pretty-properties/api.html#anchor-properties)
+  ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
+  ; [Clickable state properties](pretty-core/cljs/pretty-properties/api.html#clickable-state-properties)
+  ; [Font properties](pretty-core/cljs/pretty-properties/api.html#font-properties)
+  ; [Effect properties](pretty-core/cljs/pretty-properties/api.html#effect-properties)
+  ; [Label properties](pretty-core/cljs/pretty-properties/api.html#label-properties)
+  ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
+  ; [Mouse event properties](pretty-core/cljs/pretty-properties/api.html#mouse-event-properties)
+  ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
+  ; [Size properties](pretty-core/cljs/pretty-properties/api.html#size-properties)
+  ; [Space properties](pretty-core/cljs/pretty-properties/api.html#space-properties)
+  ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
+  ; [Text properties](pretty-core/cljs/pretty-properties/api.html#text-properties)
+  ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
+  ;
   ; @param (keyword)(opt) crumb-id
   ; @param (map) crumb-props
-  ; {:class (keyword or keywords in vector)(opt)
-  ;  :click-effect (keyword)(opt)
-  ;  :disabled? (boolean)(opt)
-  ;  :height (keyword, px or string)(opt)
-  ;  :hover-effect (keyword)(opt)
-  ;  :href-target (keyword)(opt)
-  ;  :href-uri (string)(opt)
-  ;  :indent (map)(opt)
-  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :label (metamorphic-content)(opt)
-  ;  :label-placeholder (metamorphic-content)(opt)
-  ;  :max-height (keyword, px or string)(opt)
-  ;  :max-width (keyword, px or string)(opt)
-  ;  :min-height (keyword, px or string)(opt)
-  ;  :min-width (keyword, px or string)(opt)
-  ;  :on-click-f (function)(opt)
-  ;  :on-mount-f (function)(opt)
-  ;  :on-unmount-f (function)(opt)
-  ;  :outdent (map)(opt)
-  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :preset (keyword)(opt)
-  ;  :style (map)(opt)
-  ;  :tab-disabled? (boolean)(opt)
-  ;  :text-align (keyword)(opt)
-  ;  :text-color (keyword or string)(opt)
-  ;  :text-direction (keyword)(opt)
-  ;  :text-overflow (keyword)(opt)
-  ;  :text-selectable? (boolean)(opt)
-  ;  :text-transform (keyword)(opt)
-  ;  :theme (keyword)(opt)
-  ;  :width (keyword, px or string)(opt)}
+  ; Check out the implemented properties below.
   ;
-  ; @usage
-  ; [crumb {...}]
-  ;
-  ; @usage
-  ; [crumb :my-crumb {...}]
+  ; @usage (crumb.png)
+  ; ...
   ([crumb-props]
    [view (random/generate-keyword) crumb-props])
 

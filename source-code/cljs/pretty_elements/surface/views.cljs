@@ -56,6 +56,15 @@
   ; Surface element for displaying content with optionally animated transitions,
   ; and additional controller functions.
   ;
+  ; @links Implemented controls
+  ; [surface-mounted?](pretty-ui/cljs/pretty-controls/api.html#surface-mounted_)
+  ; [mount-surface!](pretty-ui/cljs/pretty-controls/api.html#mount-surface_)
+  ; [unmount-surface!](pretty-ui/cljs/pretty-controls/api.html#unmount-surface_)
+  ; [set-surface-content!](pretty-ui/cljs/pretty-controls/api.html#set-surface-content_)
+  ; [swap-surface-content!](pretty-ui/cljs/pretty-controls/api.html#swap-surface-content_)
+  ; [show-surface-content!](pretty-ui/cljs/pretty-controls/api.html#show-surface-content_)
+  ; [hide-surface-content!](pretty-ui/cljs/pretty-controls/api.html#hide-surface-content_)
+  ;
   ; @param (keyword)(opt) surface-id
   ; @param (map) surface-props
   ; {:border-color (keyword or string)(opt)

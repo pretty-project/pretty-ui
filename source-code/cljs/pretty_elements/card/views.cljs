@@ -49,71 +49,40 @@
   ; @description
   ; Optionally clickable card style element for displaying content.
   ;
+  ; @links Implemented accessories
+  ; [Badge](pretty-ui/cljs/pretty-accessories/api.html#badge)
+  ; [Cover](pretty-ui/cljs/pretty-accessories/api.html#cover)
+  ; [Marker](pretty-ui/cljs/pretty-accessories/api.html#marker)
+  ; [Tooltip](pretty-ui/cljs/pretty-accessories/api.html#tooltip)
+  ;
+  ; @links Implemented properties
+  ; [Anchor properties](pretty-core/cljs/pretty-properties/api.html#anchor-properties)
+  ; [Background properties color](pretty-core/cljs/pretty-properties/api.html#background-color-properties)
+  ; [Border properties](pretty-core/cljs/pretty-properties/api.html#border-properties)
+  ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
+  ; [Clickable state properties](pretty-core/cljs/pretty-properties/api.html#clickable-state-properties)
+  ; [Content properties](pretty-core/cljs/pretty-properties/api.html#content-properties)
+  ; [Cursor properties](pretty-core/cljs/pretty-properties/api.html#cursor-properties)
+  ; [Effect properties](pretty-core/cljs/pretty-properties/api.html#effect-properties)
+  ; [Font properties](pretty-core/cljs/pretty-properties/api.html#font-properties)
+  ; [Flex properties](pretty-core/cljs/pretty-properties/api.html#flex-properties)
+  ; [Keypress properties](pretty-core/cljs/pretty-properties/api.html#keypress-properties)
+  ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
+  ; [Mouse event properties](pretty-core/cljs/pretty-properties/api.html#mouse-event-properties)
+  ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
+  ; [Size properties](pretty-core/cljs/pretty-properties/api.html#size-properties)
+  ; [Space properties](pretty-core/cljs/pretty-properties/api.html#space-properties)
+  ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
+  ; [Text properties](pretty-core/cljs/pretty-properties/api.html#text-properties)
+  ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
+  ;
   ; @param (keyword)(opt) card-id
   ; @param (map) card-props
-  ; {:badge (map)(opt)
-  ;  :border-color (keyword or string)(opt)
-  ;  :border-position (keyword)(opt)
-  ;  :border-radius (map)(opt)
-  ;   {:all, :tl, :tr, :br, :bl (keyword, px or string)(opt)}
-  ;  :border-width (keyword, px or string)(opt)
-  ;  :class (keyword or keywords in vector)(opt)
-  ;  :click-effect (keyword)(opt)
-  ;  :content (metamorphic-content)(opt)
-  ;  :content-placeholder (metamorphic-content)(opt)
-  ;  :cover (map)(opt)
-  ;  :cursor (keyword or string)(opt)
-  ;  :disabled? (boolean)(opt)
-  ;  :fill-color (keyword or string)(opt)
-  ;  :fill-pattern (keyword)(opt)
-  ;  :font-size (keyword, px or string)(opt)
-  ;  :font-weight (keyword or integer)(opt)
-  ;  :height (keyword, px or string)(opt)
-  ;  :horizontal-align (keyword)(opt)
-  ;  :highlighted? (boolean)(opt)
-  ;  :highlight-color (keyword or string)(opt)
-  ;  :highlight-pattern (keyword)(opt)
-  ;  :hover-color (keyword or string)(opt)
-  ;  :hover-pattern (keyword)(opt)
-  ;  :hover-effect (keyword)(opt)
-  ;  :href-target (keyword)(opt)
-  ;  :href-uri (string)(opt)
-  ;  :indent (map)(opt)
-  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :keypress (map)(opt)
-  ;  :letter-spacing (keyword, px or string)(opt)
-  ;  :line-height (keyword, px or string)(opt)
-  ;  :marker (map)(opt)
-  ;  :max-height (keyword, px or string)(opt)
-  ;  :max-width (keyword, px or string)(opt)
-  ;  :min-height (keyword, px or string)(opt)
-  ;  :min-width (keyword, px or string)(opt)
-  ;  :on-click-f (function)(opt)
-  ;  :on-click-timeout (ms)(opt)
-  ;  :on-mount-f (function)(opt)
-  ;  :on-unmount-f (function)(opt)
-  ;  :orientation (keyword)(opt)
-  ;  :outdent (map)(opt)
-  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :preset (keyword)(opt)
-  ;  :style (map)(opt)
-  ;  :tab-disabled? (boolean)(opt)
-  ;  :text-align (keyword)(opt)
-  ;  :text-color (keyword or string)(opt)
-  ;  :text-direction (keyword)(opt)
-  ;  :text-overflow (keyword)(opt)
-  ;  :text-selectable? (boolean)(opt)
-  ;  :text-transform (keyword)(opt)
-  ;  :theme (keyword)(opt)
-  ;  :tooltip (map)(opt)
-  ;  :vertical-align (keyword)(opt)
-  ;  :width (keyword, px or string)(opt)}
+  ; Check out the implemented accessories below.
+  ; Check out the implemented properties below.
   ;
-  ; @usage
-  ; [card {...}]
-  ;
-  ; @usage
-  ; [card :my-card {...}]
+  ; @usage (card.png)
+  ; ...
   ([card-props]
    [view (random/generate-keyword) card-props])
 

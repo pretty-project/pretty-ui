@@ -50,68 +50,59 @@
   ; @description
   ; Optionally clickable chip style element with adornments.
   ;
+  ; @links Implemented accessories
+  ; [Cover](pretty-ui/cljs/pretty-accessories/api.html#cover)
+  ; [Tooltip](pretty-ui/cljs/pretty-accessories/api.html#tooltip)
+  ;
+  ; @links Implemented elements
+  ; [Adornment-group](pretty-ui/cljs/pretty-elements/api.html#adornment-group)
+  ;
+  ; @links Implemented properties
+  ; [Anchor properties](pretty-core/cljs/pretty-properties/api.html#anchor-properties)
+  ; [Background properties color](pretty-core/cljs/pretty-properties/api.html#background-color-properties)
+  ; [Border properties](pretty-core/cljs/pretty-properties/api.html#border-properties)
+  ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
+  ; [Clickable state properties](pretty-core/cljs/pretty-properties/api.html#clickable-state-properties)
+  ; [Cursor properties](pretty-core/cljs/pretty-properties/api.html#cursor-properties)
+  ; [Effect properties](pretty-core/cljs/pretty-properties/api.html#effect-properties)
+  ; [Font properties](pretty-core/cljs/pretty-properties/api.html#font-properties)
+  ; [Keypress properties](pretty-core/cljs/pretty-properties/api.html#keypress-properties)
+  ; [Label properties](pretty-core/cljs/pretty-properties/api.html#label-properties)
+  ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
+  ; [Mouse event properties](pretty-core/cljs/pretty-properties/api.html#mouse-event-properties)
+  ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
+  ; [Size properties](pretty-core/cljs/pretty-properties/api.html#size-properties)
+  ; [Space properties](pretty-core/cljs/pretty-properties/api.html#space-properties)
+  ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
+  ; [Text properties](pretty-core/cljs/pretty-properties/api.html#text-properties)
+  ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
+  ;
   ; @param (keyword)(opt) chip-id
   ; @param (map) chip-props
-  ; {:border-color (keyword or string)(opt)
-  ;  :border-position (keyword)(opt)
-  ;  :border-radius (map)(opt)
-  ;   {:all, :tl, :tr, :br, :bl (keyword, px or string)(opt)}
-  ;  :class (keyword or keywords in vector)(opt)
-  ;  :click-effect (keyword)(opt)
-  ;  :cover (map)(opt)
-  ;  :cursor (keyword or string)(opt)
-  ;  :disabled? (boolean)(opt)
-  ;  :end-adornment-default (map)(opt)
-  ;  :end-adornments (maps in vector)(opt)
-  ;  :fill-color (keyword or string)(opt)
-  ;  :fill-pattern (keyword)(opt)
-  ;  :font-size (keyword, px or string)(opt)
-  ;  :font-weight (keyword or integer)(opt)
-  ;  :height (keyword, px or string)(opt)
-  ;  :highlighted? (boolean)(opt)
-  ;  :highlight-color (keyword or string)(opt)
-  ;  :highlight-pattern (keyword)(opt)
-  ;  :hover-color (keyword or string)(opt)
-  ;  :hover-effect (keyword)(opt)
-  ;  :hover-pattern (keyword)(opt)
-  ;  :href-target (keyword)(opt)
-  ;  :href-uri (string)(opt)
-  ;  :indent (map)(opt)
-  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :keypress (map)(opt)
-  ;  :label (metamorphic-content)(opt)
-  ;  :label-placeholder (metamorphic-content)(opt)
-  ;  :letter-spacing (keyword, px or string)(opt)
-  ;  :line-height (keyword, px or string)(opt)
-  ;  :max-height (keyword, px or string)(opt)
-  ;  :max-width (keyword, px or string)(opt)
-  ;  :min-height (keyword, px or string)(opt)
-  ;  :min-width (keyword, px or string)(opt)
-  ;  :on-click-f (function)(opt)
-  ;  :on-click-timeout (ms)(opt)
-  ;  :on-mount-f (function)(opt)
-  ;  :on-unmount-f (function)(opt)
-  ;  :outdent (map)(opt)
-  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :preset (keyword)(opt)
-  ;  :start-adornment-default (map)(opt)
-  ;  :start-adornments (maps in vector)(opt)
-  ;  :style (map)(opt)
-  ;  :tab-disabled? (boolean)(opt)
-  ;  :text-align (keyword)(opt)
-  ;  :text-color (keyword or string)(opt)
-  ;  :text-direction (keyword)(opt)
-  ;  :text-overflow (keyword)(opt)
-  ;  :text-selectable? (boolean)(opt)
-  ;  :text-transform (keyword)(opt)
-  ;  :theme (keyword)(opt)
-  ;  :width (keyword, px or string)(opt)}
+  ; Check out the implemented accessories below.
+  ; Check out the implemented elements below.
+  ; Check out the implemented properties below.
   ;
-  ; @usage
-  ; [chip {...}]
+  ; @usage (chip.png)
+  ; [chip {:border-radius    {:all :l}
+  ;        :fill-color       :primary
+  ;        :font-weight      :semi-bold
+  ;        :gap              :auto
+  ;        :indent           {:left :xxs :right :s :vertical :xxs}
+  ;        :label            "My chip #1"
+  ;        :width            :xl
+  ;        :start-adornments [{:icon :close :border-radius {:all :m} :fill-color :highlight}]}]
   ;
-  ; @usage
-  ; [chip :my-chip {...}]
+  ; [chip {:border-color   :highlight
+  ;        :border-radius  {:all :l}
+  ;        :fill-color     :highlight
+  ;        :font-weight    :semi-bold
+  ;        :gap            :auto
+  ;        :indent         {:left :s :right :xxs :vertical :xxs}
+  ;        :label          "My chip #2"
+  ;        :width          :xl
+  ;        :end-adornments [{:icon :close :border-color :highlight :border-radius {:all :m} :fill-color :default}]}]
+  ;
   ([chip-props]
    [view (random/generate-keyword) chip-props])
 

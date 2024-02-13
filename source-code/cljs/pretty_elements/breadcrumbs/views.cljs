@@ -64,37 +64,37 @@
   ; @description
   ; Breadcrumb style menu element.
   ;
+  ; @links Implemented accessories
+  ; [Bullet](pretty-ui/cljs/pretty-accessories/api.html#bullet)
+  ;
+  ; @links Implemented elements
+  ; [Crumb](pretty-ui/cljs/pretty-elements/api.html#crumb)
+  ;
+  ; @links Implemented properties
+  ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
+  ; [Flex properties](pretty-core/cljs/pretty-properties/api.html#flex-properties)
+  ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
+  ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
+  ; [Size properties](pretty-core/cljs/pretty-properties/api.html#size-properties)
+  ; [Space properties](pretty-core/cljs/pretty-properties/api.html#space-properties)
+  ; [State properties](pretty-core/cljs/pretty-properties/api.html#State-properties)
+  ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
+  ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
+  ;
   ; @param (keyword)(opt) breadcrumbs-id
   ; @param (map) breadcrumbs-props
-  ; {:bullet-color (keyword or string)(opt)
-  ;  :class (keyword or keywords in vector)(opt)
-  ;  :crumb-default (map)(opt)
-  ;  :crumbs (maps in vector)(opt)
-  ;  :disabled? (boolean)(opt)
-  ;  :gap (keyword, px or string)(opt)
-  ;  :height (keyword, px or string)(opt)
-  ;  :indent (map)(opt)
-  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :max-height (keyword, px or string)(opt)
-  ;  :max-width (keyword, px or string)(opt)
-  ;  :min-height (keyword, px or string)(opt)
-  ;  :min-width (keyword, px or string)(opt)
-  ;  :on-mount-f (function)(opt)
-  ;  :on-unmount-f (function)(opt)
-  ;  :orientation (keyword)(opt)
-  ;  :outdent (map)(opt)
-  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :overflow (keyword)(opt)
-  ;  :preset (keyword)(opt)
-  ;  :style (map)(opt)
-  ;  :theme (keyword)(opt)
-  ;  :width (keyword, px or string)(opt)}
+  ; Check out the implemented accessories below.
+  ; Check out the implemented elements below.
+  ; Check out the implemented properties below.
   ;
-  ; @usage
-  ; [breadcrumbs {...}]
-  ;
-  ; @usage
-  ; [breadcrumbs :my-breadcrumbs {...}]
+  ; @usage (breadcrumbs.png)
+  ; [breadcrumbs {:bullet        {:border-radius {:all :xxs}}
+  ;               :crumb-default {:font-size :xs}
+  ;               :crumbs [{:label "My crumb #1" :href-uri "/my-uri-1"}
+  ;                        {:label "My crumb #2" :href-uri "/my-uri-2"}
+  ;                        {:label "My crumb #3" :href-uri "/my-uri-3"}
+  ;                        {:label "My crumb #4" :href-uri "/my-uri-4"}
+  ;                        {:label "My crumb #5"}]}
   ([breadcrumbs-props]
    [view (random/generate-keyword) breadcrumbs-props])
 

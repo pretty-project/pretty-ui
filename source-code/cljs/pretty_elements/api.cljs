@@ -36,6 +36,35 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+; @tutorial Implemented accessories
+;
+; Some element implements accessories.
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @tutorial Implemented elements
+;
+; Some element implements other elements.
+; For example, the 'menu-bar' element displays a set of configured 'menu-item' elements.
+;
+; @usage
+; [menu-bar {:menu-items [{:label "Menu item #1" :href "/my-uri"}]
+;            ...}]
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @tutorial Implemented properties
+;
+; Elements implement property models.
+;
+; @usage
+; [button {:font-size :xs :font-weight :medium :letter-spacing :auto ...}]
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 ; @redirect (pretty-elements.expandable.side-effects/*)
 (def expand-content!   expandable.side-effects/expand-content!)
 (def collapse-content! expandable.side-effects/collapse-content!)
@@ -54,8 +83,8 @@
 ; @redirect (*/view)
 (def adornment            adornment.views/view)
 (def adornment-group      adornment-group.views/view)
-(def breadcrumbs          breadcrumbs.views/view)
 (def blank                blank.views/view)
+(def breadcrumbs          breadcrumbs.views/view)
 (def button               button.views/view)
 (def card                 card.views/view)
 (def chip                 chip.views/view)
