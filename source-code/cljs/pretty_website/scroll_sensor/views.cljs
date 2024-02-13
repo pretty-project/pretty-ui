@@ -6,7 +6,7 @@
               [pretty-website.scroll-sensor.attributes   :as scroll-sensor.attributes]
               [pretty-website.scroll-sensor.prototypes   :as scroll-sensor.prototypes]
               [pretty-website.scroll-sensor.side-effects :as scroll-sensor.side-effects]
-              [reagent.api                               :as reagent]))
+              [reagent.core :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -30,9 +30,9 @@
   ; {:callback-f (function)}
   [sensor-id {:keys [callback-f] :as sensor-props}]
   ; @note (tutorials#parameterizing)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (scroll-sensor.side-effects/sensor-did-mount-f sensor-id callback-f))
-                       :reagent-render         (fn [_ sensor-props] [scroll-sensor sensor-id sensor-props])}))
-                      ;on-mount? on-unmount?
+  (reagent/create-class {:component-did-mount    (fn [_ _] (scroll-sensor.side-effects/sensor-did-mount-f sensor-id callback-f))
+                         :reagent-render         (fn [_ sensor-props] [scroll-sensor sensor-id sensor-props])}))
+                        ;on-mount? on-unmount?
 
 (defn view
   ; @param (keyword)(opt) sensor-id

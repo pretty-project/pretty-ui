@@ -7,7 +7,7 @@
               [pretty-elements.surface.config     :as surface.config]
               [pretty-elements.surface.prototypes :as surface.prototypes]
               [pretty-presets.engine.api          :as pretty-presets.engine]
-              [reagent.api                        :as reagent]
+              [reagent.core :as reagent]
               [transition-controller.api          :as transition-controller]))
 
 ;; ----------------------------------------------------------------------------
@@ -46,10 +46,10 @@
   ; @param (map) surface-props
   [surface-id surface-props]
   ; @note (tutorials#parameterizing)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    surface-id surface-props))
-                       :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount surface-id surface-props))
-                       :component-did-update   (fn [%]   (pretty-elements.engine/element-did-update   surface-id surface-props %))
-                       :reagent-render         (fn [_ surface-props] [surface surface-id surface-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    surface-id surface-props))
+                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount surface-id surface-props))
+                         :component-did-update   (fn [%]   (pretty-elements.engine/element-did-update   surface-id surface-props %))
+                         :reagent-render         (fn [_ surface-props] [surface surface-id surface-props])}))
 
 (defn view
   ; @description

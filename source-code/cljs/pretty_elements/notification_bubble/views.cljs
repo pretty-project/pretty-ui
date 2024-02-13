@@ -6,7 +6,7 @@
               [pretty-elements.notification-bubble.attributes :as notification-bubble.attributes]
               [pretty-elements.notification-bubble.prototypes :as notification-bubble.prototypes]
               [pretty-presets.engine.api :as pretty-presets.engine]
-              [reagent.api :as reagent]
+              [reagent.core :as reagent]
               [pretty-accessories.api :as pretty-accessories]))
 
 ;; ----------------------------------------------------------------------------
@@ -41,10 +41,10 @@
   [bubble-id bubble-props]
   ; @note (tutorials#parameterizing)
   ; @note (pretty-elements.adornment.views#8097)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    bubble-id bubble-props))
-                       :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount bubble-id bubble-props))
-                       :component-did-update   (fn [%]   (pretty-elements.engine/element-did-update   bubble-id bubble-props %))
-                       :reagent-render         (fn [_ bubble-props] [notification-bubble bubble-id bubble-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    bubble-id bubble-props))
+                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount bubble-id bubble-props))
+                         :component-did-update   (fn [%]   (pretty-elements.engine/element-did-update   bubble-id bubble-props %))
+                         :reagent-render         (fn [_ bubble-props] [notification-bubble bubble-id bubble-props])}))
 
 (defn view
   ; @param (keyword) bubble-id

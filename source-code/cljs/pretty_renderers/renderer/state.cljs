@@ -1,6 +1,6 @@
 
 (ns pretty-renderers.renderer.state
-    (:require [reagent.api :refer [ratom]]))
+    (:require [reagent.core :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -9,4 +9,4 @@
 ;
 ; @atom (map)
 ; {:my-renderer {...}}
-(defonce RENDERERS (ratom {}))
+(defonce RENDERERS (reagent/atom {}))

@@ -6,7 +6,7 @@
               [pretty-presets.engine.api                   :as pretty-presets.engine]
               [pretty-website.language-selector.attributes :as language-selector.attributes]
               [pretty-website.language-selector.prototypes :as language-selector.prototypes]
-              [reagent.api                                 :as reagent]))
+              [reagent.core :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -35,9 +35,9 @@
   ; @param (map) selector-props
   [selector-id selector-props]
   ; @note (tutorials#parameterizing)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    selector-id selector-props))
-                       :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount selector-id selector-props))
-                       :reagent-render         (fn [_ selector-props] [language-selector selector-id selector-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    selector-id selector-props))
+                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount selector-id selector-props))
+                         :reagent-render         (fn [_ selector-props] [language-selector selector-id selector-props])}))
 
 (defn view
   ; @param (keyword)(opt) selector-id

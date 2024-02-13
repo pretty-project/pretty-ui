@@ -6,7 +6,7 @@
               [pretty-presets.engine.api                 :as pretty-presets.engine]
               [pretty-website.follow-us-links.attributes :as follow-us-links.attributes]
               [pretty-website.follow-us-links.prototypes :as follow-us-links.prototypes]
-              [reagent.api                               :as reagent]))
+              [reagent.core :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -33,9 +33,9 @@
   ; @param (map) links-props
   [links-id links-props]
   ; @note (tutorials#parameterizing)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    links-id links-props))
-                       :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount links-id links-props))
-                       :reagent-render         (fn [_ links-props] [follow-us-links links-id links-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    links-id links-props))
+                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount links-id links-props))
+                         :reagent-render         (fn [_ links-props] [follow-us-links links-id links-props])}))
 
 (defn view
   ; @important

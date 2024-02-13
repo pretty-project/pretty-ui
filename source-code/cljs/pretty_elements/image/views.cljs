@@ -7,7 +7,7 @@
               [pretty-presets.engine.api            :as pretty-presets.engine]
               [pretty-accessories.api :as pretty-accessories]
               [dynamic-props.api :as dynamic-props]
-              [reagent.api :as reagent]
+              [reagent.core :as reagent]
               [pretty-accessories.api :as pretty-accessories]
               [lazy-loader.api :as lazy-loader]))
 
@@ -68,10 +68,10 @@
   [image-id image-props]
   ; @note (tutorials#parameterizing)
   ; @note (pretty-elements.adornment.views#8097)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    image-id image-props))
-                       :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount image-id image-props))
-                       :component-did-update   (fn [%]   (pretty-elements.engine/element-did-update   image-id image-props %))
-                       :reagent-render         (fn [_ image-props] [image image-id image-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    image-id image-props))
+                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount image-id image-props))
+                         :component-did-update   (fn [%]   (pretty-elements.engine/element-did-update   image-id image-props %))
+                         :reagent-render         (fn [_ image-props] [image image-id image-props])}))
 
 (defn view
   ; @description

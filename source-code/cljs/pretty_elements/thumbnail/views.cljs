@@ -7,7 +7,7 @@
               [pretty-presets.engine.api            :as pretty-presets.engine]
               [pretty-accessories.api :as pretty-accessories]
               [dynamic-props.api :as dynamic-props]
-              [reagent.api :as reagent]
+              [reagent.core :as reagent]
               [pretty-accessories.api :as pretty-accessories]
               [lazy-loader.api :as lazy-loader]))
 
@@ -57,10 +57,10 @@
   [thumbnail-id thumbnail-props]
   ; @note (tutorials#parameterizing)
   ; @note (pretty-elements.adornment.views#8097)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    thumbnail-id thumbnail-props))
-                       :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount thumbnail-id thumbnail-props))
-                       :component-did-update   (fn [%]   (pretty-elements.engine/element-did-update   thumbnail-id thumbnail-props %))
-                       :reagent-render         (fn [_ thumbnail-props] [thumbnail thumbnail-id thumbnail-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    thumbnail-id thumbnail-props))
+                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount thumbnail-id thumbnail-props))
+                         :component-did-update   (fn [%]   (pretty-elements.engine/element-did-update   thumbnail-id thumbnail-props %))
+                         :reagent-render         (fn [_ thumbnail-props] [thumbnail thumbnail-id thumbnail-props])}))
 
 (defn view
   ; @description

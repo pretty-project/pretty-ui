@@ -9,7 +9,7 @@
               [pretty-inputs.combo-box.prototypes :as combo-box.prototypes]
               [pretty-inputs.text-field.views     :as text-field.views]
               [re-frame.api                       :as r]
-              [reagent.api                        :as reagent]))
+              [reagent.core :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

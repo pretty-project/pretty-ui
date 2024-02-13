@@ -7,7 +7,7 @@
               [pretty-elements.menu-bar.views           :as menu-bar.views]
               [pretty-elements.surface.views            :as surface.views]
               [pretty-presets.engine.api                :as pretty-presets.engine]
-              [reagent.api                              :as reagent]))
+              [reagent.core :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -37,9 +37,9 @@
   ; @param (map) menu-props
   [menu-id menu-props]
   ; @note (tutorials#parameterizing)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    menu-id menu-props))
-                       :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount menu-id menu-props))
-                       :reagent-render         (fn [_ menu-props] [dropdown-menu menu-id menu-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    menu-id menu-props))
+                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount menu-id menu-props))
+                         :reagent-render         (fn [_ menu-props] [dropdown-menu menu-id menu-props])}))
 
 (defn view
   ; @description

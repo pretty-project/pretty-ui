@@ -10,7 +10,7 @@
               [pretty-inputs.engine.api            :as pretty-inputs.engine]
               [pretty-inputs.header.views          :as header.views]
               [pretty-presets.engine.api           :as pretty-presets.engine]
-              [reagent.api                         :as reagent]))
+              [reagent.core :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -61,9 +61,9 @@
   ; @param (map) group-props
   [group-id group-props]
   ; @note (tutorials#parameterizing)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-inputs.engine/input-did-mount    group-id group-props))
-                       :component-will-unmount (fn [_ _] (pretty-inputs.engine/input-will-unmount group-id group-props))
-                       :reagent-render         (fn [_ group-props] [chip-group group-id group-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-inputs.engine/input-did-mount    group-id group-props))
+                         :component-will-unmount (fn [_ _] (pretty-inputs.engine/input-will-unmount group-id group-props))
+                         :reagent-render         (fn [_ group-props] [chip-group group-id group-props])}))
 
 (defn view
   ; @param (keyword)(opt) group-id

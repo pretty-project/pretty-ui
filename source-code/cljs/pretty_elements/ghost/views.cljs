@@ -5,7 +5,7 @@
               [pretty-elements.ghost.attributes :as ghost.attributes]
               [pretty-elements.ghost.prototypes :as ghost.prototypes]
               [pretty-presets.engine.api        :as pretty-presets.engine]
-              [reagent.api                      :as reagent]))
+              [reagent.core :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -29,9 +29,9 @@
   ; @param (map) ghost-props
   [ghost-id ghost-props]
   ; @note (tutorials#parameterizing)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    ghost-id ghost-props))
-                       :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount ghost-id ghost-props))
-                       :reagent-render         (fn [_ ghost-props] [ghost ghost-id ghost-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    ghost-id ghost-props))
+                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount ghost-id ghost-props))
+                         :reagent-render         (fn [_ ghost-props] [ghost ghost-id ghost-props])}))
 
 (defn view
   ; @description

@@ -7,7 +7,7 @@
               [pretty-layouts.plain-surface.prototypes :as plain-surface.prototypes]
               [pretty-presets.engine.api               :as pretty-presets.engine]
               [re-frame.api                            :as r]
-              [reagent.api                             :as reagent]))
+              [reagent.core :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -34,9 +34,9 @@
   ; {}
   [surface-id {:keys [on-mount on-unmount] :as surface-props}]
   ; @note (tutorials#parameterizing)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (r/dispatch on-mount))
-                       :component-will-unmount (fn [_ _] (r/dispatch on-unmount))
-                       :reagent-render         (fn [_ surface-props] [plain-surface surface-id surface-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (r/dispatch on-mount))
+                         :component-will-unmount (fn [_ _] (r/dispatch on-unmount))
+                         :reagent-render         (fn [_ surface-props] [plain-surface surface-id surface-props])}))
 
 (defn view
   ; @param (keyword)(opt) surface-id

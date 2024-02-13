@@ -7,7 +7,7 @@
               [pretty-layouts.sidebar.prototypes :as sidebar.prototypes]
               [pretty-presets.engine.api         :as pretty-presets.engine]
               [re-frame.api                      :as r]
-              [reagent.api                       :as reagent]
+              [reagent.core :as reagent]
               [window-observer.api               :as window-observer]))
 
 ;; ----------------------------------------------------------------------------
@@ -39,9 +39,9 @@
   ; {}
   [sidebar-id {:keys [on-mount on-unmount] :as sidebar-props}]
   ; @note (tutorials#parameterizing)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (r/dispatch on-mount))
-                       :component-will-unmount (fn [_ _] (r/dispatch on-unmount))
-                       :reagent-render         (fn [_ sidebar-props] [sidebar sidebar-id sidebar-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (r/dispatch on-mount))
+                         :component-will-unmount (fn [_ _] (r/dispatch on-unmount))
+                         :reagent-render         (fn [_ sidebar-props] [sidebar sidebar-id sidebar-props])}))
 
 (defn view
   ; @param (keyword)(opt) sidebar-id

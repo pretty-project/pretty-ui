@@ -9,7 +9,7 @@
               [pretty-layouts.struct-popup.utils      :as struct-popup.utils]
               [pretty-presets.engine.api              :as pretty-presets.engine]
               [re-frame.api                           :as r]
-              [reagent.api                            :as reagent]
+              [reagent.core :as reagent]
               [scroll-lock.api                        :as scroll-lock]))
 
 ;; ----------------------------------------------------------------------------
@@ -34,9 +34,9 @@
   ; {:footer (metamorphic-content)(opt)}
   [popup-id {:keys [footer] :as popup-props}]
   ; @note (tutorials#parameterizing)
-  (if footer (reagent/lifecycles {:component-did-mount    (fn [_ _] (struct-popup.utils/footer-did-mount-f    popup-id))
-                                  :component-will-unmount (fn [_ _] (struct-popup.utils/footer-will-unmount-f popup-id))
-                                  :reagent-render         (fn [_ popup-props] [struct-popup-footer popup-id popup-props])})))
+  (if footer (reagent/create-class {:component-did-mount    (fn [_ _] (struct-popup.utils/footer-did-mount-f    popup-id))
+                                    :component-will-unmount (fn [_ _] (struct-popup.utils/footer-will-unmount-f popup-id))
+                                    :reagent-render         (fn [_ popup-props] [struct-popup-footer popup-id popup-props])})))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -60,9 +60,9 @@
   ; {:header (metamorphic-content)(opt)}
   [popup-id {:keys [header] :as popup-props}]
   ; @note (tutorials#parameterizing)
-  (if header (reagent/lifecycles {:component-did-mount    (fn [_ _] (struct-popup.utils/header-did-mount-f    popup-id))
-                                  :component-will-unmount (fn [_ _] (struct-popup.utils/header-will-unmount-f popup-id))
-                                  :reagent-render         (fn [_ popup-props] [struct-popup-header popup-id popup-props])})))
+  (if header (reagent/create-class {:component-did-mount    (fn [_ _] (struct-popup.utils/header-did-mount-f    popup-id))
+                                    :component-will-unmount (fn [_ _] (struct-popup.utils/header-will-unmount-f popup-id))
+                                    :reagent-render         (fn [_ popup-props] [struct-popup-header popup-id popup-props])})))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -96,7 +96,7 @@
   ; {:body (metamorphic-content)(opt)}
   [popup-id {:keys [body] :as popup-props}]
   ; @note (tutorials#parameterizing)
-  (if body (reagent/lifecycles {:reagent-render (fn [_ popup-props] [struct-popup-body popup-id popup-props])})))
+  (if body (reagent/create-class {:reagent-render (fn [_ popup-props] [struct-popup-body popup-id popup-props])})))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -128,11 +128,11 @@
   ; {}
   [popup-id {:keys [lock-scroll? on-mount on-unmount] :as popup-props}]
   ; @note (tutorials#parameterizing)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (if lock-scroll? (scroll-lock/add-scroll-prohibition! popup-id))
-                                                         (if on-mount     (r/dispatch on-mount)))
-                       :component-will-unmount (fn [_ _] (if lock-scroll? (scroll-lock/remove-scroll-prohibition! popup-id))
-                                                         (if on-unmount   (r/dispatch on-unmount)))
-                       :reagent-render         (fn [_ popup-props] [struct-popup popup-id popup-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (if lock-scroll? (scroll-lock/add-scroll-prohibition! popup-id))
+                                                           (if on-mount     (r/dispatch on-mount)))
+                         :component-will-unmount (fn [_ _] (if lock-scroll? (scroll-lock/remove-scroll-prohibition! popup-id))
+                                                           (if on-unmount   (r/dispatch on-unmount)))
+                         :reagent-render         (fn [_ popup-props] [struct-popup popup-id popup-props])}))
 
 (defn view
   ; @param (keyword)(opt) popup-id

@@ -9,7 +9,7 @@
               [pretty-inputs.multi-field.utils      :as multi-field.utils]
               [pretty-inputs.text-field.views       :as text-field.views]
               [re-frame.api                         :as r]
-              [reagent.api                          :as reagent]))
+              [reagent.core :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -50,8 +50,8 @@
   ; @param (map) group-props
   [group-id group-props]
   ; @note (tutorials#parameterizing)
-  (reagent/lifecycles {:component-did-mount (fn [_ _]); (r/dispatch [:pretty-inputs.group/group-did-mount group-id group-props]))
-                       :reagent-render      (fn [_ group-props] [multi-field group-id group-props])}))
+  (reagent/create-class {:component-did-mount (fn [_ _]); (r/dispatch [:pretty-inputs.group/group-did-mount group-id group-props]))
+                         :reagent-render      (fn [_ group-props] [multi-field group-id group-props])}))
 
 (defn view
   ; @note

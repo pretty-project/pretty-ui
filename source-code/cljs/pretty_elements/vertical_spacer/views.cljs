@@ -5,7 +5,7 @@
               [pretty-elements.vertical-spacer.attributes :as vertical-spacer.attributes]
               [pretty-elements.vertical-spacer.prototypes :as vertical-spacer.prototypes]
               [pretty-presets.engine.api                  :as pretty-presets.engine]
-              [reagent.api                                :as reagent]))
+              [reagent.core :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -29,9 +29,9 @@
   ; @param (map) spacer-props
   [spacer-id spacer-props]
   ; @note (tutorials#parameterizing)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    spacer-id spacer-props))
-                       :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount spacer-id spacer-props))
-                       :reagent-render         (fn [_ spacer-props] [vertical-spacer spacer-id spacer-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    spacer-id spacer-props))
+                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount spacer-id spacer-props))
+                         :reagent-render         (fn [_ spacer-props] [vertical-spacer spacer-id spacer-props])}))
 
 (defn view
   ; @param (keyword)(opt) spacer-id

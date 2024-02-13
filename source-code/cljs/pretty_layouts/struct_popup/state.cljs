@@ -1,6 +1,6 @@
 
 (ns pretty-layouts.struct-popup.state
-    (:require [reagent.api :refer [ratom]]))
+    (:require [reagent.core :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -8,9 +8,9 @@
 ; @ignore
 ;
 ; @atom (map)
-(defonce HEADER-SHADOW-VISIBLE? (ratom {}))
+(defonce HEADER-SHADOW-VISIBLE? (reagent/atom {}))
 
 ; @ignore
 ;
 ; @atom (map)
-(defonce FOOTER-SHADOW-VISIBLE? (ratom {}))
+(defonce FOOTER-SHADOW-VISIBLE? (reagent/atom {}))

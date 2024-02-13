@@ -7,7 +7,7 @@
               [pretty-diagrams.circle-diagram.prototypes :as circle-diagram.prototypes]
               [pretty-diagrams.engine.api                :as pretty-diagrams.engine]
               [pretty-presets.engine.api                 :as pretty-presets.engine]
-              [reagent.api                               :as reagent]))
+              [reagent.core :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -53,9 +53,9 @@
   ; @param (map) diagram-props
   [diagram-id diagram-props]
   ; @note (tutorials#parameterizing)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-diagrams.engine/diagram-did-mount    diagram-id diagram-props))
-                       :component-will-unmount (fn [_ _] (pretty-diagrams.engine/diagram-will-unmount diagram-id diagram-props))
-                       :reagent-render         (fn [_ diagram-props] [circle-diagram diagram-id diagram-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-diagrams.engine/diagram-did-mount    diagram-id diagram-props))
+                         :component-will-unmount (fn [_ _] (pretty-diagrams.engine/diagram-will-unmount diagram-id diagram-props))
+                         :reagent-render         (fn [_ diagram-props] [circle-diagram diagram-id diagram-props])}))
 
 (defn view
   ; @description

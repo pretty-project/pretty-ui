@@ -13,7 +13,7 @@
               [pretty-inputs.text-field.views  :as text-field.views]
               [pretty-layouts.api              :as pretty-layouts]
               [pretty-presets.engine.api       :as pretty-presets.engine]
-              [reagent.api                     :as reagent]))
+              [reagent.core :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -167,9 +167,9 @@
   ; @param (map) select-props
   [select-id select-props]
   ; @note (tutorials#parameterizing)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-inputs.engine/input-did-mount    select-id select-props))
-                       :component-will-unmount (fn [_ _] (pretty-inputs.engine/input-will-unmount select-id select-props))
-                       :reagent-render         (fn [_ select-props] [select select-id select-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-inputs.engine/input-did-mount    select-id select-props))
+                         :component-will-unmount (fn [_ _] (pretty-inputs.engine/input-will-unmount select-id select-props))
+                         :reagent-render         (fn [_ select-props] [select select-id select-props])}))
 
 (defn view
   ; @param (keyword)(opt) select-id

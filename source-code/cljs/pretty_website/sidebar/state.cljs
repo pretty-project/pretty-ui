@@ -1,6 +1,6 @@
 
 (ns pretty-website.sidebar.state
-    (:require [reagent.api :refer [ratom]]))
+    (:require [reagent.core :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -11,4 +11,4 @@
 ; Stores the ID of the currently visible sidebar.
 ;
 ; @atom (keyword)
-(def VISIBLE-SIDEBAR (ratom nil))
+(def VISIBLE-SIDEBAR (reagent/atom nil))

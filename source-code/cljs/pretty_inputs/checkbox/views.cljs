@@ -9,7 +9,7 @@
               [pretty-inputs.engine.api          :as pretty-inputs.engine]
               [pretty-inputs.header.views        :as header.views]
               [pretty-presets.engine.api         :as pretty-presets.engine]
-              [reagent.api                       :as reagent]))
+              [reagent.core :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -69,9 +69,9 @@
   ; @param (map) checkbox-props
   [checkbox-id checkbox-props]
   ; @note (tutorials#parameterizing)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-inputs.engine/input-did-mount    checkbox-id checkbox-props))
-                       :component-will-unmount (fn [_ _] (pretty-inputs.engine/input-will-unmount checkbox-id checkbox-props))
-                       :reagent-render         (fn [_ checkbox-props] [checkbox checkbox-id checkbox-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-inputs.engine/input-did-mount    checkbox-id checkbox-props))
+                         :component-will-unmount (fn [_ _] (pretty-inputs.engine/input-will-unmount checkbox-id checkbox-props))
+                         :reagent-render         (fn [_ checkbox-props] [checkbox checkbox-id checkbox-props])}))
 
 (defn view
   ; @param (keyword)(opt) checkbox-id

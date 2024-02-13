@@ -5,7 +5,7 @@
               [pretty-elements.label.prototypes :as label.prototypes]
               [pretty-elements.engine.api        :as pretty-elements.engine]
               [pretty-presets.engine.api         :as pretty-presets.engine]
-              [reagent.api                       :as reagent]))
+              [reagent.core :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -37,9 +37,9 @@
   [label-id label-props]
   ; @note (tutorials#parameterizing)
   ; @note (pretty-elements.adornment.views#8097)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    label-id label-props))
-                       :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount label-id label-props))
-                       :reagent-render         (fn [_ label-props] [label label-id label-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    label-id label-props))
+                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount label-id label-props))
+                         :reagent-render         (fn [_ label-props] [label label-id label-props])}))
 
 (defn view
   ; @description

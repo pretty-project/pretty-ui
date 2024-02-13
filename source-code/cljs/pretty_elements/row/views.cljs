@@ -6,7 +6,7 @@
               [pretty-elements.row.attributes :as row.attributes]
               [pretty-elements.row.prototypes :as row.prototypes]
               [pretty-presets.engine.api      :as pretty-presets.engine]
-              [reagent.api                    :as reagent]))
+              [reagent.core :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -33,9 +33,9 @@
   ; @param (map) row-props
   [row-id row-props]
   ; @note (tutorials#parameterizing)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    row-id row-props))
-                       :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount row-id row-props))
-                       :reagent-render         (fn [_ row-props] [row row-id row-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    row-id row-props))
+                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount row-id row-props))
+                         :reagent-render         (fn [_ row-props] [row row-id row-props])}))
 
 (defn view
   ; @param (keyword)(opt) row-id

@@ -5,7 +5,7 @@
               [pretty-accessories.bullet.prototypes :as bullet.prototypes]
               [pretty-elements.engine.api :as pretty-elements.engine]
               [pretty-presets.engine.api :as pretty-presets.engine]
-              [reagent.api :as reagent]))
+              [reagent.core :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -29,9 +29,9 @@
   ; @param (map) bullet-props
   [bullet-id bullet-props]
   ; @note (tutorials#parameterizing)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    bullet-id bullet-props))
-                       :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount bullet-id bullet-props))
-                       :reagent-render         (fn [_ bullet-props] [bullet bullet-id bullet-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    bullet-id bullet-props))
+                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount bullet-id bullet-props))
+                         :reagent-render         (fn [_ bullet-props] [bullet bullet-id bullet-props])}))
 
 (defn view
   ; @param (keyword)(opt) bullet-id

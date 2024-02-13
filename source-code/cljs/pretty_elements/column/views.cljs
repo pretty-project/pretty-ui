@@ -5,7 +5,7 @@
               [pretty-elements.column.prototypes :as column.prototypes]
               [pretty-elements.engine.api        :as pretty-elements.engine]
               [pretty-presets.engine.api         :as pretty-presets.engine]
-              [reagent.api                       :as reagent]))
+              [reagent.core :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -31,13 +31,13 @@
   ; @param (map) column-props
   [column-id column-props]
   ; @note (tutorials#parameterizing)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    column-id column-props))
-                       :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount column-id column-props))
-                       :reagent-render         (fn [_ column-props] [column column-id column-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    column-id column-props))
+                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount column-id column-props))
+                         :reagent-render         (fn [_ column-props] [column column-id column-props])}))
 
 (defn view
   ; @description
-  ; Vertical flex container element for displaying content.
+  ; Vertical flex container element.
   ;
   ; @links Implemented properties
   ; [Background properties color](pretty-core/cljs/pretty-properties/api.html#background-color-properties)

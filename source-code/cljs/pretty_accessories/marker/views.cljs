@@ -5,7 +5,7 @@
               [pretty-accessories.marker.prototypes :as marker.prototypes]
               [pretty-elements.engine.api :as pretty-elements.engine]
               [pretty-presets.engine.api :as pretty-presets.engine]
-              [reagent.api :as reagent]))
+              [reagent.core :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -29,9 +29,9 @@
   ; @param (map) marker-props
   [marker-id marker-props]
   ; @note (tutorials#parameterizing)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    marker-id marker-props))
-                       :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount marker-id marker-props))
-                       :reagent-render         (fn [_ marker-props] [marker marker-id marker-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    marker-id marker-props))
+                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount marker-id marker-props))
+                         :reagent-render         (fn [_ marker-props] [marker marker-id marker-props])}))
 
 (defn view
   ; @param (keyword)(opt) marker-id

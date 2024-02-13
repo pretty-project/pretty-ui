@@ -7,7 +7,7 @@
               [pretty-elements.adornment.views            :as adornment.views]
               [pretty-elements.engine.api                 :as pretty-elements.engine]
               [pretty-presets.engine.api                  :as pretty-presets.engine]
-              [reagent.api                                :as reagent]))
+              [reagent.core :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -43,9 +43,9 @@
   ; @param (map) group-props
   [group-id group-props]
   ; @note (tutorials#parameterizing)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    group-id group-props))
-                       :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount group-id group-props))
-                       :reagent-render         (fn [_ group-props] [adornment-group group-id group-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    group-id group-props))
+                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount group-id group-props))
+                         :reagent-render         (fn [_ group-props] [adornment-group group-id group-props])}))
 
 (defn view
   ; @description

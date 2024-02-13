@@ -5,7 +5,7 @@
               [pretty-presets.engine.api          :as pretty-presets.engine]
               [pretty-tables.data-cell.attributes :as data-cell.attributes]
               [pretty-tables.data-cell.prototypes :as data-cell.prototypes]
-              [reagent.api                        :as reagent]))
+              [reagent.core :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -31,9 +31,9 @@
   ; @param (map) cell-props
   [cell-id cell-props]
   ; @note (tutorials#parameterizing)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    cell-id cell-props))
-                       :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount cell-id cell-props))
-                       :reagent-render         (fn [_ cell-props] [data-cell cell-id cell-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    cell-id cell-props))
+                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount cell-id cell-props))
+                         :reagent-render         (fn [_ cell-props] [data-cell cell-id cell-props])}))
 
 (defn view
   ; @param (keyword)(opt) cell-id

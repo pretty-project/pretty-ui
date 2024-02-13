@@ -5,7 +5,7 @@
               [pretty-elements.blank.prototypes :as blank.prototypes]
               [pretty-elements.engine.api       :as pretty-elements.engine]
               [pretty-presets.engine.api        :as pretty-presets.engine]
-              [reagent.api                      :as reagent]))
+              [reagent.core :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -31,9 +31,9 @@
   ; @param (map) blank-props
   [blank-id blank-props]
   ; @note (tutorials#parameterizing)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    blank-id blank-props))
-                       :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount blank-id blank-props))
-                       :reagent-render         (fn [_ blank-props] [blank blank-id blank-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    blank-id blank-props))
+                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount blank-id blank-props))
+                         :reagent-render         (fn [_ blank-props] [blank blank-id blank-props])}))
 
 (defn view
   ; @description

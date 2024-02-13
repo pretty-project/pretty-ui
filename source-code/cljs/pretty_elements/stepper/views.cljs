@@ -5,7 +5,7 @@
               [pretty-elements.stepper.attributes :as stepper.attributes]
               [pretty-elements.stepper.prototypes :as stepper.prototypes]
               [pretty-presets.engine.api          :as pretty-presets.engine]
-              [reagent.api                        :as reagent]))
+              [reagent.core :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -29,9 +29,9 @@
   ; @param (map) stepper-props
   [stepper-id stepper-props]
   ; @note (tutorials#parameterizing)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    stepper-id stepper-props))
-                       :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount stepper-id stepper-props))
-                       :reagent-render         (fn [_ stepper-props] [stepper stepper-id stepper-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    stepper-id stepper-props))
+                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount stepper-id stepper-props))
+                         :reagent-render         (fn [_ stepper-props] [stepper stepper-id stepper-props])}))
 
 (defn view
   ; @important

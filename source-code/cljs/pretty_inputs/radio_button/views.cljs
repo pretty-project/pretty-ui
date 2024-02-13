@@ -9,7 +9,7 @@
               [pretty-inputs.radio-button.attributes :as radio-button.attributes]
               [pretty-inputs.radio-button.prototypes :as radio-button.prototypes]
               [pretty-presets.engine.api             :as pretty-presets.engine]
-              [reagent.api                           :as reagent]))
+              [reagent.core :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -69,9 +69,9 @@
   ; @param (map) button-props
   [button-id button-props]
   ; @note (tutorials#parameterizing)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-inputs.engine/input-did-mount    button-id button-props))
-                       :component-will-unmount (fn [_ _] (pretty-inputs.engine/input-will-unmount button-id button-props))
-                       :reagent-render         (fn [_ button-props] [radio-button button-id button-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-inputs.engine/input-did-mount    button-id button-props))
+                         :component-will-unmount (fn [_ _] (pretty-inputs.engine/input-will-unmount button-id button-props))
+                         :reagent-render         (fn [_ button-props] [radio-button button-id button-props])}))
 
 (defn view
   ; @param (keyword) button-id

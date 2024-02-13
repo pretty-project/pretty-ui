@@ -6,7 +6,7 @@
               [pretty-elements.toggle.attributes :as toggle.attributes]
               [pretty-elements.toggle.prototypes :as toggle.prototypes]
               [pretty-presets.engine.api         :as pretty-presets.engine]
-              [reagent.api                       :as reagent]
+              [reagent.core :as reagent]
               [pretty-accessories.api :as pretty-accessories]))
 
 ;; ----------------------------------------------------------------------------
@@ -35,10 +35,10 @@
   [toggle-id toggle-props]
   ; @note (tutorials#parameterizing)
   ; @note (pretty-elements.adornment.views#8097)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    toggle-id toggle-props))
-                       :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount toggle-id toggle-props))
-                       :component-did-update   (fn [%]   (pretty-elements.engine/element-did-update   toggle-id toggle-props %))
-                       :reagent-render         (fn [_ toggle-props] [toggle toggle-id toggle-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    toggle-id toggle-props))
+                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount toggle-id toggle-props))
+                         :component-did-update   (fn [%]   (pretty-elements.engine/element-did-update   toggle-id toggle-props %))
+                         :reagent-render         (fn [_ toggle-props] [toggle toggle-id toggle-props])}))
 
 (defn view
   ; @param (keyword)(opt) toggle-id

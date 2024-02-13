@@ -9,7 +9,7 @@
               [pretty-inputs.switch.attributes :as switch.attributes]
               [pretty-inputs.switch.prototypes :as switch.prototypes]
               [pretty-presets.engine.api       :as pretty-presets.engine]
-              [reagent.api                     :as reagent]))
+              [reagent.core :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -68,9 +68,9 @@
   ; @param (map) switch-props
   [switch-id switch-props]
   ; @note (tutorials#parameterizing)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-inputs.engine/input-did-mount    switch-id switch-props))
-                       :component-will-unmount (fn [_ _] (pretty-inputs.engine/input-will-unmount switch-id switch-props))
-                       :reagent-render         (fn [_ switch-props] [switch switch-id switch-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-inputs.engine/input-did-mount    switch-id switch-props))
+                         :component-will-unmount (fn [_ _] (pretty-inputs.engine/input-will-unmount switch-id switch-props))
+                         :reagent-render         (fn [_ switch-props] [switch switch-id switch-props])}))
 
 (defn view
   ; @param (keyword)(opt) switch-id

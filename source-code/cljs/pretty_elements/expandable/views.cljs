@@ -7,7 +7,7 @@
               [pretty-elements.expandable.prototypes :as expandable.prototypes]
               [pretty-elements.surface.views         :as surface.views]
               [pretty-presets.engine.api             :as pretty-presets.engine]
-              [reagent.api                           :as reagent]))
+              [reagent.core :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -37,13 +37,13 @@
   ; @param (map) expandable-props
   [expandable-id expandable-props]
   ; @note (tutorials#parameterizing)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    expandable-id expandable-props))
-                       :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount expandable-id expandable-props))
-                       :reagent-render         (fn [_ expandable-props] [expandable expandable-id expandable-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    expandable-id expandable-props))
+                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount expandable-id expandable-props))
+                         :reagent-render         (fn [_ expandable-props] [expandable expandable-id expandable-props])}))
 
 (defn view
   ; @description
-  ; Expandable element for displaying content.
+  ; Expandable element.
   ;
   ; @links Implemented elements
   ; [Button](pretty-ui/cljs/pretty-elements/api.html#button)

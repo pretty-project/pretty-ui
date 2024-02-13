@@ -4,7 +4,7 @@
               [pretty-inputs.password-field.prototypes   :as password-field.prototypes]
               [pretty-inputs.password-field.side-effects :as password-field.side-effects]
               [pretty-inputs.text-field.views            :as text-field.views]
-              [reagent.api                               :as reagent]))
+              [reagent.core :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -27,8 +27,8 @@
   ; @param (map) field-props
   [field-id field-props]
   ; @note (tutorials#parameterizing)
-  (reagent/lifecycles {:component-will-unmount (fn [_ _] (password-field.side-effects/field-will-unmount field-id field-props))
-                       :reagent-render         (fn [_ field-props] [password-field field-id field-props])}))
+  (reagent/create-class {:component-will-unmount (fn [_ _] (password-field.side-effects/field-will-unmount field-id field-props))
+                         :reagent-render         (fn [_ field-props] [password-field field-id field-props])}))
 
 (defn view
   ; @note

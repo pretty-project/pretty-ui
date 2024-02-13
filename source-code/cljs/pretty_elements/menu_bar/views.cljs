@@ -7,7 +7,7 @@
               [pretty-elements.menu-bar.prototypes :as menu-bar.prototypes]
               [pretty-elements.menu-item.views     :as menu-item.views]
               [pretty-presets.engine.api           :as pretty-presets.engine]
-              [reagent.api                         :as reagent]))
+              [reagent.core :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -43,9 +43,9 @@
   ; @param (map) bar-props
   [bar-id bar-props]
   ; @note (tutorials#parameterizing)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    bar-id bar-props))
-                       :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount bar-id bar-props))
-                       :reagent-render         (fn [_ bar-props] [menu-bar bar-id bar-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    bar-id bar-props))
+                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount bar-id bar-props))
+                         :reagent-render         (fn [_ bar-props] [menu-bar bar-id bar-props])}))
 
 (defn view
   ; @param (keyword)(opt) bar-id

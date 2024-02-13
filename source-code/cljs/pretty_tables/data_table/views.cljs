@@ -8,7 +8,7 @@
               [pretty-tables.data-row.views        :as data-row.views]
               [pretty-tables.data-table.attributes :as data-table.attributes]
               [pretty-tables.data-table.prototypes :as data-table.prototypes]
-              [reagent.api                         :as reagent]))
+              [reagent.core :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -56,9 +56,9 @@
   ; @param (map) table-props
   [table-id table-props]
   ; @note (tutorials#parameterizing)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    table-id table-props))
-                       :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount table-id table-props))
-                       :reagent-render         (fn [_ table-props] [data-table table-id table-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    table-id table-props))
+                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount table-id table-props))
+                         :reagent-render         (fn [_ table-props] [data-table table-id table-props])}))
 
 (defn view
   ; @param (keyword)(opt) table-id

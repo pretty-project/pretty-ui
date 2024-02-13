@@ -5,7 +5,7 @@
               [pretty-elements.menu-item.attributes :as menu-item.attributes]
               [pretty-elements.menu-item.prototypes :as menu-item.prototypes]
               [pretty-presets.engine.api            :as pretty-presets.engine]
-              [reagent.api                          :as reagent]
+              [reagent.core :as reagent]
               [pretty-accessories.api :as pretty-accessories]))
 
 ;; ----------------------------------------------------------------------------
@@ -45,9 +45,9 @@
   [item-id item-props]
   ; @note (tutorials#parameterizing)
   ; @note (pretty-elements.adornment.views#8097)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    item-id item-props))
-                       :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount item-id item-props))
-                       :reagent-render         (fn [_ item-props] [menu-item item-id item-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    item-id item-props))
+                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount item-id item-props))
+                         :reagent-render         (fn [_ item-props] [menu-item item-id item-props])}))
 
 (defn view
   ; @description

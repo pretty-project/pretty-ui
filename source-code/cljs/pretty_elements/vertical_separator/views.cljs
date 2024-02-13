@@ -6,7 +6,7 @@
               [pretty-elements.vertical-separator.attributes :as vertical-separator.attributes]
               [pretty-elements.vertical-separator.prototypes :as vertical-separator.prototypes]
               [pretty-presets.engine.api                     :as pretty-presets.engine]
-              [reagent.api                                   :as reagent]))
+              [reagent.core :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -35,9 +35,9 @@
   ; @param (map) separator-props
   [separator-id separator-props]
   ; @note (tutorials#parameterizing)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    separator-id separator-props))
-                       :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount separator-id separator-props))
-                       :reagent-render         (fn [_ separator-props] [vertical-separator separator-id separator-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    separator-id separator-props))
+                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount separator-id separator-props))
+                         :reagent-render         (fn [_ separator-props] [vertical-separator separator-id separator-props])}))
 
 (defn view
   ; @param (keyword)(opt) separator-id

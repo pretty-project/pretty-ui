@@ -5,7 +5,7 @@
               [pretty-elements.icon.attributes :as icon.attributes]
               [pretty-elements.icon.prototypes :as icon.prototypes]
               [pretty-presets.engine.api       :as pretty-presets.engine]
-              [reagent.api                     :as reagent]))
+              [reagent.core :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -30,9 +30,9 @@
   ; @param (map) icon-props
   [icon-id icon-props]
   ; @note (tutorials#parameterizing)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    icon-id icon-props))
-                       :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount icon-id icon-props))
-                       :reagent-render         (fn [_ icon-props] [icon icon-id icon-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    icon-id icon-props))
+                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount icon-id icon-props))
+                         :reagent-render         (fn [_ icon-props] [icon icon-id icon-props])}))
 
 (defn view
   ; @description

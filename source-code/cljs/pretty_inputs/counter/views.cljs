@@ -7,7 +7,7 @@
               [pretty-inputs.header.views       :as header.views]
               [pretty-presets.engine.api        :as pretty-presets.engine]
               [re-frame.api                     :as r]
-              [reagent.api                      :as reagent]))
+              [reagent.core :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -39,8 +39,8 @@
   ; @param (map) counter-props
   [counter-id counter-props]
   ; @note (tutorials#parameterizing)
-  (reagent/lifecycles {:component-did-mount (fn [_ _] (r/dispatch [:pretty-inputs.counter/counter-did-mount counter-id counter-props]))
-                       :reagent-render      (fn [_ counter-props] [counter counter-id counter-props])}))
+  (reagent/create-class {:component-did-mount (fn [_ _] (r/dispatch [:pretty-inputs.counter/counter-did-mount counter-id counter-props]))
+                         :reagent-render      (fn [_ counter-props] [counter counter-id counter-props])}))
 
 (defn view
   ; @param (keyword)(opt) counter-id

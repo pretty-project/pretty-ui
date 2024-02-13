@@ -8,7 +8,7 @@
               [pretty-inputs.header.attributes :as header.attributes]
               [pretty-inputs.header.prototypes :as header.prototypes]
               [pretty-presets.engine.api       :as pretty-presets.engine]
-              [reagent.api                     :as reagent]))
+              [reagent.core :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -45,9 +45,9 @@
   ; @param (map) header-props
   [header-id header-props]
   ; @note (tutorials#parameterizing)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    header-id header-props))
-                       :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount header-id header-props))
-                       :reagent-render         (fn [_ header-props] [header header-id header-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    header-id header-props))
+                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount header-id header-props))
+                         :reagent-render         (fn [_ header-props] [header header-id header-props])}))
 
 (defn view
   ; @param (keyword)(opt) header-id

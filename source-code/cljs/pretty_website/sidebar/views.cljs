@@ -9,7 +9,7 @@
               [pretty-website.sidebar.prototypes :as sidebar.prototypes]
               [pretty-website.sidebar.state      :as sidebar.state]
               ;[react.api                         :as react]
-              [reagent.api                       :as reagent]))
+              [reagent.core :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -42,9 +42,9 @@
   ; @param (map) sidebar-props
   [sidebar-id sidebar-props]
   ; @note (tutorials#parameterizing)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    sidebar-id sidebar-props))
-                       :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount sidebar-id sidebar-props))
-                       :reagent-render         (fn [_ sidebar-props] [sidebar sidebar-id sidebar-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    sidebar-id sidebar-props))
+                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount sidebar-id sidebar-props))
+                         :reagent-render         (fn [_ sidebar-props] [sidebar sidebar-id sidebar-props])}))
 
 (defn view
   ; @param (keyword)(opt) sidebar-id

@@ -10,7 +10,7 @@
               [pretty-inputs.text-field.env        :as text-field.env]
               [pretty-inputs.text-field.prototypes :as text-field.prototypes]
               [pretty-presets.engine.api           :as pretty-presets.engine]
-              [reagent.api                         :as reagent]))
+              [reagent.core :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -87,9 +87,9 @@
   ; @param (map) field-props
   [field-id field-props]
   ; @note (tutorials#parameterizing)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-inputs.engine/input-did-mount    field-id field-props))
-                       :component-will-unmount (fn [_ _] (pretty-inputs.engine/input-will-unmount field-id field-props))
-                       :reagent-render         (fn [_ field-props] [text-field field-id field-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-inputs.engine/input-did-mount    field-id field-props))
+                         :component-will-unmount (fn [_ _] (pretty-inputs.engine/input-will-unmount field-id field-props))
+                         :reagent-render         (fn [_ field-props] [text-field field-id field-props])}))
 
 (defn view
   ; @param (keyword)(opt) field-id

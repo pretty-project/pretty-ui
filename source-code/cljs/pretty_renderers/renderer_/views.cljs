@@ -2,7 +2,7 @@
 (ns renderers.renderer.views
     (:require [fruits.hiccup.api        :as hiccup]
               [fruits.vector.api        :as vector]
-              [reagent.api              :as reagent]
+              [reagent.core :as reagent]
               [renderers.renderer.utils :as renderer.utils]))
 
 ;; ----------------------------------------------------------------------------
@@ -35,7 +35,7 @@
   ; (defn my-content-component [renderer-id content-id] ...)
   ; [renderer :my-renderer {:content-component #'my-content-component}]
   [renderer-id renderer-props]
-  (reagent/lifecycles (renderer.utils/renderer-id->dom-id renderer-id)
-                      {:reagent-render         (fn [] [renderer-contents                        renderer-id renderer-props])
-                       :component-will-unmount (fn [] (renderer.side-effects/destruct-renderer! renderer-id renderer-props))
-                       :component-did-mount    (fn [] (renderer.side-effects/init-renderer!     renderer-id renderer-props))}))
+  (reagent/create-class ;(renderer.utils/renderer-id->dom-id renderer-id) <- ez a reagent.api/lifecycles argumentuma volt 'hot-reload prevent' miatt
+                        {:reagent-render         (fn [] [renderer-contents                        renderer-id renderer-props])
+                         :component-will-unmount (fn [] (renderer.side-effects/destruct-renderer! renderer-id renderer-props))
+                         :component-did-mount    (fn [] (renderer.side-effects/init-renderer!     renderer-id renderer-props))}))

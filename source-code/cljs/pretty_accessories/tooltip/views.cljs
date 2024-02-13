@@ -5,7 +5,7 @@
               [pretty-accessories.tooltip.prototypes :as tooltip.prototypes]
               [pretty-elements.engine.api :as pretty-elements.engine]
               [pretty-presets.engine.api :as pretty-presets.engine]
-              [reagent.api :as reagent]))
+              [reagent.core :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -33,9 +33,9 @@
   ; @param (map) tooltip-props
   [tooltip-id tooltip-props]
   ; @note (tutorials#parameterizing)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    tooltip-id tooltip-props))
-                       :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount tooltip-id tooltip-props))
-                       :reagent-render         (fn [_ tooltip-props] [tooltip tooltip-id tooltip-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    tooltip-id tooltip-props))
+                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount tooltip-id tooltip-props))
+                         :reagent-render         (fn [_ tooltip-props] [tooltip tooltip-id tooltip-props])}))
 
 (defn view
   ; @param (keyword)(opt) tooltip-id

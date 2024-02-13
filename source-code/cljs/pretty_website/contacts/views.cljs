@@ -7,7 +7,7 @@
               [pretty-presets.engine.api          :as pretty-presets.engine]
               [pretty-website.contacts.attributes :as contacts.attributes]
               [pretty-website.contacts.prototypes :as contacts.prototypes]
-              [reagent.api                        :as reagent]))
+              [reagent.core :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -67,9 +67,9 @@
   ; @param (map) contacts-props
   [contacts-id contacts-props]
   ; @note (tutorials#parameterizing)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    contacts-id contacts-props))
-                       :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount contacts-id contacts-props))
-                       :reagent-render         (fn [_ contacts-props] [contacts contacts-id contacts-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    contacts-id contacts-props))
+                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount contacts-id contacts-props))
+                         :reagent-render         (fn [_ contacts-props] [contacts contacts-id contacts-props])}))
 
 (defn view
   ; @param (keyword)(opt) contacts-id

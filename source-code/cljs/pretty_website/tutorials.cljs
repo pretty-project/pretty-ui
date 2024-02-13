@@ -64,6 +64,8 @@
 ;
 ; @note
 ; In case the provided ID changes the item doesn't take the new ID, it keeps the first one that was provided.
+; In case the element properties changes, the element doesn't generate a new ID.
+; It only generates new ID when it gets rerendered.
 ;
 ; @note
 ; In case of no ID is provided and the item gets rerendered it doesn't generate a new ID for itself, it keeps the first one that was generated.

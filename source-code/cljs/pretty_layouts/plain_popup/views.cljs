@@ -7,7 +7,7 @@
               [pretty-layouts.plain-popup.prototypes :as plain-popup.prototypes]
               [pretty-presets.engine.api             :as pretty-presets.engine]
               [re-frame.api                          :as r]
-              [reagent.api                           :as reagent]
+              [reagent.core :as reagent]
               [scroll-lock.api                       :as scroll-lock]))
 
 ;; ----------------------------------------------------------------------------
@@ -36,11 +36,11 @@
   ; {}
   [popup-id {:keys [lock-scroll? on-mount on-unmount] :as popup-props}]
   ; @note (tutorials#parameterizing)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (if lock-scroll? (scroll-lock/add-scroll-prohibition! popup-id))
-                                                         (if on-mount     (r/dispatch on-mount)))
-                       :component-will-unmount (fn [_ _] (if lock-scroll? (scroll-lock/remove-scroll-prohibition! popup-id))
-                                                         (if on-unmount   (r/dispatch on-unmount)))
-                       :reagent-render         (fn [_ popup-props] [plain-popup popup-id popup-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (if lock-scroll? (scroll-lock/add-scroll-prohibition! popup-id))
+                                                           (if on-mount     (r/dispatch on-mount)))
+                         :component-will-unmount (fn [_ _] (if lock-scroll? (scroll-lock/remove-scroll-prohibition! popup-id))
+                                                           (if on-unmount   (r/dispatch on-unmount)))
+                         :reagent-render         (fn [_ popup-props] [plain-popup popup-id popup-props])}))
 
 (defn view
   ; @param (keyword)(opt) popup-id

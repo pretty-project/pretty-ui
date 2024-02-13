@@ -6,7 +6,7 @@
               [pretty-website.scroll-icon.attributes :as scroll-icon.attributes]
               [pretty-website.scroll-icon.prototypes :as scroll-icon.prototypes]
               [pretty-website.scroll-sensor.views    :as scroll-sensor.views]
-              [reagent.api                           :as reagent]))
+              [reagent.core :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -31,9 +31,9 @@
   ; @param (map) icon-props
   [icon-id icon-props]
   ; @note (tutorials#parameterizing)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    icon-id icon-props))
-                       :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount icon-id icon-props))
-                       :reagent-render         (fn [_ icon-props] [scroll-icon icon-id icon-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    icon-id icon-props))
+                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount icon-id icon-props))
+                         :reagent-render         (fn [_ icon-props] [scroll-icon icon-id icon-props])}))
 
 (defn view
   ; @param (keyword)(opt) icon-id

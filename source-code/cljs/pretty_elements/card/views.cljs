@@ -5,7 +5,7 @@
               [pretty-elements.card.prototypes :as card.prototypes]
               [pretty-elements.engine.api      :as pretty-elements.engine]
               [pretty-presets.engine.api       :as pretty-presets.engine]
-              [reagent.api                     :as reagent]
+              [reagent.core :as reagent]
               [pretty-accessories.api :as pretty-accessories]))
 
 ;; ----------------------------------------------------------------------------
@@ -40,14 +40,14 @@
   [card-id card-props]
   ; @note (tutorials#parameterizing)
   ; @note (pretty-elements.adornment.views#8097)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    card-id card-props))
-                       :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount card-id card-props))
-                       :component-did-update   (fn [%]   (pretty-elements.engine/element-did-update   card-id card-props %))
-                       :reagent-render         (fn [_ card-props] [card card-id card-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    card-id card-props))
+                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount card-id card-props))
+                         :component-did-update   (fn [%]   (pretty-elements.engine/element-did-update   card-id card-props %))
+                         :reagent-render         (fn [_ card-props] [card card-id card-props])}))
 
 (defn view
   ; @description
-  ; Optionally clickable card style element for displaying content.
+  ; Optionally clickable card style element.
   ;
   ; @links Implemented accessories
   ; [Badge](pretty-ui/cljs/pretty-accessories/api.html#badge)

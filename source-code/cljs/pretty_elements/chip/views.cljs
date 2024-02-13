@@ -7,7 +7,7 @@
               [pretty-elements.engine.api            :as pretty-elements.engine]
               [pretty-presets.engine.api             :as pretty-presets.engine]
               [pretty-accessories.api             :as pretty-accessories]
-              [reagent.api                           :as reagent]))
+              [reagent.core :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -41,10 +41,10 @@
   [chip-id chip-props]
   ; @note (tutorials#parameterizing)
   ; @note (pretty-elements.adornment.views#8097)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    chip-id chip-props))
-                       :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount chip-id chip-props))
-                       :component-did-update   (fn [%]   (pretty-elements.engine/element-did-update   chip-id chip-props %))
-                       :reagent-render         (fn [_ chip-props] [chip chip-id chip-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    chip-id chip-props))
+                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount chip-id chip-props))
+                         :component-did-update   (fn [%]   (pretty-elements.engine/element-did-update   chip-id chip-props %))
+                         :reagent-render         (fn [_ chip-props] [chip chip-id chip-props])}))
 
 (defn view
   ; @description

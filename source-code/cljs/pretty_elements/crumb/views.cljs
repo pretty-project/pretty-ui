@@ -5,7 +5,7 @@
               [pretty-elements.crumb.prototypes :as crumb.prototypes]
               [pretty-elements.engine.api       :as pretty-elements.engine]
               [pretty-presets.engine.api        :as pretty-presets.engine]
-              [reagent.api                      :as reagent]))
+              [reagent.core :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -33,9 +33,9 @@
   ; @param (map) crumb-props
   [crumb-id crumb-props]
   ; @note (tutorials#parameterizing)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    crumb-id crumb-props))
-                       :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount crumb-id crumb-props))
-                       :reagent-render         (fn [_ crumb-props] [crumb crumb-id crumb-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    crumb-id crumb-props))
+                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount crumb-id crumb-props))
+                         :reagent-render         (fn [_ crumb-props] [crumb crumb-id crumb-props])}))
 
 (defn view
   ; @description

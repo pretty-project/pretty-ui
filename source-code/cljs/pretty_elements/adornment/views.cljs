@@ -6,7 +6,7 @@
               [pretty-elements.engine.api           :as pretty-elements.engine]
               [pretty-presets.engine.api            :as pretty-presets.engine]
               [pretty-accessories.api            :as pretty-accessories]
-              [reagent.api                          :as reagent]))
+              [reagent.core :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -39,10 +39,10 @@
   ; @note (tutorials#parameterizing)
   ; @note (#8097)
   ; The 'element-did-update' function re-registers the keypress events when the element property map gets changed.
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    adornment-id adornment-props))
-                       :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount adornment-id adornment-props))
-                       :component-did-update   (fn [%]   (pretty-elements.engine/element-did-update   adornment-id adornment-props %))
-                       :reagent-render         (fn [_ adornment-props] [adornment adornment-id adornment-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    adornment-id adornment-props))
+                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount adornment-id adornment-props))
+                         :component-did-update   (fn [%]   (pretty-elements.engine/element-did-update   adornment-id adornment-props %))
+                         :reagent-render         (fn [_ adornment-props] [adornment adornment-id adornment-props])}))
 
 (defn view
   ; @description

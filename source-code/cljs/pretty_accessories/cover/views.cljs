@@ -5,7 +5,7 @@
               [pretty-accessories.cover.prototypes :as cover.prototypes]
               [pretty-elements.engine.api :as pretty-elements.engine]
               [pretty-presets.engine.api :as pretty-presets.engine]
-              [reagent.api :as reagent]))
+              [reagent.core :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -33,9 +33,9 @@
   ; @param (map) cover-props
   [cover-id cover-props]
   ; @note (tutorials#parameterizing)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    cover-id cover-props))
-                       :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount cover-id cover-props))
-                       :reagent-render         (fn [_ cover-props] [cover cover-id cover-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    cover-id cover-props))
+                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount cover-id cover-props))
+                         :reagent-render         (fn [_ cover-props] [cover cover-id cover-props])}))
 
 (defn view
   ; @param (keyword)(opt) cover-id

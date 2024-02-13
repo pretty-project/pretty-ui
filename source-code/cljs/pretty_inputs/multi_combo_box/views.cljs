@@ -8,7 +8,7 @@
               [pretty-inputs.multi-combo-box.attributes :as multi-combo-box.attributes]
               [pretty-inputs.multi-combo-box.prototypes :as multi-combo-box.prototypes]
               [re-frame.api                             :as r]
-              [reagent.api                              :as reagent]))
+              [reagent.core :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -64,9 +64,9 @@
   ; @param (map) box-props
   [box-id box-props]
   ; @note (tutorials#parameterizing)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-inputs.engine/input-did-mount    box-id box-props))
-                       :component-will-unmount (fn [_ _] (pretty-inputs.engine/input-will-unmount box-id box-props))
-                       :reagent-render         (fn [_ box-props] [multi-combo-box box-id box-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-inputs.engine/input-did-mount    box-id box-props))
+                         :component-will-unmount (fn [_ _] (pretty-inputs.engine/input-will-unmount box-id box-props))
+                         :reagent-render         (fn [_ box-props] [multi-combo-box box-id box-props])}))
 
 (defn view
   ; @note

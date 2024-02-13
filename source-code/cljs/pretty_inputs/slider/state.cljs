@@ -1,6 +1,6 @@
 
 (ns pretty-inputs.slider.state
-    (:require [reagent.api :refer [ratom]]))
+    (:require [reagent.core :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -8,4 +8,4 @@
 ; @ignore
 ;
 ; @atom (map)
-(defonce THUMBS (ratom {}))
+(defonce THUMBS (reagent/atom {}))

@@ -7,7 +7,7 @@
               [pretty-tables.data-cell.views        :as data-cell.views]
               [pretty-tables.data-column.attributes :as data-column.attributes]
               [pretty-tables.data-column.prototypes :as data-column.prototypes]
-              [reagent.api                          :as reagent]))
+              [reagent.core :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -43,9 +43,9 @@
   ; @param (map) column-props
   [column-id column-props]
   ; @note (tutorials#parameterizing)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    column-id column-props))
-                       :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount column-id column-props))
-                       :reagent-render         (fn [_ column-props] [data-column column-id column-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    column-id column-props))
+                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount column-id column-props))
+                         :reagent-render         (fn [_ column-props] [data-column column-id column-props])}))
 
 (defn view
   ; @param (keyword)(opt) column-id

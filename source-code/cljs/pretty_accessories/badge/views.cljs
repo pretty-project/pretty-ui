@@ -5,7 +5,7 @@
               [pretty-accessories.badge.prototypes :as badge.prototypes]
               [pretty-elements.engine.api :as pretty-elements.engine]
               [pretty-presets.engine.api :as pretty-presets.engine]
-              [reagent.api :as reagent]))
+              [reagent.core :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -33,9 +33,9 @@
   ; @param (map) badge-props
   [badge-id badge-props]
   ; @note (tutorials#parameterizing)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    badge-id badge-props))
-                       :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount badge-id badge-props))
-                       :reagent-render         (fn [_ badge-props] [badge badge-id badge-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    badge-id badge-props))
+                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount badge-id badge-props))
+                         :reagent-render         (fn [_ badge-props] [badge badge-id badge-props])}))
 
 (defn view
   ; @param (keyword)(opt) badge-id

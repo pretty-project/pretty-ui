@@ -7,7 +7,7 @@
               [pretty-elements.text.attributes :as text.attributes]
               [pretty-elements.text.prototypes :as text.prototypes]
               [pretty-presets.engine.api       :as pretty-presets.engine]
-              [reagent.api                     :as reagent]))
+              [reagent.core :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -39,9 +39,9 @@
   ; @param (map) text-props
   [text-id text-props]
   ; @note (tutorials#parameterizing)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    text-id text-props))
-                       :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount text-id text-props))
-                       :reagent-render         (fn [_ text-props] [text text-id text-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    text-id text-props))
+                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount text-id text-props))
+                         :reagent-render         (fn [_ text-props] [text text-id text-props])}))
 
 (defn view
   ; @param (keyword)(opt) text-id
@@ -97,7 +97,7 @@
   ;  :text-selectable? (boolean)(opt)
   ;  :text-transform (keyword)(opt)
 
-  
+
   ;  :theme (keyword)(opt)
   ;  :vertical-align (keyword)(opt)
   ;  :width (keyword, px or string)(opt)}

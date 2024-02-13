@@ -1,6 +1,6 @@
 
 (ns renderers.renderer.state
-    (:require [reagent.api :refer [ratom]]))
+    (:require [reagent.core :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -8,4 +8,4 @@
 ; @ignore
 ;
 ; @atom (map)
-(def RENDERERS (ratom {}))
+(def RENDERERS (reagent/atom {}))

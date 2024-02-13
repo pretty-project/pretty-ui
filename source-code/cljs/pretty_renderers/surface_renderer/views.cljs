@@ -16,15 +16,15 @@
   ; @param (keyword) renderer-id
   ; @param (keyword) surface-id
   [renderer-id surface-id]
-  (reagent/lifecycles surface-id
-                      {:reagent-render         (fn [] (if-let [content (renderer.env/get-content-prop renderer-id surface-id :content)]
-                                                              [:div (surface-renderer.attributes/surface-content-attributes renderer-id surface-id)
-                                                                    [metamorphic-content/compose content]]))
-                       :component-did-mount    (fn [] (if autoreset-scroll-y? (dom/set-scroll-y! 0))
-                                                      (if-let [on-mount (renderer.env/get-content-prop renderer-id surface-id :on-mount)]
-                                                              (r/dispatch on-mount)))
-                       :component-will-unmount (fn [] (if-let [on-unmount (renderer.env/get-content-prop renderer-id surface-id :on-unmount)]
-                                                              (r/dispatch on-unmount)))}))
+  (reagent/create-class surface-id
+                        {:reagent-render         (fn [] (if-let [content (renderer.env/get-content-prop renderer-id surface-id :content)]
+                                                                [:div (surface-renderer.attributes/surface-content-attributes renderer-id surface-id)
+                                                                      [metamorphic-content/compose content]]))
+                         :component-did-mount    (fn [] (if autoreset-scroll-y? (dom/set-scroll-y! 0))
+                                                        (if-let [on-mount (renderer.env/get-content-prop renderer-id surface-id :on-mount)]
+                                                                (r/dispatch on-mount)))
+                         :component-will-unmount (fn [] (if-let [on-unmount (renderer.env/get-content-prop renderer-id surface-id :on-unmount)]
+                                                                (r/dispatch on-unmount)))}))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

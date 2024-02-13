@@ -5,7 +5,7 @@
               [pretty-elements.icon-button.attributes :as icon-button.attributes]
               [pretty-elements.icon-button.prototypes :as icon-button.prototypes]
               [pretty-presets.engine.api              :as pretty-presets.engine]
-              [reagent.api                            :as reagent]
+              [reagent.core :as reagent]
               [pretty-accessories.api :as pretty-accessories]))
 
 ;; ----------------------------------------------------------------------------
@@ -42,10 +42,10 @@
   [button-id button-props]
   ; @note (tutorials#parameterizing)
   ; @note (pretty-elements.adornment.views#8097)
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    button-id button-props))
-                       :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount button-id button-props))
-                       :component-did-update   (fn [%]   (pretty-elements.engine/element-did-update   button-id button-props %))
-                       :reagent-render         (fn [_ button-props] [icon-button button-id button-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    button-id button-props))
+                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount button-id button-props))
+                         :component-did-update   (fn [%]   (pretty-elements.engine/element-did-update   button-id button-props %))
+                         :reagent-render         (fn [_ button-props] [icon-button button-id button-props])}))
 
 (defn view
   ; @param (keyword)(opt) button-id
