@@ -13,6 +13,7 @@
   ; @param (keyword) expandable-id
   ;
   ; @usage
+  ; [expandable :my-expandable {...}]
   ; (expand-content! :my-expandable)
   [expandable-id]
   (let [surface-id (pretty-elements.engine/element-id->subitem-id expandable-id :surface)]
@@ -25,6 +26,7 @@
   ; @param (keyword) expandable-id
   ;
   ; @usage
+  ; [expandable :my-expandable {...}]
   ; (collapse-content! :my-expandable)
   [expandable-id]
   (let [surface-id (pretty-elements.engine/element-id->subitem-id expandable-id :surface)]

@@ -15,6 +15,7 @@
   ; @param (keyword) surface-id
   ;
   ; @usage
+  ; [surface :my-surface {...}]
   ; (mount-surface! :my-surface)
   [surface-id]
   (dynamic-props/update-props! surface-id assoc :mounted? true))
@@ -26,6 +27,7 @@
   ; @param (keyword) surface-id
   ;
   ; @usage
+  ; [surface :my-surface {...}]
   ; (unmount-surface! :my-surface)
   [surface-id]
   (dynamic-props/update-props! surface-id assoc :mounted? false))
@@ -43,9 +45,11 @@
   ; {:animation-direction (keyword)(opt)}
   ;
   ; @usage
+  ; [surface :my-surface {...}]
   ; (set-surface-content! :my-surface [:div "My content"])
   ;
   ; @usage
+  ; [surface :my-surface {...}]
   ; (set-surface-content! :my-surface [:div "My content"] {:animation-direction :rtl})
   ([surface-id content]
    (set-surface-content! surface-id content {}))
@@ -84,9 +88,11 @@
   ; {:animation-direction (keyword)(opt)}
   ;
   ; @usage
+  ; [surface :my-surface {...}]
   ; (swap-surface-content! :my-surface [:div "My content"])
   ;
   ; @usage
+  ; [surface :my-surface {...}]
   ; (swap-surface-content! :my-surface [:div "My content"] {:animation-direction :rtl})
   ([surface-id content]
    (swap-surface-content! surface-id content {}))
@@ -106,9 +112,11 @@
   ; {:animation-direction (keyword)(opt)}
   ;
   ; @usage
+  ; [surface :my-surface {...}]
   ; (show-surface-content! :my-surface)
   ;
   ; @usage
+  ; [surface :my-surface {...}]
   ; (show-surface-content! :my-surface {:animation-direction :rtl})
   ([surface-id]
    (show-surface-content! surface-id {}))
@@ -132,9 +140,11 @@
   ; {:animation-direction (keyword)(opt)}
   ;
   ; @usage
+  ; [surface :my-surface {...}]
   ; (hide-surface-content! :my-surface)
   ;
   ; @usage
+  ; [surface :my-surface {...}]
   ; (hide-surface-content! :my-surface {:animation-direction :rtl})
   ([surface-id]
    (hide-surface-content! surface-id {}))
