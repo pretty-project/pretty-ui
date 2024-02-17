@@ -1,5 +1,6 @@
 
-(ns pretty-inputs.counter.prototypes)
+(ns pretty-inputs.counter.prototypes
+    (:require [pretty-standards.api :as pretty-standards]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -26,3 +27,4 @@
           :font-size       :s
           :initial-value   0}
          (-> counter-props)))
+; standard-input-option-props

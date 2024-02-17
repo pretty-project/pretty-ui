@@ -4,7 +4,8 @@
               [fruits.vector.api                 :as vector]
               [pretty-inputs.engine.api          :as pretty-inputs.engine]
               [pretty-inputs.select.env          :as select.env]
-              [pretty-inputs.select.side-effects :as select.side-effects]))
+              [pretty-inputs.select.side-effects :as select.side-effects]
+              [pretty-standards.api :as pretty-standards]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -125,3 +126,4 @@
           :orientation     :vertical}
          (if border-color {:border-position :all :border-width :xxs})
          (-> select-props)))
+; standard-input-option-props

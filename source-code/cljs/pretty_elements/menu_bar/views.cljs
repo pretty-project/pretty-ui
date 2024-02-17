@@ -26,7 +26,8 @@
   ;
   ; @param (keyword) bar-id
   ; @param (map) bar-props
-  ; {:menu-items (maps in vector)(opt)}
+  ; {:menu-items (maps in vector)(opt)
+  ;  ...}
   [bar-id {:keys [menu-items] :as bar-props}]
   [:div (menu-bar.attributes/menu-bar-attributes bar-id bar-props)
         [:div (menu-bar.attributes/menu-bar-body-attributes bar-id bar-props)
@@ -48,46 +49,38 @@
                          :reagent-render         (fn [_ bar-props] [menu-bar bar-id bar-props])}))
 
 (defn view
+  ; @description
+  ; Menu bar element.
+  ;
+  ; @links Implemented elements
+  ; [Menu-item](pretty-ui/cljs/pretty-elements/api.html#menu-item)
+  ;
+  ; @links Implemented properties
+  ; [Background color properties](pretty-core/cljs/pretty-properties/api.html#background-color-properties)
+  ; [Border properties](pretty-core/cljs/pretty-properties/api.html#border-properties)
+  ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
+  ; [Flex properties](pretty-core/cljs/pretty-properties/api.html#flex-properties)
+  ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
+  ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
+  ; [Size properties](pretty-core/cljs/pretty-properties/api.html#size-properties)
+  ; [Space properties](pretty-core/cljs/pretty-properties/api.html#space-properties)
+  ; [State properties](pretty-core/cljs/pretty-properties/api.html#state-properties)
+  ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
+  ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
+  ;
   ; @param (keyword)(opt) bar-id
   ; @param (map) bar-props
-  ; {:border-color (keyword or string)(opt)
-  ;  :border-position (keyword)(opt)
-  ;  :border-radius (map)(opt)
-  ;   {:all, :tl, :tr, :br, :bl (keyword, px or string)(opt)}
-  ;  :border-width (keyword, px or string)(opt)
-  ;  :class (keyword or keywords in vector)(opt)
-  ;  :disabled? (boolean)(opt)
-  ;  :fill-color (keyword or string)(opt)
-  ;  :fill-pattern (keyword)(opt)
-  ;  :gap (keyword, px or string)(opt)
-  ;  :height (keyword, px or string)(opt)
-  ;  :horizontal-align (keyword)(opt)
-  ;  :indent (map)(opt)
-  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :max-height (keyword, px or string)(opt)
-  ;  :max-width (keyword, px or string)(opt)
-  ;  :menu-item-default (map)(opt)
-  ;  :menu-items (maps in vector)(opt)
-  ;  :min-height (keyword, px or string)(opt)
-  ;  :min-width (keyword, px or string)(opt)
-  ;  :on-mount-f (function)(opt)
-  ;  :on-unmount-f (function)(opt)
-  ;  :orientation (keyword)(opt)
-  ;  :overflow (keyword)(opt)
-  ;  :outdent (map)(opt)
-  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :overflow (keyword)(opt)
-  ;  :preset (keyword)(opt)
-  ;  :style (map)(opt)
-  ;  :theme (keyword)(opt)
-  ;  :vertical-align (keyword)(opt)
-  ;  :width (keyword, px or string)(opt)}
+  ; Check out the implemented elements.
+  ; Check out the implemented properties.
   ;
-  ; @usage
-  ; [menu-bar {...}]
-  ;
-  ; @usage
-  ; [menu-bar :my-menu-bar {...}]
+  ; @usage (menu-bar.png)
+  ; [menu-bar {:gap               :m
+  ;            :menu-item-default {:border-position :bottom
+  ;                                :border-width    :xs
+  ;                                :font-size       :s}
+  ;            :menu-items        [{:label "My menu item #1" :href-uri "/my-uri-1" :border-color :secondary}
+  ;                                {:label "My menu item #2" :href-uri "/my-uri-2"}
+  ;                                {:label "My menu item #3" :href-uri "/my-uri-3"}]}]
   ([bar-props]
    [view (random/generate-keyword) bar-props])
 

@@ -1,6 +1,8 @@
 
 (ns pretty-elements.horizontal-separator.prototypes
-    (:require [pretty-properties.api :as pretty-properties]))
+    (:require [pretty-properties.api :as pretty-properties]
+              [pretty-rules.api :as pretty-rules]
+              [pretty-standards.api :as pretty-standards]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -13,10 +15,16 @@
   ;
   ; @return (map)
   [_ separator-props]
-  (-> separator-props (pretty-properties/default-line-props         {:line-orientation :horizontal})
-                      (pretty-properties/default-font-props         {:font-size :micro :font-weight :medium})
-                      (pretty-properties/default-flex-props         {:gap :xs :orientation :horizontal})
-                      (pretty-properties/default-label-props        {})
-                      (pretty-properties/default-size-props         {:height :content :width :auto :size-unit :full-block})
-                      (pretty-properties/default-text-props         {:text-transform :uppercase :text-selectable? false})
-                      (pretty-properties/default-wrapper-size-props {})))
+  (-> separator-props (pretty-properties/default-font-props {:font-size :micro :font-weight :medium})
+                      (pretty-properties/default-flex-props {:gap :xs :orientation :horizontal})
+                      (pretty-properties/default-line-props {:line-color :muted :line-orientation :horizontal :line-size :grow})
+                      (pretty-properties/default-size-props {:height :content :width :auto :size-unit :full-block})
+                      (pretty-properties/default-text-props {:text-color :muted :text-transform :uppercase :text-selectable? false})
+                      (pretty-standards/standard-flex-props)
+                      (pretty-standards/standard-font-props)
+                      (pretty-standards/standard-line-props)
+                      (pretty-standards/standard-text-props)
+                      (pretty-standards/standard-wrapper-size-props)
+                      (pretty-rules/auto-adapt-wrapper-size)
+                      (pretty-rules/auto-align-scrollable-flex)
+                      (pretty-rules/compose-label)))

@@ -15,7 +15,8 @@
   ;
   ; @param (keyword) column-id
   ; @param (map) column-props
-  ; {:content (metamorphic-content)(opt)}
+  ; {:content (metamorphic-content)(opt)
+  ;  ...}
   [column-id {:keys [content] :as column-props}]
   [:div (column.attributes/column-attributes column-id column-props)
         [:div (column.attributes/column-body-attributes column-id column-props)
@@ -40,7 +41,7 @@
   ; Vertical flex container element.
   ;
   ; @links Implemented properties
-  ; [Background properties color](pretty-core/cljs/pretty-properties/api.html#background-color-properties)
+  ; [Background color properties](pretty-core/cljs/pretty-properties/api.html#background-color-properties)
   ; [Border properties](pretty-core/cljs/pretty-properties/api.html#border-properties)
   ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
   ; [Content properties](pretty-core/cljs/pretty-properties/api.html#content-properties)
@@ -55,10 +56,21 @@
   ;
   ; @param (keyword)(opt) column-id
   ; @param (map) column-props
-  ; Check out the implemented properties below.
+  ; Check out the implemented properties.
   ;
   ; @usage (column.png)
-  ; ...
+  ; [column {:border-color     :primary
+  ;          :border-radius    {:all :m}
+  ;          :border-width     :xs
+  ;          :content          [:<> [:div "My row #1"]
+  ;                                 [:div "My row #2"]
+  ;                                 [:div "My row #3"]]
+  ;          :fill-color       :highlight
+  ;          :gap              :xs
+  ;          :horizontal-align :center
+  ;          :vertical-align   :center
+  ;          :height           :s
+  ;          :width            :5xl}]
   ([column-props]
    [view (random/generate-keyword) column-props])
 

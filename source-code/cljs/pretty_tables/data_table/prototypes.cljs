@@ -1,6 +1,8 @@
 
 (ns pretty-tables.data-table.prototypes
-    (:require [pretty-properties.api :as pretty-properties]))
+    (:require [pretty-properties.api :as pretty-properties]
+              [pretty-rules.api :as pretty-rules]
+              [pretty-standards.api :as pretty-standards]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -36,5 +38,6 @@
   ;
   ; @return (map)
   [_ table-props]
-  (-> table-props (pretty-properties/default-size-props         {:height :content :width :auto :size-unit :double-block})
-                  (pretty-properties/default-wrapper-size-props {})))
+  (-> table-props (pretty-properties/default-size-props {:height :content :width :auto :size-unit :double-block})
+                  (pretty-standards/standard-wrapper-size-props)
+                  (pretty-rules/auto-adapt-wrapper-size)))

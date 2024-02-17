@@ -1,7 +1,9 @@
 
 (ns pretty-elements.toggle.prototypes
     (:require [dom.api :as dom]
-              [react-references.api :as react-references]))
+              [react-references.api :as react-references]
+              [pretty-rules.api :as pretty-rules]
+              [pretty-standards.api :as pretty-standards]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -36,3 +38,13 @@
          ; :text-selectable? false
          ;(pretty-properties/default-size-props {:size-unit :full-block})
          ;(pretty-properties/default-wrapper-size-props {})))
+         ;(pretty-standards/standard-wrapper-size-props)))
+         ;(pretty-rules/auto-disable-highlight-color)))
+         ;(pretty-rules/auto-disable-hover-color)))
+         ;(pretty-rules/apply-auto-border-crop)))
+         ;(pretty-rules/auto-disable-effects)))
+         ;(pretty-rules/auto-disable-cursor)))
+         ;(pretty-rules/auto-disable-mouse-events)))
+         ;(pretty-rules/auto-set-click-effect)))
+         ; (pretty-rules/auto-blur-click-events)))
+         ;(pretty-rules/auto-adapt-wrapper-size)))

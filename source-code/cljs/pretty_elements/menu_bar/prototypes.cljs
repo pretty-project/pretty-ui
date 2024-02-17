@@ -1,6 +1,8 @@
 
 (ns pretty-elements.menu-bar.prototypes
-    (:require [pretty-properties.api :as pretty-properties]))
+    (:require [pretty-properties.api :as pretty-properties]
+              [pretty-rules.api :as pretty-rules]
+              [pretty-standards.api :as pretty-standards]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -26,7 +28,13 @@
   ;
   ; @return (map)
   [bar-id bar-props]
-  (-> bar-props (pretty-properties/default-border-props       {})
-                (pretty-properties/default-flex-props         {:orientation :horizontal :overflow :scroll})
-                (pretty-properties/default-size-props         {:height :content :width :content :size-unit :double-block})
-                (pretty-properties/default-wrapper-size-props {})))
+  (-> bar-props (pretty-properties/default-flex-props {:orientation :horizontal :overflow :scroll})
+                (pretty-properties/default-size-props {:height :content :width :content :size-unit :double-block})
+                (pretty-standards/standard-border-props)
+                (pretty-standards/standard-flex-props)
+                (pretty-standards/standard-wrapper-size-props)
+                (pretty-rules/apply-auto-border-crop)
+                (pretty-rules/auto-adapt-wrapper-size)
+                (pretty-rules/auto-align-scrollable-flex)))
+               ;(pretty-rules/auto-disable-highlight-color)
+               ;(pretty-rules/auto-disable-hover-color)

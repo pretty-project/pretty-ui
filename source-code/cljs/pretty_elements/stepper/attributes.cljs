@@ -33,7 +33,7 @@
   ;  ...}
   [_ stepper-props]
   (-> {:class :pe-stepper}
-      (pretty-attributes/class-attributes  stepper-props)
+      (pretty-attributes/class-attributes   stepper-props)
       (pretty-attributes/outdent-attributes stepper-props)
-      (pretty-attributes/state-attributes  stepper-props)
+      (pretty-attributes/state-attributes   stepper-props)
       (pretty-attributes/theme-attributes   stepper-props)))

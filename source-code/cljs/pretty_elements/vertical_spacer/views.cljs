@@ -50,11 +50,8 @@
   ;  :theme (keyword)(opt)
   ;  :width (keyword, px or string)(opt)}
   ;
-  ; @usage
-  ; [vertical-spacer {...}]
-  ;
-  ; @usage
-  ; [vertical-spacer :my-vertical-spacer {...}]
+  ; @usage (vertical-spacer.png)
+  ; ...
   ([spacer-props]
    [view (random/generate-keyword) spacer-props])
 

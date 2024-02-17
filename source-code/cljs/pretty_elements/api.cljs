@@ -38,7 +38,11 @@
 
 ; @tutorial Implemented accessories
 ;
-; Some element implements accessories.
+; Accessories, implemented by elements are customizable by
+;
+; @example Customizing the cover accessory on a button element:
+; [button {:cover {:fill-color :primary ...}
+;          :label "My button"}]
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

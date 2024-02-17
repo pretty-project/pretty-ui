@@ -2,7 +2,6 @@
 (ns pretty-elements.text.views
     (:require [fruits.hiccup.api               :as hiccup]
               [fruits.random.api               :as random]
-              [metamorphic-content.api         :as metamorphic-content]
               [pretty-elements.engine.api      :as pretty-elements.engine]
               [pretty-elements.text.attributes :as text.attributes]
               [pretty-elements.text.prototypes :as text.prototypes]
@@ -18,16 +17,12 @@
   ; @param (keyword) text-id
   ; @param (map) text-props
   ; {:content (metamorphic-content)(opt)
-  ;  :content-placeholder (metamorphic-content)(opt)
-  ;  :on-copy-f (function)(opt)}
-  [text-id {:keys [content content-placeholder on-copy-f] :as text-props}]
+  ;  ...}
+  [text-id {:keys [content] :as text-props}]
   [:div (text.attributes/text-attributes text-id text-props)
         [:div (text.attributes/text-body-attributes text-id text-props)
-              (if on-copy-f [:div (text.attributes/copyable-attributes text-id text-props)
-                                  [:div (text.attributes/content-attributes text-id text-props)
-                                        (hiccup/parse-newlines [:<> (metamorphic-content/compose content content-placeholder)])]]
-                            [:<>  [:div (text.attributes/content-attributes text-id text-props)
-                                        (hiccup/parse-newlines [:<> (metamorphic-content/compose content content-placeholder)])]])]])
+              [:div (text.attributes/text-content-attributes text-id text-props)
+                    (hiccup/parse-newlines [:<> content])]]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -102,11 +97,8 @@
   ;  :vertical-align (keyword)(opt)
   ;  :width (keyword, px or string)(opt)}
   ;
-  ; @usage
-  ; [text {...}]
-  ;
-  ; @usage
-  ; [text :my-text {...}]
+  ; @usage (text.png)
+  ; ...
   ([text-props]
    [view (random/generate-keyword) text-props])
 

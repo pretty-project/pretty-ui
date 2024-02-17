@@ -91,3 +91,4 @@
           (fn [%] (merge % {:on-blur       [:pretty-inputs.text-field/field-blurred field-id %]
                             :on-focus      [:pretty-inputs.text-field/field-focused field-id %]
                             :on-type-ended [:pretty-inputs.text-field/type-ended    field-id %]}))))
+          ; input/autofill-rules

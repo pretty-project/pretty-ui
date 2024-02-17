@@ -17,7 +17,8 @@
   ;
   ; @param (keyword) toggle-id
   ; @param (map) toggle-props
-  ; {}
+  ; {:content (metamorphic-content)(opt)
+  ;  ...}
   [toggle-id {:keys [content content-placeholder] :as toggle-props}]
   [:div (toggle.attributes/toggle-attributes toggle-id toggle-props)
         [(pretty-elements.engine/clickable-auto-tag toggle-id toggle-props)
@@ -85,11 +86,8 @@
   ; + keypress?
   ; badge, marker, cover, tooltip
   ;
-  ; @usage
-  ; [toggle {...}]
-  ;
-  ; @usage
-  ; [toggle :my-toggle {...}]
+  ; @usage (toggle.png)
+  ; ...
   ([toggle-props]
    [view (random/generate-keyword) toggle-props])
 

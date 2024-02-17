@@ -16,7 +16,8 @@
   ;
   ; @param (keyword) separator-id
   ; @param (map) separator-props
-  ; {:label (metamorphic-content)(opt)}
+  ; {:label (metamorphic-content)(opt)
+  ;  ...}
   [separator-id {:keys [label] :as separator-props}]
   [:div (horizontal-separator.attributes/separator-attributes separator-id separator-props)
         [:div (horizontal-separator.attributes/separator-body-attributes separator-id separator-props)
@@ -60,12 +61,12 @@
   ;
   ; @param (keyword)(opt) separator-id
   ; @param (map) separator-props
-  ; Check out the implemented accessories below.
-  ; Check out the implemented elements below.
-  ; Check out the implemented properties below.
+  ; Check out the implemented properties.
   ;
   ; @usage (horizontal-separator.png)
-  ; ...
+  ; [horizontal-separator {:label      "My horizontal separator"
+  ;                        :line-color :muted
+  ;                        :text-color :muted}]
   ([separator-props]
    [view (random/generate-keyword) separator-props])
 

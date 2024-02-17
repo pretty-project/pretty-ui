@@ -1,6 +1,7 @@
 
 (ns pretty-inputs.checkbox.prototypes
-    (:require [fruits.noop.api :refer [none return]]))
+    (:require [fruits.noop.api :refer [none return]]
+              [pretty-standards.api :as pretty-standards]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -32,3 +33,5 @@
           :option-value-f  return
           :orientation     :vertical}
          (-> checkbox-props)))
+ ; auto-disable-effects + tobbi inputra is + tobbi rule
+; standard-input-option-props

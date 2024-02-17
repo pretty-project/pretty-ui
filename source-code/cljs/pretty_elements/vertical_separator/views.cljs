@@ -16,7 +16,8 @@
   ;
   ; @param (keyword) separator-id
   ; @param (map) separator-props
-  ; {:label (metamorphic-content)(opt)}
+  ; {:label (metamorphic-content)(opt)
+  ;  ...}
   [separator-id {:keys [label] :as separator-props}]
   [:div (vertical-separator.attributes/separator-attributes separator-id separator-props)
         [:div (vertical-separator.attributes/separator-body-attributes separator-id separator-props)
@@ -75,11 +76,8 @@
   ;  :theme (keyword)(opt)
   ;  :width (keyword, px or string)(opt)}
   ;
-  ; @usage
-  ; [vertical-separator {...}]
-  ;
-  ; @usage
-  ; [vertical-separator :my-vertical-separator {...}]
+  ; @usage (vertical-separator.png)
+  ; ...
   ([separator-props]
    [view (random/generate-keyword) separator-props])
 

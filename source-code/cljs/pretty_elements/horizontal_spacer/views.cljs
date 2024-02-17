@@ -49,10 +49,10 @@
   ;
   ; @param (keyword)(opt) spacer-id
   ; @param (map) spacer-props
-  ; Check out the implemented properties below.
+  ; Check out the implemented properties.
   ;
   ; @usage (horizontal-spacer.png)
-  ; ...
+  ; [horizontal-spacer {:height :s}]
   ([spacer-props]
    [view (random/generate-keyword) spacer-props])
 

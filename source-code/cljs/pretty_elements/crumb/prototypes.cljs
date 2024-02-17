@@ -1,6 +1,8 @@
 
 (ns pretty-elements.crumb.prototypes
-    (:require [pretty-properties.api :as pretty-properties]))
+    (:require [pretty-properties.api :as pretty-properties]
+              [pretty-rules.api :as pretty-rules]
+              [pretty-standards.api :as pretty-standards]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -13,13 +15,22 @@
   ;
   ; @return (map)
   [_ crumb-props]
-  (-> crumb-props (pretty-properties/clickable-text-auto-props)
-                  (pretty-properties/default-anchor-props       {})
-                  (pretty-properties/default-effect-props       {})
-                  (pretty-properties/default-flex-props         {:orientation :horizontal})
-                  (pretty-properties/default-font-props         {:font-size :xs :font-weight :semi-bold})
-                  (pretty-properties/default-label-props        {})
-                  (pretty-properties/default-mouse-event-props  {})
-                  (pretty-properties/default-size-props         {:max-width :l :size-unit :full-block})
-                  (pretty-properties/default-text-props         {:text-overflow :ellipsis :text-selectable? false})
-                  (pretty-properties/default-wrapper-size-props {})))
+  (-> crumb-props (pretty-properties/default-flex-props {:orientation :horizontal})
+                  (pretty-properties/default-font-props {:font-size :xs :font-weight :semi-bold})
+                  (pretty-properties/default-size-props {:max-width :l :size-unit :full-block})
+                  (pretty-properties/default-text-props {:text-overflow :ellipsis :text-selectable? false})
+                  (pretty-standards/standard-anchor-props)
+                  (pretty-standards/standard-flex-props)
+                  (pretty-standards/standard-font-props)
+                  (pretty-standards/standard-text-props)
+                  (pretty-standards/standard-wrapper-size-props)
+                  (pretty-rules/auto-adapt-wrapper-size)
+                  (pretty-rules/auto-align-scrollable-flex)
+                  (pretty-rules/auto-blur-click-events)
+                  (pretty-rules/auto-color-clickable-text)
+                  (pretty-rules/auto-disable-highlight-color)
+                  (pretty-rules/auto-disable-effects)
+                  (pretty-rules/auto-disable-hover-color)
+                  (pretty-rules/auto-disable-mouse-events)
+                  (pretty-rules/auto-set-click-effect)
+                  (pretty-rules/compose-label)))

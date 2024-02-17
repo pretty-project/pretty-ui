@@ -64,6 +64,8 @@
                            ; Google Chrome Version 89.0.4389.114
                            ; The height of a textarea element has to be at least 2 rows!
                            ; Otherwise, the browsers might not wrap the content.
+                           ;
+                           ; + The extra line tells the user that's a multiline field.
                            (inc line-count))
 
                       ; If the field is NOT multiline ...

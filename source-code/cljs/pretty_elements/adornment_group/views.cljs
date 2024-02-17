@@ -26,7 +26,8 @@
   ;
   ; @param (keyword) group-id
   ; @param (map) group-props
-  ; {:adornments (maps in vector)(opt)}
+  ; {:adornments (maps in vector)(opt)
+  ;  ...}
   [group-id {:keys [adornments] :as group-props}]
   [:div (adornment-group.attributes/group-attributes group-id group-props)
         [:div (adornment-group.attributes/group-body-attributes group-id group-props)
@@ -67,8 +68,8 @@
   ;
   ; @param (keyword)(opt) group-id
   ; @param (map) group-props
-  ; Check out the implemented elements below.
-  ; Check out the implemented properties below.
+  ; Check out the implemented elements.
+  ; Check out the implemented properties.
   ;
   ; @usage (adornment-group.png)
   ; [adornment-group {:adornment-default {:fill-color :highlight :border-radius {:all :s}}

@@ -19,7 +19,8 @@
   ; {:badge (map)(opt)
   ;  :content (metamorphic-content)(opt)
   ;  :cover (map)(opt)
-  ;  :marker (map)(opt)}
+  ;  :marker (map)(opt)
+  ;  ...}
   [card-id {:keys [badge content cover marker] :as card-props}]
   [:div (card.attributes/card-attributes card-id card-props)
         [(pretty-elements.engine/clickable-auto-tag card-id card-props)
@@ -57,7 +58,7 @@
   ;
   ; @links Implemented properties
   ; [Anchor properties](pretty-core/cljs/pretty-properties/api.html#anchor-properties)
-  ; [Background properties color](pretty-core/cljs/pretty-properties/api.html#background-color-properties)
+  ; [Background color properties](pretty-core/cljs/pretty-properties/api.html#background-color-properties)
   ; [Border properties](pretty-core/cljs/pretty-properties/api.html#border-properties)
   ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
   ; [Clickable state properties](pretty-core/cljs/pretty-properties/api.html#clickable-state-properties)
@@ -78,11 +79,19 @@
   ;
   ; @param (keyword)(opt) card-id
   ; @param (map) card-props
-  ; Check out the implemented accessories below.
-  ; Check out the implemented properties below.
+  ; Check out the implemented accessories.
+  ; Check out the implemented properties.
   ;
   ; @usage (card.png)
-  ; ...
+  ; [card {:border-color     :primary
+  ;        :border-radius    {:all :m}
+  ;        :border-width     :xs
+  ;        :content          "My card"
+  ;        :fill-color       :highlight
+  ;        :horizontal-align :center
+  ;        :vertical-align   :center
+  ;        :height           :l
+  ;        :width            :l}]
   ([card-props]
    [view (random/generate-keyword) card-props])
 

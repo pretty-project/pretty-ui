@@ -61,11 +61,24 @@
   ;
   ; @param (keyword)(opt) menu-id
   ; @param (map) menu-props
-  ; Check out the implemented elements below.
-  ; Check out the implemented properties below.
+  ; Check out the implemented elements.
+  ; Check out the implemented properties.
   ;
   ; @usage (dropdown-menu.png)
-  ; ...
+  ; [dropdown-menu {:menu-bar {:gap               :xs
+  ;                            :menu-item-default {:border-radius {:all :s}
+  ;                                                :font-size     :s
+  ;                                                :hover-color   :highlight
+  ;                                                :indent        {:all :xxs}}
+  ;                            :menu-items        [{:label "My menu item #1" :dropdown-content [:div "My dropdown content #1"]}
+  ;                                                {:label "My menu item #2" :dropdown-content [:div "My dropdown content #2"]}
+  ;                                                {:label "My menu item #3" :dropdown-content [:div "My dropdown content #3"]}
+  ;                 :surface  {:border-color  :muted
+  ;                            :border-radius {:all :m}
+  ;                            :fill-color    :highlight
+  ;                            :indent        {:all :s}
+  ;                            :outdent       {:top :m}}}]
+  ;
   ([menu-props]
    [view (random/generate-keyword) menu-props])
 

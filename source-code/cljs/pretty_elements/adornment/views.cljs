@@ -18,7 +18,8 @@
   ; @param (map) adornment-props
   ; {:cover (keyword)(opt)
   ;  :icon (keyword)(opt)
-  ;  :label (metamorphic-content)(opt)}
+  ;  :label (metamorphic-content)(opt)
+  ;  ...}
   [adornment-id {:keys [cover icon label] :as adornment-props}]
   [:div (adornment.attributes/adornment-attributes adornment-id adornment-props)
         [(pretty-elements.engine/clickable-auto-tag      adornment-id adornment-props)
@@ -54,7 +55,7 @@
   ;
   ; @links Implemented properties
   ; [Anchor properties](pretty-core/cljs/pretty-properties/api.html#anchor-properties)
-  ; [Background properties color](pretty-core/cljs/pretty-properties/api.html#background-color-properties)
+  ; [Background color properties](pretty-core/cljs/pretty-properties/api.html#background-color-properties)
   ; [Border properties](pretty-core/cljs/pretty-properties/api.html#border-properties)
   ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
   ; [Clickable state properties](pretty-core/cljs/pretty-properties/api.html#clickable-state-properties)
@@ -76,8 +77,8 @@
   ;
   ; @param (keyword)(opt) adornment-id
   ; @param (map) adornment-props
-  ; Check out the implemented accessories below.
-  ; Check out the implemented properties below.
+  ; Check out the implemented accessories.
+  ; Check out the implemented properties.
   ;
   ; @usage (adornment.png)
   ; [adornment {:border-radius {:all :xs}

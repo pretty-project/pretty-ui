@@ -1,6 +1,8 @@
 
 (ns pretty-elements.adornment-group.prototypes
-    (:require [pretty-properties.api :as pretty-properties]))
+    (:require [pretty-properties.api :as pretty-properties]
+              [pretty-rules.api :as pretty-rules]
+              [pretty-standards.api :as pretty-standards]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -26,6 +28,9 @@
   ;
   ; @return (map)
   [_ group-props]
-  (-> group-props (pretty-properties/default-flex-props         {:orientation :horizontal :overflow :scroll})
-                  (pretty-properties/default-size-props         {:size-unit :full-block})
-                  (pretty-properties/default-wrapper-size-props {})))
+  (-> group-props (pretty-properties/default-flex-props {:orientation :horizontal :overflow :scroll})
+                  (pretty-properties/default-size-props {:size-unit :full-block})
+                  (pretty-standards/standard-flex-props)
+                  (pretty-standards/standard-wrapper-size-props)
+                  (pretty-rules/auto-adapt-wrapper-size)
+                  (pretty-rules/auto-align-scrollable-flex)))

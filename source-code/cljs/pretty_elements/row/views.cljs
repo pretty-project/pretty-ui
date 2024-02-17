@@ -1,7 +1,6 @@
 
 (ns pretty-elements.row.views
     (:require [fruits.random.api              :as random]
-              [metamorphic-content.api        :as metamorphic-content]
               [pretty-elements.engine.api     :as pretty-elements.engine]
               [pretty-elements.row.attributes :as row.attributes]
               [pretty-elements.row.prototypes :as row.prototypes]
@@ -17,11 +16,11 @@
   ; @param (keyword) row-id
   ; @param (map) row-props
   ; {:content (metamorphic-content)(opt)
-  ;  :content-placeholder (metamorphic-content)(opt)}
-  [row-id {:keys [content content-placeholder] :as row-props}]
+  ;  ...}
+  [row-id {:keys [content] :as row-props}]
   [:div (row.attributes/row-attributes row-id row-props)
         [:div (row.attributes/row-body-attributes row-id row-props)
-              [metamorphic-content/compose content content-placeholder]]])
+              (-> content)]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -38,47 +37,40 @@
                          :reagent-render         (fn [_ row-props] [row row-id row-props])}))
 
 (defn view
+  ; @description
+  ; Horizontal flex container element.
+  ;
+  ; @links Implemented properties
+  ; [Background color properties](pretty-core/cljs/pretty-properties/api.html#background-color-properties)
+  ; [Border properties](pretty-core/cljs/pretty-properties/api.html#border-properties)
+  ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
+  ; [Content properties](pretty-core/cljs/pretty-properties/api.html#content-properties)
+  ; [Flex properties](pretty-core/cljs/pretty-properties/api.html#flex-properties)
+  ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
+  ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
+  ; [Size properties](pretty-core/cljs/pretty-properties/api.html#size-properties)
+  ; [Space properties](pretty-core/cljs/pretty-properties/api.html#space-properties)
+  ; [State properties](pretty-core/cljs/pretty-properties/api.html#state-properties)
+  ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
+  ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
+  ;
   ; @param (keyword)(opt) row-id
   ; @param (map) row-props
-  ; {:border-color (keyword or string)(opt)
-  ;  :border-position (keyword)(opt)
-  ;  :border-radius (map)(opt)
-  ;   {:all, :tl, :tr, :br, :bl (keyword, px or string)(opt)}
-  ;  :border-width (keyword, px or string)(opt)
-  ;  :class (keyword or keywords in vector)(opt)
-  ;  :content (metamorphic-content)(opt)
-  ;  :content-placeholder (metamorphic-content)(opt)
-  ;  :disabled? (boolean)(opt)
-  ;  :fill-color (keyword or string)(opt)
-  ;  :fill-pattern (keyword)(opt)
-  ;   Default: :cover
-  ;  :gap (keyword, px or string)(opt)
-  ;  :height (keyword, px or string)(opt)
-  ;  :horizontal-align (keyword)(opt)
-  ;   Default: :left
-  ;  :indent (map)(opt)
-  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :max-height (keyword, px or string)(opt)
-  ;  :max-width (keyword, px or string)(opt)
-  ;  :min-height (keyword, px or string)(opt)
-  ;  :min-width (keyword, px or string)(opt)
-  ;  :on-mount-f (function)(opt)
-  ;  :on-unmount-f (function)(opt)
-  ;  :outdent (map)(opt)
-  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :overflow (keyword)(opt)
-  ;  :preset (keyword)(opt)
-  ;  :style (map)(opt)
-  ;  :theme (keyword)(opt)
-  ;  :vertical-align (keyword)(opt)
-  ;   Default: :center
-  ;  :width (keyword, px or string)(opt)}
+  ; Check out the implemented properties.
   ;
-  ; @usage
-  ; [row {...}]
-  ;
-  ; @usage
-  ; [row :my-row {...}]
+  ; @usage (row.png)
+  ; [row {:border-color     :primary
+  ;       :border-radius    {:all :m}
+  ;       :border-width     :xs
+  ;       :content          [:<> [:div "My column #1"]
+  ;                              [:div "My column #2"]
+  ;                              [:div "My column #3"]]
+  ;       :fill-color       :highlight
+  ;       :gap              :xs
+  ;       :horizontal-align :center
+  ;       :vertical-align   :center
+  ;       :height           :s
+  ;       :width            :5xl}]
   ([row-props]
    [view (random/generate-keyword) row-props])
 

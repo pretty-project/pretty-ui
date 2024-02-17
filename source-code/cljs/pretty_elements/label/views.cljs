@@ -17,7 +17,8 @@
   ; @param (map) label-props
   ; {:label (metamorphic-content)(opt)
   ;  :icon (keyword)(opt)
-  ;  :icon-position (keyword)(opt)}
+  ;  :icon-position (keyword)(opt)
+  ;  ...}
   [label-id {:keys [content icon icon-position] :as label-props}]
   [:div (label.attributes/label-attributes label-id label-props)
         [:div (label.attributes/label-body-attributes label-id label-props)
@@ -43,59 +44,39 @@
 
 (defn view
   ; @description
-  ; Label element with
+  ; Customizable label element.
+  ;
+  ; @links Implemented properties
+  ; [Background color properties](pretty-core/cljs/pretty-properties/api.html#background-color-properties)
+  ; [Border properties](pretty-core/cljs/pretty-properties/api.html#border-properties)
+  ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
+  ; [Content properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
+  ; [Flex properties](pretty-core/cljs/pretty-properties/api.html#flex-properties)
+  ; [Font properties](pretty-core/cljs/pretty-properties/api.html#font-properties)
+  ; [Icon properties](pretty-core/cljs/pretty-properties/api.html#icon-properties)
+  ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
+  ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
+  ; [Size properties](pretty-core/cljs/pretty-properties/api.html#size-properties)
+  ; [Space properties](pretty-core/cljs/pretty-properties/api.html#space-properties)
+  ; [State properties](pretty-core/cljs/pretty-properties/api.html#state-properties)
+  ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
+  ; [Text properties](pretty-core/cljs/pretty-properties/api.html#text-properties)
+  ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
   ;
   ; @param (keyword)(opt) label-id
   ; @param (map) label-props
-  ; {:border-color (keyword or string)(opt)
-  ;  :border-position (keyword)(opt)
-  ;  :border-radius (map)(opt)
-  ;   {:all, :tl, :tr, :br, :bl (keyword, px or string)(opt)}
-  ;  :border-width (keyword, px or string)(opt)
-  ;  :class (keyword or keywords in vector)(opt)
-  ;  :content (metamorphic-content)(opt)
-  ;  :content-placeholder (metamorphic-content)(opt)
-  ;  :disabled? (boolean)(opt)
-  ;  :fill-color (keyword or string)(opt)
-  ;  :fill-pattern (keyword)(opt)
-  ;  :font-size (keyword, px or string)(opt)
-  ;  :font-weight (keyword or integer)(opt)
-  ;  :gap (keyword, px or string)(opt)
-  ;  :height (keyword, px or string)(opt)
-  ;  :horizontal-align (keyword)(opt)
-  ;  :icon (keyword)(opt)
-  ;  :icon-color (keyword or string)(opt)
-  ;  :icon-family (keyword)(opt)
-  ;  :icon-position (keyword)(opt)
-  ;  :icon-size (keyword, px or string)(opt)
-  ;  :indent (map)(opt)
-  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :letter-spacing (keyword, px or string)(opt)
-  ;  :line-height (keyword, px or string)(opt)
-  ;  :max-height (keyword, px or string)(opt)
-  ;  :max-width (keyword, px or string)(opt)
-  ;  :min-height (keyword, px or string)(opt)
-  ;  :min-width (keyword, px or string)(opt)
-  ;  :on-mount-f (function)(opt)
-  ;  :on-unmount-f (function)(opt)
-  ;  :outdent (map)(opt)
-  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :preset (keyword)(opt)
-  ;  :style (map)(opt)
-  ;  :text-align (keyword)(opt)
-  ;  :text-color (keyword or string)(opt)
-  ;  :text-direction (keyword)(opt)
-  ;  :text-overflow (keyword)(opt)
-  ;  :text-selectable? (boolean)(opt)
-  ;  :text-transform (keyword)(opt)
-  ;  :theme (keyword)(opt)
-  ;  :width (keyword, px or string)(opt)}
+  ; Check out the implemented properties.
   ;
-  ; @usage
-  ; [label {...}]
-  ;
-  ; @usage
-  ; [label :my-label {...}]
+  ; @usage (label.png)
+  ; [label {:border-color     :secondary
+  ;         :content          "My label"
+  ;         :border-position  :bottom
+  ;         :border-width     :xs
+  ;         :gap              :auto
+  ;         :horizontal-align :left
+  ;         :icon             :star
+  ;         :icon-position    :right
+  ;         :width            :xxl}]
   ([label-props]
    [view (random/generate-keyword) label-props])
 

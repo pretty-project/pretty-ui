@@ -1,6 +1,8 @@
 
 (ns pretty-diagrams.circle-diagram.prototypes
-    (:require [pretty-properties.api :as pretty-properties]))
+    (:require [pretty-properties.api :as pretty-properties]
+              [pretty-rules.api :as pretty-rules]
+              [pretty-standards.api :as pretty-standards]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -13,7 +15,8 @@
   ;
   ; @return (map)
   [_ diagram-props]
-  (-> diagram-props (pretty-properties/default-data-props         {})
-                    (pretty-properties/default-shape-props        {})
-                    (pretty-properties/default-size-props         {:size-unit :full-block})
-                    (pretty-properties/default-wrapper-size-props {})))
+  (-> diagram-props (pretty-properties/default-size-props {:size-unit :full-block})
+                    (pretty-standards/standard-data-props)
+                    (pretty-standards/standard-shape-props)
+                    (pretty-standards/standard-wrapper-size-props)
+                    (pretty-rules/auto-adapt-wrapper-size)))

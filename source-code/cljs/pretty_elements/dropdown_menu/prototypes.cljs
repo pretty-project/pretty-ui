@@ -15,7 +15,7 @@
   ;
   ; @return (map)
   [menu-id {:keys [menu-bar]}]
-  (-> menu-bar (assoc-in [:menu-item-default :menu-id] menu-id)))
+  (-> menu-bar (assoc-in [:menu-item-default :dropdown-menu-id] menu-id)))
 
 (defn surface-props-prototype
   ; @ignore

@@ -36,12 +36,7 @@
 (defn view
   ; @param (keyword)(opt) bullet-id
   ; @param (map) bullet-props
-  ; {:border-color (keyword or string)(opt)
-  ;  :border-position (keyword)(opt)
-  ;  :border-radius (map)(opt)
-  ;   {:all, :tl, :tr, :br, :bl (keyword, px or string)(opt)}
-  ;  :border-width (keyword, px or string)(opt)
-  ;  :class (keyword or keywords in vector)(opt)
+  ; {:class (keyword or keywords in vector)(opt)
   ;  :disabled? (boolean)(opt)
   ;  :fill-color (keyword or string)(opt)
   ;  :fill-pattern (keyword)(opt)

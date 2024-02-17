@@ -1,6 +1,7 @@
 
 (ns pretty-inputs.switch.prototypes
-    (:require [fruits.noop.api :refer [none return]]))
+    (:require [fruits.noop.api :refer [none return]]
+              [pretty-standards.api :as pretty-standards]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -36,3 +37,4 @@
           :option-value-f  return
           :orientation     :vertical}
          (-> switch-props)))
+; standard-input-option-props

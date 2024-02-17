@@ -20,7 +20,8 @@
   ; {:cover (map)(opt)
   ;  :end-adornments (maps in vector)(opt)
   ;  :label (metamorphic-content)(opt)
-  ;  :start-adornments (maps in vector)(opt)}
+  ;  :start-adornments (maps in vector)(opt)
+  ;  ...}
   [chip-id {:keys [cover end-adornments label start-adornments] :as chip-props}]
   [:div (chip.attributes/chip-attributes chip-id chip-props)
         [(pretty-elements.engine/clickable-auto-tag chip-id chip-props)
@@ -48,7 +49,7 @@
 
 (defn view
   ; @description
-  ; Optionally clickable chip style element with adornments.
+  ; Optionally clickable chip style element with optional adornments.
   ;
   ; @links Implemented accessories
   ; [Cover](pretty-ui/cljs/pretty-accessories/api.html#cover)
@@ -59,7 +60,7 @@
   ;
   ; @links Implemented properties
   ; [Anchor properties](pretty-core/cljs/pretty-properties/api.html#anchor-properties)
-  ; [Background properties color](pretty-core/cljs/pretty-properties/api.html#background-color-properties)
+  ; [Background color properties](pretty-core/cljs/pretty-properties/api.html#background-color-properties)
   ; [Border properties](pretty-core/cljs/pretty-properties/api.html#border-properties)
   ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
   ; [Clickable state properties](pretty-core/cljs/pretty-properties/api.html#clickable-state-properties)
@@ -79,30 +80,31 @@
   ;
   ; @param (keyword)(opt) chip-id
   ; @param (map) chip-props
-  ; Check out the implemented accessories below.
-  ; Check out the implemented elements below.
-  ; Check out the implemented properties below.
+  ; Check out the implemented accessories.
+  ; Check out the implemented elements.
+  ; Check out the implemented properties.
   ;
   ; @usage (chip.png)
-  ; [chip {:border-radius    {:all :l}
-  ;        :fill-color       :primary
-  ;        :font-weight      :semi-bold
-  ;        :gap              :auto
-  ;        :indent           {:left :xxs :right :s :vertical :xxs}
-  ;        :label            "My chip #1"
-  ;        :width            :xl
-  ;        :start-adornments [{:icon :close :border-radius {:all :m} :fill-color :highlight}]}]
+  ; [chip {:border-radius         {:all :l}
+  ;        :fill-color            :primary
+  ;        :font-weight           :semi-bold
+  ;        :gap                   :auto
+  ;        :indent                {:left :xxs :right :s :vertical :xxs}
+  ;        :label                 "My chip #1"
+  ;        :width                 :xl
+  ;        :end-adornment-default {:border-radius {:all :m} :fill-color :highlight}
+  ;        :start-adornments      [{:icon :close :on-click-f (fn [_] ...)}]}]
   ;
-  ; [chip {:border-color   :highlight
-  ;        :border-radius  {:all :l}
-  ;        :fill-color     :highlight
-  ;        :font-weight    :semi-bold
-  ;        :gap            :auto
-  ;        :indent         {:left :s :right :xxs :vertical :xxs}
-  ;        :label          "My chip #2"
-  ;        :width          :xl
-  ;        :end-adornments [{:icon :close :border-color :highlight :border-radius {:all :m} :fill-color :default}]}]
-  ;
+  ; [chip {:border-color          :highlight
+  ;        :border-radius         {:all :l}
+  ;        :fill-color            :highlight
+  ;        :font-weight           :semi-bold
+  ;        :gap                   :auto
+  ;        :indent                {:left :s :right :xxs :vertical :xxs}
+  ;        :label                 "My chip #2"
+  ;        :width                 :xl
+  ;        :end-adornment-default {:border-color :highlight :border-radius {:all :m} :fill-color :default}
+  ;        :end-adornments        [{:icon :close :on-click-f (fn [_] ...)}]}]
   ([chip-props]
    [view (random/generate-keyword) chip-props])
 
@@ -113,7 +115,7 @@
              chip-props (chip.prototypes/chip-props-prototype                          chip-id chip-props)
              chip-props (pretty-elements.engine/element-timeout-props                  chip-id chip-props)
              chip-props (pretty-elements.engine/element-subitem-group<-subitem-default chip-id chip-props :start-adornments :start-adornment-default)
-             chip-props (pretty-elements.engine/element-subitem-group<-subitem-default chip-id chip-props :start-adornments :start-adornment-default)
-             chip-props (pretty-elements.engine/element-subitem-group<-disabled-state  chip-id chip-props :end-adornments)
+             chip-props (pretty-elements.engine/element-subitem-group<-subitem-default chip-id chip-props :end-adornments   :end-adornment-default)
+             chip-props (pretty-elements.engine/element-subitem-group<-disabled-state  chip-id chip-props :start-adornments)
              chip-props (pretty-elements.engine/element-subitem-group<-disabled-state  chip-id chip-props :end-adornments)]
             [view-lifecycles chip-id chip-props]))))

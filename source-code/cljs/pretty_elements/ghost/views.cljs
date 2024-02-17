@@ -35,11 +35,11 @@
 
 (defn view
   ; @description
-  ; Placeholder element for loading contents.
+  ; Placeholder element for loading contents (with optional loading animation).
   ;
   ; @links Implemented properties
-  ; [Animation properties color](pretty-core/cljs/pretty-properties/api.html#animation-properties)
-  ; [Background properties color](pretty-core/cljs/pretty-properties/api.html#background-color-properties)
+  ; [Animation properties](pretty-core/cljs/pretty-properties/api.html#animation-properties)
+  ; [Background color properties](pretty-core/cljs/pretty-properties/api.html#background-color-properties)
   ; [Border properties](pretty-core/cljs/pretty-properties/api.html#border-properties)
   ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
   ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
@@ -52,10 +52,13 @@
   ;
   ; @param (keyword)(opt) ghost-id
   ; @param (map) ghost-props
-  ; Check out the implemented properties below.
+  ; Check out the implemented properties.
   ;
   ; @usage (ghost.png)
-  ; ...
+  ; [ghost {:border-radius {:all :m}
+  ;         :fill-color    :muted
+  ;         :height        :xs
+  ;         :width         :5xl}]
   ([ghost-props]
    [view (random/generate-keyword) ghost-props])
 

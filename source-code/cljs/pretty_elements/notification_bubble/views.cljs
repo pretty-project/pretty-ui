@@ -20,7 +20,8 @@
   ; {:content (metamorphic-content)(opt)
   ;  :cover (map)(opt)
   ;  :end-adornments (map)(opt)
-  ;  :start-adornments (map)(opt)}
+  ;  :start-adornments (map)(opt)
+  ;  ...}
   [bubble-id {:keys [content cover end-adornments start-adornments] :as bubble-props}]
   [:div (notification-bubble.attributes/bubble-attributes bubble-id bubble-props)
         [(pretty-elements.engine/clickable-auto-tag             bubble-id bubble-props)
@@ -47,69 +48,62 @@
                          :reagent-render         (fn [_ bubble-props] [notification-bubble bubble-id bubble-props])}))
 
 (defn view
-  ; @param (keyword) bubble-id
+  ; @description
+  ; Notification bubble element with optional adornments, keypress control, timeout lock, and progress display.
+  ;
+  ; @links Implemented accessories
+  ; [Cover](pretty-ui/cljs/pretty-accessories/api.html#cover)
+  ;
+  ; @links Implemented elements
+  ; [Adornment-group](pretty-ui/cljs/pretty-elements/api.html#adornment-group)
+  ;
+  ; @links Implemented properties
+  ; [Anchor properties](pretty-core/cljs/pretty-properties/api.html#anchor-properties)
+  ; [Background color properties](pretty-core/cljs/pretty-properties/api.html#background-color-properties)
+  ; [Border properties](pretty-core/cljs/pretty-properties/api.html#border-properties)
+  ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
+  ; [Clickable state properties](pretty-core/cljs/pretty-properties/api.html#clickable-state-properties)
+  ; [Cursor properties](pretty-core/cljs/pretty-properties/api.html#cursor-properties)
+  ; [Content properties](pretty-core/cljs/pretty-properties/api.html#content-properties)
+  ; [Effect properties](pretty-core/cljs/pretty-properties/api.html#effect-properties)
+  ; [Flex properties](pretty-core/cljs/pretty-properties/api.html#flex-properties)
+  ; [Font properties](pretty-core/cljs/pretty-properties/api.html#font-properties)
+  ; [Keypress properties](pretty-core/cljs/pretty-properties/api.html#keypress-properties)
+  ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
+  ; [Mouse event properties](pretty-core/cljs/pretty-properties/api.html#mouse-event-properties)
+  ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
+  ; [Progress properties](pretty-core/cljs/pretty-properties/api.html#progress-properties)
+  ; [Size properties](pretty-core/cljs/pretty-properties/api.html#size-properties)
+  ; [Space properties](pretty-core/cljs/pretty-properties/api.html#space-properties)
+  ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
+  ; [Text properties](pretty-core/cljs/pretty-properties/api.html#text-properties)
+  ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
+  ;
+  ; @param (keyword)(opt) bubble-id
   ; @param (map) bubble-props
-  ; {:border-color (keyword or string)(opt)
-  ;  :border-position (keyword)(opt)
-  ;  :border-radius (map)(opt)
-  ;   {:all, :tl, :tr, :br, :bl (keyword, px or string)(opt)}
-  ;  :border-width (keyword, px or string)(opt)
-  ;  :class (keyword or keywords in vector)(opt)
-  ;  :cover (map)(opt)
-  ;  :cursor (keyword or string)(opt)
-  ;  :content (metamorphic-content)(opt)
-  ;  :content-placeholder (metamorphic-content)(opt)
-  ;  :disabled? (boolean)(opt)
-  ;  :end-adornment-default (map)(opt)
-  ;  :end-adornments (maps in vector)(opt)
-  ;  :font-size (keyword, px or string)(opt)
-  ;  :font-weight (keyword or integer)(opt)
-  ;  :fill-color (keyword or string)(opt)
-  ;  :fill-pattern (keyword)(opt)
-  ;  :height (keyword, px or string)(opt)
-  ;  :href-target (string)(opt)
-  ;  :href-uri (string)(opt)
-  ;  :indent (map)(opt)
-  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :keypress (map)(opt)
-  ;  :letter-spacing (keyword, px or string)(opt)
-  ;  :line-height (keyword, px or string)(opt)
-  ;  :max-height (keyword, px or string)(opt)
-  ;  :max-width (keyword, px or string)(opt)
-  ;  :min-height (keyword, px or string)(opt)
-  ;  :min-width (keyword, px or string)(opt)
-  ;  :on-mount-f (function)(opt)
-  ;  :on-unmount-f (function)(opt)
-  ;  :outdent (map)(opt)
-  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :preset (keyword)(opt)
-  ;  :progress (percentage)(opt)
-  ;  :progress-color (keyword or string)(opt)
-  ;  :progress-direction (keyword)(opt)
-  ;  :progress-duration (ms)(opt)
-  ;  :start-adornment-default (map)(opt)
-  ;  :start-adornments (maps in vector)(opt)
-  ;  :style (map)(opt)
-  ;  :tab-disabled? (boolean)(opt)
-  ;  :text-align (keyword)(opt)
-  ;  :text-color (keyword or string)(opt)
-  ;  :text-direction (keyword)(opt)
-  ;  :text-overflow (keyword)(opt)
-  ;  :text-selectable? (boolean)(opt)
-  ;  :text-transform (keyword)(opt)
-  ;  :theme (keyword)(opt)
-  ;  :width (keyword, px or string)(opt)}
+  ; Check out the implemented accessories.
+  ; Check out the implemented elements.
+  ; Check out the implemented properties.
   ;
-  ; flex props
-  ; + hover-color, hover-effect, hover-pattern, highlight-... ...
-  ; + href-uri, href-target ...
-  ; + on-click-f, on-click-timeout ...
+  ; @usage (notification-bubble.png)
+  ; [notification-bubble {:border-radius         {:all :m}
+  ;                       :content               "My notification bubble #1"
+  ;                       :fill-color            :primary
+  ;                       :indent                {:horizontal :s}
+  ;                       :end-adornment-default {:fill-color :highlight :border-radius {:all :s}}
+  ;                       :end-adornments        [{:icon :close}]
+  ;                       :height                :xs
+  ;                       :width                 :3xl}]
   ;
-  ; @usage
-  ; [notification-bubble {...}]
-  ;
-  ; @usage
-  ; [notification-bubble :my-notification-bubble {...}]
+  ; [notification-bubble {:border-color            :highlight
+  ;                       :border-radius           {:all :m}
+  ;                       :content                 "My notification bubble #2"
+  ;                       :fill-color              :highlight
+  ;                       :indent                  {:horizontal :s}
+  ;                       :start-adornment-default {:fill-color :default :border-color :highlight :border-radius {:all :s}}
+  ;                       :start-adornments        [{:icon :close}]
+  ;                       :height                  :xs
+  ;                       :width                   :3xl}]
   ([bubble-props]
    [view (random/generate-keyword) bubble-props])
 
@@ -120,7 +114,7 @@
              bubble-props (notification-bubble.prototypes/bubble-props-prototype         bubble-id bubble-props)
              bubble-props (pretty-elements.engine/element-timeout-props                  bubble-id bubble-props)
              bubble-props (pretty-elements.engine/element-subitem-group<-subitem-default bubble-id bubble-props :start-adornments :start-adornment-default)
-             bubble-props (pretty-elements.engine/element-subitem-group<-subitem-default bubble-id bubble-props :start-adornments :start-adornment-default)
-             bubble-props (pretty-elements.engine/element-subitem-group<-disabled-state  bubble-id bubble-props :end-adornments)
+             bubble-props (pretty-elements.engine/element-subitem-group<-subitem-default bubble-id bubble-props :end-adornments   :end-adornment-default)
+             bubble-props (pretty-elements.engine/element-subitem-group<-disabled-state  bubble-id bubble-props :start-adornments)
              bubble-props (pretty-elements.engine/element-subitem-group<-disabled-state  bubble-id bubble-props :end-adornments)]
             [view-lifecycles bubble-id bubble-props]))))

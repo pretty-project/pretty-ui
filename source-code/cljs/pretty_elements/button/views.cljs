@@ -21,7 +21,8 @@
   ;  :icon (keyword)(opt)
   ;  :icon-position (keyword)(opt)
   ;  :label (metamorphic-content)(opt)
-  ;  :marker (map)(opt)}
+  ;  :marker (map)(opt)
+  ;  ...}
   [button-id {:keys [badge cover icon icon-position label marker] :as button-props}]
   [:div (button.attributes/button-attributes button-id button-props)
         [(pretty-elements.engine/clickable-auto-tag button-id button-props)
@@ -62,7 +63,7 @@
   ;
   ; @links Implemented properties
   ; [Anchor properties](pretty-core/cljs/pretty-properties/api.html#anchor-properties)
-  ; [Background properties color](pretty-core/cljs/pretty-properties/api.html#background-color-properties)
+  ; [Background color properties](pretty-core/cljs/pretty-properties/api.html#background-color-properties)
   ; [Border properties](pretty-core/cljs/pretty-properties/api.html#border-properties)
   ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
   ; [Clickable state properties](pretty-core/cljs/pretty-properties/api.html#clickable-state-properties)
@@ -85,11 +86,28 @@
   ;
   ; @param (keyword)(opt) button-id
   ; @param (map) button-props
-  ; Check out the implemented accessories below.
-  ; Check out the implemented properties below.
+  ; Check out the implemented accessories.
+  ; Check out the implemented properties.
   ;
   ; @usage (button.png)
-  ; ...
+  ; [button {:border-radius {:all :l}
+  ;          :fill-color    :primary
+  ;          :gap           :auto
+  ;          :icon          :settings
+  ;          :icon-position :right
+  ;          :indent        {:horizontal :s :vertical :xxs}
+  ;          :label         "My button #1"
+  ;          :width         :5xl}]
+  ;
+  ; [button {:border-radius {:all :l}
+  ;          :border-color  :highlight
+  ;          :fill-color    :highlight
+  ;          :gap           :auto
+  ;          :icon          :people
+  ;          :icon-position :left
+  ;          :indent        {:horizontal :s :vertical :xxs}
+  ;          :label         "My button #2"
+  ;          :width         :5xl}]
   ([button-props]
    [view (random/generate-keyword) button-props])
 

@@ -1,6 +1,8 @@
 
 (ns pretty-elements.ghost.prototypes
-    (:require [pretty-properties.api :as pretty-properties]))
+    (:require [pretty-properties.api :as pretty-properties]
+              [pretty-rules.api :as pretty-rules]
+              [pretty-standards.api :as pretty-standards]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -15,6 +17,11 @@
   [_ ghost-props]
   (-> ghost-props (pretty-properties/default-animation-props        {:animation-duration 2000 :animation-mode :repeat :animation-name :pulse})
                   (pretty-properties/default-background-color-props {:fill-color :highlight})
-                  (pretty-properties/default-border-props           {})
                   (pretty-properties/default-size-props             {:height :s :width :s :size-unit :full-block})
-                  (pretty-properties/default-wrapper-size-props     {})))
+                  (pretty-standards/standard-animation-props)
+                  (pretty-standards/standard-border-props)
+                  (pretty-standards/standard-wrapper-size-props)
+                  (pretty-rules/apply-auto-border-crop)
+                  (pretty-rules/auto-adapt-wrapper-size)))
+                 ;(pretty-rules/auto-disable-highlight-color)
+                 ;(pretty-rules/auto-disable-hover-color)

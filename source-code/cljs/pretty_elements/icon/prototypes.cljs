@@ -1,6 +1,7 @@
 
 (ns pretty-elements.icon.prototypes
-    (:require [pretty-properties.api :as pretty-properties]))
+    (:require [pretty-properties.api :as pretty-properties]
+              [pretty-standards.api :as pretty-standards]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -13,4 +14,5 @@
   ;
   ; @return (map)
   [_ icon-props]
-  (-> icon-props (pretty-properties/default-icon-props {:icon-size :m})))
+  (-> icon-props (pretty-properties/default-icon-props {:icon-size :m})
+                 (pretty-standards/standard-icon-props)))

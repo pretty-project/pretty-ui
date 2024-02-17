@@ -15,7 +15,8 @@
   ;
   ; @param (keyword) crumb-id
   ; @param (map) crumb-props
-  ; {:label (metamorphic-content)(opt)}
+  ; {:label (metamorphic-content)(opt)
+  ;  ...}
   [crumb-id {:keys [label] :as crumb-props}]
   [:div (crumb.attributes/crumb-attributes crumb-id crumb-props)
         [(pretty-elements.engine/clickable-auto-tag crumb-id crumb-props)
@@ -59,10 +60,12 @@
   ;
   ; @param (keyword)(opt) crumb-id
   ; @param (map) crumb-props
-  ; Check out the implemented properties below.
+  ; Check out the implemented properties.
   ;
   ; @usage (crumb.png)
-  ; ...
+  ; [crumb {:font-size :xs
+  ;         :href-uri  "/my-uri"
+  ;         :label     "My crumb"}]
   ([crumb-props]
    [view (random/generate-keyword) crumb-props])
 

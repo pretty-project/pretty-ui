@@ -130,7 +130,6 @@
             (transition-controller/show-content! surface-id)
             (mount-surface!                      surface-id)))))
 
-
 (defn hide-surface-content!
   ; @description
   ; Turns off the visibility of the 'surface' element.

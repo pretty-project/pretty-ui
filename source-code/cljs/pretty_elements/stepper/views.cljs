@@ -39,13 +39,9 @@
   ;
   ; @param (keyword)(opt) stepper-id
   ; @param (map) stepper-props
-  ; {}
   ;
-  ; @usage
+  ; @usage (stepper.png)
   ; [stepper {...}]
-  ;
-  ; @usage
-  ; [stepper :my-stepper {...}]
   ([stepper-props]
    [view (random/generate-keyword) stepper-props])
 

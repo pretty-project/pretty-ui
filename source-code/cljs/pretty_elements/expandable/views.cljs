@@ -43,7 +43,11 @@
 
 (defn view
   ; @description
-  ; Expandable element.
+  ; Expandable element with controller functions.
+  ;
+  ; @links Implemented controls
+  ; [expand-content!](pretty-ui/cljs/pretty-controls/api.html#expand-content_)
+  ; [collapse-content!](pretty-ui/cljs/pretty-controls/api.html#collapse-content_)
   ;
   ; @links Implemented elements
   ; [Button](pretty-ui/cljs/pretty-elements/api.html#button)
@@ -60,11 +64,13 @@
   ;
   ; @param (keyword)(opt) expandable-id
   ; @param (map) expandable-props
-  ; Check out the implemented elements below.
-  ; Check out the implemented properties below.
+  ; Check out the implemented elements.
+  ; Check out the implemented properties.
   ;
   ; @usage (expandable.png)
-  ; ...
+  ; [expandable {:button  {:label      "My expandable"}
+  ;              :surface {:content    "My expandable content"
+  ;                       :text-color :muted}}]
   ([expandable-props]
    [view (random/generate-keyword) expandable-props])
 

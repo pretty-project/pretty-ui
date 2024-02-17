@@ -15,7 +15,8 @@
   ;
   ; @param (keyword) blank-id
   ; @param (map) blank-props
-  ; {:content (metamorphic-content)(opt)}
+  ; {:content (metamorphic-content)(opt)
+  ;  ...}
   [blank-id {:keys [content] :as blank-props}]
   [:div (blank.attributes/blank-attributes blank-id blank-props)
         [:div (blank.attributes/blank-body-attributes blank-id blank-props)
@@ -51,7 +52,7 @@
   ;
   ; @param (keyword)(opt) blank-id
   ; @param (map) blank-props
-  ; Check out the implemented properties below.
+  ; Check out the implemented properties.
   ;
   ; @usage (blank.png)
   ; [blank {:content [:div "My content"]}]

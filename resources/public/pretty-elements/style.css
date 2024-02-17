@@ -1,33 +1,4 @@
 
-/***** Horizontal separator *****/
-/*** Line ***/
-
-.pe-horizontal-separator--line {
-  flex-grow: 1;
-}
-
-/*** Line ***/
-/***** Horizontal separator *****/
-
-
-
-/***** Row *****/
-/*** Body ***/
-
-.pe-row--body {
-  display: flex;
-  width:   100%;
-
-  /* XXX#6667 */
-  /* The {height: 100%} setting is necessary to make the content vertically alignable! */
-  height: 100%;
-}
-
-/*** Body ***/
-/***** Row *****/
-
-
-
 /***** Spacer *****/
 
 .pe-horizontal-spacer,
@@ -36,6 +7,7 @@
 }
 
 /***** Spacer *****/
+
 
 
 /***** Surface *****/
@@ -145,15 +117,3 @@
 
 /*** Body ***/
 /***** Toggle *****/
-
-
-
-/***** Vertical separator *****/
-/*** Line ***/
-
-.pe-vertical-separator--line {
-  flex-grow: 1;
-}
-
-/*** Line ***/
-/***** Vertical separator *****/

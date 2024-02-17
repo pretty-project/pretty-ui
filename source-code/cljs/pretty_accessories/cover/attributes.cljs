@@ -47,7 +47,6 @@
   [cover-id cover-props]
   (-> {:class :pa-cover--body}
       (pretty-attributes/background-color-attributes cover-props)
-      (pretty-attributes/border-attributes           cover-props)
       (pretty-attributes/flex-attributes             cover-props)
       (pretty-attributes/indent-attributes           cover-props)
       (pretty-attributes/style-attributes            cover-props)

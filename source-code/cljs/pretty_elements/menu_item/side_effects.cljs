@@ -18,4 +18,5 @@
   ; {:dropdown-content (metamorphic-content)(opt)
   ;  :dropdown-menu-id (keyword)(opt)}
   [_ {:keys [dropdown-content dropdown-menu-id]}]
+  (println dropdown-content dropdown-menu-id)
   (and dropdown-content dropdown-menu-id (dropdown-menu.side-effects/set-dropdown-content! dropdown-menu-id dropdown-content)))

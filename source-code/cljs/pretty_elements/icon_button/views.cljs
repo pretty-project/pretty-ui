@@ -20,7 +20,8 @@
   ;  :cover (map)(opt)
   ;  :icon (keyword)(opt)
   ;  :label (metamorphic-content)(opt)
-  ;  :marker (map)(opt)}
+  ;  :marker (map)(opt)
+  ;  ...}
   [button-id {:keys [badge cover icon label marker] :as button-props}]
   [:div (icon-button.attributes/button-attributes button-id button-props)
         [(pretty-elements.engine/clickable-auto-tag     button-id button-props)
@@ -48,66 +49,50 @@
                          :reagent-render         (fn [_ button-props] [icon-button button-id button-props])}))
 
 (defn view
+  ; @description
+  ; Icon button element with optional keypress control, timeout lock, and progress display.
+  ;
+  ; @links Implemented accessories
+  ; [Badge](pretty-ui/cljs/pretty-accessories/api.html#badge)
+  ; [Cover](pretty-ui/cljs/pretty-accessories/api.html#cover)
+  ; [Marker](pretty-ui/cljs/pretty-accessories/api.html#marker)
+  ; [Tooltip](pretty-ui/cljs/pretty-accessories/api.html#tooltip)
+  ;
+  ; @links Implemented properties
+  ; [Anchor properties](pretty-core/cljs/pretty-properties/api.html#anchor-properties)
+  ; [Background color properties](pretty-core/cljs/pretty-properties/api.html#background-color-properties)
+  ; [Border properties](pretty-core/cljs/pretty-properties/api.html#border-properties)
+  ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
+  ; [Clickable state properties](pretty-core/cljs/pretty-properties/api.html#clickable-state-properties)
+  ; [Cursor properties](pretty-core/cljs/pretty-properties/api.html#cursor-properties)
+  ; [Effect properties](pretty-core/cljs/pretty-properties/api.html#effect-properties)
+  ; [Flex properties](pretty-core/cljs/pretty-properties/api.html#flex-properties)
+  ; [Font properties](pretty-core/cljs/pretty-properties/api.html#font-properties)
+  ; [Icon properties](pretty-core/cljs/pretty-properties/api.html#icon-properties)
+  ; [Keypress properties](pretty-core/cljs/pretty-properties/api.html#keypress-properties)
+  ; [Label properties](pretty-core/cljs/pretty-properties/api.html#label-properties)
+  ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
+  ; [Mouse event properties](pretty-core/cljs/pretty-properties/api.html#mouse-event-properties)
+  ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
+  ; [Progress properties](pretty-core/cljs/pretty-properties/api.html#progress-properties)
+  ; [Size properties](pretty-core/cljs/pretty-properties/api.html#size-properties)
+  ; [Space properties](pretty-core/cljs/pretty-properties/api.html#space-properties)
+  ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
+  ; [Text properties](pretty-core/cljs/pretty-properties/api.html#text-properties)
+  ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
+  ;
   ; @param (keyword)(opt) button-id
   ; @param (map) button-props
-  ; {:badge (map)(opt)
-  ;  :border-color (keyword or string)(opt)
-  ;  :border-position (keyword)(opt)
-  ;  :border-radius (map)(opt)
-  ;   {:all, :tl, :tr, :br, :bl (keyword, px or string)(opt)}
-  ;  :border-width (keyword, px or string)(opt)
-  ;  :class (keyword or keywords in vector)(opt)
-  ;  :click-effect (keyword)(opt)
-  ;  :cover (map)(opt)
-  ;  :cursor (keyword or string)(opt)
-  ;  :disabled? (boolean)(opt)
-  ;  :fill-color (keyword or string)(opt)
-  ;  :fill-pattern (keyword)(opt)
-  ;  :height (keyword, px or string)(opt)
-  ;  :highlighted? (boolean)(opt)
-  ;  :highlight-color (keyword or string)(opt)
-  ;  :highlight-pattern (keyword)(opt)
-  ;  :hover-color (keyword or string)(opt)
-  ;  :hover-pattern (keyword)(opt)
-  ;  :hover-effect (keyword)(opt)
-  ;  :href-target (keyword)(opt)
-  ;  :href-uri (string)(opt)
-  ;  :icon (keyword)
-  ;  :icon-color (keyword or string)(opt)
-  ;  :icon-family (keyword)(opt)
-  ;  :icon-size (keyword, px or string)(opt)
-  ;  :indent (map)(opt)
-  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :keypress (map)(opt)
-  ;  :label (metamorphic-content)(opt)
-  ;  :label-placeholder (metamorphic-content)(opt)
-  ;  :marker (map)(opt)
-  ;  :max-height (keyword, px or string)(opt)
-  ;  :max-width (keyword, px or string)(opt)
-  ;  :min-height (keyword, px or string)(opt)
-  ;  :min-width (keyword, px or string)(opt)
-  ;  :on-click-f (function)(opt)
-  ;  :on-click-timeout (ms)(opt)
-  ;  :on-mount-f (function)(opt)
-  ;  :on-unmount-f (function)(opt)
-  ;  :outdent (map)(opt)
-  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :preset (keyword)(opt)
-  ;  :progress (percentage)(opt)
-  ;  :progress-color (keyword or string)
-  ;  :progress-direction (keyword)(opt)
-  ;  :progress-duration (ms)(opt)
-  ;  :style (map)(opt)
-  ;  :tab-disabled? (boolean)(opt)
-  ;  :theme (keyword)(opt)
-  ;  :tooltip (map)(opt)
-  ;  :width (keyword, px or string)(opt)}
+  ; Check out the implemented accessories.
+  ; Check out the implemented properties.
   ;
-  ; @usage
-  ; [icon-button {...}]
-  ;
-  ; @usage
-  ; [icon-button :my-button {...}]
+  ; @usage (icon-button.png)
+  ; [icon-button {:border-radius {:all :s}
+  ;               :fill-color    :highlight
+  ;               :icon          :settings
+  ;               :gap           :xxs
+  ;               :indent        {:all :xxs}
+  ;               :label         "My icon button"}]
   ([button-props]
    [view (random/generate-keyword) button-props])
 

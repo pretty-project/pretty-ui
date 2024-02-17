@@ -37,7 +37,9 @@
   ;
   ; @param (keyword) breadcrumbs-id
   ; @param (map) breadcrumbs-props
-  ; {:crumbs (maps in vector)(opt)}
+  ; {:bullet (map)(opt)
+  ;  :crumbs (maps in vector)(opt)
+  ;  ...}
   [breadcrumbs-id {:keys [bullet crumbs] :as breadcrumbs-props}]
   [:div (breadcrumbs.attributes/breadcrumbs-attributes breadcrumbs-id breadcrumbs-props)
         [:div (breadcrumbs.attributes/breadcrumbs-body-attributes breadcrumbs-id breadcrumbs-props)
@@ -83,18 +85,16 @@
   ;
   ; @param (keyword)(opt) breadcrumbs-id
   ; @param (map) breadcrumbs-props
-  ; Check out the implemented accessories below.
-  ; Check out the implemented elements below.
-  ; Check out the implemented properties below.
+  ; Check out the implemented accessories.
+  ; Check out the implemented elements.
+  ; Check out the implemented properties.
   ;
   ; @usage (breadcrumbs.png)
-  ; [breadcrumbs {:bullet        {:border-radius {:all :xxs}}
+  ; [breadcrumbs {:bullet        {:border-radius {:all :xs}}
   ;               :crumb-default {:font-size :xs}
   ;               :crumbs [{:label "My crumb #1" :href-uri "/my-uri-1"}
   ;                        {:label "My crumb #2" :href-uri "/my-uri-2"}
-  ;                        {:label "My crumb #3" :href-uri "/my-uri-3"}
-  ;                        {:label "My crumb #4" :href-uri "/my-uri-4"}
-  ;                        {:label "My crumb #5"}]}
+  ;                        {:label "My crumb #3"}]}
   ([breadcrumbs-props]
    [view (random/generate-keyword) breadcrumbs-props])
 

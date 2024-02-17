@@ -18,7 +18,8 @@
   ;
   ; @param (keyword) surface-id
   ; @param (map) surface-props
-  ; {:content (metamorphic-content)(opt)}
+  ; {:content (metamorphic-content)(opt)
+  ;  ...}
   [surface-id {:keys [content]}]
   ; The 'surface' element doesn't react on the changes of the ':content' property, unless it gets re-mounted,
   ; then the transition controller uses the given ':content' property as its initial content.
@@ -30,7 +31,8 @@
   ;
   ; @param (keyword) surface-id
   ; @param (map) surface-props
-  ; {:mounted? (boolean)(opt)}
+  ; {:mounted? (boolean)(opt)
+  ;  ...}
   [surface-id {:keys [mounted?] :as surface-props}]
   (if mounted? [:div (surface.attributes/surface-attributes surface-id surface-props)
                      [:div (surface.attributes/surface-body-attributes surface-id surface-props)
@@ -48,13 +50,11 @@
   ; @note (tutorials#parameterizing)
   (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    surface-id surface-props))
                          :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount surface-id surface-props))
-                         :component-did-update   (fn [%]   (pretty-elements.engine/element-did-update   surface-id surface-props %))
                          :reagent-render         (fn [_ surface-props] [surface surface-id surface-props])}))
 
 (defn view
   ; @description
-  ; Surface element for displaying content with optionally animated transitions,
-  ; and additional controller functions.
+  ; Surface element for displaying content with controller functions and optionally animated transitions.
   ;
   ; @links Implemented controls
   ; [surface-mounted?](pretty-ui/cljs/pretty-controls/api.html#surface-mounted_)
@@ -65,43 +65,29 @@
   ; [show-surface-content!](pretty-ui/cljs/pretty-controls/api.html#show-surface-content_)
   ; [hide-surface-content!](pretty-ui/cljs/pretty-controls/api.html#hide-surface-content_)
   ;
+  ; @links Implemented properties
+  ; [Background color properties](pretty-core/cljs/pretty-properties/api.html#background-color-properties)
+  ; [Border properties](pretty-core/cljs/pretty-properties/api.html#border-properties)
+  ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
+  ; [Content properties](pretty-core/cljs/pretty-properties/api.html#content-properties)
+  ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
+  ; [Position properties](pretty-core/cljs/pretty-properties/api.html#position-properties)
+  ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
+  ; [Size properties](pretty-core/cljs/pretty-properties/api.html#size-properties)
+  ; [Space properties](pretty-core/cljs/pretty-properties/api.html#space-properties)
+  ; [State properties](pretty-core/cljs/pretty-properties/api.html#state-properties)
+  ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
+  ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
+  ;
   ; @param (keyword)(opt) surface-id
   ; @param (map) surface-props
-  ; {:border-color (keyword or string)(opt)
-  ;  :border-position (keyword)(opt)
-  ;  :border-radius (map)(opt)
-  ;   {:all, :tl, :tr, :br, :bl (keyword, px or string)(opt)}
-  ;  :border-width (keyword, px or string)(opt)
-  ;  :class (keyword or keywords in vector)(opt)
-  ;  :content (metamorphic-content)(opt)
-  ;  :disabled? (boolean)(opt)
-  ;  :fill-color (keyword or string)(opt)
-  ;  :fill-pattern (keyword)(opt)
-  ;  :height (keyword, px or string)(opt)
-  ;  :indent (map)(opt)
-  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :layer (keyword or integer)(opt)
-  ;  :max-height (keyword, px or string)(opt)
-  ;  :max-width (keyword, px or string)(opt)
-  ;  :min-height (keyword, px or string)(opt)
-  ;  :min-width (keyword, px or string)(opt)
+  ; Check out the implemented properties.
+  ;
   ;  :mounted? (boolean)(opt)
-  ;  :on-mount-f (function)(opt)
-  ;  :on-unmount-f (function)(opt)
-  ;  :outdent (map)(opt)
-  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :position-base (keyword)(opt)
-  ;  :position-method (keyword)(opt)
-  ;  :preset (keyword)(opt)
-  ;  :style (map)(opt)
-  ;  :theme (keyword)(opt)
-  ;  :width (keyword, px or string)(opt)}
+  ;  + mounted? doesnt trigger on-mount-f and on-unmount-f
   ;
-  ; @usage
-  ; [surface {...}]
-  ;
-  ; @usage
-  ; [surface :my-surface {...}]
+  ; @usage (surface.png)
+  ; ...
   ([surface-props]
    [view (random/generate-keyword) surface-props])
 

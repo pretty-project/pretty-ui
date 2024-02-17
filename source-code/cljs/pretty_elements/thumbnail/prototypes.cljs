@@ -2,7 +2,9 @@
 (ns pretty-elements.thumbnail.prototypes
     (:require [pretty-elements.image.prototypes :as image.prototypes]
               [react-references.api :as react-references]
-              [pretty-properties.api :as pretty-properties]))
+              [pretty-properties.api :as pretty-properties]
+              [pretty-standards.api :as pretty-standards]
+              [pretty-rules.api :as pretty-rules]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -22,12 +24,10 @@
   ; @return (map)
   [thumbnail-id thumbnail-props]
   (let [set-reference-f (react-references/set-reference-f thumbnail-id)]
-       (-> thumbnail-props (pretty-properties/clickable-text-auto-props)
-                           (pretty-properties/default-anchor-props           {})
-                           (pretty-properties/default-animation-props        {:animation-duration 2000 :animation-mode :repeat :animation-name :pulse})
+       (-> thumbnail-props (pretty-properties/default-animation-props        {:animation-duration 2000 :animation-mode :repeat :animation-name :pulse})
                            (pretty-properties/default-background-color-props {:fill-color :highlight})
                            (pretty-properties/default-background-image-props {:background-size :contain})
-                           (pretty-properties/default-border-props           {})
+                           (pretty-properties/default-border-props           {:border-crop :auto})
                            (pretty-properties/default-canvas-size-props      {:canvas-height :grow :canvas-width :parent})
                            (pretty-properties/default-effect-props           {})
                            (pretty-properties/default-flex-props             {:orientation :vertical})
@@ -38,4 +38,24 @@
                            (pretty-properties/default-react-props            {:set-reference-f set-reference-f})
                            (pretty-properties/default-size-props             {:height :s :width :s :size-unit :full-block})
                            (pretty-properties/default-text-props             {:text-overflow :ellipsis :text-selectable? false})
-                           (pretty-properties/default-wrapper-size-props     {}))))
+                           (pretty-standards/standard-anchor-props)
+                           (pretty-standards/standard-animation-props)
+                           (pretty-standards/standard-background-image-props)
+                           (pretty-standards/standard-border-props)
+                           (pretty-standards/standard-flex-props)
+                           (pretty-standards/standard-font-props)
+                           (pretty-standards/standard-icon-props)
+                           (pretty-standards/standard-text-props)
+                           (pretty-standards/standard-wrapper-size-props)
+                           (pretty-rules/auto-disable-highlight-color)
+                           (pretty-rules/auto-disable-hover-color)
+                           (pretty-rules/apply-auto-border-crop)
+                           (pretty-rules/auto-color-clickable-text)
+                           (pretty-rules/auto-disable-cursor)
+                           (pretty-rules/auto-disable-effects)
+                           (pretty-rules/auto-align-scrollable-flex)
+                           (pretty-rules/auto-set-click-effect)
+                           (pretty-rules/compose-label)
+                           (pretty-rules/auto-disable-mouse-events)
+                           (pretty-rules/auto-blur-click-events)
+                           (pretty-rules/auto-adapt-wrapper-size))))

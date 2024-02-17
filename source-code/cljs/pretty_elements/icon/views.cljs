@@ -15,7 +15,8 @@
   ;
   ; @param (keyword) icon-id
   ; @param (map) icon-props
-  ; {:icon (keyword)(opt)}
+  ; {:icon (keyword)(opt)
+  ;  ...}
   [icon-id {:keys [icon] :as icon-props}]
   [:div (icon.attributes/icon-attributes icon-id icon-props)
         [:i (icon.attributes/icon-body-attributes icon-id icon-props) icon]])
@@ -50,10 +51,10 @@
   ;
   ; @param (keyword)(opt) icon-id
   ; @param (map) icon-props
-  ; Check out the implemented properties below.
+  ; Check out the implemented properties.
   ;
   ; @usage (icon.png)
-  ; ...
+  ; [icon {:icon :settings}]
   ([icon-props]
    [view (random/generate-keyword) icon-props])
 
