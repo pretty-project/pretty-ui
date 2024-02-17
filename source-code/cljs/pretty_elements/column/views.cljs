@@ -58,7 +58,7 @@
   ; @param (map) column-props
   ; Check out the implemented properties.
   ;
-  ; @usage (column.png)
+  ; @usage (pretty-elements/column.png)
   ; [column {:border-color     :primary
   ;          :border-radius    {:all :m}
   ;          :border-width     :xs

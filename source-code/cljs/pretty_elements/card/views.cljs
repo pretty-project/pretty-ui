@@ -82,7 +82,7 @@
   ; Check out the implemented accessories.
   ; Check out the implemented properties.
   ;
-  ; @usage (card.png)
+  ; @usage (pretty-elements/card.png)
   ; [card {:border-color     :primary
   ;        :border-radius    {:all :m}
   ;        :border-width     :xs

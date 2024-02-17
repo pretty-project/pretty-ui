@@ -17,7 +17,7 @@
   [_ thumbnail-props]
   (-> {:class :pe-thumbnail--canvas}
       (pretty-attributes/background-image-attributes thumbnail-props)
-      (pretty-attributes/canvas-size-attributes      thumbnail-props)))
+      (pretty-attributes/content-size-attributes     thumbnail-props)))
 
 (defn thumbnail-icon-attributes
   ; @ignore
@@ -30,9 +30,9 @@
   ;  ...}
   [_ thumbnail-props]
   (-> {:class :pe-thumbnail--icon}
-      (pretty-attributes/animation-attributes   thumbnail-props)
-      (pretty-attributes/canvas-size-attributes thumbnail-props)
-      (pretty-attributes/icon-attributes        thumbnail-props)))
+      (pretty-attributes/animation-attributes    thumbnail-props)
+      (pretty-attributes/content-size-attributes thumbnail-props)
+      (pretty-attributes/icon-attributes         thumbnail-props)))
 
 (defn thumbnail-label-attributes
   ; @ignore

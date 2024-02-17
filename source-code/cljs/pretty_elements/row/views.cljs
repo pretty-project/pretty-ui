@@ -58,7 +58,7 @@
   ; @param (map) row-props
   ; Check out the implemented properties.
   ;
-  ; @usage (row.png)
+  ; @usage (pretty-elements/row.png)
   ; [row {:border-color     :primary
   ;       :border-radius    {:all :m}
   ;       :border-width     :xs

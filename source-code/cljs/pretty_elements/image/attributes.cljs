@@ -17,7 +17,7 @@
   [_ image-props]
   (-> {:class :pe-image--canvas}
       (pretty-attributes/background-image-attributes image-props)
-      (pretty-attributes/canvas-size-attributes      image-props)))
+      (pretty-attributes/content-size-attributes     image-props)))
 
 (defn image-icon-attributes
   ; @ignore
@@ -30,9 +30,9 @@
   ;  ...}
   [_ image-props]
   (-> {:class :pe-image--icon}
-      (pretty-attributes/animation-attributes   image-props)
-      (pretty-attributes/canvas-size-attributes image-props)
-      (pretty-attributes/icon-attributes        image-props)))
+      (pretty-attributes/animation-attributes    image-props)
+      (pretty-attributes/content-size-attributes image-props)
+      (pretty-attributes/icon-attributes         image-props)))
 
 (defn image-label-attributes
   ; @ignore

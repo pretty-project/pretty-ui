@@ -65,8 +65,8 @@
   ;  ...}
   [_ separator-props]
   (-> {:class :pe-vertical-separator}
-      (pretty-attributes/theme-attributes    separator-props)
       (pretty-attributes/class-attributes        separator-props)
       (pretty-attributes/state-attributes        separator-props)
       (pretty-attributes/outdent-attributes      separator-props)
+      (pretty-attributes/theme-attributes        separator-props)
       (pretty-attributes/wrapper-size-attributes separator-props)))

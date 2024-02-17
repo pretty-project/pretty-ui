@@ -53,7 +53,7 @@
   ; @param (map) icon-props
   ; Check out the implemented properties.
   ;
-  ; @usage (icon.png)
+  ; @usage (pretty-elements/icon.png)
   ; [icon {:icon :settings}]
   ([icon-props]
    [view (random/generate-keyword) icon-props])

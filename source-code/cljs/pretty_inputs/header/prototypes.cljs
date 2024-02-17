@@ -1,7 +1,8 @@
 
 (ns pretty-inputs.header.prototypes
     (:require [pretty-properties.api :as pretty-properties]
-              [pretty-rules.api :as pretty-rules]))
+              [pretty-rules.api :as pretty-rules]
+              [pretty-standards.api :as pretty-standards]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

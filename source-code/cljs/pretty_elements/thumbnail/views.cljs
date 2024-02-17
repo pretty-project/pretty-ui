@@ -102,7 +102,7 @@
   ; Check out the implemented accessories.
   ; Check out the implemented properties.
   ;
-  ; @usage (thumbnail.png)
+  ; @usage (pretty-elements/thumbnail.png)
   ; [thumbnail {:background-uri  "/my-thumbnail.png"
   ;             :badge           {:icon     :fullscreen
   ;                               :position :tr}

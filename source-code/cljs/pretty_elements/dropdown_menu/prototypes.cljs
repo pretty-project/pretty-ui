@@ -17,18 +17,18 @@
   [menu-id {:keys [menu-bar]}]
   (-> menu-bar (assoc-in [:menu-item-default :dropdown-menu-id] menu-id)))
 
-(defn surface-props-prototype
+(defn expandable-props-prototype
   ; @ignore
   ;
   ; @param (keyword) menu-id
   ; @param (map) menu-props
-  ; {:surface (map)(opt)}
+  ; {:expandable (map)(opt)}
   ;
   ; @return (map)
-  [_ {:keys [surface]}]
-  (-> surface (pretty-properties/default-position-props {:layer :uppermost :position-method :absolute})
-              (pretty-properties/default-size-props     {:width :parent})
-              (pretty-properties/default-state-props    {:mounted? false})))
+  [_ {:keys [expandable]}]
+  (-> expandable (pretty-properties/default-position-props   {:layer :uppermost :position-method :absolute})
+                 (pretty-properties/default-size-props       {:width :parent})
+                 (pretty-properties/default-expandable-props {:expanded? false})))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

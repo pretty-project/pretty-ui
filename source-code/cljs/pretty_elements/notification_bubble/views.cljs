@@ -85,7 +85,7 @@
   ; Check out the implemented elements.
   ; Check out the implemented properties.
   ;
-  ; @usage (notification-bubble.png)
+  ; @usage (pretty-elements/notification-bubble.png)
   ; [notification-bubble {:border-radius         {:all :m}
   ;                       :content               "My notification bubble #1"
   ;                       :fill-color            :primary

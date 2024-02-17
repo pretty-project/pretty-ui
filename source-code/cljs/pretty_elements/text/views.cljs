@@ -39,66 +39,36 @@
                          :reagent-render         (fn [_ text-props] [text text-id text-props])}))
 
 (defn view
+  ; @description
+  ; Customizable text element.
+  ;
+  ; @links Implemented properties
+  ; [Background color properties](pretty-core/cljs/pretty-properties/api.html#background-color-properties)
+  ; [Border properties](pretty-core/cljs/pretty-properties/api.html#border-properties)
+  ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
+  ; [Content properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
+  ; [Flex properties](pretty-core/cljs/pretty-properties/api.html#flex-properties)
+  ; [Font properties](pretty-core/cljs/pretty-properties/api.html#font-properties)
+  ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
+  ; [Multiline properties](pretty-core/cljs/pretty-properties/api.html#multiline-properties)
+  ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
+  ; [Size properties](pretty-core/cljs/pretty-properties/api.html#size-properties)
+  ; [Space properties](pretty-core/cljs/pretty-properties/api.html#space-properties)
+  ; [State properties](pretty-core/cljs/pretty-properties/api.html#state-properties)
+  ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
+  ; [Text properties](pretty-core/cljs/pretty-properties/api.html#text-properties)
+  ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
+  ;
   ; @param (keyword)(opt) text-id
   ; @param (map) text-props
-  ; {:border-color (keyword or string)(opt)
-  ;  :border-position (keyword)(opt)
-  ;  :border-radius (map)(opt)
-  ;   {:all, :tl, :tr, :br, :bl (keyword, px or string)(opt)}
-  ;  :border-width (keyword, px or string)(opt)
-  ;  :class (keyword or keywords in vector)(opt)
-  ;  :content (metamorphic-content)(opt)
-  ;  :content-placeholder (metamorphic-content)(opt)
-  ;  :disabled? (boolean)(opt)
-  ;  :fill-color (keyword or string)(opt)
-  ;  :fill-pattern (keyword)(opt)
-  ;   Default: :cover
-  ;  :font-size (keyword, px or string)(opt)
-  ;   Default: :s
-  ;  :font-weight (keyword or integer)(opt)
-  ;   Default: :normal
-  ;  :height (keyword, px or string)(opt)
-  ;  :horizontal-align (keyword)(opt)
-  ;  :indent (map)(opt)
-  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :info-text (metamorphic-content)(opt)
-  ;  :line-height (keyword, px or string)(opt)
-  ;   Default: :text-block
-  ;  :max-lines (integer)(opt)
-  ;  :min-height (keyword, px or string)(opt)
-  ;  :min-width (keyword, px or string)(opt)
-  ;  :on-copy-f (function)(opt)
-  ;   Takes the text content as parameter.
-  ;  :on-mount-f (function)(opt)
-  ;  :on-unmount-f (function)(opt)
-  ;  :outdent (map)(opt)
-  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :preset (keyword)(opt)
-  ;  :style (map)(opt)
-  ;  :text-align (keyword)(opt)
-  ;  :text-color (keyword or string)(opt)
-  ;   Default: :default
-  ;  :text-direction (keyword)(opt)
-  ;   :normal, :reversed
-  ;   Default :normal
-  ;  :text-overflow (keyword)(opt)
-  ;   Default: :wrap
-  ;  :text-selectable? (boolean)(opt)
-
-  ;  :text-align (keyword)(opt)
-  ;  :text-color (keyword or string)(opt)
-  ;  :text-direction (keyword)(opt)
-  ;  :text-overflow (keyword)(opt)
-  ;  :text-selectable? (boolean)(opt)
-  ;  :text-transform (keyword)(opt)
-
-
-  ;  :theme (keyword)(opt)
-  ;  :vertical-align (keyword)(opt)
-  ;  :width (keyword, px or string)(opt)}
+  ; Check out the implemented properties.
   ;
-  ; @usage (text.png)
-  ; ...
+  ; @usage (pretty-elements/text.png)
+  ; [text {:border-radius {:all :m}
+  ;        :content       "My text line #1\nMy text line #2\nMy text line #3"
+  ;        :fill-color    :highlight
+  ;        :height        :5xl
+  ;        :width         :5xl}]
   ([text-props]
    [view (random/generate-keyword) text-props])
 

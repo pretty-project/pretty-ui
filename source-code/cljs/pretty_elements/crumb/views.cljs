@@ -62,7 +62,7 @@
   ; @param (map) crumb-props
   ; Check out the implemented properties.
   ;
-  ; @usage (crumb.png)
+  ; @usage (pretty-elements/crumb.png)
   ; [crumb {:font-size :xs
   ;         :href-uri  "/my-uri"
   ;         :label     "My crumb"}]

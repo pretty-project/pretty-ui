@@ -86,7 +86,7 @@
   ; Check out the implemented accessories.
   ; Check out the implemented properties.
   ;
-  ; @usage (menu-item.png)
+  ; @usage (pretty-elements/menu-item.png)
   ; [menu-item {:border-color    :secondary
   ;             :border-width    :xs
   ;             :border-position :bottom

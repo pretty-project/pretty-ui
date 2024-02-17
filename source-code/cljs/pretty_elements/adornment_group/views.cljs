@@ -71,7 +71,7 @@
   ; Check out the implemented elements.
   ; Check out the implemented properties.
   ;
-  ; @usage (adornment-group.png)
+  ; @usage (pretty-elements/adornment-group.png)
   ; [adornment-group {:adornment-default {:fill-color :highlight :border-radius {:all :s}}
   ;                   :adornments [{:icon :home}
   ;                                {:icon :settings}

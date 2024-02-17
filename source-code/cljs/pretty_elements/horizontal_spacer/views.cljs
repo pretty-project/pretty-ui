@@ -51,7 +51,7 @@
   ; @param (map) spacer-props
   ; Check out the implemented properties.
   ;
-  ; @usage (horizontal-spacer.png)
+  ; @usage (pretty-elements/horizontal-spacer.png)
   ; [horizontal-spacer {:height :s}]
   ([spacer-props]
    [view (random/generate-keyword) spacer-props])

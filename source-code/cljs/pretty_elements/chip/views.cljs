@@ -84,7 +84,7 @@
   ; Check out the implemented elements.
   ; Check out the implemented properties.
   ;
-  ; @usage (chip.png)
+  ; @usage (pretty-elements/chip.png)
   ; [chip {:border-radius         {:all :l}
   ;        :fill-color            :primary
   ;        :font-weight           :semi-bold

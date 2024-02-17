@@ -89,7 +89,7 @@
   ; Check out the implemented elements.
   ; Check out the implemented properties.
   ;
-  ; @usage (breadcrumbs.png)
+  ; @usage (pretty-elements/breadcrumbs.png)
   ; [breadcrumbs {:bullet        {:border-radius {:all :xs}}
   ;               :crumb-default {:font-size :xs}
   ;               :crumbs [{:label "My crumb #1" :href-uri "/my-uri-1"}

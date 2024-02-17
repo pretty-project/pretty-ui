@@ -89,7 +89,7 @@
   ; Check out the implemented accessories.
   ; Check out the implemented properties.
   ;
-  ; @usage (button.png)
+  ; @usage (pretty-elements/button.png)
   ; [button {:border-radius {:all :l}
   ;          :fill-color    :primary
   ;          :gap           :auto

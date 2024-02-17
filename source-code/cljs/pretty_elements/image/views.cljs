@@ -112,7 +112,7 @@
   ; Check out the implemented accessories.
   ; Check out the implemented properties.
   ;
-  ; @usage (image.png)
+  ; @usage (pretty-elements/image.png)
   ; [image {:background-uri  "/my-image.png"
   ;         :badge           {:icon     :fullscreen
   ;                           :position :tr}

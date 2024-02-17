@@ -34,32 +34,31 @@
                          :reagent-render         (fn [_ bullet-props] [bullet bullet-id bullet-props])}))
 
 (defn view
+  ; @description
+  ; Bullet accessory for elements.
+  ;
+  ; @links Implemented properties
+  ; [Background color properties](pretty-core/cljs/pretty-properties/api.html#background-color-properties)
+  ; [Border properties](pretty-core/cljs/pretty-properties/api.html#border-properties)
+  ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
+  ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
+  ; [Position properties](pretty-core/cljs/pretty-properties/api.html#position-properties)
+  ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
+  ; [Size properties](pretty-core/cljs/pretty-properties/api.html#size-properties)
+  ; [Space properties](pretty-core/cljs/pretty-properties/api.html#space-properties)
+  ; [State properties](pretty-core/cljs/pretty-properties/api.html#state-properties)
+  ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
+  ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
+  ;
   ; @param (keyword)(opt) bullet-id
   ; @param (map) bullet-props
-  ; {:class (keyword or keywords in vector)(opt)
-  ;  :disabled? (boolean)(opt)
-  ;  :fill-color (keyword or string)(opt)
-  ;  :fill-pattern (keyword)(opt)
-  ;  :height (keyword, px or string)(opt)
-  ;  :indent (map)(opt)
-  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :on-mount-f (function)(opt)
-  ;  :on-unmount-f (function)(opt)
-  ;  :outdent (map)(opt)
-  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :position (keyword)(opt)
-  ;  :position-base (keyword)(opt)
-  ;  :position-method (keyword)(opt)
-  ;  :preset (keyword)(opt)
-  ;  :style (map)(opt)
-  ;  :theme (keyword)(opt)
-  ;  :width (keyword, px or string)(opt)}
+  ; Check out the implemented properties.
   ;
-  ; @usage
-  ; [bullet {...}]
-  ;
-  ; @usage
-  ; [bullet :my-bullet {...}]
+  ; @usage (pretty-accessories/bullet.png)
+  ; [bullet {:border-radius {:all :xs}
+  ;          :fill-color    :muted
+  ;          :height        :xs
+  ;          :width         :xs}]
   ([bullet-props]
    [view (random/generate-keyword) bullet-props])
 

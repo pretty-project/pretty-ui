@@ -18,3 +18,5 @@
           :min-lines 1}
          (-> field-props)
          {:multiline? true}))
+
+         ; (pretty-properties/default-content-props {:content (env/get-field-content)}) ; <- auto-count-content-lines miatt kell

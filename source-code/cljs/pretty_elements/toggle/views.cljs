@@ -1,7 +1,6 @@
 
 (ns pretty-elements.toggle.views
     (:require [fruits.random.api                 :as random]
-              [metamorphic-content.api           :as metamorphic-content]
               [pretty-elements.engine.api        :as pretty-elements.engine]
               [pretty-elements.toggle.attributes :as toggle.attributes]
               [pretty-elements.toggle.prototypes :as toggle.prototypes]
@@ -17,13 +16,19 @@
   ;
   ; @param (keyword) toggle-id
   ; @param (map) toggle-props
-  ; {:content (metamorphic-content)(opt)
+  ; {:badge (map)(opt)
+  ;  :content (metamorphic-content)(opt)
+  ;  :cover (map)(opt)
+  ;  :marker (map)(opt)
   ;  ...}
-  [toggle-id {:keys [content content-placeholder] :as toggle-props}]
+  [toggle-id {:keys [badge content cover marker] :as toggle-props}]
   [:div (toggle.attributes/toggle-attributes toggle-id toggle-props)
         [(pretty-elements.engine/clickable-auto-tag toggle-id toggle-props)
          (toggle.attributes/toggle-body-attributes  toggle-id toggle-props)
-         [metamorphic-content/compose content content-placeholder]]])
+         (-> content)
+         (if badge  [pretty-accessories/badge  toggle-id badge])
+         (if marker [pretty-accessories/marker toggle-id marker])
+         (if cover  [pretty-accessories/cover  toggle-id cover])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -42,52 +47,45 @@
                          :reagent-render         (fn [_ toggle-props] [toggle toggle-id toggle-props])}))
 
 (defn view
+  ; @description
+  ; Clickable wrapper element with optional keypress control and timeout lock.
+  ;
+  ; @links Implemented accessories
+  ; [Badge](pretty-ui/cljs/pretty-accessories/api.html#badge)
+  ; [Cover](pretty-ui/cljs/pretty-accessories/api.html#cover)
+  ; [Marker](pretty-ui/cljs/pretty-accessories/api.html#marker)
+  ; [Tooltip](pretty-ui/cljs/pretty-accessories/api.html#tooltip)
+  ;
+  ; @links Implemented properties
+  ; [Anchor properties](pretty-core/cljs/pretty-properties/api.html#anchor-properties)
+  ; [Background color properties](pretty-core/cljs/pretty-properties/api.html#background-color-properties)
+  ; [Border properties](pretty-core/cljs/pretty-properties/api.html#border-properties)
+  ; [Content properties](pretty-core/cljs/pretty-properties/api.html#content-properties)
+  ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
+  ; [Clickable state properties](pretty-core/cljs/pretty-properties/api.html#clickable-state-properties)
+  ; [Cursor properties](pretty-core/cljs/pretty-properties/api.html#cursor-properties)
+  ; [Effect properties](pretty-core/cljs/pretty-properties/api.html#effect-properties)
+  ; [Flex properties](pretty-core/cljs/pretty-properties/api.html#flex-properties)
+  ; [Keypress properties](pretty-core/cljs/pretty-properties/api.html#keypress-properties)
+  ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
+  ; [Mouse event properties](pretty-core/cljs/pretty-properties/api.html#mouse-event-properties)
+  ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
+  ; [Size properties](pretty-core/cljs/pretty-properties/api.html#size-properties)
+  ; [Space properties](pretty-core/cljs/pretty-properties/api.html#space-properties)
+  ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
+  ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
+  ;
   ; @param (keyword)(opt) toggle-id
   ; @param (map) toggle-props
-  ; {:border-color (keyword or string)(opt)
-  ;  :border-position (keyword)(opt)
-  ;  :border-radius (map)(opt)
-  ;   {:all, :tl, :tr, :br, :bl (keyword, px or string)(opt)}
-  ;  :border-width (keyword, px or string)(opt)
-  ;  :class (keyword or keywords in vector)(opt)
-  ;  :content (metamorphic-content)(opt)
-  ;  :content-placeholder (metamorphic-content)(opt)
-  ;  :click-effect (keyword)(opt)
-  ;  :cursor (keyword or string)(opt)
-  ;   Default: :pointer
-  ;  :disabled? (boolean)(opt)
-  ;  :fill-color (keyword or string)(opt)
-  ;  :fill-pattern (keyword)(opt)
-  ;  :height (keyword, px or string)(opt)
-  ;  :highlighted? (boolean)(opt)
-  ;  :highlight-color (keyword or string)(opt)
-  ;  :highlight-pattern (keyword)(opt)
-  ;  :hover-color (keyword or string)(opt)
-  ;  :hover-effect (keyword)(opt)
-  ;  :hover-pattern (keyword)(opt)
-  ;  :href-target (keyword)(opt)
-  ;  :href-uri (string)(opt)
-  ;  :indent (map)(opt)
-  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :keypress (map)(opt)
-  ;  :marker (map)(opt)
-  ;  :on-click-f (function)(opt)
-  ;  :on-click-timeout (ms)(opt)
-  ;  :on-mount-f (function)(opt)
-  ;  :on-unmount-f (function)(opt)
-  ;  :outdent (map)(opt)
-  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :preset (keyword)(opt)
-  ;  :style (map)(opt)
-  ;  :tab-disabled? (boolean)(opt)
-  ;  :theme (keyword)(opt)
-  ;  :width (keyword, px or string)(opt)}
+  ; Check out the implemented accessories.
+  ; Check out the implemented properties.
   ;
-  ; + keypress?
-  ; badge, marker, cover, tooltip
-  ;
-  ; @usage (toggle.png)
-  ; ...
+  ; @usage (pretty-elements/toggle.png)
+  ; [toggle {:border-radius {:all :m}
+  ;          :content       [:div "My toggle"]
+  ;          :fill-color    :highlight
+  ;          :href-uri      "/my-uri"
+  ;          :indent        {:all :s}}]
   ([toggle-props]
    [view (random/generate-keyword) toggle-props])
 

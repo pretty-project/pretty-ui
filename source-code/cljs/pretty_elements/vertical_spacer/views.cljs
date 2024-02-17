@@ -34,24 +34,25 @@
                          :reagent-render         (fn [_ spacer-props] [vertical-spacer spacer-id spacer-props])}))
 
 (defn view
+  ; @description
+  ; Empty vertical spacer element.
+  ;
+  ; @links Implemented properties
+  ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
+  ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
+  ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
+  ; [Size properties](pretty-core/cljs/pretty-properties/api.html#size-properties)
+  ; [Space properties](pretty-core/cljs/pretty-properties/api.html#space-properties)
+  ; [State properties](pretty-core/cljs/pretty-properties/api.html#state-properties)
+  ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
+  ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
+  ;
   ; @param (keyword)(opt) spacer-id
   ; @param (map) spacer-props
-  ; {:class (keyword or keywords in vector)(opt)
-  ;  :disabled? (boolean)(opt)
-  ;  :height (keyword, px or string)(opt)
-  ;  :max-height (keyword, px or string)(opt)
-  ;  :max-width (keyword, px or string)(opt)
-  ;  :min-height (keyword, px or string)(opt)
-  ;  :min-width (keyword, px or string)(opt)
-  ;  :on-mount-f (function)(opt)
-  ;  :on-unmount-f (function)(opt)
-  ;  :preset (keyword)(opt)
-  ;  :style (map)(opt)
-  ;  :theme (keyword)(opt)
-  ;  :width (keyword, px or string)(opt)}
+  ; Check out the implemented properties.
   ;
-  ; @usage (vertical-spacer.png)
-  ; ...
+  ; @usage (pretty-elements/vertical-spacer.png)
+  ; [vertical-spacer {:width :s}]
   ([spacer-props]
    [view (random/generate-keyword) spacer-props])
 

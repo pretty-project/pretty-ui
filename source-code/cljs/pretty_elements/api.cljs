@@ -24,9 +24,6 @@
               [pretty-elements.notification-bubble.views  :as notification-bubble.views]
               [pretty-elements.row.views                  :as row.views]
               [pretty-elements.stepper.views              :as stepper.views]
-              [pretty-elements.surface.env                :as surface.env]
-              [pretty-elements.surface.side-effects       :as surface.side-effects]
-              [pretty-elements.surface.views              :as surface.views]
               [pretty-elements.text.views                 :as text.views]
               [pretty-elements.thumbnail.views            :as thumbnail.views]
               [pretty-elements.toggle.views               :as toggle.views]
@@ -73,17 +70,6 @@
 (def expand-content!   expandable.side-effects/expand-content!)
 (def collapse-content! expandable.side-effects/collapse-content!)
 
-; @redirect (pretty-elements.surface.env/*)
-(def surface-mounted? surface.env/surface-mounted?)
-
-; @redirect (pretty-elements.surface.side-effects/*)
-(def mount-surface!        surface.side-effects/mount-surface!)
-(def unmount-surface!      surface.side-effects/unmount-surface!)
-(def swap-surface-content! surface.side-effects/swap-surface-content!)
-(def set-surface-content!  surface.side-effects/set-surface-content!)
-(def show-surface-content! surface.side-effects/show-surface-content!)
-(def hide-surface-content! surface.side-effects/hide-surface-content!)
-
 ; @redirect (*/view)
 (def adornment            adornment.views/view)
 (def adornment-group      adornment-group.views/view)
@@ -107,8 +93,6 @@
 (def menu-item            menu-item.views/view)
 (def notification-bubble  notification-bubble.views/view)
 (def row                  row.views/view)
-(def stepper              stepper.views/view)
-(def surface              surface.views/view)
 (def text                 text.views/view)
 (def thumbnail            thumbnail.views/view)
 (def toggle               toggle.views/view)

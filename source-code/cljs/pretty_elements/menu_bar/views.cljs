@@ -73,7 +73,7 @@
   ; Check out the implemented elements.
   ; Check out the implemented properties.
   ;
-  ; @usage (menu-bar.png)
+  ; @usage (pretty-elements/menu-bar.png)
   ; [menu-bar {:gap               :m
   ;            :menu-item-default {:border-position :bottom
   ;                                :border-width    :xs

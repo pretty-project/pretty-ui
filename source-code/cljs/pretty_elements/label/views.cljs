@@ -67,7 +67,7 @@
   ; @param (map) label-props
   ; Check out the implemented properties.
   ;
-  ; @usage (label.png)
+  ; @usage (pretty-elements/label.png)
   ; [label {:border-color     :secondary
   ;         :content          "My label"
   ;         :border-position  :bottom

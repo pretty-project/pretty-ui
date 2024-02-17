@@ -40,7 +40,7 @@
                        (pretty-properties/default-background-color-props {:fill-color :highlight})
                        (pretty-properties/default-background-image-props {:background-size :contain})
                        (pretty-properties/default-border-props           {:border-crop :auto})
-                       (pretty-properties/default-canvas-size-props      {:canvas-height :grow :canvas-width :parent})
+                       (pretty-properties/default-content-size-props     {:content-height :grow :content-width :parent})
                        (pretty-properties/default-flex-props             {:orientation :vertical})
                        (pretty-properties/default-font-props             {:font-size :xs :font-weight :medium})
                        (pretty-properties/default-icon-props             {:icon :image :icon-color :muted})

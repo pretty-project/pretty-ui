@@ -63,7 +63,7 @@
   ; @param (map) separator-props
   ; Check out the implemented properties.
   ;
-  ; @usage (horizontal-separator.png)
+  ; @usage (pretty-elements/horizontal-separator.png)
   ; [horizontal-separator {:label      "My horizontal separator"
   ;                        :line-color :muted
   ;                        :text-color :muted}]

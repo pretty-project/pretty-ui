@@ -40,7 +40,7 @@
   ; @param (keyword)(opt) stepper-id
   ; @param (map) stepper-props
   ;
-  ; @usage (stepper.png)
+  ; @usage (pretty-elements/stepper.png)
   ; [stepper {...}]
   ([stepper-props]
    [view (random/generate-keyword) stepper-props])

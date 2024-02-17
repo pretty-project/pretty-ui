@@ -59,7 +59,7 @@
   ; @return (integer)
   [field-id {:keys [multiline?] :as field-props}]
   (let [field-content (get-field-content field-id field-props)]
-       (if multiline? (let [line-count (-> field-content string/line-count inc)]
+       (if multiline? (let [line-count (-> field-content string/line-count)]
                            ; BUG#1481
                            ; Google Chrome Version 89.0.4389.114
                            ; The height of a textarea element has to be at least 2 rows!

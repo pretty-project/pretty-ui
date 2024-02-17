@@ -54,7 +54,7 @@
   ; @param (map) ghost-props
   ; Check out the implemented properties.
   ;
-  ; @usage (ghost.png)
+  ; @usage (pretty-elements/ghost.png)
   ; [ghost {:border-radius {:all :m}
   ;         :fill-color    :muted
   ;         :height        :xs

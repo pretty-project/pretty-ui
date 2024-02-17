@@ -80,7 +80,7 @@
   ; Check out the implemented accessories.
   ; Check out the implemented properties.
   ;
-  ; @usage (adornment.png)
+  ; @usage (pretty-elements/adornment.png)
   ; [adornment {:border-radius {:all :xs}
   ;             :fill-color    :highlight
   ;             :hover-color   :highlight

@@ -38,49 +38,36 @@
                          :reagent-render         (fn [_ badge-props] [badge badge-id badge-props])}))
 
 (defn view
+  ; @description
+  ; Badge accessory for elements.
+  ;
+  ; @links Implemented properties
+  ; [Background color properties](pretty-core/cljs/pretty-properties/api.html#background-color-properties)
+  ; [Border properties](pretty-core/cljs/pretty-properties/api.html#border-properties)
+  ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
+  ; [Font properties](pretty-core/cljs/pretty-properties/api.html#font-properties)
+  ; [Icon properties](pretty-core/cljs/pretty-properties/api.html#icon-properties)
+  ; [Label properties](pretty-core/cljs/pretty-properties/api.html#label-properties)
+  ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
+  ; [Position properties](pretty-core/cljs/pretty-properties/api.html#position-properties)
+  ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
+  ; [Size properties](pretty-core/cljs/pretty-properties/api.html#size-properties)
+  ; [Space properties](pretty-core/cljs/pretty-properties/api.html#space-properties)
+  ; [State properties](pretty-core/cljs/pretty-properties/api.html#state-properties)
+  ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
+  ; [Text properties](pretty-core/cljs/pretty-properties/api.html#text-properties)
+  ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
+  ;
   ; @param (keyword)(opt) badge-id
   ; @param (map) badge-props
-  ; {:border-color (keyword or string)(opt)
-  ;  :border-position (keyword)(opt)
-  ;  :border-radius (map)(opt)
-  ;   {:all, :tl, :tr, :br, :bl (keyword, px or string)(opt)}
-  ;  :border-width (keyword, px or string)(opt)
-  ;  :class (keyword or keywords in vector)(opt)
-  ;  :disabled? (boolean)(opt)
-  ;  :fill-color (keyword or string)(opt)
-  ;  :fill-pattern (keyword)(opt)
-  ;  :height (keyword, px or string)(opt)
-  ;  :icon (keyword)(opt)
-  ;  :icon-color (keyword or string)(opt)
-  ;  :icon-family (keyword)(opt)
-  ;  :indent (map)(opt)
-  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :label (metamorphic-content)(opt)
-  ;  :label-placeholder (metamorphic-content)(opt)
-  ;  :max-height (keyword, px or string)(opt)
-  ;  :max-width (keyword, px or string)(opt)
-  ;  :min-height (keyword, px or string)(opt)
-  ;  :min-width (keyword, px or string)(opt)
-  ;  :on-mount-f (function)(opt)
-  ;  :on-unmount-f (function)(opt)
-  ;  :outdent (map)(opt)
-  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :position (keyword)(opt)
-  ;  :position-base (keyword)(opt)
-  ;  :position-method (keyword)(opt)
-  ;  :preset (keyword)(opt)
-  ;  :style (map)(opt)
-  ;  :text-color (keyword or string)(opt)
-  ;  :text-overflow (keyword)(opt)
-  ;  :text-transform (keyword)(opt)
-  ;  :theme (keyword)(opt)
-  ;  :width (keyword, px or string)(opt)}
+  ; Check out the implemented properties.
   ;
-  ; @usage
-  ; [badge {...}]
-  ;
-  ; @usage
-  ; [badge :my-badge {...}]
+  ; @usage (pretty-accessories/badge.png)
+  ; [badge {:border-radius {:all :s}
+  ;         :label         "My badge"
+  ;         :fill-color    :highlight
+  ;         :indent        {:all :xxs}
+  ;         :position      :br}]
   ([badge-props]
    [view (random/generate-keyword) badge-props])
 

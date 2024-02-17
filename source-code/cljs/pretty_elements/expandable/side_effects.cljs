@@ -1,14 +1,13 @@
 
 (ns pretty-elements.expandable.side-effects
-    (:require [pretty-elements.engine.api           :as pretty-elements.engine]
-              [pretty-elements.surface.side-effects :as surface.side-effects]))
+    (:require [dynamic-props.api :as dynamic-props]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn expand-content!
   ; @description
-  ; Turns on the content visibility of the 'expandable' element.
+  ; Expands the content of the expandable element.
   ;
   ; @param (keyword) expandable-id
   ;
@@ -16,12 +15,11 @@
   ; [expandable :my-expandable {...}]
   ; (expand-content! :my-expandable)
   [expandable-id]
-  (let [surface-id (pretty-elements.engine/element-id->subitem-id expandable-id :surface)]
-       (surface.side-effects/mount-surface! surface-id)))
+  (dynamic-props/update-props! expandable-id assoc :expanded? true))
 
 (defn collapse-content!
   ; @description
-  ; Turns off the content visibility of the 'expandable' element.
+  ; Collapses the content of the expandable element.
   ;
   ; @param (keyword) expandable-id
   ;
@@ -29,5 +27,4 @@
   ; [expandable :my-expandable {...}]
   ; (collapse-content! :my-expandable)
   [expandable-id]
-  (let [surface-id (pretty-elements.engine/element-id->subitem-id expandable-id :surface)]
-       (surface.side-effects/unmount-surface! surface-id)))
+  (dynamic-props/update-props! expandable-id assoc :expanded? false))

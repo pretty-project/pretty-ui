@@ -54,7 +54,7 @@
   ; @param (map) blank-props
   ; Check out the implemented properties.
   ;
-  ; @usage (blank.png)
+  ; @usage (pretty-elements/blank.png)
   ; [blank {:content [:div "My content"]}]
   ([blank-props]
    [view (random/generate-keyword) blank-props])

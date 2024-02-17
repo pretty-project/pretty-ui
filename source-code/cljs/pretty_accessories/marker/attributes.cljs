@@ -17,6 +17,7 @@
   [marker-id marker-props]
   (-> {:class :pa-marker--body}
       (pretty-attributes/background-color-attributes marker-props)
+      (pretty-attributes/border-attributes           marker-props)
       (pretty-attributes/indent-attributes           marker-props)
       (pretty-attributes/size-attributes             marker-props)
       (pretty-attributes/style-attributes            marker-props)))

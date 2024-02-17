@@ -86,7 +86,7 @@
   ; Check out the implemented accessories.
   ; Check out the implemented properties.
   ;
-  ; @usage (icon-button.png)
+  ; @usage (pretty-elements/icon-button.png)
   ; [icon-button {:border-radius {:all :s}
   ;               :fill-color    :highlight
   ;               :icon          :settings
