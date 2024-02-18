@@ -1,7 +1,10 @@
 
 (ns pretty-diagrams.bar-diagram.attributes
     (:require [pretty-attributes.api      :as pretty-attributes]
-              [pretty-diagrams.engine.api :as pretty-diagrams.engine]))
+              [pretty-diagrams.engine.api :as pretty-diagrams.engine]
+
+              [fruits.css.api :as css]
+              [fruits.math.api :as math]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -11,12 +14,27 @@
   ;
   ; @param (keyword) diagram-id
   ; @param (map) diagram-props
+  ; {:datum-count (integer)
+  ;  :datum-max (number)
+  ;  :max-value (number)
+  ;  :strength (percentage)
+  ;  ...}
   ; @param (integer) datum-dex
   ; @param (*) datum
   ;
   ; @return (map)
-  ; {}
-  [diagram-id diagram-props datum-dex datum])
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
+  [diagram-id {:keys [datum-count datum-max max-value strength] :as diagram-props} datum-dex datum]
+  (let [datum-color  (pretty-diagrams.engine/get-diagram-datum-color diagram-id diagram-props datum-dex datum)
+        datum-value  (pretty-diagrams.engine/get-diagram-datum-value diagram-id diagram-props datum-dex datum)
+        data-limit   (max max-value datum-max)
+        datum-ratio  (math/percent data-limit datum-value)
+        datum-height (css/percent  (/ strength datum-count))
+        datum-width  (css/percent  datum-ratio)]
+       (-> {:class :pd-line-diagram--datum}
+           (pretty-attributes/background-color-attributes {:fill-color datum-color})
+           (pretty-attributes/size-attributes             {:height     datum-height :width datum-width}))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

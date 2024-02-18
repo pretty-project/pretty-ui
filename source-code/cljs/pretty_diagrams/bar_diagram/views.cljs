@@ -38,8 +38,8 @@
   ; @param (map) diagram-props
   [diagram-id diagram-props]
   [:div (bar-diagram.attributes/diagram-attributes diagram-id diagram-props)
-        [:div (bar-diagram.attributes/diagram-body-attributes diagram-id diagram-props)]])
-              ; Bar diagrams display multiple lines or bars in a stack.
+        [:div (bar-diagram.attributes/diagram-body-attributes diagram-id diagram-props)
+              [bar-diagram-datum-list                         diagram-id diagram-props]]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -62,31 +62,29 @@
   ; @description
   ; Bar diagram for displaying values with colored bars.
   ;
+  ; @links Implemented properties
+  ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
+  ; [Data properties](pretty-core/cljs/pretty-properties/api.html#data-properties)
+  ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
+  ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
+  ; [Shape properties](pretty-core/cljs/pretty-properties/api.html#shape-properties)
+  ; [Size properties](pretty-core/cljs/pretty-properties/api.html#size-properties)
+  ; [Space properties](pretty-core/cljs/pretty-properties/api.html#space-properties)
+  ; [State properties](pretty-core/cljs/pretty-properties/api.html#state-properties)
+  ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
+  ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
+  ;
   ; @param (keyword)(opt) diagram-id
   ; @param (map) diagram-props
-  ; {:class (keyword or keywords in vector)
-  ;  :datum-color-f (function)(opt)
-  ;  :datum-label-f (function)(opt)
-  ;  :datum-value-f (function)(opt)
-  ;  :disabled? (boolean)(opt)
-  ;  :get-data-f (function)(opt)
-  ;  :indent (map)(opt)
-  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :max-value (number)(opt)
-  ;  :on-mount-f (function)(opt)
-  ;  :on-unmount-f (function)(opt)
-  ;  :outdent (map)(opt)
-  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :preset (keyword)(opt)
-  ;  :style (map)(opt)
-  ;  :strength (percentage)(opt)
-  ;  :theme (keyword)(opt)}
+  ; Check out the implemented properties.
   ;
-  ; @usage
-  ; [bar-diagram {...}]
-  ;
-  ; @usage
-  ; [bar-diagram :my-bar-diagram {...}]
+  ; @usage (pretty-diagrams/bar-diagram.png)
+  ; [bar-diagram {:datum-color-f :color
+  ;               :datum-value-f :value
+  ;               :get-data-f    #(-> [{:color :primary :value 10} {:color :secondary :value 10} {:color :muted :value 10} {:color :highlight :value 30}])
+  ;               :strength      100
+  ;               :height        :m
+  ;               :width         :m}]
   ([diagram-props]
    [view (random/generate-keyword) diagram-props])
 

@@ -13,17 +13,20 @@
   ;
   ; @param (keyword) diagram-id
   ; @param (map) diagram-props
-  ; {:strength (percentage)}
+  ; {:max-value (number)
+  ;  :strength (percentage)
+  ;  :total-value (number)
+  ;  ...}
   ; @param (integer) datum-dex
   ; @param (*) datum
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [diagram-id {:keys [strength] :as diagram-props} datum-dex datum]
-  (let [data-limit   (pretty-diagrams.engine/get-diagram-data-limit  diagram-id diagram-props)
-        datum-color  (pretty-diagrams.engine/get-diagram-datum-color diagram-id diagram-props datum-dex datum)
+  [diagram-id {:keys [max-value strength total-value] :as diagram-props} datum-dex datum]
+  (let [datum-color  (pretty-diagrams.engine/get-diagram-datum-color diagram-id diagram-props datum-dex datum)
         datum-value  (pretty-diagrams.engine/get-diagram-datum-value diagram-id diagram-props datum-dex datum)
+        data-limit   (max max-value total-value)
         datum-ratio  (math/percent data-limit datum-value)
         datum-height (css/percent  strength)
         datum-width  (css/percent  datum-ratio)]

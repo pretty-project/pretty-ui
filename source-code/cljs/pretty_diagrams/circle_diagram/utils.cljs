@@ -13,14 +13,17 @@
   ;
   ; @param (keyword) diagram-id
   ; @param (map) diagram-props
-  ; {:strength (percentage)}
+  ; {:max-value (number)
+  ;  :strength (percentage)
+  ;  :total-value (number)
+  ;  ...}
   ; @param (integer) datum-dex
   ; @param (*) datum
   ;
   ; @return (string)
-  [diagram-id {:keys [strength] :as diagram-props} datum-dex datum]
-  (let [data-limit    (pretty-diagrams.engine/get-diagram-data-limit  diagram-id diagram-props)
-        datum-value   (pretty-diagrams.engine/get-diagram-datum-value diagram-id diagram-props datum-dex datum)
+  [diagram-id {:keys [max-value strength total-value] :as diagram-props} datum-dex datum]
+  (let [datum-value   (pretty-diagrams.engine/get-diagram-datum-value diagram-id diagram-props datum-dex datum)
+        data-limit    (max total-value max-value)
         datum-ratio   (math/percent data-limit datum-value)
         median-radius (/ (- circle-diagram.config/CIRCLE-DIAMETER strength) 2)
         circum        (* median-radius math/PI 2)
@@ -33,13 +36,16 @@
   ;
   ; @param (keyword) diagram-id
   ; @param (map) diagram-props
+  ; {:max-value (number)
+  ;  :total-value (number)
+  ;  ...}
   ; @param (integer) datum-dex
   ; @param (*) datum
   ;
   ; @return (string)
-  [diagram-id diagram-props datum-dex datum]
-  (let [data-limit      (pretty-diagrams.engine/get-diagram-data-limit   diagram-id diagram-props)
-        datum-offset    (pretty-diagrams.engine/get-diagram-datum-offset diagram-id diagram-props datum-dex datum)
+  [diagram-id {:keys [max-value total-value] :as diagram-props} datum-dex datum]
+  (let [datum-offset    (pretty-diagrams.engine/get-diagram-datum-offset diagram-id diagram-props datum-dex datum)
+        data-limit      (max total-value max-value)
         offset-ratio    (math/percent data-limit datum-offset)
         rotation-angle  (math/percent->angle offset-ratio)
         corrected-angle (+ rotation-angle circle-diagram.config/ANGLE-CORRECTION)]

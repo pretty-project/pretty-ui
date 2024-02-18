@@ -59,33 +59,29 @@
   ; @description
   ; Line diagram for displaying values with continuous colored lines.
   ;
+  ; @links Implemented properties
+  ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
+  ; [Data properties](pretty-core/cljs/pretty-properties/api.html#data-properties)
+  ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
+  ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
+  ; [Shape properties](pretty-core/cljs/pretty-properties/api.html#shape-properties)
+  ; [Size properties](pretty-core/cljs/pretty-properties/api.html#size-properties)
+  ; [Space properties](pretty-core/cljs/pretty-properties/api.html#space-properties)
+  ; [State properties](pretty-core/cljs/pretty-properties/api.html#state-properties)
+  ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
+  ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
+  ;
   ; @param (keyword)(opt) diagram-id
   ; @param (map) diagram-props
-  ; {:class (keyword or keywords in vector)(opt)
-  ;  :datum-color-f (function)(opt)
-  ;  :datum-label-f (function)(opt)
-  ;  :datum-value-f (function)(opt)
-  ;  :disabled? (boolean)(opt)
-  ;  :get-data-f (function)(opt)
-  ;  :height (keyword, px or string)(opt)
-  ;  :indent (map)(opt)
-  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :max-value (number)(opt)
-  ;  :on-mount-f (function)(opt)
-  ;  :on-unmount-f (function)(opt)
-  ;  :outdent (map)(opt)
-  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :preset (keyword)(opt)
-  ;  :strength (percentage)(opt)
-  ;  :style (map)(opt)
-  ;  :theme (keyword)(opt)
-  ;  :width (keyword, px or string)(opt)}
+  ; Check out the implemented properties.
   ;
-  ; @usage
-  ; [line-diagram {...}]
-  ;
-  ; @usage
-  ; [line-diagram :my-line-diagram {...}]
+  ; @usage (pretty-diagrams/line-diagram.png)
+  ; [line-diagram {:datum-color-f :color
+  ;                :datum-value-f :value
+  ;                :get-data-f    #(-> [{:color :primary :value 10} {:color :secondary :value 10} {:color :muted :value 10} {:color :highlight :value 30}])
+  ;                :strength      100
+  ;                :height        :m
+  ;                :width         :m}]
   ([diagram-props]
    [view (random/generate-keyword) diagram-props])
 
