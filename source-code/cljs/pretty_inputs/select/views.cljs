@@ -102,7 +102,7 @@
                                        :header [select-popup-header select-id select-props])]
        (if (pretty-inputs.engine/input-popup-visible? select-id select-props)
            [:div {:class :pi-select--popup}
-                 [pretty-layouts/struct-popup popup-id popup-props]])))
+                 [pretty-layouts/popup popup-id popup-props]])))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

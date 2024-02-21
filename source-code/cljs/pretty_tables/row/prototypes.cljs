@@ -1,5 +1,5 @@
 
-(ns pretty-tables.data-row.prototypes
+(ns pretty-tables.row.prototypes
     (:require [pretty-properties.api :as pretty-properties]
               [pretty-rules.api :as pretty-rules]
               [pretty-standards.api :as pretty-standards]))
@@ -25,11 +25,16 @@
   ;
   ; @param (keyword) row-id
   ; @param (map) row-props
-  ; {:cells (maps in vector)(opt)}
+  ; {:cells (maps in vector)(opt)
+  ;  ...}
   ;
   ; @return (map)
   [_ {:keys [cells] :as row-props}]
   (-> row-props (pretty-properties/default-grid-props {:row-template :even :row-count (count cells)})
                 (pretty-properties/default-size-props {:height :content :width :auto :size-unit :double-block})
+                (pretty-standards/standard-border-props)
                 (pretty-standards/standard-wrapper-size-props)
+                (pretty-rules/apply-auto-border-crop)
                 (pretty-rules/auto-adapt-wrapper-size)))
+               ;(pretty-rules/auto-disable-highlight-color)
+               ;(pretty-rules/auto-disable-hover-color)

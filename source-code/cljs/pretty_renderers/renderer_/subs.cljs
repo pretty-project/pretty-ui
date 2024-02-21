@@ -105,7 +105,7 @@
   [db [_ renderer-id]]
   (let [max-elements-rendered (r get-max-elements-rendered db renderer-id)
         visible-element-order (r get-visible-element-order db renderer-id)]
-       (vector/count? visible-element-order max-elements-rendered)))
+       (vector/item-count? visible-element-order max-elements-rendered)))
 
 (defn get-renderer-queue-behavior
   ; WARNING! NON-PUBLIC! DO NOT USE!

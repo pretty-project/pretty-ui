@@ -1,5 +1,5 @@
 
-(ns pretty-layouts.struct-popup.state
+(ns pretty-layouts.popup.state
     (:require [reagent.core :as reagent]))
 
 ;; ----------------------------------------------------------------------------

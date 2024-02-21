@@ -17,7 +17,7 @@
   ; @return (boolean)
   [group-id group-props _]
   (let [group-value @(r/subscribe [:pretty-inputs.multi-field/get-group-value group-id group-props])]
-       (vector/count? group-value 1)))
+       (vector/item-count? group-value 1)))
 
 (defn group-props->multi-field?
   ; @ignore
@@ -41,7 +41,7 @@
   ; @return (boolean)
   [group-id group-props _]
   (let [group-value @(r/subscribe [:pretty-inputs.multi-field/get-group-value group-id group-props])]
-       (vector/count? group-value 1)))
+       (vector/item-count? group-value 1)))
 
 (defn group-props->max-field-count-reached?
   ; @ignore
@@ -54,7 +54,7 @@
   ; @return (boolean)
   [group-id {:keys [max-input-count] :as group-props} _]
   (let [group-value @(r/subscribe [:pretty-inputs.multi-field/get-group-value group-id group-props])]
-       (vector/count? group-value max-input-count)))
+       (vector/item-count? group-value max-input-count)))
 
 (defn field-dex->field-label
   ; @ignore

@@ -151,7 +151,7 @@
   ;  ...}
   [_ checkbox-props]
   (-> {:class :pi-checkbox}
-      (pretty-attributes/class-attributes  checkbox-props)
+      (pretty-attributes/class-attributes   checkbox-props)
       (pretty-attributes/outdent-attributes checkbox-props)
-      (pretty-attributes/state-attributes  checkbox-props)
+      (pretty-attributes/state-attributes   checkbox-props)
       (pretty-attributes/theme-attributes   checkbox-props)))

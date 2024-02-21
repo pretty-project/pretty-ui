@@ -1,32 +1,34 @@
 
-(ns pretty-layouts.struct-popup.views
+(ns pretty-layouts.popup.views
     (:require [fruits.hiccup.api                      :as hiccup]
               [fruits.random.api                      :as random]
               [metamorphic-content.api                :as metamorphic-content]
               [pretty-layouts.engine.api              :as pretty-layouts.engine]
-              [pretty-layouts.struct-popup.attributes :as struct-popup.attributes]
-              [pretty-layouts.struct-popup.prototypes :as struct-popup.prototypes]
-              [pretty-layouts.struct-popup.utils      :as struct-popup.utils]
+              [pretty-layouts.popup.attributes :as popup.attributes]
+              [pretty-layouts.popup.prototypes :as popup.prototypes]
+              [pretty-layouts.popup.utils      :as popup.utils]
               [pretty-presets.engine.api              :as pretty-presets.engine]
               [re-frame.api                           :as r]
               [reagent.core :as reagent]
-              [scroll-lock.api                        :as scroll-lock]))
+              [scroll-lock.api                        :as scroll-lock]
+              [pretty-accessories.api :as pretty-accessories]))
+
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- struct-popup-footer
+(defn- popup-footer
   ; @ignore
   ;
   ; @param (keyword) popup-id
   ; @param (map) popup-props
   ; {:footer (metamorphic-content)}
   [popup-id {:keys [footer] :as popup-props}]
-  [:div (struct-popup.attributes/popup-footer-attributes popup-id popup-props)
-        [:div {:class :pl-struct-popup--footer-content}
+  [:div (popup.attributes/popup-footer-attributes popup-id popup-props)
+        [:div {:class :pl-popup--footer-content}
               [metamorphic-content/compose footer]]])
 
-(defn- struct-popup-footer-lifecycles
+(defn- popup-footer-lifecycles
   ; @ignore
   ;
   ; @param (keyword) popup-id
@@ -34,25 +36,25 @@
   ; {:footer (metamorphic-content)(opt)}
   [popup-id {:keys [footer] :as popup-props}]
   ; @note (tutorials#parameterizing)
-  (if footer (reagent/create-class {:component-did-mount    (fn [_ _] (struct-popup.utils/footer-did-mount-f    popup-id))
-                                    :component-will-unmount (fn [_ _] (struct-popup.utils/footer-will-unmount-f popup-id))
-                                    :reagent-render         (fn [_ popup-props] [struct-popup-footer popup-id popup-props])})))
+  (if footer (reagent/create-class {:component-did-mount    (fn [_ _] (popup.utils/footer-did-mount-f    popup-id))
+                                    :component-will-unmount (fn [_ _] (popup.utils/footer-will-unmount-f popup-id))
+                                    :reagent-render         (fn [_ popup-props] [popup-footer popup-id popup-props])})))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- struct-popup-header
+(defn- popup-header
   ; @ignore
   ;
   ; @param (keyword) popup-id
   ; @param (map) popup-props
   ; {:header (metamorphic-content)}
   [popup-id {:keys [header] :as popup-props}]
-  [:div (struct-popup.attributes/popup-header-attributes popup-id popup-props)
-        [:div {:class :pl-struct-popup--header-content}
+  [:div (popup.attributes/popup-header-attributes popup-id popup-props)
+        [:div {:class :pl-popup--header-content}
               [metamorphic-content/compose header]]])
 
-(defn- struct-popup-header-lifecycles
+(defn- popup-header-lifecycles
   ; @ignore
   ;
   ; @param (keyword) popup-id
@@ -60,14 +62,14 @@
   ; {:header (metamorphic-content)(opt)}
   [popup-id {:keys [header] :as popup-props}]
   ; @note (tutorials#parameterizing)
-  (if header (reagent/create-class {:component-did-mount    (fn [_ _] (struct-popup.utils/header-did-mount-f    popup-id))
-                                    :component-will-unmount (fn [_ _] (struct-popup.utils/header-will-unmount-f popup-id))
-                                    :reagent-render         (fn [_ popup-props] [struct-popup-header popup-id popup-props])})))
+  (if header (reagent/create-class {:component-did-mount    (fn [_ _] (popup.utils/header-did-mount-f    popup-id))
+                                    :component-will-unmount (fn [_ _] (popup.utils/header-will-unmount-f popup-id))
+                                    :reagent-render         (fn [_ popup-props] [popup-header popup-id popup-props])})))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- struct-popup-body
+(defn- popup-body
   ; @ignore
   ;
   ; @param (keyword) popup-id
@@ -82,13 +84,13 @@
   ;
   ; The body content element must be stretched vertically to its wrapper
   ; (to the body element) to provide the center alignment ability for the content.
-  [:div {:class :pl-struct-popup--body :data-scroll-axis :y}
-        [:div {:class :pl-struct-popup--body-content}
+  [:div {:class :pl-popup--body :data-scroll-axis :y}
+        [:div {:class :pl-popup--body-content}
               (if header [:div {:id (hiccup/value popup-id "header-sensor")}])
               (if body   [metamorphic-content/compose body])
               (if footer [:div {:id (hiccup/value popup-id "footer-sensor")}])]])
 
-(defn- struct-popup-body-lifecycles
+(defn- popup-body-lifecycles
   ; @ignore
   ;
   ; @param (keyword) popup-id
@@ -96,26 +98,27 @@
   ; {:body (metamorphic-content)(opt)}
   [popup-id {:keys [body] :as popup-props}]
   ; @note (tutorials#parameterizing)
-  (if body (reagent/create-class {:reagent-render (fn [_ popup-props] [struct-popup-body popup-id popup-props])})))
+  (if body (reagent/create-class {:reagent-render (fn [_ popup-props] [popup-body popup-id popup-props])})))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- struct-popup
+(defn- popup
   ; @ignore
   ;
   ; @param (keyword) popup-id
   ; @param (map) popup-props
-  ; {:cover-color (keyword or string)(opt)}
-  [popup-id {:keys [cover-color] :as popup-props}]
-  [:div (struct-popup.attributes/popup-attributes popup-id popup-props)
-        (if cover-color [:div (struct-popup.attributes/popup-cover-attributes popup-id popup-props)])
-        [:div (struct-popup.attributes/popup-wrapper-attributes popup-id popup-props)
-              [:div (struct-popup.attributes/popup-structure-attributes popup-id popup-props)
-                    [:div {:class :pl-struct-popup--hack}
-                          [struct-popup-body-lifecycles   popup-id popup-props]
-                          [struct-popup-header-lifecycles popup-id popup-props]]
-                    [struct-popup-footer-lifecycles popup-id popup-props]]]])
+  ; {:cover (map)(opt)
+  ;  ...}
+  [popup-id {:keys [cover] :as popup-props}]
+  [:div (popup.attributes/popup-attributes popup-id popup-props)
+        (if cover [pretty-accessories/cover popup-id cover])
+        [:div (popup.attributes/popup-wrapper-attributes popup-id popup-props)
+              [:div (popup.attributes/popup-structure-attributes popup-id popup-props)
+                    [:div {:class :pl-popup--hack}
+                          [popup-body-lifecycles   popup-id popup-props]
+                          [popup-header-lifecycles popup-id popup-props]]
+                    [popup-footer-lifecycles popup-id popup-props]]]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -125,18 +128,37 @@
   ;
   ; @param (keyword) popup-id
   ; @param (map) popup-props
-  ; {}
-  [popup-id {:keys [lock-scroll? on-mount on-unmount] :as popup-props}]
+  [popup-id popup-props]
   ; @note (tutorials#parameterizing)
-  (reagent/create-class {:component-did-mount    (fn [_ _] (if lock-scroll? (scroll-lock/add-scroll-prohibition! popup-id))
-                                                           (if on-mount     (r/dispatch on-mount)))
-                         :component-will-unmount (fn [_ _] (if lock-scroll? (scroll-lock/remove-scroll-prohibition! popup-id))
-                                                           (if on-unmount   (r/dispatch on-unmount)))
-                         :reagent-render         (fn [_ popup-props] [struct-popup popup-id popup-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-layouts.engine/layout-did-mount    popup-id popup-props))
+                         :component-will-unmount (fn [_ _] (pretty-layouts.engine/layout-will-unmount popup-id popup-props))
+                         :reagent-render         (fn [_ popup-props] [popup popup-id popup-props])}))
 
 (defn view
+  ; @description
+  ; Popup style layout.
+  ;
+  ; @links Implemented accessories
+  ; [Cover](pretty-ui/cljs/pretty-accessories/api.html#cover)
+  ;
+  ; @links Implemented properties
+  ; [Background color properties](pretty-core/cljs/pretty-properties/api.html#background-color-properties)
+  ; [Border properties](pretty-core/cljs/pretty-properties/api.html#border-properties)
+  ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
+  ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
+  ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
+  ; [Size properties](pretty-core/cljs/pretty-properties/api.html#size-properties)
+  ; [Space properties](pretty-core/cljs/pretty-properties/api.html#space-properties)
+  ; [State properties](pretty-core/cljs/pretty-properties/api.html#state-properties)
+  ; [Structure properties](pretty-core/cljs/pretty-properties/api.html#structure-properties)
+  ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
+  ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
+  ;
   ; @param (keyword)(opt) popup-id
   ; @param (map) popup-props
+  ; Check out the implemented accessories.
+  ; Check out the implemented properties.
+  ;
   ; {:body (metamorphic-content)(opt)
   ;  :border-color (keyword or string)(opt)
   ;  :border-radius (map)(opt)
@@ -169,16 +191,16 @@
   ;  :theme (keyword)(opt)}
   ;
   ; @usage
-  ; [struct-popup {...}]
+  ; [popup {...}]
   ;
   ; @usage
-  ; [struct-popup :my-struct-popup {...}]
+  ; [popup :my-popup {...}]
   ([popup-props]
    [view (random/generate-keyword) popup-props])
 
   ([popup-id popup-props]
    ; @note (tutorials#parameterizing)
    (fn [_ popup-props]
-       (let [popup-props (pretty-presets.engine/apply-preset            popup-id popup-props)
-             popup-props (struct-popup.prototypes/popup-props-prototype popup-id popup-props)]
+       (let [popup-props (pretty-presets.engine/apply-preset     popup-id popup-props)
+             popup-props (popup.prototypes/popup-props-prototype popup-id popup-props)]
             [view-lifecycles popup-id popup-props]))))

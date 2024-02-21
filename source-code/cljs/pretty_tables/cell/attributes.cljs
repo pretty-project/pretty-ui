@@ -1,5 +1,5 @@
 
-(ns pretty-tables.data-cell.attributes
+(ns pretty-tables.cell.attributes
     (:require [pretty-attributes.api :as pretty-attributes]))
 
 ;; ----------------------------------------------------------------------------
@@ -15,8 +15,9 @@
   ; {:class (keyword or keywords in vector)
   ;  ...}
   [_ cell-props]
-  (-> {:class :pt-data-cell--body}
+  (-> {:class :pt-cell--body}
       (pretty-attributes/background-color-attributes cell-props)
+      (pretty-attributes/border-attributes           cell-props)
       (pretty-attributes/flex-attributes             cell-props)
       (pretty-attributes/font-attributes             cell-props)
       (pretty-attributes/indent-attributes           cell-props)
@@ -37,7 +38,7 @@
   ; {:class (keyword or keywords in vector)
   ;  ...}
   [_ cell-props]
-  (-> {:class :pt-data-cell}
+  (-> {:class :pt-cell}
       (pretty-attributes/class-attributes        cell-props)
       (pretty-attributes/outdent-attributes      cell-props)
       (pretty-attributes/state-attributes        cell-props)

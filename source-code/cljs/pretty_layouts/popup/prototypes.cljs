@@ -1,5 +1,5 @@
 
-(ns pretty-layouts.struct-popup.prototypes
+(ns pretty-layouts.popup.prototypes
     (:require [pretty-rules.api :as pretty-rules]
               [pretty-properties.api :as pretty-properties]
               [pretty-standards.api :as pretty-standards]))

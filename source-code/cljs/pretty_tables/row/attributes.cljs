@@ -1,5 +1,5 @@
 
-(ns pretty-tables.data-row.attributes
+(ns pretty-tables.row.attributes
     (:require [pretty-attributes.api :as pretty-attributes]))
 
 ;; ----------------------------------------------------------------------------
@@ -15,11 +15,13 @@
   ; {:class (keyword or keywords in vector)
   ;  ...}
   [_ row-props]
-  (-> {:class :pt-data-row--body}
-      (pretty-attributes/grid-attributes   row-props)
-      (pretty-attributes/indent-attributes row-props)
-      (pretty-attributes/size-attributes   row-props)
-      (pretty-attributes/style-attributes  row-props)))
+  (-> {:class :pt-row--body}
+      (pretty-attributes/background-color-attributes row-props)
+      (pretty-attributes/border-attributes           row-props)
+      (pretty-attributes/grid-attributes             row-props)
+      (pretty-attributes/indent-attributes           row-props)
+      (pretty-attributes/size-attributes             row-props)
+      (pretty-attributes/style-attributes            row-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -34,7 +36,7 @@
   ; {:class (keyword or keywords in vector)
   ;  ...}
   [_ row-props]
-  (-> {:class :pt-data-row}
+  (-> {:class :pt-row}
       (pretty-attributes/class-attributes        row-props)
       (pretty-attributes/outdent-attributes      row-props)
       (pretty-attributes/state-attributes        row-props)

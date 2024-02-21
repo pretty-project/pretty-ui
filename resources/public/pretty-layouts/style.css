@@ -117,6 +117,106 @@
 
 
 
+/***** Popup *****/
+/*** Wrapper ***/
+
+.pl-popup {
+  display:         flex;
+  justify-content: center;
+  left:            0;
+  position:        fixed;
+  top:             50%;
+  width:           100%;
+}
+
+/*** Wrapper ***/
+
+/*** Cover ***/
+
+.pl-popup--cover {
+  height:    100%;
+  left:      0;
+  opacity:  .85;
+  position: fixed;
+  top:      0;
+  width:    100%;
+}
+
+/*** Cover ***/
+
+/*** Wrapper ***/
+
+.pl-popup--wrapper {
+  display: flex;
+  max-height: 100vh;
+  transform: translateY( -50% );
+
+  /* XXX#0213 */
+  position: absolute;
+}
+
+[data-stretch-orientation="both"]       .pl-popup--wrapper,
+[data-stretch-orientation="horizontal"] .pl-popup--wrapper {
+  width: 100%;
+}
+
+[data-stretch-orientation="both"]     .pl-popup--wrapper,
+[data-stretch-orientation="vertical"] .pl-popup--wrapper {
+  height: 100vh;
+}
+
+/*** Wrapper ***/
+
+/*** Structure ***/
+
+.pl-popup--structure {
+  display:        flex;
+  flex-direction: column;
+
+  /* Makes the popup structure fits into the wrapper, if the wrapper has the
+   * :data-content-min-width attribute. */
+  width: 100%;
+}
+
+[data-stretch-orientation="both"]       .pl-popup--structure,
+[data-stretch-orientation="horizontal"] .pl-popup--structure {
+  width: 100%;
+}
+
+[data-stretch-orientation="both"]     .pl-popup--structure,
+[data-stretch-orientation="vertical"] .pl-popup--structure {
+  height: 100%;
+}
+
+.pl-popup--hack {
+  /* In popup layouts, the header and footer must be above the body (Z axis)
+   * to make the possibly visible shadows of header and footer visible.
+   * The footer element is placed after the body element in the DOM tree by default,
+   * but the header had to be moved after the body and the .pl-popup--hack
+   * contains them (header and body) to make their visible order normal again. */
+  display:        flex;
+  flex-direction: column-reverse;
+  flex-grow:      1;
+  overflow:       hidden;
+}
+
+/*** Structure ***/
+
+/*** Body ***/
+
+.pl-popup--body {
+  flex-grow: 1;
+}
+
+.pl-popup--body-content {
+  height: 100%;
+}
+
+/*** Body ***/
+/***** Popup *****/
+
+
+
 /***** Sidebar *****/
 /*** Wrapper ***/
 
@@ -188,103 +288,3 @@
 
 /*** Sensor ***/
 /***** Sidebar *****/
-
-
-
-/***** Struct popup *****/
-/*** Wrapper ***/
-
-.pl-struct-popup {
-  display:         flex;
-  justify-content: center;
-  left:            0;
-  position:        fixed;
-  top:             50%;
-  width:           100%;
-}
-
-/*** Wrapper ***/
-
-/*** Cover ***/
-
-.pl-struct-popup--cover {
-  height:    100%;
-  left:      0;
-  opacity:  .85;
-  position: fixed;
-  top:      0;
-  width:    100%;
-}
-
-/*** Cover ***/
-
-/*** Wrapper ***/
-
-.pl-struct-popup--wrapper {
-  display: flex;
-  max-height: 100vh;
-  transform: translateY( -50% );
-
-  /* XXX#0213 */
-  position: absolute;
-}
-
-[data-stretch-orientation="both"]       .pl-struct-popup--wrapper,
-[data-stretch-orientation="horizontal"] .pl-struct-popup--wrapper {
-  width: 100%;
-}
-
-[data-stretch-orientation="both"]     .pl-struct-popup--wrapper,
-[data-stretch-orientation="vertical"] .pl-struct-popup--wrapper {
-  height: 100vh;
-}
-
-/*** Wrapper ***/
-
-/*** Structure ***/
-
-.pl-struct-popup--structure {
-  display:        flex;
-  flex-direction: column;
-
-  /* Makes the popup structure fits into the wrapper, if the wrapper has the
-   * :data-content-min-width attribute. */
-  width: 100%;
-}
-
-[data-stretch-orientation="both"]       .pl-struct-popup--structure,
-[data-stretch-orientation="horizontal"] .pl-struct-popup--structure {
-  width: 100%;
-}
-
-[data-stretch-orientation="both"]     .pl-struct-popup--structure,
-[data-stretch-orientation="vertical"] .pl-struct-popup--structure {
-  height: 100%;
-}
-
-.pl-struct-popup--hack {
-  /* In struct-popup layouts, the header and footer must be above the body (Z axis)
-   * to make the possibly visible shadows of header and footer visible.
-   * The footer element is placed after the body element in the DOM tree by default,
-   * but the header had to be moved after the body and the .pl-struct-popup--hack
-   * contains them (header and body) to make their visible order normal again. */
-  display:        flex;
-  flex-direction: column-reverse;
-  flex-grow:      1;
-  overflow:       hidden;
-}
-
-/*** Structure ***/
-
-/*** Body ***/
-
-.pl-struct-popup--body {
-  flex-grow: 1;
-}
-
-.pl-struct-popup--body-content {
-  height: 100%;
-}
-
-/*** Body ***/
-/***** Struct popup *****/

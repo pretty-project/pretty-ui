@@ -78,9 +78,11 @@
   ; Check out the implemented properties.
   ;
   ; @usage (pretty-diagrams/circle-diagram.png)
+  ; (def DATA [{:color :primary :value 10} {:color :secondary :value 10} {:color :muted :value 10} {:color :highlight :value 30}])
+  ;
   ; [circle-diagram {:datum-color-f :color
   ;                  :datum-value-f :value
-  ;                  :get-data-f    #(-> [{:color :primary :value 10} {:color :secondary :value 10} {:color :muted :value 10} {:color :highlight :value 30}])
+  ;                  :get-data-f    #(-> DATA)
   ;                  :strength      50
   ;                  :height        :m
   ;                  :width         :m}]

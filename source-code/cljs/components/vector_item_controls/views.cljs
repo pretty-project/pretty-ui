@@ -61,7 +61,7 @@
   ;  :value-path (Re-Frame path vector)}
   [_ {:keys [disabled? item-dex on-change tooltip-position value-path]}]
   (let [move-event    [:update-item! value-path vector/move-nth-item-fwd item-dex]
-        single-item? @(r/subscribe [:get-updated-item value-path vector/count? 1])]
+        single-item? @(r/subscribe [:get-updated-item value-path vector/item-count? 1])]
        [pretty-elements/icon-button {:border-radius    {:all :s}
                                      :disabled?        (or disabled? single-item?)
                                      :hover-color      :highlight
@@ -82,7 +82,7 @@
   ;  :value-path (Re-Frame path vector)}
   [_ {:keys [disabled? item-dex on-change tooltip-position value-path]}]
   (let [move-event [:update-item! value-path vector/move-nth-item-bwd item-dex]
-        single-item? @(r/subscribe [:get-updated-item value-path vector/count? 1])]
+        single-item? @(r/subscribe [:get-updated-item value-path vector/item-count? 1])]
        [pretty-elements/icon-button {:border-radius    {:all :s}
                                      :disabled?        (or disabled? single-item?)
                                      :hover-color      :highlight

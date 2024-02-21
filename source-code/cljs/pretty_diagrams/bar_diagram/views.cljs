@@ -56,9 +56,6 @@
                          :reagent-render         (fn [_ diagram-props] [bar-diagram diagram-id diagram-props])}))
 
 (defn view
-  ; @important
-  ; This function is incomplete and may not behave as expected.
-  ;
   ; @description
   ; Bar diagram for displaying values with colored bars.
   ;
@@ -79,9 +76,11 @@
   ; Check out the implemented properties.
   ;
   ; @usage (pretty-diagrams/bar-diagram.png)
+  ; (def DATA [{:color :primary :value 10} {:color :secondary :value 10} {:color :muted :value 10} {:color :highlight :value 30}])
+  ;
   ; [bar-diagram {:datum-color-f :color
   ;               :datum-value-f :value
-  ;               :get-data-f    #(-> [{:color :primary :value 10} {:color :secondary :value 10} {:color :muted :value 10} {:color :highlight :value 30}])
+  ;               :get-data-f    #(-> DATA)
   ;               :strength      100
   ;               :height        :m
   ;               :width         :m}]

@@ -1,21 +1,11 @@
 
-(ns pretty-tables.data-table.prototypes
+(ns pretty-tables.table.prototypes
     (:require [pretty-properties.api :as pretty-properties]
               [pretty-rules.api :as pretty-rules]
               [pretty-standards.api :as pretty-standards]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(defn column-props-prototype
-  ; @ignore
-  ;
-  ; @param (integer) column-dex
-  ; @param (map) column-props
-  ;
-  ; @return (map)
-  [_ column-props]
-  (-> column-props))
 
 (defn row-props-prototype
   ; @ignore
@@ -25,7 +15,7 @@
   ;
   ; @return (map)
   [_ row-props]
-  (-> row-props))
+  (-> row-props (pretty-properties/default-size-props {:height :content :width :parent})))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -38,6 +28,13 @@
   ;
   ; @return (map)
   [_ table-props]
-  (-> table-props (pretty-properties/default-size-props {:height :content :width :auto :size-unit :double-block})
+  (-> table-props (pretty-properties/default-flex-props {:orientation :vertical :vertical-align :top})
+                  (pretty-properties/default-size-props {:height :content :width :auto :size-unit :double-block})
+                  (pretty-standards/standard-border-props)
+                  (pretty-standards/standard-flex-props)
                   (pretty-standards/standard-wrapper-size-props)
-                  (pretty-rules/auto-adapt-wrapper-size)))
+                  (pretty-rules/apply-auto-border-crop)
+                  (pretty-rules/auto-adapt-wrapper-size)
+                  (pretty-rules/auto-align-scrollable-flex)))
+                 ;(pretty-rules/auto-disable-highlight-color)
+                 ;(pretty-rules/auto-disable-hover-color)

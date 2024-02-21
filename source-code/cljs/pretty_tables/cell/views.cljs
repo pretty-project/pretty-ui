@@ -1,24 +1,25 @@
 
-(ns pretty-tables.data-cell.views
+(ns pretty-tables.cell.views
     (:require [fruits.random.api                  :as random]
               [pretty-elements.engine.api         :as pretty-elements.engine]
               [pretty-presets.engine.api          :as pretty-presets.engine]
-              [pretty-tables.data-cell.attributes :as data-cell.attributes]
-              [pretty-tables.data-cell.prototypes :as data-cell.prototypes]
+              [pretty-tables.cell.attributes :as cell.attributes]
+              [pretty-tables.cell.prototypes :as cell.prototypes]
               [reagent.core :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- data-cell
+(defn- cell
   ; @ignore
   ;
   ; @param (keyword) cell-id
   ; @param (map) cell-props
-  ; {:content (metamorphic-content)(opt)}
+  ; {:content (metamorphic-content)(opt)
+  ;  ...}
   [cell-id {:keys [content] :as cell-props}]
-  [:div (data-cell.attributes/cell-attributes cell-id cell-props)
-        [:div (data-cell.attributes/cell-body-attributes cell-id cell-props)
+  [:div (cell.attributes/cell-attributes cell-id cell-props)
+        [:div (cell.attributes/cell-body-attributes cell-id cell-props)
               (-> content)]])
 
 ;; ----------------------------------------------------------------------------
@@ -33,7 +34,7 @@
   ; @note (tutorials#parameterizing)
   (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    cell-id cell-props))
                          :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount cell-id cell-props))
-                         :reagent-render         (fn [_ cell-props] [data-cell cell-id cell-props])}))
+                         :reagent-render         (fn [_ cell-props] [cell cell-id cell-props])}))
 
 (defn view
   ; @param (keyword)(opt) cell-id
@@ -68,17 +69,19 @@
   ;  :theme (keyword)(opt)
   ;  :width (keyword, px or string)(opt)}
   ;
-  ; @usage
-  ; [data-cell {...}]
+  ; flex-properties
   ;
   ; @usage
-  ; [data-cell :my-data-cell {...}]
+  ; [cell {...}]
+  ;
+  ; @usage
+  ; [cell :my-cell {...}]
   ([cell-props]
    [view (random/generate-keyword) cell-props])
 
   ([cell-id cell-props]
    ; @note (tutorials#parameterizing)
    (fn [_ cell-props]
-       (let [cell-props (pretty-presets.engine/apply-preset        cell-id cell-props)
-             cell-props (data-cell.prototypes/cell-props-prototype cell-id cell-props)]
+       (let [cell-props (pretty-presets.engine/apply-preset   cell-id cell-props)
+             cell-props (cell.prototypes/cell-props-prototype cell-id cell-props)]
             [view-lifecycles cell-id cell-props]))))

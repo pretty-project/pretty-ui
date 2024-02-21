@@ -57,7 +57,7 @@
 
 (defn view
   ; @description
-  ; Line diagram for displaying values with continuous colored lines.
+  ; Line diagram for displaying values on a continuous colored line.
   ;
   ; @links Implemented properties
   ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
@@ -76,9 +76,11 @@
   ; Check out the implemented properties.
   ;
   ; @usage (pretty-diagrams/line-diagram.png)
+  ; (def DATA [{:color :primary :value 10} {:color :secondary :value 10} {:color :muted :value 10} {:color :highlight :value 30}])
+  ;
   ; [line-diagram {:datum-color-f :color
   ;                :datum-value-f :value
-  ;                :get-data-f    #(-> [{:color :primary :value 10} {:color :secondary :value 10} {:color :muted :value 10} {:color :highlight :value 30}])
+  ;                :get-data-f    #(-> DATA)
   ;                :strength      100
   ;                :height        :m
   ;                :width         :m}]

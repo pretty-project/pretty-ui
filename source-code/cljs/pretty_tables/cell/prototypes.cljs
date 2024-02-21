@@ -1,5 +1,5 @@
 
-(ns pretty-tables.data-cell.prototypes
+(ns pretty-tables.cell.prototypes
     (:require [pretty-properties.api :as pretty-properties]
               [pretty-rules.api :as pretty-rules]
               [pretty-standards.api :as pretty-standards]))
@@ -15,17 +15,17 @@
   ;
   ; @return (map)
   [_ cell-props]
-  (-> cell-props (pretty-properties/default-font-props         {:font-size :xxs :font-weight :normal})
-                 (pretty-properties/default-content-props      {})
-                 (pretty-properties/default-flex-props         {:horizontal-align :left :orientation :horizontal})
-                 (pretty-properties/default-size-props         {:height :parent :width :parent :size-unit :full-block})
-                 (pretty-properties/default-text-props         {:text-overflow :ellipsis})
+  (-> cell-props (pretty-properties/default-font-props {:font-size :xxs :font-weight :normal})
+                 (pretty-properties/default-flex-props {:horizontal-align :center :orientation :horizontal})
+                 (pretty-properties/default-size-props {:height :content :width :auto :size-unit :full-block})
+                 (pretty-properties/default-text-props {:text-overflow :ellipsis})
+                 (pretty-standards/standard-border-props)
                  (pretty-standards/standard-flex-props)
                  (pretty-standards/standard-font-props)
                  (pretty-standards/standard-text-props)
                  (pretty-standards/standard-wrapper-size-props)
-                 ;(pretty-rules/auto-disable-highlight-color)
-                 ;(pretty-rules/auto-disable-hover-color)
-                 (pretty-rules/compose-content)
+                 (pretty-rules/auto-adapt-wrapper-size)
                  (pretty-rules/auto-align-scrollable-flex)
-                 (pretty-rules/auto-adapt-wrapper-size)))
+                ;(pretty-rules/auto-disable-highlight-color)
+                ;(pretty-rules/auto-disable-hover-color)
+                 (pretty-rules/compose-content)))
