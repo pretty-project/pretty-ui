@@ -102,7 +102,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn contacts-body-attributes
+(defn contacts-inner-attributes
   ; @ignore
   ;
   ; @param (keyword) contacts-id
@@ -112,7 +112,7 @@
   ; {:class (keyword or keywords in vector)
   ;  ...}
   [_ contacts-props]
-  (-> {:class :pw-contacts--body}
+  (-> {:class :pw-contacts--inner}
       (pretty-attributes/indent-attributes contacts-props)
       (pretty-attributes/style-attributes  contacts-props)))
 

@@ -35,7 +35,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn menu-item-body-attributes
+(defn menu-item-inner-attributes
   ; @ignore
   ;
   ; @param (keyword) item-id
@@ -45,7 +45,7 @@
   ; {:class (keyword or keywords in vector)
   ;  ...}
   [_ item-props]
-  (-> {:class :pe-menu-item--body}
+  (-> {:class :pe-menu-item--inner}
       (pretty-attributes/anchor-attributes           item-props)
       (pretty-attributes/background-color-attributes item-props)
       (pretty-attributes/border-attributes           item-props)
@@ -72,8 +72,10 @@
   ;  ...}
   [_ item-props]
   (-> {:class :pe-menu-item}
-      (pretty-attributes/class-attributes      item-props)
-      (pretty-attributes/outdent-attributes    item-props)
-      (pretty-attributes/outer-size-attributes item-props)
-      (pretty-attributes/state-attributes      item-props)
-      (pretty-attributes/theme-attributes      item-props)))
+      (pretty-attributes/class-attributes          item-props)
+      (pretty-attributes/inner-position-attributes item-props)
+      (pretty-attributes/outdent-attributes        item-props)
+      (pretty-attributes/outer-position-attributes item-props)
+      (pretty-attributes/outer-size-attributes     item-props)
+      (pretty-attributes/state-attributes          item-props)
+      (pretty-attributes/theme-attributes          item-props)))

@@ -24,8 +24,8 @@
   ;  ...}
   [bubble-id {:keys [content cover end-adornments start-adornments] :as bubble-props}]
   [:div (notification-bubble.attributes/bubble-attributes bubble-id bubble-props)
-        [(pretty-elements.engine/clickable-auto-tag             bubble-id bubble-props)
-         (notification-bubble.attributes/bubble-body-attributes bubble-id bubble-props)
+        [(pretty-elements.engine/clickable-auto-tag              bubble-id bubble-props)
+         (notification-bubble.attributes/bubble-inner-attributes bubble-id bubble-props)
          (when start-adornments [adornment-group.views/view bubble-id {:adornments start-adornments}])
          (when :always          [:div (notification-bubble.attributes/bubble-content-attributes bubble-id bubble-props) content])
          (when end-adornments   [adornment-group.views/view bubble-id {:adornments end-adornments}])
@@ -68,10 +68,12 @@
   ; [Effect properties](pretty-core/cljs/pretty-properties/api.html#effect-properties)
   ; [Flex properties](pretty-core/cljs/pretty-properties/api.html#flex-properties)
   ; [Font properties](pretty-core/cljs/pretty-properties/api.html#font-properties)
+  ; [Inner position properties](pretty-core/cljs/pretty-properties/api.html#inner-position-properties)
   ; [Inner size properties](pretty-core/cljs/pretty-properties/api.html#inner-size-properties)
   ; [Keypress properties](pretty-core/cljs/pretty-properties/api.html#keypress-properties)
   ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
   ; [Mouse event properties](pretty-core/cljs/pretty-properties/api.html#mouse-event-properties)
+  ; [Outer position properties](pretty-core/cljs/pretty-properties/api.html#outer-position-properties)
   ; [Outer size properties](pretty-core/cljs/pretty-properties/api.html#outer-size-properties)
   ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
   ; [Progress properties](pretty-core/cljs/pretty-properties/api.html#progress-properties)

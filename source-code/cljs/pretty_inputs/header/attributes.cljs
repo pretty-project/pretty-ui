@@ -68,7 +68,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn header-body-attributes
+(defn header-inner-attributes
   ; @ignore
   ;
   ; @param (keyword) header-id
@@ -78,7 +78,7 @@
   ; {:class (keyword or keywords in vector)
   ;  ...}
   [_ header-props]
-  (-> {:class :pi-header--body}
+  (-> {:class :pi-header--inner}
       (pretty-attributes/indent-attributes     header-props)
       (pretty-attributes/inner-size-attributes header-props)
       (pretty-attributes/style-attributes      header-props)))
@@ -96,8 +96,10 @@
   ; {}
   [_ header-props]
   (-> {:class :pi-header}
-      (pretty-attributes/class-attributes      header-props)
-      (pretty-attributes/outdent-attributes    header-props)
-      (pretty-attributes/outer-size-attributes header-props)
-      (pretty-attributes/state-attributes      header-props)
-      (pretty-attributes/theme-attributes      header-props)))
+      (pretty-attributes/class-attributes          header-props)
+      (pretty-attributes/inner-position-attributes header-props)
+      (pretty-attributes/outdent-attributes        header-props)
+      (pretty-attributes/outer-position-attributes header-props)
+      (pretty-attributes/outer-size-attributes     header-props)
+      (pretty-attributes/state-attributes          header-props)
+      (pretty-attributes/theme-attributes          header-props)))

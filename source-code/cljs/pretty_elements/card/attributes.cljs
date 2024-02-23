@@ -22,7 +22,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn card-body-attributes
+(defn card-inner-attributes
   ; @ignore
   ;
   ; @param (keyword) card-id
@@ -32,7 +32,7 @@
   ; {:class (keyword or keywords in vector)
   ;  ...}
   [card-id card-props]
-  (-> {:class :pe-card--body}
+  (-> {:class :pe-card--inner}
       (pretty-attributes/anchor-attributes           card-props)
       (pretty-attributes/background-color-attributes card-props)
       (pretty-attributes/border-attributes           card-props)
@@ -60,8 +60,10 @@
   ;  ...}
   [_ card-props]
   (-> {:class :pe-card}
-      (pretty-attributes/class-attributes      card-props)
-      (pretty-attributes/outdent-attributes    card-props)
-      (pretty-attributes/outer-size-attributes card-props)
-      (pretty-attributes/state-attributes      card-props)
-      (pretty-attributes/theme-attributes      card-props)))
+      (pretty-attributes/class-attributes          card-props)
+      (pretty-attributes/inner-position-attributes card-props)
+      (pretty-attributes/outdent-attributes        card-props)
+      (pretty-attributes/outer-position-attributes card-props)
+      (pretty-attributes/outer-size-attributes     card-props)
+      (pretty-attributes/state-attributes          card-props)
+      (pretty-attributes/theme-attributes          card-props)))

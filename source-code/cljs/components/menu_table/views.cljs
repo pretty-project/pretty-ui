@@ -93,10 +93,10 @@
   ; @param (map) table-props
   ; {:items (maps in vector)(opt)}
   [table-id {:keys [items] :as table-props}]
-  [:div.c-menu-table--body (menu-table.helpers/table-body-attributes table-id table-props)
-                           (if (empty? items)
-                               [menu-items-placeholder table-id table-props]
-                               [menu-item-list         table-id table-props])])
+  [:div.c-menu-table--inner (menu-table.helpers/table-inner-attributes table-id table-props)
+                            (if (empty? items)
+                                [menu-items-placeholder table-id table-props]
+                                [menu-item-list         table-id table-props])])
 
 (defn- menu-table
   ; @param (keyword) table-id

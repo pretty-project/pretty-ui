@@ -24,7 +24,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn table-body-attributes
+(defn table-inner-attributes
   ; @param (keyword) table-id
   ; @param (map) table-props
   ;

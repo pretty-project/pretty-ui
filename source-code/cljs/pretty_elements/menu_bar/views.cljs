@@ -30,7 +30,7 @@
   ;  ...}
   [bar-id {:keys [menu-items] :as bar-props}]
   [:div (menu-bar.attributes/menu-bar-attributes bar-id bar-props)
-        [:div (menu-bar.attributes/menu-bar-body-attributes bar-id bar-props)
+        [:div (menu-bar.attributes/menu-bar-inner-attributes bar-id bar-props)
               (letfn [(f0 [item-dex item-props] [menu-bar-menu-item item-dex item-props])]
                      (hiccup/put-with-indexed [:<>] menu-items f0))]])
 
@@ -60,8 +60,10 @@
   ; [Border properties](pretty-core/cljs/pretty-properties/api.html#border-properties)
   ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
   ; [Flex properties](pretty-core/cljs/pretty-properties/api.html#flex-properties)
+  ; [Inner position properties](pretty-core/cljs/pretty-properties/api.html#inner-position-properties)
   ; [Inner size properties](pretty-core/cljs/pretty-properties/api.html#inner-size-properties)
   ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
+  ; [Outer position properties](pretty-core/cljs/pretty-properties/api.html#outer-position-properties)
   ; [Outer size properties](pretty-core/cljs/pretty-properties/api.html#outer-size-properties)
   ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
   ; [Space properties](pretty-core/cljs/pretty-properties/api.html#space-properties)

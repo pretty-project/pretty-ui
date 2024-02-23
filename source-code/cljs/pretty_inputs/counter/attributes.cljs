@@ -82,7 +82,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn counter-body-attributes
+(defn counter-inner-attributes
   ; @ignore
   ;
   ; @param (keyword) counter-id
@@ -92,7 +92,7 @@
   ; {:class (keyword or keywords in vector)
   ;  ...}
   [_ counter-props]
-  (-> {:class :pi-counter--body}
+  (-> {:class :pi-counter--inner}
       (pretty-attributes/indent-attributes counter-props)
       (pretty-attributes/style-attributes  counter-props)
 

@@ -15,7 +15,7 @@
   ; {}
   [header-id {:keys [hide-button order-button search-field] :as header-props}]
   [:div (compact-list-header.attributes/header-attributes header-id header-props)
-        [:div (compact-list-header.attributes/header-body-attributes header-id header-props)
+        [:div (compact-list-header.attributes/header-inner-attributes header-id header-props)
               [pretty-elements/icon-button order-button]
               [pretty-inputs/text-field    search-field]
               [pretty-elements/icon-button hide-button]]])

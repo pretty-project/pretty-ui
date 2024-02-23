@@ -17,7 +17,7 @@
   ; @param (map) ghost-props
   [ghost-id ghost-props]
   [:div (ghost.attributes/ghost-attributes ghost-id ghost-props)
-        [:div (ghost.attributes/ghost-body-attributes ghost-id ghost-props)]])
+        [:div (ghost.attributes/ghost-inner-attributes ghost-id ghost-props)]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -42,8 +42,10 @@
   ; [Background color properties](pretty-core/cljs/pretty-properties/api.html#background-color-properties)
   ; [Border properties](pretty-core/cljs/pretty-properties/api.html#border-properties)
   ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
+  ; [Inner position properties](pretty-core/cljs/pretty-properties/api.html#inner-position-properties)
   ; [Inner size properties](pretty-core/cljs/pretty-properties/api.html#inner-size-properties)
   ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
+  ; [Outer position properties](pretty-core/cljs/pretty-properties/api.html#outer-position-properties)
   ; [Outer size properties](pretty-core/cljs/pretty-properties/api.html#outer-size-properties)
   ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
   ; [Space properties](pretty-core/cljs/pretty-properties/api.html#space-properties)

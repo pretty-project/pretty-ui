@@ -22,7 +22,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn bubble-body-attributes
+(defn bubble-inner-attributes
   ; @ignore
   ;
   ; @param (keyword) bubble-id
@@ -32,7 +32,7 @@
   ; {:class (keyword or keywords in vector)
   ;  ...}
   [_ bubble-props]
-  (-> {:class :pe-notification-bubble--body}
+  (-> {:class :pe-notification-bubble--inner}
       (pretty-attributes/anchor-attributes           bubble-props)
       (pretty-attributes/background-color-attributes bubble-props)
       (pretty-attributes/border-attributes           bubble-props)
@@ -61,8 +61,10 @@
   ;  ...}
   [_ bubble-props]
   (-> {:class :pe-notification-bubble}
-      (pretty-attributes/class-attributes      bubble-props)
-      (pretty-attributes/outdent-attributes    bubble-props)
-      (pretty-attributes/outer-size-attributes bubble-props)
-      (pretty-attributes/state-attributes      bubble-props)
-      (pretty-attributes/theme-attributes      bubble-props)))
+      (pretty-attributes/class-attributes          bubble-props)
+      (pretty-attributes/inner-position-attributes bubble-props)
+      (pretty-attributes/outdent-attributes        bubble-props)
+      (pretty-attributes/outer-position-attributes bubble-props)
+      (pretty-attributes/outer-size-attributes     bubble-props)
+      (pretty-attributes/state-attributes          bubble-props)
+      (pretty-attributes/theme-attributes          bubble-props)))

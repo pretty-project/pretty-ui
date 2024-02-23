@@ -49,7 +49,7 @@
   ; @param (map) box-props
   [box-id box-props]
   [:div (multi-combo-box.attributes/box-attributes box-id box-props)
-        [:div (multi-combo-box.attributes/box-body-attributes box-id box-props)
+        [:div (multi-combo-box.attributes/box-inner-attributes box-id box-props)
               ;[pretty-inputs.engine/input-label box-id box-props]
               [multi-combo-box-chip-group                     box-id box-props]
               [multi-combo-box-field                          box-id box-props]]])

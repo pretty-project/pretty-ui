@@ -5,7 +5,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn header-body-attributes
+(defn header-inner-attributes
   ; @param (keyword) header-id
   ; @param (map) header-props
   ;
@@ -13,7 +13,7 @@
   ; {:class (keyword or keywords in vector)
   ;  ...}
   [_ header-props]
-  (-> {:class :c-compact-list-header--body}
+  (-> {:class :c-compact-list-header--inner}
       (pretty-attributes/background-color-attributes header-props)
       (pretty-attributes/border-attributes           header-props)
       (pretty-attributes/indent-attributes           header-props)

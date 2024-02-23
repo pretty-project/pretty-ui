@@ -19,7 +19,7 @@
   ;  ...}
   [blank-id {:keys [content] :as blank-props}]
   [:div (blank.attributes/blank-attributes blank-id blank-props)
-        [:div (blank.attributes/blank-body-attributes blank-id blank-props)
+        [:div (blank.attributes/blank-inner-attributes blank-id blank-props)
               (-> content)]])
 
 ;; ----------------------------------------------------------------------------
@@ -43,8 +43,10 @@
   ; @links Implemented properties
   ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
   ; [Content properties](pretty-core/cljs/pretty-properties/api.html#content-properties)
+  ; [Inner position properties](pretty-core/cljs/pretty-properties/api.html#inner-position-properties)
   ; [Inner size properties](pretty-core/cljs/pretty-properties/api.html#inner-size-properties)
   ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
+  ; [Outer position properties](pretty-core/cljs/pretty-properties/api.html#outer-position-properties)
   ; [Outer size properties](pretty-core/cljs/pretty-properties/api.html#outer-size-properties)
   ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
   ; [Space properties](pretty-core/cljs/pretty-properties/api.html#space-properties)

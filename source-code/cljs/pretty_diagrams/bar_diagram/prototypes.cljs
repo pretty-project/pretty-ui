@@ -17,6 +17,8 @@
   [_ diagram-props]
   (-> diagram-props (pretty-properties/default-outer-size-props {:outer-size-unit :full-block})
                     (pretty-standards/standard-data-props)
+                    (pretty-standards/standard-inner-position-props)
                     (pretty-standards/standard-inner-size-props)
+                    (pretty-standards/standard-outer-position-props)
                     (pretty-standards/standard-outer-size-props)
                     (pretty-standards/standard-shape-props)))

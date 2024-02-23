@@ -21,3 +21,5 @@
                    (pretty-standards/standard-border-props)
                    (pretty-rules/compose-input-guides)
                    (pretty-rules/compose-label)))
+                   ; inner-size outer-size
+                   ; inner-position outer-position

@@ -117,7 +117,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn switch-body-attributes
+(defn switch-inner-attributes
   ; @ignore
   ;
   ; @param (keyword) switch-id
@@ -129,7 +129,7 @@
   [switch-id switch-props]
   (let [on-blur-f  (fn [_] (pretty-inputs.engine/input-left    switch-id switch-props))
         on-focus-f (fn [_] (pretty-inputs.engine/input-focused switch-id switch-props))]
-       (-> {:class :pi-switch--body
+       (-> {:class :pi-switch--inner
             :on-blur  on-blur-f
             :on-focus on-focus-f}
            (pretty-attributes/indent-attributes      switch-props)

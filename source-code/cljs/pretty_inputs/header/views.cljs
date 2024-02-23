@@ -26,7 +26,7 @@
   ; https://css-tricks.com/html-inputs-and-labels-a-love-story/
   ; ... it is always the best idea to use an explicit label instead of an implicit label.
   [:div (header.attributes/header-attributes header-id header-props)
-        [:div (header.attributes/header-body-attributes header-id header-props)
+        [:div (header.attributes/header-inner-attributes header-id header-props)
               (let [info-text-visible?         (pretty-inputs.engine/input-info-text-visible? header-id header-props)
                     toggle-info-text-adornment (header.adornments/toggle-info-text-adornment  header-id header-props)]
                    [:<> (if label              [:div (header.attributes/header-label-attributes header-id header-props) label

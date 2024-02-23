@@ -5,7 +5,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn header-body-attributes
+(defn header-inner-attributes
   ; @ignore
   ;
   ; @param (keyword) header-id
@@ -17,7 +17,7 @@
   ;  :data-row-horizontal-align (keyword)
   ;  :data-orientation (keyword)}
   [_ {:keys [horizontal-align] :as header-props}]
-  (-> {:class                     :c-vector-items-header--body
+  (-> {:class                     :c-vector-items-header--inner
        :data-orientation          :horizontal
        :data-row-horizontal-align horizontal-align}
       (pretty-attributes/indent-attributes header-props)

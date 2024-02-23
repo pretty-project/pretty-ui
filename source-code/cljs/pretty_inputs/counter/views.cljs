@@ -22,7 +22,7 @@
   [:div (counter.attributes/counter-attributes   counter-id counter-props)
         [pretty-inputs.header.views/view         counter-id counter-props]
         [pretty-inputs.engine/input-synchronizer counter-id counter-props]
-        [:div (counter.attributes/counter-body-attributes counter-id counter-props)
+        [:div (counter.attributes/counter-inner-attributes counter-id counter-props)
               [:button (counter.attributes/decrease-button-attributes counter-id counter-props)]
               (let [value @(r/subscribe [:get-item value-path])]
                    [:div {:class :pi-counter--value} value])

@@ -17,5 +17,7 @@
   [_ spacer-props]
   (-> spacer-props (pretty-properties/default-flex-props       {:shrink 0})
                    (pretty-properties/default-outer-size-props {:outer-height :s :outer-width :auto :outer-size-unit :quarter-block})
+                   (pretty-standards/standard-inner-position-props)
                    (pretty-standards/standard-inner-size-props)
+                   (pretty-standards/standard-outer-position-props)
                    (pretty-standards/standard-outer-size-props)))

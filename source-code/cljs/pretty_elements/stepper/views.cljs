@@ -17,7 +17,7 @@
   ; @param (map) stepper-props
   [stepper-id stepper-props]
   [:div (stepper.attributes/stepper-attributes stepper-id stepper-props)
-        [:div (stepper.attributes/stepper-body-attributes stepper-id stepper-props)]])
+        [:div (stepper.attributes/stepper-inner-attributes stepper-id stepper-props)]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

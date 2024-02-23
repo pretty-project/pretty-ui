@@ -98,7 +98,7 @@
   ; @param (map) controls-props
   [controls-id controls-props]
   [:div {:class :c-vector-item-controls}
-        [:div {:class :c-vector-item-controls--body}
+        [:div {:class :c-vector-item-controls--inner}
               [move-up-icon-button   controls-id controls-props]
               [move-down-icon-button controls-id controls-props]
               [duplicate-icon-button controls-id controls-props]

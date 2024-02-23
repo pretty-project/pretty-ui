@@ -26,7 +26,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn links-body-attributes
+(defn links-inner-attributes
   ; @ignore
   ;
   ; @param (keyword) links-id
@@ -36,7 +36,7 @@
   ; {:class (keyword or keywords in vector)
   ;  ...}
   [_ links-props]
-  (-> {:class :pw-follow-us-links--body}
+  (-> {:class :pw-follow-us-links--inner}
       (pretty-attributes/indent-attributes links-props)
       (pretty-attributes/style-attributes  links-props)))
 

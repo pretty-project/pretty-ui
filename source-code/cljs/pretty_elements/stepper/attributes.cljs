@@ -5,7 +5,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn stepper-body-attributes
+(defn stepper-inner-attributes
   ; @ignore
   ;
   ; @param (keyword) stepper-id
@@ -15,7 +15,7 @@
   ; {:class (keyword or keywords in vector)
   ;  ...}
   [_ stepper-props]
-  (-> {:class :pe-stepper--body}
+  (-> {:class :pe-stepper--inner}
       (pretty-attributes/indent-attributes     stepper-props)
       (pretty-attributes/inner-size-attributes stepper-props)
       (pretty-attributes/style-attributes      stepper-props)))
@@ -34,8 +34,10 @@
   ;  ...}
   [_ stepper-props]
   (-> {:class :pe-stepper}
-      (pretty-attributes/class-attributes      stepper-props)
-      (pretty-attributes/outdent-attributes    stepper-props)
-      (pretty-attributes/outer-size-attributes stepper-props)
-      (pretty-attributes/state-attributes      stepper-props)
-      (pretty-attributes/theme-attributes      stepper-props)))
+      (pretty-attributes/class-attributes          stepper-props)
+      (pretty-attributes/inner-position-attributes stepper-props)
+      (pretty-attributes/outdent-attributes        stepper-props)
+      (pretty-attributes/outer-position-attributes stepper-props)
+      (pretty-attributes/outer-size-attributes     stepper-props)
+      (pretty-attributes/state-attributes          stepper-props)
+      (pretty-attributes/theme-attributes          stepper-props)))

@@ -5,7 +5,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn menu-body-attributes
+(defn menu-inner-attributes
   ; @param (keyword) menu-id
   ; @param (map) menu-props
   ; {:min-width (keyword, px or string)(opt)}

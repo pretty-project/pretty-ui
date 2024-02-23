@@ -5,7 +5,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn field-body-attributes
+(defn field-inner-attributes
   ; @ignore
   ;
   ; @param (keyword) field-id
@@ -15,7 +15,7 @@
   ; {:class (keyword or keywords in vector)
   ;  ...}
   [_ field-props]
-  (-> {:class :pi-digit-field--body}
+  (-> {:class :pi-digit-field--inner}
       (pretty-attributes/indent-attributes field-props)
       (pretty-attributes/style-attributes  field-props)))
 

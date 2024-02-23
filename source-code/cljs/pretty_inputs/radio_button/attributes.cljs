@@ -117,7 +117,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn radio-button-body-attributes
+(defn radio-button-inner-attributes
   ; @ignore
   ;
   ; @param (keyword) button-id
@@ -128,7 +128,7 @@
   [button-id button-props]
   (let [on-blur-f  (fn [_] (pretty-inputs.engine/input-left    button-id button-props))
         on-focus-f (fn [_] (pretty-inputs.engine/input-focused button-id button-props))]
-       (-> {:class :pi-radio-button--body
+       (-> {:class :pi-radio-button--inner
             :on-blur  on-blur-f
             :on-focus on-focus-f}
            (pretty-attributes/indent-attributes button-props)

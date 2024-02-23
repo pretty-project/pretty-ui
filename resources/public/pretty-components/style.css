@@ -8,13 +8,13 @@
 
 /*** Wrapper ***/
 
-/*** Body ***/
+/*** Inner ***/
 
-.c-color-picker--body {
+.c-color-picker--inner {
   display: flex;
 }
 
-/*** Body ***/
+/*** Inner ***/
 
 /*** Placeholder ***/
 
@@ -37,44 +37,44 @@
 
 
 /***** Compact list header *****/
-/*** Body ***/
+/*** Inner ***/
 
-.c-compact-list-header--body {
+.c-compact-list-header--inner {
   align-items: center;
   display: flex;
 }
 
-.c-compact-list-header--body .e-text-field {
+.c-compact-list-header--inner .e-text-field {
   flex-grow: 1;
 }
 
-/*** Body ***/
+/*** Inner ***/
 /***** Compact list header *****/
 
 
 
 /***** Ghost view *****/
-/*** Body ***/
+/*** Inner ***/
 
 .c-ghost-view[data-layout="box-surface"] {
   width: 100%;
 }
 
-/*** Body ***/
+/*** Inner ***/
 /***** Ghost view *****/
 
 
 
 /***** Illustration *****/
-/*** Body ***/
+/*** Inner ***/
 
-.c-illustration--body {
+.c-illustration--inner {
   background-position: bottom center;
   background-repeat:   no-repeat;
   background-size:     contain;
 }
 
-/*** Body ***/
+/*** Inner ***/
 /***** Illustration *****/
 
 
@@ -126,16 +126,16 @@
 
 
 /***** Input table *****/
-/*** Body ***/
+/*** Inner ***/
 
-.c-input-table--body {
+.c-input-table--inner {
   background-color: var( --border-color-highlight );
   display: flex;
   flex-direction: column;
   grid-gap: 1px;
 }
 
-/*** Body ***/
+/*** Inner ***/
 
 /*** Row ***/
 
@@ -241,7 +241,7 @@
   padding: 0 12px;
 }
 
-.c-list-item-button--body {
+.c-list-item-button--inner {
   flex-grow: 1;
 }
 
@@ -321,7 +321,7 @@
   padding-bottom: 6px;
 }
 
-.c-menu-table--body {
+.c-menu-table--inner {
   padding-top: 12px;
 }
 
@@ -330,22 +330,22 @@
 
 
 /***** Popup label bar *****/
-/*** Body ***/
+/*** Inner ***/
 
-.c-popup-label-bar--body {
+.c-popup-label-bar--inner {
   display:         flex;
   justify-content: space-between;
 }
 
-/*** Body ***/
+/*** Inner ***/
 /***** Popup label bar *****/
 
 
 
 /***** Side menu *****/
-/*** Body ***/
+/*** Inner ***/
 
-.c-side-menu--body {
+.c-side-menu--inner {
   display: flex;
   flex-direction: column;
   height: calc(100vh - 48px);
@@ -353,19 +353,19 @@
   top: 48px;
 }
 
-/*** Body ***/
+/*** Inner ***/
 /***** Side menu *****/
 
 
 
 /***** Side menu button *****/
-/*** Body ***/
+/*** Inner ***/
 
-.c-side-menu-button--body {
+.c-side-menu-button--inner {
   display: flex;
 }
 
-/*** Body ***/
+/*** Inner ***/
 /***** Side menu button *****/
 
 
@@ -436,14 +436,14 @@
 
 
 /***** Vector item controls *****/
-/*** Body ***/
+/*** Inner ***/
 
-.c-vector-item-controls--body {
+.c-vector-item-controls--inner {
   display: flex;
   justify-content: flex-end;
 }
 
-/*** Body ***/
+/*** Inner ***/
 /***** Vector item controls *****/
 
 

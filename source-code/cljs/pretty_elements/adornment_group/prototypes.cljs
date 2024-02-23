@@ -31,6 +31,8 @@
   (-> group-props (pretty-properties/default-flex-props       {:orientation :horizontal :overflow :scroll})
                   (pretty-properties/default-outer-size-props {:outer-size-unit :full-block})
                   (pretty-standards/standard-flex-props)
+                  (pretty-standards/standard-inner-position-props)
                   (pretty-standards/standard-inner-size-props)
+                  (pretty-standards/standard-outer-position-props)
                   (pretty-standards/standard-outer-size-props)
                   (pretty-rules/auto-align-scrollable-flex)))

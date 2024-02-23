@@ -39,7 +39,8 @@
   ;
   ; @param (keyword) checkbox-id
   ; @param (map) checkbox-props
-  ; {:options-placeholder (metamorphic-content)(opt)}
+  ; {:options-placeholder (metamorphic-content)(opt)
+  ;  ...}
   [checkbox-id {:keys [options-placeholder] :as checkbox-props}]
   (letfn [(f0 [option-dex option] [checkbox-option checkbox-id checkbox-props option-dex option])]
          (let [options (pretty-inputs.engine/get-input-options checkbox-id checkbox-props)]
@@ -56,8 +57,8 @@
   [:div (checkbox.attributes/checkbox-attributes checkbox-id checkbox-props)
         [pretty-inputs.header.views/view         checkbox-id checkbox-props]
         [pretty-inputs.engine/input-synchronizer checkbox-id checkbox-props]
-        [:div (checkbox.attributes/checkbox-body-attributes checkbox-id checkbox-props)
-              [checkbox-option-list                         checkbox-id checkbox-props]]])
+        [:div (checkbox.attributes/checkbox-inner-attributes checkbox-id checkbox-props)
+              [checkbox-option-list                          checkbox-id checkbox-props]]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

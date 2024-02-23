@@ -5,7 +5,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn row-body-attributes
+(defn row-inner-attributes
   ; @ignore
   ;
   ; @param (keyword) row-id
@@ -15,7 +15,7 @@
   ; {:class (keyword or keywords in vector)
   ;  ...}
   [_ row-props]
-  (-> {:class :pt-row--body}
+  (-> {:class :pt-row--inner}
       (pretty-attributes/background-color-attributes row-props)
       (pretty-attributes/border-attributes           row-props)
       (pretty-attributes/grid-attributes             row-props)
@@ -37,8 +37,10 @@
   ;  ...}
   [_ row-props]
   (-> {:class :pt-row}
-      (pretty-attributes/class-attributes      row-props)
-      (pretty-attributes/outdent-attributes    row-props)
-      (pretty-attributes/outer-size-attributes row-props)
-      (pretty-attributes/state-attributes      row-props)
-      (pretty-attributes/theme-attributes      row-props)))
+      (pretty-attributes/class-attributes          row-props)
+      (pretty-attributes/inner-position-attributes row-props)
+      (pretty-attributes/outdent-attributes        row-props)
+      (pretty-attributes/outer-position-attributes row-props)
+      (pretty-attributes/outer-size-attributes     row-props)
+      (pretty-attributes/state-attributes          row-props)
+      (pretty-attributes/theme-attributes          row-props)))

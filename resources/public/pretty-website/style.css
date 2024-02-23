@@ -8,15 +8,15 @@
 
 /*** Wrapper ***/
 
-/*** Body ***/
+/*** Inner ***/
 
-.pw-contacts--body {
+.pw-contacts--inner {
   display:        flex;
   flex-direction: column;
   gap:            24px;
 }
 
-/*** Body ***/
+/*** Inner ***/
 
 /*** Contact group ***/
 
@@ -53,13 +53,13 @@
 
 
 /***** Language selector *****/
-/*** Body ***/
+/*** Inner ***/
 
-.pw-language-selector--body {
+.pw-language-selector--inner {
   display: flex;
 }
 
-/*** Body ***/
+/*** Inner ***/
 
 /*** Language button ***/
 
@@ -104,9 +104,9 @@
 
 /*** Element ***/
 
-/*** Body ***/
+/*** Inner ***/
 
-.pw-scroll-icon--body {
+.pw-scroll-icon--inner {
   border-color:  var( --icon-color );
   border-radius: 10px;
   border-style:  solid;
@@ -116,7 +116,7 @@
   width:         20px;
 }
 
-.pw-scroll-icon--body::before {
+.pw-scroll-icon--inner::before {
   animation-name:            pw-scroll-icon;
   animation-duration:        2s;
   animation-iteration-count: infinite;
@@ -130,7 +130,7 @@
   width:                     5px;
 }
 
-.pw-scroll-icon--body::after {
+.pw-scroll-icon--inner::after {
   border-bottom:    2px solid var( --icon-color );
   border-left:      2px solid var( --icon-color );
   bottom:           -15px;
@@ -143,7 +143,7 @@
   width:            10px;
 }
 
-/*** Body ***/
+/*** Inner ***/
 
 /*** Animation ***/
 
@@ -223,9 +223,9 @@
 
 /*** Cover ***/
 
-/*** Body ***/
+/*** Inner ***/
 
-.pw-sidebar--body {
+.pw-sidebar--inner {
   animation-fill-mode: both;
   animation-duration: .15s;
   overflow-x: hidden;
@@ -233,22 +233,22 @@
   width: 320px;
 }
 
-.pw-sidebar.pr-mounting .pw-sidebar--body {
+.pw-sidebar.pr-mounting .pw-sidebar--inner {
   animation-delay: .15s;
   animation-name: translate-x--110vw-0;
 }
 
-.pw-sidebar.pr-unmounting .pw-sidebar--body {
+.pw-sidebar.pr-unmounting .pw-sidebar--inner {
   animation-name: translate-x-0--110vw;
 }
 
 @media only screen and (min-width: 0) and (max-width: 479px) {
-.pw-sidebar--body { width: calc(100% - 60px); }}
+.pw-sidebar--inner { width: calc(100% - 60px); }}
 
 @media only screen and (min-width: 480px) and (max-width: 640px) {
-.pw-sidebar--body { width: calc(100% - 120px); }}
+.pw-sidebar--inner { width: calc(100% - 120px); }}
 
-/*** Body ***/
+/*** Inner ***/
 
 /*** Content ***/
 

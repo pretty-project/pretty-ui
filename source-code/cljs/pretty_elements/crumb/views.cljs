@@ -20,7 +20,7 @@
   [crumb-id {:keys [label] :as crumb-props}]
   [:div (crumb.attributes/crumb-attributes crumb-id crumb-props)
         [(pretty-elements.engine/clickable-auto-tag crumb-id crumb-props)
-         (crumb.attributes/crumb-body-attributes    crumb-id crumb-props)
+         (crumb.attributes/crumb-inner-attributes   crumb-id crumb-props)
          [:div (crumb.attributes/crumb-label-attributes crumb-id crumb-props)
                (-> label)]]])
 
@@ -48,10 +48,12 @@
   ; [Clickable state properties](pretty-core/cljs/pretty-properties/api.html#clickable-state-properties)
   ; [Font properties](pretty-core/cljs/pretty-properties/api.html#font-properties)
   ; [Effect properties](pretty-core/cljs/pretty-properties/api.html#effect-properties)
+  ; [Inner position properties](pretty-core/cljs/pretty-properties/api.html#inner-position-properties)
   ; [Inner size properties](pretty-core/cljs/pretty-properties/api.html#inner-size-properties)
   ; [Label properties](pretty-core/cljs/pretty-properties/api.html#label-properties)
   ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
   ; [Mouse event properties](pretty-core/cljs/pretty-properties/api.html#mouse-event-properties)
+  ; [Outer position properties](pretty-core/cljs/pretty-properties/api.html#outer-position-properties)
   ; [Outer size properties](pretty-core/cljs/pretty-properties/api.html#outer-size-properties)
   ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
   ; [Space properties](pretty-core/cljs/pretty-properties/api.html#space-properties)

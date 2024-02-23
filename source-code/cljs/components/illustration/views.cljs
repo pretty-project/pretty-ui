@@ -14,9 +14,9 @@
   ;  :uri (string)
   ;  :width (keyword, px or string)}
   [_ {:keys [height uri width]}]
-  [:div.c-illustration [:div.c-illustration--body {:style {:background-image (css/url uri)}
-                                                   :data-element-height height
-                                                   :data-element-width  width}]])
+  [:div.c-illustration [:div.c-illustration--inner {:style {:background-image (css/url uri)}
+                                                    :data-element-height height
+                                                    :data-element-width  width}]])
 
 (defn view
   ; @param (keyword)(opt) illustration-id

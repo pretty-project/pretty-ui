@@ -5,7 +5,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn group-body-attributes
+(defn group-inner-attributes
   ; @ignore
   ;
   ; @param (keyword) group-id
@@ -15,7 +15,7 @@
   ; {:class (keyword or keywords in vector)
   ;  ...}
   [_ group-props]
-  (-> {:class :pi-multi-field--body}
+  (-> {:class :pi-multi-field--inner}
       (pretty-attributes/indent-attributes group-props)
       (pretty-attributes/style-attributes  group-props)))
 

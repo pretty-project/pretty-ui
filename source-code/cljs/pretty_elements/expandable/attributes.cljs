@@ -22,7 +22,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn expandable-body-attributes
+(defn expandable-inner-attributes
   ; @ignore
   ;
   ; @param (keyword) expandable-id
@@ -32,7 +32,7 @@
   ; {:class (keyword or keywords in vector)
   ;  ...}
   [_ expandable-props]
-  (-> {:class :pe-expandable--body}
+  (-> {:class :pe-expandable--inner}
       (pretty-attributes/background-color-attributes expandable-props)
       (pretty-attributes/border-attributes           expandable-props)
       (pretty-attributes/indent-attributes           expandable-props)
@@ -53,9 +53,10 @@
   ;  ...}
   [_ expandable-props]
   (-> {:class :pe-expandable}
-      (pretty-attributes/class-attributes      expandable-props)
-      (pretty-attributes/outdent-attributes    expandable-props)
-      (pretty-attributes/outer-size-attributes expandable-props)
-      (pretty-attributes/position-attributes   expandable-props)
-      (pretty-attributes/state-attributes      expandable-props)
-      (pretty-attributes/theme-attributes      expandable-props)))
+      (pretty-attributes/class-attributes          expandable-props)
+      (pretty-attributes/inner-position-attributes expandable-props)
+      (pretty-attributes/outdent-attributes        expandable-props)
+      (pretty-attributes/outer-position-attributes expandable-props)
+      (pretty-attributes/outer-size-attributes     expandable-props)
+      (pretty-attributes/state-attributes          expandable-props)
+      (pretty-attributes/theme-attributes          expandable-props)))

@@ -11,7 +11,7 @@
 
 /*** Options ***/
 
-.pi-checkbox--body[data-orientation="horizontal"] {
+.pi-checkbox--inner[data-orientation="horizontal"] {
   column-gap: 24px;
 }
 
@@ -64,15 +64,15 @@
 
 /*** Wrapper ***/
 
-/*** Body ***/
+/*** Inner ***/
 
-.pi-chip-group--body {
+.pi-chip-group--inner {
   display:   flex;
   flex-wrap: wrap;
   gap:       12px;
 }
 
-/*** Body ***/
+/*** Inner ***/
 /***** Chip-group *****/
 
 
@@ -126,16 +126,16 @@
 
 /*** Wrapper ***/
 
-/*** Body ***/
+/*** Inner ***/
 
-.pi-counter--body {
+.pi-counter--inner {
   align-items: center;
   display: flex;
   padding-bottom: 6px;
   padding-top: 6px;
 }
 
-/*** Body ***/
+/*** Inner ***/
 
 /*** Value ***/
 
@@ -252,7 +252,7 @@
 
 /***** Multi combo-box *****/
 
-.pi-multi-combo-box--body {
+.pi-multi-combo-box--inner {
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -290,7 +290,7 @@
 
 /*** Options ***/
 
-.pi-radio-button--body[data-orientation="horizontal"] {
+.pi-radio-button--inner[data-orientation="horizontal"] {
   column-gap: 24px;
 }
 
@@ -421,13 +421,13 @@
 
 
 /***** Slider *****/
-/*** Body ***/
+/*** Inner ***/
 
-.pi-slider--body {
+.pi-slider--inner {
   height: 20px;
 }
 
-/*** Body ***/
+/*** Inner ***/
 
 /*** Track ***/
 
@@ -494,7 +494,7 @@
 
 /*** Options ***/
 
-.pi-switch--body[data-orientation="horizontal"] {
+.pi-switch--inner[data-orientation="horizontal"] {
   column-gap: 24px;
 }
 
@@ -545,14 +545,14 @@
 
 
 /***** Text field *****/
-/*** Body ***/
+/*** Inner ***/
 
-.pi-text-field--body {
+.pi-text-field--inner {
   display: flex;
   justify-content: space-between;
 }
 
-/*** Body ***/
+/*** Inner ***/
 
 /*** Input ***/
 

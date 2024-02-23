@@ -5,7 +5,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn footer-body-attributes
+(defn footer-inner-attributes
   ; @ignore
   ;
   ; @param (keyword) footer-id
@@ -15,7 +15,7 @@
   ; {:class (keyword or keywords in vector)
   ;  ...}
   [footer-id footer-props]
-  (-> {:class :pl-footer--body}
+  (-> {:class :pl-footer--inner}
       (pretty-attributes/background-color-attributes footer-props)
       (pretty-attributes/border-attributes           footer-props)
       (pretty-attributes/flex-attributes             footer-props)
@@ -37,8 +37,10 @@
   ;  ...}
   [_ footer-props]
   (-> {:class :pl-footer}
-      (pretty-attributes/class-attributes      footer-props)
-      (pretty-attributes/outdent-attributes    footer-props)
-      (pretty-attributes/outer-size-attributes footer-props)
-      (pretty-attributes/state-attributes      footer-props)
-      (pretty-attributes/theme-attributes      footer-props)))
+      (pretty-attributes/class-attributes          footer-props)
+      (pretty-attributes/inner-position-attributes footer-props)
+      (pretty-attributes/outdent-attributes        footer-props)
+      (pretty-attributes/outer-position-attributes footer-props)
+      (pretty-attributes/outer-size-attributes     footer-props)
+      (pretty-attributes/state-attributes          footer-props)
+      (pretty-attributes/theme-attributes          footer-props)))

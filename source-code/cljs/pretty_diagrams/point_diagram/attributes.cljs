@@ -23,7 +23,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn diagram-body-attributes
+(defn diagram-inner-attributes
   ; @ignore
   ;
   ; @param (keyword) diagram-id
@@ -33,7 +33,7 @@
   ; {:class (keyword or keywords in vector)
   ;  ...}
   [_ diagram-props]
-  (-> {:class :pd-point-diagram--body}
+  (-> {:class :pd-point-diagram--inner}
       (pretty-attributes/indent-attributes     diagram-props)
       (pretty-attributes/inner-size-attributes diagram-props)
       (pretty-attributes/style-attributes      diagram-props)))
@@ -52,8 +52,10 @@
   ;  ...}
   [_ diagram-props]
   (-> {:class :pd-point-diagram}
-      (pretty-attributes/class-attributes      diagram-props)
-      (pretty-attributes/outdent-attributes    diagram-props)
-      (pretty-attributes/outer-size-attributes diagram-props)
-      (pretty-attributes/state-attributes      diagram-props)
-      (pretty-attributes/theme-attributes      diagram-props)))
+      (pretty-attributes/class-attributes          diagram-props)
+      (pretty-attributes/inner-position-attributes diagram-props)
+      (pretty-attributes/outdent-attributes        diagram-props)
+      (pretty-attributes/outer-position-attributes diagram-props)
+      (pretty-attributes/outer-size-attributes     diagram-props)
+      (pretty-attributes/state-attributes          diagram-props)
+      (pretty-attributes/theme-attributes          diagram-props)))

@@ -5,7 +5,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn list-body-attributes
+(defn list-inner-attributes
   ; @ignore
   ;
   ; @param (keyword) list-id
@@ -15,7 +15,7 @@
   ; {:class (keyword or keywords in vector)
   ;  ...}
   [_ list-props]
-  (-> {:class :c-vector-item-list--body}
+  (-> {:class :c-vector-item-list--inner}
       (pretty-attributes/indent-attributes list-props)
       (pretty-attributes/style-attributes  list-props)))
 

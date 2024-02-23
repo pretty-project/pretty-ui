@@ -201,18 +201,6 @@
 }
 
 /*** Structure ***/
-
-/*** Body ***/
-
-.pl-popup--body_ {
-  -flex-grow: 1;
-}
-
-.pl-popup--body-content {
-  -height: 100%;
-}
-
-/*** Body ***/
 /***** Popup *****/
 
 
@@ -253,14 +241,14 @@
 
 /*** Sidebar wrapper ***/
 
-/*** Body ***/
+/*** Inner ***/
 
-.pl-sidebar--body {
+.pl-sidebar--inner {
   height:     100%;
   overflow-y: hidden;
 }
 
-/*** Body ***/
+/*** Inner ***/
 
 /*** Sensor ***/
 

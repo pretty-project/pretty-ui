@@ -35,7 +35,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn label-body-attributes
+(defn label-inner-attributes
   ; @ignore
   ;
   ; @param (keyword) label-id
@@ -46,7 +46,7 @@
   ; {:class (keyword or keywords in vector)
   ;  ...}
   [_ label-props]
-  (-> {:class :pe-label--body}
+  (-> {:class :pe-label--inner}
       (pretty-attributes/background-color-attributes label-props)
       (pretty-attributes/border-attributes           label-props)
       (pretty-attributes/flex-attributes             label-props)
@@ -68,8 +68,10 @@
   ;  ...}
   [_ label-props]
   (-> {:class :pe-label}
-      (pretty-attributes/class-attributes      label-props)
-      (pretty-attributes/outdent-attributes    label-props)
-      (pretty-attributes/outer-size-attributes label-props)
-      (pretty-attributes/state-attributes      label-props)
-      (pretty-attributes/theme-attributes      label-props)))
+      (pretty-attributes/class-attributes          label-props)
+      (pretty-attributes/inner-position-attributes label-props)
+      (pretty-attributes/outdent-attributes        label-props)
+      (pretty-attributes/outer-position-attributes label-props)
+      (pretty-attributes/outer-size-attributes     label-props)
+      (pretty-attributes/state-attributes          label-props)
+      (pretty-attributes/theme-attributes          label-props)))

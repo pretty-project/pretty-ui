@@ -121,7 +121,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn select-body-attributes
+(defn select-inner-attributes
   ; @ignore
   ;
   ; @param (keyword) select-id
@@ -130,7 +130,7 @@
   ; @return (map)
   ; {}
   [_ select-props]
-  (-> {:class :pi-select--body}
+  (-> {:class :pi-select--inner}
       (pretty-attributes/indent-attributes select-props)
       (pretty-attributes/style-attributes  select-props)))
 

@@ -43,7 +43,7 @@
   ; @param (map) list-props
   [list-id list-props]
   [:div (vector-item-list.attributes/list-attributes list-id list-props)
-        [:div (vector-item-list.attributes/list-body-attributes list-id list-props)
+        [:div (vector-item-list.attributes/list-inner-attributes list-id list-props)
               [vector-item-list-items list-id list-props]]])
 
 (defn view

@@ -23,7 +23,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn chip-group-body-attributes
+(defn chip-group-inner-attributes
   ; @ignore
   ;
   ; @param (keyword) group-id
@@ -33,7 +33,7 @@
   ; {:class (keyword or keywords in vector)
   ;  ...}
   [_ group-props]
-  (-> {:class :pi-chip-group--body}
+  (-> {:class :pi-chip-group--inner}
       (pretty-attributes/indent-attributes group-props)
       (pretty-attributes/style-attributes  group-props)))
 

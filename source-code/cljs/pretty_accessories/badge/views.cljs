@@ -20,7 +20,7 @@
   ;  ...}
   [badge-id {:keys [icon label] :as badge-props}]
   [:div (badge.attributes/badge-attributes badge-id badge-props)
-        [:div (badge.attributes/badge-body-attributes badge-id badge-props)
+        [:div (badge.attributes/badge-inner-attributes badge-id badge-props)
               (cond label [:div (badge.attributes/badge-label-attributes badge-id badge-props) label]
                     icon  [:i   (badge.attributes/badge-icon-attributes  badge-id badge-props) icon])]])
 
@@ -48,11 +48,12 @@
   ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
   ; [Font properties](pretty-core/cljs/pretty-properties/api.html#font-properties)
   ; [Icon properties](pretty-core/cljs/pretty-properties/api.html#icon-properties)
+  ; [Inner position properties](pretty-core/cljs/pretty-properties/api.html#inner-position-properties)
   ; [Inner size properties](pretty-core/cljs/pretty-properties/api.html#inner-size-properties)
   ; [Label properties](pretty-core/cljs/pretty-properties/api.html#label-properties)
   ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
+  ; [Outer position properties](pretty-core/cljs/pretty-properties/api.html#outer-position-properties)
   ; [Outer size properties](pretty-core/cljs/pretty-properties/api.html#outer-size-properties)
-  ; [Position properties](pretty-core/cljs/pretty-properties/api.html#position-properties)
   ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
   ; [Space properties](pretty-core/cljs/pretty-properties/api.html#space-properties)
   ; [State properties](pretty-core/cljs/pretty-properties/api.html#state-properties)

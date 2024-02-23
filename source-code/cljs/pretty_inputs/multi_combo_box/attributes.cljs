@@ -5,7 +5,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn box-body-attributes
+(defn box-inner-attributes
   ; @ignore
   ;
   ; @param (keyword) box-id
@@ -15,7 +15,7 @@
   ; {:class (keyword or keywords in vector)
   ;  ...}
   [_ box-props]
-  (-> {:class :pi-multi-combo-box--body}
+  (-> {:class :pi-multi-combo-box--inner}
       (pretty-attributes/indent-attributes box-props)
       (pretty-attributes/style-attributes  box-props)))
 

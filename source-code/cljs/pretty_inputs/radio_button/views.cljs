@@ -56,8 +56,8 @@
   [:div (radio-button.attributes/radio-button-attributes button-id button-props)
         [pretty-inputs.header.views/view                 button-id button-props]
         [pretty-inputs.engine/input-synchronizer         button-id button-props]
-        [:div (radio-button.attributes/radio-button-body-attributes button-id button-props)
-              [radio-button-option-list                             button-id button-props]]])
+        [:div (radio-button.attributes/radio-button-inner-attributes button-id button-props)
+              [radio-button-option-list                              button-id button-props]]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

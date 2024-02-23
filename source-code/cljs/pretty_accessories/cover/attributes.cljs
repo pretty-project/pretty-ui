@@ -35,7 +35,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn cover-body-attributes
+(defn cover-inner-attributes
   ; @ignore
   ;
   ; @param (keyword) cover-id
@@ -45,7 +45,7 @@
   ; {:class (keyword or keywords in vector)
   ;  ...}
   [cover-id cover-props]
-  (-> {:class :pa-cover--body}
+  (-> {:class :pa-cover--inner}
       (pretty-attributes/flex-attributes       cover-props)
       (pretty-attributes/indent-attributes     cover-props)
       (pretty-attributes/inner-size-attributes cover-props)
@@ -66,10 +66,11 @@
   ;  ...}
   [_ cover-props]
   (-> {:class :pa-cover}
-      (pretty-attributes/class-attributes      cover-props)
-      (pretty-attributes/outdent-attributes    cover-props)
-      (pretty-attributes/outer-size-attributes cover-props)
-      (pretty-attributes/overlay-attributes    cover-props)
-      (pretty-attributes/position-attributes   cover-props)
-      (pretty-attributes/state-attributes      cover-props)
-      (pretty-attributes/theme-attributes      cover-props)))
+      (pretty-attributes/class-attributes          cover-props)
+      (pretty-attributes/inner-position-attributes cover-props)
+      (pretty-attributes/outdent-attributes        cover-props)
+      (pretty-attributes/outer-position-attributes cover-props)
+      (pretty-attributes/outer-size-attributes     cover-props)
+      (pretty-attributes/overlay-attributes        cover-props)
+      (pretty-attributes/state-attributes          cover-props)
+      (pretty-attributes/theme-attributes          cover-props)))

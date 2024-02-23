@@ -148,7 +148,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn field-body-attributes
+(defn field-inner-attributes
   ; @ignore
   ;
   ; @param (keyword) field-id
@@ -157,7 +157,7 @@
   ; @return (map)
   ; {}
   [_ field-props]
-  (-> {:class               :pi-text-field--body
+  (-> {:class               :pi-text-field--inner
        :data-letter-spacing :auto}
       (pretty-attributes/background-color-attributes  field-props)
       (pretty-attributes/border-attributes field-props)

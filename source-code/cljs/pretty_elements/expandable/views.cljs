@@ -45,7 +45,7 @@
   ;  ...}
   [expandable-id {:keys [button content expanded?] :as expandable-props}]
   (if expanded? [:div (expandable.attributes/expandable-attributes expandable-id expandable-props)
-                      [:div (expandable.attributes/expandable-body-attributes expandable-id expandable-props)
+                      [:div (expandable.attributes/expandable-inner-attributes expandable-id expandable-props)
                             (if button  [expandable-button  expandable-id expandable-props])
                             (if content [expandable-content expandable-id expandable-props])]]))
 
@@ -80,10 +80,11 @@
   ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
   ; [Font properties](pretty-core/cljs/pretty-properties/api.html#font-properties)
   ; [Expandable properties](pretty-core/cljs/pretty-properties/api.html#expandable-properties)
+  ; [Inner position properties](pretty-core/cljs/pretty-properties/api.html#inner-position-properties)
   ; [Inner size properties](pretty-core/cljs/pretty-properties/api.html#inner-size-properties)
   ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
+  ; [Outer position properties](pretty-core/cljs/pretty-properties/api.html#outer-position-properties)
   ; [Outer size properties](pretty-core/cljs/pretty-properties/api.html#outer-size-properties)
-  ; [Position properties](pretty-core/cljs/pretty-properties/api.html#position-properties)
   ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
   ; [Space properties](pretty-core/cljs/pretty-properties/api.html#space-properties)
   ; [State properties](pretty-core/cljs/pretty-properties/api.html#state-properties)

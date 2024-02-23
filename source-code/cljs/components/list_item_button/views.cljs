@@ -13,7 +13,7 @@
   ; @param (map) button-props
   ; {}
   [button-id {:keys [] :as button-props}]
-  [:div.c-list-item-button [:div.c-list-item-button--body [pretty-elements/button button-id button-props]]])
+  [:div.c-list-item-button [:div.c-list-item-button--inner [pretty-elements/button button-id button-props]]])
 
 (defn view
   ; @note

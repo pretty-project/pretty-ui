@@ -5,7 +5,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn cell-body-attributes
+(defn cell-inner-attributes
   ; @ignore
   ;
   ; @param (keyword) cell-id
@@ -15,7 +15,7 @@
   ; {:class (keyword or keywords in vector)
   ;  ...}
   [_ cell-props]
-  (-> {:class :pt-cell--body}
+  (-> {:class :pt-cell--inner}
       (pretty-attributes/background-color-attributes cell-props)
       (pretty-attributes/border-attributes           cell-props)
       (pretty-attributes/flex-attributes             cell-props)
@@ -39,8 +39,10 @@
   ;  ...}
   [_ cell-props]
   (-> {:class :pt-cell}
-      (pretty-attributes/class-attributes      cell-props)
-      (pretty-attributes/outdent-attributes    cell-props)
-      (pretty-attributes/outer-size-attributes cell-props)
-      (pretty-attributes/state-attributes      cell-props)
-      (pretty-attributes/theme-attributes      cell-props)))
+      (pretty-attributes/class-attributes          cell-props)
+      (pretty-attributes/inner-position-attributes cell-props)
+      (pretty-attributes/outdent-attributes        cell-props)
+      (pretty-attributes/outer-position-attributes cell-props)
+      (pretty-attributes/outer-size-attributes     cell-props)
+      (pretty-attributes/state-attributes          cell-props)
+      (pretty-attributes/theme-attributes          cell-props)))

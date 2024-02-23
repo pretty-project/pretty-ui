@@ -150,7 +150,7 @@
   [:div (select.attributes/select-attributes     select-id select-props)
         [pretty-inputs.header.views/view         select-id select-props]
         [pretty-inputs.engine/input-synchronizer select-id select-props]
-        [:div (select.attributes/select-body-attributes select-id select-props)
+        [:div (select.attributes/select-inner-attributes select-id select-props)
               (case layout :button        [button-layout        select-id select-props]
                            :icon-button   [icon-button-layout   select-id select-props]
                            :select-button [select-button-layout select-id select-props]

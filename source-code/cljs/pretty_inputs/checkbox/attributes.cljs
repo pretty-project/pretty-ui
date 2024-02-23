@@ -117,7 +117,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn checkbox-body-attributes
+(defn checkbox-inner-attributes
   ; @ignore
   ;
   ; @param (keyword) checkbox-id
@@ -130,7 +130,7 @@
   [checkbox-id checkbox-props]
   (let [on-blur-f  (fn [_] (pretty-inputs.engine/input-left    checkbox-id checkbox-props))
         on-focus-f (fn [_] (pretty-inputs.engine/input-focused checkbox-id checkbox-props))]
-       (-> {:class    :pi-checkbox--body
+       (-> {:class    :pi-checkbox--inner
             :on-blur  on-blur-f
             :on-focus on-focus-f}
            (pretty-attributes/indent-attributes      checkbox-props)

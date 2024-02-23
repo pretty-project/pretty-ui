@@ -5,7 +5,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn menu-body-attributes
+(defn menu-inner-attributes
   ; @ignore
   ;
   ; @param (keyword) menu-id
@@ -15,7 +15,7 @@
   ; {:class (keyword or keywords in vector)
   ;  ...}
   [_ menu-props]
-  (-> {:class :pw-multi-menu--body}
+  (-> {:class :pw-multi-menu--inner}
       (pretty-attributes/indent-attributes menu-props)
       (pretty-attributes/style-attributes  menu-props)))
 

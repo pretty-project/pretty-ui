@@ -19,7 +19,7 @@
   ; {:languages (keywords in vector)}
   [selector-id {:keys [languages] :as selector-props}]
   [:div (language-selector.attributes/selector-attributes selector-id selector-props)
-        [:div (language-selector.attributes/selector-body-attributes selector-id selector-props)
+        [:div (language-selector.attributes/selector-inner-attributes selector-id selector-props)
               (letfn [(f0 [language]
                           [:button (language-selector.attributes/language-button-attributes selector-id selector-props language)
                                    (name language)])]

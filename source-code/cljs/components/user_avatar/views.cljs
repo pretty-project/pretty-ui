@@ -37,7 +37,7 @@
   ;  :initials (string)(opt)}
   [avatar-id {:keys [colors icon icon-family initials] :as avatar-props}]
   [:div (user-avatar.attributes/avatar-attributes avatar-id avatar-props)
-        [:div (user-avatar.attributes/avatar-body-attributes avatar-id avatar-props)
+        [:div (user-avatar.attributes/avatar-inner-attributes avatar-id avatar-props)
               (if (string/not-empty? initials) [:div {:class :c-user-avatar--initials :data-text-selectable false} initials]
                                                [:div {:class :c-user-avatar--icon :data-icon-family icon-family :data-icon-size :m} icon])
               (if (vector/not-empty? colors)   [user-avatar-colors avatar-id avatar-props])]])

@@ -19,8 +19,8 @@
   (if (or (-> threshold not)
           (-> threshold window-observer/viewport-width-min?))
       [:div.c-side-menu (side-menu.helpers/menu-attributes menu-id menu-props)
-                        [:div.c-side-menu--body (side-menu.helpers/menu-body-attributes menu-id menu-props)
-                                                [metamorphic-content/compose content]]]))
+                        [:div.c-side-menu--inner (side-menu.helpers/menu-inner-attributes menu-id menu-props)
+                                                 [metamorphic-content/compose content]]]))
 
 (defn view
   ; @param (keyword)(opt) menu-id

@@ -30,7 +30,7 @@
   ;  ...}
   [table-id {:keys [rows] :as table-props}]
   [:div (table.attributes/table-attributes table-id table-props)
-        [:div (table.attributes/table-body-attributes table-id table-props)
+        [:div (table.attributes/table-inner-attributes table-id table-props)
               (letfn [(f0 [row-dex row-props] [table-row row-dex row-props])]
                      (hiccup/put-with-indexed [:<>] rows f0))]])
 
@@ -60,8 +60,10 @@
   ; [Border properties](pretty-core/cljs/pretty-properties/api.html#border-properties)
   ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
   ; [Flex properties](pretty-core/cljs/pretty-properties/api.html#flex-properties)
+  ; [Inner position properties](pretty-core/cljs/pretty-properties/api.html#inner-position-properties)
   ; [Inner size properties](pretty-core/cljs/pretty-properties/api.html#inner-size-properties)
   ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
+  ; [Outer position properties](pretty-core/cljs/pretty-properties/api.html#outer-position-properties)
   ; [Outer size properties](pretty-core/cljs/pretty-properties/api.html#outer-size-properties)
   ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
   ; [Space properties](pretty-core/cljs/pretty-properties/api.html#space-properties)

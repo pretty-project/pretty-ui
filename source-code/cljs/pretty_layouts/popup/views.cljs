@@ -66,7 +66,7 @@
   ;  ...}
   [popup-id {:keys [body footer header] :as popup-props}]
   [:div (popup.attributes/popup-attributes popup-id popup-props)
-        [:div (popup.attributes/popup-body-attributes popup-id popup-props)
+        [:div (popup.attributes/popup-inner-attributes popup-id popup-props)
               (if header [popup-header popup-id popup-props])
               (if body   [popup-body   popup-id popup-props])
               (if footer [popup-footer popup-id popup-props])]])
@@ -98,8 +98,10 @@
   ; [Background color properties](pretty-core/cljs/pretty-properties/api.html#background-color-properties)
   ; [Border properties](pretty-core/cljs/pretty-properties/api.html#border-properties)
   ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
+  ; [Inner position properties](pretty-core/cljs/pretty-properties/api.html#inner-position-properties)
   ; [Inner size properties](pretty-core/cljs/pretty-properties/api.html#inner-size-properties)
   ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
+  ; [Outer position properties](pretty-core/cljs/pretty-properties/api.html#outer-position-properties)
   ; [Outer size properties](pretty-core/cljs/pretty-properties/api.html#outer-size-properties)
   ; [Overlay properties](pretty-core/cljs/pretty-properties/api.html#overlay-properties)
   ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)

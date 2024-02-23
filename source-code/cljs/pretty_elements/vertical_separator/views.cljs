@@ -20,7 +20,7 @@
   ;  ...}
   [separator-id {:keys [label] :as separator-props}]
   [:div (vertical-separator.attributes/separator-attributes separator-id separator-props)
-        [:div (vertical-separator.attributes/separator-body-attributes separator-id separator-props)
+        [:div (vertical-separator.attributes/separator-inner-attributes separator-id separator-props)
               (if label [:<> [:hr   (vertical-separator.attributes/separator-line-attributes  separator-id separator-props)]
                              [:span (vertical-separator.attributes/separator-label-attributes separator-id separator-props) label]
                              [:hr   (vertical-separator.attributes/separator-line-attributes  separator-id separator-props)]]
@@ -48,10 +48,12 @@
   ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
   ; [Flex properties](pretty-core/cljs/pretty-properties/api.html#flex-properties)
   ; [Font properties](pretty-core/cljs/pretty-properties/api.html#font-properties)
+  ; [Inner position properties](pretty-core/cljs/pretty-properties/api.html#inner-position-properties)
   ; [Inner size properties](pretty-core/cljs/pretty-properties/api.html#inner-size-properties)
   ; [Label properties](pretty-core/cljs/pretty-properties/api.html#label-properties)
   ; [Line properties](pretty-core/cljs/pretty-properties/api.html#line-properties)
   ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
+  ; [Outer position properties](pretty-core/cljs/pretty-properties/api.html#outer-position-properties)
   ; [Outer size properties](pretty-core/cljs/pretty-properties/api.html#outer-size-properties)
   ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
   ; [Space properties](pretty-core/cljs/pretty-properties/api.html#space-properties)

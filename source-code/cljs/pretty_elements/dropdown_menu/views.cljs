@@ -39,7 +39,7 @@
   ; @param (map) menu-props
   [menu-id menu-props]
   [:div (dropdown-menu.attributes/menu-attributes menu-id menu-props)
-        [:div (dropdown-menu.attributes/menu-body-attributes menu-id menu-props)
+        [:div (dropdown-menu.attributes/menu-inner-attributes menu-id menu-props)
               [dropdown-menu-menu-bar   menu-id menu-props]
               [dropdown-menu-expandable menu-id menu-props]]])
 
@@ -67,8 +67,10 @@
   ;
   ; @links Implemented properties
   ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
+  ; [Inner position properties](pretty-core/cljs/pretty-properties/api.html#inner-position-properties)
   ; [Inner size properties](pretty-core/cljs/pretty-properties/api.html#inner-size-properties)
   ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
+  ; [Outer position properties](pretty-core/cljs/pretty-properties/api.html#outer-position-properties)
   ; [Outer size properties](pretty-core/cljs/pretty-properties/api.html#outer-size-properties)
   ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
   ; [Space properties](pretty-core/cljs/pretty-properties/api.html#space-properties)

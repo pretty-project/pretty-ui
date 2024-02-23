@@ -51,7 +51,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn thumbnail-body-attributes
+(defn thumbnail-inner-attributes
   ; @ignore
   ;
   ; @param (keyword) thumbnail-id
@@ -62,7 +62,7 @@
   ; {:class (keyword or keywords in vector)
   ;  ...}
   [_ thumbnail-props]
-  (-> {:class :pe-thumbnail--body}
+  (-> {:class :pe-thumbnail--inner}
       (pretty-attributes/anchor-attributes           thumbnail-props)
       (pretty-attributes/background-color-attributes thumbnail-props)
       (pretty-attributes/border-attributes           thumbnail-props)
@@ -90,8 +90,10 @@
   ;  ...}
   [_ thumbnail-props]
   (-> {:class :pe-thumbnail}
-      (pretty-attributes/class-attributes      thumbnail-props)
-      (pretty-attributes/outdent-attributes    thumbnail-props)
-      (pretty-attributes/outer-size-attributes thumbnail-props)
-      (pretty-attributes/state-attributes      thumbnail-props)
-      (pretty-attributes/theme-attributes      thumbnail-props)))
+      (pretty-attributes/class-attributes          thumbnail-props)
+      (pretty-attributes/inner-position-attributes thumbnail-props)
+      (pretty-attributes/outdent-attributes        thumbnail-props)
+      (pretty-attributes/outer-position-attributes thumbnail-props)
+      (pretty-attributes/outer-size-attributes     thumbnail-props)
+      (pretty-attributes/state-attributes          thumbnail-props)
+      (pretty-attributes/theme-attributes          thumbnail-props)))

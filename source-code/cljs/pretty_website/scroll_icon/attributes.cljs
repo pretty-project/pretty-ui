@@ -21,7 +21,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn icon-body-attributes
+(defn icon-inner-attributes
   ; @ignore
   ;
   ; @param (keyword) icon-id
@@ -32,7 +32,7 @@
   ; {:class (keyword or keywords in vector)
   ;  :style (map)}
   [_ {:keys [color] :as icon-props}]
-  (-> {:class :pw-scroll-icon--body
+  (-> {:class :pw-scroll-icon--inner
        :style {"--icon-color" color}}
       (pretty-attributes/style-attributes icon-props)))
 

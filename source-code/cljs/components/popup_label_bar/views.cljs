@@ -21,7 +21,7 @@
   ; is pressed even if a text field is focused and the keypress handler is in
   ; type mode, then set the on-click event as the on-enter event of the field as well.
   [:div {:class :c-popup-label-bar}
-        [:div {:class :c-popup-label-bar--body}
+        [:div {:class :c-popup-label-bar--inner}
               (if secondary-button [pretty-elements/button secondary-button]
                                    [:div {:class :c-popup-label-bar--placeholder}])
               (if label            [pretty-elements/label label]

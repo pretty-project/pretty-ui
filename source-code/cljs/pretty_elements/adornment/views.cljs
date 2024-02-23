@@ -22,8 +22,8 @@
   ;  ...}
   [adornment-id {:keys [cover icon label] :as adornment-props}]
   [:div (adornment.attributes/adornment-attributes adornment-id adornment-props)
-        [(pretty-elements.engine/clickable-auto-tag      adornment-id adornment-props)
-         (adornment.attributes/adornment-body-attributes adornment-id adornment-props)
+        [(pretty-elements.engine/clickable-auto-tag       adornment-id adornment-props)
+         (adornment.attributes/adornment-inner-attributes adornment-id adornment-props)
          (cond label [:div (adornment.attributes/adornment-label-attributes adornment-id adornment-props) label]
                icon  [:i   (adornment.attributes/adornment-icon-attributes  adornment-id adornment-props) icon])
          (when cover [:<>  [pretty-accessories/cover adornment-id cover]])]])
@@ -63,11 +63,13 @@
   ; [Effect properties](pretty-core/cljs/pretty-properties/api.html#effect-properties)
   ; [Font properties](pretty-core/cljs/pretty-properties/api.html#font-properties)
   ; [Icon properties](pretty-core/cljs/pretty-properties/api.html#icon-properties)
+  ; [Inner position properties](pretty-core/cljs/pretty-properties/api.html#inner-position-properties)
   ; [Inner size properties](pretty-core/cljs/pretty-properties/api.html#inner-size-properties)
   ; [Keypress properties](pretty-core/cljs/pretty-properties/api.html#keypress-properties)
   ; [Label properties](pretty-core/cljs/pretty-properties/api.html#label-properties)
   ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
   ; [Mouse event properties](pretty-core/cljs/pretty-properties/api.html#mouse-event-properties)
+  ; [Outer position properties](pretty-core/cljs/pretty-properties/api.html#outer-position-properties)
   ; [Outer size properties](pretty-core/cljs/pretty-properties/api.html#outer-size-properties)
   ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
   ; [Progress properties](pretty-core/cljs/pretty-properties/api.html#progress-properties)

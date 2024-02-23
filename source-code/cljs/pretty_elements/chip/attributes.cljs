@@ -22,7 +22,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn chip-body-attributes
+(defn chip-inner-attributes
   ; @ignore
   ;
   ; @param (keyword) chip-id
@@ -32,7 +32,7 @@
   ; {:class (keyword or keywords in vector)
   ;  ...}
   [chip-id chip-props]
-  (-> {:class :pe-chip--body}
+  (-> {:class :pe-chip--inner}
       (pretty-attributes/anchor-attributes           chip-props)
       (pretty-attributes/background-color-attributes chip-props)
       (pretty-attributes/border-attributes           chip-props)
@@ -60,8 +60,10 @@
   ;  ...}
   [_ chip-props]
   (-> {:class :pe-chip}
-      (pretty-attributes/class-attributes      chip-props)
-      (pretty-attributes/outdent-attributes    chip-props)
-      (pretty-attributes/outer-size-attributes chip-props)
-      (pretty-attributes/state-attributes      chip-props)
-      (pretty-attributes/theme-attributes      chip-props)))
+      (pretty-attributes/class-attributes          chip-props)
+      (pretty-attributes/inner-position-attributes chip-props)
+      (pretty-attributes/outdent-attributes        chip-props)
+      (pretty-attributes/outer-position-attributes chip-props)
+      (pretty-attributes/outer-size-attributes     chip-props)
+      (pretty-attributes/state-attributes          chip-props)
+      (pretty-attributes/theme-attributes          chip-props)))

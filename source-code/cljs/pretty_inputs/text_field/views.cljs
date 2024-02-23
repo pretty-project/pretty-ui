@@ -62,7 +62,7 @@
   [:div (text-field.attributes/field-attributes  field-id field-props)
         [pretty-inputs.header.views/view         field-id field-props]
         [pretty-inputs.engine/input-synchronizer field-id field-props]
-        [:div (text-field.attributes/field-body-attributes field-id field-props)
+        [:div (text-field.attributes/field-inner-attributes field-id field-props)
               [field-start-adornments field-id field-props]
               [:div {:class :pi-text-field--input-structure}
                     (if placeholder (if-let [field-empty? (pretty-inputs.engine/input-empty? field-id field-props)]

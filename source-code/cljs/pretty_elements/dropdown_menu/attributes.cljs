@@ -5,7 +5,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn menu-body-attributes
+(defn menu-inner-attributes
   ; @ignore
   ;
   ; @param (keyword) menu-id
@@ -15,7 +15,7 @@
   ; {:class (keyword or keywords in vector)
   ;  ...}
   [_ menu-props]
-  (-> {:class :pe-dropdown-menu--body}
+  (-> {:class :pe-dropdown-menu--inner}
       (pretty-attributes/indent-attributes      menu-props)
       (pretty-attributes/inner-size-attributes  menu-props)
       (pretty-attributes/mouse-event-attributes menu-props)
@@ -32,8 +32,10 @@
   ;  ...}
   [_ menu-props]
   (-> {:class :pe-dropdown-menu}
-      (pretty-attributes/class-attributes      menu-props)
-      (pretty-attributes/outdent-attributes    menu-props)
-      (pretty-attributes/outer-size-attributes menu-props)
-      (pretty-attributes/state-attributes      menu-props)
-      (pretty-attributes/theme-attributes      menu-props)))
+      (pretty-attributes/class-attributes          menu-props)
+      (pretty-attributes/inner-position-attributes menu-props)
+      (pretty-attributes/outdent-attributes        menu-props)
+      (pretty-attributes/outer-position-attributes menu-props)
+      (pretty-attributes/outer-size-attributes     menu-props)
+      (pretty-attributes/state-attributes          menu-props)
+      (pretty-attributes/theme-attributes          menu-props)))

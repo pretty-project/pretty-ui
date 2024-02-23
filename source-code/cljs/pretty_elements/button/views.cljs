@@ -26,7 +26,7 @@
   [button-id {:keys [badge cover icon icon-position label marker] :as button-props}]
   [:div (button.attributes/button-attributes button-id button-props)
         [(pretty-elements.engine/clickable-auto-tag button-id button-props)
-         (button.attributes/button-body-attributes  button-id button-props)
+         (button.attributes/button-inner-attributes button-id button-props)
          (case icon-position :right [:<> (if label [:div (button.attributes/button-label-attributes button-id button-props) label])
                                          (if icon  [:i   (button.attributes/button-icon-attributes  button-id button-props) icon])]
                                     [:<> (if icon  [:i   (button.attributes/button-icon-attributes  button-id button-props) icon])
@@ -72,11 +72,13 @@
   ; [Flex properties](pretty-core/cljs/pretty-properties/api.html#flex-properties)
   ; [Font properties](pretty-core/cljs/pretty-properties/api.html#font-properties)
   ; [Icon properties](pretty-core/cljs/pretty-properties/api.html#icon-properties)
+  ; [Inner position properties](pretty-core/cljs/pretty-properties/api.html#inner-position-properties)
   ; [Inner size properties](pretty-core/cljs/pretty-properties/api.html#inner-size-properties)
   ; [Keypress properties](pretty-core/cljs/pretty-properties/api.html#keypress-properties)
   ; [Label properties](pretty-core/cljs/pretty-properties/api.html#label-properties)
   ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
   ; [Mouse event properties](pretty-core/cljs/pretty-properties/api.html#mouse-event-properties)
+  ; [Outer position properties](pretty-core/cljs/pretty-properties/api.html#outer-position-properties)
   ; [Outer size properties](pretty-core/cljs/pretty-properties/api.html#outer-size-properties)
   ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
   ; [Progress properties](pretty-core/cljs/pretty-properties/api.html#progress-properties)

@@ -5,7 +5,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn ghost-body-attributes
+(defn ghost-inner-attributes
   ; @ignore
   ;
   ; @param (keyword) ghost-id
@@ -15,7 +15,7 @@
   ; {:class (keyword or keywords in vector)
   ;  ...}
   [_ ghost-props]
-  (-> {:class :pe-ghost--body}
+  (-> {:class :pe-ghost--inner}
       (pretty-attributes/animation-attributes        ghost-props)
       (pretty-attributes/background-color-attributes ghost-props)
       (pretty-attributes/border-attributes           ghost-props)
@@ -37,8 +37,10 @@
   ;  ...}
   [_ ghost-props]
   (-> {:class :pe-ghost}
-      (pretty-attributes/class-attributes      ghost-props)
-      (pretty-attributes/outdent-attributes    ghost-props)
-      (pretty-attributes/outer-size-attributes ghost-props)
-      (pretty-attributes/state-attributes      ghost-props)
-      (pretty-attributes/theme-attributes      ghost-props)))
+      (pretty-attributes/class-attributes          ghost-props)
+      (pretty-attributes/inner-position-attributes ghost-props)
+      (pretty-attributes/outdent-attributes        ghost-props)
+      (pretty-attributes/outer-position-attributes ghost-props)
+      (pretty-attributes/outer-size-attributes     ghost-props)
+      (pretty-attributes/state-attributes          ghost-props)
+      (pretty-attributes/theme-attributes          ghost-props)))

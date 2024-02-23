@@ -5,7 +5,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn breadcrumbs-body-attributes
+(defn breadcrumbs-inner-attributes
   ; @ignore
   ;
   ; @param (keyword) breadcrumbs-id
@@ -15,7 +15,7 @@
   ; {:class (keyword or keywords in vector)
   ;  ...}
   [_ breadcrumbs-props]
-  (-> {:class :pe-breadcrumbs--body}
+  (-> {:class :pe-breadcrumbs--inner}
       (pretty-attributes/flex-attributes       breadcrumbs-props)
       (pretty-attributes/indent-attributes     breadcrumbs-props)
       (pretty-attributes/inner-size-attributes breadcrumbs-props)
@@ -35,8 +35,10 @@
   ;  ...}
   [_ breadcrumbs-props]
   (-> {:class :pe-breadcrumbs}
-      (pretty-attributes/class-attributes      breadcrumbs-props)
-      (pretty-attributes/outdent-attributes    breadcrumbs-props)
-      (pretty-attributes/outer-size-attributes breadcrumbs-props)
-      (pretty-attributes/state-attributes      breadcrumbs-props)
-      (pretty-attributes/theme-attributes      breadcrumbs-props)))
+      (pretty-attributes/class-attributes          breadcrumbs-props)
+      (pretty-attributes/inner-position-attributes breadcrumbs-props)
+      (pretty-attributes/outdent-attributes        breadcrumbs-props)
+      (pretty-attributes/outer-position-attributes breadcrumbs-props)
+      (pretty-attributes/outer-size-attributes     breadcrumbs-props)
+      (pretty-attributes/state-attributes          breadcrumbs-props)
+      (pretty-attributes/theme-attributes          breadcrumbs-props)))

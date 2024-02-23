@@ -35,7 +35,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn badge-body-attributes
+(defn badge-inner-attributes
   ; @ignore
   ;
   ; @param (keyword) badge-id
@@ -45,7 +45,7 @@
   ; {:class (keyword or keywords in vector)
   ;  ...}
   [badge-id badge-props]
-  (-> {:class :pa-badge--body}
+  (-> {:class :pa-badge--inner}
       (pretty-attributes/background-color-attributes badge-props)
       (pretty-attributes/border-attributes           badge-props)
       (pretty-attributes/indent-attributes           badge-props)
@@ -66,9 +66,10 @@
   ;  ...}
   [_ badge-props]
   (-> {:class :pa-badge}
-      (pretty-attributes/class-attributes      badge-props)
-      (pretty-attributes/outdent-attributes    badge-props)
-      (pretty-attributes/outer-size-attributes badge-props)
-      (pretty-attributes/position-attributes   badge-props)
-      (pretty-attributes/state-attributes      badge-props)
-      (pretty-attributes/theme-attributes      badge-props)))
+      (pretty-attributes/class-attributes          badge-props)
+      (pretty-attributes/inner-position-attributes badge-props)
+      (pretty-attributes/outdent-attributes        badge-props)
+      (pretty-attributes/outer-position-attributes badge-props)
+      (pretty-attributes/outer-size-attributes     badge-props)
+      (pretty-attributes/state-attributes          badge-props)
+      (pretty-attributes/theme-attributes          badge-props)))

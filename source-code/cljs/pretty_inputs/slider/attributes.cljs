@@ -64,7 +64,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn slider-body-attributes
+(defn slider-inner-attributes
   ; @ignore
   ;
   ; @param (keyword) slider-id
@@ -74,7 +74,7 @@
   ; {:class (keyword or keywords in vector)
   ;  ...}
   [_ slider-props]
-  (-> {:class :pi-slider--body}
+  (-> {:class :pi-slider--inner}
       (pretty-attributes/indent-attributes slider-props)
       (pretty-attributes/inner-size-attributes slider-props)
       (pretty-attributes/style-attributes  slider-props)))

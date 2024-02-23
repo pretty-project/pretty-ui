@@ -20,7 +20,7 @@
   ;  ...}
   [cover-id {:keys [icon label] :as cover-props}]
   [:div (cover.attributes/cover-attributes cover-id cover-props)
-        [:div (cover.attributes/cover-body-attributes cover-id cover-props)
+        [:div (cover.attributes/cover-inner-attributes cover-id cover-props)
               (cond label [:div (cover.attributes/cover-label-attributes cover-id cover-props) label]
                     icon  [:i   (cover.attributes/cover-icon-attributes  cover-id cover-props) icon])]])
 
@@ -47,12 +47,13 @@
   ; [Font properties](pretty-core/cljs/pretty-properties/api.html#font-properties)
   ; [Flex properties](pretty-core/cljs/pretty-properties/api.html#flex-properties)
   ; [Icon properties](pretty-core/cljs/pretty-properties/api.html#icon-properties)
+  ; [Inner position properties](pretty-core/cljs/pretty-properties/api.html#inner-position-properties)
   ; [Inner size properties](pretty-core/cljs/pretty-properties/api.html#inner-size-properties)
   ; [Label properties](pretty-core/cljs/pretty-properties/api.html#label-properties)
   ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
+  ; [Outer position properties](pretty-core/cljs/pretty-properties/api.html#outer-position-properties)
   ; [Outer size properties](pretty-core/cljs/pretty-properties/api.html#outer-size-properties)
   ; [Overlay properties](pretty-core/cljs/pretty-properties/api.html#overlay-properties)
-  ; [Position properties](pretty-core/cljs/pretty-properties/api.html#position-properties)
   ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
   ; [Space properties](pretty-core/cljs/pretty-properties/api.html#space-properties)
   ; [State properties](pretty-core/cljs/pretty-properties/api.html#state-properties)

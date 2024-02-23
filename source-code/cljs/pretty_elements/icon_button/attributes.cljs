@@ -35,7 +35,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn button-body-attributes
+(defn button-inner-attributes
   ; @ignore
   ;
   ; @param (keyword) button-id
@@ -45,7 +45,7 @@
   ; {:class (keyword or keywords in vector)
   ;  ...}
   [button-id button-props]
-  (-> {:class :pe-icon-button--body}
+  (-> {:class :pe-icon-button--inner}
       (pretty-attributes/anchor-attributes           button-props)
       (pretty-attributes/background-color-attributes button-props)
       (pretty-attributes/border-attributes           button-props)
@@ -74,8 +74,10 @@
   ;  ...}
   [_ button-props]
   (-> {:class :pe-icon-button}
-      (pretty-attributes/class-attributes      button-props)
-      (pretty-attributes/outdent-attributes    button-props)
-      (pretty-attributes/outer-size-attributes button-props)
-      (pretty-attributes/state-attributes      button-props)
-      (pretty-attributes/theme-attributes      button-props)))
+      (pretty-attributes/class-attributes          button-props)
+      (pretty-attributes/inner-position-attributes button-props)
+      (pretty-attributes/outdent-attributes        button-props)
+      (pretty-attributes/outer-position-attributes button-props)
+      (pretty-attributes/outer-size-attributes     button-props)
+      (pretty-attributes/state-attributes          button-props)
+      (pretty-attributes/theme-attributes          button-props)))

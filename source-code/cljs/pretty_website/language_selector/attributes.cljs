@@ -35,7 +35,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn selector-body-attributes
+(defn selector-inner-attributes
   ; @ignore
   ;
   ; @param (keyword) selector-id
@@ -45,7 +45,7 @@
   ; {:class (keyword or keywords in vector)
   ;  ...}
   [_ selector-props]
-  (-> {:class :pw-language-selector--body}
+  (-> {:class :pw-language-selector--inner}
       (pretty-attributes/indent-attributes selector-props)
       (pretty-attributes/flex-attributes    selector-props)
       (pretty-attributes/style-attributes  selector-props)))

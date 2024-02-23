@@ -55,8 +55,8 @@
   [:div (switch.attributes/switch-attributes     switch-id switch-props)
         [pretty-inputs.header.views/view         switch-id switch-props]
         [pretty-inputs.engine/input-synchronizer switch-id switch-props]
-        [:div (switch.attributes/switch-body-attributes switch-id switch-props)
-              [switch-option-list                       switch-id switch-props]]])
+        [:div (switch.attributes/switch-inner-attributes switch-id switch-props)
+              [switch-option-list                        switch-id switch-props]]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

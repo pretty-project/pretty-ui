@@ -5,7 +5,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn group-body-attributes
+(defn group-inner-attributes
   ; @ignore
   ;
   ; @param (keyword) group-id
@@ -15,11 +15,11 @@
   ; {:class (keyword or keywords in vector)
   ;  ...}
   [group-id group-props]
-  (-> {:class :pe-adornment-group--body}
+  (-> {:class :pe-adornment-group--inner}
       (pretty-attributes/flex-attributes       group-props)
       (pretty-attributes/indent-attributes     group-props)
       (pretty-attributes/inner-size-attributes group-props)
-      (pretty-attributes/style-attributes      group-props))) 
+      (pretty-attributes/style-attributes      group-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -35,8 +35,10 @@
   ;  ...}
   [_ group-props]
   (-> {:class :pe-adornment-group}
-      (pretty-attributes/class-attributes      group-props)
-      (pretty-attributes/outdent-attributes    group-props)
-      (pretty-attributes/outer-size-attributes group-props)
-      (pretty-attributes/state-attributes      group-props)
-      (pretty-attributes/theme-attributes      group-props)))
+      (pretty-attributes/class-attributes          group-props)
+      (pretty-attributes/inner-position-attributes group-props)
+      (pretty-attributes/outdent-attributes        group-props)
+      (pretty-attributes/outer-position-attributes group-props)
+      (pretty-attributes/outer-size-attributes     group-props)
+      (pretty-attributes/state-attributes          group-props)
+      (pretty-attributes/theme-attributes          group-props)))

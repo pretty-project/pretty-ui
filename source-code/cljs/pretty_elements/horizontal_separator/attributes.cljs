@@ -35,7 +35,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn separator-body-attributes
+(defn separator-inner-attributes
   ; @ignore
   ;
   ; @param (keyword) separator-id
@@ -45,7 +45,7 @@
   ; {:class (keyword or keywords in vector)
   ;  ...}
   [_ separator-props]
-  (-> {:class :pe-horizontal-separator--body}
+  (-> {:class :pe-horizontal-separator--inner}
       (pretty-attributes/flex-attributes       separator-props)
       (pretty-attributes/indent-attributes     separator-props)
       (pretty-attributes/inner-size-attributes separator-props)
@@ -65,8 +65,10 @@
   ;  ...}
   [_ separator-props]
   (-> {:class :pe-horizontal-separator}
-      (pretty-attributes/class-attributes      separator-props)
-      (pretty-attributes/outdent-attributes    separator-props)
-      (pretty-attributes/outer-size-attributes separator-props)
-      (pretty-attributes/state-attributes      separator-props)
-      (pretty-attributes/theme-attributes      separator-props)))
+      (pretty-attributes/class-attributes          separator-props)
+      (pretty-attributes/inner-position-attributes separator-props)
+      (pretty-attributes/outdent-attributes        separator-props)
+      (pretty-attributes/outer-position-attributes separator-props)
+      (pretty-attributes/outer-size-attributes     separator-props)
+      (pretty-attributes/state-attributes          separator-props)
+      (pretty-attributes/theme-attributes          separator-props)))

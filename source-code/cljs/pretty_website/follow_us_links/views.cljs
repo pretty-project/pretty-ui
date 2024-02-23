@@ -19,7 +19,7 @@
   ; {:links (vectors in vector)}
   [links-id {:keys [links] :as links-props}]
   [:div (follow-us-links.attributes/links-attributes links-id links-props)
-        [:div (follow-us-links.attributes/links-body-attributes links-id links-props)
+        [:div (follow-us-links.attributes/links-inner-attributes links-id links-props)
               (letfn [(f0 [%] [:a (follow-us-links.attributes/links-link-attributes links-id links-props %)])]
                      (hiccup/put-with [:<>] links f0))]])
 

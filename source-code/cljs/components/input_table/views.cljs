@@ -34,8 +34,8 @@
   [table-id table-props]
   [:div.c-input-table (input-table.helpers/table-attributes table-id table-props)
                       [input-table-label table-id table-props]
-                      [:div.c-input-table--body (input-table.helpers/table-body-attributes table-id table-props)
-                                                [input-table-rows table-id table-props]]])
+                      [:div.c-input-table--inner (input-table.helpers/table-inner-attributes table-id table-props)
+                                                 [input-table-rows table-id table-props]]])
 
 (defn view
   ; @param (keyword)(opt) table-id

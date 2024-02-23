@@ -19,7 +19,7 @@
   [icon-id icon-props]
   [:<> [scroll-sensor.views/view (scroll-icon.attributes/sensor-attributes icon-id icon-props)]
        [:div (scroll-icon.attributes/icon-attributes icon-id icon-props)
-             [:div (scroll-icon.attributes/icon-body-attributes icon-id icon-props)]]])
+             [:div (scroll-icon.attributes/icon-inner-attributes icon-id icon-props)]]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

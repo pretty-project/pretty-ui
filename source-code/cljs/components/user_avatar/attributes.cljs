@@ -47,7 +47,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn avatar-body-attributes
+(defn avatar-inner-attributes
   ; @ignore
   ;
   ; @param (keyword) avatar-id
@@ -58,7 +58,7 @@
   ; {:class (keyword or keywords in vector)
   ;  :style (map)}
   [_ {:keys [size] :as avatar-props}]
-  (-> {:class :c-user-avatar--body
+  (-> {:class :c-user-avatar--inner
        :style {:height (css/px size)
                :width  (css/px size)}}
       (pretty-attributes/indent-attributes avatar-props)

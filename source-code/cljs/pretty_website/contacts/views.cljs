@@ -52,7 +52,7 @@
   ; {:contact-groups (maps in vector)(opt)}
   [contacts-id {:keys [contact-groups] :as contacts-props}]
   [:div (contacts.attributes/contacts-attributes contacts-id contacts-props)
-        [:div (contacts.attributes/contacts-body-attributes contacts-id contacts-props)
+        [:div (contacts.attributes/contacts-inner-attributes contacts-id contacts-props)
               (if-not (empty? contact-groups)
                       (letfn [(f0 [group-props] [contact-group contacts-id contacts-props group-props])]
                              (hiccup/put-with [:<>] contact-groups f0)))]])

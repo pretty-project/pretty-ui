@@ -17,7 +17,7 @@
   ; @param (map) spacer-props
   [spacer-id spacer-props]
   [:div (vertical-spacer.attributes/spacer-attributes spacer-id spacer-props)
-        [:div (vertical-spacer.attributes/spacer-body-attributes spacer-id spacer-props)]])
+        [:div (vertical-spacer.attributes/spacer-inner-attributes spacer-id spacer-props)]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -39,8 +39,10 @@
   ;
   ; @links Implemented properties
   ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
+  ; [Inner position properties](pretty-core/cljs/pretty-properties/api.html#inner-position-properties)
   ; [Inner size properties](pretty-core/cljs/pretty-properties/api.html#inner-size-properties)
   ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
+  ; [Outer position properties](pretty-core/cljs/pretty-properties/api.html#outer-position-properties)
   ; [Outer size properties](pretty-core/cljs/pretty-properties/api.html#outer-size-properties)
   ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
   ; [Space properties](pretty-core/cljs/pretty-properties/api.html#space-properties)

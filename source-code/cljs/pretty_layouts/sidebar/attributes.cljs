@@ -25,7 +25,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn sidebar-body-attributes
+(defn sidebar-inner-attributes
   ; @ignore
   ;
   ; @param (keyword) sidebar-id
@@ -35,7 +35,7 @@
   ; {:class (keyword or keywords in vector)
   ;  ...}
   [_ sidebar-props]
-  (-> {:class :pl-sidebar--body}
+  (-> {:class :pl-sidebar--inner}
       (pretty-attributes/background-color-attributes        sidebar-props)
       (pretty-attributes/border-attributes       sidebar-props)
       (pretty-attributes/indent-attributes       sidebar-props)

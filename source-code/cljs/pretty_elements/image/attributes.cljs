@@ -51,7 +51,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn image-body-attributes
+(defn image-inner-attributes
   ; @ignore
   ;
   ; @param (keyword) image-id
@@ -62,7 +62,7 @@
   ; {:class (keyword or keywords in vector)
   ;  ...}
   [_ image-props]
-  (-> {:class :pe-image--body}
+  (-> {:class :pe-image--inner}
       (pretty-attributes/anchor-attributes           image-props)
       (pretty-attributes/background-color-attributes image-props)
       (pretty-attributes/border-attributes           image-props)
@@ -90,8 +90,10 @@
   ;  ...}
   [_ image-props]
   (-> {:class :pe-image}
-      (pretty-attributes/class-attributes      image-props)
-      (pretty-attributes/outdent-attributes    image-props)
-      (pretty-attributes/outer-size-attributes image-props)
-      (pretty-attributes/state-attributes      image-props)
-      (pretty-attributes/theme-attributes      image-props)))
+      (pretty-attributes/class-attributes          image-props)
+      (pretty-attributes/inner-position-attributes image-props)
+      (pretty-attributes/outdent-attributes        image-props)
+      (pretty-attributes/outer-position-attributes image-props)
+      (pretty-attributes/outer-size-attributes     image-props)
+      (pretty-attributes/state-attributes          image-props)
+      (pretty-attributes/theme-attributes          image-props)))

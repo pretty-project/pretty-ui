@@ -35,7 +35,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn adornment-body-attributes
+(defn adornment-inner-attributes
   ; @ignore
   ;
   ; @param (keyword) adornment-id
@@ -45,7 +45,7 @@
   ; {:class (keyword or keywords in vector)
   ;  ...}
   [adornment-id adornment-props]
-  (-> {:class :pe-adornment--body}
+  (-> {:class :pe-adornment--inner}
       (pretty-attributes/anchor-attributes           adornment-props)
       (pretty-attributes/background-color-attributes adornment-props)
       (pretty-attributes/border-attributes           adornment-props)
@@ -74,8 +74,10 @@
   ;  ...}
   [_ adornment-props]
   (-> {:class :pe-adornment}
-      (pretty-attributes/class-attributes      adornment-props)
-      (pretty-attributes/outdent-attributes    adornment-props)
-      (pretty-attributes/outer-size-attributes adornment-props)
-      (pretty-attributes/state-attributes      adornment-props)
-      (pretty-attributes/theme-attributes      adornment-props)))
+      (pretty-attributes/class-attributes          adornment-props)
+      (pretty-attributes/inner-position-attributes adornment-props)
+      (pretty-attributes/outdent-attributes        adornment-props)
+      (pretty-attributes/outer-position-attributes adornment-props)
+      (pretty-attributes/outer-size-attributes     adornment-props)
+      (pretty-attributes/state-attributes          adornment-props)
+      (pretty-attributes/theme-attributes          adornment-props)))

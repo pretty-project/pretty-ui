@@ -38,8 +38,8 @@
   [thumbnail-id {:keys [badge cover icon label loaded? marker] :as thumbnail-props}]
   [:div (thumbnail.attributes/thumbnail-attributes thumbnail-id thumbnail-props)
         [thumbnail-load-sensor                     thumbnail-id thumbnail-props]
-        [(pretty-elements.engine/clickable-auto-tag      thumbnail-id thumbnail-props)
-         (thumbnail.attributes/thumbnail-body-attributes thumbnail-id thumbnail-props)
+        [(pretty-elements.engine/clickable-auto-tag       thumbnail-id thumbnail-props)
+         (thumbnail.attributes/thumbnail-inner-attributes thumbnail-id thumbnail-props)
          (if loaded? [:div (thumbnail.attributes/thumbnail-canvas-attributes thumbnail-id thumbnail-props)]
                      [:i   (thumbnail.attributes/thumbnail-icon-attributes   thumbnail-id thumbnail-props) icon])
          (if label   [:div (thumbnail.attributes/thumbnail-label-attributes  thumbnail-id thumbnail-props) label])
@@ -86,11 +86,13 @@
   ; [Flex properties](pretty-core/cljs/pretty-properties/api.html#flex-properties)
   ; [Font properties](pretty-core/cljs/pretty-properties/api.html#font-properties)
   ; [Icon properties](pretty-core/cljs/pretty-properties/api.html#icon-properties)
+  ; [Inner position properties](pretty-core/cljs/pretty-properties/api.html#inner-position-properties)
   ; [Inner size properties](pretty-core/cljs/pretty-properties/api.html#inner-size-properties)
   ; [Keypress properties](pretty-core/cljs/pretty-properties/api.html#keypress-properties)
   ; [Label properties](pretty-core/cljs/pretty-properties/api.html#label-properties)
   ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
   ; [Mouse event properties](pretty-core/cljs/pretty-properties/api.html#mouse-event-properties)
+  ; [Outer position properties](pretty-core/cljs/pretty-properties/api.html#outer-position-properties)
   ; [Outer size properties](pretty-core/cljs/pretty-properties/api.html#outer-size-properties)
   ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
   ; [Space properties](pretty-core/cljs/pretty-properties/api.html#space-properties)

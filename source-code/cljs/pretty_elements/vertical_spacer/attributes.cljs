@@ -5,7 +5,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn spacer-body-attributes
+(defn spacer-inner-attributes
   ; @ignore
   ;
   ; @param (keyword) spacer-id
@@ -15,7 +15,7 @@
   ; {:class (keyword or keywords in vector)
   ;  ...}
   [_ spacer-props]
-  (-> {:class :pe-vertical-spacer--body}
+  (-> {:class :pe-vertical-spacer--inner}
       (pretty-attributes/indent-attributes     spacer-props)
       (pretty-attributes/inner-size-attributes spacer-props)
       (pretty-attributes/style-attributes      spacer-props)))
@@ -34,8 +34,10 @@
   ;  ...}
   [_ spacer-props]
   (-> {:class :pe-vertical-spacer}
-      (pretty-attributes/class-attributes      spacer-props)
-      (pretty-attributes/outdent-attributes    spacer-props)
-      (pretty-attributes/outer-size-attributes spacer-props)
-      (pretty-attributes/state-attributes      spacer-props)
-      (pretty-attributes/theme-attributes      spacer-props)))
+      (pretty-attributes/class-attributes          spacer-props)
+      (pretty-attributes/inner-position-attributes spacer-props)
+      (pretty-attributes/outdent-attributes        spacer-props)
+      (pretty-attributes/outer-position-attributes spacer-props)
+      (pretty-attributes/outer-size-attributes     spacer-props)
+      (pretty-attributes/state-attributes          spacer-props)
+      (pretty-attributes/theme-attributes          spacer-props)))

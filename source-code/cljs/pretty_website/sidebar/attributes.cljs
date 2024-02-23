@@ -25,7 +25,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn sidebar-body-attributes
+(defn sidebar-inner-attributes
   ; @ignore
   ;
   ; @param (keyword) sidebar-id
@@ -35,7 +35,7 @@
   ; {:class (keyword or keywords in vector)
   ;  :data-scroll-axis (keyword)}
   [_ sidebar-props]
-  (-> {:class            :pw-sidebar--body
+  (-> {:class            :pw-sidebar--inner
        :data-scroll-axis :y}
       (pretty-attributes/background-color-attributes  sidebar-props)
       (pretty-attributes/border-attributes sidebar-props)

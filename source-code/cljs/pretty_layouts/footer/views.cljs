@@ -19,7 +19,7 @@
   ;  ...}
   [footer-id {:keys [content] :as footer-props}]
   [:div (footer.attributes/footer-attributes footer-id footer-props)
-        [:div (footer.attributes/footer-body-attributes footer-id footer-props)
+        [:div (footer.attributes/footer-inner-attributes footer-id footer-props)
               (-> content)]])
 
 ;; ----------------------------------------------------------------------------
@@ -46,8 +46,10 @@
   ; [Content properties](pretty-core/cljs/pretty-properties/api.html#content-properties)
   ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
   ; [Flex properties](pretty-core/cljs/pretty-properties/api.html#flex-properties)
+  ; [Inner position properties](pretty-core/cljs/pretty-properties/api.html#inner-position-properties)
   ; [Inner size properties](pretty-core/cljs/pretty-properties/api.html#inner-size-properties)
   ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
+  ; [Outer position properties](pretty-core/cljs/pretty-properties/api.html#outer-position-properties)
   ; [Outer size properties](pretty-core/cljs/pretty-properties/api.html#outer-size-properties)
   ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
   ; [Space properties](pretty-core/cljs/pretty-properties/api.html#space-properties)

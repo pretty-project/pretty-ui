@@ -38,8 +38,8 @@
   ; @param (map) diagram-props
   [diagram-id diagram-props]
   [:div (line-diagram.attributes/diagram-attributes diagram-id diagram-props)
-        [:div (line-diagram.attributes/diagram-body-attributes diagram-id diagram-props)
-              [line-diagram-datum-list                         diagram-id diagram-props]]])
+        [:div (line-diagram.attributes/diagram-inner-attributes diagram-id diagram-props)
+              [line-diagram-datum-list                          diagram-id diagram-props]]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -62,8 +62,10 @@
   ; @links Implemented properties
   ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
   ; [Data properties](pretty-core/cljs/pretty-properties/api.html#data-properties)
+  ; [Inner position properties](pretty-core/cljs/pretty-properties/api.html#inner-position-properties)
   ; [Inner size properties](pretty-core/cljs/pretty-properties/api.html#inner-size-properties)
   ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
+  ; [Outer position properties](pretty-core/cljs/pretty-properties/api.html#outer-position-properties)
   ; [Outer size properties](pretty-core/cljs/pretty-properties/api.html#outer-size-properties)
   ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
   ; [Shape properties](pretty-core/cljs/pretty-properties/api.html#shape-properties)

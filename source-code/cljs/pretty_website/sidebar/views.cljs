@@ -28,7 +28,7 @@
        ;[react/mount-animation {:mounted? (= sidebar-id @sidebar.state/VISIBLE-SIDEBAR)}
         ;                      [:div (sidebar.attributes/sidebar-attributes sidebar-id sidebar-props)
         ;                            [:div (sidebar.attributes/sidebar-cover-attributes sidebar-id sidebar-props)]
-        ;                            [:div (sidebar.attributes/sidebar-body-attributes sidebar-id sidebar-props)
+        ;                            [:div (sidebar.attributes/sidebar-inner-attributes sidebar-id sidebar-props)
         ;                                  [:div {:class :pw-sidebar--content}
         ;                                        [metamorphic-content/compose content placeholder])]])
 

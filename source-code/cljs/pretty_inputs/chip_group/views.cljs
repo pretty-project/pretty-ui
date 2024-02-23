@@ -48,8 +48,8 @@
   [:div (chip-group.attributes/chip-group-attributes group-id group-props)
         [pretty-inputs.header.views/view             group-id group-props]
         [pretty-inputs.engine/input-synchronizer     group-id group-props]
-        [:div (chip-group.attributes/chip-group-body-attributes group-id group-props)
-              [chip-group-chip-list                             group-id group-props]]])
+        [:div (chip-group.attributes/chip-group-inner-attributes group-id group-props)
+              [chip-group-chip-list                              group-id group-props]]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

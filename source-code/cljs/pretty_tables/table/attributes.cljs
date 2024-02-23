@@ -5,7 +5,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn table-body-attributes
+(defn table-inner-attributes
   ; @ignore
   ;
   ; @param (keyword) table-id
@@ -15,7 +15,7 @@
   ; {:class (keyword or keywords in vector)
   ;  ...}
   [_ table-props]
-  (-> {:class :pe-table--body}
+  (-> {:class :pe-table--inner}
       (pretty-attributes/background-color-attributes table-props)
       (pretty-attributes/border-attributes           table-props)
       (pretty-attributes/flex-attributes             table-props)
@@ -37,8 +37,10 @@
   ;  ...}
   [_ table-props]
   (-> {:class :pe-table}
-      (pretty-attributes/class-attributes      table-props)
-      (pretty-attributes/outdent-attributes    table-props)
-      (pretty-attributes/outer-size-attributes table-props)
-      (pretty-attributes/state-attributes      table-props)
-      (pretty-attributes/theme-attributes      table-props)))
+      (pretty-attributes/class-attributes          table-props)
+      (pretty-attributes/inner-position-attributes table-props)
+      (pretty-attributes/outdent-attributes        table-props)
+      (pretty-attributes/outer-position-attributes table-props)
+      (pretty-attributes/outer-size-attributes     table-props)
+      (pretty-attributes/state-attributes          table-props)
+      (pretty-attributes/theme-attributes          table-props)))

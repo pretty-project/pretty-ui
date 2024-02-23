@@ -22,7 +22,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn crumb-body-attributes
+(defn crumb-inner-attributes
   ; @ignore
   ;
   ; @param (keyword) crumb-id
@@ -32,7 +32,7 @@
   ; {:class (keyword or keywords in vector)
   ;  ...}
   [crumb-id crumb-props]
-  (-> {:class :pe-crumb--body}
+  (-> {:class :pe-crumb--inner}
       (pretty-attributes/anchor-attributes          crumb-props)
       (pretty-attributes/clickable-state-attributes crumb-props)
       (pretty-attributes/effect-attributes          crumb-props)
@@ -57,8 +57,10 @@
   ;  ...}
   [_ crumb-props]
   (-> {:class :pe-crumb}
-      (pretty-attributes/class-attributes      crumb-props)
-      (pretty-attributes/outdent-attributes    crumb-props)
-      (pretty-attributes/outer-size-attributes crumb-props)
-      (pretty-attributes/state-attributes      crumb-props)
-      (pretty-attributes/theme-attributes      crumb-props)))
+      (pretty-attributes/class-attributes          crumb-props)
+      (pretty-attributes/inner-position-attributes crumb-props)
+      (pretty-attributes/outdent-attributes        crumb-props)
+      (pretty-attributes/outer-position-attributes crumb-props)
+      (pretty-attributes/outer-size-attributes     crumb-props)
+      (pretty-attributes/state-attributes          crumb-props)
+      (pretty-attributes/theme-attributes          crumb-props)))

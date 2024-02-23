@@ -66,11 +66,13 @@
   ;
   ; @return (map)
   [_ popup-props]
-  (-> popup-props (pretty-properties/default-flex-props       {:orientation :vertical})
-                  (pretty-properties/default-outer-size-props {:outer-size-unit :screen})
-                  (pretty-properties/default-position-props   {:position :center :position-method :fixed})
+  (-> popup-props (pretty-properties/default-flex-props           {:orientation :vertical})
+                  (pretty-properties/default-outer-position-props {:outer-position :center :outer-position-method :fixed})
+                  (pretty-properties/default-outer-size-props     {:outer-size-unit :screen})
                   (pretty-standards/standard-border-props)
+                  (pretty-standards/standard-inner-position-props)
                   (pretty-standards/standard-inner-size-props)
+                  (pretty-standards/standard-outer-position-props)
                   (pretty-standards/standard-outer-size-props)
                   (pretty-standards/standard-overlay-props)
                   (pretty-rules/apply-auto-border-crop)))

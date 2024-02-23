@@ -5,7 +5,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn toggle-body-attributes
+(defn toggle-inner-attributes
   ; @ignore
   ;
   ; @param (keyword) toggle-id
@@ -15,7 +15,7 @@
   ; {:class (keyword or keywords in vector)
   ;  ...}
   [_ toggle-props]
-  (-> {:class :pe-toggle--body}
+  (-> {:class :pe-toggle--inner}
       (pretty-attributes/anchor-attributes           toggle-props)
       (pretty-attributes/background-color-attributes toggle-props)
       (pretty-attributes/border-attributes           toggle-props)
@@ -42,8 +42,10 @@
   ;  ...}
   [_ toggle-props]
   (-> {:class :pe-toggle}
-      (pretty-attributes/class-attributes      toggle-props)
-      (pretty-attributes/outdent-attributes    toggle-props)
-      (pretty-attributes/outer-size-attributes toggle-props)
-      (pretty-attributes/state-attributes      toggle-props)
-      (pretty-attributes/theme-attributes      toggle-props)))
+      (pretty-attributes/class-attributes          toggle-props)
+      (pretty-attributes/inner-position-attributes toggle-props)
+      (pretty-attributes/outdent-attributes        toggle-props)
+      (pretty-attributes/outer-position-attributes toggle-props)
+      (pretty-attributes/outer-size-attributes     toggle-props)
+      (pretty-attributes/state-attributes          toggle-props)
+      (pretty-attributes/theme-attributes          toggle-props)))

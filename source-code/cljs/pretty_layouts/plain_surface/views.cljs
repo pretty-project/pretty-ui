@@ -20,7 +20,7 @@
   ; {:content (metamorphic-content)(opt)}
   [surface-id {:keys [content] :as surface-props}]
   [:div {:class :pl-plain-surface}
-        [:div (plain-surface.attributes/surface-body-attributes surface-id surface-props)
+        [:div (plain-surface.attributes/surface-inner-attributes surface-id surface-props)
               [metamorphic-content/compose content]]])
 
 ;; ----------------------------------------------------------------------------
