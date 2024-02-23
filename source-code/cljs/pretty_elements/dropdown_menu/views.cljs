@@ -12,6 +12,26 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn- dropdown-menu-menu-bar
+  ; @ignore
+  ;
+  ; @param (keyword) menu-id
+  ; @param (map) menu-props
+  [menu-id menu-props]
+  (let [bar-id    (pretty-elements.engine/element-id->subitem-id menu-id :menu-bar)
+        bar-props (dropdown-menu.prototypes/bar-props-prototype  menu-id menu-props)]
+       [menu-bar.views/view bar-id bar-props]))
+
+(defn- dropdown-menu-expandable
+  ; @ignore
+  ;
+  ; @param (keyword) menu-id
+  ; @param (map) menu-props
+  [menu-id menu-props]
+  (let [expandable-id    (pretty-elements.engine/element-id->subitem-id       menu-id :expandable)
+        expandable-props (dropdown-menu.prototypes/expandable-props-prototype menu-id menu-props)]
+       [expandable.views/view expandable-id expandable-props]))
+
 (defn- dropdown-menu
   ; @ignore
   ;
@@ -20,12 +40,8 @@
   [menu-id menu-props]
   [:div (dropdown-menu.attributes/menu-attributes menu-id menu-props)
         [:div (dropdown-menu.attributes/menu-body-attributes menu-id menu-props)
-              (let [bar-id    (pretty-elements.engine/element-id->subitem-id menu-id :menu-bar)
-                    bar-props (dropdown-menu.prototypes/bar-props-prototype  menu-id menu-props)]
-                   [menu-bar.views/view bar-id bar-props])
-              (let [expandable-id    (pretty-elements.engine/element-id->subitem-id       menu-id :expandable)
-                    expandable-props (dropdown-menu.prototypes/expandable-props-prototype menu-id menu-props)]
-                   [expandable.views/view expandable-id expandable-props])]])
+              [dropdown-menu-menu-bar   menu-id menu-props]
+              [dropdown-menu-expandable menu-id menu-props]]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -54,6 +70,7 @@
   ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
   ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
   ; [Progress properties](pretty-core/cljs/pretty-properties/api.html#progress-properties)
+  ; [Size properties](pretty-core/cljs/pretty-properties/api.html#size-properties)
   ; [Space properties](pretty-core/cljs/pretty-properties/api.html#space-properties)
   ; [State properties](pretty-core/cljs/pretty-properties/api.html#state-properties)
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)

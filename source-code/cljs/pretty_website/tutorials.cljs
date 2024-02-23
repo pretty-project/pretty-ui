@@ -49,7 +49,7 @@
 ;
 ; 2. A property map that describes the item's look and behaviour.
 ;
-; @code
+; @---
 ; (ns my-namespace
 ;     (:require [pretty-elements.api :as pretty-elements]))
 ;
@@ -57,7 +57,6 @@
 ;   []
 ;   [:<> [pretty-elements/text-field           {:border-radius {:all :xs} :fill-color :muted}]
 ;        [pretty-elements/text-field :my-field {:border-radius {:all :xs} :fill-color :muted}])
-; @---
 ;
 ; @note
 ; In case the ID is not provided the item generates one for itself.
@@ -76,7 +75,7 @@
 ;
 ; Pretty UI items optionally take a preset ID to implement preset property maps or preset functions.
 ;
-; @code
+; @---
 ; (ns my-namespace
 ;     (:require [pretty-presets.engine.api :as pretty-presets.engine]))
 ;
@@ -85,9 +84,8 @@
 ;
 ; (pretty-presets/reg-preset! :my-preset-f
 ;                             (fn [%] (assoc % :border-radius {:all :xs})))
-; @---
 ;
-; @code
+; @---
 ; (ns my-namespace
 ;     (:require [pretty-elements.api :as pretty-elements]))
 ;
@@ -95,7 +93,6 @@
 ;   []
 ;   [:<> [pretty-elements/text-field {:label "My text field"      :preset :my-preset}]
 ;        [pretty-elements/text-field {:label "Another text field" :preset :my-preset-f}])
-; @---
 
 
 
@@ -112,47 +109,43 @@
 ;
 ; @title Event handler functions
 ;
-; @code
+; @---
 ; (ns my-namespace
 ;     (:require [pretty-elements.api :as pretty-elements]))
 ;
 ; (defn my-function [content-value] ...)
 ;
 ; [pretty-elements/button {:content "My button" :on-click my-function}]
-; @---
 ;
 ;
 ;
 ; @title Re-Frame event handlers
 ;
-; @code
+; @---
 ; (ns my-namespace
 ;     (:require [re-frame.core :as r]))
 ;
 ; (r/reg-event-fx
 ;    :my-event
 ;    (fn [_ [_ content-value]] ...))
-; @---
 ;
-; @code
+; @---
 ; (ns my-namespace
 ;     (:require [pretty-elements.api :as pretty-elements]))
 ;
 ; (defn my-ui
 ;   []
 ;   [pretty-elements/button {:on-click [:my-event]}])
-; @---
 ;
 ; @note
 ; The Pretty UI implements the [bithandshake/re-frame-extra](https://github.com/bithandshake/re-frame-extra) library
 ; that can handle Re-Frame metamorphic-events in addition to the default Re-Frame events.
 ;
-; @code
+; @---
 ; (ns my-namespace
 ;     (:require [pretty-elements.api :as pretty-elements]))
 ;
 ; [pretty-elements/button {:on-click {:dispatch-n [[:my-event] {:dispatch-later [{:ms 50 :dispatch [:another-event]}]}]}}]
-; @---
 
 
 
@@ -170,7 +163,7 @@
 ; ... the provided ':value' parameter (as primary source),
 ; ... or the value in the Re-Frame state where the provided ':value-path' parameter points to (as secondary source).
 ;
-; @code
+; @---
 ; (ns my-namespace
 ;     (:require [pretty-elements.api :as pretty-elements]))
 ;
@@ -181,7 +174,6 @@
 ; (defn another-text-field
 ;   []
 ;   [pretty-elements/text-field {:value "My value"}])
-; @---
 ;
 ; @note
 ; In case of no ':value-path' parameter is provided, the input will use a default Re-Frame value path.
@@ -202,7 +194,7 @@
 ;   ... got a single option to select, its output is a single value.
 ;   ... got multiple options to select, its output is a vector of selected options.
 ;
-; @code Example
+; @--- Example
 ; (ns my-namespace
 ;   (:require [pretty-inputs.api :as pretty-inputs]
 ;             [re-frame.core     :as r]))
@@ -218,4 +210,3 @@
 ;   [pretty-inputs/checkbox {:options "abc" :on-change println}])
 ; =>
 ; nil, "abc"
-; @---

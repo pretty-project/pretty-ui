@@ -16,6 +16,7 @@
   ;  ...}
   [_ menu-props]
   (-> {:class :pe-dropdown-menu--body}
+      (pretty-attributes/body-size-attributes   menu-props)
       (pretty-attributes/indent-attributes      menu-props)
       (pretty-attributes/mouse-event-attributes menu-props)
       (pretty-attributes/style-attributes       menu-props)))
@@ -32,6 +33,7 @@
   [_ menu-props]
   (-> {:class :pe-dropdown-menu}
       (pretty-attributes/class-attributes   menu-props)
-      (pretty-attributes/outdent-attributes menu-props) 
+      (pretty-attributes/outdent-attributes menu-props)
+      (pretty-attributes/size-attributes    menu-props)
       (pretty-attributes/state-attributes   menu-props)
       (pretty-attributes/theme-attributes   menu-props)))

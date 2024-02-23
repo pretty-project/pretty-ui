@@ -65,6 +65,7 @@
   (-> {:class :pe-image--body}
       (pretty-attributes/anchor-attributes           image-props)
       (pretty-attributes/background-color-attributes image-props)
+      (pretty-attributes/body-size-attributes        image-props)
       (pretty-attributes/border-attributes           image-props)
       (pretty-attributes/clickable-state-attributes  image-props)
       (pretty-attributes/cursor-attributes           image-props)
@@ -73,7 +74,6 @@
       (pretty-attributes/indent-attributes           image-props)
       (pretty-attributes/mouse-event-attributes      image-props)
       (pretty-attributes/react-attributes            image-props)
-      (pretty-attributes/size-attributes             image-props)
       (pretty-attributes/style-attributes            image-props)))
 
 ;; ----------------------------------------------------------------------------
@@ -90,8 +90,8 @@
   ;  ...}
   [_ image-props]
   (-> {:class :pe-image}
-      (pretty-attributes/class-attributes        image-props)
-      (pretty-attributes/outdent-attributes      image-props)
-      (pretty-attributes/state-attributes        image-props)
-      (pretty-attributes/theme-attributes        image-props)
-      (pretty-attributes/wrapper-size-attributes image-props)))
+      (pretty-attributes/class-attributes   image-props)
+      (pretty-attributes/outdent-attributes image-props)
+      (pretty-attributes/size-attributes    image-props)
+      (pretty-attributes/state-attributes   image-props)
+      (pretty-attributes/theme-attributes   image-props)))

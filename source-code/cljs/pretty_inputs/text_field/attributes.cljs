@@ -164,6 +164,7 @@
       (pretty-attributes/font-attributes   field-props)
       (pretty-attributes/indent-attributes field-props)
       (pretty-attributes/style-attributes  field-props)))
+      ; body-size-attributes
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -183,6 +184,6 @@
        :data-covered disabled?}
       (pretty-attributes/class-attributes       field-props)
       (pretty-attributes/outdent-attributes      field-props)
+      (pretty-attributes/size-attributes field-props)
       (pretty-attributes/state-attributes       field-props)
-      (pretty-attributes/theme-attributes        field-props)
-      (pretty-attributes/wrapper-size-attributes field-props)))
+      (pretty-attributes/theme-attributes        field-props)))

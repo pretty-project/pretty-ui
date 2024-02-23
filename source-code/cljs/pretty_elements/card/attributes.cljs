@@ -35,6 +35,7 @@
   (-> {:class :pe-card--body}
       (pretty-attributes/anchor-attributes           card-props)
       (pretty-attributes/background-color-attributes card-props)
+      (pretty-attributes/body-size-attributes        card-props)
       (pretty-attributes/border-attributes           card-props)
       (pretty-attributes/clickable-state-attributes  card-props)
       (pretty-attributes/cursor-attributes           card-props)
@@ -43,7 +44,6 @@
       (pretty-attributes/indent-attributes           card-props)
       (pretty-attributes/mouse-event-attributes      card-props)
       (pretty-attributes/react-attributes            card-props)
-      (pretty-attributes/size-attributes             card-props)
       (pretty-attributes/style-attributes            card-props)))
 
 ;; ----------------------------------------------------------------------------
@@ -60,8 +60,8 @@
   ;  ...}
   [_ card-props]
   (-> {:class :pe-card}
-      (pretty-attributes/class-attributes        card-props)
-      (pretty-attributes/outdent-attributes      card-props)
-      (pretty-attributes/state-attributes        card-props)
-      (pretty-attributes/theme-attributes        card-props)
-      (pretty-attributes/wrapper-size-attributes card-props)))
+      (pretty-attributes/class-attributes   card-props)
+      (pretty-attributes/outdent-attributes card-props)
+      (pretty-attributes/size-attributes    card-props)
+      (pretty-attributes/state-attributes   card-props)
+      (pretty-attributes/theme-attributes   card-props)))

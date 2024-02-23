@@ -34,13 +34,13 @@
   [crumb-id crumb-props]
   (-> {:class :pe-crumb--body}
       (pretty-attributes/anchor-attributes          crumb-props)
+      (pretty-attributes/body-size-attributes       crumb-props)
       (pretty-attributes/clickable-state-attributes crumb-props)
       (pretty-attributes/effect-attributes          crumb-props)
       (pretty-attributes/flex-attributes            crumb-props)
       (pretty-attributes/indent-attributes          crumb-props)
       (pretty-attributes/mouse-event-attributes     crumb-props)
       (pretty-attributes/state-attributes           crumb-props)
-      (pretty-attributes/size-attributes            crumb-props)
       (pretty-attributes/style-attributes           crumb-props)))
 
 ;; ----------------------------------------------------------------------------
@@ -57,8 +57,8 @@
   ;  ...}
   [_ crumb-props]
   (-> {:class :pe-crumb}
-      (pretty-attributes/outdent-attributes      crumb-props)
-      (pretty-attributes/class-attributes        crumb-props)
-      (pretty-attributes/state-attributes        crumb-props)
-      (pretty-attributes/theme-attributes        crumb-props)
-      (pretty-attributes/wrapper-size-attributes crumb-props)))
+      (pretty-attributes/outdent-attributes crumb-props)
+      (pretty-attributes/class-attributes   crumb-props)
+      (pretty-attributes/size-attributes    crumb-props)
+      (pretty-attributes/state-attributes   crumb-props)
+      (pretty-attributes/theme-attributes   crumb-props)))

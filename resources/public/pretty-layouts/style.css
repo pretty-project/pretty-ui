@@ -120,13 +120,13 @@
 /***** Popup *****/
 /*** Wrapper ***/
 
-.pl-popup {
-  display:         flex;
-  justify-content: center;
-  left:            0;
-  position:        fixed;
-  top:             50%;
-  width:           100%;
+.pl-popup_ {
+  -display:         flex;
+  -justify-content: center;
+  -left:            0;
+  -position:        fixed;
+  -top:             50%;
+  -width:           100%;
 }
 
 /*** Wrapper ***/
@@ -204,12 +204,12 @@
 
 /*** Body ***/
 
-.pl-popup--body {
-  flex-grow: 1;
+.pl-popup--body_ {
+  -flex-grow: 1;
 }
 
 .pl-popup--body-content {
-  height: 100%;
+  -height: 100%;
 }
 
 /*** Body ***/

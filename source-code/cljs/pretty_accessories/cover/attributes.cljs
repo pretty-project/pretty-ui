@@ -46,12 +46,11 @@
   ;  ...}
   [cover-id cover-props]
   (-> {:class :pa-cover--body}
-      (pretty-attributes/background-color-attributes cover-props)
-      (pretty-attributes/flex-attributes             cover-props)
-      (pretty-attributes/indent-attributes           cover-props)
-      (pretty-attributes/style-attributes            cover-props)
-      (pretty-attributes/size-attributes             cover-props)
-      (pretty-attributes/visibility-attributes       cover-props)))
+      (pretty-attributes/body-size-attributes  cover-props)
+      (pretty-attributes/flex-attributes       cover-props)
+      (pretty-attributes/indent-attributes     cover-props)
+      (pretty-attributes/style-attributes      cover-props)
+      (pretty-attributes/visibility-attributes cover-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -67,9 +66,10 @@
   ;  ...}
   [_ cover-props]
   (-> {:class :pa-cover}
-      (pretty-attributes/class-attributes        cover-props)
-      (pretty-attributes/outdent-attributes      cover-props)
-      (pretty-attributes/position-attributes     cover-props)
-      (pretty-attributes/state-attributes        cover-props)
-      (pretty-attributes/theme-attributes        cover-props)
-      (pretty-attributes/wrapper-size-attributes cover-props)))
+      (pretty-attributes/class-attributes    cover-props)
+      (pretty-attributes/outdent-attributes  cover-props)
+      (pretty-attributes/overlay-attributes  cover-props)
+      (pretty-attributes/position-attributes cover-props)
+      (pretty-attributes/size-attributes     cover-props)
+      (pretty-attributes/state-attributes    cover-props)
+      (pretty-attributes/theme-attributes    cover-props)))

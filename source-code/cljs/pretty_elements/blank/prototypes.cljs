@@ -1,6 +1,7 @@
 
 (ns pretty-elements.blank.prototypes
-    (:require [pretty-rules.api :as pretty-rules]))
+    (:require [pretty-rules.api :as pretty-rules]
+              [pretty-standards.api :as pretty-standards]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -13,4 +14,6 @@
   ;
   ; @return (map)
   [_ blank-props]
-  (-> blank-props (pretty-rules/compose-content)))
+  (-> blank-props (pretty-rules/compose-content)
+                  (pretty-standards/standard-body-size-props)
+                  (pretty-standards/standard-size-props)))

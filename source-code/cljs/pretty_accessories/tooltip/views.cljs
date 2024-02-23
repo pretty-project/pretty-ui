@@ -16,7 +16,8 @@
   ; @param (keyword) tooltip-id
   ; @param (map) tooltip-props
   ; {:icon (keyword)(opt)
-  ;  :label (metamorphic-content)(opt)}
+  ;  :label (metamorphic-content)(opt)
+  ;  ...}
   [tooltip-id {:keys [icon label] :as tooltip-props}]
   [:div (tooltip.attributes/tooltip-attributes tooltip-id tooltip-props)
         [:div (tooltip.attributes/tooltip-body-attributes tooltip-id tooltip-props)

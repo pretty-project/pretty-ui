@@ -47,9 +47,9 @@
   [badge-id badge-props]
   (-> {:class :pa-badge--body}
       (pretty-attributes/background-color-attributes badge-props)
+      (pretty-attributes/body-size-attributes        badge-props)
       (pretty-attributes/border-attributes           badge-props)
       (pretty-attributes/indent-attributes           badge-props)
-      (pretty-attributes/size-attributes             badge-props)
       (pretty-attributes/style-attributes            badge-props)))
 
 ;; ----------------------------------------------------------------------------
@@ -66,9 +66,9 @@
   ;  ...}
   [_ badge-props]
   (-> {:class :pa-badge}
-      (pretty-attributes/class-attributes        badge-props)
-      (pretty-attributes/outdent-attributes      badge-props)
-      (pretty-attributes/position-attributes     badge-props)
-      (pretty-attributes/state-attributes        badge-props)
-      (pretty-attributes/theme-attributes        badge-props)
-      (pretty-attributes/wrapper-size-attributes badge-props)))
+      (pretty-attributes/class-attributes    badge-props)
+      (pretty-attributes/outdent-attributes  badge-props)
+      (pretty-attributes/position-attributes badge-props)
+      (pretty-attributes/size-attributes     badge-props)
+      (pretty-attributes/state-attributes    badge-props)
+      (pretty-attributes/theme-attributes    badge-props)))

@@ -19,7 +19,8 @@
   ;  ...}
   [icon-id {:keys [icon] :as icon-props}]
   [:div (icon.attributes/icon-attributes icon-id icon-props)
-        [:i (icon.attributes/icon-body-attributes icon-id icon-props) icon]])
+        [:div (icon.attributes/icon-body-attributes icon-id icon-props)
+            [:i (icon.attributes/icon-icon-attributes icon-id icon-props) icon]]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -41,9 +42,11 @@
   ;
   ; @links Implemented properties
   ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
+  ; [Flex properties](pretty-core/cljs/pretty-properties/api.html#flex-properties)
   ; [Icon properties](pretty-core/cljs/pretty-properties/api.html#icon-properties)
   ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
   ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
+  ; [Size properties](pretty-core/cljs/pretty-properties/api.html#size-properties)
   ; [Space properties](pretty-core/cljs/pretty-properties/api.html#space-properties)
   ; [State properties](pretty-core/cljs/pretty-properties/api.html#state-properties)
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)

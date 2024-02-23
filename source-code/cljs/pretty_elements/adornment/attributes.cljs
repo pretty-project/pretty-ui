@@ -48,6 +48,7 @@
   (-> {:class :pe-adornment--body}
       (pretty-attributes/anchor-attributes           adornment-props)
       (pretty-attributes/background-color-attributes adornment-props)
+      (pretty-attributes/body-size-attributes        adornment-props)
       (pretty-attributes/border-attributes           adornment-props)
       (pretty-attributes/clickable-state-attributes  adornment-props)
       (pretty-attributes/cursor-attributes           adornment-props)
@@ -57,7 +58,6 @@
       (pretty-attributes/mouse-event-attributes      adornment-props)
       (pretty-attributes/progress-attributes         adornment-props)
       (pretty-attributes/react-attributes            adornment-props)
-      (pretty-attributes/size-attributes             adornment-props)
       (pretty-attributes/style-attributes            adornment-props)))
 
 ;; ----------------------------------------------------------------------------
@@ -74,8 +74,8 @@
   ;  ...}
   [_ adornment-props]
   (-> {:class :pe-adornment}
-      (pretty-attributes/class-attributes        adornment-props)
-      (pretty-attributes/outdent-attributes      adornment-props)
-      (pretty-attributes/state-attributes        adornment-props)
-      (pretty-attributes/theme-attributes        adornment-props)
-      (pretty-attributes/wrapper-size-attributes adornment-props)))
+      (pretty-attributes/class-attributes   adornment-props)
+      (pretty-attributes/outdent-attributes adornment-props)
+      (pretty-attributes/size-attributes    adornment-props)
+      (pretty-attributes/state-attributes   adornment-props)
+      (pretty-attributes/theme-attributes   adornment-props)))

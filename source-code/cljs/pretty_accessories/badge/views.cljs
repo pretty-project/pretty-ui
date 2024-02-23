@@ -16,7 +16,8 @@
   ; @param (keyword) badge-id
   ; @param (map) badge-props
   ; {:icon (keyword)(opt)
-  ;  :label (metamorphic-content)(opt)}
+  ;  :label (metamorphic-content)(opt)
+  ;  ...}
   [badge-id {:keys [icon label] :as badge-props}]
   [:div (badge.attributes/badge-attributes badge-id badge-props)
         [:div (badge.attributes/badge-body-attributes badge-id badge-props)

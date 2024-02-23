@@ -17,5 +17,5 @@
   [_ spacer-props]
   (-> spacer-props (pretty-properties/default-flex-props {:shrink 0})
                    (pretty-properties/default-size-props {:height :s :width :auto :size-unit :quarter-block})
-                   (pretty-standards/standard-wrapper-size-props)
-                   (pretty-rules/auto-adapt-wrapper-size)))
+                   (pretty-standards/standard-body-size-props)
+                   (pretty-standards/standard-size-props)))

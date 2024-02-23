@@ -17,10 +17,10 @@
   [_ column-props]
   (-> {:class :pe-column--body}
       (pretty-attributes/background-color-attributes column-props)
+      (pretty-attributes/body-size-attributes        column-props)
       (pretty-attributes/border-attributes           column-props)
       (pretty-attributes/flex-attributes             column-props)
       (pretty-attributes/indent-attributes           column-props)
-      (pretty-attributes/size-attributes             column-props)
       (pretty-attributes/style-attributes            column-props)))
 
 ;; ----------------------------------------------------------------------------
@@ -37,8 +37,8 @@
   ;  ...}
   [_ column-props]
   (-> {:class :pe-column}
-      (pretty-attributes/class-attributes        column-props)
-      (pretty-attributes/outdent-attributes      column-props)
-      (pretty-attributes/state-attributes        column-props)
-      (pretty-attributes/theme-attributes        column-props)
-      (pretty-attributes/wrapper-size-attributes column-props)))
+      (pretty-attributes/class-attributes   column-props)
+      (pretty-attributes/outdent-attributes column-props)
+      (pretty-attributes/size-attributes    column-props)
+      (pretty-attributes/state-attributes   column-props)
+      (pretty-attributes/theme-attributes   column-props)))

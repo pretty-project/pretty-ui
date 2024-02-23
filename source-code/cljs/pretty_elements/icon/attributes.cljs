@@ -5,6 +5,22 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn icon-icon-attributes
+  ; @ignore
+  ;
+  ; @param (keyword) icon-id
+  ; @param (map) icon-props
+  ;
+  ; @return (map)
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
+  [_ icon-props]
+  (-> {:class :pe-icon--icon}
+      (pretty-attributes/icon-attributes icon-props)))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn icon-body-attributes
   ; @ignore
   ;
@@ -16,9 +32,10 @@
   ;  ...}
   [_ icon-props]
   (-> {:class :pe-icon--body}
-      (pretty-attributes/icon-attributes   icon-props)
-      (pretty-attributes/indent-attributes icon-props)
-      (pretty-attributes/style-attributes  icon-props)))
+      (pretty-attributes/body-size-attributes icon-props)
+      (pretty-attributes/flex-attributes      icon-props)
+      (pretty-attributes/indent-attributes    icon-props)
+      (pretty-attributes/style-attributes     icon-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -36,5 +53,6 @@
   (-> {:class :pe-icon}
       (pretty-attributes/class-attributes   icon-props)
       (pretty-attributes/outdent-attributes icon-props)
+      (pretty-attributes/size-attributes    icon-props)
       (pretty-attributes/state-attributes   icon-props)
       (pretty-attributes/theme-attributes   icon-props)))

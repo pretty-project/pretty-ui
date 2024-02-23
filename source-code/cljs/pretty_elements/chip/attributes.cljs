@@ -35,6 +35,7 @@
   (-> {:class :pe-chip--body}
       (pretty-attributes/anchor-attributes           chip-props)
       (pretty-attributes/background-color-attributes chip-props)
+      (pretty-attributes/body-size-attributes        chip-props)
       (pretty-attributes/border-attributes           chip-props)
       (pretty-attributes/clickable-state-attributes  chip-props)
       (pretty-attributes/cursor-attributes           chip-props)
@@ -43,7 +44,6 @@
       (pretty-attributes/indent-attributes           chip-props)
       (pretty-attributes/mouse-event-attributes      chip-props)
       (pretty-attributes/react-attributes            chip-props)
-      (pretty-attributes/size-attributes             chip-props)
       (pretty-attributes/style-attributes            chip-props)))
 
 ;; ----------------------------------------------------------------------------
@@ -60,8 +60,8 @@
   ;  ...}
   [_ chip-props]
   (-> {:class :pe-chip}
-      (pretty-attributes/class-attributes        chip-props)
-      (pretty-attributes/outdent-attributes      chip-props)
-      (pretty-attributes/state-attributes        chip-props)
-      (pretty-attributes/theme-attributes        chip-props)
-      (pretty-attributes/wrapper-size-attributes chip-props)))
+      (pretty-attributes/class-attributes   chip-props)
+      (pretty-attributes/outdent-attributes chip-props)
+      (pretty-attributes/size-attributes    chip-props)
+      (pretty-attributes/state-attributes   chip-props)
+      (pretty-attributes/theme-attributes   chip-props)))

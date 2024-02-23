@@ -16,10 +16,10 @@
   ;  ...}
   [_ breadcrumbs-props]
   (-> {:class :pe-breadcrumbs--body}
-      (pretty-attributes/flex-attributes   breadcrumbs-props)
-      (pretty-attributes/indent-attributes breadcrumbs-props)
-      (pretty-attributes/size-attributes   breadcrumbs-props)
-      (pretty-attributes/style-attributes  breadcrumbs-props)))
+      (pretty-attributes/body-size-attributes breadcrumbs-props)
+      (pretty-attributes/flex-attributes      breadcrumbs-props)
+      (pretty-attributes/indent-attributes    breadcrumbs-props)
+      (pretty-attributes/style-attributes     breadcrumbs-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -35,8 +35,8 @@
   ;  ...}
   [_ breadcrumbs-props]
   (-> {:class :pe-breadcrumbs}
-      (pretty-attributes/class-attributes        breadcrumbs-props)
-      (pretty-attributes/outdent-attributes      breadcrumbs-props)
-      (pretty-attributes/state-attributes        breadcrumbs-props)
-      (pretty-attributes/theme-attributes        breadcrumbs-props)
-      (pretty-attributes/wrapper-size-attributes breadcrumbs-props)))
+      (pretty-attributes/class-attributes   breadcrumbs-props)
+      (pretty-attributes/outdent-attributes breadcrumbs-props)
+      (pretty-attributes/size-attributes    breadcrumbs-props)
+      (pretty-attributes/state-attributes   breadcrumbs-props)
+      (pretty-attributes/theme-attributes   breadcrumbs-props)))

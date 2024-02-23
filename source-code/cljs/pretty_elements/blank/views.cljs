@@ -45,6 +45,7 @@
   ; [Content properties](pretty-core/cljs/pretty-properties/api.html#content-properties)
   ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
   ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
+  ; [Size properties](pretty-core/cljs/pretty-properties/api.html#size-properties)
   ; [Space properties](pretty-core/cljs/pretty-properties/api.html#space-properties)
   ; [State properties](pretty-core/cljs/pretty-properties/api.html#State-properties)
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)

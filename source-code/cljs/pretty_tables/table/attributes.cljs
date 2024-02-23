@@ -17,10 +17,10 @@
   [_ table-props]
   (-> {:class :pe-table--body}
       (pretty-attributes/background-color-attributes table-props)
+      (pretty-attributes/body-size-attributes        table-props)
       (pretty-attributes/border-attributes           table-props)
       (pretty-attributes/flex-attributes             table-props)
       (pretty-attributes/indent-attributes           table-props)
-      (pretty-attributes/size-attributes             table-props)
       (pretty-attributes/style-attributes            table-props)))
 
 ;; ----------------------------------------------------------------------------
@@ -37,8 +37,8 @@
   ;  ...}
   [_ table-props]
   (-> {:class :pe-table}
-      (pretty-attributes/class-attributes        table-props)
-      (pretty-attributes/outdent-attributes      table-props)
-      (pretty-attributes/state-attributes        table-props)
-      (pretty-attributes/theme-attributes        table-props)
-      (pretty-attributes/wrapper-size-attributes table-props)))
+      (pretty-attributes/class-attributes   table-props)
+      (pretty-attributes/outdent-attributes table-props)
+      (pretty-attributes/size-attributes    table-props)
+      (pretty-attributes/state-attributes   table-props)
+      (pretty-attributes/theme-attributes   table-props)))

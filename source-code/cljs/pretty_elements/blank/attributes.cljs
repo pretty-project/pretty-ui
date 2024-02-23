@@ -16,8 +16,9 @@
   ;  ...}
   [_ blank-props]
   (-> {:class :pe-blank--body}
-      (pretty-attributes/indent-attributes blank-props)
-      (pretty-attributes/style-attributes  blank-props)))
+      (pretty-attributes/body-size-attributes blank-props)
+      (pretty-attributes/indent-attributes    blank-props)
+      (pretty-attributes/style-attributes     blank-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -35,5 +36,6 @@
   (-> {:class :pe-blank}
       (pretty-attributes/class-attributes   blank-props)
       (pretty-attributes/outdent-attributes blank-props)
+      (pretty-attributes/size-attributes    blank-props)
       (pretty-attributes/state-attributes   blank-props)
       (pretty-attributes/theme-attributes   blank-props)))

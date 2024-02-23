@@ -47,9 +47,9 @@
   [tooltip-id tooltip-props]
   (-> {:class :pa-tooltip--body}
       (pretty-attributes/background-color-attributes tooltip-props)
+      (pretty-attributes/body-size-attributes        tooltip-props)
       (pretty-attributes/border-attributes           tooltip-props)
       (pretty-attributes/indent-attributes           tooltip-props)
-      (pretty-attributes/size-attributes             tooltip-props)
       (pretty-attributes/style-attributes            tooltip-props)))
 
 ;; ----------------------------------------------------------------------------
@@ -66,9 +66,9 @@
   ;  ...}
   [_ tooltip-props]
   (-> {:class :pa-tooltip}
-      (pretty-attributes/class-attributes        tooltip-props)
-      (pretty-attributes/outdent-attributes      tooltip-props)
-      (pretty-attributes/position-attributes     tooltip-props)
-      (pretty-attributes/state-attributes        tooltip-props)
-      (pretty-attributes/theme-attributes        tooltip-props)
-      (pretty-attributes/wrapper-size-attributes tooltip-props)))
+      (pretty-attributes/class-attributes    tooltip-props)
+      (pretty-attributes/outdent-attributes  tooltip-props)
+      (pretty-attributes/position-attributes tooltip-props)
+      (pretty-attributes/size-attributes     tooltip-props)
+      (pretty-attributes/state-attributes    tooltip-props)
+      (pretty-attributes/theme-attributes    tooltip-props)))

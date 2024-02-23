@@ -20,9 +20,9 @@
   ; {:button (map)(opt)
   ;  ...}
   [expandable-id {:keys [button] :as expandable-props}]
-  (if button (let [button-id    (pretty-elements.engine/element-id->subitem-id expandable-id :button)
-                   button-props (expandable.prototypes/button-props-prototype  expandable-id expandable-props)]
-                  [button.views/view button-id button-props])))
+  (let [button-id    (pretty-elements.engine/element-id->subitem-id expandable-id :button)
+        button-props (expandable.prototypes/button-props-prototype  expandable-id expandable-props)]
+       [button.views/view button-id button-props]))
 
 (defn expandable-content
   ; @ignore
@@ -39,13 +39,15 @@
   ;
   ; @param (keyword) expandable-id
   ; @param (map) expandable-props
-  ; {:expanded? (boolean)(opt)
+  ; {:button (map)(opt)
+  ;  :content (metamorphic-content)(opt)
+  ;  :expanded? (boolean)(opt)
   ;  ...}
-  [expandable-id {:keys [expanded?] :as expandable-props}]
+  [expandable-id {:keys [button content expanded?] :as expandable-props}]
   (if expanded? [:div (expandable.attributes/expandable-attributes expandable-id expandable-props)
                       [:div (expandable.attributes/expandable-body-attributes expandable-id expandable-props)
-                            [expandable-button                                expandable-id expandable-props]
-                            [expandable-content                               expandable-id expandable-props]]]))
+                            (if button  [expandable-button  expandable-id expandable-props])
+                            (if content [expandable-content expandable-id expandable-props])]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

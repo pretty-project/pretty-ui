@@ -65,6 +65,7 @@
   (-> {:class :pe-thumbnail--body}
       (pretty-attributes/anchor-attributes           thumbnail-props)
       (pretty-attributes/background-color-attributes thumbnail-props)
+      (pretty-attributes/body-size-attributes        thumbnail-props)
       (pretty-attributes/border-attributes           thumbnail-props)
       (pretty-attributes/clickable-state-attributes  thumbnail-props)
       (pretty-attributes/cursor-attributes           thumbnail-props)
@@ -73,7 +74,6 @@
       (pretty-attributes/indent-attributes           thumbnail-props)
       (pretty-attributes/mouse-event-attributes      thumbnail-props)
       (pretty-attributes/react-attributes            thumbnail-props)
-      (pretty-attributes/size-attributes             thumbnail-props)
       (pretty-attributes/style-attributes            thumbnail-props)))
 
 ;; ----------------------------------------------------------------------------
@@ -90,8 +90,8 @@
   ;  ...}
   [_ thumbnail-props]
   (-> {:class :pe-thumbnail}
-      (pretty-attributes/class-attributes        thumbnail-props)
-      (pretty-attributes/outdent-attributes      thumbnail-props)
-      (pretty-attributes/state-attributes        thumbnail-props)
-      (pretty-attributes/theme-attributes        thumbnail-props)
-      (pretty-attributes/wrapper-size-attributes thumbnail-props)))
+      (pretty-attributes/class-attributes   thumbnail-props)
+      (pretty-attributes/outdent-attributes thumbnail-props)
+      (pretty-attributes/size-attributes    thumbnail-props)
+      (pretty-attributes/state-attributes   thumbnail-props)
+      (pretty-attributes/theme-attributes   thumbnail-props)))

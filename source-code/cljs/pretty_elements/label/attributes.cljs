@@ -48,11 +48,11 @@
   [_ label-props]
   (-> {:class :pe-label--body}
       (pretty-attributes/background-color-attributes label-props)
+      (pretty-attributes/body-size-attributes        label-props)
       (pretty-attributes/border-attributes           label-props)
       (pretty-attributes/flex-attributes             label-props)
       (pretty-attributes/indent-attributes           label-props)
-      (pretty-attributes/style-attributes            label-props)
-      (pretty-attributes/size-attributes             label-props)))
+      (pretty-attributes/style-attributes            label-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -68,8 +68,8 @@
   ;  ...}
   [_ label-props]
   (-> {:class :pe-label}
-      (pretty-attributes/class-attributes        label-props)
-      (pretty-attributes/outdent-attributes      label-props)
-      (pretty-attributes/state-attributes        label-props)
-      (pretty-attributes/theme-attributes        label-props)
-      (pretty-attributes/wrapper-size-attributes label-props)))
+      (pretty-attributes/class-attributes   label-props)
+      (pretty-attributes/outdent-attributes label-props)
+      (pretty-attributes/size-attributes    label-props)
+      (pretty-attributes/state-attributes   label-props)
+      (pretty-attributes/theme-attributes   label-props)))

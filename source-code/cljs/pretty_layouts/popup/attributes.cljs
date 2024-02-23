@@ -1,73 +1,30 @@
 
 (ns pretty-layouts.popup.attributes
-    (:require [pretty-layouts.box-popup.attributes :as box-popup.attributes]
-              [pretty-layouts.popup.state   :as popup.state]))
+    (:require [pretty-attributes.api :as pretty-attributes]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn popup-footer-attributes
+(defn popup-body-attributes
   ; @ignore
   ;
   ; @param (keyword) popup-id
   ; @param (map) popup-props
   ;
   ; @return (map)
-  ; {}
-  [popup-id _]
-  (merge {:class :pl-popup--footer}
-         (if (popup-id @popup.state/FOOTER-SHADOW-VISIBLE?)
-             {:data-shadow-position :top :data-shadow-strength :s})))
-
-(defn popup-header-attributes
-  ; @ignore
-  ;
-  ; @param (keyword) popup-id
-  ; @param (map) popup-props
-  ; {}
-  ;
-  ; @return (map)
-  ; {}
-  [popup-id _]
-  (merge {:class :pl-popup--header}
-         (if (popup-id @popup.state/HEADER-SHADOW-VISIBLE?)
-             {:data-shadow-position :bottom :data-shadow-strength :s})))
-
-(defn popup-cover-attributes
-  ; @ignore
-  ;
-  ; @param (keyword) popup-id
-  ; @param (map) popup-props
-  ;
-  ; @return (map)
-  ; {}
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
   [popup-id popup-props]
-  (merge (box-popup.attributes/popup-cover-attributes popup-id popup-props)
-         {:class :pl-popup--cover}))
+  (-> {:class :pl-popup--body}
+      (pretty-attributes/background-color-attributes popup-props)
+      (pretty-attributes/body-size-attributes        popup-props)
+      (pretty-attributes/border-attributes           popup-props)
+      (pretty-attributes/flex-attributes             popup-props)
+      (pretty-attributes/indent-attributes           popup-props)
+      (pretty-attributes/style-attributes            popup-props)))
 
-(defn popup-structure-attributes
-  ; @ignore
-  ;
-  ; @param (keyword) popup-id
-  ; @param (map) popup-props
-  ;
-  ; @return (map)
-  ; {}
-  [popup-id popup-props]
-  (merge (box-popup.attributes/popup-structure-attributes popup-id popup-props)
-         {:class :pl-popup--structure}))
-
-(defn popup-wrapper-attributes
-  ; @ignore
-  ;
-  ; @param (keyword) popup-id
-  ; @param (map) popup-props
-  ;
-  ; @return (map)
-  ; {}
-  [popup-id popup-props]
-  (merge (box-popup.attributes/popup-wrapper-attributes popup-id popup-props)
-         {:class :pl-popup--wrapper}))
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn popup-attributes
   ; @ignore
@@ -76,9 +33,16 @@
   ; @param (map) popup-props
   ;
   ; @return (map)
-  ; {}
-  [popup-id popup-props]
-  (merge (box-popup.attributes/popup-attributes popup-id popup-props)
-         {:class :pl-popup}))
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
+  [_ popup-props]
+  (-> {:class :pl-popup}
+      (pretty-attributes/class-attributes    popup-props)
+      (pretty-attributes/outdent-attributes  popup-props)
+      (pretty-attributes/overlay-attributes  popup-props)
+      (pretty-attributes/position-attributes popup-props)
+      (pretty-attributes/size-attributes     popup-props)
+      (pretty-attributes/state-attributes    popup-props)
+      (pretty-attributes/theme-attributes    popup-props)))
 
-; + class-attributes, state-attributes, style-attributes, theme-attributes
+; + fullscreen-props ... stretch-orientation

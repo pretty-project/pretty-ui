@@ -50,9 +50,9 @@
   ;  ...}
   [_ diagram-props]
   (-> {:class :pd-bar-diagram--body}
-      (pretty-attributes/indent-attributes diagram-props)
-      (pretty-attributes/size-attributes   diagram-props)
-      (pretty-attributes/style-attributes  diagram-props)))
+      (pretty-attributes/body-size-attributes diagram-props)
+      (pretty-attributes/indent-attributes    diagram-props)
+      (pretty-attributes/style-attributes     diagram-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -68,8 +68,8 @@
   ;  ...}
   [_ diagram-props]
   (-> {:class :pd-bar-diagram}
-      (pretty-attributes/class-attributes        diagram-props)
-      (pretty-attributes/outdent-attributes      diagram-props)
-      (pretty-attributes/state-attributes        diagram-props)
-      (pretty-attributes/theme-attributes        diagram-props)
-      (pretty-attributes/wrapper-size-attributes diagram-props)))
+      (pretty-attributes/class-attributes   diagram-props)
+      (pretty-attributes/outdent-attributes diagram-props)
+      (pretty-attributes/size-attributes    diagram-props)
+      (pretty-attributes/state-attributes   diagram-props)
+      (pretty-attributes/theme-attributes   diagram-props)))

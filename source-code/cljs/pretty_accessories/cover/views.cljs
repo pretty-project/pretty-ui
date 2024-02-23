@@ -16,7 +16,8 @@
   ; @param (keyword) cover-id
   ; @param (map) cover-props
   ; {:icon (keyword)(opt)
-  ;  :label (metamorphic-content)(opt)}
+  ;  :label (metamorphic-content)(opt)
+  ;  ...}
   [cover-id {:keys [icon label] :as cover-props}]
   [:div (cover.attributes/cover-attributes cover-id cover-props)
         [:div (cover.attributes/cover-body-attributes cover-id cover-props)
@@ -42,13 +43,13 @@
   ; Cover accessory for elements.
   ;
   ; @links Implemented properties
-  ; [Background color properties](pretty-core/cljs/pretty-properties/api.html#background-color-properties)
   ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
   ; [Font properties](pretty-core/cljs/pretty-properties/api.html#font-properties)
   ; [Flex properties](pretty-core/cljs/pretty-properties/api.html#flex-properties)
   ; [Icon properties](pretty-core/cljs/pretty-properties/api.html#icon-properties)
   ; [Label properties](pretty-core/cljs/pretty-properties/api.html#label-properties)
   ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
+  ; [Overlay properties](pretty-core/cljs/pretty-properties/api.html#overlay-properties)
   ; [Position properties](pretty-core/cljs/pretty-properties/api.html#position-properties)
   ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
   ; [Size properties](pretty-core/cljs/pretty-properties/api.html#size-properties)
@@ -57,16 +58,15 @@
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
   ; [Text properties](pretty-core/cljs/pretty-properties/api.html#text-properties)
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
-  ; [Visibility properties](pretty-core/cljs/pretty-properties/api.html#visibility-properties)
   ;
   ; @param (keyword)(opt) cover-id
   ; @param (map) cover-props
   ; Check out the implemented properties.
   ;
   ; @usage (pretty-accessories/cover.png)
-  ; [cover {:fill-color :highlight
-  ;         :label      "My cover"
-  ;         :opacity    :medium}]
+  ; [cover {:label           "My cover"
+  ;         :overlay-color   :highlight
+  ;         :overlay-opacity :medium}]
   ([cover-props]
    [view (random/generate-keyword) cover-props])
 

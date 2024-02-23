@@ -16,10 +16,10 @@
   ;  ...}
   [group-id group-props]
   (-> {:class :pe-adornment-group--body}
-      (pretty-attributes/flex-attributes   group-props)
-      (pretty-attributes/indent-attributes group-props)
-      (pretty-attributes/size-attributes   group-props)
-      (pretty-attributes/style-attributes  group-props)))
+      (pretty-attributes/body-size-attributes group-props)
+      (pretty-attributes/flex-attributes      group-props)
+      (pretty-attributes/indent-attributes    group-props)
+      (pretty-attributes/style-attributes     group-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -35,8 +35,8 @@
   ;  ...}
   [_ group-props]
   (-> {:class :pe-adornment-group}
-      (pretty-attributes/class-attributes        group-props)
-      (pretty-attributes/outdent-attributes      group-props)
-      (pretty-attributes/state-attributes        group-props)
-      (pretty-attributes/theme-attributes        group-props)
-      (pretty-attributes/wrapper-size-attributes group-props)))
+      (pretty-attributes/class-attributes   group-props)
+      (pretty-attributes/outdent-attributes group-props)
+      (pretty-attributes/size-attributes    group-props)
+      (pretty-attributes/state-attributes   group-props)
+      (pretty-attributes/theme-attributes   group-props)))

@@ -17,7 +17,7 @@
   [_ bullet-props]
   (-> bullet-props (pretty-properties/default-background-color-props {:fill-color :muted})
                    (pretty-properties/default-size-props             {:height :xxs :width :xxs :size-unit :quarter-block})
-                   (pretty-standards/standard-wrapper-size-props)
-                   (pretty-rules/auto-adapt-wrapper-size)))
+                   (pretty-standards/standard-body-size-props)
+                   (pretty-standards/standard-size-props)))
                   ;(pretty-rules/auto-disable-highlight-color)
                   ;(pretty-rules/auto-disable-hover-color)

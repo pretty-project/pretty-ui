@@ -17,9 +17,9 @@
   [marker-id marker-props]
   (-> {:class :pa-marker--body}
       (pretty-attributes/background-color-attributes marker-props)
+      (pretty-attributes/body-size-attributes        marker-props)
       (pretty-attributes/border-attributes           marker-props)
       (pretty-attributes/indent-attributes           marker-props)
-      (pretty-attributes/size-attributes             marker-props)
       (pretty-attributes/style-attributes            marker-props)))
 
 ;; ----------------------------------------------------------------------------
@@ -36,9 +36,9 @@
   ;  ...}
   [_ marker-props]
   (-> {:class :pa-marker}
-      (pretty-attributes/class-attributes        marker-props)
-      (pretty-attributes/outdent-attributes      marker-props)
-      (pretty-attributes/position-attributes     marker-props)
-      (pretty-attributes/state-attributes        marker-props)
-      (pretty-attributes/theme-attributes        marker-props)
-      (pretty-attributes/wrapper-size-attributes marker-props)))
+      (pretty-attributes/class-attributes    marker-props)
+      (pretty-attributes/outdent-attributes  marker-props)
+      (pretty-attributes/position-attributes marker-props)
+      (pretty-attributes/size-attributes     marker-props)
+      (pretty-attributes/state-attributes    marker-props)
+      (pretty-attributes/theme-attributes    marker-props)))

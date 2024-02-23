@@ -14,7 +14,8 @@
   ;
   ; @param (keyword) image-id
   ; @param (map) image-props
-  ; {:background-uri (string)(opt)}
+  ; {:background-uri (string)(opt
+  ;  ...)}
   ;
   ; @return (map)
   ; {:on-load-f (function)
@@ -50,14 +51,14 @@
                        (pretty-standards/standard-anchor-props)
                        (pretty-standards/standard-animation-props)
                        (pretty-standards/standard-background-image-props)
+                       (pretty-standards/standard-body-size-props)
                        (pretty-standards/standard-border-props)
                        (pretty-standards/standard-flex-props)
                        (pretty-standards/standard-font-props)
                        (pretty-standards/standard-icon-props)
+                       (pretty-standards/standard-size-props)
                        (pretty-standards/standard-text-props)
-                       (pretty-standards/standard-wrapper-size-props)
                        (pretty-rules/apply-auto-border-crop)
-                       (pretty-rules/auto-adapt-wrapper-size)
                        (pretty-rules/auto-align-scrollable-flex)
                        (pretty-rules/auto-blur-click-events)
                        (pretty-rules/auto-color-clickable-text)

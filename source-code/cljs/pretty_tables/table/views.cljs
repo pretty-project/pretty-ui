@@ -80,9 +80,9 @@
   ;         :fill-color    :muted
   ;         :gap           :micro
   ;         :row-default   {:column-gap :micro :cell-default {:fill-color :highlight :height :xs}}
-  ;         :rows [{:cells [{:content "My cell #1.1"} {:content "My cell #1.2"}]}
-  ;                {:cells [{:content "My cell #2.1"} {:content "My cell #2.2"}]}
-  ;                {:cells [{:content "My cell #3.1"} {:content "My cell #3.2"}]}]}]
+  ;         :rows          [{:cells [{:content "My cell #1.1"} {:content "My cell #1.2"}]}
+  ;                         {:cells [{:content "My cell #2.1"} {:content "My cell #2.2"}]}
+  ;                         {:cells [{:content "My cell #3.1"} {:content "My cell #3.2"}]}]}]
   ([table-props]
    [view (random/generate-keyword) table-props])
 
