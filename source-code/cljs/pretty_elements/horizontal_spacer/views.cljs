@@ -39,9 +39,10 @@
   ;
   ; @links Implemented properties
   ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
+  ; [Inner size properties](pretty-core/cljs/pretty-properties/api.html#inner-size-properties)
   ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
+  ; [Outer size properties](pretty-core/cljs/pretty-properties/api.html#outer-size-properties)
   ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
-  ; [Size properties](pretty-core/cljs/pretty-properties/api.html#size-properties)
   ; [Space properties](pretty-core/cljs/pretty-properties/api.html#space-properties)
   ; [State properties](pretty-core/cljs/pretty-properties/api.html#state-properties)
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
@@ -52,7 +53,7 @@
   ; Check out the implemented properties.
   ;
   ; @usage (pretty-elements/horizontal-spacer.png)
-  ; [horizontal-spacer {:height :s}]
+  ; [horizontal-spacer {:outer-height :s}]
   ([spacer-props]
    [view (random/generate-keyword) spacer-props])
 

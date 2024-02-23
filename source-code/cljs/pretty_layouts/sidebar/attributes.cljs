@@ -40,7 +40,7 @@
       (pretty-attributes/border-attributes       sidebar-props)
       (pretty-attributes/indent-attributes       sidebar-props)
       (pretty-attributes/style-attributes        sidebar-props)
-      (pretty-attributes/size-attributes              sidebar-props)
+      ;(pretty-attributes/size-attributes              sidebar-props)
       (pretty-attributes/theme-attributes        sidebar-props)))
 
 ;; ----------------------------------------------------------------------------

@@ -17,11 +17,11 @@
   [_ cell-props]
   (-> {:class :pt-cell--body}
       (pretty-attributes/background-color-attributes cell-props)
-      (pretty-attributes/body-size-attributes        cell-props)
       (pretty-attributes/border-attributes           cell-props)
       (pretty-attributes/flex-attributes             cell-props)
       (pretty-attributes/font-attributes             cell-props)
       (pretty-attributes/indent-attributes           cell-props)
+      (pretty-attributes/inner-size-attributes       cell-props)
       (pretty-attributes/style-attributes            cell-props)
       (pretty-attributes/text-attributes             cell-props)))
 
@@ -39,8 +39,8 @@
   ;  ...}
   [_ cell-props]
   (-> {:class :pt-cell}
-      (pretty-attributes/class-attributes   cell-props)
-      (pretty-attributes/outdent-attributes cell-props)
-      (pretty-attributes/size-attributes    cell-props)
-      (pretty-attributes/state-attributes   cell-props)
-      (pretty-attributes/theme-attributes   cell-props)))
+      (pretty-attributes/class-attributes      cell-props)
+      (pretty-attributes/outdent-attributes    cell-props)
+      (pretty-attributes/outer-size-attributes cell-props)
+      (pretty-attributes/state-attributes      cell-props)
+      (pretty-attributes/theme-attributes      cell-props)))

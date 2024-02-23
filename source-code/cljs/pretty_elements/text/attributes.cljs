@@ -35,10 +35,10 @@
   [text-id text-props]
   (-> {:class :pe-text--body}
       (pretty-attributes/background-color-attributes text-props)
-      (pretty-attributes/body-size-attributes        text-props)
       (pretty-attributes/border-attributes           text-props)
       (pretty-attributes/flex-attributes             text-props)
       (pretty-attributes/indent-attributes           text-props)
+      (pretty-attributes/inner-size-attributes       text-props)
       (pretty-attributes/style-attributes            text-props)))
 
 ;; ----------------------------------------------------------------------------
@@ -55,8 +55,8 @@
   ;  ...}
   [_ text-props]
   (-> {:class :pe-text}
-      (pretty-attributes/class-attributes   text-props)
-      (pretty-attributes/outdent-attributes text-props)
-      (pretty-attributes/size-attributes    text-props)
-      (pretty-attributes/state-attributes   text-props)
-      (pretty-attributes/theme-attributes   text-props)))
+      (pretty-attributes/class-attributes      text-props)
+      (pretty-attributes/outdent-attributes    text-props)
+      (pretty-attributes/outer-size-attributes text-props)
+      (pretty-attributes/state-attributes      text-props)
+      (pretty-attributes/theme-attributes      text-props)))

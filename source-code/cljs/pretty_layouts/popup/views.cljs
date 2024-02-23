@@ -37,7 +37,7 @@
   [popup-id {:keys [footer header] :as popup-props}]
   (let [body-id    (pretty-layouts.engine/layout-id->subitem-id popup-id :body)
         body-props (popup.prototypes/body-props-prototype       popup-id popup-props)]
-       [:div {:style {:overflow :auto :width :100%}}
+       [:div {:style {:overflow :auto :width :100% :flex-grow :1}}
              (when header  [pretty-layouts.engine/layout-header-sensor popup-id popup-props])
              (when :always [body.views/view                            body-id  body-props])
              (when footer  [pretty-layouts.engine/layout-footer-sensor popup-id popup-props])]))
@@ -98,10 +98,11 @@
   ; [Background color properties](pretty-core/cljs/pretty-properties/api.html#background-color-properties)
   ; [Border properties](pretty-core/cljs/pretty-properties/api.html#border-properties)
   ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
+  ; [Inner size properties](pretty-core/cljs/pretty-properties/api.html#inner-size-properties)
   ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
+  ; [Outer size properties](pretty-core/cljs/pretty-properties/api.html#outer-size-properties)
   ; [Overlay properties](pretty-core/cljs/pretty-properties/api.html#overlay-properties)
   ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
-  ; [Size properties](pretty-core/cljs/pretty-properties/api.html#size-properties)
   ; [Space properties](pretty-core/cljs/pretty-properties/api.html#space-properties)
   ; [State properties](pretty-core/cljs/pretty-properties/api.html#state-properties)
   ; [Structure properties](pretty-core/cljs/pretty-properties/api.html#structure-properties)

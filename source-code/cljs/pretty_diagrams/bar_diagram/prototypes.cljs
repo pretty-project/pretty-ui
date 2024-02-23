@@ -15,8 +15,8 @@
   ;
   ; @return (map)
   [_ diagram-props]
-  (-> diagram-props (pretty-properties/default-size-props {:size-unit :full-block})
-                    (pretty-standards/standard-body-size-props)
+  (-> diagram-props (pretty-properties/default-outer-size-props {:outer-size-unit :full-block})
                     (pretty-standards/standard-data-props)
-                    (pretty-standards/standard-shape-props)
-                    (pretty-standards/standard-size-props)))
+                    (pretty-standards/standard-inner-size-props)
+                    (pretty-standards/standard-outer-size-props)
+                    (pretty-standards/standard-shape-props)))

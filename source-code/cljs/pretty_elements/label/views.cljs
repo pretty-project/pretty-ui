@@ -54,9 +54,10 @@
   ; [Flex properties](pretty-core/cljs/pretty-properties/api.html#flex-properties)
   ; [Font properties](pretty-core/cljs/pretty-properties/api.html#font-properties)
   ; [Icon properties](pretty-core/cljs/pretty-properties/api.html#icon-properties)
+  ; [Inner size properties](pretty-core/cljs/pretty-properties/api.html#inner-size-properties)
   ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
+  ; [Outer size properties](pretty-core/cljs/pretty-properties/api.html#outer-size-properties)
   ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
-  ; [Size properties](pretty-core/cljs/pretty-properties/api.html#size-properties)
   ; [Space properties](pretty-core/cljs/pretty-properties/api.html#space-properties)
   ; [State properties](pretty-core/cljs/pretty-properties/api.html#state-properties)
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
@@ -76,7 +77,7 @@
   ;         :horizontal-align :left
   ;         :icon             :star
   ;         :icon-position    :right
-  ;         :width            :xxl}]
+  ;         :outer-width      :xxl}]
   ([label-props]
    [view (random/generate-keyword) label-props])
 

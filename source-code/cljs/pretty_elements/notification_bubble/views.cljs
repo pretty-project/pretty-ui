@@ -68,12 +68,13 @@
   ; [Effect properties](pretty-core/cljs/pretty-properties/api.html#effect-properties)
   ; [Flex properties](pretty-core/cljs/pretty-properties/api.html#flex-properties)
   ; [Font properties](pretty-core/cljs/pretty-properties/api.html#font-properties)
+  ; [Inner size properties](pretty-core/cljs/pretty-properties/api.html#inner-size-properties)
   ; [Keypress properties](pretty-core/cljs/pretty-properties/api.html#keypress-properties)
   ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
   ; [Mouse event properties](pretty-core/cljs/pretty-properties/api.html#mouse-event-properties)
+  ; [Outer size properties](pretty-core/cljs/pretty-properties/api.html#outer-size-properties)
   ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
   ; [Progress properties](pretty-core/cljs/pretty-properties/api.html#progress-properties)
-  ; [Size properties](pretty-core/cljs/pretty-properties/api.html#size-properties)
   ; [Space properties](pretty-core/cljs/pretty-properties/api.html#space-properties)
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
   ; [Text properties](pretty-core/cljs/pretty-properties/api.html#text-properties)
@@ -92,8 +93,8 @@
   ;                       :indent                {:horizontal :s}
   ;                       :end-adornment-default {:fill-color :highlight :border-radius {:all :s}}
   ;                       :end-adornments        [{:icon :close}]
-  ;                       :height                :xs
-  ;                       :width                 :3xl}]
+  ;                       :outer-height          :xs
+  ;                       :outer-width           :3xl}]
   ;
   ; [notification-bubble {:border-color            :highlight
   ;                       :border-radius           {:all :m}
@@ -102,8 +103,8 @@
   ;                       :indent                  {:horizontal :s}
   ;                       :start-adornment-default {:fill-color :default :border-color :highlight :border-radius {:all :s}}
   ;                       :start-adornments        [{:icon :close}]
-  ;                       :height                  :xs
-  ;                       :width                   :3xl}]
+  ;                       :outer-height            :xs
+  ;                       :outer-width             :3xl}]
   ([bubble-props]
    [view (random/generate-keyword) bubble-props])
 

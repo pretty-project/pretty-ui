@@ -15,5 +15,5 @@
   ; @return (map)
   [_ blank-props]
   (-> blank-props (pretty-rules/compose-content)
-                  (pretty-standards/standard-body-size-props)
-                  (pretty-standards/standard-size-props)))
+                  (pretty-standards/standard-inner-size-props)
+                  (pretty-standards/standard-outer-size-props)))

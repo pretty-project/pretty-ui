@@ -49,10 +49,11 @@
   ; [Content properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
   ; [Flex properties](pretty-core/cljs/pretty-properties/api.html#flex-properties)
   ; [Font properties](pretty-core/cljs/pretty-properties/api.html#font-properties)
+  ; [Inner size properties](pretty-core/cljs/pretty-properties/api.html#inner-size-properties)
   ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
   ; [Multiline properties](pretty-core/cljs/pretty-properties/api.html#multiline-properties)
+  ; [Outer size properties](pretty-core/cljs/pretty-properties/api.html#outer-size-properties)
   ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
-  ; [Size properties](pretty-core/cljs/pretty-properties/api.html#size-properties)
   ; [Space properties](pretty-core/cljs/pretty-properties/api.html#space-properties)
   ; [State properties](pretty-core/cljs/pretty-properties/api.html#state-properties)
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
@@ -67,8 +68,8 @@
   ; [text {:border-radius {:all :m}
   ;        :content       "My text line #1\nMy text line #2\nMy text line #3"
   ;        :fill-color    :highlight
-  ;        :height        :5xl
-  ;        :width         :5xl}]
+  ;        :outer-height  :5xl
+  ;        :outer-width   :5xl}]
   ([text-props]
    [view (random/generate-keyword) text-props])
 

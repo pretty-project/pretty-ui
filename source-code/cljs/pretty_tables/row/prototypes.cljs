@@ -30,11 +30,11 @@
   ;
   ; @return (map)
   [_ {:keys [cells] :as row-props}]
-  (-> row-props (pretty-properties/default-grid-props {:row-template :even :row-count (count cells)})
-                (pretty-properties/default-size-props {:height :content :width :auto :size-unit :double-block})
-                (pretty-standards/standard-body-size-props)
+  (-> row-props (pretty-properties/default-grid-props       {:row-template :even :row-count (count cells)})
+                (pretty-properties/default-outer-size-props {:outer-height :content :outer-width :auto :outer-size-unit :double-block})
                 (pretty-standards/standard-border-props)
-                (pretty-standards/standard-size-props)
+                (pretty-standards/standard-inner-size-props)
+                (pretty-standards/standard-outer-size-props)
                 (pretty-rules/apply-auto-border-crop)))
                ;(pretty-rules/auto-disable-highlight-color)
                ;(pretty-rules/auto-disable-hover-color)

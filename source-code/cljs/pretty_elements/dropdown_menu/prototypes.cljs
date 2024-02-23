@@ -32,9 +32,9 @@
   ;
   ; @return (map)
   [_ {:keys [expandable]}]
-  (-> expandable (pretty-properties/default-position-props   {:layer :uppermost :position-method :absolute})
-                 (pretty-properties/default-size-props       {:size-unit :double-block :width :parent})
-                 (pretty-properties/default-expandable-props {:expanded? false})))
+  (-> expandable (pretty-properties/default-expandable-props {:expanded? false})
+                 (pretty-properties/default-outer-size-props {:outer-size-unit :double-block :outer-width :parent})
+                 (pretty-properties/default-position-props   {:layer :uppermost :position-method :absolute})))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -49,5 +49,5 @@
   [menu-id menu-props]
   (let [on-mouse-leave-f (fn [_] (dropdown-menu.side-effects/on-mouse-leave-f menu-id menu-props))]
        (-> menu-props (pretty-properties/default-mouse-event-props {:on-mouse-leave-f on-mouse-leave-f})
-                      (pretty-standards/standard-body-size-props)
-                      (pretty-standards/standard-size-props))))
+                      (pretty-standards/standard-inner-size-props)
+                      (pretty-standards/standard-outer-size-props))))

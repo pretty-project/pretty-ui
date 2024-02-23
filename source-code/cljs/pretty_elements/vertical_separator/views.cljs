@@ -48,11 +48,12 @@
   ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
   ; [Flex properties](pretty-core/cljs/pretty-properties/api.html#flex-properties)
   ; [Font properties](pretty-core/cljs/pretty-properties/api.html#font-properties)
+  ; [Inner size properties](pretty-core/cljs/pretty-properties/api.html#inner-size-properties)
   ; [Label properties](pretty-core/cljs/pretty-properties/api.html#label-properties)
   ; [Line properties](pretty-core/cljs/pretty-properties/api.html#line-properties)
   ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
+  ; [Outer size properties](pretty-core/cljs/pretty-properties/api.html#outer-size-properties)
   ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
-  ; [Size properties](pretty-core/cljs/pretty-properties/api.html#size-properties)
   ; [Space properties](pretty-core/cljs/pretty-properties/api.html#space-properties)
   ; [State properties](pretty-core/cljs/pretty-properties/api.html#state-properties)
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
@@ -64,10 +65,10 @@
   ; Check out the implemented properties.
   ;
   ; @usage (pretty-elements/vertical-separator.png)
-  ; [vertical-separator {:height     :5xl
-  ;                      :label      "My vertical separator"
-  ;                      :line-color :muted
-  ;                      :text-color :muted}]
+  ; [vertical-separator {:label        "My vertical separator"
+  ;                      :line-color   :muted
+  ;                      :outer-height :5xl
+  ;                      :text-color   :muted}]
   ([separator-props]
    [view (random/generate-keyword) separator-props])
 

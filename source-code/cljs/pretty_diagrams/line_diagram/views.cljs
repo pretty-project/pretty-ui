@@ -62,10 +62,11 @@
   ; @links Implemented properties
   ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
   ; [Data properties](pretty-core/cljs/pretty-properties/api.html#data-properties)
+  ; [Inner size properties](pretty-core/cljs/pretty-properties/api.html#inner-size-properties)
   ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
+  ; [Outer size properties](pretty-core/cljs/pretty-properties/api.html#outer-size-properties)
   ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
   ; [Shape properties](pretty-core/cljs/pretty-properties/api.html#shape-properties)
-  ; [Size properties](pretty-core/cljs/pretty-properties/api.html#size-properties)
   ; [Space properties](pretty-core/cljs/pretty-properties/api.html#space-properties)
   ; [State properties](pretty-core/cljs/pretty-properties/api.html#state-properties)
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
@@ -81,9 +82,9 @@
   ; [line-diagram {:datum-color-f :color
   ;                :datum-value-f :value
   ;                :get-data-f    #(-> DATA)
-  ;                :strength      100
-  ;                :height        :m
-  ;                :width         :m}]
+  ;                :outer-height  :m
+  ;                :outer-width   :m
+  ;                :strength      100}]
   ([diagram-props]
    [view (random/generate-keyword) diagram-props])
 

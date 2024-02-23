@@ -48,13 +48,13 @@
   (-> {:class :pe-button--body}
       (pretty-attributes/anchor-attributes           button-props)
       (pretty-attributes/background-color-attributes button-props)
-      (pretty-attributes/body-size-attributes        button-props)
       (pretty-attributes/border-attributes           button-props)
       (pretty-attributes/clickable-state-attributes  button-props)
       (pretty-attributes/cursor-attributes           button-props)
       (pretty-attributes/effect-attributes           button-props)
       (pretty-attributes/flex-attributes             button-props)
       (pretty-attributes/indent-attributes           button-props)
+      (pretty-attributes/inner-size-attributes       button-props)
       (pretty-attributes/mouse-event-attributes      button-props)
       (pretty-attributes/progress-attributes         button-props)
       (pretty-attributes/react-attributes            button-props)
@@ -74,8 +74,8 @@
   ;  ...}
   [_ button-props]
   (-> {:class :pe-button}
-      (pretty-attributes/class-attributes   button-props)
-      (pretty-attributes/outdent-attributes button-props)
-      (pretty-attributes/size-attributes    button-props)
-      (pretty-attributes/state-attributes   button-props)
-      (pretty-attributes/theme-attributes   button-props)))
+      (pretty-attributes/class-attributes      button-props)
+      (pretty-attributes/outdent-attributes    button-props)
+      (pretty-attributes/outer-size-attributes button-props)
+      (pretty-attributes/state-attributes      button-props)
+      (pretty-attributes/theme-attributes      button-props)))

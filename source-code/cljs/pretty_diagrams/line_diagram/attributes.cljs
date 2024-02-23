@@ -31,8 +31,8 @@
         datum-height (css/percent  strength)
         datum-width  (css/percent  datum-ratio)]
        (-> {:class :pd-line-diagram--datum}
-           (pretty-attributes/background-color-attributes {:fill-color datum-color})
-           (pretty-attributes/size-attributes             {:height     datum-height :width datum-width}))))
+           (pretty-attributes/background-color-attributes {:fill-color     datum-color})
+           (pretty-attributes/content-size-attributes     {:content-height datum-height :content-width datum-width}))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -48,10 +48,10 @@
   ;  ...}
   [_ diagram-props]
   (-> {:class :pd-line-diagram--body}
-      (pretty-attributes/body-size-attributes diagram-props)
-      (pretty-attributes/flex-attributes      diagram-props)
-      (pretty-attributes/indent-attributes    diagram-props)
-      (pretty-attributes/style-attributes     diagram-props)))
+      (pretty-attributes/flex-attributes       diagram-props)
+      (pretty-attributes/indent-attributes     diagram-props)
+      (pretty-attributes/inner-size-attributes diagram-props)
+      (pretty-attributes/style-attributes      diagram-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -67,8 +67,8 @@
   ;  ...}
   [_ diagram-props]
   (-> {:class :pd-line-diagram}
-      (pretty-attributes/class-attributes   diagram-props)
-      (pretty-attributes/outdent-attributes diagram-props)
-      (pretty-attributes/size-attributes    diagram-props)
-      (pretty-attributes/state-attributes   diagram-props)
-      (pretty-attributes/theme-attributes   diagram-props)))
+      (pretty-attributes/class-attributes      diagram-props)
+      (pretty-attributes/outdent-attributes    diagram-props)
+      (pretty-attributes/outer-size-attributes diagram-props)
+      (pretty-attributes/state-attributes      diagram-props)
+      (pretty-attributes/theme-attributes      diagram-props)))

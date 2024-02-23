@@ -72,13 +72,14 @@
   ; [Flex properties](pretty-core/cljs/pretty-properties/api.html#flex-properties)
   ; [Font properties](pretty-core/cljs/pretty-properties/api.html#font-properties)
   ; [Icon properties](pretty-core/cljs/pretty-properties/api.html#icon-properties)
+  ; [Inner size properties](pretty-core/cljs/pretty-properties/api.html#inner-size-properties)
   ; [Keypress properties](pretty-core/cljs/pretty-properties/api.html#keypress-properties)
   ; [Label properties](pretty-core/cljs/pretty-properties/api.html#label-properties)
   ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
   ; [Mouse event properties](pretty-core/cljs/pretty-properties/api.html#mouse-event-properties)
+  ; [Outer size properties](pretty-core/cljs/pretty-properties/api.html#outer-size-properties)
   ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
   ; [Progress properties](pretty-core/cljs/pretty-properties/api.html#progress-properties)
-  ; [Size properties](pretty-core/cljs/pretty-properties/api.html#size-properties)
   ; [Space properties](pretty-core/cljs/pretty-properties/api.html#space-properties)
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
   ; [Text properties](pretty-core/cljs/pretty-properties/api.html#text-properties)
@@ -97,7 +98,7 @@
   ;          :icon-position :right
   ;          :indent        {:horizontal :s :vertical :xxs}
   ;          :label         "My button #1"
-  ;          :width         :5xl}]
+  ;          :outer-width   :5xl}]
   ;
   ; [button {:border-radius {:all :l}
   ;          :border-color  :highlight
@@ -107,7 +108,7 @@
   ;          :icon-position :left
   ;          :indent        {:horizontal :s :vertical :xxs}
   ;          :label         "My button #2"
-  ;          :width         :5xl}]
+  ;          :outer-width   :5xl}]
   ([button-props]
    [view (random/generate-keyword) button-props])
 

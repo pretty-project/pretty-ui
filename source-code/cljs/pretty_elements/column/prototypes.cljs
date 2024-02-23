@@ -15,12 +15,12 @@
   ;
   ; @return (map)
   [_ column-props]
-  (-> column-props (pretty-properties/default-flex-props {:orientation :vertical :vertical-align :top})
-                   (pretty-properties/default-size-props {:size-unit :double-block})
-                   (pretty-standards/standard-body-size-props)
+  (-> column-props (pretty-properties/default-flex-props       {:orientation :vertical :vertical-align :top})
+                   (pretty-properties/default-outer-size-props {:outer-size-unit :double-block})
                    (pretty-standards/standard-border-props)
                    (pretty-standards/standard-flex-props)
-                   (pretty-standards/standard-size-props)
+                   (pretty-standards/standard-inner-size-props)
+                   (pretty-standards/standard-outer-size-props)
                    (pretty-rules/apply-auto-border-crop)
                    (pretty-rules/auto-align-scrollable-flex)
                    (pretty-rules/auto-disable-highlight-color)

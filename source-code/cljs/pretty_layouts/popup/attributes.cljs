@@ -17,10 +17,10 @@
   [popup-id popup-props]
   (-> {:class :pl-popup--body}
       (pretty-attributes/background-color-attributes popup-props)
-      (pretty-attributes/body-size-attributes        popup-props)
       (pretty-attributes/border-attributes           popup-props)
       (pretty-attributes/flex-attributes             popup-props)
       (pretty-attributes/indent-attributes           popup-props)
+      (pretty-attributes/inner-size-attributes       popup-props)
       (pretty-attributes/style-attributes            popup-props)))
 
 ;; ----------------------------------------------------------------------------
@@ -37,12 +37,12 @@
   ;  ...}
   [_ popup-props]
   (-> {:class :pl-popup}
-      (pretty-attributes/class-attributes    popup-props)
-      (pretty-attributes/outdent-attributes  popup-props)
-      (pretty-attributes/overlay-attributes  popup-props)
-      (pretty-attributes/position-attributes popup-props)
-      (pretty-attributes/size-attributes     popup-props)
-      (pretty-attributes/state-attributes    popup-props)
-      (pretty-attributes/theme-attributes    popup-props)))
+      (pretty-attributes/class-attributes      popup-props)
+      (pretty-attributes/outdent-attributes    popup-props)
+      (pretty-attributes/outer-size-attributes popup-props)
+      (pretty-attributes/overlay-attributes    popup-props)
+      (pretty-attributes/position-attributes   popup-props)
+      (pretty-attributes/state-attributes      popup-props)
+      (pretty-attributes/theme-attributes      popup-props)))
 
 ; + fullscreen-props ... stretch-orientation

@@ -67,11 +67,12 @@
   ; [Effect properties](pretty-core/cljs/pretty-properties/api.html#effect-properties)
   ; [Font properties](pretty-core/cljs/pretty-properties/api.html#font-properties)
   ; [Flex properties](pretty-core/cljs/pretty-properties/api.html#flex-properties)
+  ; [Inner size properties](pretty-core/cljs/pretty-properties/api.html#inner-size-properties)
   ; [Keypress properties](pretty-core/cljs/pretty-properties/api.html#keypress-properties)
   ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
   ; [Mouse event properties](pretty-core/cljs/pretty-properties/api.html#mouse-event-properties)
+  ; [Outer size properties](pretty-core/cljs/pretty-properties/api.html#outer-size-properties)
   ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
-  ; [Size properties](pretty-core/cljs/pretty-properties/api.html#size-properties)
   ; [Space properties](pretty-core/cljs/pretty-properties/api.html#space-properties)
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
   ; [Text properties](pretty-core/cljs/pretty-properties/api.html#text-properties)
@@ -90,8 +91,8 @@
   ;        :fill-color       :highlight
   ;        :horizontal-align :center
   ;        :vertical-align   :center
-  ;        :height           :l
-  ;        :width            :l}]
+  ;        :outer-height     :l
+  ;        :outer-width      :l}]
   ([card-props]
    [view (random/generate-keyword) card-props])
 

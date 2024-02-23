@@ -67,12 +67,13 @@
   ; [Cursor properties](pretty-core/cljs/pretty-properties/api.html#cursor-properties)
   ; [Effect properties](pretty-core/cljs/pretty-properties/api.html#effect-properties)
   ; [Font properties](pretty-core/cljs/pretty-properties/api.html#font-properties)
+  ; [Inner size properties](pretty-core/cljs/pretty-properties/api.html#inner-size-properties)
   ; [Keypress properties](pretty-core/cljs/pretty-properties/api.html#keypress-properties)
   ; [Label properties](pretty-core/cljs/pretty-properties/api.html#label-properties)
   ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
   ; [Mouse event properties](pretty-core/cljs/pretty-properties/api.html#mouse-event-properties)
+  ; [Outer size properties](pretty-core/cljs/pretty-properties/api.html#outer-size-properties)
   ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
-  ; [Size properties](pretty-core/cljs/pretty-properties/api.html#size-properties)
   ; [Space properties](pretty-core/cljs/pretty-properties/api.html#space-properties)
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
   ; [Text properties](pretty-core/cljs/pretty-properties/api.html#text-properties)
@@ -91,7 +92,7 @@
   ;        :gap                   :auto
   ;        :indent                {:left :xxs :right :s :vertical :xxs}
   ;        :label                 "My chip #1"
-  ;        :width                 :xl
+  ;        :outer-width           :xl
   ;        :end-adornment-default {:border-radius {:all :m} :fill-color :highlight}
   ;        :start-adornments      [{:icon :close :on-click-f (fn [_] ...)}]}]
   ;
@@ -102,7 +103,7 @@
   ;        :gap                   :auto
   ;        :indent                {:left :s :right :xxs :vertical :xxs}
   ;        :label                 "My chip #2"
-  ;        :width                 :xl
+  ;        :outer-width           :xl
   ;        :end-adornment-default {:border-color :highlight :border-radius {:all :m} :fill-color :default}
   ;        :end-adornments        [{:icon :close :on-click-f (fn [_] ...)}]}]
   ([chip-props]

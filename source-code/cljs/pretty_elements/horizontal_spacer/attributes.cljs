@@ -16,9 +16,9 @@
   ;  ...}
   [_ spacer-props]
   (-> {:class :pe-horizontal-spacer--body}
-      (pretty-attributes/body-size-attributes spacer-props)
-      (pretty-attributes/indent-attributes    spacer-props)
-      (pretty-attributes/style-attributes     spacer-props)))
+      (pretty-attributes/indent-attributes     spacer-props)
+      (pretty-attributes/inner-size-attributes spacer-props)
+      (pretty-attributes/style-attributes      spacer-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -34,8 +34,8 @@
   ;  ...}
   [_ spacer-props]
   (-> {:class :pe-horizontal-spacer}
-      (pretty-attributes/class-attributes   spacer-props)
-      (pretty-attributes/outdent-attributes spacer-props)
-      (pretty-attributes/size-attributes    spacer-props)
-      (pretty-attributes/state-attributes   spacer-props)
-      (pretty-attributes/theme-attributes   spacer-props)))
+      (pretty-attributes/class-attributes      spacer-props)
+      (pretty-attributes/outdent-attributes    spacer-props)
+      (pretty-attributes/outer-size-attributes spacer-props)
+      (pretty-attributes/state-attributes      spacer-props)
+      (pretty-attributes/theme-attributes      spacer-props)))

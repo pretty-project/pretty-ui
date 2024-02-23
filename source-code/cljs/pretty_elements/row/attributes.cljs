@@ -17,10 +17,10 @@
   [_ row-props]
   (-> {:class :pe-row--body}
       (pretty-attributes/background-color-attributes row-props)
-      (pretty-attributes/body-size-attributes        row-props)
       (pretty-attributes/border-attributes           row-props)
       (pretty-attributes/flex-attributes             row-props)
       (pretty-attributes/indent-attributes           row-props)
+      (pretty-attributes/inner-size-attributes       row-props)
       (pretty-attributes/style-attributes            row-props)))
 
 ;; ----------------------------------------------------------------------------
@@ -37,8 +37,8 @@
   ;  ...}
   [_ row-props]
   (-> {:class :pe-row}
-      (pretty-attributes/class-attributes   row-props)
-      (pretty-attributes/outdent-attributes row-props)
-      (pretty-attributes/size-attributes    row-props)
-      (pretty-attributes/state-attributes   row-props)
-      (pretty-attributes/theme-attributes   row-props)))
+      (pretty-attributes/class-attributes      row-props)
+      (pretty-attributes/outdent-attributes    row-props)
+      (pretty-attributes/outer-size-attributes row-props)
+      (pretty-attributes/state-attributes      row-props)
+      (pretty-attributes/theme-attributes      row-props)))

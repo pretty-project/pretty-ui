@@ -41,10 +41,11 @@
   ; [Background color properties](pretty-core/cljs/pretty-properties/api.html#background-color-properties)
   ; [Border properties](pretty-core/cljs/pretty-properties/api.html#border-properties)
   ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
+  ; [Inner size properties](pretty-core/cljs/pretty-properties/api.html#inner-size-properties)
   ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
+  ; [Outer size properties](pretty-core/cljs/pretty-properties/api.html#outer-size-properties)
   ; [Position properties](pretty-core/cljs/pretty-properties/api.html#position-properties)
   ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
-  ; [Size properties](pretty-core/cljs/pretty-properties/api.html#size-properties)
   ; [Space properties](pretty-core/cljs/pretty-properties/api.html#space-properties)
   ; [State properties](pretty-core/cljs/pretty-properties/api.html#state-properties)
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
@@ -57,8 +58,8 @@
   ; @usage (pretty-accessories/bullet.png)
   ; [bullet {:border-radius {:all :xs}
   ;          :fill-color    :muted
-  ;          :height        :xs
-  ;          :width         :xs}]
+  ;          :outer-height  :xs
+  ;          :outer-width   :xs}]
   ([bullet-props]
    [view (random/generate-keyword) bullet-props])
 

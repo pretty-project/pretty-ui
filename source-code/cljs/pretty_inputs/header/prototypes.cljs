@@ -17,7 +17,7 @@
   [_ header-props]
   (-> header-props (pretty-properties/default-label-props       {})
                    (pretty-properties/default-input-guide-props {})
-                   (pretty-properties/default-size-props        {:height :content :width :content})
+                   (pretty-properties/default-outer-size-props  {:height :content :outer-width :content})
                    (pretty-standards/standard-border-props)
                    (pretty-rules/compose-input-guides)
                    (pretty-rules/compose-label)))

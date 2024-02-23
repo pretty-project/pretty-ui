@@ -14,10 +14,10 @@
   ;
   ; @return (map)
   [_ icon-props]
-  (-> icon-props (pretty-properties/default-flex-props {:orientation :horizontal})
-                 (pretty-properties/default-icon-props {:icon-size :m})
-                 (pretty-properties/default-size-props {:size-unit :full-block})
-                 (pretty-standards/standard-body-size-props)
+  (-> icon-props (pretty-properties/default-flex-props       {:orientation :horizontal})
+                 (pretty-properties/default-icon-props       {:icon-size :m})
+                 (pretty-properties/default-outer-size-props {:outer-size-unit :full-block})
                  (pretty-standards/standard-flex-props)
                  (pretty-standards/standard-icon-props)
-                 (pretty-standards/standard-size-props)))
+                 (pretty-standards/standard-inner-size-props)
+                 (pretty-standards/standard-outer-size-props)))

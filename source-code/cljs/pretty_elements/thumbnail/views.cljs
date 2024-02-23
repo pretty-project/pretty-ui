@@ -86,12 +86,13 @@
   ; [Flex properties](pretty-core/cljs/pretty-properties/api.html#flex-properties)
   ; [Font properties](pretty-core/cljs/pretty-properties/api.html#font-properties)
   ; [Icon properties](pretty-core/cljs/pretty-properties/api.html#icon-properties)
+  ; [Inner size properties](pretty-core/cljs/pretty-properties/api.html#inner-size-properties)
   ; [Keypress properties](pretty-core/cljs/pretty-properties/api.html#keypress-properties)
   ; [Label properties](pretty-core/cljs/pretty-properties/api.html#label-properties)
   ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
   ; [Mouse event properties](pretty-core/cljs/pretty-properties/api.html#mouse-event-properties)
+  ; [Outer size properties](pretty-core/cljs/pretty-properties/api.html#outer-size-properties)
   ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
-  ; [Size properties](pretty-core/cljs/pretty-properties/api.html#size-properties)
   ; [Space properties](pretty-core/cljs/pretty-properties/api.html#space-properties)
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
   ; [Text properties](pretty-core/cljs/pretty-properties/api.html#text-properties)
@@ -109,8 +110,8 @@
   ;             :border-radius   {:all :s}
   ;             :background-size :cover
   ;             :label           "My thumbnail"
-  ;             :height          :l
-  ;             :width           :l}]
+  ;             :outer-height    :l
+  ;             :outer-width     :l}]
   ([thumbnail-props]
    [view (random/generate-keyword) thumbnail-props])
 

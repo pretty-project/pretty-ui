@@ -32,10 +32,10 @@
   ;  ...}
   [_ icon-props]
   (-> {:class :pe-icon--body}
-      (pretty-attributes/body-size-attributes icon-props)
-      (pretty-attributes/flex-attributes      icon-props)
-      (pretty-attributes/indent-attributes    icon-props)
-      (pretty-attributes/style-attributes     icon-props)))
+      (pretty-attributes/flex-attributes       icon-props)
+      (pretty-attributes/indent-attributes     icon-props)
+      (pretty-attributes/inner-size-attributes icon-props)
+      (pretty-attributes/style-attributes      icon-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -51,8 +51,8 @@
   ;  ...}
   [_ icon-props]
   (-> {:class :pe-icon}
-      (pretty-attributes/class-attributes   icon-props)
-      (pretty-attributes/outdent-attributes icon-props)
-      (pretty-attributes/size-attributes    icon-props)
-      (pretty-attributes/state-attributes   icon-props)
-      (pretty-attributes/theme-attributes   icon-props)))
+      (pretty-attributes/class-attributes      icon-props)
+      (pretty-attributes/outdent-attributes    icon-props)
+      (pretty-attributes/outer-size-attributes icon-props)
+      (pretty-attributes/state-attributes      icon-props)
+      (pretty-attributes/theme-attributes      icon-props)))

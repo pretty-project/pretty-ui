@@ -46,10 +46,10 @@
   ;  ...}
   [_ separator-props]
   (-> {:class :pe-horizontal-separator--body}
-      (pretty-attributes/body-size-attributes separator-props)
-      (pretty-attributes/flex-attributes      separator-props)
-      (pretty-attributes/indent-attributes    separator-props)
-      (pretty-attributes/style-attributes     separator-props)))
+      (pretty-attributes/flex-attributes       separator-props)
+      (pretty-attributes/indent-attributes     separator-props)
+      (pretty-attributes/inner-size-attributes separator-props)
+      (pretty-attributes/style-attributes      separator-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -65,8 +65,8 @@
   ;  ...}
   [_ separator-props]
   (-> {:class :pe-horizontal-separator}
-      (pretty-attributes/class-attributes   separator-props)
-      (pretty-attributes/outdent-attributes separator-props)
-      (pretty-attributes/size-attributes    separator-props)
-      (pretty-attributes/state-attributes   separator-props)
-      (pretty-attributes/theme-attributes   separator-props)))
+      (pretty-attributes/class-attributes      separator-props)
+      (pretty-attributes/outdent-attributes    separator-props)
+      (pretty-attributes/outer-size-attributes separator-props)
+      (pretty-attributes/state-attributes      separator-props)
+      (pretty-attributes/theme-attributes      separator-props)))

@@ -143,7 +143,7 @@
            (pretty-attributes/input-field-attributes        field-props)
            (pretty-attributes/effect-attributes       field-props)
            (pretty-attributes/react-attributes        field-props)
-           (pretty-attributes/size-attributes            field-props))))
+           (pretty-attributes/inner-size-attributes            field-props)))) ; <- ?? body inkább?
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -184,6 +184,6 @@
        :data-covered disabled?}
       (pretty-attributes/class-attributes       field-props)
       (pretty-attributes/outdent-attributes      field-props)
-      (pretty-attributes/size-attributes field-props)
+      (pretty-attributes/outer-size-attributes field-props)
       (pretty-attributes/state-attributes       field-props)
       (pretty-attributes/theme-attributes        field-props)))

@@ -17,10 +17,10 @@
   [footer-id footer-props]
   (-> {:class :pl-footer--body}
       (pretty-attributes/background-color-attributes footer-props)
-      (pretty-attributes/body-size-attributes        footer-props)
       (pretty-attributes/border-attributes           footer-props)
       (pretty-attributes/flex-attributes             footer-props)
       (pretty-attributes/indent-attributes           footer-props)
+      (pretty-attributes/inner-size-attributes       footer-props)
       (pretty-attributes/style-attributes            footer-props)))
 
 ;; ----------------------------------------------------------------------------
@@ -37,8 +37,8 @@
   ;  ...}
   [_ footer-props]
   (-> {:class :pl-footer}
-      (pretty-attributes/class-attributes   footer-props)
-      (pretty-attributes/outdent-attributes footer-props)
-      (pretty-attributes/size-attributes    footer-props)
-      (pretty-attributes/state-attributes   footer-props)
-      (pretty-attributes/theme-attributes   footer-props)))
+      (pretty-attributes/class-attributes      footer-props)
+      (pretty-attributes/outdent-attributes    footer-props)
+      (pretty-attributes/outer-size-attributes footer-props)
+      (pretty-attributes/state-attributes      footer-props)
+      (pretty-attributes/theme-attributes      footer-props)))

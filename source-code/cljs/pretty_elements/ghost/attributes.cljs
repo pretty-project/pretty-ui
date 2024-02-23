@@ -18,9 +18,9 @@
   (-> {:class :pe-ghost--body}
       (pretty-attributes/animation-attributes        ghost-props)
       (pretty-attributes/background-color-attributes ghost-props)
-      (pretty-attributes/body-size-attributes        ghost-props)
       (pretty-attributes/border-attributes           ghost-props)
       (pretty-attributes/indent-attributes           ghost-props)
+      (pretty-attributes/inner-size-attributes       ghost-props)
       (pretty-attributes/style-attributes            ghost-props)))
 
 ;; ----------------------------------------------------------------------------
@@ -37,8 +37,8 @@
   ;  ...}
   [_ ghost-props]
   (-> {:class :pe-ghost}
-      (pretty-attributes/class-attributes   ghost-props)
-      (pretty-attributes/outdent-attributes ghost-props)
-      (pretty-attributes/size-attributes    ghost-props)
-      (pretty-attributes/state-attributes   ghost-props)
-      (pretty-attributes/theme-attributes   ghost-props)))
+      (pretty-attributes/class-attributes      ghost-props)
+      (pretty-attributes/outdent-attributes    ghost-props)
+      (pretty-attributes/outer-size-attributes ghost-props)
+      (pretty-attributes/state-attributes      ghost-props)
+      (pretty-attributes/theme-attributes      ghost-props)))
