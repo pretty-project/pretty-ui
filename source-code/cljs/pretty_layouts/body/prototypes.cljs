@@ -16,7 +16,7 @@
   ; @return (map)
   [_ body-props]
   (-> body-props (pretty-properties/default-flex-props       {:orientation :horizontal})
-                 (pretty-properties/default-outer-size-props {:outer-height :content :outer-width :parent :outer-size-unit :half-block})
+                 (pretty-properties/default-outer-size-props {:outer-height :parent :outer-width :parent :outer-size-unit :half-block})
                  (pretty-standards/standard-border-props)
                  (pretty-standards/standard-flex-props)
                  (pretty-standards/standard-inner-position-props)

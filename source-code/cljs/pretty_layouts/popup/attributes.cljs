@@ -5,6 +5,23 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn popup-content-attributes
+  ; @ignore
+  ;
+  ; @param (keyword) popup-id
+  ; @param (map) popup-props
+  ;
+  ; @return (map)
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
+  [_ popup-props]
+  (-> {:class :pl-popup--content}
+      (pretty-attributes/content-size-attributes popup-props)
+      (pretty-attributes/overflow-attributes     popup-props)))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn popup-inner-attributes
   ; @ignore
   ;
@@ -14,7 +31,7 @@
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [popup-id popup-props]
+  [_ popup-props]
   (-> {:class :pl-popup--inner}
       (pretty-attributes/background-color-attributes popup-props)
       (pretty-attributes/border-attributes           popup-props)
@@ -45,5 +62,3 @@
       (pretty-attributes/overlay-attributes        popup-props)
       (pretty-attributes/state-attributes          popup-props)
       (pretty-attributes/theme-attributes          popup-props)))
-
-; + fullscreen-props ... stretch-orientation

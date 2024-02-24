@@ -62,6 +62,9 @@
   ; Check out the implemented properties.
   ;
   ; @usage (pretty-layouts/header.png)
+  ; [header {:content    "My header"
+  ;          :fill-color :highlight
+  ;          :indent     {:all :s}}]
   ([header-props]
    [view (random/generate-keyword) header-props])
 

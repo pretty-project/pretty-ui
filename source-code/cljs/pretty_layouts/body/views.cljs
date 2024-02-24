@@ -62,6 +62,9 @@
   ; Check out the implemented properties.
   ;
   ; @usage (pretty-layouts/body.png)
+  ; [body {:content    "My body"
+  ;        :fill-color :highlight
+  ;        :indent     {:all :s}}]
   ([body-props]
    [view (random/generate-keyword) body-props])
 

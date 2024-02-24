@@ -39,7 +39,7 @@
   (let [options (combo-box.env/get-rendered-options box-id box-props)]
        {:class :pi-combo-box--options
         :data-options-rendered (-> options empty? not)
-        :data-scroll-axis :y}))
+        :data-scroll-axis :y})) ; overflow-attributes
 
 (defn combo-box-surface-content-attributes
   ; @ignore

@@ -62,6 +62,9 @@
   ; Check out the implemented properties.
   ;
   ; @usage (pretty-layouts/footer.png)
+  ; [footer {:content    "My footer"
+  ;          :fill-color :highlight
+  ;          :indent     {:all :s}}]
   ([footer-props]
    [view (random/generate-keyword) footer-props])
 

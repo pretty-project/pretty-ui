@@ -36,7 +36,7 @@
   ;  :data-scroll-axis (keyword)}
   [_ sidebar-props]
   (-> {:class            :pw-sidebar--inner
-       :data-scroll-axis :y}
+       :data-scroll-axis :y} ; overflow-attributes
       (pretty-attributes/background-color-attributes  sidebar-props)
       (pretty-attributes/border-attributes sidebar-props)
       (pretty-attributes/indent-attributes sidebar-props)
