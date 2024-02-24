@@ -1,8 +1,8 @@
 
-(ns pretty-accessories.marker.views
+(ns pretty-accessories.sensor.views
     (:require [fruits.random.api :as random]
-              [pretty-accessories.marker.attributes :as marker.attributes]
-              [pretty-accessories.marker.prototypes :as marker.prototypes]
+              [pretty-accessories.sensor.attributes :as sensor.attributes]
+              [pretty-accessories.sensor.prototypes :as sensor.prototypes]
               [pretty-elements.engine.api :as pretty-elements.engine]
               [pretty-presets.engine.api :as pretty-presets.engine]
               [reagent.core :as reagent]))
@@ -10,14 +10,14 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- marker
+(defn- sensor
   ; @ignore
   ;
-  ; @param (keyword) marker-id
-  ; @param (map) marker-props
-  [marker-id marker-props]
-  [:div (marker.attributes/marker-attributes marker-id marker-props)
-        [:div (marker.attributes/marker-inner-attributes marker-id marker-props)]])
+  ; @param (keyword) sensor-id
+  ; @param (map) sensor-props
+  [sensor-id sensor-props]
+  [:div (sensor.attributes/sensor-attributes sensor-id sensor-props)
+        [:div (sensor.attributes/sensor-inner-attributes sensor-id sensor-props)]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -25,27 +25,27 @@
 (defn- view-lifecycles
   ; @ignore
   ;
-  ; @param (keyword) marker-id
-  ; @param (map) marker-props
-  [marker-id marker-props]
+  ; @param (keyword) sensor-id
+  ; @param (map) sensor-props
+  [sensor-id sensor-props]
   ; @note (tutorials#parameterizing)
-  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    marker-id marker-props))
-                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount marker-id marker-props))
-                         :reagent-render         (fn [_ marker-props] [marker marker-id marker-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    sensor-id sensor-props))
+                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount sensor-id sensor-props))
+                         :reagent-render         (fn [_ sensor-props] [sensor sensor-id sensor-props])}))
 
 (defn view
   ; @description
-  ; Marker accessory for elements.
+  ; Sensor accessory for elements.
   ;
   ; @links Implemented properties
   ; [Animation properties](pretty-core/cljs/pretty-properties/api.html#animation-properties)
   ; [Background color properties](pretty-core/cljs/pretty-properties/api.html#background-color-properties)
-  ; [Border properties](pretty-core/cljs/pretty-properties/api.html#border-properties)
   ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
   ; [Inner position properties](pretty-core/cljs/pretty-properties/api.html#inner-position-properties)
   ; [Inner size properties](pretty-core/cljs/pretty-properties/api.html#inner-size-properties)
   ; [Inner space properties](pretty-core/cljs/pretty-properties/api.html#inner-space-properties)
   ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
+  ; [Mouse event properties](pretty-core/cljs/pretty-properties/api.html#mouse-event-properties)
   ; [Outer position properties](pretty-core/cljs/pretty-properties/api.html#outer-position-properties)
   ; [Outer size properties](pretty-core/cljs/pretty-properties/api.html#outer-size-properties)
   ; [Outer space properties](pretty-core/cljs/pretty-properties/api.html#outer-space-properties)
@@ -53,21 +53,21 @@
   ; [State properties](pretty-core/cljs/pretty-properties/api.html#state-properties)
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
+  ; [Visibility properties](pretty-core/cljs/pretty-properties/api.html#visibility-properties)
   ;
-  ; @param (keyword)(opt) marker-id
-  ; @param (map) marker-props
+  ; @param (keyword)(opt) sensor-id
+  ; @param (map) sensor-props
   ; Check out the implemented properties.
   ;
-  ; @usage (pretty-accessories/marker.png)
-  ; [marker {:border-radius {:all :s}
-  ;          :fill-color    :primary
-  ;          :position      :tr}]
-  ([marker-props]
-   [view (random/generate-keyword) marker-props])
+  ; @usage (pretty-accessories/sensor.png)
+  ; [sensor {:fill-color      :invert
+  ;          :on-mouse-over-f (fn [_] ...)}]
+  ([sensor-props]
+   [view (random/generate-keyword) sensor-props])
 
-  ([marker-id marker-props]
+  ([sensor-id sensor-props]
    ; @note (tutorials#parameterizing)
-   (fn [_ marker-props]
-       (let [marker-props (pretty-presets.engine/apply-preset       marker-id marker-props)
-             marker-props (marker.prototypes/marker-props-prototype marker-id marker-props)]
-            [view-lifecycles marker-id marker-props]))))
+   (fn [_ sensor-props]
+       (let [sensor-props (pretty-presets.engine/apply-preset       sensor-id sensor-props)
+             sensor-props (sensor.prototypes/sensor-props-prototype sensor-id sensor-props)]
+            [view-lifecycles sensor-id sensor-props]))))

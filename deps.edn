@@ -42,3 +42,4 @@
 ; + pretty-core, pretty-engines ...
 
 ; intersection-observer és hasnolok átkölzötek a pretty-engines-be
+; window-observer kell?

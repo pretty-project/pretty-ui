@@ -176,9 +176,4 @@
    (fn [_ field-props]
        (let [field-props (pretty-presets.engine/apply-preset          field-id field-props)
              field-props (text-field.prototypes/field-props-prototype field-id field-props)]
-
-             ;field-props (pretty-elements.engine/element-subitem-field<-subitem-default field-id field-props :start-adornments :start-adornment-default)
-             ;field-props (pretty-elements.engine/element-subitem-field<-disabled-state  field-id field-props :end-adornments   :end-adornment-default)
-             ;field-props (pretty-elements.engine/element-subitem-field<-subitem-default field-id field-props :start-adornments :start-adornment-default)
-             ;field-props (pretty-elements.engine/element-subitem-field<-disabled-state  field-id field-props :end-adornments   :end-adornment-default)
             [view-lifecycles field-id field-props]))))

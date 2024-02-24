@@ -1,6 +1,6 @@
 
 (ns pretty-elements.dropdown-menu.side-effects
-    (:require [pretty-elements.engine.api :as pretty-elements.engine]
+    (:require [pretty-subitems.api :as pretty-subitems]
               [pretty-elements.expandable.side-effects :as expandable.side-effects]
               [dynamic-props.api :as dynamic-props]))
 
@@ -22,7 +22,7 @@
   ;   the 'on-mouse-out' event of the 'dropdown-menu' element wouldn't fire at all.
   ; - https://www.geeksforgeeks.org/how-to-disable-mouseout-events-triggered-by-child-elements
   ;   According to this article, using the 'on-mouse-leave' event instead of using the 'on-mouse-out' event solves the problem.
-  (let [expandable-id (pretty-elements.engine/element-id->subitem-id menu-id :expandable)]
+  (let [expandable-id (pretty-subitems/subitem-id menu-id :expandable)]
        (expandable.side-effects/collapse-content! expandable-id)))
 
 ;; ----------------------------------------------------------------------------
@@ -34,6 +34,6 @@
   ; @param (keyword) menu-id
   ; @param (metamorphic-content) dropdown-content
   [menu-id dropdown-content]
-  (let [expandable-id (pretty-elements.engine/element-id->subitem-id menu-id :expandable)]
+  (let [expandable-id (pretty-subitems/subitem-id menu-id :expandable)]
        (dynamic-props/update-props!             expandable-id assoc :content dropdown-content)
        (expandable.side-effects/expand-content! expandable-id)))

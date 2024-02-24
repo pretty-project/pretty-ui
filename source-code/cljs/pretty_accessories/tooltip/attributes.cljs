@@ -46,6 +46,7 @@
   ;  ...}
   [tooltip-id tooltip-props]
   (-> {:class :pa-tooltip--inner}
+      (pretty-attributes/animation-attributes        tooltip-props)
       (pretty-attributes/background-color-attributes tooltip-props)
       (pretty-attributes/border-attributes           tooltip-props)
       (pretty-attributes/inner-size-attributes       tooltip-props)

@@ -16,6 +16,7 @@
   ;  ...}
   [bullet-id bullet-props]
   (-> {:class :pa-bullet--inner}
+      (pretty-attributes/animation-attributes        bullet-props)
       (pretty-attributes/background-color-attributes bullet-props)
       (pretty-attributes/border-attributes           bullet-props)
       (pretty-attributes/inner-size-attributes       bullet-props)

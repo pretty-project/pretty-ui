@@ -2,7 +2,8 @@
 (ns pretty-elements.breadcrumbs.prototypes
     (:require [pretty-properties.api :as pretty-properties]
               [pretty-rules.api :as pretty-rules]
-              [pretty-standards.api :as pretty-standards]))
+              [pretty-standards.api :as pretty-standards]
+              [pretty-subitems.api :as pretty-subitems]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -48,4 +49,7 @@
                         (pretty-standards/standard-inner-size-props)
                         (pretty-standards/standard-outer-position-props)
                         (pretty-standards/standard-outer-size-props)
-                        (pretty-rules/auto-align-scrollable-flex)))
+                        (pretty-rules/auto-align-scrollable-flex)
+                        (pretty-subitems/subitem-group<-subitem-default :crumbs)
+                        (pretty-subitems/subitem-group<-disabled-state  :crumbs)
+                        (pretty-subitems/leave-disabled-state           :crumbs)))

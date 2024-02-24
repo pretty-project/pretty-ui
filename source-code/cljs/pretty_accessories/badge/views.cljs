@@ -43,6 +43,7 @@
   ; Badge accessory for elements.
   ;
   ; @links Implemented properties
+  ; [Animation properties](pretty-core/cljs/pretty-properties/api.html#animation-properties)
   ; [Background color properties](pretty-core/cljs/pretty-properties/api.html#background-color-properties)
   ; [Border properties](pretty-core/cljs/pretty-properties/api.html#border-properties)
   ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)

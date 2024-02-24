@@ -17,6 +17,7 @@
   [_ bullet-props]
   (-> bullet-props (pretty-properties/default-background-color-props {:fill-color :muted})
                    (pretty-properties/default-outer-size-props       {:outer-height :xxs :outer-width :xxs :outer-size-unit :quarter-block})
+                   (pretty-standards/standard-animation-props)
                    (pretty-standards/standard-inner-position-props)
                    (pretty-standards/standard-inner-size-props)
                    (pretty-standards/standard-outer-position-props)

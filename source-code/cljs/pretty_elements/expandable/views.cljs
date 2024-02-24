@@ -6,6 +6,7 @@
               [pretty-elements.expandable.attributes :as expandable.attributes]
               [pretty-elements.expandable.prototypes :as expandable.prototypes]
               [pretty-presets.engine.api             :as pretty-presets.engine]
+              [pretty-subitems.api             :as pretty-subitems]
               [reagent.core :as reagent]
               [dynamic-props.api :as dynamic-props]))
 
@@ -20,8 +21,8 @@
   ; {:button (map)(opt)
   ;  ...}
   [expandable-id {:keys [button] :as expandable-props}]
-  (let [button-id    (pretty-elements.engine/element-id->subitem-id expandable-id :button)
-        button-props (expandable.prototypes/button-props-prototype  expandable-id expandable-props)]
+  (let [button-id    (pretty-subitems/subitem-id                   expandable-id :button)
+        button-props (expandable.prototypes/button-props-prototype expandable-id expandable-props)]
        [button.views/view button-id button-props]))
 
 (defn expandable-content
@@ -111,9 +112,7 @@
   ([expandable-id expandable-props]
    ; @note (tutorials#parameterizing)
    (fn [_ expandable-props]
-       (let [expandable-props (pretty-presets.engine/apply-preset                     expandable-id expandable-props)
-             expandable-props (expandable.prototypes/expandable-props-prototype       expandable-id expandable-props)
-             expandable-props (pretty-elements.engine/element-subitem<-disabled-state expandable-id expandable-props :button)
-             expandable-props (pretty-elements.engine/leave-element-disabled-state    expandable-id expandable-props :button)
-             expandable-props (dynamic-props/import-props                             expandable-id expandable-props)]
+       (let [expandable-props (pretty-presets.engine/apply-preset               expandable-id expandable-props)
+             expandable-props (expandable.prototypes/expandable-props-prototype expandable-id expandable-props)
+             expandable-props (dynamic-props/import-props                       expandable-id expandable-props)]
             [view-lifecycles expandable-id expandable-props]))))

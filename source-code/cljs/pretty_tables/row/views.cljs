@@ -91,9 +91,6 @@
   ([row-id row-props]
    ; @note (tutorials#parameterizing)
    (fn [_ row-props]
-       (let [row-props (pretty-presets.engine/apply-preset                            row-id row-props)
-             row-props (row.prototypes/row-props-prototype                            row-id row-props)
-             row-props (pretty-elements.engine/element-subitem-group<-subitem-default row-id row-props :cells :cell-default)
-             row-props (pretty-elements.engine/element-subitem-group<-disabled-state  row-id row-props :cells)
-             row-props (pretty-elements.engine/leave-element-disabled-state           row-id row-props :cells)]
+       (let [row-props (pretty-presets.engine/apply-preset row-id row-props)
+             row-props (row.prototypes/row-props-prototype row-id row-props)]
             [view-lifecycles row-id row-props]))))

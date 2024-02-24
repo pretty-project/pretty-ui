@@ -3,7 +3,8 @@
     (:require [pretty-properties.api :as pretty-properties]
               [react-references.api :as react-references]
               [pretty-rules.api :as pretty-rules]
-              [pretty-standards.api :as pretty-standards]))
+              [pretty-standards.api :as pretty-standards]
+              [pretty-subitems.api :as pretty-subitems]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -42,4 +43,7 @@
                       (pretty-rules/auto-disable-hover-color)
                       (pretty-rules/auto-disable-mouse-events)
                       (pretty-rules/auto-set-click-effect)
-                      (pretty-rules/compose-label))))
+                      (pretty-rules/compose-label)
+                      (pretty-subitems/subitem-groups<-subitem-default :start-adornments :end-adornments)
+                      (pretty-subitems/subitem-groups<-disabled-state  :start-adornments :end-adornments)
+                      (pretty-subitems/leave-disabled-state            :start-adornments :end-adornments))))

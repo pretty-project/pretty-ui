@@ -33,6 +33,7 @@
   ;  ...}
   [_ popup-props]
   (-> {:class :pl-popup--inner}
+      (pretty-attributes/animation-attributes        popup-props)
       (pretty-attributes/background-color-attributes popup-props)
       (pretty-attributes/border-attributes           popup-props)
       (pretty-attributes/flex-attributes             popup-props)
@@ -59,6 +60,5 @@
       (pretty-attributes/outer-position-attributes popup-props)
       (pretty-attributes/outer-size-attributes     popup-props)
       (pretty-attributes/outer-space-attributes    popup-props)
-      (pretty-attributes/overlay-attributes        popup-props)
       (pretty-attributes/state-attributes          popup-props)
       (pretty-attributes/theme-attributes          popup-props)))

@@ -14,7 +14,7 @@
   ;
   ; @return (map)
   ; {}
-  (fn [{:keys [on-click on-mouse-over on-right-click] :as element-props}]
+  (fn [_ {:keys [on-click on-mouse-over on-right-click] :as element-props}]
       (merge (if on-click       {:on-click-f       #(r/dispatch on-click)})
              (if on-mouse-over  {:on-mouse-over-f  #(r/dispatch on-mouse-over)})
              (if on-right-click {:on-right-click-f #(r/dispatch on-click)})

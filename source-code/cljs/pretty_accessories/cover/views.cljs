@@ -43,6 +43,8 @@
   ; Cover accessory for elements.
   ;
   ; @links Implemented properties
+  ; [Animation properties](pretty-core/cljs/pretty-properties/api.html#animation-properties)
+  ; [Background color properties](pretty-core/cljs/pretty-properties/api.html#background-color-properties)
   ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
   ; [Font properties](pretty-core/cljs/pretty-properties/api.html#font-properties)
   ; [Flex properties](pretty-core/cljs/pretty-properties/api.html#flex-properties)
@@ -61,15 +63,16 @@
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
   ; [Text properties](pretty-core/cljs/pretty-properties/api.html#text-properties)
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
+  ; [Visibility properties](pretty-core/cljs/pretty-properties/api.html#visibility-properties)
   ;
   ; @param (keyword)(opt) cover-id
   ; @param (map) cover-props
   ; Check out the implemented properties.
   ;
   ; @usage (pretty-accessories/cover.png)
-  ; [cover {:label           "My cover"
-  ;         :overlay-color   :highlight
-  ;         :overlay-opacity :medium}]
+  ; [cover {:fill-color :highlight
+  ;         :label      "My cover"
+  ;         :opacity    :medium}]
   ([cover-props]
    [view (random/generate-keyword) cover-props])
 

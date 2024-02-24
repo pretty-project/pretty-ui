@@ -3,6 +3,7 @@
     (:require [pretty-rules.api :as pretty-rules]
               [pretty-properties.api :as pretty-properties]
               [pretty-standards.api :as pretty-standards]
+              [pretty-subitems.api :as pretty-subitems]
               [pretty-layouts.engine.api :as pretty-layouts.engine]))
 
 ;; ----------------------------------------------------------------------------
@@ -71,12 +72,14 @@
                   (pretty-properties/default-outer-position-props {:outer-position :center :outer-position-method :fixed})
                   (pretty-properties/default-outer-size-props     {:outer-size-unit :screen})
                   (pretty-properties/default-overflow-props       {:vertical-overflow :scroll})
+                  (pretty-standards/standard-animation-props)
                   (pretty-standards/standard-border-props)
                   (pretty-standards/standard-inner-position-props)
                   (pretty-standards/standard-inner-size-props)
                   (pretty-standards/standard-outer-position-props)
                   (pretty-standards/standard-outer-size-props)
-                  (pretty-standards/standard-overlay-props)
-                  (pretty-rules/apply-auto-border-crop)))
+                  (pretty-rules/apply-auto-border-crop)
                  ;(pretty-rules/auto-disable-highlight-color)
-                 ;(pretty-rules/auto-disable-hover-color)))
+                 ;(pretty-rules/auto-disable-hover-color)
+                  (pretty-subitems/subitems<-disabled-state :body :footer :header)
+                  (pretty-subitems/leave-disabled-state     :body :footer :header)))

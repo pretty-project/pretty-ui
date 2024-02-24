@@ -19,6 +19,7 @@
                   (pretty-properties/default-outer-position-props {:outer-position :br :outer-position-method :absolute})
                   (pretty-properties/default-outer-size-props     {:outer-size-unit :quarter-block})
                   (pretty-properties/default-text-props           {:text-selectable? false})
+                  (pretty-standards/standard-animation-props)
                   (pretty-standards/standard-border-props)
                   (pretty-standards/standard-font-props)
                   (pretty-standards/standard-icon-props)

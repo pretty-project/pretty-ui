@@ -114,11 +114,7 @@
   ([bubble-id bubble-props]
    ; @note (tutorials#parameterizing)
    (fn [_ bubble-props]
-       (let [bubble-props (pretty-presets.engine/apply-preset                            bubble-id bubble-props)
-             bubble-props (notification-bubble.prototypes/bubble-props-prototype         bubble-id bubble-props)
-             bubble-props (pretty-elements.engine/element-timeout-props                  bubble-id bubble-props)
-             bubble-props (pretty-elements.engine/element-subitem-group<-subitem-default bubble-id bubble-props :start-adornments :start-adornment-default)
-             bubble-props (pretty-elements.engine/element-subitem-group<-subitem-default bubble-id bubble-props :end-adornments   :end-adornment-default)
-             bubble-props (pretty-elements.engine/element-subitem-group<-disabled-state  bubble-id bubble-props :start-adornments)
-             bubble-props (pretty-elements.engine/element-subitem-group<-disabled-state  bubble-id bubble-props :end-adornments)]
+       (let [bubble-props (pretty-presets.engine/apply-preset                    bubble-id bubble-props)
+             bubble-props (notification-bubble.prototypes/bubble-props-prototype bubble-id bubble-props)
+             bubble-props (pretty-elements.engine/element-timeout-props          bubble-id bubble-props)]
             [view-lifecycles bubble-id bubble-props]))))

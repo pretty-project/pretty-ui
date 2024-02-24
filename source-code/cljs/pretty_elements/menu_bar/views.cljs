@@ -91,9 +91,6 @@
   ([bar-id bar-props]
    ; @note (tutorials#parameterizing)
    (fn [_ bar-props]
-       (let [bar-props (pretty-presets.engine/apply-preset                            bar-id bar-props)
-             bar-props (menu-bar.prototypes/bar-props-prototype                       bar-id bar-props)
-             bar-props (pretty-elements.engine/element-subitem-group<-subitem-default bar-id bar-props :menu-items :menu-item-default)
-             bar-props (pretty-elements.engine/element-subitem-group<-disabled-state  bar-id bar-props :menu-items)
-             bar-props (pretty-elements.engine/leave-element-disabled-state           bar-id bar-props :menu-items)]
+       (let [bar-props (pretty-presets.engine/apply-preset      bar-id bar-props)
+             bar-props (menu-bar.prototypes/bar-props-prototype bar-id bar-props)]
             [view-lifecycles bar-id bar-props]))))

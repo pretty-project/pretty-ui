@@ -20,6 +20,7 @@
                     (pretty-properties/default-outer-position-props   {:outer-position :right :outer-position-base :external :outer-position-method :absolute :layer :uppermost})
                     (pretty-properties/default-outer-size-props       {:outer-size-unit :quarter-block})
                     (pretty-properties/default-text-props             {:text-color :invert :text-selectable? false})
+                    (pretty-standards/standard-animation-props)
                     (pretty-standards/standard-border-props)
                     (pretty-standards/standard-font-props)
                     (pretty-standards/standard-icon-props)

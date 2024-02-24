@@ -18,6 +18,7 @@
   (-> marker-props (pretty-properties/default-background-color-props {:fill-color :default})
                    (pretty-properties/default-outer-position-props   {:outer-position :tr :outer-position-method :absolute})
                    (pretty-properties/default-outer-size-props       {:outer-height :xxs :outer-width :xxs :outer-size-unit :quarter-block})
+                   (pretty-standards/standard-animation-props)
                    (pretty-standards/standard-inner-position-props)
                    (pretty-standards/standard-inner-size-props)
                    (pretty-standards/standard-outer-position-props)

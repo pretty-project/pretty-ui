@@ -15,7 +15,7 @@
   ;
   ; @return (map)
   ; {}
-  (fn [{:keys [options options-path value-path] :as input-props}]
+  (fn [_ {:keys [options options-path value-path] :as input-props}]
 
       ; Emiatt a blur esemény azonnal a state-be irta a field content-et
       ; de most már a validator-ok nem a state alapján validálnak hanem az internal-value alapján
@@ -49,7 +49,7 @@
   ;
   ; @return (map)
   ; {}
-  (fn [{:keys [add-options? options options-path value-path] :as input-props}]
+  (fn [_ {:keys [add-options? options options-path value-path] :as input-props}]
       (merge (if options      {:get-options-f #(-> options)})
              (if add-options? {:add-option-f  #(r/dispatch   [:update-item! options-path vector/cons-item-once %])})
              (if options-path {:get-options-f #(r/subscribed [:get-item     options-path])})

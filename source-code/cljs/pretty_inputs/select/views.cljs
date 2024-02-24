@@ -13,7 +13,8 @@
               [pretty-inputs.text-field.views  :as text-field.views]
               [pretty-layouts.api              :as pretty-layouts]
               [pretty-presets.engine.api       :as pretty-presets.engine]
-              [reagent.core :as reagent]))
+              [reagent.core :as reagent]
+              [pretty-subitems.api :as pretty-subitems]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -27,7 +28,7 @@
   ; The option field  ...
   ; ... filters the selectable options.
   ; ... optionally provide an "Add" button as end adornment to add new options.
-  (let [field-id    (pretty-inputs.engine/input-id->subitem-id      select-id :text-field)
+  (let [field-id    (pretty-subitems/subitem-id select-id :text-field)
         field-props (select.prototypes/field-props-prototype select-id select-props)]
        [text-field.views/view field-id field-props]))
 
@@ -96,8 +97,8 @@
   ; @param (map) select-props
   ; {:popup (map)(opt)}
   [select-id {:keys [popup] :as select-props}]
-  (let [popup-id    (pretty-inputs.engine/input-id->subitem-id select-id :popup)
-        popup-props (select.prototypes/popup-props-prototype   select-id select-props)
+  (let [popup-id    (pretty-subitems/subitem-id select-id :popup)
+        popup-props (select.prototypes/popup-props-prototype select-id select-props)
         popup-props (assoc popup-props :body   [select-popup-body   select-id select-props]
                                        :header [select-popup-header select-id select-props])]
        (if (pretty-inputs.engine/input-popup-visible? select-id select-props)
@@ -113,7 +114,7 @@
   ; @param (keyword) select-id
   ; @param (map) select-props
   [select-id select-props]
-  (let [button-id    (pretty-inputs.engine/input-id->subitem-id       select-id :button)
+  (let [button-id    (pretty-subitems/subitem-id select-id :button)
         button-props (select.prototypes/select-button-props-prototype select-id select-props)]
        [pretty-elements/button button-id button-props]))
 
@@ -123,7 +124,7 @@
   ; @param (keyword) select-id
   ; @param (map) select-props
   [select-id select-props]
-  (let [button-id    (pretty-inputs.engine/input-id->subitem-id     select-id :button)
+  (let [button-id    (pretty-subitems/subitem-id select-id :button)
         button-props (select.prototypes/icon-button-props-prototype select-id select-props)]
        [pretty-elements/icon-button button-id button-props]))
 
@@ -133,7 +134,7 @@
   ; @param (keyword) select-id
   ; @param (map) select-props
   [select-id select-props]
-  (let [button-id    (pretty-inputs.engine/input-id->subitem-id select-id :button)
+  (let [button-id    (pretty-subitems/subitem-id select-id :button)
         button-props (select.prototypes/button-props-prototype  select-id select-props)]
        [pretty-elements/button button-id button-props]))
 

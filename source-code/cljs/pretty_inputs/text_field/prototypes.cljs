@@ -92,3 +92,9 @@
                             :on-focus      [:pretty-inputs.text-field/field-focused field-id %]
                             :on-type-ended [:pretty-inputs.text-field/type-ended    field-id %]}))))
           ; input/autofill-rules
+
+
+          ;field-props (pretty-elements.engine/element-subitem-field<-subitem-default field-id field-props :start-adornments :start-adornment-default)
+          ;field-props (pretty-elements.engine/element-subitem-field<-disabled-state  field-id field-props :end-adornments   :end-adornment-default)
+          ;field-props (pretty-elements.engine/element-subitem-field<-subitem-default field-id field-props :start-adornments :start-adornment-default)
+          ;field-props (pretty-elements.engine/element-subitem-field<-disabled-state  field-id field-props :end-adornments   :end-adornment-default)

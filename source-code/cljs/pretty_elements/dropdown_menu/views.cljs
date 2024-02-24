@@ -7,6 +7,7 @@
               [pretty-elements.menu-bar.views           :as menu-bar.views]
               [pretty-elements.expandable.views         :as expandable.views]
               [pretty-presets.engine.api                :as pretty-presets.engine]
+              [pretty-subitems.api                :as pretty-subitems]
               [reagent.core :as reagent]))
 
 ;; ----------------------------------------------------------------------------
@@ -18,7 +19,7 @@
   ; @param (keyword) menu-id
   ; @param (map) menu-props
   [menu-id menu-props]
-  (let [bar-id    (pretty-elements.engine/element-id->subitem-id menu-id :menu-bar)
+  (let [bar-id    (pretty-subitems/subitem-id                    menu-id :menu-bar)
         bar-props (dropdown-menu.prototypes/bar-props-prototype  menu-id menu-props)]
        [menu-bar.views/view bar-id bar-props]))
 
@@ -28,7 +29,7 @@
   ; @param (keyword) menu-id
   ; @param (map) menu-props
   [menu-id menu-props]
-  (let [expandable-id    (pretty-elements.engine/element-id->subitem-id       menu-id :expandable)
+  (let [expandable-id    (pretty-subitems/subitem-id                          menu-id :expandable)
         expandable-props (dropdown-menu.prototypes/expandable-props-prototype menu-id menu-props)]
        [expandable.views/view expandable-id expandable-props]))
 
@@ -75,7 +76,7 @@
   ; [Outer size properties](pretty-core/cljs/pretty-properties/api.html#outer-size-properties)
   ; [Outer space properties](pretty-core/cljs/pretty-properties/api.html#outer-space-properties)
   ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
-  
+
   ; [State properties](pretty-core/cljs/pretty-properties/api.html#state-properties)
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
@@ -105,10 +106,6 @@
   ([menu-id menu-props]
    ; @note (tutorials#parameterizing)
    (fn [_ menu-props]
-       (let [menu-props (pretty-presets.engine/apply-preset                     menu-id menu-props)
-             menu-props (dropdown-menu.prototypes/menu-props-prototype          menu-id menu-props)
-             menu-props (pretty-elements.engine/element-subitem<-disabled-state menu-id menu-props :menu-bar)
-             menu-props (pretty-elements.engine/element-subitem<-disabled-state menu-id menu-props :expandable)
-             menu-props (pretty-elements.engine/leave-element-disabled-state    menu-id menu-props :menu-bar)
-             menu-props (pretty-elements.engine/leave-element-disabled-state    menu-id menu-props :expandable)]
+       (let [menu-props (pretty-presets.engine/apply-preset            menu-id menu-props)
+             menu-props (dropdown-menu.prototypes/menu-props-prototype menu-id menu-props)]
             [view-lifecycles menu-id menu-props]))))

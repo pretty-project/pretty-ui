@@ -83,7 +83,7 @@
 ;                             {:border-radius {:all :xs}})
 ;
 ; (pretty-presets/reg-preset! :my-preset-f
-;                             (fn [%] (assoc % :border-radius {:all :xs})))
+;                             (fn [id props] (assoc props :border-radius {:all :xs})))
 ;
 ; @---
 ; (ns my-namespace

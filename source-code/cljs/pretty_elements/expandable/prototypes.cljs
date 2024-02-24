@@ -3,7 +3,8 @@
     (:require [pretty-elements.expandable.side-effects :as expandable.side-effects]
               [pretty-properties.api                   :as pretty-properties]
               [pretty-standards.api                   :as pretty-standards]
-              [pretty-rules.api                   :as pretty-rules]))
+              [pretty-rules.api                   :as pretty-rules]
+              [pretty-subitems.api :as pretty-subitems]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -48,4 +49,6 @@
                        (pretty-standards/standard-text-props)
                       ;(pretty-rules/auto-disable-highlight-color)
                       ;(pretty-rules/auto-disable-hover-color)
-                       (pretty-rules/compose-content)))
+                       (pretty-rules/compose-content)
+                       (pretty-subitems/subitem<-disabled-state :button)
+                       (pretty-subitems/leave-disabled-state    :button)))

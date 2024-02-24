@@ -115,11 +115,7 @@
   ([chip-id chip-props]
    ; @note (tutorials#parameterizing)
    (fn [_ chip-props]
-       (let [chip-props (pretty-presets.engine/apply-preset                            chip-id chip-props)
-             chip-props (chip.prototypes/chip-props-prototype                          chip-id chip-props)
-             chip-props (pretty-elements.engine/element-timeout-props                  chip-id chip-props)
-             chip-props (pretty-elements.engine/element-subitem-group<-subitem-default chip-id chip-props :start-adornments :start-adornment-default)
-             chip-props (pretty-elements.engine/element-subitem-group<-subitem-default chip-id chip-props :end-adornments   :end-adornment-default)
-             chip-props (pretty-elements.engine/element-subitem-group<-disabled-state  chip-id chip-props :start-adornments)
-             chip-props (pretty-elements.engine/element-subitem-group<-disabled-state  chip-id chip-props :end-adornments)]
+       (let [chip-props (pretty-presets.engine/apply-preset           chip-id chip-props)
+             chip-props (chip.prototypes/chip-props-prototype         chip-id chip-props)
+             chip-props (pretty-elements.engine/element-timeout-props chip-id chip-props)]
             [view-lifecycles chip-id chip-props]))))

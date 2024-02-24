@@ -1,5 +1,5 @@
 
-(ns pretty-layouts.sidebar.prototypes
+(ns pretty-layouts.surface.prototypes
     (:require [pretty-rules.api :as pretty-rules]
               [pretty-properties.api :as pretty-properties]
               [pretty-standards.api :as pretty-standards]
@@ -58,27 +58,25 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn sidebar-props-prototype
+(defn surface-props-prototype
   ; @ignore
   ;
-  ; @param (keyword) sidebar-id
-  ; @param (map) sidebar-props
+  ; @param (keyword) surface-id
+  ; @param (map) surface-props
   ;
   ; @return (map)
-  [_ sidebar-props]
-  (-> sidebar-props (pretty-properties/default-content-size-props   {:content-height :grow :content-width :parent})
+  [_ surface-props]
+  (-> surface-props (pretty-properties/default-content-size-props   {:content-height :grow :content-width :parent})
                     (pretty-properties/default-flex-props           {:orientation :vertical})
-                    (pretty-properties/default-inner-position-props {:inner-position :center :inner-position-method :flex})
-                    (pretty-properties/default-outer-position-props {:outer-position :left :outer-position-method :absolute})
-                    (pretty-properties/default-outer-size-props     {:outer-height :parent :outer-size-unit :screen :outer-width :content})
-                    (pretty-properties/default-overflow-props       {:vertical-overflow :scroll})
+                    ;(pretty-properties/default-inner-position-props {:inner-position :center :inner-position-method :flex})
+                    ;(pretty-properties/default-outer-position-props {:outer-position :left :outer-position-method :absolute})
+                    (pretty-properties/default-outer-size-props     {:outer-height :parent :outer-size-unit :screen :outer-width :parent})
+                    ;(pretty-properties/default-overflow-props       {:vertical-overflow :scroll})
                     (pretty-standards/standard-animation-props)
-                    (pretty-standards/standard-border-props)
                     (pretty-standards/standard-inner-position-props)
                     (pretty-standards/standard-inner-size-props)
                     (pretty-standards/standard-outer-position-props)
                     (pretty-standards/standard-outer-size-props)
-                    (pretty-rules/apply-auto-border-crop)
                    ;(pretty-rules/auto-disable-highlight-color)
                    ;(pretty-rules/auto-disable-hover-color)
                     (pretty-subitems/subitems<-disabled-state :body :footer :header)

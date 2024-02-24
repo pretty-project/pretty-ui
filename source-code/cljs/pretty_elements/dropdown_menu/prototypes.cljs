@@ -2,7 +2,8 @@
 (ns pretty-elements.dropdown-menu.prototypes
     (:require [pretty-elements.dropdown-menu.side-effects :as dropdown-menu.side-effects]
               [pretty-properties.api                      :as pretty-properties]
-              [pretty-standards.api :as pretty-standards]))
+              [pretty-standards.api :as pretty-standards]
+              [pretty-subitems.api :as pretty-subitems]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -52,4 +53,6 @@
                       (pretty-standards/standard-inner-position-props)
                       (pretty-standards/standard-inner-size-props)
                       (pretty-standards/standard-outer-position-props)
-                      (pretty-standards/standard-outer-size-props))))
+                      (pretty-standards/standard-outer-size-props)
+                      (pretty-subitems/subitem<-disabled-state :menu-bar :expandable)
+                      (pretty-subitems/leave-disabled-state    :menu-bar :expandable))))

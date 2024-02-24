@@ -4,7 +4,9 @@
               [pretty-accessories.bullet.views   :as bullet.views]
               [pretty-accessories.cover.views  :as cover.views]
               [pretty-accessories.marker.views  :as marker.views]
-              [pretty-accessories.tooltip.views  :as tooltip.views]))
+              [pretty-accessories.tooltip.views  :as tooltip.views]
+              [pretty-accessories.overlay.views  :as overlay.views]
+              [pretty-accessories.sensor.views  :as sensor.views]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -14,4 +16,6 @@
 (def bullet  bullet.views/view)
 (def cover   cover.views/view)
 (def marker  marker.views/view)
+(def overlay overlay.views/view)
+(def sensor  sensor.views/view)
 (def tooltip tooltip.views/view)

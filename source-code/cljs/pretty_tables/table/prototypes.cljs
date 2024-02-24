@@ -2,7 +2,8 @@
 (ns pretty-tables.table.prototypes
     (:require [pretty-properties.api :as pretty-properties]
               [pretty-rules.api :as pretty-rules]
-              [pretty-standards.api :as pretty-standards]))
+              [pretty-standards.api :as pretty-standards]
+              [pretty-subitems.api :as pretty-subitems]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -37,6 +38,9 @@
                   (pretty-standards/standard-outer-position-props)
                   (pretty-standards/standard-outer-size-props)
                   (pretty-rules/apply-auto-border-crop)
-                  (pretty-rules/auto-align-scrollable-flex)))
+                  (pretty-rules/auto-align-scrollable-flex)
                  ;(pretty-rules/auto-disable-highlight-color)
                  ;(pretty-rules/auto-disable-hover-color)
+                  (pretty-subitems/subitem-group<-subitem-default :rows)
+                  (pretty-subitems/subitem-group<-disabled-state  :rows)
+                  (pretty-subitems/leave-disabled-state           :rows)))

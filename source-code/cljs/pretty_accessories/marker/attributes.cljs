@@ -16,6 +16,7 @@
   ;  ...}
   [marker-id marker-props]
   (-> {:class :pa-marker--inner}
+      (pretty-attributes/animation-attributes        marker-props)
       (pretty-attributes/background-color-attributes marker-props)
       (pretty-attributes/border-attributes           marker-props)
       (pretty-attributes/inner-size-attributes       marker-props)

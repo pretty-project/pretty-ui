@@ -46,6 +46,7 @@
   ;  ...}
   [badge-id badge-props]
   (-> {:class :pa-badge--inner}
+      (pretty-attributes/animation-attributes        badge-props)
       (pretty-attributes/background-color-attributes badge-props)
       (pretty-attributes/border-attributes           badge-props)
       (pretty-attributes/inner-size-attributes       badge-props)

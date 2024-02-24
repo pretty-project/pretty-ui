@@ -46,11 +46,12 @@
   ;  ...}
   [cover-id cover-props]
   (-> {:class :pa-cover--inner}
-      (pretty-attributes/flex-attributes        cover-props)
-      (pretty-attributes/inner-size-attributes  cover-props)
-      (pretty-attributes/inner-space-attributes cover-props)
-      (pretty-attributes/style-attributes       cover-props)
-      (pretty-attributes/visibility-attributes  cover-props)))
+      (pretty-attributes/animation-attributes        cover-props)
+      (pretty-attributes/background-color-attributes cover-props)
+      (pretty-attributes/flex-attributes             cover-props)
+      (pretty-attributes/inner-size-attributes       cover-props)
+      (pretty-attributes/inner-space-attributes      cover-props)
+      (pretty-attributes/style-attributes            cover-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -71,6 +72,6 @@
       (pretty-attributes/outer-position-attributes cover-props)
       (pretty-attributes/outer-size-attributes     cover-props)
       (pretty-attributes/outer-space-attributes    cover-props)
-      (pretty-attributes/overlay-attributes        cover-props)
       (pretty-attributes/state-attributes          cover-props)
-      (pretty-attributes/theme-attributes          cover-props)))
+      (pretty-attributes/theme-attributes          cover-props)
+      (pretty-attributes/visibility-attributes     cover-props)))
