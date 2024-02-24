@@ -20,7 +20,7 @@
   (-> {:class                     :c-vector-items-header--inner
        :data-orientation          :horizontal
        :data-row-horizontal-align horizontal-align}
-      (pretty-attributes/indent-attributes header-props)
+      (pretty-attributes/inner-space-attributes header-props)
       (pretty-attributes/style-attributes  header-props)))
 
 
@@ -38,5 +38,5 @@
   [_ header-props]
   (-> {:class :c-vector-items-header}
       (pretty-attributes/class-attributes  header-props)
-      (pretty-attributes/outdent-attributes header-props)
+      (pretty-attributes/outer-space-attributes header-props)
       (pretty-attributes/state-attributes  header-props)))

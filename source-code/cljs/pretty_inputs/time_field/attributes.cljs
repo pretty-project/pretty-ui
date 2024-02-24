@@ -17,7 +17,7 @@
   ;  ...}
   [_ field-props]
   (-> {:class :pi-time-field--inner}
-      (pretty-attributes/indent-attributes field-props)
+      (pretty-attributes/inner-space-attributes field-props)
       (pretty-attributes/style-attributes  field-props)))
 
 (defn field-attributes
@@ -31,5 +31,5 @@
   [_ field-props]
   (-> {:class :pi-time-field}
       (pretty-attributes/class-attributes  field-props)
-      (pretty-attributes/outdent-attributes field-props)
+      (pretty-attributes/outer-space-attributes field-props)
       (pretty-attributes/state-attributes  field-props)))

@@ -18,8 +18,8 @@
   (-> {:class :pa-marker--inner}
       (pretty-attributes/background-color-attributes marker-props)
       (pretty-attributes/border-attributes           marker-props)
-      (pretty-attributes/indent-attributes           marker-props)
       (pretty-attributes/inner-size-attributes       marker-props)
+      (pretty-attributes/inner-space-attributes      marker-props)
       (pretty-attributes/style-attributes            marker-props)))
 
 ;; ----------------------------------------------------------------------------
@@ -38,8 +38,8 @@
   (-> {:class :pa-marker}
       (pretty-attributes/class-attributes          marker-props)
       (pretty-attributes/inner-position-attributes marker-props)
-      (pretty-attributes/outdent-attributes        marker-props)
       (pretty-attributes/outer-position-attributes marker-props)
       (pretty-attributes/outer-size-attributes     marker-props)
+      (pretty-attributes/outer-space-attributes    marker-props)
       (pretty-attributes/state-attributes          marker-props)
       (pretty-attributes/theme-attributes          marker-props)))

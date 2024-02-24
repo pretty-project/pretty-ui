@@ -32,7 +32,7 @@
   [_ table-props]
   (-> {}
       (pretty-attributes/border-attributes table-props)
-      (pretty-attributes/indent-attributes table-props)
+      (pretty-attributes/inner-space-attributes table-props)
       (pretty-attributes/style-attributes  table-props)))
 
 ;; ----------------------------------------------------------------------------
@@ -45,5 +45,5 @@
   ; @return (map)
   [_ table-props]
   (-> {} (pretty-attributes/class-attributes  table-props)
-         (pretty-attributes/outdent-attributes table-props)
+         (pretty-attributes/outer-space-attributes table-props)
          (pretty-attributes/state-attributes  table-props)))

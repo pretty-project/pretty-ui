@@ -16,7 +16,7 @@
   (-> {:class :c-compact-list-header--inner}
       (pretty-attributes/background-color-attributes header-props)
       (pretty-attributes/border-attributes           header-props)
-      (pretty-attributes/indent-attributes           header-props)
+      (pretty-attributes/inner-space-attributes      header-props)
       (pretty-attributes/style-attributes            header-props)))
 
 ;; ----------------------------------------------------------------------------
@@ -31,7 +31,7 @@
   ;  ...}
   [_ header-props]
   (-> {:class :c-compact-list-header}
-      (pretty-attributes/class-attributes   header-props)
-      (pretty-attributes/outdent-attributes header-props)
-      (pretty-attributes/state-attributes   header-props)
-      (pretty-attributes/theme-attributes   header-props)))
+      (pretty-attributes/class-attributes       header-props)
+      (pretty-attributes/outer-space-attributes header-props)
+      (pretty-attributes/state-attributes       header-props)
+      (pretty-attributes/theme-attributes       header-props)))

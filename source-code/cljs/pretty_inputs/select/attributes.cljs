@@ -131,7 +131,7 @@
   ; {}
   [_ select-props]
   (-> {:class :pi-select--inner}
-      (pretty-attributes/indent-attributes select-props)
+      (pretty-attributes/inner-space-attributes select-props)
       (pretty-attributes/style-attributes  select-props)))
 
 ;; ----------------------------------------------------------------------------
@@ -148,6 +148,6 @@
   [_ select-props]
   (-> {:class :pi-select}
       (pretty-attributes/class-attributes  select-props)
-      (pretty-attributes/outdent-attributes select-props)
+      (pretty-attributes/outer-space-attributes select-props)
       (pretty-attributes/state-attributes  select-props)
       (pretty-attributes/theme-attributes   select-props)))

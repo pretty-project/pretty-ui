@@ -16,7 +16,7 @@
   (-> {:data-element-min-width min-width}
       (pretty-attributes/background-color-attributes menu-props)
       (pretty-attributes/border-attributes     menu-props)
-      (pretty-attributes/indent-attributes menu-props)
+      (pretty-attributes/inner-space-attributes menu-props)
       (pretty-attributes/style-attributes  menu-props)))
 
 ;; ----------------------------------------------------------------------------
@@ -29,5 +29,5 @@
   ; @return (map)
   [_ menu-props]
   (-> {} (pretty-attributes/class-attributes  menu-props)
-         (pretty-attributes/outdent-attributes menu-props)
+         (pretty-attributes/outer-space-attributes menu-props)
          (pretty-attributes/state-attributes  menu-props)))

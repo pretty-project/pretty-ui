@@ -16,9 +16,9 @@
   ;  ...}
   [_ stepper-props]
   (-> {:class :pe-stepper--inner}
-      (pretty-attributes/indent-attributes     stepper-props)
-      (pretty-attributes/inner-size-attributes stepper-props)
-      (pretty-attributes/style-attributes      stepper-props)))
+      (pretty-attributes/inner-size-attributes  stepper-props)
+      (pretty-attributes/inner-space-attributes stepper-props)
+      (pretty-attributes/style-attributes       stepper-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -36,8 +36,8 @@
   (-> {:class :pe-stepper}
       (pretty-attributes/class-attributes          stepper-props)
       (pretty-attributes/inner-position-attributes stepper-props)
-      (pretty-attributes/outdent-attributes        stepper-props)
       (pretty-attributes/outer-position-attributes stepper-props)
       (pretty-attributes/outer-size-attributes     stepper-props)
+      (pretty-attributes/outer-space-attributes    stepper-props)
       (pretty-attributes/state-attributes          stepper-props)
       (pretty-attributes/theme-attributes          stepper-props)))

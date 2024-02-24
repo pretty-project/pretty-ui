@@ -16,8 +16,8 @@
   ;  ...}
   [_ field-props]
   (-> {:class :pi-digit-field--inner}
-      (pretty-attributes/indent-attributes field-props)
-      (pretty-attributes/style-attributes  field-props)))
+      (pretty-attributes/inner-space-attributes field-props)
+      (pretty-attributes/style-attributes       field-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -33,6 +33,6 @@
   [_ field-props]
   (-> {:class :pi-digit-field}
       (pretty-attributes/class-attributes  field-props)
-      (pretty-attributes/outdent-attributes field-props)
+      (pretty-attributes/outer-space-attributes field-props)
       (pretty-attributes/state-attributes  field-props)
       (pretty-attributes/theme-attributes   field-props)))

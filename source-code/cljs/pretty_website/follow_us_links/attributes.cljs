@@ -37,7 +37,7 @@
   ;  ...}
   [_ links-props]
   (-> {:class :pw-follow-us-links--inner}
-      (pretty-attributes/indent-attributes links-props)
+      (pretty-attributes/inner-space-attributes links-props)
       (pretty-attributes/style-attributes  links-props)))
 
 ;; ----------------------------------------------------------------------------
@@ -55,6 +55,6 @@
   [_ links-props]
   (-> {:class :pw-follow-us-links}
       (pretty-attributes/class-attributes  links-props)
-      (pretty-attributes/outdent-attributes links-props)
+      (pretty-attributes/outer-space-attributes links-props)
       (pretty-attributes/state-attributes  links-props)
       (pretty-attributes/theme-attributes   links-props)))

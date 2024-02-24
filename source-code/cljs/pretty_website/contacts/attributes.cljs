@@ -113,7 +113,7 @@
   ;  ...}
   [_ contacts-props]
   (-> {:class :pw-contacts--inner}
-      (pretty-attributes/indent-attributes contacts-props)
+      (pretty-attributes/inner-space-attributes contacts-props)
       (pretty-attributes/style-attributes  contacts-props)))
 
 ;; ----------------------------------------------------------------------------
@@ -131,6 +131,6 @@
   [_ contacts-props]
   (-> {:class :pw-contacts}
       (pretty-attributes/class-attributes  contacts-props)
-      (pretty-attributes/outdent-attributes contacts-props)
+      (pretty-attributes/outer-space-attributes contacts-props)
       (pretty-attributes/state-attributes  contacts-props)
       (pretty-attributes/theme-attributes   contacts-props)))

@@ -19,8 +19,8 @@
       (pretty-attributes/background-color-attributes row-props)
       (pretty-attributes/border-attributes           row-props)
       (pretty-attributes/grid-attributes             row-props)
-      (pretty-attributes/indent-attributes           row-props)
       (pretty-attributes/inner-size-attributes       row-props)
+      (pretty-attributes/inner-space-attributes      row-props)
       (pretty-attributes/style-attributes            row-props)))
 
 ;; ----------------------------------------------------------------------------
@@ -39,8 +39,8 @@
   (-> {:class :pt-row}
       (pretty-attributes/class-attributes          row-props)
       (pretty-attributes/inner-position-attributes row-props)
-      (pretty-attributes/outdent-attributes        row-props)
       (pretty-attributes/outer-position-attributes row-props)
       (pretty-attributes/outer-size-attributes     row-props)
+      (pretty-attributes/outer-space-attributes    row-props)
       (pretty-attributes/state-attributes          row-props)
       (pretty-attributes/theme-attributes          row-props)))

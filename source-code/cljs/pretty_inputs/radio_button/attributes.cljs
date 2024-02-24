@@ -131,7 +131,7 @@
        (-> {:class :pi-radio-button--inner
             :on-blur  on-blur-f
             :on-focus on-focus-f}
-           (pretty-attributes/indent-attributes button-props)
+           (pretty-attributes/inner-space-attributes button-props)
            (pretty-attributes/flex-attributes   button-props)
            (pretty-attributes/style-attributes         button-props))))
 
@@ -149,6 +149,6 @@
   [_ button-props]
   (-> {:class :pi-radio-button}
       (pretty-attributes/class-attributes  button-props)
-      (pretty-attributes/outdent-attributes button-props)
+      (pretty-attributes/outer-space-attributes button-props)
       (pretty-attributes/state-attributes  button-props)
       (pretty-attributes/theme-attributes   button-props)))

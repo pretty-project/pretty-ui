@@ -19,8 +19,8 @@
       (pretty-attributes/background-color-attributes footer-props)
       (pretty-attributes/border-attributes           footer-props)
       (pretty-attributes/flex-attributes             footer-props)
-      (pretty-attributes/indent-attributes           footer-props)
       (pretty-attributes/inner-size-attributes       footer-props)
+      (pretty-attributes/inner-space-attributes      footer-props)
       (pretty-attributes/style-attributes            footer-props)))
 
 ;; ----------------------------------------------------------------------------
@@ -39,8 +39,8 @@
   (-> {:class :pl-footer}
       (pretty-attributes/class-attributes          footer-props)
       (pretty-attributes/inner-position-attributes footer-props)
-      (pretty-attributes/outdent-attributes        footer-props)
       (pretty-attributes/outer-position-attributes footer-props)
       (pretty-attributes/outer-size-attributes     footer-props)
+      (pretty-attributes/outer-space-attributes    footer-props)
       (pretty-attributes/state-attributes          footer-props)
       (pretty-attributes/theme-attributes          footer-props)))

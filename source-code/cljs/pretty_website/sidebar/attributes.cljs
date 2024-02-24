@@ -39,7 +39,7 @@
        :data-scroll-axis :y} ; overflow-attributes
       (pretty-attributes/background-color-attributes  sidebar-props)
       (pretty-attributes/border-attributes sidebar-props)
-      (pretty-attributes/indent-attributes sidebar-props)
+      (pretty-attributes/inner-space-attributes sidebar-props)
       (pretty-attributes/style-attributes  sidebar-props)))
 
 ;; ----------------------------------------------------------------------------
@@ -59,6 +59,6 @@
   (-> {:class         :pw-sidebar
        :data-position position}
       (pretty-attributes/class-attributes  sidebar-props)
-      (pretty-attributes/outdent-attributes sidebar-props)
+      (pretty-attributes/outer-space-attributes sidebar-props)
       (pretty-attributes/state-attributes  sidebar-props)
       (pretty-attributes/theme-attributes   sidebar-props)))

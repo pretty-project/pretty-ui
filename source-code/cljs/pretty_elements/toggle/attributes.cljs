@@ -23,8 +23,8 @@
       (pretty-attributes/cursor-attributes           toggle-props)
       (pretty-attributes/effect-attributes           toggle-props)
       (pretty-attributes/flex-attributes             toggle-props)
-      (pretty-attributes/indent-attributes           toggle-props)
       (pretty-attributes/inner-size-attributes       toggle-props)
+      (pretty-attributes/inner-space-attributes      toggle-props)
       (pretty-attributes/mouse-event-attributes      toggle-props)
       (pretty-attributes/react-attributes            toggle-props)))
 
@@ -44,8 +44,8 @@
   (-> {:class :pe-toggle}
       (pretty-attributes/class-attributes          toggle-props)
       (pretty-attributes/inner-position-attributes toggle-props)
-      (pretty-attributes/outdent-attributes        toggle-props)
       (pretty-attributes/outer-position-attributes toggle-props)
       (pretty-attributes/outer-size-attributes     toggle-props)
+      (pretty-attributes/outer-space-attributes    toggle-props)
       (pretty-attributes/state-attributes          toggle-props)
       (pretty-attributes/theme-attributes          toggle-props)))

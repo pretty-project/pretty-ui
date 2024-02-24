@@ -61,7 +61,7 @@
   (-> {:class :c-user-avatar--inner
        :style {:height (css/px size)
                :width  (css/px size)}}
-      (pretty-attributes/indent-attributes avatar-props)
+      (pretty-attributes/inner-space-attributes avatar-props)
       (pretty-attributes/style-attributes  avatar-props)))
 
 
@@ -79,5 +79,5 @@
   [_ avatar-props]
   (-> {:class :c-user-avatar}
       (pretty-attributes/class-attributes  avatar-props)
-      (pretty-attributes/outdent-attributes avatar-props)
+      (pretty-attributes/outer-space-attributes avatar-props)
       (pretty-attributes/state-attributes  avatar-props)))

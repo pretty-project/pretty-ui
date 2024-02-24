@@ -133,7 +133,7 @@
        (-> {:class    :pi-checkbox--inner
             :on-blur  on-blur-f
             :on-focus on-focus-f}
-           (pretty-attributes/indent-attributes      checkbox-props)
+           (pretty-attributes/inner-space-attributes checkbox-props)
            (pretty-attributes/flex-attributes checkbox-props)
            (pretty-attributes/style-attributes       checkbox-props))))
 
@@ -152,6 +152,6 @@
   [_ checkbox-props]
   (-> {:class :pi-checkbox}
       (pretty-attributes/class-attributes   checkbox-props)
-      (pretty-attributes/outdent-attributes checkbox-props)
+      (pretty-attributes/outer-space-attributes checkbox-props)
       (pretty-attributes/state-attributes   checkbox-props)
       (pretty-attributes/theme-attributes   checkbox-props)))

@@ -16,8 +16,8 @@
   ;  ...}
   [_ group-props]
   (-> {:class :pi-multi-field--inner}
-      (pretty-attributes/indent-attributes group-props)
-      (pretty-attributes/style-attributes  group-props)))
+      (pretty-attributes/inner-space-attributes group-props)
+      (pretty-attributes/style-attributes       group-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -36,5 +36,5 @@
   (let [group-props (dissoc group-props :disabled?)]
        (-> {:class :pi-multi-field}
            (pretty-attributes/class-attributes  group-props)
-           (pretty-attributes/outdent-attributes group-props)
+           (pretty-attributes/outer-space-attributes group-props)
            (pretty-attributes/state-attributes  group-props))))

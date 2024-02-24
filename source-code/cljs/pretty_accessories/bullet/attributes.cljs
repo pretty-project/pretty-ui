@@ -18,8 +18,8 @@
   (-> {:class :pa-bullet--inner}
       (pretty-attributes/background-color-attributes bullet-props)
       (pretty-attributes/border-attributes           bullet-props)
-      (pretty-attributes/indent-attributes           bullet-props)
       (pretty-attributes/inner-size-attributes       bullet-props)
+      (pretty-attributes/inner-space-attributes      bullet-props)
       (pretty-attributes/style-attributes            bullet-props)))
 
 ;; ----------------------------------------------------------------------------
@@ -38,8 +38,8 @@
   (-> {:class :pa-bullet}
       (pretty-attributes/class-attributes          bullet-props)
       (pretty-attributes/inner-position-attributes bullet-props)
-      (pretty-attributes/outdent-attributes        bullet-props)
       (pretty-attributes/outer-position-attributes bullet-props)
       (pretty-attributes/outer-size-attributes     bullet-props)
+      (pretty-attributes/outer-space-attributes    bullet-props)
       (pretty-attributes/state-attributes          bullet-props)
       (pretty-attributes/theme-attributes          bullet-props)))

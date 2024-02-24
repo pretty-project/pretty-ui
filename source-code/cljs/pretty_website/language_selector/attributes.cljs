@@ -46,7 +46,7 @@
   ;  ...}
   [_ selector-props]
   (-> {:class :pw-language-selector--inner}
-      (pretty-attributes/indent-attributes selector-props)
+      (pretty-attributes/inner-space-attributes selector-props)
       (pretty-attributes/flex-attributes    selector-props)
       (pretty-attributes/style-attributes  selector-props)))
 
@@ -66,5 +66,5 @@
   (-> {:class :pw-language-selector}
       (pretty-attributes/class-attributes  selector-props)
       (pretty-attributes/state-attributes  selector-props)
-      (pretty-attributes/outdent-attributes selector-props)
+      (pretty-attributes/outer-space-attributes selector-props)
       (pretty-attributes/theme-attributes   selector-props)))

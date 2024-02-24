@@ -16,7 +16,7 @@
   ;  ...}
   [_ list-props]
   (-> {:class :c-vector-item-list--inner}
-      (pretty-attributes/indent-attributes list-props)
+      (pretty-attributes/inner-space-attributes list-props)
       (pretty-attributes/style-attributes  list-props)))
 
 
@@ -35,5 +35,5 @@
   [_ list-props]
   (-> {:class :c-vector-item-list}
       (pretty-attributes/class-attributes  list-props)
-      (pretty-attributes/outdent-attributes list-props)
+      (pretty-attributes/outer-space-attributes list-props)
       (pretty-attributes/state-attributes  list-props)))

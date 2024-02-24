@@ -53,8 +53,8 @@
       (pretty-attributes/cursor-attributes           item-props)
       (pretty-attributes/effect-attributes           item-props)
       (pretty-attributes/flex-attributes             item-props)
-      (pretty-attributes/indent-attributes           item-props)
       (pretty-attributes/inner-size-attributes       item-props)
+      (pretty-attributes/inner-space-attributes      item-props)
       (pretty-attributes/mouse-event-attributes      item-props)
       (pretty-attributes/style-attributes            item-props)))
 
@@ -74,8 +74,8 @@
   (-> {:class :pe-menu-item}
       (pretty-attributes/class-attributes          item-props)
       (pretty-attributes/inner-position-attributes item-props)
-      (pretty-attributes/outdent-attributes        item-props)
       (pretty-attributes/outer-position-attributes item-props)
       (pretty-attributes/outer-size-attributes     item-props)
+      (pretty-attributes/outer-space-attributes    item-props)
       (pretty-attributes/state-attributes          item-props)
       (pretty-attributes/theme-attributes          item-props)))

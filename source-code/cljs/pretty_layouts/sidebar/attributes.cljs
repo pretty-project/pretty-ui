@@ -38,7 +38,7 @@
   (-> {:class :pl-sidebar--inner}
       (pretty-attributes/background-color-attributes        sidebar-props)
       (pretty-attributes/border-attributes       sidebar-props)
-      (pretty-attributes/indent-attributes       sidebar-props)
+      (pretty-attributes/inner-space-attributes  sidebar-props)
       (pretty-attributes/style-attributes        sidebar-props)
       ;(pretty-attributes/size-attributes              sidebar-props)
       (pretty-attributes/theme-attributes        sidebar-props)))

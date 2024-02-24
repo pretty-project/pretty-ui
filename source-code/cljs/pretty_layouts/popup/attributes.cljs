@@ -36,8 +36,8 @@
       (pretty-attributes/background-color-attributes popup-props)
       (pretty-attributes/border-attributes           popup-props)
       (pretty-attributes/flex-attributes             popup-props)
-      (pretty-attributes/indent-attributes           popup-props)
       (pretty-attributes/inner-size-attributes       popup-props)
+      (pretty-attributes/inner-space-attributes      popup-props)
       (pretty-attributes/style-attributes            popup-props)))
 
 ;; ----------------------------------------------------------------------------
@@ -56,9 +56,9 @@
   (-> {:class :pl-popup}
       (pretty-attributes/class-attributes          popup-props)
       (pretty-attributes/inner-position-attributes popup-props)
-      (pretty-attributes/outdent-attributes        popup-props)
       (pretty-attributes/outer-position-attributes popup-props)
       (pretty-attributes/outer-size-attributes     popup-props)
+      (pretty-attributes/outer-space-attributes    popup-props)
       (pretty-attributes/overlay-attributes        popup-props)
       (pretty-attributes/state-attributes          popup-props)
       (pretty-attributes/theme-attributes          popup-props)))

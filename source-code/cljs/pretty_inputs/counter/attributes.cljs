@@ -93,8 +93,8 @@
   ;  ...}
   [_ counter-props]
   (-> {:class :pi-counter--inner}
-      (pretty-attributes/indent-attributes counter-props)
-      (pretty-attributes/style-attributes  counter-props)
+      (pretty-attributes/inner-space-attributes counter-props)
+      (pretty-attributes/style-attributes       counter-props)
 
       ; nem elég ha a value-n van csak alkalmazva a text-attributes?
       (pretty-attributes/text-attributes counter-props)))
@@ -113,6 +113,6 @@
   [_ counter-props]
   (-> {:class :pi-counter}
       (pretty-attributes/class-attributes  counter-props)
-      (pretty-attributes/outdent-attributes counter-props)
+      (pretty-attributes/outer-space-attributes counter-props)
       (pretty-attributes/state-attributes  counter-props)
       (pretty-attributes/theme-attributes   counter-props)))

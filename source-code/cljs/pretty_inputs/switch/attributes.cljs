@@ -132,7 +132,7 @@
        (-> {:class :pi-switch--inner
             :on-blur  on-blur-f
             :on-focus on-focus-f}
-           (pretty-attributes/indent-attributes      switch-props)
+           (pretty-attributes/inner-space-attributes switch-props)
            (pretty-attributes/flex-attributes switch-props)
            (pretty-attributes/style-attributes              switch-props))))
 
@@ -147,6 +147,6 @@
   [_ switch-props]
   (-> {:class :pi-switch}
       (pretty-attributes/class-attributes  switch-props)
-      (pretty-attributes/outdent-attributes switch-props)
+      (pretty-attributes/outer-space-attributes switch-props)
       (pretty-attributes/state-attributes  switch-props)
       (pretty-attributes/theme-attributes   switch-props)))

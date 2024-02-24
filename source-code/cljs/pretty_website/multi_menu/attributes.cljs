@@ -16,7 +16,7 @@
   ;  ...}
   [_ menu-props]
   (-> {:class :pw-multi-menu--inner}
-      (pretty-attributes/indent-attributes menu-props)
+      (pretty-attributes/inner-space-attributes menu-props)
       (pretty-attributes/style-attributes  menu-props)))
 
 ;; ----------------------------------------------------------------------------
@@ -35,5 +35,5 @@
   (-> {:class :pw-multi-menu}
       (pretty-attributes/class-attributes  menu-props)
       (pretty-attributes/state-attributes  menu-props)
-      (pretty-attributes/outdent-attributes menu-props)
+      (pretty-attributes/outer-space-attributes menu-props)
       (pretty-attributes/theme-attributes   menu-props)))

@@ -91,7 +91,7 @@
        :data-box-shadow-color :default
        :on-mouse-down         dom/prevent-default}
       (pretty-attributes/border-attributes surface)
-      (pretty-attributes/indent-attributes surface)
+      (pretty-attributes/inner-space-attributes surface)
       ; The field surface inherits the font settings of the field as its default.
       (pretty-attributes/font-attributes field-props)))
 
@@ -162,7 +162,7 @@
       (pretty-attributes/background-color-attributes  field-props)
       (pretty-attributes/border-attributes field-props)
       (pretty-attributes/font-attributes   field-props)
-      (pretty-attributes/indent-attributes field-props)
+      (pretty-attributes/inner-space-attributes field-props)
       (pretty-attributes/style-attributes  field-props)))
       ; body-size-attributes
 
@@ -183,7 +183,7 @@
   (-> {:class        :pi-text-field
        :data-covered disabled?}
       (pretty-attributes/class-attributes       field-props)
-      (pretty-attributes/outdent-attributes      field-props)
       (pretty-attributes/outer-size-attributes field-props)
       (pretty-attributes/state-attributes       field-props)
+      (pretty-attributes/outer-space-attributes  field-props)
       (pretty-attributes/theme-attributes        field-props)))

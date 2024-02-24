@@ -19,8 +19,8 @@
       (pretty-attributes/background-color-attributes body-props)
       (pretty-attributes/border-attributes           body-props)
       (pretty-attributes/flex-attributes             body-props)
-      (pretty-attributes/indent-attributes           body-props)
       (pretty-attributes/inner-size-attributes       body-props)
+      (pretty-attributes/inner-space-attributes      body-props)
       (pretty-attributes/style-attributes            body-props)))
 
 ;; ----------------------------------------------------------------------------
@@ -39,8 +39,8 @@
   (-> {:class :pl-body}
       (pretty-attributes/class-attributes          body-props)
       (pretty-attributes/inner-position-attributes body-props)
-      (pretty-attributes/outdent-attributes        body-props)
       (pretty-attributes/outer-position-attributes body-props)
       (pretty-attributes/outer-size-attributes     body-props)
+      (pretty-attributes/outer-space-attributes    body-props)
       (pretty-attributes/state-attributes          body-props)
       (pretty-attributes/theme-attributes          body-props)))

@@ -48,8 +48,8 @@
   (-> {:class :pa-tooltip--inner}
       (pretty-attributes/background-color-attributes tooltip-props)
       (pretty-attributes/border-attributes           tooltip-props)
-      (pretty-attributes/indent-attributes           tooltip-props)
       (pretty-attributes/inner-size-attributes       tooltip-props)
+      (pretty-attributes/inner-space-attributes      tooltip-props)
       (pretty-attributes/style-attributes            tooltip-props)))
 
 ;; ----------------------------------------------------------------------------
@@ -68,8 +68,8 @@
   (-> {:class :pa-tooltip}
       (pretty-attributes/class-attributes          tooltip-props)
       (pretty-attributes/inner-position-attributes tooltip-props)
-      (pretty-attributes/outdent-attributes        tooltip-props)
       (pretty-attributes/outer-position-attributes tooltip-props)
       (pretty-attributes/outer-size-attributes     tooltip-props)
+      (pretty-attributes/outer-space-attributes    tooltip-props)
       (pretty-attributes/state-attributes          tooltip-props)
       (pretty-attributes/theme-attributes          tooltip-props)))

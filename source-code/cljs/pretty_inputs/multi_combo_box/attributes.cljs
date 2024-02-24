@@ -16,8 +16,8 @@
   ;  ...}
   [_ box-props]
   (-> {:class :pi-multi-combo-box--inner}
-      (pretty-attributes/indent-attributes box-props)
-      (pretty-attributes/style-attributes  box-props)))
+      (pretty-attributes/inner-space-attributes box-props)
+      (pretty-attributes/style-attributes       box-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -33,6 +33,6 @@
   [_ box-props]
   (-> {:class :pi-multi-combo-box}
       (pretty-attributes/class-attributes  box-props)
-      (pretty-attributes/outdent-attributes box-props)
+      (pretty-attributes/outer-space-attributes box-props)
       (pretty-attributes/state-attributes  box-props)
       (pretty-attributes/theme-attributes   box-props)))

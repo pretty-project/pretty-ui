@@ -34,8 +34,8 @@
   ;  ...}
   [_ group-props]
   (-> {:class :pi-chip-group--inner}
-      (pretty-attributes/indent-attributes group-props)
-      (pretty-attributes/style-attributes  group-props)))
+      (pretty-attributes/inner-space-attributes group-props)
+      (pretty-attributes/style-attributes       group-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -52,5 +52,5 @@
   (-> {:class :pi-chip-group}
       ; + theme-attributes
       (pretty-attributes/class-attributes  group-props)
-      (pretty-attributes/outdent-attributes group-props)
+      (pretty-attributes/outer-space-attributes group-props)
       (pretty-attributes/state-attributes  group-props)))

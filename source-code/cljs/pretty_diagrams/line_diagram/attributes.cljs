@@ -48,10 +48,10 @@
   ;  ...}
   [_ diagram-props]
   (-> {:class :pd-line-diagram--inner}
-      (pretty-attributes/flex-attributes       diagram-props)
-      (pretty-attributes/indent-attributes     diagram-props)
-      (pretty-attributes/inner-size-attributes diagram-props)
-      (pretty-attributes/style-attributes      diagram-props)))
+      (pretty-attributes/flex-attributes        diagram-props)
+      (pretty-attributes/inner-size-attributes  diagram-props)
+      (pretty-attributes/inner-space-attributes diagram-props)
+      (pretty-attributes/style-attributes       diagram-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -69,8 +69,8 @@
   (-> {:class :pd-line-diagram}
       (pretty-attributes/class-attributes          diagram-props)
       (pretty-attributes/inner-position-attributes diagram-props)
-      (pretty-attributes/outdent-attributes        diagram-props)
       (pretty-attributes/outer-position-attributes diagram-props)
       (pretty-attributes/outer-size-attributes     diagram-props)
+      (pretty-attributes/outer-space-attributes    diagram-props)
       (pretty-attributes/state-attributes          diagram-props)
       (pretty-attributes/theme-attributes          diagram-props)))
