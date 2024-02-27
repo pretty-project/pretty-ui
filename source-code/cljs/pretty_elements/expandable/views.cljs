@@ -1,7 +1,6 @@
 
 (ns pretty-elements.expandable.views
     (:require [fruits.random.api                     :as random]
-              [pretty-elements.button.views          :as button.views]
               [pretty-elements.engine.api            :as pretty-elements.engine]
               [pretty-elements.expandable.attributes :as expandable.attributes]
               [pretty-elements.expandable.prototypes :as expandable.prototypes]
@@ -13,42 +12,18 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn expandable-button
-  ; @ignore
-  ;
-  ; @param (keyword) expandable-id
-  ; @param (map) expandable-props
-  ; {:button (map)(opt)
-  ;  ...}
-  [expandable-id {:keys [button] :as expandable-props}]
-  (let [button-id    (pretty-subitems/subitem-id                   expandable-id :button)
-        button-props (expandable.prototypes/button-props-prototype expandable-id expandable-props)]
-       [button.views/view button-id button-props]))
-
-(defn expandable-content
-  ; @ignore
-  ;
-  ; @param (keyword) expandable-id
-  ; @param (map) expandable-props
-  ; {:content (metamorphic-content)(opt)
-  ;  ...}
-  [expandable-id {:keys [content] :as expandable-props}]
-  [:div (expandable.attributes/expandable-content-attributes expandable-id expandable-props) content])
-
 (defn expandable
   ; @ignore
   ;
   ; @param (keyword) expandable-id
   ; @param (map) expandable-props
-  ; {:button (map)(opt)
-  ;  :content (metamorphic-content)(opt)
+  ; {:content (metamorphic-content)(opt)
   ;  :expanded? (boolean)(opt)
   ;  ...}
-  [expandable-id {:keys [button content expanded?] :as expandable-props}]
+  [expandable-id {:keys [content expanded?] :as expandable-props}]
   (if expanded? [:div (expandable.attributes/expandable-attributes expandable-id expandable-props)
                       [:div (expandable.attributes/expandable-inner-attributes expandable-id expandable-props)
-                            (if button  [expandable-button  expandable-id expandable-props])
-                            (if content [expandable-content expandable-id expandable-props])]]))
+                            (-> content)]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -72,14 +47,11 @@
   ; [expand-content!](pretty-ui/cljs/pretty-controls/api.html#expand-content_)
   ; [collapse-content!](pretty-ui/cljs/pretty-controls/api.html#collapse-content_)
   ;
-  ; @links Implemented elements
-  ; [Button](pretty-ui/cljs/pretty-elements/api.html#button)
-  ;
   ; @links Implemented properties
   ; [Background color properties](pretty-core/cljs/pretty-properties/api.html#background-color-properties)
   ; [Border properties](pretty-core/cljs/pretty-properties/api.html#border-properties)
   ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
-  ; [Font properties](pretty-core/cljs/pretty-properties/api.html#font-properties)
+  ; [Content properties](pretty-core/cljs/pretty-properties/api.html#content-properties)
   ; [Expandable properties](pretty-core/cljs/pretty-properties/api.html#expandable-properties)
   ; [Inner position properties](pretty-core/cljs/pretty-properties/api.html#inner-position-properties)
   ; [Inner size properties](pretty-core/cljs/pretty-properties/api.html#inner-size-properties)
@@ -91,21 +63,18 @@
   ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
   ; [State properties](pretty-core/cljs/pretty-properties/api.html#state-properties)
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
-  ; [Text properties](pretty-core/cljs/pretty-properties/api.html#text-properties)
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
   ;
   ; @param (keyword)(opt) expandable-id
   ; @param (map) expandable-props
-  ; Check out the implemented elements.
+  ; Check out the implemented controls.
   ; Check out the implemented properties.
   ;
   ; @usage (pretty-elements/expandable.png)
   ; [expandable {:border-radius {:all :m}
-  ;              :button        {:label "My expandable"}
-  ;              :content       "My expandable content"
+  ;              :content       [:div "My expandable"]
   ;              :fill-color    :highlight
-  ;              :indent        {:all :s}
-  ;              :text-color    :muted}]
+  ;              :indent        {:all :s}}]
   ([expandable-props]
    [view (random/generate-keyword) expandable-props])
 

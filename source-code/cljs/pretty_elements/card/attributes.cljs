@@ -5,23 +5,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn card-content-attributes
-  ; @ignore
-  ;
-  ; @param (keyword) card-id
-  ; @param (map) card-props
-  ;
-  ; @return (map)
-  ; {:class (keyword or keywords in vector)
-  ;  ...}
-  [card-id card-props]
-  (-> {:class :pe-card--content}
-      (pretty-attributes/font-attributes card-props)
-      (pretty-attributes/text-attributes card-props)))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (defn card-inner-attributes
   ; @ignore
   ;
@@ -31,7 +14,7 @@
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [card-id card-props]
+  [_ card-props]
   (-> {:class :pe-card--inner}
       (pretty-attributes/anchor-attributes           card-props)
       (pretty-attributes/background-color-attributes card-props)

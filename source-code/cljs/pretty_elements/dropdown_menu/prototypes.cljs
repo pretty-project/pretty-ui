@@ -48,11 +48,15 @@
   ;
   ; @return (map)
   [menu-id menu-props]
-  (let [on-mouse-leave-f (fn [_] (dropdown-menu.side-effects/on-mouse-leave-f menu-id menu-props))]
+  (let [on-mouse-leave-f             (fn [_] (dropdown-menu.side-effects/on-mouse-leave-f menu-id menu-props))
+        expandable-props-prototype-f (fn [_] (expandable-props-prototype                  menu-id menu-props))
+        bar-props-prototype-f        (fn [_] (bar-props-prototype                         menu-id menu-props))]
        (-> menu-props (pretty-properties/default-mouse-event-props {:on-mouse-leave-f on-mouse-leave-f})
                       (pretty-standards/standard-inner-position-props)
                       (pretty-standards/standard-inner-size-props)
                       (pretty-standards/standard-outer-position-props)
                       (pretty-standards/standard-outer-size-props)
                       (pretty-subitems/subitem<-disabled-state :menu-bar :expandable)
-                      (pretty-subitems/leave-disabled-state    :menu-bar :expandable))))
+                      (pretty-subitems/leave-disabled-state    :menu-bar :expandable)
+                      (pretty-subitems/apply-subitem-prototype :expandable expandable-props-prototype-f)
+                      (pretty-subitems/apply-subitem-prototype :menu-bar   bar-props-prototype-f))))

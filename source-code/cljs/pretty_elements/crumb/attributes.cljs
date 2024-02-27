@@ -5,23 +5,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn crumb-label-attributes
-  ; @ignore
-  ;
-  ; @param (keyword) crumb-id
-  ; @param (map) crumb-props
-  ;
-  ; @return (map)
-  ; {:class (keyword or keywords in vector)
-  ;  ...}
-  [_ crumb-props]
-  (-> {:class :pe-crumb--label}
-      (pretty-attributes/font-attributes crumb-props)
-      (pretty-attributes/text-attributes crumb-props)))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (defn crumb-inner-attributes
   ; @ignore
   ;
@@ -31,7 +14,7 @@
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [crumb-id crumb-props]
+  [_ crumb-props]
   (-> {:class :pe-crumb--inner}
       (pretty-attributes/anchor-attributes          crumb-props)
       (pretty-attributes/clickable-state-attributes crumb-props)

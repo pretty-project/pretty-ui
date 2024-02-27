@@ -4,6 +4,10 @@
               [fruits.vector.api                   :as vector]
               [pretty-inputs.engine.api            :as pretty-inputs.engine]
               [pretty-inputs.text-field.adornments :as text-field.adornments]
+              [react-references.api :as react-references]
+              [pretty-standards.api :as pretty-standards]
+              [pretty-rules.api :as pretty-rules]
+              [pretty-properties.api :as pretty-properties]
               [react-references.api :as react-references]))
 
 ;; ----------------------------------------------------------------------------
@@ -78,19 +82,24 @@
   ; XXX#5068
   ; By using the '<-walk' function the ':on-blur', ':on-type-ended' and ':on-focus'
   ; events take the 'field-props' map AFTER it gets merged with the default values!
-  (<-walk {:font-size   :s
-           ;:focus-id    field-id
-           :form-id     field-id
-           :font-weight :normal
-           :line-height :text-block
-           :type        :text}
-          (fn [%] (merge % (if border-color {:border-position :all
-                                             :border-width    :xxs})
-                           (if marker-color {:marker-position :tr})))
-          (fn [%] (merge % field-props))
-          (fn [%] (merge % {:on-blur       [:pretty-inputs.text-field/field-blurred field-id %]
-                            :on-focus      [:pretty-inputs.text-field/field-focused field-id %]
-                            :on-type-ended [:pretty-inputs.text-field/type-ended    field-id %]}))))
+  (let [set-reference-f (react-references/set-reference-f field-id)]
+
+    (<-walk {:font-size   :s
+             ;:focus-id    field-id
+             :form-id     field-id
+             :font-weight :normal
+             :line-height :text-block
+             :type        :text
+
+             :set-reference-f set-reference-f}
+
+            (fn [%] (merge % (if border-color {:border-position :all
+                                               :border-width    :xxs})
+                             (if marker-color {:marker-position :tr})))
+            (fn [%] (merge % field-props))
+            (fn [%] (merge % {:on-blur       [:pretty-inputs.text-field/field-blurred field-id %]
+                              :on-focus      [:pretty-inputs.text-field/field-focused field-id %]
+                              :on-type-ended [:pretty-inputs.text-field/type-ended    field-id %]})))))
           ; input/autofill-rules
 
 
@@ -98,3 +107,5 @@
           ;field-props (pretty-elements.engine/element-subitem-field<-disabled-state  field-id field-props :end-adornments   :end-adornment-default)
           ;field-props (pretty-elements.engine/element-subitem-field<-subitem-default field-id field-props :start-adornments :start-adornment-default)
           ;field-props (pretty-elements.engine/element-subitem-field<-disabled-state  field-id field-props :end-adornments   :end-adornment-default)
+          ; auto-disable-input-autofill
+          ; generate-input-autofill

@@ -9,7 +9,9 @@
               [dynamic-props.api :as dynamic-props]
               [reagent.core :as reagent]
               [pretty-accessories.api :as pretty-accessories]
-              [lazy-loader.api :as lazy-loader]))
+              [lazy-loader.api :as lazy-loader]
+              [pretty-elements.icon.views :as icon.views]
+              [pretty-elements.label.views :as label.views]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -41,8 +43,8 @@
   ; @param (map) image-props
   ; {:badge (map)(opt)
   ;  :cover (map)(opt)
-  ;  :icon (keyword)(opt)
-  ;  :label (metamorphic-content)(opt)
+  ;  :icon (map)(opt)
+  ;  :label (map)(opt)
   ;  :loaded? (boolean)(opt)
   ;  :marker (map)(opt)
   ;  ...}
@@ -51,12 +53,12 @@
         [image-load-sensor                 image-id image-props]
         [(pretty-elements.engine/clickable-auto-tag image-id image-props)
          (image.attributes/image-inner-attributes   image-id image-props)
-         (if loaded? [:div (image.attributes/image-canvas-attributes image-id image-props)]
-                     [:i   (image.attributes/image-icon-attributes   image-id image-props) icon])
-         (if label   [:div (image.attributes/image-label-attributes  image-id image-props) label])
-         (if badge   [pretty-accessories/badge  image-id badge])
-         (if marker  [pretty-accessories/marker image-id marker])
-         (if cover   [pretty-accessories/cover  image-id cover])]])
+         (cond loaded? [:div (image.attributes/image-canvas-attributes image-id image-props)]
+               icon    [icon.views/view                    icon]) ; <- Using the same ID would clear the dynamic props of the image when the icon unmounts.
+         (when label   [label.views/view          image-id label])
+         (when badge   [pretty-accessories/badge  image-id badge])
+         (when marker  [pretty-accessories/marker image-id marker])
+         (when cover   [pretty-accessories/cover  image-id cover])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -84,6 +86,10 @@
   ; [Marker](pretty-ui/cljs/pretty-accessories/api.html#marker)
   ; [Tooltip](pretty-ui/cljs/pretty-accessories/api.html#tooltip)
   ;
+  ; @links Implemented elements
+  ; [Icon](pretty-ui/cljs/pretty-elements/api.html#icon)
+  ; [Label](pretty-ui/cljs/pretty-elements/api.html#label)
+  ;
   ; @links Implemented properties
   ; [Anchor properties](pretty-core/cljs/pretty-properties/api.html#anchor-properties)
   ; [Animation properties](pretty-core/cljs/pretty-properties/api.html#animation-properties)
@@ -95,13 +101,10 @@
   ; [Cursor properties](pretty-core/cljs/pretty-properties/api.html#cursor-properties)
   ; [Effect properties](pretty-core/cljs/pretty-properties/api.html#effect-properties)
   ; [Flex properties](pretty-core/cljs/pretty-properties/api.html#flex-properties)
-  ; [Font properties](pretty-core/cljs/pretty-properties/api.html#font-properties)
-  ; [Icon properties](pretty-core/cljs/pretty-properties/api.html#icon-properties)
   ; [Inner position properties](pretty-core/cljs/pretty-properties/api.html#inner-position-properties)
   ; [Inner size properties](pretty-core/cljs/pretty-properties/api.html#inner-size-properties)
   ; [Inner space properties](pretty-core/cljs/pretty-properties/api.html#inner-space-properties)
   ; [Keypress properties](pretty-core/cljs/pretty-properties/api.html#keypress-properties)
-  ; [Label properties](pretty-core/cljs/pretty-properties/api.html#label-properties)
   ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
   ; [Mouse event properties](pretty-core/cljs/pretty-properties/api.html#mouse-event-properties)
   ; [Outer position properties](pretty-core/cljs/pretty-properties/api.html#outer-position-properties)
@@ -109,21 +112,20 @@
   ; [Outer space properties](pretty-core/cljs/pretty-properties/api.html#outer-space-properties)
   ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
-  ; [Text properties](pretty-core/cljs/pretty-properties/api.html#text-properties)
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
   ;
   ; @param (keyword)(opt) image-id
   ; @param (map) image-props
   ; Check out the implemented accessories.
+  ; Check out the implemented elements.
   ; Check out the implemented properties.
   ;
   ; @usage (pretty-elements/image.png)
-  ; [image {:background-uri  "/my-image.png"
-  ;         :badge           {:icon     :fullscreen
-  ;                           :position :tr}
+  ; [image {:background-size :cover
+  ;         :background-uri  "/my-image.png"
+  ;         :badge           {:content [icon {:icon-name :fullscreen}] :position :tr}
   ;         :border-radius   {:all :s}
-  ;         :background-size :cover
-  ;         :label           "My image"
+  ;         :label           {:content "My image"}
   ;         :outer-height    :s
   ;         :outer-width     :l}]
   ([image-props]

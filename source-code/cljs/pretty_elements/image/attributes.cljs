@@ -19,35 +19,6 @@
       (pretty-attributes/background-image-attributes image-props)
       (pretty-attributes/content-size-attributes     image-props)))
 
-(defn image-icon-attributes
-  ; @ignore
-  ;
-  ; @param (keyword) image-id
-  ; @param (map) image-props
-  ;
-  ; @return (map)
-  ; {:class (keyword or keywords in vector)
-  ;  ...}
-  [_ image-props]
-  (-> {:class :pe-image--icon}
-      (pretty-attributes/animation-attributes    image-props)
-      (pretty-attributes/content-size-attributes image-props)
-      (pretty-attributes/icon-attributes         image-props)))
-
-(defn image-label-attributes
-  ; @ignore
-  ;
-  ; @param (keyword) image-id
-  ; @param (map) image-props
-  ;
-  ; @return (map)
-  ; {:class (keyword or keywords in vector)
-  ;  ...}
-  [_ image-props]
-  (-> {:class :pe-image--label}
-      (pretty-attributes/font-attributes image-props)
-      (pretty-attributes/text-attributes image-props)))
-
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -64,6 +35,7 @@
   [_ image-props]
   (-> {:class :pe-image--inner}
       (pretty-attributes/anchor-attributes           image-props)
+      (pretty-attributes/animation-attributes        image-props)
       (pretty-attributes/background-color-attributes image-props)
       (pretty-attributes/border-attributes           image-props)
       (pretty-attributes/clickable-state-attributes  image-props)

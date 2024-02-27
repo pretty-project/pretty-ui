@@ -25,10 +25,10 @@
   [:div (card.attributes/card-attributes card-id card-props)
         [(pretty-elements.engine/clickable-auto-tag card-id card-props)
          (card.attributes/card-inner-attributes     card-id card-props)
-         (if content [:div (card.attributes/card-content-attributes card-id card-props) content])
-         (if badge   [:<>  [pretty-accessories/badge                card-id badge]])
-         (if marker  [:<>  [pretty-accessories/marker               card-id marker]])
-         (if cover   [:<>  [pretty-accessories/cover                card-id cover]])]])
+         (if content [:<> content])
+         (if badge   [:<> [pretty-accessories/badge  card-id badge]])
+         (if marker  [:<> [pretty-accessories/marker card-id marker]])
+         (if cover   [:<> [pretty-accessories/cover  card-id cover]])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -65,7 +65,6 @@
   ; [Content properties](pretty-core/cljs/pretty-properties/api.html#content-properties)
   ; [Cursor properties](pretty-core/cljs/pretty-properties/api.html#cursor-properties)
   ; [Effect properties](pretty-core/cljs/pretty-properties/api.html#effect-properties)
-  ; [Font properties](pretty-core/cljs/pretty-properties/api.html#font-properties)
   ; [Flex properties](pretty-core/cljs/pretty-properties/api.html#flex-properties)
   ; [Inner position properties](pretty-core/cljs/pretty-properties/api.html#inner-position-properties)
   ; [Inner size properties](pretty-core/cljs/pretty-properties/api.html#inner-size-properties)
@@ -78,7 +77,6 @@
   ; [Outer space properties](pretty-core/cljs/pretty-properties/api.html#outer-space-properties)
   ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
-  ; [Text properties](pretty-core/cljs/pretty-properties/api.html#text-properties)
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
   ;
   ; @param (keyword)(opt) card-id

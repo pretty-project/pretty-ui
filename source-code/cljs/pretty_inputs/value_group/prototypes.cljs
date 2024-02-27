@@ -1,13 +1,16 @@
 
-(ns pretty-inputs.chip-group.prototypes
+(ns pretty-inputs.value-group.prototypes
     (:require [fruits.noop.api                     :refer [return]]
               [fruits.vector.api                   :as vector]
-              [pretty-inputs.chip-group.adornments :as chip-group.adornments]))
+              [pretty-inputs.value-group.adornments :as value-group.adornments]
+              [pretty-standards.api :as pretty-standards]
+              [pretty-rules.api :as pretty-rules]
+              [pretty-properties.api :as pretty-properties]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn chip-props-prototype
+(defn value-props-prototype
   ; @ignore
   ;
   ; @param (keyword) group-id
@@ -19,7 +22,7 @@
   ; @return (map)
   ; {}
   [group-id {:keys [chip chip-label-f chips-deletable?] :as group-props} chip-dex chip-value]
-  (let [delete-chip-adornment (chip-group.adornments/delete-chip-adornment group-id group-props chip-dex chip-value)]
+  (let [delete-chip-adornment (value-group.adornments/delete-chip-adornment group-id group-props chip-dex chip-value)]
        (merge {:label              (-> chip-value chip-label-f)}
               (if chips-deletable? (-> chip (update :end-adornments vector/conj-item delete-chip-adornment))
                                    (-> chip)))))

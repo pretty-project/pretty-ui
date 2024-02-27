@@ -6,7 +6,9 @@
               [pretty-elements.engine.api        :as pretty-elements.engine]
               [pretty-presets.engine.api         :as pretty-presets.engine]
               [reagent.core :as reagent]
-              [pretty-accessories.api :as pretty-accessories]))
+              [pretty-accessories.api :as pretty-accessories]
+              [pretty-elements.icon.views :as icon.views]
+              [pretty-elements.label.views :as label.views]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -18,19 +20,16 @@
   ; @param (map) button-props
   ; {:badge (map)(opt)
   ;  :cover (map)(opt)
-  ;  :icon (keyword)(opt)
-  ;  :icon-position (keyword)(opt)
-  ;  :label (metamorphic-content)(opt)
+  ;  :icon (map)(opt)
+  ;  :label (map)(opt)
   ;  :marker (map)(opt)
   ;  ...}
-  [button-id {:keys [badge cover icon icon-position label marker] :as button-props}]
+  [button-id {:keys [badge cover icon label marker] :as button-props}]
   [:div (button.attributes/button-attributes button-id button-props)
         [(pretty-elements.engine/clickable-auto-tag button-id button-props)
          (button.attributes/button-inner-attributes button-id button-props)
-         (case icon-position :right [:<> (if label [:div (button.attributes/button-label-attributes button-id button-props) label])
-                                         (if icon  [:i   (button.attributes/button-icon-attributes  button-id button-props) icon])]
-                                    [:<> (if icon  [:i   (button.attributes/button-icon-attributes  button-id button-props) icon])
-                                         (if label [:div (button.attributes/button-label-attributes button-id button-props) label])])
+         (if label  [label.views/view          button-id label])
+         (if icon   [icon.views/view           button-id icon])
          (if badge  [pretty-accessories/badge  button-id badge])
          (if marker [pretty-accessories/marker button-id marker])
          (if cover  [pretty-accessories/cover  button-id cover])]])
@@ -61,6 +60,10 @@
   ; [Marker](pretty-ui/cljs/pretty-accessories/api.html#marker)
   ; [Tooltip](pretty-ui/cljs/pretty-accessories/api.html#tooltip)
   ;
+  ; @links Implemented elements
+  ; [Icon](pretty-ui/cljs/pretty-elements/api.html#icon)
+  ; [Label](pretty-ui/cljs/pretty-elements/api.html#label)
+  ;
   ; @links Implemented properties
   ; [Anchor properties](pretty-core/cljs/pretty-properties/api.html#anchor-properties)
   ; [Background color properties](pretty-core/cljs/pretty-properties/api.html#background-color-properties)
@@ -70,13 +73,10 @@
   ; [Cursor properties](pretty-core/cljs/pretty-properties/api.html#cursor-properties)
   ; [Effect properties](pretty-core/cljs/pretty-properties/api.html#effect-properties)
   ; [Flex properties](pretty-core/cljs/pretty-properties/api.html#flex-properties)
-  ; [Font properties](pretty-core/cljs/pretty-properties/api.html#font-properties)
-  ; [Icon properties](pretty-core/cljs/pretty-properties/api.html#icon-properties)
   ; [Inner position properties](pretty-core/cljs/pretty-properties/api.html#inner-position-properties)
   ; [Inner size properties](pretty-core/cljs/pretty-properties/api.html#inner-size-properties)
   ; [Inner space properties](pretty-core/cljs/pretty-properties/api.html#inner-space-properties)
   ; [Keypress properties](pretty-core/cljs/pretty-properties/api.html#keypress-properties)
-  ; [Label properties](pretty-core/cljs/pretty-properties/api.html#label-properties)
   ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
   ; [Mouse event properties](pretty-core/cljs/pretty-properties/api.html#mouse-event-properties)
   ; [Outer position properties](pretty-core/cljs/pretty-properties/api.html#outer-position-properties)
@@ -85,32 +85,22 @@
   ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
   ; [Progress properties](pretty-core/cljs/pretty-properties/api.html#progress-properties)
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
-  ; [Text properties](pretty-core/cljs/pretty-properties/api.html#text-properties)
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
   ;
   ; @param (keyword)(opt) button-id
   ; @param (map) button-props
   ; Check out the implemented accessories.
+  ; Check out the implemented elements.
   ; Check out the implemented properties.
   ;
   ; @usage (pretty-elements/button.png)
-  ; [button {:border-radius {:all :l}
-  ;          :fill-color    :primary
-  ;          :gap           :auto
-  ;          :icon          :settings
-  ;          :icon-position :right
-  ;          :indent        {:horizontal :s :vertical :xxs}
-  ;          :label         "My button #1"
-  ;          :outer-width   :5xl}]
-  ;
-  ; [button {:border-radius {:all :l}
-  ;          :border-color  :highlight
+  ; [button {:border-color  :highlight
+  ;          :border-radius {:all :l}
   ;          :fill-color    :highlight
   ;          :gap           :auto
-  ;          :icon          :people
-  ;          :icon-position :left
+  ;          :icon          {:icon-name :people}
   ;          :indent        {:horizontal :s :vertical :xxs}
-  ;          :label         "My button #2"
+  ;          :label         {:content "My button"}
   ;          :outer-width   :5xl}]
   ([button-props]
    [view (random/generate-keyword) button-props])

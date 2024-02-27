@@ -90,6 +90,9 @@
   ; @description
   ; Sidebar style layout.
   ;
+  ; @todo
+  ; Restore the sidebar layout's original functionality with controls and sidebar sensor.
+  ;
   ; @links Implemented accessories
   ; [Overlay](pretty-ui/cljs/pretty-accessories/api.html#overlay)
   ;

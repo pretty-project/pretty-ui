@@ -60,7 +60,7 @@
   ; - The surface element has a relatively positioned wrapper element, otherwise
   ;   it wouldn't shrink (in terms of width) in case the text-field has outdent.
   [:div (text-field.attributes/field-attributes  field-id field-props)
-        [pretty-inputs.header.views/view         field-id field-props]
+        ;[pretty-inputs.header.views/view         field-id field-props] <- turn back on / temp
         [pretty-inputs.engine/input-synchronizer field-id field-props]
         [:div (text-field.attributes/field-inner-attributes field-id field-props)
               [field-start-adornments field-id field-props]

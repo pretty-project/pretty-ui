@@ -1,7 +1,9 @@
 
 (ns pretty-inputs.switch.prototypes
     (:require [fruits.noop.api :refer [none return]]
-              [pretty-standards.api :as pretty-standards]))
+              [pretty-standards.api :as pretty-standards]
+              [pretty-rules.api :as pretty-rules]
+              [pretty-properties.api :as pretty-properties]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

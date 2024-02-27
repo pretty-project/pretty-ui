@@ -30,7 +30,7 @@
   ; @return (map)
   [bar-id bar-props]
   (-> bar-props (pretty-properties/default-flex-props       {:orientation :horizontal :overflow :scroll})
-                (pretty-properties/default-outer-size-props {:outer-height :content :outer-width :content :outer-size-unit :double-block})
+                (pretty-properties/default-outer-size-props {:outer-height :content :outer-size-unit :double-block :outer-width :content})
                 (pretty-standards/standard-border-props)
                 (pretty-standards/standard-flex-props)
                 (pretty-standards/standard-inner-position-props)
@@ -43,4 +43,5 @@
                ;(pretty-rules/auto-disable-hover-color)
                 (pretty-subitems/subitem-group<-subitem-default :menu-items)
                 (pretty-subitems/subitem-group<-disabled-state  :menu-items)
-                (pretty-subitems/leave-disabled-state           :menu-items)))
+                (pretty-subitems/leave-disabled-state           :menu-items)
+                (pretty-subitems/apply-group-item-prototype     :menu-items item-props-prototype)))

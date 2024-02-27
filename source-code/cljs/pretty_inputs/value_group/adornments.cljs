@@ -1,6 +1,6 @@
 
-(ns pretty-inputs.chip-group.adornments
-    (:require [pretty-inputs.chip-group.side-effects :as chip-group.side-effects]))
+(ns pretty-inputs.value-group.adornments
+    (:require [pretty-inputs.value-group.side-effects :as value-group.side-effects]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -15,6 +15,6 @@
   ;
   ; @return (map)
   [group-id group-props chip-dex chip-value]
-  (let [on-click-f #(chip-group.side-effects/delete-chip! group-id group-props chip-dex chip-value)]
+  (let [on-click-f #(value-group.side-effects/delete-chip! group-id group-props chip-dex chip-value)]
        {:icon       :close
         :on-click-f on-click-f}))

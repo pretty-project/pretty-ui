@@ -1,11 +1,11 @@
 
 (ns pretty-elements.horizontal-separator.views
     (:require [fruits.random.api                               :as random]
-              [metamorphic-content.api                         :as metamorphic-content]
               [pretty-elements.engine.api                      :as pretty-elements.engine]
               [pretty-elements.horizontal-separator.attributes :as horizontal-separator.attributes]
               [pretty-elements.horizontal-separator.prototypes :as horizontal-separator.prototypes]
               [pretty-presets.engine.api                       :as pretty-presets.engine]
+              [pretty-elements.label.views :as label.views]
               [reagent.core :as reagent]))
 
 ;; ----------------------------------------------------------------------------
@@ -16,15 +16,14 @@
   ;
   ; @param (keyword) separator-id
   ; @param (map) separator-props
-  ; {:label (metamorphic-content)(opt)
+  ; {:label (map)(opt)
   ;  ...}
   [separator-id {:keys [label] :as separator-props}]
   [:div (horizontal-separator.attributes/separator-attributes separator-id separator-props)
         [:div (horizontal-separator.attributes/separator-inner-attributes separator-id separator-props)
-              (if label [:<> [:hr   (horizontal-separator.attributes/separator-line-attributes  separator-id separator-props)]
-                             [:span (horizontal-separator.attributes/separator-label-attributes separator-id separator-props) label]
-                             [:hr   (horizontal-separator.attributes/separator-line-attributes  separator-id separator-props)]]
-                        [:<> [:hr   (horizontal-separator.attributes/separator-line-attributes  separator-id separator-props)]])]])
+              (when :always [:hr (horizontal-separator.attributes/separator-line-attributes separator-id separator-props)])
+              (when label   [:<> [label.views/view                                          separator-id label]])
+              (when :always [:hr (horizontal-separator.attributes/separator-line-attributes separator-id separator-props)])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -44,33 +43,34 @@
   ; @description
   ; Horizontal line element with optional label.
   ;
+  ; @links Implemented elements
+  ; [Label](pretty-ui/cljs/pretty-elements/api.html#label)
+  ;
   ; @links Implemented properties
   ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
   ; [Flex properties](pretty-core/cljs/pretty-properties/api.html#flex-properties)
-  ; [Font properties](pretty-core/cljs/pretty-properties/api.html#font-properties)
   ; [Inner position properties](pretty-core/cljs/pretty-properties/api.html#inner-position-properties)
   ; [Inner size properties](pretty-core/cljs/pretty-properties/api.html#inner-size-properties)
   ; [Inner space properties](pretty-core/cljs/pretty-properties/api.html#inner-space-properties)
-  ; [Label properties](pretty-core/cljs/pretty-properties/api.html#label-properties)
-  ; [Line properties](pretty-core/cljs/pretty-properties/api.html#line-properties)
   ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
+  ; [Line properties](pretty-core/cljs/pretty-properties/api.html#line-properties)
   ; [Outer position properties](pretty-core/cljs/pretty-properties/api.html#outer-position-properties)
   ; [Outer size properties](pretty-core/cljs/pretty-properties/api.html#outer-size-properties)
   ; [Outer space properties](pretty-core/cljs/pretty-properties/api.html#outer-space-properties)
   ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
   ; [State properties](pretty-core/cljs/pretty-properties/api.html#state-properties)
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
-  ; [Text properties](pretty-core/cljs/pretty-properties/api.html#text-properties)
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
   ;
   ; @param (keyword)(opt) separator-id
   ; @param (map) separator-props
+  ; Check out the implemented elements.
   ; Check out the implemented properties.
   ;
   ; @usage (pretty-elements/horizontal-separator.png)
-  ; [horizontal-separator {:label      "My horizontal separator"
-  ;                        :line-color :muted
-  ;                        :text-color :muted}]
+  ; [horizontal-separator {:gap        :xs 
+  ;                        :label      {:content "My horizontal separator" :text-color :muted}
+  ;                        :line-color :muted}]
   ([separator-props]
    [view (random/generate-keyword) separator-props])
 

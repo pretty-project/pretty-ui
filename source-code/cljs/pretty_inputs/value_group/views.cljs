@@ -1,12 +1,12 @@
 
-(ns pretty-inputs.chip-group.views
+(ns pretty-inputs.value-group.views
     (:require [fruits.hiccup.api                   :as hiccup]
               [fruits.random.api                   :as random]
               [fruits.vector.api                   :as vector]
               [metamorphic-content.api             :as metamorphic-content]
               [pretty-elements.api                 :as pretty-elements]
-              [pretty-inputs.chip-group.attributes :as chip-group.attributes]
-              [pretty-inputs.chip-group.prototypes :as chip-group.prototypes]
+              [pretty-inputs.value-group.attributes :as value-group.attributes]
+              [pretty-inputs.value-group.prototypes :as value-group.prototypes]
               [pretty-inputs.engine.api            :as pretty-inputs.engine]
               [pretty-inputs.header.views          :as header.views]
               [pretty-presets.engine.api           :as pretty-presets.engine]
@@ -23,7 +23,7 @@
   ; @param (integer) chip-dex
   ; @param (*) chip-value
   [group-id group-props chip-dex chip-value]
-  (let [chip-props (chip-group.prototypes/chip-props-prototype group-id group-props chip-dex chip-value)]
+  (let [chip-props (value-group.prototypes/value-props-prototype group-id group-props chip-dex chip-value)]
        [pretty-elements/chip chip-props]))
 
 (defn- chip-group-chip-list
@@ -36,7 +36,7 @@
   (letfn [(f0 [chip-dex chip-value] [chip-group-chip group-id group-props chip-dex chip-value])]
          (let [chips (pretty-inputs.engine/get-input-displayed-value group-id group-props)]
               (cond (-> chips vector/not-empty?) (hiccup/put-with-indexed [:<>] chips f0)
-                    (-> chips-placeholder) [:div (chip-group.attributes/chip-group-chips-placeholder-attributes group-id group-props)
+                    (-> chips-placeholder) [:div (value-group.attributes/value-group-values-placeholder-attributes group-id group-props)
                                                  (metamorphic-content/compose chips-placeholder)]))))
 
 (defn- chip-group
@@ -45,10 +45,10 @@
   ; @param (keyword) group-id
   ; @param (map) group-props
   [group-id group-props]
-  [:div (chip-group.attributes/chip-group-attributes group-id group-props)
+  [:div (value-group.attributes/value-group-attributes group-id group-props)
         [pretty-inputs.header.views/view             group-id group-props]
         [pretty-inputs.engine/input-synchronizer     group-id group-props]
-        [:div (chip-group.attributes/chip-group-inner-attributes group-id group-props)
+        [:div (value-group.attributes/value-group-inner-attributes group-id group-props)
               [chip-group-chip-list                              group-id group-props]]])
 
 ;; ----------------------------------------------------------------------------
@@ -106,7 +106,7 @@
    ; @note (tutorials#parameterizing)
    (fn [_ group-props]
        (let [group-props (pretty-presets.engine/apply-preset          group-id group-props)
-             group-props (chip-group.prototypes/group-props-prototype group-id group-props)]
+             group-props (value-group.prototypes/group-props-prototype group-id group-props)]
              ;group-props (pretty-elements.engine/apply-element-item-default     group-id group-props :chips :chip-default)
              ;group-props (pretty-elements.engine/inherit-element-disabled-state group-id group-props :chips :chip-default)
             [view-lifecycles group-id group-props]))))

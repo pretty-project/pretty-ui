@@ -1,11 +1,11 @@
 
-(ns pretty-inputs.chip-group.attributes
+(ns pretty-inputs.value-group.attributes
     (:require [pretty-attributes.api :as pretty-attributes]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn chip-group-chips-placeholder-attributes
+(defn value-group-values-placeholder-attributes
   ; @ignore
   ;
   ; @param (keyword) group-id
@@ -14,7 +14,7 @@
   ; @return (map)
   ; {}
   [_ _]
-  {:class               :pi-chip-group--chips-placeholder
+  {:class               :pi-value-group--values-placeholder
    :data-font-size      :s
    :data-letter-spacing :auto
    :data-line-height    :text-block
@@ -23,7 +23,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn chip-group-inner-attributes
+(defn value-group-inner-attributes
   ; @ignore
   ;
   ; @param (keyword) group-id
@@ -33,14 +33,14 @@
   ; {:class (keyword or keywords in vector)
   ;  ...}
   [_ group-props]
-  (-> {:class :pi-chip-group--inner}
+  (-> {:class :pi-value-group--inner}
       (pretty-attributes/inner-space-attributes group-props)
       (pretty-attributes/style-attributes       group-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn chip-group-attributes
+(defn value-group-attributes
   ; @ignore
   ;
   ; @param (keyword) group-id
@@ -49,7 +49,7 @@
   ; @return (map)
   ; {}
   [_ group-props]
-  (-> {:class :pi-chip-group}
+  (-> {:class :pi-value-group}
       ; + theme-attributes
       (pretty-attributes/class-attributes  group-props)
       (pretty-attributes/outer-space-attributes group-props)

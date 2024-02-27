@@ -18,7 +18,7 @@
   (-> separator-props (pretty-properties/default-font-props       {:font-size :micro :font-weight :medium})
                       (pretty-properties/default-flex-props       {:gap :xs :orientation :vertical})
                       (pretty-properties/default-line-props       {:line-color :muted :line-orientation :vertical :line-size :grow})
-                      (pretty-properties/default-outer-size-props {:outer-height :parent :outer-width :content :outer-size-unit :full-block})
+                      (pretty-properties/default-outer-size-props {:outer-height :parent :outer-size-unit :full-block :outer-width :content})
                       (pretty-properties/default-text-props       {:text-color :muted :text-transform :uppercase :text-selectable? false})
                       (pretty-standards/standard-flex-props)
                       (pretty-standards/standard-font-props)

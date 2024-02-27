@@ -9,7 +9,14 @@
               [pretty-inputs.engine.api          :as pretty-inputs.engine]
               [pretty-inputs.header.views        :as header.views]
               [pretty-presets.engine.api         :as pretty-presets.engine]
-              [reagent.core :as reagent]))
+              [reagent.core :as reagent]
+              [pretty-guides.api :as pretty-guides]
+              [pretty-subitems.api :as pretty-subitems]
+              [pretty-elements.api :as pretty-elements]))
+
+; no more header
+; inputs implement guides and the label element
+; info-text adornment is part of the input engine
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -53,9 +60,12 @@
   ;
   ; @param (keyword) checkbox-id
   ; @param (map) checkbox-props
-  [checkbox-id checkbox-props]
+  ; {:label (map)(opt)
+  ;  ...}
+  [checkbox-id {:keys [label] :as checkbox-props}]
   [:div (checkbox.attributes/checkbox-attributes checkbox-id checkbox-props)
-        [pretty-inputs.header.views/view         checkbox-id checkbox-props]
+        ;[pretty-inputs.header.views/view         checkbox-id checkbox-props]
+        (if label [pretty-elements/label checkbox-id label])
         [pretty-inputs.engine/input-synchronizer checkbox-id checkbox-props]
         [:div (checkbox.attributes/checkbox-inner-attributes checkbox-id checkbox-props)
               [checkbox-option-list                          checkbox-id checkbox-props]]])
@@ -75,6 +85,17 @@
                          :reagent-render         (fn [_ checkbox-props] [checkbox checkbox-id checkbox-props])}))
 
 (defn view
+
+  ; @links Implemented elements
+  ; [Marker](pretty-core/cljs/pretty-elements/api.html#label)
+  ;
+  ; @links Implemented guides
+  ; [Error-text](pretty-core/cljs/pretty-guides/api.html#error-text)
+  ; [Helper-text](pretty-core/cljs/pretty-guides/api.html#helper-text)
+  ; [Info-text](pretty-core/cljs/pretty-guides/api.html#info-text)
+
+
+
   ; @param (keyword)(opt) checkbox-id
   ; @param (map) checkbox-props
   ; {:border-color (keyword or string)(opt)

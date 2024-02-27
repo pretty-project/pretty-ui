@@ -22,8 +22,7 @@
   ;   the 'on-mouse-out' event of the 'dropdown-menu' element wouldn't fire at all.
   ; - https://www.geeksforgeeks.org/how-to-disable-mouseout-events-triggered-by-child-elements
   ;   According to this article, using the 'on-mouse-leave' event instead of using the 'on-mouse-out' event solves the problem.
-  (let [expandable-id (pretty-subitems/subitem-id menu-id :expandable)]
-       (expandable.side-effects/collapse-content! expandable-id)))
+  (expandable.side-effects/collapse-content! menu-id))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -34,6 +33,5 @@
   ; @param (keyword) menu-id
   ; @param (metamorphic-content) dropdown-content
   [menu-id dropdown-content]
-  (let [expandable-id (pretty-subitems/subitem-id menu-id :expandable)]
-       (dynamic-props/update-props!             expandable-id assoc :content dropdown-content)
-       (expandable.side-effects/expand-content! expandable-id)))
+  (dynamic-props/update-props!             menu-id assoc :content dropdown-content)
+  (expandable.side-effects/expand-content! menu-id))

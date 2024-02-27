@@ -6,47 +6,24 @@
               [pretty-elements.breadcrumbs.prototypes :as breadcrumbs.prototypes]
               [pretty-elements.crumb.views            :as crumb.views]
               [pretty-elements.engine.api             :as pretty-elements.engine]
-              [pretty-accessories.api :as pretty-accessories]
               [pretty-presets.engine.api              :as pretty-presets.engine]
               [reagent.core :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn breadcrumbs-bullet
-  ; @ignore
-  ;
-  ; @param (integer) bullet-dex
-  ; @param (map) bullet-props
-  [bullet-dex bullet-props]
-  (if (-> bullet-dex pos?)
-      (let [bullet-props (breadcrumbs.prototypes/bullet-props-prototype bullet-dex bullet-props)]
-           [pretty-accessories/bullet bullet-props])))
-
-(defn breadcrumbs-crumb
-  ; @ignore
-  ;
-  ; @param (integer) crumb-dex
-  ; @param (map) crumb-props
-  [crumb-dex crumb-props]
-  (let [crumb-props (breadcrumbs.prototypes/crumb-props-prototype crumb-dex crumb-props)]
-       [crumb.views/view crumb-props]))
-
 (defn breadcrumbs
   ; @ignore
   ;
   ; @param (keyword) breadcrumbs-id
   ; @param (map) breadcrumbs-props
-  ; {:bullet (map)(opt)
-  ;  :crumbs (maps in vector)(opt)
+  ; {:crumbs (maps in vector)(opt)
   ;  ...}
-  [breadcrumbs-id {:keys [bullet crumbs] :as breadcrumbs-props}]
+  [breadcrumbs-id {:keys [crumbs] :as breadcrumbs-props}]
   [:div (breadcrumbs.attributes/breadcrumbs-attributes breadcrumbs-id breadcrumbs-props)
         [:div (breadcrumbs.attributes/breadcrumbs-inner-attributes breadcrumbs-id breadcrumbs-props)
-              (letfn [(f0 [crumb-dex crumb-props]
-                          [:<> [breadcrumbs-bullet crumb-dex bullet]
-                               [breadcrumbs-crumb  crumb-dex crumb-props]])]
-                     (hiccup/put-with-indexed [:<>] crumbs f0))]])
+              (letfn [(f0 [crumb-props] [crumb.views/view crumb-props])]
+                     (hiccup/put-with [:<>] crumbs f0))]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -65,9 +42,6 @@
 (defn view
   ; @description
   ; Breadcrumb style menu element.
-  ;
-  ; @links Implemented accessories
-  ; [Bullet](pretty-ui/cljs/pretty-accessories/api.html#bullet)
   ;
   ; @links Implemented elements
   ; [Crumb](pretty-ui/cljs/pretty-elements/api.html#crumb)
@@ -89,16 +63,15 @@
   ;
   ; @param (keyword)(opt) breadcrumbs-id
   ; @param (map) breadcrumbs-props
-  ; Check out the implemented accessories.
   ; Check out the implemented elements.
   ; Check out the implemented properties.
   ;
   ; @usage (pretty-elements/breadcrumbs.png)
-  ; [breadcrumbs {:bullet        {:border-radius {:all :xs}}
-  ;               :crumb-default {:font-size :xs}
-  ;               :crumbs [{:label "My crumb #1" :href-uri "/my-uri-1"}
-  ;                        {:label "My crumb #2" :href-uri "/my-uri-2"}
-  ;                        {:label "My crumb #3"}]}
+  ; [breadcrumbs {:crumb-default {:bullet {:border-radius {:all :xxs} :fill-color :primary}}
+  ;               :crumbs        [{:label {:content "My crumb #1"} :href-uri "/my-uri-1"}
+  ;                               {:label {:content "My crumb #2"} :href-uri "/my-uri-2"}
+  ;                               {:label {:content "My crumb #3" :text-color :muted}}]
+  ;               :gap           :xs}
   ([breadcrumbs-props]
    [view (random/generate-keyword) breadcrumbs-props])
 

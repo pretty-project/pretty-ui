@@ -97,6 +97,14 @@
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+;(let [on-blur-f  (fn [_] (pretty-inputs.engine/input-left    checkbox-id checkbox-props))
+;      on-focus-f (fn [_] (pretty-inputs.engine/input-focused checkbox-id checkbox-props))
+;     (-> {:class    :pi-checkbox--inner
+;          :on-blur  on-blur-f
+;          :on-focus on-focus-f
+;         (pretty-attributes/inner-space-attributes checkbox-props)
+;         (pretty-attributes/flex-attributes checkbox-props)
+;         (pretty-attributes/style-attributes       checkbox-props))))
 
 (defn field-input-attributes
   ; @ignore
@@ -121,7 +129,8 @@
   ; If the input has no ':on-change' property, the React would warn that the input stepped into an uncontrolled state.
   ; Therefore, the input DOM element must keep its ':on-change' property in '{:disabled? true}' state as well!
   (let [field-content (text-field.env/get-field-content field-id field-props)
-        on-blur-f   (fn [_] (text-field.side-effects/field-left    field-id field-props))
+        on-blur-f   (fn [_] (text-field.side-effects/field-left    field-id field-props)
+                            (pretty-inputs.engine/input-left    field-id field-props))
         on-focus-f  (fn [_] (text-field.side-effects/field-focused field-id field-props))
         on-input-f  (fn [%] (text-field.side-effects/value-changed field-id field-props %))
         on-change-f (fn [%] (text-field.side-effects/value-changed field-id field-props %))
@@ -139,7 +148,6 @@
                           :on-focus            on-focus-f
                           :on-change           on-change-f
                           :on-input            on-input-f})
-           (pretty-attributes/input-autofill-attributes     field-props) ; + default-input-autofill-props !
            (pretty-attributes/input-field-attributes        field-props)
            (pretty-attributes/effect-attributes       field-props)
            (pretty-attributes/react-attributes        field-props)

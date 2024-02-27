@@ -50,7 +50,6 @@
                            (pretty-rules/apply-auto-border-crop)
                            (pretty-rules/auto-align-scrollable-flex)
                            (pretty-rules/auto-blur-click-events)
-                           (pretty-rules/auto-color-clickable-text)
                            (pretty-rules/auto-disable-cursor)
                            (pretty-rules/auto-disable-effects)
                            (pretty-rules/auto-disable-mouse-events)

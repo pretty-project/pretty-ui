@@ -3,7 +3,38 @@
     (:require [pretty-elements.menu-item.side-effects :as menu-item.side-effects]
               [pretty-properties.api                  :as pretty-properties]
               [pretty-rules.api :as pretty-rules]
-              [pretty-standards.api :as pretty-standards]))
+              [pretty-standards.api :as pretty-standards]
+              [pretty-subitems.api :as pretty-subitems]))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn icon-props-prototype
+  ; @ignore
+  ;
+  ; @param (keyword) adornment-id
+  ; @param (map) adornment-props
+  ; {:icon (map)(opt)
+  ;  ...}
+  ;
+  ; @return (map)
+  [_ {:keys [icon]}]
+  (-> icon))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn label-props-prototype
+  ; @ignore
+  ;
+  ; @param (keyword) adornment-id
+  ; @param (map) adornment-props
+  ; {:label (map)(opt)
+  ;  ...}
+  ;
+  ; @return (map)
+  [_ {:keys [label]}]
+  (-> label))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -16,31 +47,27 @@
   ;
   ; @return (map)
   [item-id item-props]
-  (let [on-mouse-over-f (fn [_] (menu-item.side-effects/on-mouse-over-f item-id item-props))]
-       (-> item-props (pretty-properties/default-font-props        {:font-size :s :font-weight :medium})
-                      (pretty-properties/default-mouse-event-props {:on-mouse-over-f on-mouse-over-f})
+  (let [on-mouse-over-f         (fn [_] (menu-item.side-effects/on-mouse-over-f item-id item-props))
+        icon-props-prototype-f  (fn [_] (icon-props-prototype                   item-id item-props))
+        label-props-prototype-f (fn [_] (label-props-prototype                  item-id item-props))]
+       (-> item-props (pretty-properties/default-mouse-event-props {:on-mouse-over-f on-mouse-over-f})
                       (pretty-properties/default-flex-props        {:orientation :horizontal})
                       (pretty-properties/default-outer-size-props  {:outer-size-unit :full-block})
-                      (pretty-properties/default-text-props        {:text-selectable? false})
                       (pretty-standards/standard-anchor-props)
                       (pretty-standards/standard-border-props)
-                      (pretty-standards/standard-flex-props)
-                      (pretty-standards/standard-font-props)
-                      (pretty-standards/standard-icon-props)
+                      (pretty-standards/standard-flex-props) 
                       (pretty-standards/standard-inner-position-props)
                       (pretty-standards/standard-inner-size-props)
                       (pretty-standards/standard-outer-position-props)
                       (pretty-standards/standard-outer-size-props)
-                      (pretty-standards/standard-text-props)
                       (pretty-rules/apply-auto-border-crop)
                       (pretty-rules/auto-align-scrollable-flex)
                       (pretty-rules/auto-blur-click-events)
-                      (pretty-rules/auto-color-clickable-text)
                       (pretty-rules/auto-disable-cursor)
                       (pretty-rules/auto-disable-effects)
                       (pretty-rules/auto-disable-highlight-color)
                       (pretty-rules/auto-disable-hover-color)
                       (pretty-rules/auto-disable-mouse-events)
                       (pretty-rules/auto-set-click-effect)
-                      (pretty-rules/compose-label)
-                      (pretty-rules/inherit-icon-props))))
+                      (pretty-subitems/apply-subitem-prototype :icon  icon-props-prototype-f)
+                      (pretty-subitems/apply-subitem-prototype :label label-props-prototype-f))))

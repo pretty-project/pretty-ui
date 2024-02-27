@@ -6,6 +6,7 @@
               [pretty-elements.engine.api        :as pretty-elements.engine]
               [pretty-presets.engine.api         :as pretty-presets.engine]
               [reagent.core :as reagent]))
+              ;[pretty-elements.adornment-group.views :as adornment-group.views]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -15,17 +16,16 @@
   ;
   ; @param (keyword) label-id
   ; @param (map) label-props
-  ; {:label (metamorphic-content)(opt)
-  ;  :icon (keyword)(opt)
-  ;  :icon-position (keyword)(opt)
+  ; {:content (metamorphic-content)(opt)
+  ;  :end-adornments (maps in vector)(opt)
+  ;  :start-adornments (maps in vector)(opt)
   ;  ...}
-  [label-id {:keys [content icon icon-position] :as label-props}]
+  [label-id {:keys [content end-adornments start-adornments] :as label-props}]
   [:div (label.attributes/label-attributes label-id label-props)
         [:div (label.attributes/label-inner-attributes label-id label-props)
-              (case icon-position :right [:<> (if content [:div (label.attributes/label-content-attributes label-id label-props) content])
-                                              (if icon    [:i   (label.attributes/label-icon-attributes    label-id label-props) icon])]
-                                         [:<> (if icon    [:i   (label.attributes/label-icon-attributes    label-id label-props) icon])
-                                              (if content [:div (label.attributes/label-content-attributes label-id label-props) content])])]])
+              ;(when start-adornments [adornment-group.views/view label-id {:adornments start-adornments}])
+              (when :always          [:div (label.attributes/label-content-attributes label-id label-props) content])]])
+              ;(when end-adornments   [adornment-group.views/view label-id {:adornments end-adornments}])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -37,14 +37,16 @@
   ; @param (map) label-props
   [label-id label-props]
   ; @note (tutorials#parameterizing)
-  ; @note (pretty-elements.adornment.views#8097)
   (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    label-id label-props))
                          :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount label-id label-props))
                          :reagent-render         (fn [_ label-props] [label label-id label-props])}))
 
 (defn view
   ; @description
-  ; Customizable label element.
+  ; Customizable label element with optional adornments.
+  ;
+  ; @links Implemented elements
+  ; [Adornment](pretty-ui/cljs/pretty-elements/api.html#adornment)
   ;
   ; @links Implemented properties
   ; [Background color properties](pretty-core/cljs/pretty-properties/api.html#background-color-properties)
@@ -53,7 +55,6 @@
   ; [Content properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
   ; [Flex properties](pretty-core/cljs/pretty-properties/api.html#flex-properties)
   ; [Font properties](pretty-core/cljs/pretty-properties/api.html#font-properties)
-  ; [Icon properties](pretty-core/cljs/pretty-properties/api.html#icon-properties)
   ; [Inner position properties](pretty-core/cljs/pretty-properties/api.html#inner-position-properties)
   ; [Inner size properties](pretty-core/cljs/pretty-properties/api.html#inner-size-properties)
   ; [Inner space properties](pretty-core/cljs/pretty-properties/api.html#inner-space-properties)
@@ -69,18 +70,29 @@
   ;
   ; @param (keyword)(opt) label-id
   ; @param (map) label-props
+  ; Check out the implemented elements.
   ; Check out the implemented properties.
   ;
   ; @usage (pretty-elements/label.png)
-  ; [label {:border-color     :secondary
-  ;         :content          "My label"
-  ;         :border-position  :bottom
-  ;         :border-width     :xs
-  ;         :gap              :auto
-  ;         :horizontal-align :left
-  ;         :icon             :star
-  ;         :icon-position    :right
-  ;         :outer-width      :xxl}]
+  ; [label {:border-color            :primary
+  ;         :content                 "My label #1"
+  ;         :border-position         :bottom
+  ;         :border-width            :xs
+  ;         :gap                     :auto
+  ;         :horizontal-align        :left
+  ;         :outer-width             :xxl
+  ;         :start-adornment-default {:icon-color :default}
+  ;         :start-adornments        [{:icon :star}]}]
+  ;
+  ; [label {:border-color          :secondary
+  ;         :content               "My label #2"
+  ;         :border-position       :bottom
+  ;         :border-width          :xs
+  ;         :gap                   :auto
+  ;         :horizontal-align      :left
+  ;         :outer-width           :xxl
+  ;         :end-adornment-default {:icon-color :default}
+  ;         :end-adornments        [{:icon :star}]}]
   ([label-props]
    [view (random/generate-keyword) label-props])
 

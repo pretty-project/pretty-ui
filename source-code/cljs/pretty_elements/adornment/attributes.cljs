@@ -5,36 +5,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn adornment-icon-attributes
-  ; @ignore
-  ;
-  ; @param (keyword) adornment-id
-  ; @param (map) adornment-props
-  ;
-  ; @return (map)
-  ; {:class (keyword or keywords in vector)
-  ;  ...}
-  [adornment-id adornment-props]
-  (-> {:class :pe-adornment--icon}
-      (pretty-attributes/icon-attributes adornment-props)))
-
-(defn adornment-label-attributes
-  ; @ignore
-  ;
-  ; @param (keyword) adornment-id
-  ; @param (map) adornment-props
-  ;
-  ; @return (map)
-  ; {:class (keyword or keywords in vector)
-  ;  ...}
-  [_ adornment-props]
-  (-> {:class :pe-adornment--label}
-      (pretty-attributes/font-attributes adornment-props)
-      (pretty-attributes/text-attributes adornment-props)))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (defn adornment-inner-attributes
   ; @ignore
   ;
@@ -44,7 +14,7 @@
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [adornment-id adornment-props]
+  [_ adornment-props]
   (-> {:class :pe-adornment--inner}
       (pretty-attributes/anchor-attributes           adornment-props)
       (pretty-attributes/background-color-attributes adornment-props)

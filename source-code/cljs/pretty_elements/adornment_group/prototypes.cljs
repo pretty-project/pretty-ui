@@ -39,4 +39,5 @@
                   (pretty-rules/auto-align-scrollable-flex)
                   (pretty-subitems/subitem-group<-subitem-default :adornments)
                   (pretty-subitems/subitem-group<-disabled-state  :adornments)
-                  (pretty-subitems/leave-disabled-state           :adornments)))
+                  (pretty-subitems/leave-disabled-state           :adornments)
+                  (pretty-subitems/apply-group-item-prototype     :adornments adornment-props-prototype)))

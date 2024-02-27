@@ -15,12 +15,12 @@
   ;
   ; @param (keyword) icon-id
   ; @param (map) icon-props
-  ; {:icon (keyword)(opt)
+  ; {:icon-name (keyword)(opt)
   ;  ...}
-  [icon-id {:keys [icon] :as icon-props}]
+  [icon-id {:keys [icon-name] :as icon-props}]
   [:div (icon.attributes/icon-attributes icon-id icon-props)
         [:div (icon.attributes/icon-inner-attributes icon-id icon-props)
-            [:i (icon.attributes/icon-content-attributes icon-id icon-props) icon]]])
+              (if icon-name [:i (icon.attributes/icon-content-attributes icon-id icon-props) icon-name])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -41,6 +41,8 @@
   ; Icon element.
   ;
   ; @links Implemented properties
+  ; [Background color properties](pretty-core/cljs/pretty-properties/api.html#background-color-properties)
+  ; [Border properties](pretty-core/cljs/pretty-properties/api.html#border-properties)
   ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
   ; [Flex properties](pretty-core/cljs/pretty-properties/api.html#flex-properties)
   ; [Icon properties](pretty-core/cljs/pretty-properties/api.html#icon-properties)
@@ -61,7 +63,7 @@
   ; Check out the implemented properties.
   ;
   ; @usage (pretty-elements/icon.png)
-  ; [icon {:icon :settings}]
+  ; [icon {:icon-name :settings}]
   ([icon-props]
    [view (random/generate-keyword) icon-props])
 

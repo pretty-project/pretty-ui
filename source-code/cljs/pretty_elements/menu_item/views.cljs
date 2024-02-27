@@ -6,7 +6,9 @@
               [pretty-elements.menu-item.prototypes :as menu-item.prototypes]
               [pretty-presets.engine.api            :as pretty-presets.engine]
               [reagent.core :as reagent]
-              [pretty-accessories.api :as pretty-accessories]))
+              [pretty-accessories.api :as pretty-accessories]
+              [pretty-elements.icon.views :as icon.views]
+              [pretty-elements.label.views :as label.views]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -17,23 +19,18 @@
   ; @param (keyword) item-id
   ; @param (map) item-props
   ; {:badge (map)(opt)
-  ;  :cover (map)(opt)
-  ;  :icon (keyword)(opt)
-  ;  :icon-position (keyword)(opt)
-  ;  :label (metamorphic-content)(opt)
+  ;  :icon (map)(opt)
+  ;  :label (map)(opt)
   ;  :marker (map)(opt)
   ;  ...}
-  [item-id {:keys [badge cover icon icon-position label marker] :as item-props}]
+  [item-id {:keys [badge icon label marker] :as item-props}]
   [:div (menu-item.attributes/menu-item-attributes item-id item-props)
         [(pretty-elements.engine/clickable-auto-tag       item-id item-props)
          (menu-item.attributes/menu-item-inner-attributes item-id item-props)
-         (case icon-position :right [:<> (if label [:div (menu-item.attributes/menu-item-label-attributes item-id item-props) label])
-                                         (if icon  [:i   (menu-item.attributes/menu-item-icon-attributes  item-id item-props) icon])]
-                                    [:<> (if icon  [:i   (menu-item.attributes/menu-item-icon-attributes  item-id item-props) icon])
-                                         (if label [:div (menu-item.attributes/menu-item-label-attributes item-id item-props) label])])
+         (if label  [label.views/view          item-id label])
+         (if icon   [icon.views/view           item-id icon])
          (if badge  [pretty-accessories/badge  item-id badge])
-         (if marker [pretty-accessories/marker item-id marker])
-         (if cover  [pretty-accessories/cover  item-id cover])]])
+         (if marker [pretty-accessories/marker item-id marker])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -56,9 +53,12 @@
   ;
   ; @links Implemented accessories
   ; [Badge](pretty-ui/cljs/pretty-accessories/api.html#badge)
-  ; [Cover](pretty-ui/cljs/pretty-accessories/api.html#cover)
   ; [Marker](pretty-ui/cljs/pretty-accessories/api.html#marker)
   ; [Tooltip](pretty-ui/cljs/pretty-accessories/api.html#tooltip)
+  ;
+  ; @links Implemented elements
+  ; [Icon](pretty-ui/cljs/pretty-elements/api.html#icon)
+  ; [Label](pretty-ui/cljs/pretty-elements/api.html#label)
   ;
   ; @links Implemented properties
   ; [Anchor properties](pretty-core/cljs/pretty-properties/api.html#anchor-properties)
@@ -69,12 +69,9 @@
   ; [Cursor properties](pretty-core/cljs/pretty-properties/api.html#cursor-properties)
   ; [Effect properties](pretty-core/cljs/pretty-properties/api.html#effect-properties)
   ; [Flex properties](pretty-core/cljs/pretty-properties/api.html#flex-properties)
-  ; [Font properties](pretty-core/cljs/pretty-properties/api.html#font-properties)
-  ; [Icon properties](pretty-core/cljs/pretty-properties/api.html#icon-properties)
   ; [Inner position properties](pretty-core/cljs/pretty-properties/api.html#inner-position-properties)
   ; [Inner size properties](pretty-core/cljs/pretty-properties/api.html#inner-size-properties)
   ; [Inner space properties](pretty-core/cljs/pretty-properties/api.html#inner-space-properties)
-  ; [Label properties](pretty-core/cljs/pretty-properties/api.html#label-properties)
   ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
   ; [Mouse event properties](pretty-core/cljs/pretty-properties/api.html#mouse-event-properties)
   ; [Outer position properties](pretty-core/cljs/pretty-properties/api.html#outer-position-properties)
@@ -82,12 +79,12 @@
   ; [Outer space properties](pretty-core/cljs/pretty-properties/api.html#outer-space-properties)
   ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
-  ; [Text properties](pretty-core/cljs/pretty-properties/api.html#text-properties)
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
   ;
   ; @param (keyword)(opt) item-id
   ; @param (map) item-props
   ; Check out the implemented accessories.
+  ; Check out the implemented elements.
   ; Check out the implemented properties.
   ;
   ; @usage (pretty-elements/menu-item.png)
@@ -95,7 +92,7 @@
   ;             :border-width    :xs
   ;             :border-position :bottom
   ;             :href-uri        "/my-uri"
-  ;             :label           "My menu item"}]
+  ;             :label           {:content "My menu item"}}]
   ([item-props]
    [view (random/generate-keyword) item-props])
 

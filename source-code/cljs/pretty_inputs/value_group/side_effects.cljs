@@ -1,5 +1,5 @@
 
-(ns pretty-inputs.chip-group.side-effects
+(ns pretty-inputs.value-group.side-effects
     (:require [fruits.vector.api        :as vector]
               [pretty-inputs.engine.api :as pretty-inputs.engine]))
 

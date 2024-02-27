@@ -33,18 +33,13 @@
   ;  ...}
   [_ bubble-props]
   (-> {:class :pe-notification-bubble--inner}
-      (pretty-attributes/anchor-attributes           bubble-props)
       (pretty-attributes/background-color-attributes bubble-props)
       (pretty-attributes/border-attributes           bubble-props)
-      (pretty-attributes/clickable-state-attributes  bubble-props)
-      (pretty-attributes/cursor-attributes           bubble-props)
-      (pretty-attributes/effect-attributes           bubble-props)
       (pretty-attributes/flex-attributes             bubble-props)
       (pretty-attributes/inner-size-attributes       bubble-props)
       (pretty-attributes/inner-space-attributes      bubble-props)
       (pretty-attributes/mouse-event-attributes      bubble-props)
       (pretty-attributes/progress-attributes         bubble-props)
-      (pretty-attributes/react-attributes            bubble-props)
       (pretty-attributes/style-attributes            bubble-props)))
 
 ;; ----------------------------------------------------------------------------

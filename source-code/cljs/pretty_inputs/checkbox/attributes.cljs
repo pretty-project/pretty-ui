@@ -125,18 +125,15 @@
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
-  ;  :on-blur (function)
-  ;  :on-focus (function)}
-  [checkbox-id checkbox-props]
-  (let [on-blur-f  (fn [_] (pretty-inputs.engine/input-left    checkbox-id checkbox-props))
-        on-focus-f (fn [_] (pretty-inputs.engine/input-focused checkbox-id checkbox-props))]
-       (-> {:class    :pi-checkbox--inner
-            :on-blur  on-blur-f
-            :on-focus on-focus-f}
-           (pretty-attributes/inner-space-attributes checkbox-props)
-           (pretty-attributes/flex-attributes checkbox-props)
-           (pretty-attributes/style-attributes       checkbox-props))))
-
+  ;  ...}
+  [_ checkbox-props]
+  (-> {:class :pi-checkbox--inner}
+      (pretty-attributes/flex-attributes        checkbox-props)
+      (pretty-attributes/focus-event-attributes checkbox-props)
+      (pretty-attributes/inner-size-attributes  checkbox-props)
+      (pretty-attributes/inner-space-attributes checkbox-props)
+      (pretty-attributes/style-attributes       checkbox-props)))
+           
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -151,7 +148,10 @@
   ;  ...}
   [_ checkbox-props]
   (-> {:class :pi-checkbox}
-      (pretty-attributes/class-attributes   checkbox-props)
-      (pretty-attributes/outer-space-attributes checkbox-props)
-      (pretty-attributes/state-attributes   checkbox-props)
-      (pretty-attributes/theme-attributes   checkbox-props)))
+      (pretty-attributes/class-attributes          checkbox-props)
+      (pretty-attributes/inner-position-attributes checkbox-props)
+      (pretty-attributes/outer-position-attributes checkbox-props)
+      (pretty-attributes/outer-size-attributes     checkbox-props)
+      (pretty-attributes/outer-space-attributes    checkbox-props)
+      (pretty-attributes/state-attributes          checkbox-props)
+      (pretty-attributes/theme-attributes          checkbox-props)))

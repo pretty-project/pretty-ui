@@ -5,6 +5,8 @@
               [pretty-elements.crumb.prototypes :as crumb.prototypes]
               [pretty-elements.engine.api       :as pretty-elements.engine]
               [pretty-presets.engine.api        :as pretty-presets.engine]
+              [pretty-accessories.api :as pretty-accessories]
+              [pretty-elements.label.views :as label.views]
               [reagent.core :as reagent]))
 
 ;; ----------------------------------------------------------------------------
@@ -15,14 +17,15 @@
   ;
   ; @param (keyword) crumb-id
   ; @param (map) crumb-props
-  ; {:label (metamorphic-content)(opt)
+  ; {:bullet (map)(opt)
+  ;  :label (map)(opt)
   ;  ...}
-  [crumb-id {:keys [label] :as crumb-props}]
+  [crumb-id {:keys [bullet label] :as crumb-props}]
   [:div (crumb.attributes/crumb-attributes crumb-id crumb-props)
         [(pretty-elements.engine/clickable-auto-tag crumb-id crumb-props)
          (crumb.attributes/crumb-inner-attributes   crumb-id crumb-props)
-         [:div (crumb.attributes/crumb-label-attributes crumb-id crumb-props)
-               (-> label)]]])
+         (if bullet [pretty-accessories/bullet crumb-id bullet])
+         (if label  [label.views/view          crumb-id label])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -42,16 +45,20 @@
   ; @description
   ; Simplified button element for breadcrumb style menus.
   ;
+  ; @links Implemented accessories
+  ; [Bullet](pretty-ui/cljs/pretty-accessories/api.html#bullet)
+  ;
+  ; @links Implemented elements
+  ; [Label](pretty-ui/cljs/pretty-elements/api.html#label)
+  ;
   ; @links Implemented properties
   ; [Anchor properties](pretty-core/cljs/pretty-properties/api.html#anchor-properties)
   ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
   ; [Clickable state properties](pretty-core/cljs/pretty-properties/api.html#clickable-state-properties)
-  ; [Font properties](pretty-core/cljs/pretty-properties/api.html#font-properties)
   ; [Effect properties](pretty-core/cljs/pretty-properties/api.html#effect-properties)
   ; [Inner position properties](pretty-core/cljs/pretty-properties/api.html#inner-position-properties)
   ; [Inner size properties](pretty-core/cljs/pretty-properties/api.html#inner-size-properties)
   ; [Inner space properties](pretty-core/cljs/pretty-properties/api.html#inner-space-properties)
-  ; [Label properties](pretty-core/cljs/pretty-properties/api.html#label-properties)
   ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
   ; [Mouse event properties](pretty-core/cljs/pretty-properties/api.html#mouse-event-properties)
   ; [Outer position properties](pretty-core/cljs/pretty-properties/api.html#outer-position-properties)
@@ -59,17 +66,19 @@
   ; [Outer space properties](pretty-core/cljs/pretty-properties/api.html#outer-space-properties)
   ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
-  ; [Text properties](pretty-core/cljs/pretty-properties/api.html#text-properties)
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
   ;
   ; @param (keyword)(opt) crumb-id
   ; @param (map) crumb-props
+  ; Check out the implemented accessories.
+  ; Check out the implemented elements.
   ; Check out the implemented properties.
   ;
   ; @usage (pretty-elements/crumb.png)
-  ; [crumb {:font-size :xs
-  ;         :href-uri  "/my-uri"
-  ;         :label     "My crumb"}]
+  ; [crumb {:bullet   {:border-radius {:all :xxs} :fill-color :primary}
+  ;         :gap      :xs
+  ;         :href-uri "/my-uri"
+  ;         :label    {:content "My crumb"}}]
   ([crumb-props]
    [view (random/generate-keyword) crumb-props])
 

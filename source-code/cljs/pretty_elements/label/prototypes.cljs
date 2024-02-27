@@ -2,7 +2,8 @@
 (ns pretty-elements.label.prototypes
     (:require [pretty-properties.api :as pretty-properties]
               [pretty-rules.api :as pretty-rules]
-              [pretty-standards.api :as pretty-standards]))
+              [pretty-standards.api :as pretty-standards]
+              [pretty-subitems.api :as pretty-subitems]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -27,7 +28,6 @@
                   (pretty-standards/standard-border-props)
                   (pretty-standards/standard-flex-props)
                   (pretty-standards/standard-font-props)
-                  (pretty-standards/standard-icon-props)
                   (pretty-standards/standard-inner-position-props)
                   (pretty-standards/standard-inner-size-props)
                   (pretty-standards/standard-outer-position-props)
@@ -38,4 +38,6 @@
                  ;(pretty-rules/auto-disable-highlight-color)
                  ;(pretty-rules/auto-disable-hover-color)
                   (pretty-rules/compose-content)
-                  (pretty-rules/inherit-icon-props)))
+                  (pretty-subitems/subitem-groups<-subitem-default :start-adornments :end-adornments)
+                  (pretty-subitems/subitem-groups<-disabled-state  :start-adornments :end-adornments)
+                  (pretty-subitems/leave-disabled-state            :start-adornments :end-adornments)))

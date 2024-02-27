@@ -5,36 +5,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn button-icon-attributes
-  ; @ignore
-  ;
-  ; @param (keyword) button-id
-  ; @param (map) button-props
-  ;
-  ; @return (map)
-  ; {:class (keyword or keywords in vector)
-  ;  ...}
-  [_ button-props]
-  (-> {:class :pe-button--icon}
-      (pretty-attributes/icon-attributes button-props)))
-
-(defn button-label-attributes
-  ; @ignore
-  ;
-  ; @param (keyword) button-id
-  ; @param (map) button-props
-  ;
-  ; @return (map)
-  ; {:class (keyword or keywords in vector)
-  ;  ...}
-  [_ button-props]
-  (-> {:class :pe-button--label}
-      (pretty-attributes/font-attributes button-props)
-      (pretty-attributes/text-attributes button-props)))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (defn button-inner-attributes
   ; @ignore
   ;

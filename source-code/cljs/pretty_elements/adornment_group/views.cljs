@@ -12,15 +12,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn adornment-group-adornment
-  ; @ignore
-  ;
-  ; @param (integer) adornment-dex
-  ; @param (map) adornment-props
-  [adornment-dex adornment-props]
-  (let [adornment-props (adornment-group.prototypes/adornment-props-prototype adornment-dex adornment-props)]
-       [adornment.views/view adornment-props]))
-
 (defn- adornment-group
   ; @ignore
   ;
@@ -31,8 +22,8 @@
   [group-id {:keys [adornments] :as group-props}]
   [:div (adornment-group.attributes/group-attributes group-id group-props)
         [:div (adornment-group.attributes/group-inner-attributes group-id group-props)
-              (letfn [(f0 [adornment-dex adornment-props] [adornment-group-adornment adornment-dex adornment-props])]
-                     (hiccup/put-with-indexed [:<>] adornments f0))]])
+              (letfn [(f0 [adornment-props] [adornment.views/view adornment-props])]
+                     (hiccup/put-with [:<>] adornments f0))]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -76,13 +67,13 @@
   ; Check out the implemented properties.
   ;
   ; @usage (pretty-elements/adornment-group.png)
-  ; [adornment-group {:adornment-default {:fill-color :highlight :border-radius {:all :s}}
-  ;                   :adornments [{:icon :home}
-  ;                                {:icon :settings}
-  ;                                {:icon :star}
-  ;                                {:icon :delete}
-  ;                                {:icon :add}
-  ;                                {:icon :favorite :icon-color :warning :icon-family :material-symbols-filled}]
+  ; [adornment-group {:adornment-default {:border-radius {:all :s} :fill-color :highlight}
+  ;                   :adornments [{:icon {:icon-name :home}}
+  ;                                {:icon {:icon-name :settings}}
+  ;                                {:icon {:icon-name :star}}
+  ;                                {:icon {:icon-name :delete}}
+  ;                                {:icon {:icon-name :add}}
+  ;                                {:icon {:icon-name :favorite :icon-color :warning :icon-family :material-symbols-filled}}]
   ;                   :gap :xs}]
   ([group-props]
    [view (random/generate-keyword) group-props])

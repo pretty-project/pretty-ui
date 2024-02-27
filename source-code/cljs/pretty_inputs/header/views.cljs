@@ -8,32 +8,53 @@
               [pretty-inputs.header.attributes :as header.attributes]
               [pretty-inputs.header.prototypes :as header.prototypes]
               [pretty-presets.engine.api       :as pretty-presets.engine]
-              [reagent.core :as reagent]))
+              [reagent.core :as reagent]
+              [pretty-guides.api :as pretty-guides]
+              [pretty-subitems.api :as pretty-subitems]
+              [pretty-elements.api :as pretty-elements]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+(defn- info-text-adornment
+  ; @ignore
+  ;
+  ; @param (keyword) header-id
+  ; @param (map) header-props
+  [header-id header-props]
+  (let [toggle-info-text-adornment (header.adornments/toggle-info-text-adornment header-id header-props)]
+       [pretty-elements/adornment toggle-info-text-adornment]))
+
+(defn- header-label
+  ; @ignore
+  ;
+  ; @param (keyword) header-id
+  ; @param (map) header-props
+  [header-id header-props]
+  (let [label-id (pretty-subitems/subitem-id header-id :label)
+        label-props (header.prototypes/label-props-prototype header-id header-props)]
+       [pretty-elements/label label-id label-props]))
 
 (defn- header
   ; @ignore
   ;
   ; @param (keyword) header-id
   ; @param (map) header-props
-  ; {:error-text (metamorphic-content)(opt)
-  ;  :helper-text (metamorphic-content)(opt)
-  ;  :info-text (metamorphic-content)(opt)
-  ;  :label (metamorphic-content)(opt)}
+  ; {:error-text (map)(opt)
+  ;  :helper-text (map)(opt)
+  ;  :info-text (map)(opt)
+  ;  :label (metamorphic-content)(opt)
+  ;  ...}
   [header-id {:keys [error-text helper-text info-text label] :as header-props}]
   ; https://css-tricks.com/html-inputs-and-labels-a-love-story/
   ; ... it is always the best idea to use an explicit label instead of an implicit label.
   [:div (header.attributes/header-attributes header-id header-props)
         [:div (header.attributes/header-inner-attributes header-id header-props)
-              (let [info-text-visible?         (pretty-inputs.engine/input-info-text-visible? header-id header-props)
-                    toggle-info-text-adornment (header.adornments/toggle-info-text-adornment  header-id header-props)]
-                   [:<> (if label              [:div (header.attributes/header-label-attributes header-id header-props) label
-                                                     (if info-text [pretty-elements/adornment toggle-info-text-adornment])])
-                        (if info-text-visible? [:div (header.attributes/header-info-text-attributes   header-id header-props) info-text])
-                        (if helper-text        [:div (header.attributes/header-helper-text-attributes header-id header-props) helper-text])
-                        (if error-text         [:div (header.attributes/header-error-text-attributes  header-id header-props) error-text])])]])
+              (let [info-text-visible? (pretty-inputs.engine/input-info-text-visible? header-id header-props)]
+                   [:<> (if label              [header-label              header-id header-props])
+                        (if info-text-visible? [pretty-guides/info-text   header-id info-text])
+                        (if helper-text        [pretty-guides/helper-text header-id helper-text])
+                        (if error-text         [pretty-guides/error-text  header-id error-text])])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -50,25 +71,50 @@
                          :reagent-render         (fn [_ header-props] [header header-id header-props])}))
 
 (defn view
+  ; @description
+  ; Header element for inputs with helper text, info text and automatically subscribed error text.
+  ;
+  ; @links Implemented accessories
+  ; [Marker](pretty-core/cljs/pretty-accessories/api.html#marker)
+  ;
+  ; @links Implemented elements
+  ; [Marker](pretty-core/cljs/pretty-elements/api.html#label)
+  ;
+  ; @links Implemented guides
+  ; [Error-text](pretty-core/cljs/pretty-guides/api.html#error-text)
+  ; [Helper-text](pretty-core/cljs/pretty-guides/api.html#helper-text)
+  ; [Info-text](pretty-core/cljs/pretty-guides/api.html#info-text)
+  ;
+  ; @links Implemented properties
+  ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
+  ; [Flex properties](pretty-core/cljs/pretty-properties/api.html#flex-properties)
+  ; [Inner position properties](pretty-core/cljs/pretty-properties/api.html#inner-position-properties)
+  ; [Inner size properties](pretty-core/cljs/pretty-properties/api.html#inner-size-properties)
+  ; [Inner space properties](pretty-core/cljs/pretty-properties/api.html#inner-space-properties)
+  ; [Input guide properties](pretty-core/cljs/pretty-properties/api.html#input-guide-properties)
+  ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
+  ; [Outer position properties](pretty-core/cljs/pretty-properties/api.html#outer-position-properties)
+  ; [Outer size properties](pretty-core/cljs/pretty-properties/api.html#outer-size-properties)
+  ; [Outer space properties](pretty-core/cljs/pretty-properties/api.html#outer-space-properties)
+  ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
+  ; [State properties](pretty-core/cljs/pretty-properties/api.html#state-properties)
+  ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
+  ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
+  ;
   ; @param (keyword)(opt) header-id
   ; @param (map) header-props
-  ; {:class (keyword or keywords in vector)(opt)
-  ;  :disabled? (boolean)(opt)
-  ;  :error-text (metamorphic-content)(opt)
-  ;  :helper-text (metamorphic-content)(opt)
-  ;  :indent (map)(opt)
-  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :info-text (metamorphic-content)(opt)
+  ; Check out the implemented accessories.
+  ; Check out the implemented guides.
+  ; Check out the implemented properties.
+  ;
+  ; @usage (pretty-inputs/header.png)
+  ; [header {}]
+
+
+  ; @param (keyword)(opt) header-id
+  ; @param (map) header-props
   ;  :label (metamorphic-content)(opt)
   ;  :line-height (keyword, px or string)(opt)
-  ;  :marker (map)(opt)
-  ;  :on-mount-f (function)(opt)
-  ;  :on-unmount-f (function)(opt)
-  ;  :outdent (map)(opt)
-  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :preset (keyword)(opt)
-  ;  :style (map)(opt)
-  ;  :theme (keyword)(opt)}
   ;
   ; @usage
   ; [header {...}]
@@ -77,7 +123,8 @@
   ; [header :my-header {...}]
   ;
   ; @usage
-  ; To associate a header with an input, use the same ID for both.
+  ; ;; All inputs implement the 'header' element
+  ; ;; To associate a header with an input, use the same ID for both .
   ; [:<> [header     :my-field {...}]
   ;      [text-field :my-field {...}]]
   ([header-props]

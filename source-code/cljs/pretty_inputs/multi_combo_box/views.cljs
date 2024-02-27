@@ -2,7 +2,7 @@
 (ns pretty-inputs.multi-combo-box.views
     (:require [fruits.random.api                        :as random]
               [fruits.vector.api                        :as vector]
-              [pretty-inputs.chip-group.views           :as chip-group.views]
+              [pretty-inputs.value-group.views           :as value-group.views]
               [pretty-inputs.combo-box.views            :as combo-box.views]
               [pretty-inputs.engine.api                 :as pretty-inputs.engine]
               [pretty-inputs.multi-combo-box.attributes :as multi-combo-box.attributes]
@@ -25,7 +25,7 @@
           (if (vector/not-empty? chips)
               (let [group-id    (pretty-subitems/subitem-id box-id :chip-group)
                     group-props (multi-combo-box.prototypes/group-props-prototype box-id box-props)]
-                   [chip-group.views/view group-id group-props]))))
+                   [value-group.views/view group-id group-props]))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

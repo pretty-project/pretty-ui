@@ -7,42 +7,24 @@
               [pretty-elements.menu-bar.views           :as menu-bar.views]
               [pretty-elements.expandable.views         :as expandable.views]
               [pretty-presets.engine.api                :as pretty-presets.engine]
-              [pretty-subitems.api                :as pretty-subitems]
               [reagent.core :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(defn- dropdown-menu-menu-bar
-  ; @ignore
-  ;
-  ; @param (keyword) menu-id
-  ; @param (map) menu-props
-  [menu-id menu-props]
-  (let [bar-id    (pretty-subitems/subitem-id                    menu-id :menu-bar)
-        bar-props (dropdown-menu.prototypes/bar-props-prototype  menu-id menu-props)]
-       [menu-bar.views/view bar-id bar-props]))
-
-(defn- dropdown-menu-expandable
-  ; @ignore
-  ;
-  ; @param (keyword) menu-id
-  ; @param (map) menu-props
-  [menu-id menu-props]
-  (let [expandable-id    (pretty-subitems/subitem-id                          menu-id :expandable)
-        expandable-props (dropdown-menu.prototypes/expandable-props-prototype menu-id menu-props)]
-       [expandable.views/view expandable-id expandable-props]))
 
 (defn- dropdown-menu
   ; @ignore
   ;
   ; @param (keyword) menu-id
   ; @param (map) menu-props
-  [menu-id menu-props]
+  ; {:expandable (map)(opt)
+  ;  :menu-bar (map)(opt)
+  ;  ...}
+  [menu-id {:keys [expandable menu-bar] :as menu-props}]
   [:div (dropdown-menu.attributes/menu-attributes menu-id menu-props)
         [:div (dropdown-menu.attributes/menu-inner-attributes menu-id menu-props)
-              [dropdown-menu-menu-bar   menu-id menu-props]
-              [dropdown-menu-expandable menu-id menu-props]]])
+              (if menu-bar   [menu-bar.views/view   menu-id menu-bar])
+              (if expandable [expandable.views/view menu-id expandable])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -76,7 +58,6 @@
   ; [Outer size properties](pretty-core/cljs/pretty-properties/api.html#outer-size-properties)
   ; [Outer space properties](pretty-core/cljs/pretty-properties/api.html#outer-space-properties)
   ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
-
   ; [State properties](pretty-core/cljs/pretty-properties/api.html#state-properties)
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
@@ -93,13 +74,10 @@
   ;                              :indent        {:all :s}
   ;                              :outdent       {:top :m}}
   ;                 :menu-bar   {:gap               :xs
-  ;                              :menu-item-default {:border-radius {:all :s}
-  ;                                                  :font-size     :s
-  ;                                                  :hover-color   :highlight
-  ;                                                  :indent        {:all :xxs}}
-  ;                              :menu-items        [{:label "My menu item #1" :dropdown-content [:div "My dropdown content #1"]}
-  ;                                                  {:label "My menu item #2" :dropdown-content [:div "My dropdown content #2"]}
-  ;                                                  {:label "My menu item #3" :dropdown-content [:div "My dropdown content #3"]}}]
+  ;                              :menu-item-default {:border-radius {:all :s} :hover-color :highlight :label {:font-size :s} :indent {:all :xxs}}
+  ;                              :menu-items        [{:label {:content "My menu item #1"} :dropdown-content [:div "My dropdown content #1"]}
+  ;                                                  {:label {:content "My menu item #2"} :dropdown-content [:div "My dropdown content #2"]}
+  ;                                                  {:label {:content "My menu item #3"} :dropdown-content [:div "My dropdown content #3"]}}]
   ([menu-props]
    [view (random/generate-keyword) menu-props])
 

@@ -14,7 +14,7 @@
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [group-id group-props]
+  [_ group-props]
   (-> {:class :pe-adornment-group--inner}
       (pretty-attributes/flex-attributes        group-props)
       (pretty-attributes/inner-size-attributes  group-props)

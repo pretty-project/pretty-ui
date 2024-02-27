@@ -16,7 +16,7 @@
               [pretty-inputs.slider.events]
               [pretty-inputs.slider.subs]
               [pretty-inputs.checkbox.views        :as checkbox.views]
-              [pretty-inputs.chip-group.views      :as chip-group.views]
+              [pretty-inputs.value-group.views      :as value-group.views]
               [pretty-inputs.combo-box.views       :as combo-box.views]
               [pretty-inputs.counter.views         :as counter.views]
               [pretty-inputs.date-field.views      :as date-field.views]
@@ -30,6 +30,7 @@
               [pretty-inputs.radio-button.views    :as radio-button.views]
               [pretty-inputs.search-field.views    :as search-field.views]
               [pretty-inputs.select.views          :as select.views]
+              [pretty-inputs.value.views :as value.views]
               [pretty-inputs.slider.views          :as slider.views]
               [pretty-inputs.switch.views          :as switch.views]
               [pretty-inputs.text-field.views      :as text-field.views]))
@@ -39,7 +40,6 @@
 
 ; @redirect (*/view)
 (def checkbox        checkbox.views/view)
-(def chip-group      chip-group.views/view)
 (def combo-box       combo-box.views/view)
 (def counter         counter.views/view)
 (def date-field      date-field.views/view)
@@ -56,3 +56,5 @@
 (def slider          slider.views/view)
 (def switch          switch.views/view)
 (def text-field      text-field.views/view)
+(def value           value.views/view)
+(def value-group     value-group.views/view)

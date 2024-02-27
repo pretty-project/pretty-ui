@@ -32,10 +32,12 @@
   ;  ...}
   [_ icon-props]
   (-> {:class :pe-icon--inner}
-      (pretty-attributes/flex-attributes        icon-props)
-      (pretty-attributes/inner-size-attributes  icon-props)
-      (pretty-attributes/inner-space-attributes icon-props)
-      (pretty-attributes/style-attributes       icon-props)))
+      (pretty-attributes/background-color-attributes icon-props)
+      (pretty-attributes/border-attributes           icon-props)
+      (pretty-attributes/flex-attributes             icon-props)
+      (pretty-attributes/inner-size-attributes       icon-props)
+      (pretty-attributes/inner-space-attributes      icon-props)
+      (pretty-attributes/style-attributes            icon-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

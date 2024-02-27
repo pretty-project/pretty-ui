@@ -5,36 +5,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn menu-item-icon-attributes
-  ; @ignore
-  ;
-  ; @param (keyword) item-id
-  ; @param (map) item-props
-  ;
-  ; @return (map)
-  ; {:class (keyword or keywords in vector)
-  ;  ...}
-  [_ item-props]
-  (-> {:class :pe-menu-item--icon}
-      (pretty-attributes/icon-attributes item-props)))
-
-(defn menu-item-label-attributes
-  ; @ignore
-  ;
-  ; @param (keyword) item-id
-  ; @param (map) item-props
-  ;
-  ; @return (map)
-  ; {:class (keyword or keywords in vector)
-  ;  ...}
-  [_ item-props]
-  (-> {:class :pe-menu-item--label}
-      (pretty-attributes/font-attributes item-props)
-      (pretty-attributes/text-attributes item-props)))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (defn menu-item-inner-attributes
   ; @ignore
   ;

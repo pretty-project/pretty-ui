@@ -5,19 +5,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn label-icon-attributes
-  ; @ignore
-  ;
-  ; @param (keyword) label-id
-  ; @param (map) label-props
-  ;
-  ; @return (map)
-  ; {:class (keyword or keywords in vector)
-  ;  ...}
-  [_ label-props]
-  (-> {:class :pe-label--icon}
-      (pretty-attributes/icon-attributes label-props)))
-
 (defn label-content-attributes
   ; @ignore
   ;

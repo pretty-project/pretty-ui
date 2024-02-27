@@ -1,6 +1,8 @@
 
 (ns pretty-inputs.counter.prototypes
-    (:require [pretty-standards.api :as pretty-standards]))
+    (:require [pretty-standards.api :as pretty-standards]
+              [pretty-rules.api :as pretty-rules]
+              [pretty-properties.api :as pretty-properties]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

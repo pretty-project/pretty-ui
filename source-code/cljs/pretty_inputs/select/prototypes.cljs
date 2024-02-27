@@ -5,7 +5,9 @@
               [pretty-inputs.engine.api          :as pretty-inputs.engine]
               [pretty-inputs.select.env          :as select.env]
               [pretty-inputs.select.side-effects :as select.side-effects]
-              [pretty-standards.api :as pretty-standards]))
+              [pretty-standards.api :as pretty-standards]
+              [pretty-rules.api :as pretty-rules]
+              [pretty-properties.api :as pretty-properties]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

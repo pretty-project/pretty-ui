@@ -12,15 +12,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn menu-bar-menu-item
-  ; @ignore
-  ;
-  ; @param (integer) item-dex
-  ; @param (map) item-props
-  [item-dex item-props]
-  (let [item-props (menu-bar.prototypes/item-props-prototype item-dex item-props)]
-       [menu-item.views/view item-props]))
-
 (defn- menu-bar
   ; @ignore
   ;
@@ -31,8 +22,8 @@
   [bar-id {:keys [menu-items] :as bar-props}]
   [:div (menu-bar.attributes/menu-bar-attributes bar-id bar-props)
         [:div (menu-bar.attributes/menu-bar-inner-attributes bar-id bar-props)
-              (letfn [(f0 [item-dex item-props] [menu-bar-menu-item item-dex item-props])]
-                     (hiccup/put-with-indexed [:<>] menu-items f0))]])
+              (letfn [(f0 [item-props] [menu-item.views/view item-props])]
+                     (hiccup/put-with [:<>] menu-items f0))]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -79,12 +70,10 @@
   ;
   ; @usage (pretty-elements/menu-bar.png)
   ; [menu-bar {:gap               :m
-  ;            :menu-item-default {:border-position :bottom
-  ;                                :border-width    :xs
-  ;                                :font-size       :s}
-  ;            :menu-items        [{:label "My menu item #1" :href-uri "/my-uri-1" :border-color :secondary}
-  ;                                {:label "My menu item #2" :href-uri "/my-uri-2"}
-  ;                                {:label "My menu item #3" :href-uri "/my-uri-3"}]}]
+  ;            :menu-item-default {:border-position :bottom :border-width :xs :label {:font-size :s}}
+  ;            :menu-items        [{:label {:content "My menu item #1"} :href-uri "/my-uri-1" :border-color :secondary}
+  ;                                {:label {:content "My menu item #2"} :href-uri "/my-uri-2"}
+  ;                                {:label {:content "My menu item #3"} :href-uri "/my-uri-3"}]}]
   ([bar-props]
    [view (random/generate-keyword) bar-props])
 

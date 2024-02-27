@@ -1,8 +1,10 @@
 
 (ns pretty-inputs.combo-box.prototypes
     (:require [fruits.loop.api :refer [<-walk]]
-              [fruits.noop.api :refer [return]]))
-              ;[pretty-defaults.api :as pretty-defaults]))
+              [fruits.noop.api :refer [return]]
+              [pretty-standards.api :as pretty-standards]
+              [pretty-rules.api :as pretty-rules]
+              [pretty-properties.api :as pretty-properties]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
