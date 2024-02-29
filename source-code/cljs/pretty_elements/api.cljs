@@ -16,9 +16,8 @@
               [pretty-elements.horizontal-separator.views :as horizontal-separator.views]
               [pretty-elements.horizontal-spacer.views    :as horizontal-spacer.views]
               [pretty-elements.icon-button.views          :as icon-button.views]
-              [pretty-elements.icon.views                 :as icon.views]
               [pretty-elements.image.views                :as image.views]
-              [pretty-elements.label.views                :as label.views]
+              [pretty-elements.header.views                :as header.views]
               [pretty-elements.menu-bar.views             :as menu-bar.views]
               [pretty-elements.menu-item.views            :as menu-item.views]
               [pretty-elements.notification-bubble.views  :as notification-bubble.views]
@@ -83,12 +82,11 @@
 (def dropdown-menu        dropdown-menu.views/view)
 (def expandable           expandable.views/view)
 (def ghost                ghost.views/view)
+(def header               header.views/view)
 (def horizontal-separator horizontal-separator.views/view)
 (def horizontal-spacer    horizontal-spacer.views/view)
-(def icon                 icon.views/view)
 (def icon-button          icon-button.views/view)
 (def image                image.views/view)
-(def label                label.views/view)
 (def menu-bar             menu-bar.views/view)
 (def menu-item            menu-item.views/view)
 (def notification-bubble  notification-bubble.views/view)

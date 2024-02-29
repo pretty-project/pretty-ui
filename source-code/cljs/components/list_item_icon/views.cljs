@@ -10,8 +10,8 @@
   ; @param (keyword) icon-id
   ; @param (map) icon-props
   [icon-id icon-props]
-  [:div {:class :c-list-item-icon}
-        [pretty-elements/icon icon-id icon-props]])
+  [:div {:class :c-list-item-icon}])
+        ;[pretty-elements/icon icon-id icon-props]])
 
 (defn view
   ; @note

@@ -16,15 +16,15 @@
   ;  :info-text (metamorphic-content)(opt)
   ;  :label (metamorphic-content)(opt)
   ;  :marked? (boolean)(opt)}
-  [_ {:keys [disabled? font-size helper info-text label marked?]}]
+  [_ {:keys [disabled? font-size helper info-text label marked?]}])
   ; XXX#0510 (source-code/app/pretty_components/frontend/data_element/prototypes.cljs)
-  (if label [pretty-elements/label {:content          label
-                                    :disabled?        disabled?
-                                    :font-size        font-size
-                                    :helper           helper
-                                    :horizontal-align :left
-                                    :info-text        info-text
-                                    :marked?          marked?}]))
+  ;(if label [pretty-elements/label {:content          label
+  ;                                  :disabled?        disabled?
+  ;                                  :font-size        font-size
+  ;;                                  :helper           helper
+    ;                                :horizontal-align :left
+    ;                                :info-text        info-text
+    ;                                :marked?          marked?]}])
 
 (defn- data-element-value
   ; @param (keyword) element-id

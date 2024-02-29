@@ -26,9 +26,9 @@
   [:div (option.attributes/option-attributes option-id option-props)
         [(pretty-models/clickable-auto-tag          option-id option-props)
          (option.attributes/option-inner-attributes option-id option-props)
-         [:div {:class :pi-option--checkmark} (if icon        [pretty-accessories/icon   option-id icon])]
-         [:div {:class :pi-option--content}   (if label       [pretty-accessories/label  option-id label])
-                                              (if helper-text [pretty-guides/helper-text option-id helper-text])]]])
+         (if icon  [:div {:class :pi-option--checkmark} [pretty-accessories/icon   option-id icon]])
+         (if label [:div {:class :pi-option--content}   [pretty-accessories/label  option-id label]
+                                        (if helper-text [pretty-guides/helper-text option-id helper-text])])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

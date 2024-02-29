@@ -10,23 +10,23 @@
 (defn- error-occured-label
   ; @param (keyword) content-id
   ; @param (map) content-props
-  [_ _]
-  [pretty-elements/label {:color            :warning
-                          :content          :an-error-occured
-                          :font-size        :m
-                          :horizontal-align :center
-                          :outdent          {:top :xxl}}])
+  [_ _])
+  ;[pretty-elements/label {:color            :warning
+  ;                        :content          :an-error-occured
+  ;                        :font-size        :m
+  ;                        :horizontal-align :center
+  ;                        :outdent          {:top :xxl}}])
 
 (defn- error-message-label
   ; @param (keyword) content-id
   ; @param (map) content-props
   ; {:content (metamorphic-content)}
-  [_ {:keys [content]}]
-  [pretty-elements/label {:color            :muted
-                          :content          content
-                          :horizontal-align :center
-                          :outdent          {:bottom :xxl}}])
-
+  [_ {:keys [content]}])
+  ;[pretty-elements/label {:color            :muted
+  ;                        :content          content
+  ;                        :horizontal-align :center
+  ;                        :outdent          {:bottom :xxl}]}])
+;
 (defn- error-content
   ; @param (keyword) content-id
   ; @param (map) content-props

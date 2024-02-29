@@ -53,13 +53,13 @@
   ; @param (map) menu-props
   ; {:label (metamorphic-content)(opt)
   ;  :label-placeholder (metamorphic-content)(opt)}
-  [_ {:keys [label label-placeholder]}]
-  [pretty-elements/label ::header-label
-                         {:color               :muted
-                          :content             label
-                          :content-placeholder label-placeholder
-                          :font-size           :xs
-                          :indent              {:horizontal :xs :left :s}}])
+  [_ {:keys [label label-placeholder]}])
+  ;[pretty-elements/label ::header-label
+  ;                       {:color               :muted
+  ;                        :content             label
+  ;                        :content-placeholder label-placeholder
+  ;                        :font-size           :xs
+  ;                        :indent              {:horizontal :xs :left :s}]}])
 
 (defn- context-menu-header
   ; @param (keyword) menu-id

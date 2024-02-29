@@ -1,5 +1,5 @@
 
-(ns pretty-inputs.header.attributes
+(ns pretty-elements.header.attributes
     (:require [pretty-attributes.api :as pretty-attributes]))
 
 ;; ----------------------------------------------------------------------------
@@ -15,12 +15,13 @@
   ; {:class (keyword or keywords in vector)
   ;  ...}
   [_ header-props]
-  (-> {:class :pi-header--inner}
-      (pretty-attributes/flex-attributes        header-props)
-      (pretty-attributes/inner-size-attributes  header-props)
-      (pretty-attributes/inner-space-attributes header-props)
-      (pretty-attributes/mouse-event-attributes header-props)
-      (pretty-attributes/style-attributes       header-props)))
+  (-> {:class :pe-header--inner}
+      (pretty-attributes/background-color-attributes header-props)
+      (pretty-attributes/border-attributes           header-props)
+      (pretty-attributes/flex-attributes             header-props)
+      (pretty-attributes/inner-size-attributes       header-props)
+      (pretty-attributes/inner-space-attributes      header-props)
+      (pretty-attributes/style-attributes            header-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -35,7 +36,7 @@
   ; {:class (keyword or keywords in vector)
   ;  ...}
   [_ header-props]
-  (-> {:class :pi-header}
+  (-> {:class :pe-header}
       (pretty-attributes/class-attributes          header-props)
       (pretty-attributes/inner-position-attributes header-props)
       (pretty-attributes/outer-position-attributes header-props)

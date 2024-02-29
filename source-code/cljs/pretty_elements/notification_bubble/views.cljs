@@ -19,15 +19,15 @@
   ; @param (map) bubble-props
   ; {:content (metamorphic-content)(opt)
   ;  :cover (map)(opt)
-  ;  :end-adornments (map)(opt)
-  ;  :start-adornments (map)(opt)
+  ;  :end-adornment-group (map)(opt)
+  ;  :start-adornment-group (map)(opt)
   ;  ...}
-  [bubble-id {:keys [content cover end-adornments start-adornments] :as bubble-props}]
+  [bubble-id {:keys [content cover end-adornment-group start-adornment-group] :as bubble-props}]
   [:div (notification-bubble.attributes/bubble-attributes bubble-id bubble-props)
         [:div (notification-bubble.attributes/bubble-inner-attributes bubble-id bubble-props)
-              (if start-adornments [adornment-group.views/view bubble-id {:adornments start-adornments}])
-              (if content          [:div (notification-bubble.attributes/bubble-content-attributes bubble-id bubble-props) content])
-              (if end-adornments   [adornment-group.views/view bubble-id {:adornments end-adornments}])]])
+              (if start-adornment-group [adornment-group.views/view bubble-id start-adornment-group])
+              (if content               [:div (notification-bubble.attributes/bubble-content-attributes bubble-id bubble-props) content])
+              (if end-adornment-group   [adornment-group.views/view bubble-id end-adornment-group])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -48,7 +48,7 @@
   ; Notification bubble element with optional adornments and progress display.
   ;
   ; @links Implemented elements
-  ; [Adornment](pretty-ui/cljs/pretty-elements/api.html#adornment)
+  ; [Adornment-group](pretty-ui/cljs/pretty-elements/api.html#adornment-group)
   ;
   ; @links Implemented properties
   ; [Background color properties](pretty-core/cljs/pretty-properties/api.html#background-color-properties)
@@ -78,24 +78,24 @@
   ; Check out the implemented properties.
   ;
   ; @usage (pretty-elements/notification-bubble.png)
-  ; [notification-bubble {:border-radius         {:all :m}
-  ;                       :content               "My notification bubble #1"
-  ;                       :fill-color            :primary
-  ;                       :indent                {:horizontal :s}
-  ;                       :end-adornment-default {:fill-color :highlight :border-radius {:all :s}}
-  ;                       :end-adornments        [{:icon :close}]
-  ;                       :outer-height          :xs
-  ;                       :outer-width           :3xl}]
+  ; [notification-bubble {:border-radius       {:all :m}
+  ;                       :content             "My notification bubble #1"
+  ;                       :fill-color          :primary
+  ;                       :indent              {:horizontal :s}
+  ;                       :outer-height        :xs
+  ;                       :outer-width         :3xl
+  ;                       :end-adornment-group {:adornment-default {:fill-color :highlight :border-radius {:all :s}}
+  ;                                             :adornments        [{:icon {:icon-name :close}}]}}]
   ;
-  ; [notification-bubble {:border-color            :highlight
-  ;                       :border-radius           {:all :m}
-  ;                       :content                 "My notification bubble #2"
-  ;                       :fill-color              :highlight
-  ;                       :indent                  {:horizontal :s}
-  ;                       :start-adornment-default {:fill-color :default :border-color :highlight :border-radius {:all :s}}
-  ;                       :start-adornments        [{:icon :close}]
-  ;                       :outer-height            :xs
-  ;                       :outer-width             :3xl}]
+  ; [notification-bubble {:border-color          :highlight
+  ;                       :border-radius         {:all :m}
+  ;                       :content               "My notification bubble #2"
+  ;                       :fill-color            :highlight
+  ;                       :indent                {:horizontal :s}
+  ;                       :outer-height          :xs
+  ;                       :outer-width           :3xl
+  ;                       :start-adornment-group {:adornment-default {:fill-color :default :border-color :highlight :border-radius {:all :s}}
+  ;                                               :adornments        [{:icon {:icon-name :close}}]}}]
   ([bubble-props]
    [view (random/generate-keyword) bubble-props])
 

@@ -12,6 +12,6 @@
   ; @param (map) header-props
   [header-id header-props]
   (let [on-click-f #(pretty-inputs.engine/toggle-input-info-text-visibility! header-id header-props)]
-       {:icon       :info
-        :icon-color :muted
-        :on-click-f on-click-f}))
+       (if (-> header-props :header :info-text)
+           {:icon {:icon-name :info :icon-color :muted}
+            :on-click-f on-click-f})))

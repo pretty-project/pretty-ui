@@ -33,10 +33,10 @@
   ; @param (keyword) dialog-id
   ; @param (map) dialog-props
   ; {:label (metamorphic-content)(opt)}
-  [_ {:keys [label]}]
-  [pretty-elements/label ::header-label
-                         {:content label
-                          :indent  {:horizontal :xs :left :s}}])
+  [_ {:keys [label]}])
+  ;[pretty-elements/label ::header-label
+  ;                       {:content label
+  ;                        :indent  {:horizontal :xs :left :s}]}])
 
 (defn- consent-dialog-header
   ; @param (keyword) dialog-id

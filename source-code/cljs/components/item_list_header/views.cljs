@@ -17,8 +17,8 @@
   ;  :on-click (function or Re-Frame metamorphic-event)(opt)}
   [header-id header-props cell-dex {:keys [label] :as cell-props}]
   (let [cell-props (item-list-header.prototypes/cell-props-prototype header-id header-props cell-dex cell-props)]
-       [:div.c-item-list-header--cell (item-list-header.helpers/cell-attributes cell-props)
-                                      (if label [pretty-elements/label cell-props])]))
+       [:div.c-item-list-header--cell (item-list-header.helpers/cell-attributes cell-props)]))
+                                      ;(if label [pretty-elements/label cell-props])]))
 
 (defn- header-cells
   ; @param (keyword) header-id

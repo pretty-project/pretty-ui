@@ -33,5 +33,5 @@
   ([description-id description-props]
    ; @note (tutorials#parameterizing)
    (fn [_ description-props]
-       (let [description-props (section-description.prototypes/description-props-prototype description-props)]
-            [pretty-elements/label description-id description-props]))))
+       (let [description-props (section-description.prototypes/description-props-prototype description-props)]))))
+            ;[pretty-elements/label description-id description-props]))))

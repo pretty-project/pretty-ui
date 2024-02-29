@@ -12,11 +12,11 @@
   ; {:icon (keyword)(opt)
   ;  :icon-family (keyword)(opt)
   ;  :thumbnail (string)(opt)}
-  [_ {:keys [icon icon-family thumbnail]}]
-  (cond icon-family      [:div.c-list-item-thumbnail--icon [pretty-elements/icon {:icon icon :icon-family icon-family}]]
-        icon             [:div.c-list-item-thumbnail--icon [pretty-elements/icon {:icon icon}]]
-        thumbnail        [pretty-elements/thumbnail {:border-radius {:all :s} :height :s :indent {:horizontal :xxs} :uri thumbnail :width :l}]
-        :empty-thumbnail [pretty-elements/thumbnail {:border-radius {:all :s} :height :s :indent {:horizontal :xxs}                :width :l}]))
+  [_ {:keys [icon icon-family thumbnail]}])
+  ;(cond icon-family      [:div.c-list-item-thumbnail--icon [pretty-elements/icon {:icon icon :icon-family icon-family}]]
+  ;      icon             [:div.c-list-item-thumbnail--icon [pretty-elements/icon {:icon icon}]]
+  ;      thumbnail        [pretty-elements/thumbnail {:border-radius {:all :s} :height :s :indent {:horizontal :xxs} :uri thumbnail :width :l}]
+  ;      :empty-thumbnail [pretty-elements/thumbnail {:border-radius {:all :s} :height :s :indent {:horizontal :xxs}                :width :l}]}])
 
 (defn- list-item-thumbnail
   ; @param (keyword) thumbnail-id

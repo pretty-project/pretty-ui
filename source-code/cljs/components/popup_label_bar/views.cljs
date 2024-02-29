@@ -24,8 +24,8 @@
         [:div {:class :c-popup-label-bar--inner}
               (if secondary-button [pretty-elements/button secondary-button]
                                    [:div {:class :c-popup-label-bar--placeholder}])
-              (if label            [pretty-elements/label label]
-                                   [:div {:class :c-popup-label-bar--placeholder}])
+              ;(if label            [pretty-elements/label label]
+              ;                     [:div {:class :c-popup-label-bar--placeholder}])
               (if primary-button   [pretty-elements/button primary-button]
                                    [:div {:class :c-popup-label-bar--placeholder}])]])
 

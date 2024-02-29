@@ -29,5 +29,5 @@
   ([label-id label-props]
    ; @note (tutorials#parameterizing)
    (fn [_ label-props]
-       (let [label-props (error-label.prototypes/label-props-prototype label-props)]
-            [pretty-elements/label label-id label-props]))))
+       (let [label-props (error-label.prototypes/label-props-prototype label-props)]))))
+            ;[pretty-elements/label label-id label-props]))))

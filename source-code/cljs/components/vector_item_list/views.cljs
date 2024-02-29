@@ -19,8 +19,8 @@
   ;   {}}
   [_ {{:keys [illustration label]} :placeholder}]
   [:div {:class :c-vector-item-list--placeholder}
-        (if illustration [illustration.views/view {:illustration illustration :height :s :width :s}])
-        (if label        [pretty-elements/label {:content label :font-size :l :font-weight :semi-bold}])])
+        (if illustration [illustration.views/view {:illustration illustration :height :s :width :s}])])
+        ;(if label        [pretty-elements/label {:content label :font-size :l :font-weight :semi-bold}])])
 
 (defn- vector-item-list-items
   ; @ignore

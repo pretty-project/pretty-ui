@@ -27,7 +27,6 @@
   ;
   ; @param (keyword) thumbnail-id
   ; @param (map) thumbnail-props
-  ; {}
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)

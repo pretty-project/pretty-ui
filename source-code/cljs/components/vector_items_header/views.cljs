@@ -33,7 +33,7 @@
   [header-id {:keys [label] :as header-props}]
   [:div (vector-items-header.attributes/header-attributes header-id header-props)
         [:div (vector-items-header.attributes/header-inner-attributes header-id header-props)
-              [pretty-elements/label {:content label :font-size :xl}]
+              ;[pretty-elements/label {:content label :font-size :xl}]
               [add-icon-button header-id header-props]]])
 
 (defn view

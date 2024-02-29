@@ -1,9 +1,9 @@
 
 (ns pretty-inputs.checkbox.views
-    (:require [fruits.hiccup.api                 :as hiccup]
+    (:require ;[fruits.hiccup.api                 :as hiccup]
               [fruits.random.api                 :as random]
-              [fruits.vector.api                 :as vector]
-              [metamorphic-content.api           :as metamorphic-content]
+              ;[fruits.vector.api                 :as vector]
+              ;[metamorphic-content.api           :as metamorphic-content]
               [pretty-inputs.checkbox.attributes :as checkbox.attributes]
               [pretty-inputs.checkbox.prototypes :as checkbox.prototypes]
               [pretty-inputs.engine.api          :as pretty-inputs.engine]
@@ -11,7 +11,9 @@
               [reagent.core :as reagent]
               [pretty-guides.api :as pretty-guides]
               [pretty-subitems.api :as pretty-subitems]
-              [pretty-elements.api :as pretty-elements]))
+              [pretty-accessories.api :as pretty-accessories]
+              [pretty-inputs.option-group.views :as option-group.views]
+              [pretty-inputs.header.views :as header.views]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -45,25 +47,25 @@
   ;  ...}
   [checkbox-id {:keys [options-placeholder] :as checkbox-props}]
   (letfn [(f0 [option-dex option] [checkbox-option checkbox-id checkbox-props option-dex option])]
-         (let [options (pretty-inputs.engine/get-input-options checkbox-id checkbox-props)]
-              (cond (-> options vector/not-empty?) (hiccup/put-with-indexed [:<>] options f0)
-                    (-> options-placeholder) [:div (checkbox.attributes/checkbox-options-placeholder-attributes checkbox-id checkbox-props)
-                                                   (metamorphic-content/compose options-placeholder)]))))
+         (let [options (pretty-inputs.engine/get-input-options checkbox-id checkbox-props)])))
+              ;(cond (-> options vector/not-empty?) (hiccup/put-with-indexed [:<>] options f0)
+              ;      (-> options-placeholder) [:div (checkbox.attributes/checkbox-options-placeholder-attributes checkbox-id checkbox-props)]])))
+                                                   ;(metamorphic-content/compose options-placeholder)]))))
 
 (defn- checkbox
   ; @ignore
   ;
   ; @param (keyword) checkbox-id
   ; @param (map) checkbox-props
-  ; {:label (map)(opt)
+  ; {:header (map)(opt)
+  ;  :option-group (map)(opt)
   ;  ...}
-  [checkbox-id {:keys [label] :as checkbox-props}]
+  [checkbox-id {:keys [header option-group] :as checkbox-props}]
   [:div (checkbox.attributes/checkbox-attributes checkbox-id checkbox-props)
-        ;[pretty-inputs.header.views/view         checkbox-id checkbox-props]
-        (if label [pretty-elements/label checkbox-id label])
         [pretty-inputs.engine/input-synchronizer checkbox-id checkbox-props]
         [:div (checkbox.attributes/checkbox-inner-attributes checkbox-id checkbox-props)
-              [checkbox-option-list                          checkbox-id checkbox-props]]])
+              (if header       [header.views/view       checkbox-id header])
+              (if option-group [option-group.views/view checkbox-id option-group])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -142,11 +144,12 @@
   ;   [{:error-text (metamorphic-content)(opt)
   ;     :f (function)}]}
   ;
-  ; @usage
-  ; [checkbox {...}]
-  ;
-  ; @usage
-  ; [checkbox :my-checkbox {...}]
+  ; @usage (pretty-inputs/checkbox.png)
+  ; [checkbox {
+  ;            :option-group {:option-default {}
+  ;                           :options        [{:label {:content "My option #1"}}]
+  ;}
+  ;}]
   ([checkbox-props]
    [view (random/generate-keyword) checkbox-props])
 
@@ -154,5 +157,6 @@
    ; @note (tutorials#parameterizing)
    (fn [_ checkbox-props]
        (let [checkbox-props (pretty-presets.engine/apply-preset           checkbox-id checkbox-props)
-             checkbox-props (checkbox.prototypes/checkbox-props-prototype checkbox-id checkbox-props)]
+             checkbox-props (checkbox.prototypes/checkbox-props-prototype checkbox-id checkbox-props)
+             checkbox-props (pretty-inputs.engine/xxx checkbox-id checkbox-props)]
             [view-lifecycles checkbox-id checkbox-props]))))

@@ -11,8 +11,8 @@
   ; @param (keyword) handle-id
   ; @param (map) handle-props
   ; {:drag-attributes (map)}
-  [_ {:keys [drag-attributes]}]
-  [:div.c-list-item-drag-handle drag-attributes [pretty-elements/icon {:icon :drag_handle}]])
+  [_ {:keys [drag-attributes]}])
+  ;[:div.c-list-item-drag-handle drag-attributes [pretty-elements/icon {:icon :drag_handle}]])
 
 (defn view
   ; @param (keyword)(opt) handle-id

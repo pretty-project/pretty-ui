@@ -16,8 +16,8 @@
   [title-id {:keys [content content-placeholder] :as title-props}]
   ; The sensor and title must be placed in a common element.
   ; Otherwise, in some cases the sensor would be in a wrong position!
-  [:div.c-section-title [auto-title/sensor {:title-placeholder content-placeholder :title content :offset -12}]
-                        [pretty-elements/label title-id title-props]])
+  [:div.c-section-title [auto-title/sensor {:title-placeholder content-placeholder :title content :offset -12}]])
+                        ;[pretty-elements/label title-id title-props]])
 
 (defn view
   ; @note

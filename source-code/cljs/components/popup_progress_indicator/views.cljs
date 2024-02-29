@@ -11,10 +11,10 @@
   ; @param (map) indicator-props
   ; {:color (keyword)(opt)
   ;  :label (metamorphic-content)}
-  [_ {:keys [color label]}]
-  [pretty-elements/label ::popup-progress-label
-                         {:color   (or color :muted)
-                          :content label}])
+  [_ {:keys [color label]}])
+  ;[pretty-elements/label ::popup-progress-label
+  ;                       {:color   (or color :muted)
+  ;                        :content label]}])
 
 (defn- popup-progress-indicator
   ; @param (keyword) indicator-id

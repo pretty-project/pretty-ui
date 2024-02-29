@@ -27,7 +27,6 @@
   ;
   ; @param (keyword) image-id
   ; @param (map) image-props
-  ; {}
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)

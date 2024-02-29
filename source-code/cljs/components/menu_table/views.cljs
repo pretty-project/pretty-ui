@@ -73,10 +73,10 @@
 (defn- menu-items-placeholder
   ; @param (keyword) table-id
   ; @param (map) table-props
-  [_ _]
-  [:div.c-menu-table--placeholder [pretty-elements/label {:color     :highlight
-                                                          :content   :no-items-to-show
-                                                          :font-size :xs}]])
+  [_ _])
+  ;[:div.c-menu-table--placeholder [pretty-elements/label {:color     :highlight
+  ;                                                        :content   :no-items-to-show
+  ;                                                        :font-size :xs])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -85,8 +85,8 @@
   ; @param (keyword) table-id
   ; @param (map) table-props
   ; {:label (metamorphic-content)}
-  [_ {:keys [label]}]
-  (if label [:div.c-menu-table--label [pretty-elements/label {:content label}]]))
+  [_ {:keys [label]}])
+  ;(if label [:div.c-menu-table--label [pretty-elements/label {:content label}]]))
 
 (defn- menu-table-body
   ; @param (keyword) table-id
