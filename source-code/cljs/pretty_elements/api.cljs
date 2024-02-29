@@ -3,7 +3,7 @@
     (:require [pretty-elements.adornment-group.views      :as adornment-group.views]
               [pretty-elements.adornment.views            :as adornment.views]
               [pretty-elements.blank.views                :as blank.views]
-              [pretty-elements.breadcrumbs.views          :as breadcrumbs.views]
+              [pretty-elements.crumb-group.views          :as crumb-group.views]
               [pretty-elements.button.views               :as button.views]
               [pretty-elements.card.views                 :as card.views]
               [pretty-elements.chip.views                 :as chip.views]
@@ -74,12 +74,12 @@
 (def adornment            adornment.views/view)
 (def adornment-group      adornment-group.views/view)
 (def blank                blank.views/view)
-(def breadcrumbs          breadcrumbs.views/view)
 (def button               button.views/view)
 (def card                 card.views/view)
 (def chip                 chip.views/view)
 (def column               column.views/view)
 (def crumb                crumb.views/view)
+(def crumb-group          crumb-group.views/view)
 (def dropdown-menu        dropdown-menu.views/view)
 (def expandable           expandable.views/view)
 (def ghost                ghost.views/view)

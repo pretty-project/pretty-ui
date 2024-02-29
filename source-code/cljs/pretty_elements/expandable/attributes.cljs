@@ -5,6 +5,23 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn expandable-content-attributes
+  ; @ignore
+  ;
+  ; @param (keyword) expandable-id
+  ; @param (map) expandable-props
+  ;
+  ; @return (map)
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
+  [_ expandable-props]
+  (-> {:class :pe-expandable--content}
+      (pretty-attributes/font-attributes expandable-props)
+      (pretty-attributes/text-attributes expandable-props)))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn expandable-inner-attributes
   ; @ignore
   ;

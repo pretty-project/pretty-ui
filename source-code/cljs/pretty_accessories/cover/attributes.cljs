@@ -5,36 +5,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn cover-icon-attributes
-  ; @ignore
-  ;
-  ; @param (keyword) cover-id
-  ; @param (map) cover-props
-  ;
-  ; @return (map)
-  ; {:class (keyword or keywords in vector)
-  ;  ...}
-  [cover-id cover-props]
-  (-> {:class :pa-cover--icon}
-      (pretty-attributes/icon-attributes cover-props)))
-
-(defn cover-label-attributes
-  ; @ignore
-  ;
-  ; @param (keyword) cover-id
-  ; @param (map) cover-props
-  ;
-  ; @return (map)
-  ; {:class (keyword or keywords in vector)
-  ;  ...}
-  [_ cover-props]
-  (-> {:class :pa-cover--label}
-      (pretty-attributes/font-attributes cover-props)
-      (pretty-attributes/text-attributes cover-props)))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (defn cover-inner-attributes
   ; @ignore
   ;
@@ -44,7 +14,7 @@
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [cover-id cover-props]
+  [_ cover-props]
   (-> {:class :pa-cover--inner}
       (pretty-attributes/animation-attributes        cover-props)
       (pretty-attributes/background-color-attributes cover-props)

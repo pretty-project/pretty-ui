@@ -19,35 +19,6 @@
       (pretty-attributes/background-image-attributes thumbnail-props)
       (pretty-attributes/content-size-attributes     thumbnail-props)))
 
-(defn thumbnail-icon-attributes
-  ; @ignore
-  ;
-  ; @param (keyword) thumbnail-id
-  ; @param (map) thumbnail-props
-  ;
-  ; @return (map)
-  ; {:class (keyword or keywords in vector)
-  ;  ...}
-  [_ thumbnail-props]
-  (-> {:class :pe-thumbnail--icon}
-      (pretty-attributes/animation-attributes    thumbnail-props)
-      (pretty-attributes/content-size-attributes thumbnail-props)
-      (pretty-attributes/icon-attributes         thumbnail-props)))
-
-(defn thumbnail-label-attributes
-  ; @ignore
-  ;
-  ; @param (keyword) thumbnail-id
-  ; @param (map) thumbnail-props
-  ;
-  ; @return (map)
-  ; {:class (keyword or keywords in vector)
-  ;  ...}
-  [_ thumbnail-props]
-  (-> {:class :pe-thumbnail--label}
-      (pretty-attributes/font-attributes thumbnail-props)
-      (pretty-attributes/text-attributes thumbnail-props)))
-
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 

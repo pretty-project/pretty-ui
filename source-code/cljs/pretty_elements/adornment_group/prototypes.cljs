@@ -8,19 +8,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn adornment-props-prototype
-  ; @ignore
-  ;
-  ; @param (integer) adornment-dex
-  ; @param (map) adornment-props
-  ;
-  ; @return (map)
-  [_ adornment-props]
-  (-> adornment-props))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (defn group-props-prototype
   ; @ignore
   ;
@@ -39,5 +26,4 @@
                   (pretty-rules/auto-align-scrollable-flex)
                   (pretty-subitems/subitem-group<-subitem-default :adornments)
                   (pretty-subitems/subitem-group<-disabled-state  :adornments)
-                  (pretty-subitems/leave-disabled-state           :adornments)
-                  (pretty-subitems/apply-group-item-prototype     :adornments adornment-props-prototype)))
+                  (pretty-subitems/leave-disabled-state           :adornments)))

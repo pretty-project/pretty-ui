@@ -5,36 +5,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn tooltip-icon-attributes
-  ; @ignore
-  ;
-  ; @param (keyword) tooltip-id
-  ; @param (map) tooltip-props
-  ;
-  ; @return (map)
-  ; {:class (keyword or keywords in vector)
-  ;  ...}
-  [tooltip-id tooltip-props]
-  (-> {:class :pa-tooltip--icon}
-      (pretty-attributes/icon-attributes tooltip-props)))
-
-(defn tooltip-label-attributes
-  ; @ignore
-  ;
-  ; @param (keyword) tooltip-id
-  ; @param (map) tooltip-props
-  ;
-  ; @return (map)
-  ; {:class (keyword or keywords in vector)
-  ;  ...}
-  [_ tooltip-props]
-  (-> {:class :pa-tooltip--label}
-      (pretty-attributes/font-attributes tooltip-props)
-      (pretty-attributes/text-attributes tooltip-props)))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (defn tooltip-inner-attributes
   ; @ignore
   ;
@@ -44,7 +14,7 @@
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [tooltip-id tooltip-props]
+  [_ tooltip-props]
   (-> {:class :pa-tooltip--inner}
       (pretty-attributes/animation-attributes        tooltip-props)
       (pretty-attributes/background-color-attributes tooltip-props)

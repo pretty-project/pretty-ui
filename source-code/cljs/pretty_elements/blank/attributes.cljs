@@ -5,6 +5,23 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn blank-content-attributes
+  ; @ignore
+  ;
+  ; @param (keyword) blank-id
+  ; @param (map) blank-props
+  ;
+  ; @return (map)
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
+  [_ blank-props]
+  (-> {:class :pe-blank--content}
+      (pretty-attributes/font-attributes blank-props)
+      (pretty-attributes/text-attributes blank-props)))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn blank-inner-attributes
   ; @ignore
   ;

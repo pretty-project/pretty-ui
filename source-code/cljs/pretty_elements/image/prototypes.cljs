@@ -69,9 +69,10 @@
   ;
   ; @return (map)
   [image-id image-props]
-  (let [set-reference-f         (fn [%] (react-references/set-reference! image-id %))
-        icon-props-prototype-f  (fn [_] (icon-props-prototype            image-id image-props))
-        label-props-prototype-f (fn [_] (label-props-prototype           image-id image-props))]
+  (let [set-reference-f          (fn [%] (react-references/set-reference! image-id %))
+        icon-props-prototype-f   (fn [_] (icon-props-prototype            image-id image-props))
+        label-props-prototype-f  (fn [_] (label-props-prototype           image-id image-props))
+        sensor-props-prototype-f (fn [_] (label-props-prototype           image-id image-props))]
        (-> image-props (pretty-properties/default-animation-props        {:animation-duration 2000 :animation-mode :repeat :animation-name :pulse})
                        (pretty-properties/default-background-color-props {:fill-color :highlight})
                        (pretty-properties/default-background-image-props {:background-size :contain})
@@ -98,6 +99,7 @@
                        (pretty-rules/auto-disable-hover-color)
                        (pretty-rules/auto-disable-mouse-events)
                        (pretty-rules/auto-set-click-effect)
-                       (pretty-subitems/ensure-subitem          :icon)
-                       (pretty-subitems/apply-subitem-prototype :icon  icon-props-prototype-f)
-                       (pretty-subitems/apply-subitem-prototype :label label-props-prototype-f))))
+                       (pretty-subitems/ensure-subitems         :icon :sensor)
+                       (pretty-subitems/apply-subitem-prototype :icon   icon-props-prototype-f)
+                       (pretty-subitems/apply-subitem-prototype :label  label-props-prototype-f)
+                       (pretty-subitems/apply-subitem-prototype :sensor sensor-props-prototype-f))))

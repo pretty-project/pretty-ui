@@ -3,38 +3,7 @@
     (:require [pretty-properties.api :as pretty-properties]
               [react-references.api :as react-references]
               [pretty-rules.api :as pretty-rules]
-              [pretty-standards.api :as pretty-standards]
-              [pretty-subitems.api :as pretty-subitems]))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn icon-props-prototype
-  ; @ignore
-  ;
-  ; @param (keyword) adornment-id
-  ; @param (map) adornment-props
-  ; {:icon (map)(opt)
-  ;  ...}
-  ;
-  ; @return (map)
-  [_ {:keys [icon]}]
-  (-> icon))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn label-props-prototype
-  ; @ignore
-  ;
-  ; @param (keyword) adornment-id
-  ; @param (map) adornment-props
-  ; {:label (map)(opt)
-  ;  ...}
-  ;
-  ; @return (map)
-  [_ {:keys [label]}]
-  (-> label))
+              [pretty-standards.api :as pretty-standards]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -47,9 +16,7 @@
   ;
   ; @return (map)
   [button-id button-props]
-  (let [set-reference-f         (fn [%] (react-references/set-reference! button-id %))
-        icon-props-prototype-f  (fn [_] (icon-props-prototype            button-id button-props))
-        label-props-prototype-f (fn [_] (label-props-prototype           button-id button-props))]
+  (let [set-reference-f (fn [%] (react-references/set-reference! button-id %))]
        (-> button-props (pretty-properties/default-flex-props       {:orientation :horizontal})
                         (pretty-properties/default-outer-size-props {:outer-size-unit :full-block})
                         (pretty-properties/default-react-props      {:set-reference-f set-reference-f})
@@ -68,6 +35,4 @@
                         (pretty-rules/auto-disable-highlight-color)
                         (pretty-rules/auto-disable-hover-color)
                         (pretty-rules/auto-disable-mouse-events)
-                        (pretty-rules/auto-set-click-effect)
-                        (pretty-subitems/apply-subitem-prototype :icon  icon-props-prototype-f)
-                        (pretty-subitems/apply-subitem-prototype :label label-props-prototype-f))))
+                        (pretty-rules/auto-set-click-effect))))

@@ -3,9 +3,7 @@
     (:require [fruits.random.api :as random]
               [pretty-accessories.sensor.attributes :as sensor.attributes]
               [pretty-accessories.sensor.prototypes :as sensor.prototypes]
-              [pretty-elements.engine.api :as pretty-elements.engine]
-              [pretty-presets.engine.api :as pretty-presets.engine]
-              [reagent.core :as reagent]))
+              [pretty-presets.engine.api :as pretty-presets.engine]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -22,17 +20,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- view-lifecycles
-  ; @ignore
-  ;
-  ; @param (keyword) sensor-id
-  ; @param (map) sensor-props
-  [sensor-id sensor-props]
-  ; @note (tutorials#parameterizing)
-  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    sensor-id sensor-props))
-                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount sensor-id sensor-props))
-                         :reagent-render         (fn [_ sensor-props] [sensor sensor-id sensor-props])}))
-
 (defn view
   ; @description
   ; Sensor accessory for elements.
@@ -44,7 +31,6 @@
   ; [Inner position properties](pretty-core/cljs/pretty-properties/api.html#inner-position-properties)
   ; [Inner size properties](pretty-core/cljs/pretty-properties/api.html#inner-size-properties)
   ; [Inner space properties](pretty-core/cljs/pretty-properties/api.html#inner-space-properties)
-  ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
   ; [Mouse event properties](pretty-core/cljs/pretty-properties/api.html#mouse-event-properties)
   ; [Outer position properties](pretty-core/cljs/pretty-properties/api.html#outer-position-properties)
   ; [Outer size properties](pretty-core/cljs/pretty-properties/api.html#outer-size-properties)
@@ -70,4 +56,4 @@
    (fn [_ sensor-props]
        (let [sensor-props (pretty-presets.engine/apply-preset       sensor-id sensor-props)
              sensor-props (sensor.prototypes/sensor-props-prototype sensor-id sensor-props)]
-            [view-lifecycles sensor-id sensor-props]))))
+            [sensor sensor-id sensor-props]))))

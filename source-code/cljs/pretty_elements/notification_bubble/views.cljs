@@ -25,9 +25,9 @@
   [bubble-id {:keys [content cover end-adornments start-adornments] :as bubble-props}]
   [:div (notification-bubble.attributes/bubble-attributes bubble-id bubble-props)
         [:div (notification-bubble.attributes/bubble-inner-attributes bubble-id bubble-props)
-              (when start-adornments [adornment-group.views/view bubble-id {:adornments start-adornments}])
-              (when :always          [:div (notification-bubble.attributes/bubble-content-attributes bubble-id bubble-props) content])
-              (when end-adornments   [adornment-group.views/view bubble-id {:adornments end-adornments}])]])
+              (if start-adornments [adornment-group.views/view bubble-id {:adornments start-adornments}])
+              (if content          [:div (notification-bubble.attributes/bubble-content-attributes bubble-id bubble-props) content])
+              (if end-adornments   [adornment-group.views/view bubble-id {:adornments end-adornments}])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

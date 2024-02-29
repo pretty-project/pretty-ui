@@ -78,7 +78,6 @@
   ; [Marker](pretty-core/cljs/pretty-accessories/api.html#marker)
   ;
   ; @links Implemented elements
-  ; [Marker](pretty-core/cljs/pretty-elements/api.html#label)
   ;
   ; @links Implemented guides
   ; [Error-text](pretty-core/cljs/pretty-guides/api.html#error-text)

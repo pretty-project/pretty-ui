@@ -5,10 +5,9 @@
               [pretty-elements.icon-button.attributes :as icon-button.attributes]
               [pretty-elements.icon-button.prototypes :as icon-button.prototypes]
               [pretty-presets.engine.api              :as pretty-presets.engine]
+              [pretty-models.api             :as pretty-models]
               [reagent.core :as reagent]
-              [pretty-accessories.api :as pretty-accessories]
-              [pretty-elements.icon.views :as icon.views]
-              [pretty-elements.label.views :as label.views]))
+              [pretty-accessories.api :as pretty-accessories]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -26,10 +25,10 @@
   ;  ...}
   [button-id {:keys [badge cover icon label marker] :as button-props}]
   [:div (icon-button.attributes/button-attributes button-id button-props)
-        [(pretty-elements.engine/clickable-auto-tag      button-id button-props)
+        [(pretty-models/clickable-auto-tag               button-id button-props)
          (icon-button.attributes/button-inner-attributes button-id button-props)
-         (if icon   [icon.views/view           button-id icon])
-         (if label  [label.views/view          button-id label])
+         (if icon   [pretty-accessories/icon   button-id icon])
+         (if label  [pretty-accessories/label  button-id label])
          (if badge  [pretty-accessories/badge  button-id badge])
          (if marker [pretty-accessories/marker button-id marker])
          (if cover  [pretty-accessories/cover  button-id cover])]])
@@ -57,12 +56,10 @@
   ; @links Implemented accessories
   ; [Badge](pretty-ui/cljs/pretty-accessories/api.html#badge)
   ; [Cover](pretty-ui/cljs/pretty-accessories/api.html#cover)
+  ; [Icon](pretty-ui/cljs/pretty-accessories/api.html#icon)
+  ; [Label](pretty-ui/cljs/pretty-accessories/api.html#label)
   ; [Marker](pretty-ui/cljs/pretty-accessories/api.html#marker)
   ; [Tooltip](pretty-ui/cljs/pretty-accessories/api.html#tooltip)
-  ;
-  ; @links Implemented elements
-  ; [Icon](pretty-ui/cljs/pretty-elements/api.html#icon)
-  ; [Label](pretty-ui/cljs/pretty-elements/api.html#label)
   ;
   ; @links Implemented properties
   ; [Anchor properties](pretty-core/cljs/pretty-properties/api.html#anchor-properties)
@@ -90,7 +87,6 @@
   ; @param (keyword)(opt) button-id
   ; @param (map) button-props
   ; Check out the implemented accessories.
-  ; Check out the implemented elements.
   ; Check out the implemented properties.
   ;
   ; @usage (pretty-elements/icon-button.png)

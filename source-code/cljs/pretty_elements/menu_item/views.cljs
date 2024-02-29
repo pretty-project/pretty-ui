@@ -6,9 +6,8 @@
               [pretty-elements.menu-item.prototypes :as menu-item.prototypes]
               [pretty-presets.engine.api            :as pretty-presets.engine]
               [reagent.core :as reagent]
-              [pretty-accessories.api :as pretty-accessories]
-              [pretty-elements.icon.views :as icon.views]
-              [pretty-elements.label.views :as label.views]))
+              [pretty-models.api             :as pretty-models]
+              [pretty-accessories.api :as pretty-accessories]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -25,10 +24,10 @@
   ;  ...}
   [item-id {:keys [badge icon label marker] :as item-props}]
   [:div (menu-item.attributes/menu-item-attributes item-id item-props)
-        [(pretty-elements.engine/clickable-auto-tag       item-id item-props)
+        [(pretty-models/clickable-auto-tag                item-id item-props)
          (menu-item.attributes/menu-item-inner-attributes item-id item-props)
-         (if label  [label.views/view          item-id label])
-         (if icon   [icon.views/view           item-id icon])
+         (if label  [pretty-accessories/label  item-id label])
+         (if icon   [pretty-accessories/icon   item-id icon])
          (if badge  [pretty-accessories/badge  item-id badge])
          (if marker [pretty-accessories/marker item-id marker])]])
 
@@ -53,12 +52,10 @@
   ;
   ; @links Implemented accessories
   ; [Badge](pretty-ui/cljs/pretty-accessories/api.html#badge)
+  ; [Icon](pretty-ui/cljs/pretty-accessories/api.html#icon)
+  ; [Label](pretty-ui/cljs/pretty-accessories/api.html#label)
   ; [Marker](pretty-ui/cljs/pretty-accessories/api.html#marker)
   ; [Tooltip](pretty-ui/cljs/pretty-accessories/api.html#tooltip)
-  ;
-  ; @links Implemented elements
-  ; [Icon](pretty-ui/cljs/pretty-elements/api.html#icon)
-  ; [Label](pretty-ui/cljs/pretty-elements/api.html#label)
   ;
   ; @links Implemented properties
   ; [Anchor properties](pretty-core/cljs/pretty-properties/api.html#anchor-properties)
@@ -67,6 +64,7 @@
   ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
   ; [Clickable state properties](pretty-core/cljs/pretty-properties/api.html#clickable-state-properties)
   ; [Cursor properties](pretty-core/cljs/pretty-properties/api.html#cursor-properties)
+  ; [Dropdown properties](pretty-core/cljs/pretty-properties/api.html#dropdown-properties)
   ; [Effect properties](pretty-core/cljs/pretty-properties/api.html#effect-properties)
   ; [Flex properties](pretty-core/cljs/pretty-properties/api.html#flex-properties)
   ; [Inner position properties](pretty-core/cljs/pretty-properties/api.html#inner-position-properties)
@@ -84,7 +82,6 @@
   ; @param (keyword)(opt) item-id
   ; @param (map) item-props
   ; Check out the implemented accessories.
-  ; Check out the implemented elements.
   ; Check out the implemented properties.
   ;
   ; @usage (pretty-elements/menu-item.png)

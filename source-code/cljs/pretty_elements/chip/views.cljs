@@ -5,8 +5,9 @@
               [pretty-elements.chip.prototypes       :as chip.prototypes]
               [pretty-elements.engine.api            :as pretty-elements.engine]
               [pretty-presets.engine.api             :as pretty-presets.engine]
-              [reagent.core :as reagent]
-              [pretty-elements.label.views :as label.views]))
+              [pretty-accessories.api             :as pretty-accessories]
+              [pretty-models.api             :as pretty-models]
+              [reagent.core :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -20,9 +21,9 @@
   ;  ...}
   [chip-id {:keys [label] :as chip-props}]
   [:div (chip.attributes/chip-attributes chip-id chip-props)
-        [(pretty-elements.engine/clickable-auto-tag chip-id chip-props)
-         (chip.attributes/chip-inner-attributes     chip-id chip-props)
-         (if label [label.views/view chip-id label])]])
+        [(pretty-models/clickable-auto-tag      chip-id chip-props)
+         (chip.attributes/chip-inner-attributes chip-id chip-props)
+         (if label [pretty-accessories/label chip-id label])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -43,10 +44,8 @@
   ; Clickable chip style element.
   ;
   ; @links Implemented accessories
+  ; [Label](pretty-ui/cljs/pretty-accessories/api.html#label)
   ; [Tooltip](pretty-ui/cljs/pretty-accessories/api.html#tooltip)
-  ;
-  ; @links Implemented elements
-  ; [Label](pretty-ui/cljs/pretty-elements/api.html#label)
   ;
   ; @links Implemented properties
   ; [Anchor properties](pretty-core/cljs/pretty-properties/api.html#anchor-properties)
@@ -71,7 +70,6 @@
   ; @param (keyword)(opt) chip-id
   ; @param (map) chip-props
   ; Check out the implemented accessories.
-  ; Check out the implemented elements.
   ; Check out the implemented properties.
   ;
   ; @usage (pretty-elements/chip.png)

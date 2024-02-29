@@ -15,7 +15,7 @@
   ; {:class (keyword or keywords in vector)
   ;  ...}
   [_ bubble-props]
-  (-> {:class :pe-notification-bubble--content}
+  (-> {:class :pe-bubble--content}
       (pretty-attributes/font-attributes bubble-props)
       (pretty-attributes/text-attributes bubble-props)))
 

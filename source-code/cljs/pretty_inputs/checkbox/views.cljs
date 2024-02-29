@@ -7,16 +7,11 @@
               [pretty-inputs.checkbox.attributes :as checkbox.attributes]
               [pretty-inputs.checkbox.prototypes :as checkbox.prototypes]
               [pretty-inputs.engine.api          :as pretty-inputs.engine]
-              [pretty-inputs.header.views        :as header.views]
               [pretty-presets.engine.api         :as pretty-presets.engine]
               [reagent.core :as reagent]
               [pretty-guides.api :as pretty-guides]
               [pretty-subitems.api :as pretty-subitems]
               [pretty-elements.api :as pretty-elements]))
-
-; no more header
-; inputs implement guides and the label element
-; info-text adornment is part of the input engine
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -87,7 +82,6 @@
 (defn view
 
   ; @links Implemented elements
-  ; [Marker](pretty-core/cljs/pretty-elements/api.html#label)
   ;
   ; @links Implemented guides
   ; [Error-text](pretty-core/cljs/pretty-guides/api.html#error-text)

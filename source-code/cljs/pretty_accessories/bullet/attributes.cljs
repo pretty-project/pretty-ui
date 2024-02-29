@@ -14,7 +14,7 @@
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [bullet-id bullet-props]
+  [_ bullet-props]
   (-> {:class :pa-bullet--inner}
       (pretty-attributes/animation-attributes        bullet-props)
       (pretty-attributes/background-color-attributes bullet-props)

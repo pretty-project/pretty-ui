@@ -9,21 +9,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn icon-props-prototype
-  ; @ignore
-  ;
-  ; @param (keyword) adornment-id
-  ; @param (map) adornment-props
-  ; {:icon (map)(opt)
-  ;  ...}
-  ;
-  ; @return (map)
-  [_ {:keys [icon]}]
-  (-> icon))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (defn label-props-prototype
   ; @ignore
   ;
@@ -49,7 +34,6 @@
   ; @return (map)
   [adornment-id adornment-props]
   (let [set-reference-f         (fn [%] (react-references/set-reference! adornment-id %))
-        icon-props-prototype-f  (fn [_] (icon-props-prototype            adornment-id adornment-props))
         label-props-prototype-f (fn [_] (label-props-prototype           adornment-id adornment-props))]
        (-> adornment-props (pretty-properties/default-flex-props       {:orientation :horizontal})
                            (pretty-properties/default-outer-size-props {:min-outer-width :xs :outer-size-unit :half-block})
@@ -70,5 +54,4 @@
                            (pretty-rules/auto-disable-hover-color)
                            (pretty-rules/auto-disable-mouse-events)
                            (pretty-rules/auto-set-click-effect)
-                           (pretty-subitems/apply-subitem-prototype :icon  icon-props-prototype-f)
                            (pretty-subitems/apply-subitem-prototype :label label-props-prototype-f))))

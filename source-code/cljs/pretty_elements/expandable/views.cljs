@@ -23,7 +23,7 @@
   [expandable-id {:keys [content expanded?] :as expandable-props}]
   (if expanded? [:div (expandable.attributes/expandable-attributes expandable-id expandable-props)
                       [:div (expandable.attributes/expandable-inner-attributes expandable-id expandable-props)
-                            (-> content)]]))
+                            [:div (expandable.attributes/expandable-content-attributes expandable-id expandable-props) content]]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -53,6 +53,7 @@
   ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
   ; [Content properties](pretty-core/cljs/pretty-properties/api.html#content-properties)
   ; [Expandable properties](pretty-core/cljs/pretty-properties/api.html#expandable-properties)
+  ; [Font properties](pretty-core/cljs/pretty-properties/api.html#font-properties)
   ; [Inner position properties](pretty-core/cljs/pretty-properties/api.html#inner-position-properties)
   ; [Inner size properties](pretty-core/cljs/pretty-properties/api.html#inner-size-properties)
   ; [Inner space properties](pretty-core/cljs/pretty-properties/api.html#inner-space-properties)
@@ -61,8 +62,9 @@
   ; [Outer size properties](pretty-core/cljs/pretty-properties/api.html#outer-size-properties)
   ; [Outer space properties](pretty-core/cljs/pretty-properties/api.html#outer-space-properties)
   ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
-  ; [State properties](pretty-core/cljs/pretty-properties/api.html#state-properties)
+  ; [State properties](pretty-core/cljs/pretty-properties/api.html#state-properties)  
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
+  ; [Text properties](pretty-core/cljs/pretty-properties/api.html#text-properties)
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
   ;
   ; @param (keyword)(opt) expandable-id

@@ -14,7 +14,7 @@
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [sensor-id sensor-props]
+  [_ sensor-props]
   (-> {:class :pa-sensor--inner}
       (pretty-attributes/animation-attributes        sensor-props)
       (pretty-attributes/background-color-attributes sensor-props)

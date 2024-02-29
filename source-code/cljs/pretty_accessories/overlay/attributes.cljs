@@ -14,7 +14,7 @@
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [overlay-id overlay-props]
+  [_ overlay-props]
   (-> {:class :pa-overlay--inner}
       (pretty-attributes/animation-attributes        overlay-props)
       (pretty-attributes/background-color-attributes overlay-props)

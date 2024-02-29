@@ -8,20 +8,11 @@
               [pretty-accessories.api :as pretty-accessories]
               [dynamic-props.api :as dynamic-props]
               [reagent.core :as reagent]
-              [pretty-accessories.api :as pretty-accessories]
+              [pretty-models.api             :as pretty-models]
               [lazy-loader.api :as lazy-loader]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(defn- thumbnail-load-sensor
-  ; @ignore
-  ;
-  ; @param (keyword) thumbnail-id
-  ; @param (map) thumbnail-props
-  [thumbnail-id thumbnail-props]
-  (let [sensor-props (thumbnail.prototypes/sensor-props-prototype thumbnail-id thumbnail-props)]
-       [lazy-loader/image-sensor thumbnail-id sensor-props]))
 
 (defn- thumbnail
   ; @ignore
@@ -30,22 +21,23 @@
   ; @param (map) thumbnail-props
   ; {:badge (map)(opt)
   ;  :cover (map)(opt)
-  ;  :icon (keyword)(opt)
-  ;  :label (metamorphic-content)(opt)
+  ;  :icon (map)(opt)
+  ;  :label (map)(opt)
   ;  :loaded? (boolean)(opt)
   ;  :marker (map)(opt)
+  ;  :sensor (map)(opt)
   ;  ...}
-  [thumbnail-id {:keys [badge cover icon label loaded? marker] :as thumbnail-props}]
+  [thumbnail-id {:keys [badge cover icon label loaded? marker sensor] :as thumbnail-props}]
   [:div (thumbnail.attributes/thumbnail-attributes thumbnail-id thumbnail-props)
-        [thumbnail-load-sensor                     thumbnail-id thumbnail-props]
-        [(pretty-elements.engine/clickable-auto-tag       thumbnail-id thumbnail-props)
+        [(pretty-models/clickable-auto-tag                thumbnail-id thumbnail-props)
          (thumbnail.attributes/thumbnail-inner-attributes thumbnail-id thumbnail-props)
-         (if loaded? [:div (thumbnail.attributes/thumbnail-canvas-attributes thumbnail-id thumbnail-props)]
-                     [:i   (thumbnail.attributes/thumbnail-icon-attributes   thumbnail-id thumbnail-props) icon])
-         (if label   [:div (thumbnail.attributes/thumbnail-label-attributes  thumbnail-id thumbnail-props) label])
-         (if badge   [pretty-accessories/badge  thumbnail-id badge])
-         (if marker  [pretty-accessories/marker thumbnail-id marker])
-         (if cover   [pretty-accessories/cover  thumbnail-id cover])]])
+         (if     loaded? [:div (thumbnail.attributes/thumbnail-canvas-attributes thumbnail-id thumbnail-props)])
+         (if-not loaded? [lazy-loader/image-sensor  thumbnail-id sensor])
+         (if-not loaded? [pretty-accessories/icon   thumbnail-id icon])
+         (if     label   [pretty-accessories/label  thumbnail-id label])
+         (if     badge   [pretty-accessories/badge  thumbnail-id badge])
+         (if     marker  [pretty-accessories/marker thumbnail-id marker])
+         (if     cover   [pretty-accessories/cover  thumbnail-id cover])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -70,6 +62,8 @@
   ; @links Implemented accessories
   ; [Badge](pretty-ui/cljs/pretty-accessories/api.html#badge)
   ; [Cover](pretty-ui/cljs/pretty-accessories/api.html#cover)
+  ; [Icon](pretty-ui/cljs/pretty-accessories/api.html#icon)
+  ; [Label](pretty-ui/cljs/pretty-accessories/api.html#label)
   ; [Marker](pretty-ui/cljs/pretty-accessories/api.html#marker)
   ; [Tooltip](pretty-ui/cljs/pretty-accessories/api.html#tooltip)
   ;
@@ -84,13 +78,10 @@
   ; [Cursor properties](pretty-core/cljs/pretty-properties/api.html#cursor-properties)
   ; [Effect properties](pretty-core/cljs/pretty-properties/api.html#effect-properties)
   ; [Flex properties](pretty-core/cljs/pretty-properties/api.html#flex-properties)
-  ; [Font properties](pretty-core/cljs/pretty-properties/api.html#font-properties)
-  ; [Icon properties](pretty-core/cljs/pretty-properties/api.html#icon-properties)
   ; [Inner position properties](pretty-core/cljs/pretty-properties/api.html#inner-position-properties)
   ; [Inner size properties](pretty-core/cljs/pretty-properties/api.html#inner-size-properties)
   ; [Inner space properties](pretty-core/cljs/pretty-properties/api.html#inner-space-properties)
   ; [Keypress properties](pretty-core/cljs/pretty-properties/api.html#keypress-properties)
-  ; [Label properties](pretty-core/cljs/pretty-properties/api.html#label-properties)
   ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
   ; [Mouse event properties](pretty-core/cljs/pretty-properties/api.html#mouse-event-properties)
   ; [Outer position properties](pretty-core/cljs/pretty-properties/api.html#outer-position-properties)
@@ -98,7 +89,6 @@
   ; [Outer space properties](pretty-core/cljs/pretty-properties/api.html#outer-space-properties)
   ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
-  ; [Text properties](pretty-core/cljs/pretty-properties/api.html#text-properties)
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
   ;
   ; @param (keyword)(opt) thumbnail-id
@@ -108,11 +98,10 @@
   ;
   ; @usage (pretty-elements/thumbnail.png)
   ; [thumbnail {:background-uri  "/my-thumbnail.png"
-  ;             :badge           {:icon     :fullscreen
-  ;                               :position :tr}
+  ;             :badge           {:icon {:icon-name :fullscreen} :position :tr}
   ;             :border-radius   {:all :s}
   ;             :background-size :cover
-  ;             :label           "My thumbnail"
+  ;             :label           {:content "My thumbnail"}
   ;             :outer-height    :l
   ;             :outer-width     :l}]
   ([thumbnail-props]

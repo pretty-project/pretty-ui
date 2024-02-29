@@ -5,7 +5,7 @@
               [pretty-elements.horizontal-separator.attributes :as horizontal-separator.attributes]
               [pretty-elements.horizontal-separator.prototypes :as horizontal-separator.prototypes]
               [pretty-presets.engine.api                       :as pretty-presets.engine]
-              [pretty-elements.label.views :as label.views]
+              [pretty-accessories.api :as pretty-accessories]
               [reagent.core :as reagent]))
 
 ;; ----------------------------------------------------------------------------
@@ -22,7 +22,7 @@
   [:div (horizontal-separator.attributes/separator-attributes separator-id separator-props)
         [:div (horizontal-separator.attributes/separator-inner-attributes separator-id separator-props)
               (when :always [:hr (horizontal-separator.attributes/separator-line-attributes separator-id separator-props)])
-              (when label   [:<> [label.views/view                                          separator-id label]])
+              (when label   [:<> [pretty-accessories/label                                  separator-id label]])
               (when :always [:hr (horizontal-separator.attributes/separator-line-attributes separator-id separator-props)])]])
 
 ;; ----------------------------------------------------------------------------
@@ -43,8 +43,8 @@
   ; @description
   ; Horizontal line element with optional label.
   ;
-  ; @links Implemented elements
-  ; [Label](pretty-ui/cljs/pretty-elements/api.html#label)
+  ; @links Implemented accessories
+  ; [Label](pretty-ui/cljs/pretty-accessories/api.html#label)
   ;
   ; @links Implemented properties
   ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
@@ -64,11 +64,11 @@
   ;
   ; @param (keyword)(opt) separator-id
   ; @param (map) separator-props
-  ; Check out the implemented elements.
+  ; Check out the implemented accessories.
   ; Check out the implemented properties.
   ;
   ; @usage (pretty-elements/horizontal-separator.png)
-  ; [horizontal-separator {:gap        :xs 
+  ; [horizontal-separator {:gap        :xs
   ;                        :label      {:content "My horizontal separator" :text-color :muted}
   ;                        :line-color :muted}]
   ([separator-props]

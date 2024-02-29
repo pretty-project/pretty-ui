@@ -5,6 +5,23 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn column-content-attributes
+  ; @ignore
+  ;
+  ; @param (keyword) column-id
+  ; @param (map) column-props
+  ;
+  ; @return (map)
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
+  [_ column-props]
+  (-> {:class :pe-column--content}
+      (pretty-attributes/font-attributes column-props)
+      (pretty-attributes/text-attributes column-props)))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn column-inner-attributes
   ; @ignore
   ;

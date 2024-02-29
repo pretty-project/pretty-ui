@@ -5,6 +5,23 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn row-content-attributes
+  ; @ignore
+  ;
+  ; @param (keyword) row-id
+  ; @param (map) row-props
+  ;
+  ; @return (map)
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
+  [_ row-props]
+  (-> {:class :pe-row--content}
+      (pretty-attributes/font-attributes row-props)
+      (pretty-attributes/text-attributes row-props)))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn row-inner-attributes
   ; @ignore
   ;

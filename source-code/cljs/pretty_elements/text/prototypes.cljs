@@ -15,7 +15,7 @@
   ;
   ; @return (map)
   [_ text-props]
-  ; @bug (pretty-elements.label.prototypes#9811)
+  ; @bug (pretty-accessories.label.prototypes#9811)
   (-> text-props (pretty-properties/default-content-props    {:content-placeholder "\u00A0"})
                  (pretty-properties/default-flex-props       {:orientation :horizontal})
                  (pretty-properties/default-font-props       {:font-size :s :font-weight :normal})

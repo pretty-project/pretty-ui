@@ -2,7 +2,6 @@
 (ns pretty-diagrams.bar-diagram.attributes
     (:require [pretty-attributes.api      :as pretty-attributes]
               [pretty-diagrams.engine.api :as pretty-diagrams.engine]
-
               [fruits.css.api :as css]
               [fruits.math.api :as math]))
 

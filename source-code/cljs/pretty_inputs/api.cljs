@@ -33,6 +33,8 @@
               [pretty-inputs.value.views :as value.views]
               [pretty-inputs.slider.views          :as slider.views]
               [pretty-inputs.switch.views          :as switch.views]
+              [pretty-inputs.option.views          :as option.views]
+              [pretty-inputs.option-group.views          :as option-group.views]
               [pretty-inputs.text-field.views      :as text-field.views]))
 
 ;; ----------------------------------------------------------------------------
@@ -49,6 +51,8 @@
 (def multi-field     multi-field.views/view)
 (def multiline-field multiline-field.views/view)
 (def number-field    number-field.views/view)
+(def option          option.views/view)
+(def option-group    option-group.views/view)
 (def password-field  password-field.views/view)
 (def radio-button    radio-button.views/view)
 (def search-field    search-field.views/view)

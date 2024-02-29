@@ -6,7 +6,7 @@
               [pretty-elements.engine.api       :as pretty-elements.engine]
               [pretty-presets.engine.api        :as pretty-presets.engine]
               [pretty-accessories.api :as pretty-accessories]
-              [pretty-elements.label.views :as label.views]
+              [pretty-models.api             :as pretty-models]
               [reagent.core :as reagent]))
 
 ;; ----------------------------------------------------------------------------
@@ -22,10 +22,10 @@
   ;  ...}
   [crumb-id {:keys [bullet label] :as crumb-props}]
   [:div (crumb.attributes/crumb-attributes crumb-id crumb-props)
-        [(pretty-elements.engine/clickable-auto-tag crumb-id crumb-props)
-         (crumb.attributes/crumb-inner-attributes   crumb-id crumb-props)
+        [(pretty-models/clickable-auto-tag        crumb-id crumb-props)
+         (crumb.attributes/crumb-inner-attributes crumb-id crumb-props)
          (if bullet [pretty-accessories/bullet crumb-id bullet])
-         (if label  [label.views/view          crumb-id label])]])
+         (if label  [pretty-accessories/label  crumb-id label])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -47,9 +47,7 @@
   ;
   ; @links Implemented accessories
   ; [Bullet](pretty-ui/cljs/pretty-accessories/api.html#bullet)
-  ;
-  ; @links Implemented elements
-  ; [Label](pretty-ui/cljs/pretty-elements/api.html#label)
+  ; [Label](pretty-ui/cljs/pretty-accessories/api.html#label)
   ;
   ; @links Implemented properties
   ; [Anchor properties](pretty-core/cljs/pretty-properties/api.html#anchor-properties)
@@ -71,7 +69,6 @@
   ; @param (keyword)(opt) crumb-id
   ; @param (map) crumb-props
   ; Check out the implemented accessories.
-  ; Check out the implemented elements.
   ; Check out the implemented properties.
   ;
   ; @usage (pretty-elements/crumb.png)

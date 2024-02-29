@@ -6,9 +6,8 @@
               [pretty-elements.engine.api           :as pretty-elements.engine]
               [pretty-presets.engine.api            :as pretty-presets.engine]
               [pretty-accessories.api            :as pretty-accessories]
-              [reagent.core :as reagent]
-              [pretty-elements.icon.views :as icon.views]
-              [pretty-elements.label.views :as label.views]))
+              [pretty-models.api            :as pretty-models]
+              [reagent.core :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -24,10 +23,10 @@
   ;  ...}
   [adornment-id {:keys [cover icon label] :as adornment-props}]
   [:div (adornment.attributes/adornment-attributes adornment-id adornment-props)
-        [(pretty-elements.engine/clickable-auto-tag       adornment-id adornment-props)
+        [(pretty-models/clickable-auto-tag                adornment-id adornment-props)
          (adornment.attributes/adornment-inner-attributes adornment-id adornment-props)
-         (cond label [label.views/view         adornment-id label]
-               icon  [icon.views/view          adornment-id icon])
+         (cond label [pretty-accessories/label adornment-id label]
+               icon  [pretty-accessories/icon  adornment-id icon])
          (when cover [pretty-accessories/cover adornment-id cover])]])
 
 ;; ----------------------------------------------------------------------------
@@ -50,15 +49,13 @@
 
 (defn view
   ; @description
-  ; Downsized button element for adornment groups.
+  ; Downsized button element.
   ;
   ; @links Implemented accessories
   ; [Cover](pretty-ui/cljs/pretty-accessories/api.html#cover)
+  ; [Icon](pretty-ui/cljs/pretty-accessories/api.html#icon)
+  ; [Label](pretty-ui/cljs/pretty-accessories/api.html#label)
   ; [Tooltip](pretty-ui/cljs/pretty-accessories/api.html#tooltip)
-  ;
-  ; @links Implemented elements
-  ; [Icon](pretty-ui/cljs/pretty-elements/api.html#icon)
-  ; [Label](pretty-ui/cljs/pretty-elements/api.html#label)
   ;
   ; @links Implemented properties
   ; [Anchor properties](pretty-core/cljs/pretty-properties/api.html#anchor-properties)
@@ -85,7 +82,6 @@
   ; @param (keyword)(opt) adornment-id
   ; @param (map) adornment-props
   ; Check out the implemented accessories.
-  ; Check out the implemented elements.
   ; Check out the implemented properties.
   ;
   ; @usage (pretty-elements/adornment.png)

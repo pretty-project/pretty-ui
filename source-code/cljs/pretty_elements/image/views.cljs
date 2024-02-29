@@ -8,10 +8,9 @@
               [pretty-accessories.api :as pretty-accessories]
               [dynamic-props.api :as dynamic-props]
               [reagent.core :as reagent]
+              [pretty-models.api             :as pretty-models]
               [pretty-accessories.api :as pretty-accessories]
-              [lazy-loader.api :as lazy-loader]
-              [pretty-elements.icon.views :as icon.views]
-              [pretty-elements.label.views :as label.views]))
+              [lazy-loader.api :as lazy-loader]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -27,15 +26,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- image-load-sensor
-  ; @ignore
-  ;
-  ; @param (keyword) image-id
-  ; @param (map) image-props
-  [image-id image-props]
-  (let [sensor-props (image.prototypes/sensor-props-prototype image-id image-props)]
-       [lazy-loader/image-sensor image-id sensor-props]))
-
 (defn- image
   ; @ignore
   ;
@@ -47,18 +37,19 @@
   ;  :label (map)(opt)
   ;  :loaded? (boolean)(opt)
   ;  :marker (map)(opt)
+  ;  :sensor (map)(opt)
   ;  ...}
-  [image-id {:keys [badge cover icon label loaded? marker] :as image-props}]
+  [image-id {:keys [badge cover icon label loaded? marker sensor] :as image-props}]
   [:div (image.attributes/image-attributes image-id image-props)
-        [image-load-sensor                 image-id image-props]
-        [(pretty-elements.engine/clickable-auto-tag image-id image-props)
-         (image.attributes/image-inner-attributes   image-id image-props)
-         (cond loaded? [:div (image.attributes/image-canvas-attributes image-id image-props)]
-               icon    [icon.views/view                    icon]) ; <- Using the same ID would clear the dynamic props of the image when the icon unmounts.
-         (when label   [label.views/view          image-id label])
-         (when badge   [pretty-accessories/badge  image-id badge])
-         (when marker  [pretty-accessories/marker image-id marker])
-         (when cover   [pretty-accessories/cover  image-id cover])]])
+        [(pretty-models/clickable-auto-tag        image-id image-props)
+         (image.attributes/image-inner-attributes image-id image-props)
+         (if     loaded? [:div (image.attributes/image-canvas-attributes image-id image-props)])
+         (if-not loaded? [lazy-loader/image-sensor  image-id sensor])
+         (if-not loaded? [pretty-accessories/icon   image-id icon])
+         (if     label   [pretty-accessories/label  image-id label])
+         (if     badge   [pretty-accessories/badge  image-id badge])
+         (if     marker  [pretty-accessories/marker image-id marker])
+         (if     cover   [pretty-accessories/cover  image-id cover])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -83,12 +74,10 @@
   ; @links Implemented accessories
   ; [Badge](pretty-ui/cljs/pretty-accessories/api.html#badge)
   ; [Cover](pretty-ui/cljs/pretty-accessories/api.html#cover)
+  ; [Icon](pretty-ui/cljs/pretty-accessories/api.html#icon)
+  ; [Label](pretty-ui/cljs/pretty-accessories/api.html#label)
   ; [Marker](pretty-ui/cljs/pretty-accessories/api.html#marker)
   ; [Tooltip](pretty-ui/cljs/pretty-accessories/api.html#tooltip)
-  ;
-  ; @links Implemented elements
-  ; [Icon](pretty-ui/cljs/pretty-elements/api.html#icon)
-  ; [Label](pretty-ui/cljs/pretty-elements/api.html#label)
   ;
   ; @links Implemented properties
   ; [Anchor properties](pretty-core/cljs/pretty-properties/api.html#anchor-properties)
@@ -117,13 +106,12 @@
   ; @param (keyword)(opt) image-id
   ; @param (map) image-props
   ; Check out the implemented accessories.
-  ; Check out the implemented elements.
   ; Check out the implemented properties.
   ;
   ; @usage (pretty-elements/image.png)
   ; [image {:background-size :cover
   ;         :background-uri  "/my-image.png"
-  ;         :badge           {:content [icon {:icon-name :fullscreen}] :position :tr}
+  ;         :badge           {:icon {:icon-name :fullscreen} :position :tr}
   ;         :border-radius   {:all :s}
   ;         :label           {:content "My image"}
   ;         :outer-height    :s

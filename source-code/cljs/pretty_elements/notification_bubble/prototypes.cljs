@@ -16,14 +16,13 @@
   ;
   ; @return (map)
   [bubble-id bubble-props]
-  (-> bubble-props (pretty-properties/default-flex-props       {:orientation :horizontal :horizontal-align :left :gap :auto})
-                   (pretty-properties/default-font-props       {:font-size :s :font-weight :medium})
+  (-> bubble-props (pretty-properties/default-font-props       {:font-size :xxs :font-weight :medium})
+                   (pretty-properties/default-flex-props       {:orientation :horizontal :horizontal-align :left :gap :auto})
                    (pretty-properties/default-outer-size-props {:outer-size-unit :double-block})
                    (pretty-properties/default-text-props       {:text-overflow :wrap :text-selectable? true})
                    (pretty-standards/standard-border-props)
                    (pretty-standards/standard-flex-props)
                    (pretty-standards/standard-font-props)
-                   (pretty-standards/standard-icon-props)
                    (pretty-standards/standard-inner-position-props)
                    (pretty-standards/standard-inner-size-props)
                    (pretty-standards/standard-outer-position-props)

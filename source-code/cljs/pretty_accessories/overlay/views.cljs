@@ -3,9 +3,7 @@
     (:require [fruits.random.api :as random]
               [pretty-accessories.overlay.attributes :as overlay.attributes]
               [pretty-accessories.overlay.prototypes :as overlay.prototypes]
-              [pretty-elements.engine.api :as pretty-elements.engine]
-              [pretty-presets.engine.api :as pretty-presets.engine]
-              [reagent.core :as reagent]))
+              [pretty-presets.engine.api :as pretty-presets.engine]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -22,17 +20,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- view-lifecycles
-  ; @ignore
-  ;
-  ; @param (keyword) overlay-id
-  ; @param (map) overlay-props
-  [overlay-id overlay-props]
-  ; @note (tutorials#parameterizing)
-  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    overlay-id overlay-props))
-                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount overlay-id overlay-props))
-                         :reagent-render         (fn [_ overlay-props] [overlay overlay-id overlay-props])}))
-
 (defn view
   ; @description
   ; Overlay accessory for elements.
@@ -44,7 +31,6 @@
   ; [Inner position properties](pretty-core/cljs/pretty-properties/api.html#inner-position-properties)
   ; [Inner size properties](pretty-core/cljs/pretty-properties/api.html#inner-size-properties)
   ; [Inner space properties](pretty-core/cljs/pretty-properties/api.html#inner-space-properties)
-  ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
   ; [Mouse event properties](pretty-core/cljs/pretty-properties/api.html#mouse-event-properties)
   ; [Outer position properties](pretty-core/cljs/pretty-properties/api.html#outer-position-properties)
   ; [Outer size properties](pretty-core/cljs/pretty-properties/api.html#outer-size-properties)
@@ -69,4 +55,4 @@
    (fn [_ overlay-props]
        (let [overlay-props (pretty-presets.engine/apply-preset         overlay-id overlay-props)
              overlay-props (overlay.prototypes/overlay-props-prototype overlay-id overlay-props)]
-            [view-lifecycles overlay-id overlay-props]))))
+            [overlay overlay-id overlay-props]))))

@@ -3,9 +3,7 @@
     (:require [fruits.random.api :as random]
               [pretty-accessories.marker.attributes :as marker.attributes]
               [pretty-accessories.marker.prototypes :as marker.prototypes]
-              [pretty-elements.engine.api :as pretty-elements.engine]
-              [pretty-presets.engine.api :as pretty-presets.engine]
-              [reagent.core :as reagent]))
+              [pretty-presets.engine.api :as pretty-presets.engine]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -22,17 +20,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- view-lifecycles
-  ; @ignore
-  ;
-  ; @param (keyword) marker-id
-  ; @param (map) marker-props
-  [marker-id marker-props]
-  ; @note (tutorials#parameterizing)
-  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    marker-id marker-props))
-                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount marker-id marker-props))
-                         :reagent-render         (fn [_ marker-props] [marker marker-id marker-props])}))
-
 (defn view
   ; @description
   ; Marker accessory for elements.
@@ -45,7 +32,6 @@
   ; [Inner position properties](pretty-core/cljs/pretty-properties/api.html#inner-position-properties)
   ; [Inner size properties](pretty-core/cljs/pretty-properties/api.html#inner-size-properties)
   ; [Inner space properties](pretty-core/cljs/pretty-properties/api.html#inner-space-properties)
-  ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
   ; [Outer position properties](pretty-core/cljs/pretty-properties/api.html#outer-position-properties)
   ; [Outer size properties](pretty-core/cljs/pretty-properties/api.html#outer-size-properties)
   ; [Outer space properties](pretty-core/cljs/pretty-properties/api.html#outer-space-properties)
@@ -70,4 +56,4 @@
    (fn [_ marker-props]
        (let [marker-props (pretty-presets.engine/apply-preset       marker-id marker-props)
              marker-props (marker.prototypes/marker-props-prototype marker-id marker-props)]
-            [view-lifecycles marker-id marker-props]))))
+            [marker marker-id marker-props]))))

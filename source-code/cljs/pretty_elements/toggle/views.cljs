@@ -6,6 +6,7 @@
               [pretty-elements.toggle.prototypes :as toggle.prototypes]
               [pretty-presets.engine.api         :as pretty-presets.engine]
               [reagent.core :as reagent]
+              [pretty-models.api             :as pretty-models]
               [pretty-accessories.api :as pretty-accessories]))
 
 ;; ----------------------------------------------------------------------------
@@ -23,12 +24,12 @@
   ;  ...}
   [toggle-id {:keys [badge content cover marker] :as toggle-props}]
   [:div (toggle.attributes/toggle-attributes toggle-id toggle-props)
-        [(pretty-elements.engine/clickable-auto-tag toggle-id toggle-props)
+        [(pretty-models/clickable-auto-tag          toggle-id toggle-props)
          (toggle.attributes/toggle-inner-attributes toggle-id toggle-props)
-         (-> content)
-         (if badge  [pretty-accessories/badge  toggle-id badge])
-         (if marker [pretty-accessories/marker toggle-id marker])
-         (if cover  [pretty-accessories/cover  toggle-id cover])]])
+         (if content [:div (toggle.attributes/toggle-content-attributes toggle-id toggle-props) content])
+         (if badge   [pretty-accessories/badge  toggle-id badge])
+         (if marker  [pretty-accessories/marker toggle-id marker])
+         (if cover   [pretty-accessories/cover  toggle-id cover])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -66,6 +67,7 @@
   ; [Cursor properties](pretty-core/cljs/pretty-properties/api.html#cursor-properties)
   ; [Effect properties](pretty-core/cljs/pretty-properties/api.html#effect-properties)
   ; [Flex properties](pretty-core/cljs/pretty-properties/api.html#flex-properties)
+  ; [Font properties](pretty-core/cljs/pretty-properties/api.html#font-properties)
   ; [Inner position properties](pretty-core/cljs/pretty-properties/api.html#inner-position-properties)
   ; [Inner size properties](pretty-core/cljs/pretty-properties/api.html#inner-size-properties)
   ; [Inner space properties](pretty-core/cljs/pretty-properties/api.html#inner-space-properties)
@@ -77,6 +79,7 @@
   ; [Outer space properties](pretty-core/cljs/pretty-properties/api.html#outer-space-properties)
   ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
+  ; [Text properties](pretty-core/cljs/pretty-properties/api.html#text-properties)
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
   ;
   ; @param (keyword)(opt) toggle-id

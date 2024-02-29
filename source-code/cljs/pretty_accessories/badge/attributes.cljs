@@ -5,36 +5,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn badge-icon-attributes
-  ; @ignore
-  ;
-  ; @param (keyword) badge-id
-  ; @param (map) badge-props
-  ;
-  ; @return (map)
-  ; {:class (keyword or keywords in vector)
-  ;  ...}
-  [badge-id badge-props]
-  (-> {:class :pa-badge--icon}
-      (pretty-attributes/icon-attributes badge-props)))
-
-(defn badge-label-attributes
-  ; @ignore
-  ;
-  ; @param (keyword) badge-id
-  ; @param (map) badge-props
-  ;
-  ; @return (map)
-  ; {:class (keyword or keywords in vector)
-  ;  ...}
-  [_ badge-props]
-  (-> {:class :pa-badge--label}
-      (pretty-attributes/font-attributes badge-props)
-      (pretty-attributes/text-attributes badge-props)))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (defn badge-inner-attributes
   ; @ignore
   ;
@@ -44,7 +14,7 @@
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [badge-id badge-props]
+  [_ badge-props]
   (-> {:class :pa-badge--inner}
       (pretty-attributes/animation-attributes        badge-props)
       (pretty-attributes/background-color-attributes badge-props)

@@ -5,6 +5,23 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn toggle-content-attributes
+  ; @ignore
+  ;
+  ; @param (keyword) toggle-id
+  ; @param (map) toggle-props
+  ;
+  ; @return (map)
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
+  [_ toggle-props]
+  (-> {:class :pe-toggle--content}
+      (pretty-attributes/font-attributes toggle-props)
+      (pretty-attributes/text-attributes toggle-props)))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn toggle-inner-attributes
   ; @ignore
   ;
