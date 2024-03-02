@@ -79,5 +79,6 @@
    ; @note (tutorials#parameterizing)
    (fn [_ group-props]
        (let [group-props (pretty-presets.engine/apply-preset            group-id group-props)
-             group-props (option-group.prototypes/group-props-prototype group-id group-props)]
+             group-props (option-group.prototypes/group-props-prototype group-id group-props)
+             group-props (pretty-inputs.engine/xxx                      group-id group-props)]
             [view-lifecycles group-id group-props]))))

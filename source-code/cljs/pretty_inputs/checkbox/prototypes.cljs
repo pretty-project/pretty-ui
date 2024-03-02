@@ -61,7 +61,7 @@
                           (pretty-standards/standard-font-props)
                           (pretty-standards/standard-inner-position-props)
                           (pretty-standards/standard-inner-size-props)
-                          (pretty-standards/standard-input-option-props)
+                          ;(pretty-standards/standard-input-option-props)
                           (pretty-standards/standard-outer-position-props)
                           (pretty-standards/standard-outer-size-props)
                           (pretty-standards/standard-text-props)

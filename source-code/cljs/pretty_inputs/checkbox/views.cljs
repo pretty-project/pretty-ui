@@ -157,6 +157,5 @@
    ; @note (tutorials#parameterizing)
    (fn [_ checkbox-props]
        (let [checkbox-props (pretty-presets.engine/apply-preset           checkbox-id checkbox-props)
-             checkbox-props (checkbox.prototypes/checkbox-props-prototype checkbox-id checkbox-props)
-             checkbox-props (pretty-inputs.engine/xxx checkbox-id checkbox-props)]
+             checkbox-props (checkbox.prototypes/checkbox-props-prototype checkbox-id checkbox-props)]
             [view-lifecycles checkbox-id checkbox-props]))))

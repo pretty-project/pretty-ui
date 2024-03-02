@@ -22,6 +22,9 @@
                   (pretty-standards/standard-inner-position-props)
                   (pretty-standards/standard-inner-size-props)
                   (pretty-standards/standard-outer-position-props)
+                  
+                  (pretty-standards/standard-input-option-props)
+
                   (pretty-standards/standard-outer-size-props)
                   (pretty-rules/auto-align-scrollable-flex)
                   (pretty-subitems/subitem-group<-subitem-default :options)
