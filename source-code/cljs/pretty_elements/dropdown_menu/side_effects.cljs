@@ -31,7 +31,7 @@
   ; @ignore
   ;
   ; @param (keyword) menu-id
-  ; @param (metamorphic-content) dropdown-content
+  ; @param (multitype-content) dropdown-content
   [menu-id dropdown-content]
   (dynamic-props/update-props!             menu-id assoc :content dropdown-content)
   (expandable.side-effects/expand-content! menu-id))

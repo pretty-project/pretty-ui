@@ -18,7 +18,7 @@
   ; @param (keyword) card-id
   ; @param (map) card-props
   ; {:badge (map)(opt)
-  ;  :content (metamorphic-content)(opt)
+  ;  :content (multitype-content)(opt)
   ;  :cover (map)(opt)
   ;  :marker (map)(opt)
   ;  ...}

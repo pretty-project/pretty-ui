@@ -115,14 +115,14 @@
   ;  :form-id (keyword)(opt)
   ;  :get-value-f (function)(opt)
   ;  :height (keyword, px or string)(opt)
-  ;  :helper (metamorphic-content)(opt)
+  ;  :helper (multitype-content)(opt)
   ;  :hover-color (keyword or string)(opt)      ??
   ;  :hover-pattern (keyword)(opt)              ??
   ;  :indent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :info (metamorphic-content)(opt)
+  ;  :info (multitype-content)(opt)
   ;  :initial-value (string)(opt)
-  ;  :label (metamorphic-content)(opt)
+  ;  :label (multitype-content)(opt)
   ;  :line-height (keyword, px or string)(opt)
   ;   Default: :text-block
   ;  :marker (map)(opt)
@@ -140,7 +140,7 @@
   ;  :on-valid-f (function)(opt)
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :placeholder (metamorphic-content)(opt)
+  ;  :placeholder (multitype-content)(opt)
   ;  :preset (keyword)(opt)
   ;  :set-value-f (function)(opt)
   ;  :start-adornment-default (map)(opt)
@@ -149,9 +149,9 @@
   ;  :surface (map)(opt)
   ;   {:border-radius (map)(opt)
   ;     {:all, :tl, :tr, :br, :bl (keyword, px or string)(opt)}
-  ;    :content (metamorphic-content)(opt)
+  ;    :content (multitype-content)(opt)
   ;    :indent (map)(opt)
-  ;    :placeholder (metamorphic-content)(opt)}
+  ;    :placeholder (multitype-content)(opt)}
   ;  :theme (keyword)(opt)
   ;  :type (keyword)(opt)
   ;   :email, :number, :password, :tel, :text
@@ -160,7 +160,7 @@
   ;  :validate-when-leave? (boolean)(opt)
   ;  :validators (maps in vector)(opt)
   ;   [{:f (function)
-  ;     :invalid-message (metamorphic-content)(opt)}]
+  ;     :invalid-message (multitype-content)(opt)}]
   ;  :width (keyword, px or string)(opt)}
   ;
   ; @usage

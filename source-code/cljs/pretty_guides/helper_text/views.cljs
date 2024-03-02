@@ -15,7 +15,7 @@
   ;
   ; @param (keyword) text-id
   ; @param (map) text-props
-  ; {:content (metamorphic-content)(opt)
+  ; {:content (multitype-content)(opt)
   ;  ...}
   [text-id {:keys [content] :as text-props}]
   [:div (helper-text.attributes/text-attributes text-id text-props)

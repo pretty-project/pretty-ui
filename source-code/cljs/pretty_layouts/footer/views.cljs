@@ -15,7 +15,7 @@
   ;
   ; @param (keyword) footer-id
   ; @param (map) footer-props
-  ; {:content (metamorphic-content)(opt)
+  ; {:content (multitype-content)(opt)
   ;  ...}
   [footer-id {:keys [content] :as footer-props}]
   [:div (footer.attributes/footer-attributes footer-id footer-props)

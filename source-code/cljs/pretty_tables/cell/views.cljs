@@ -15,7 +15,7 @@
   ;
   ; @param (keyword) cell-id
   ; @param (map) cell-props
-  ; {:content (metamorphic-content)(opt)
+  ; {:content (multitype-content)(opt)
   ;  ...}
   [cell-id {:keys [content] :as cell-props}]
   [:div (cell.attributes/cell-attributes cell-id cell-props)

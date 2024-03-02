@@ -8,7 +8,7 @@
   ; @param (map) table-props
   ;
   ; @return (map)
-  ; {:xxx-placeholder (metamorphic-content)}
+  ; {:xxx-placeholder (multitype-content)}
   [table-props]
   (merge {:xxx-placeholder :no-items-to-show}
          (-> table-props)))

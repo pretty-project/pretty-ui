@@ -18,7 +18,7 @@
   ; @param (keyword) toggle-id
   ; @param (map) toggle-props
   ; {:badge (map)(opt)
-  ;  :content (metamorphic-content)(opt)
+  ;  :content (multitype-content)(opt)
   ;  :cover (map)(opt)
   ;  :marker (map)(opt)
   ;  ...}

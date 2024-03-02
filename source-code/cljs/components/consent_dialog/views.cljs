@@ -12,7 +12,7 @@
 (defn- consent-dialog-body
   ; @param (keyword) dialog-id
   ; @param (map) dialog-props
-  ; {:content (metamorphic-content)}
+  ; {:content (multitype-content)}
   [dialog-id {:keys [content]}]
   [metamorphic-content/compose content])
 
@@ -32,7 +32,7 @@
 (defn- header-label
   ; @param (keyword) dialog-id
   ; @param (map) dialog-props
-  ; {:label (metamorphic-content)(opt)}
+  ; {:label (multitype-content)(opt)}
   [_ {:keys [label]}])
   ;[pretty-elements/label ::header-label
   ;                       {:content label
@@ -63,8 +63,8 @@
 (defn view
   ; @param (keyword)(opt) dialog-id
   ; @param (map) dialog-props
-  ; {:content (metamorphic-content)
-  ;  :label (metamorphic-content)(opt)}
+  ; {:content (multitype-content)
+  ;  :label (multitype-content)(opt)}
   ;
   ; @usage
   ; [consent-dialog {...}]

@@ -17,7 +17,7 @@
   ;
   ; @param (keyword) expandable-id
   ; @param (map) expandable-props
-  ; {:content (metamorphic-content)(opt)
+  ; {:content (multitype-content)(opt)
   ;  :expanded? (boolean)(opt)
   ;  ...}
   [expandable-id {:keys [content expanded?] :as expandable-props}]

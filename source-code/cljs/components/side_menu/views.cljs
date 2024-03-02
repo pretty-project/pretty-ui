@@ -13,7 +13,7 @@
 (defn- side-menu
   ; @param (keyword) menu-id
   ; @param (map) menu-props
-  ; {:content (metamorphic-content)
+  ; {:content (multitype-content)
   ;  :threshold (px)(opt)}
   [menu-id {:keys [content threshold] :as menu-props}]
   (if (or (-> threshold not)
@@ -31,7 +31,7 @@
   ;   {:all, :tl, :tr, :br, :bl (keyword, px or string)(opt)}
   ;  :border-width (keyword, px or string)(opt)
   ;  :class (keyword or keywords in vector)(opt)
-  ;  :content (metamorphic-content)
+  ;  :content (multitype-content)
   ;  :fill-color (keyword or string)(opt)
   ;  :indent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}

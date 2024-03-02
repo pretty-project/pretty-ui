@@ -10,7 +10,7 @@
   ; @param (keyword) indicator-id
   ; @param (map) indicator-props
   ; {:color (keyword)(opt)
-  ;  :label (metamorphic-content)}
+  ;  :label (multitype-content)}
   [_ {:keys [color label]}])
   ;[pretty-elements/label ::popup-progress-label
   ;                       {:color   (or color :muted)
@@ -21,7 +21,7 @@
   ; @param (map) indicator-props
   ; {:color (keyword)(opt)
   ;  :indent (map)
-  ;  :label (metamorphic-content)}
+  ;  :label (multitype-content)}
   [indicator-id {:keys [indent] :as indicator-props}]
   [pretty-elements/column ::popup-progress-indicator
                           {:content          [popup-progress-label indicator-id indicator-props]
@@ -33,15 +33,15 @@
   ; @param (keyword)(opt) indicator-id
   ; @param (map) indicator-props
   ; {:class (keyword or keywords in vector)(opt)
-  ;  :content (metamorphic-content)
+  ;  :content (multitype-content)
   ;  :disabled? (boolean)(opt)
   ;  :fill-color (string)(opt)
   ;   Default: "var( --fill-color-default )"
-  ;  :helper (metamorphic-content)(opt)
+  ;  :helper (multitype-content)(opt)
   ;  :indent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :info-text (metamorphic-content)(opt)
-  ;  :label (metamorphic-content)(opt)
+  ;  :info-text (multitype-content)(opt)
+  ;  :label (multitype-content)(opt)
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :overflow (keyword)(opt)

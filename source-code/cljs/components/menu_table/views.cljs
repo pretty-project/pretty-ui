@@ -84,7 +84,7 @@
 (defn- menu-table-label
   ; @param (keyword) table-id
   ; @param (map) table-props
-  ; {:label (metamorphic-content)}
+  ; {:label (multitype-content)}
   [_ {:keys [label]}])
   ;(if label [:div.c-menu-table--label [pretty-elements/label {:content label}]]))
 
@@ -114,14 +114,14 @@
   ;  :indent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :items (maps in vector)(opt)
-  ;  [{:label (metamorphic-content)(opt)
+  ;  [{:label (multitype-content)(opt)
   ;    :link (string)(opt)
   ;    :target (keyword)
   ;     :blank, :self}]
-  ;  :label (metamorphic-content)(opt)
+  ;  :label (multitype-content)(opt)
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :xxx-placeholder (metamorphic-content)(opt)
+  ;  :xxx-placeholder (multitype-content)(opt)
   ;   Default: :no-items-to-show
   ;  :style (map)(opt)}
   ;

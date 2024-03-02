@@ -9,11 +9,11 @@
 (r/reg-event-fx :components.context-menu/render-menu!
   ; @param (keyword)(opt) menu-id
   ; @param (map) menu-props
-  ; {:label (metamorphic-content)(opt)
-  ;  :label-placeholder (metamorphic-content)(opt)
+  ; {:label (multitype-content)(opt)
+  ;  :label-placeholder (multitype-content)(opt)
   ;  :menu-items (maps in vector)
-  ;   [{:label (metamorphic-content)
-  ;     :label-placeholder (metamorphic-content)(opt)
+  ;   [{:label (multitype-content)
+  ;     :label-placeholder (multitype-content)(opt)
   ;     :on-click (function or Re-Frame metamorphic-event)(opt)}]}
   ;
   ; @usage

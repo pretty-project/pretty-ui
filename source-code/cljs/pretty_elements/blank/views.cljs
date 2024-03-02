@@ -15,7 +15,7 @@
   ;
   ; @param (keyword) blank-id
   ; @param (map) blank-props
-  ; {:content (metamorphic-content)(opt)
+  ; {:content (multitype-content)(opt)
   ;  ...}
   [blank-id {:keys [content] :as blank-props}]
   [:div (blank.attributes/blank-attributes blank-id blank-props)

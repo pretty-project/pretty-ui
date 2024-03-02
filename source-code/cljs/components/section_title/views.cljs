@@ -11,8 +11,8 @@
 (defn- section-title
   ; @param (keyword) title-id
   ; @param (map) title-props
-  ; {:content (metamorphic-content)(opt)
-  ;  :content-placeholder (metamorphic-content)(opt)}
+  ; {:content (multitype-content)(opt)
+  ;  :content-placeholder (multitype-content)(opt)}
   [title-id {:keys [content content-placeholder] :as title-props}]
   ; The sensor and title must be placed in a common element.
   ; Otherwise, in some cases the sensor would be in a wrong position!

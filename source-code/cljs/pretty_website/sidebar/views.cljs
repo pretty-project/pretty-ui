@@ -19,8 +19,8 @@
   ;
   ; @param (keyword) sidebar-id
   ; @param (map) sidebar-props
-  ; {:content (metamorphic-content)(opt)
-  ;  :placeholder (metamorphic-content)(opt)}
+  ; {:content (multitype-content)(opt)
+  ;  :placeholder (multitype-content)(opt)}
   [sidebar-id {:keys [content placeholder] :as sidebar-props}]
   [:<> [pretty-elements/icon-button (sidebar.prototypes/menu-button-props-prototype sidebar-id sidebar-props)]])
 
@@ -55,7 +55,7 @@
   ;   :left, :right
   ;  :border-width (keyword, px or string)(opt)
   ;  :class (keyword or keywords in vector)(opt)
-  ;  :content (metamorphic-content)(opt)
+  ;  :content (multitype-content)(opt)
   ;  :cover-color (keyword or string)(opt)
   ;   Default: :black
   ;  :disabled? (boolean)(opt)
@@ -67,7 +67,7 @@
   ;  :on-unmount-f (function)(opt)
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :placeholder (metamorphic-content)(opt)
+  ;  :placeholder (multitype-content)(opt)
   ;  :position (keyword)(opt)
   ;   :left, :right
   ;   Default: :left

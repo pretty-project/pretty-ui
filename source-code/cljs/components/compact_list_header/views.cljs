@@ -27,7 +27,7 @@
   ;  :hide-button (map)
   ;  :indent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :label (metamorphic-content)
+  ;  :label (multitype-content)
   ;  :order-button (map)
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}

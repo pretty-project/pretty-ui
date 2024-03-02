@@ -33,12 +33,12 @@
   ; @param (keyword)(opt) bar-id
   ; @param (map) bar-props
   ; {:label (map)(opt)
-  ;   {:content (metamorphic-content)}
+  ;   {:content (multitype-content)}
   ;  :primary-button (map)(opt)
-  ;   {:label (metamorphic-content)
+  ;   {:label (multitype-content)
   ;    :on-click (function or Re-Frame metamorphic-event)}
   ;  :secondary-button (map)(opt)
-  ;   {:label (metamorphic-content)
+  ;   {:label (multitype-content)
   ;    :on-click (function or Re-Frame metamorphic-event)}}
   ;
   ; @usage

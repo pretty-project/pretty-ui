@@ -17,7 +17,7 @@
   ;
   ; @param (keyword) bubble-id
   ; @param (map) bubble-props
-  ; {:content (metamorphic-content)(opt)
+  ; {:content (multitype-content)(opt)
   ;  :cover (map)(opt)
   ;  :end-adornment-group (map)(opt)
   ;  :start-adornment-group (map)(opt)

@@ -54,13 +54,13 @@
   ;   Default: :xs
   ;  :class (keyword or keywords in vector)(opt)
   ;  :disabled? (boolean)(opt)
-  ;  :helper (metamorphic-content)(opt)
+  ;  :helper (multitype-content)(opt)
   ;  :indent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :info (metamorphic-content)(opt)
+  ;  :info (multitype-content)(opt)
   ;  :initial-value (integer)(opt)
   ;   Default: 0
-  ;  :label (metamorphic-content)(opt)
+  ;  :label (multitype-content)(opt)
   ;  :marker (map)(opt)
   ;  :max-value (integer)(opt)
   ;  :min-value (integer)(opt)

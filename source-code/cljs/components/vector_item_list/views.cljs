@@ -58,7 +58,7 @@
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :placeholder (map)(opt)
   ;   {:illustration (string)(opt)
-  ;    :label (metamorphic-content)(opt)}
+  ;    :label (multitype-content)(opt)}
   ;  :style (map)(opt)
   ;  :value-path (Re-Frame path vector)}
   ;

@@ -20,7 +20,7 @@
 (defn- error-message-label
   ; @param (keyword) content-id
   ; @param (map) content-props
-  ; {:content (metamorphic-content)}
+  ; {:content (multitype-content)}
   [_ {:keys [content]}])
   ;[pretty-elements/label {:color            :muted
   ;                        :content          content
@@ -37,7 +37,7 @@
 (defn view
   ; @param (keyword)(opt) content-id
   ; @param (map) content-props
-  ; {:content (metamorphic-content)}
+  ; {:content (multitype-content)}
   ;
   ; @usage
   ; [error-content {...}]

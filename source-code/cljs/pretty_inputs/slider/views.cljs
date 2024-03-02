@@ -47,13 +47,13 @@
   ; {:class (keyword or keywords in vector)(opt)
   ;  :disabled? (boolean)(opt)
   ;  :height (keyword, px or string)(opt)
-  ;  :helper (metamorphic-content)(opt)
+  ;  :helper (multitype-content)(opt)
   ;  :indent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :info (metamorphic-content)(opt)
+  ;  :info (multitype-content)(opt)
   ;  :initial-value (vector)(opt)
   ;   Default: [0 100]
-  ;  :label (metamorphic-content)(opt)
+  ;  :label (multitype-content)(opt)
   ;  :max-value (integer)(opt)
   ;   Default: 100
   ;  :min-value (integer)(opt)

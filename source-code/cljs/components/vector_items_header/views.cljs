@@ -47,7 +47,7 @@
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :initial-item (*)(opt)
   ;   Default: {}
-  ;  :label (metamorphic-content)
+  ;  :label (multitype-content)
   ;  :on-change (Re-Frame metamorphic-event)(opt)
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}

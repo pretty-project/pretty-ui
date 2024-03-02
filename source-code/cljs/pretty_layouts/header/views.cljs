@@ -15,7 +15,7 @@
   ;
   ; @param (keyword) header-id
   ; @param (map) header-props
-  ; {:content (metamorphic-content)(opt)
+  ; {:content (multitype-content)(opt)
   ;  ...}
   [header-id {:keys [content] :as header-props}]
   [:div (header.attributes/header-attributes header-id header-props)

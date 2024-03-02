@@ -31,7 +31,7 @@
   ;
   ; @param (keyword) group-id
   ; @param (map) group-props
-  ; {:chips-placeholder (metamorphic-content)(opt)}
+  ; {:chips-placeholder (multitype-content)(opt)}
   [group-id {:keys [chips-placeholder] :as group-props}]
   (letfn [(f0 [chip-dex chip-value] [chip-group-chip group-id group-props chip-dex chip-value])]
          (let [chips (pretty-inputs.engine/get-input-displayed-value group-id group-props)]
@@ -72,15 +72,15 @@
   ;  :chip-default (map)(opt)
   ;  :chip-label-f (function)(opt)
   ;  :chips-deletable? (boolean)(opt)
-  ;  :chips-placeholder (metamorphic-content)(opt)
+  ;  :chips-placeholder (multitype-content)(opt)
   ;  :disabled? (boolean)(opt)
   ;  :get-value-f (function)(opt)
-  ;  :helper (metamorphic-content)(opt)
+  ;  :helper (multitype-content)(opt)
   ;  :indent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :info (metamorphic-content)(opt)
+  ;  :info (multitype-content)(opt)
   ;  :initial-value (vector)(opt)
-  ;  :label (metamorphic-content)(opt)
+  ;  :label (multitype-content)(opt)
   ;  :on-changed-f (function)(opt)
   ;  :on-empty-f (function)(opt)
   ;  :on-mount-f (function)(opt)

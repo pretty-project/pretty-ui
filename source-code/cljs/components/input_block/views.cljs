@@ -11,8 +11,8 @@
 (defn- input-block
   ; @param (keyword) block-id
   ; @param (map) block-props
-  ; {:input (metamorphic-content)
-  ;  :label (metamorphic-content)}
+  ; {:input (multitype-content)
+  ;  :label (multitype-content)}
   [block-id {:keys [input label] :as block-props}]
   [:<> [:label.c-input-block--label (input-block.helpers/input-label-attributes block-id block-props)
                                     [metamorphic-content/compose label]]
@@ -25,8 +25,8 @@
   ;
   ; @param (keyword)(opt) block-id
   ; @param (map) block-props
-  ; {:input (metamorphic-content)
-  ;  :label (metamorphic-content)}
+  ; {:input (multitype-content)
+  ;  :label (multitype-content)}
   ;
   ; @usage
   ; [input-block {...}]

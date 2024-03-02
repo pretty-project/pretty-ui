@@ -20,8 +20,8 @@
   ; @param (map) group-props
   ; {:addresses (strings in vector)(opt)
   ;  :email-addresses (strings in vector)(opt)
-  ;  :info (metamorphic-content)(opt)
-  ;  :label (metamorphic-content)(opt)
+  ;  :info (multitype-content)(opt)
+  ;  :label (multitype-content)(opt)
   ;  :phone-numbers (numbers or strings in vector)(opt)}
   [contacts-id contacts-props {:keys [addresses email-addresses info label phone-numbers] :as group-props}]
   [:div {:class :pw-contacts--contact-group}
@@ -77,8 +77,8 @@
   ; {:contact-groups (maps in vector)(opt)
   ;   [{:addresses (strings in vector)(opt)
   ;     :email-addresses (strings in vector)(opt)
-  ;     :info (metamorphic-content)(opt)
-  ;     :label (metamorphic-content)(opt)
+  ;     :info (multitype-content)(opt)
+  ;     :label (multitype-content)(opt)
   ;     :phone-numbers (numbers or strings in vector)(opt)
   ;  :class (keyword or keywords in vector)(opt)
   ;   ...

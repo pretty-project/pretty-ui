@@ -12,9 +12,9 @@
   ; @param (map) element-props
   ; {:disabled? (boolean)(opt)
   ;  :font-size (keyword, px or string)
-  ;  :helper (metamorphic-content)(opt)
-  ;  :info-text (metamorphic-content)(opt)
-  ;  :label (metamorphic-content)(opt)
+  ;  :helper (multitype-content)(opt)
+  ;  :info-text (multitype-content)(opt)
+  ;  :label (multitype-content)(opt)
   ;  :marked? (boolean)(opt)}
   [_ {:keys [disabled? font-size helper info-text label marked?]}])
   ; XXX#0510 (source-code/app/pretty_components/frontend/data_element/prototypes.cljs)
@@ -32,8 +32,8 @@
   ; {:copyable? (boolean)(opt)
   ;  :disabled? (boolean)(opt)
   ;  :font-size (keyword, px or string)
-  ;  :value-placeholder (metamorphic-content)(opt)}
-  ; @param (metamorphic-content) value
+  ;  :value-placeholder (multitype-content)(opt)}
+  ; @param (multitype-content) value
   [_ {:keys [copyable? disabled? font-size value-placeholder]} value]
   [pretty-elements/text {:copyable?           copyable?
                          :color               :muted
@@ -69,17 +69,17 @@
   ;  :disabled? (boolean)(opt)
   ;  :font-size (keyword, px or string)(opt)
   ;   Default: :s
-  ;  :helper (metamorphic-content)(opt)
+  ;  :helper (multitype-content)(opt)
   ;  :indent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :info-text (metamorphic-content)(opt)
+  ;  :info-text (multitype-content)(opt)
   ;  :marked? (boolean)(opt)
   ;   Default: false
-  ;  :label (metamorphic-content)(opt)
+  ;  :label (multitype-content)(opt)
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :value (metamorphic-content or metamorphic-contents in vector)(opt)
-  ;  :value-placeholder (metamorphic-content)(opt)}
+  ;  :value-placeholder (multitype-content)(opt)}
   ;
   ; @usage
   ; [data-element {...}]

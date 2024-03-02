@@ -43,7 +43,7 @@
   ;
   ; @param (keyword) checkbox-id
   ; @param (map) checkbox-props
-  ; {:options-placeholder (metamorphic-content)(opt)
+  ; {:options-placeholder (multitype-content)(opt)
   ;  ...}
   [checkbox-id {:keys [options-placeholder] :as checkbox-props}]
   (letfn [(f0 [option-dex option] [checkbox-option checkbox-id checkbox-props option-dex option])]
@@ -108,13 +108,13 @@
   ;   Default: :s
   ;  :get-options-f (function)(opt)
   ;  :get-value-f (function)(opt)
-  ;  :helper (metamorphic-content)(opt)
-  ;  :info (metamorphic-content)(opt)
+  ;  :helper (multitype-content)(opt)
+  ;  :info (multitype-content)(opt)
   ;  :hover-effect (keyword)(opt)
   ;  :indent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :initial-value (*)(opt)
-  ;  :label (metamorphic-content)(opt)
+  ;  :label (multitype-content)(opt)
   ;  :marker (map)(opt)
   ;  :max-selection (integer)(opt)
   ;  :on-changed-f (function)(opt)
@@ -132,7 +132,7 @@
   ;  :orientation (keyword)(opt)
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :placeholder (metamorphic-content)(opt)
+  ;  :placeholder (multitype-content)(opt)
   ;  :preset (keyword)(opt)
   ;  :projected-value (*)(opt)
   ;  :set-value-f (function)(opt)
@@ -141,7 +141,7 @@
   ;  :validate-when-change? (boolean)(opt)
   ;  :validate-when-leave? (boolean)(opt)
   ;  :validators (maps in vector)(opt)
-  ;   [{:error-text (metamorphic-content)(opt)
+  ;   [{:error-text (multitype-content)(opt)
   ;     :f (function)}]}
   ;
   ; @usage (pretty-inputs/checkbox.png)

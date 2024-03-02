@@ -14,8 +14,8 @@
   ; @param (map) menu-item
   ; {:color (keyword or string)(opt)
   ;   Default: :default
-  ;  :label (metamorphic-content)(opt)
-  ;  :label-placeholder (metamorphic-content)(opt)}
+  ;  :label (multitype-content)(opt)
+  ;  :label-placeholder (multitype-content)(opt)}
   ;  :on-click (function or Re-Frame metamorphic-event)(opt)
   [_ _ {:keys [color label label-placeholder on-click]}]
   [pretty-elements/button {:color             (or color :default)
@@ -51,8 +51,8 @@
 (defn- header-label
   ; @param (keyword) menu-id
   ; @param (map) menu-props
-  ; {:label (metamorphic-content)(opt)
-  ;  :label-placeholder (metamorphic-content)(opt)}
+  ; {:label (multitype-content)(opt)
+  ;  :label-placeholder (multitype-content)(opt)}
   [_ {:keys [label label-placeholder]}])
   ;[pretty-elements/label ::header-label
   ;                       {:color               :muted
@@ -85,13 +85,13 @@
 (defn view
   ; @param (keyword)(opt) menu-id
   ; @param (map) menu-props
-  ; {:label (metamorphic-content)(opt)
-  ;  :label-placeholder (metamorphic-content)(opt)
+  ; {:label (multitype-content)(opt)
+  ;  :label-placeholder (multitype-content)(opt)
   ;  :menu-items (maps in vector)
   ;   [{:color (keyword or string)(opt)
   ;      Default: :default
-  ;     :label (metamorphic-content)(opt)
-  ;     :label-placeholder (metamorphic-content)(opt)
+  ;     :label (multitype-content)(opt)
+  ;     :label-placeholder (multitype-content)(opt)
   ;     :on-click (function or Re-Frame metamorphic-event)(opt)}]}
   ;
   ; @usage

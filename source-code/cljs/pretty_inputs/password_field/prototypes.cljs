@@ -16,8 +16,8 @@
   ;
   ; @return (map)
   ; {:end-adornments (maps in vector)
-  ;  :label (metamorphic-content)
-  ;  :placeholder (metamorphic-content)
+  ;  :label (multitype-content)
+  ;  :placeholder (multitype-content)
   ;  :type (keyword)}
   [field-id {:keys [end-adornments] :as field-props}]
   (let [toggle-visibility-adornment (password-field.adornments/toggle-visibility-adornment field-id field-props)

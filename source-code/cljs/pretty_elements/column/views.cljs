@@ -15,7 +15,7 @@
   ;
   ; @param (keyword) column-id
   ; @param (map) column-props
-  ; {:content (metamorphic-content)(opt)
+  ; {:content (multitype-content)(opt)
   ;  ...}
   [column-id {:keys [content] :as column-props}]
   [:div (column.attributes/column-attributes column-id column-props)

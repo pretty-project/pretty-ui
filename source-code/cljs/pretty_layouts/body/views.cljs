@@ -15,7 +15,7 @@
   ;
   ; @param (keyword) body-id
   ; @param (map) body-props
-  ; {:content (metamorphic-content)(opt)
+  ; {:content (multitype-content)(opt)
   ;  ...}
   [body-id {:keys [content] :as body-props}]
   [:div (body.attributes/body-attributes body-id body-props)

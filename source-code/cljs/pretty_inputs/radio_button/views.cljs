@@ -39,7 +39,7 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  ; {:placeholder (metamorphic-content)(opt)}
+  ; {:placeholder (multitype-content)(opt)}
   [button-id {:keys [placeholder] :as button-props}]
   (letfn [(f0 [option-dex option] [radio-button-option button-id button-props option-dex option])]
          (let [options (pretty-inputs.engine/get-input-options button-id button-props)]
@@ -91,13 +91,13 @@
   ;   Default: :s
   ;  :get-options-f (function)(opt)
   ;  :get-value-f (function)(opt)
-  ;  :helper (metamorphic-content)(opt)
+  ;  :helper (multitype-content)(opt)
   ;  :hover-effect (keyword)(opt)
   ;  :indent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :info (metamorphic-content)(opt)
+  ;  :info (multitype-content)(opt)
   ;  :initial-value (*)(opt)
-  ;  :label (metamorphic-content)
+  ;  :label (multitype-content)
   ;  :marker (map)(opt)
   ;  :max-selection (integer)(opt)
   ;  :on-changed-f (function)(opt)
@@ -115,7 +115,7 @@
   ;  :orientation (keyword)(opt)
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :placeholder (metamorphic-content)(opt)
+  ;  :placeholder (multitype-content)(opt)
   ;  :preset (keyword)(opt)
   ;  :projected-value (*)(opt)
   ;  :set-value-f (function)(opt)
@@ -125,7 +125,7 @@
   ;  :validate-when-leave? (boolean)(opt)
   ;  :validators (maps in vector)(opt)
   ;   [{:f (function)
-  ;     :invalid-message (metamorphic-content)(opt)}]}
+  ;     :invalid-message (multitype-content)(opt)}]}
   ;
   ; @usage
   ; [radio-button {...}]

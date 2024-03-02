@@ -12,7 +12,7 @@
   ; @param (keyword) select-id
   ; @param (map) select-props
   ;
-  ; @return (metamorphic-content)
+  ; @return (multitype-content)
   [select-id select-props]
   (if-let [picked-option (pretty-inputs.engine/get-picked-input-option select-id select-props)]
           (if-some [option-label (pretty-inputs.engine/get-input-option-label select-id select-props picked-option)]

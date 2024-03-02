@@ -13,7 +13,7 @@
   ;
   ; @param (keyword) label-id
   ; @param (map) label-props
-  ; {:content (metamorphic-content)(opt)
+  ; {:content (multitype-content)(opt)
   ;  ...}
   [label-id {:keys [content end-adornments start-adornments] :as label-props}]
   [:div (label.attributes/label-attributes label-id label-props)

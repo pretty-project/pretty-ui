@@ -23,7 +23,7 @@
 (defn- input-table-label
   ; @param (keyword) table-id
   ; @param (map) table-props
-  ; {:label (metamorphic-content)(opt)}
+  ; {:label (multitype-content)(opt)}
   [table-id {:keys [label] :as table-props}]
   (if label [:div.c-input-table--label (input-table.helpers/table-label-attributes table-id table-props)
                                        (metamorphic-content/compose label)]))
@@ -48,15 +48,15 @@
   ;  :indent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :input-params (vector)(opt)
-  ;  :label (metamorphic-content)(opt)
+  ;  :label (multitype-content)(opt)
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :rows (vectors in vector)
   ;   [[(string) row-template
   ;     (list of metamorphic-contents or vectors) row-blocks
-  ;      [(metamorphic-content) input-label
+  ;      [(multitype-content) input-label
   ;       (keyword) input-id
-  ;       (metamorphic-content) input]]]
+  ;       (multitype-content) input]]]
   ;  :style (map)(opt)}
   ;
   ; @usage

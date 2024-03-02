@@ -15,7 +15,7 @@
   ;
   ; @param (keyword) row-id
   ; @param (map) row-props
-  ; {:content (metamorphic-content)(opt)
+  ; {:content (multitype-content)(opt)
   ;  ...}
   [row-id {:keys [content] :as row-props}]
   [:div (row.attributes/row-attributes row-id row-props)

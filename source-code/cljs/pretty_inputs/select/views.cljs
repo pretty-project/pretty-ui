@@ -83,7 +83,7 @@
   ; @param (keyword) select-id
   ; @param (map) select-props
   ; {:popup (map)(opt)
-  ;   {:label (metamorphic-content)(opt)}}
+  ;   {:label (multitype-content)(opt)}}
   [select-id {:keys [options-label] :as select-props}]
   [:div {:class :pi-select--popup-header}
         [:div (select.attributes/select-options-label-attributes select-id select-props)
@@ -184,11 +184,11 @@
   ;  :font-size (keyword, px or string)(opt)
   ;  :get-options-f (function)(opt)
   ;  :get-value-f (function)(opt)
-  ;  :helper (metamorphic-content)(opt)
+  ;  :helper (multitype-content)(opt)
   ;  :hover-effect (keyword)(opt)
-  ;  :info (metamorphic-content)(opt)
+  ;  :info (multitype-content)(opt)
   ;  :initial-value (*)(opt)
-  ;  :label (metamorphic-content)(opt)
+  ;  :label (multitype-content)(opt)
   ;  :layout (keyword)(opt)
   ;   :button, :icon-button, :select-button
   ;   Default: :select-button
@@ -205,9 +205,9 @@
   ;  :option-helper-f (function)(opt)
   ;  :option-label-f (function)(opt)
   ;  :option-value-f (function)(opt)
-  ;  :options-label (metamorphic-content)(opt)
+  ;  :options-label (multitype-content)(opt)
   ;  :orientation (keyword)(opt)
-  ;  :placeholder (metamorphic-content)(opt)
+  ;  :placeholder (multitype-content)(opt)
   ;  :preset (keyword)(opt)
   ;  :popup (map)(opt)
   ;  :projected-value (*)(opt)
@@ -218,7 +218,7 @@
   ;  :validate-when-leave? (boolean)(opt)
   ;  :validators (maps in vector)(opt)
   ;   [{:f (function)
-  ;     :invalid-message (metamorphic-content)(opt)}]}
+  ;     :invalid-message (multitype-content)(opt)}]}
   ;
   ; @usage
   ; [select {...}]

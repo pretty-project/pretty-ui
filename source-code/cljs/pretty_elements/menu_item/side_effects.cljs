@@ -15,7 +15,7 @@
   ;
   ; @param (keyword) item-id
   ; @param (map) item-props
-  ; {:dropdown-content (metamorphic-content)(opt)
+  ; {:dropdown-content (multitype-content)(opt)
   ;  :dropdown-menu-id (keyword)(opt)
   ;  ...}
   [_ {:keys [dropdown-content dropdown-menu-id]}]

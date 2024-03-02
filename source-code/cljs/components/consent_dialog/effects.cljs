@@ -9,8 +9,8 @@
 (r/reg-event-fx :components.consent-dialog/render-dialog!
   ; @param (keyword)(opt) dialog-id
   ; @param (map) dialog-props
-  ; {:content (metamorphic-content)
-  ;  :label (metamorphic-content)(opt)
+  ; {:content (multitype-content)
+  ;  :label (multitype-content)(opt)
   ;  :primary-button (map)(opt)
   ;  :secondary-button (map)(opt)}
   [r/event-vector<-id]

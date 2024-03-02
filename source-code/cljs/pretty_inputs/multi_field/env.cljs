@@ -61,10 +61,10 @@
   ;
   ; @param (keyword) group-id
   ; @param (map) group-props
-  ; {:label (metamorphic-content)}
+  ; {:label (multitype-content)}
   ; @param (integer) field-dex
   ;
-  ; @return (metamorphic-content)
+  ; @return (multitype-content)
   [group-id {:keys [label] :as group-props} field-dex]
         ; Single-field label
   (cond (and label (group-props->single-field? group-id group-props field-dex))
