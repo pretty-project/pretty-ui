@@ -3,7 +3,7 @@
     (:require ;[fruits.hiccup.api                 :as hiccup]
               [fruits.random.api                 :as random]
               ;[fruits.vector.api                 :as vector]
-              ;[metamorphic-content.api           :as metamorphic-content]
+              ;[multitype-content.api           :as multitype-content]
               [pretty-inputs.checkbox.attributes :as checkbox.attributes]
               [pretty-inputs.checkbox.prototypes :as checkbox.prototypes]
               [pretty-inputs.engine.api          :as pretty-inputs.engine]
@@ -50,7 +50,7 @@
          (let [options (pretty-inputs.engine/get-input-options checkbox-id checkbox-props)])))
               ;(cond (-> options vector/not-empty?) (hiccup/put-with-indexed [:<>] options f0)
               ;      (-> options-placeholder) [:div (checkbox.attributes/checkbox-options-placeholder-attributes checkbox-id checkbox-props)]])))
-                                                   ;(metamorphic-content/compose options-placeholder)]))))
+                                                   ;(multitype-content/compose options-placeholder)]))))
 
 (defn- checkbox
   ; @ignore

@@ -3,7 +3,7 @@
     (:require [fruits.hiccup.api               :as hiccup]
               [fruits.random.api               :as random]
               [fruits.vector.api               :as vector]
-              [metamorphic-content.api         :as metamorphic-content]
+              [multitype-content.api         :as multitype-content]
               [pretty-inputs.engine.api        :as pretty-inputs.engine]
               [pretty-inputs.header.views      :as header.views]
               [pretty-inputs.switch.attributes :as switch.attributes]
@@ -44,7 +44,7 @@
          (let [options (pretty-inputs.engine/get-input-options switch-id switch-props)]
               (cond (-> options vector/not-empty?) (hiccup/put-with-indexed [:<>] options f0)
                     (-> placeholder) [:div (switch.attributes/switch-placeholder-attributes switch-id switch-props)
-                                           (metamorphic-content/compose placeholder)]))))
+                                           (multitype-content/compose placeholder)]))))
 
 (defn- switch
   ; @ignore

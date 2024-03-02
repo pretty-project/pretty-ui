@@ -3,7 +3,7 @@
     (:require [fruits.hiccup.api                  :as hiccup]
               [fruits.loop.api                    :refer [reduce-indexed]]
               [fruits.random.api                  :as random]
-              [metamorphic-content.api            :as metamorphic-content]
+              [multitype-content.api            :as multitype-content]
               [pretty-inputs.combo-box.attributes :as combo-box.attributes]
               [pretty-inputs.combo-box.env        :as combo-box.env]
               [pretty-inputs.combo-box.prototypes :as combo-box.prototypes]
@@ -28,7 +28,7 @@
   [:button (combo-box.attributes/combo-box-option-attributes box-id box-props option-dex option)
            (if option-component [option-component box-id box-props option]
                                 [:div {:class :pi-combo-box--option-label}
-                                      (-> option option-label-f metamorphic-content/compose)])])
+                                      (-> option option-label-f multitype-content/compose)])])
 
 (defn- combo-box-options
   ; @ignore

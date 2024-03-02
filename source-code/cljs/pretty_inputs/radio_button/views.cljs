@@ -3,7 +3,7 @@
     (:require [fruits.hiccup.api                     :as hiccup]
               [fruits.random.api                     :as random]
               [fruits.vector.api                     :as vector]
-              [metamorphic-content.api               :as metamorphic-content]
+              [multitype-content.api               :as multitype-content]
               [pretty-inputs.engine.api              :as pretty-inputs.engine]
               [pretty-inputs.header.views            :as header.views]
               [pretty-inputs.radio-button.attributes :as radio-button.attributes]
@@ -45,7 +45,7 @@
          (let [options (pretty-inputs.engine/get-input-options button-id button-props)]
               (cond (-> options vector/not-empty?) (hiccup/put-with-indexed [:<>] options f0)
                     (-> placeholder) [:div (radio-button.attributes/radio-button-placeholder-attributes button-id button-props)
-                                           (metamorphic-content/compose placeholder)]))))
+                                           (multitype-content/compose placeholder)]))))
 
 (defn- radio-button
   ; @ignore

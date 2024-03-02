@@ -4,7 +4,7 @@
               [components.item-list-row.prototypes :as item-list-row.prototypes]
               [fruits.css.api                      :as css]
               [fruits.random.api                   :as random]
-              [metamorphic-content.api             :as metamorphic-content]
+              [multitype-content.api             :as multitype-content]
               [pretty-elements.api                 :as pretty-elements]))
 
 ;; ----------------------------------------------------------------------------
@@ -16,7 +16,7 @@
   ; {:cells (vector)}
   [row-id {:keys [cells]}]
   (letfn [(f0 [cells cell-props]
-              (conj cells [metamorphic-content/compose cell-props]))]
+              (conj cells [multitype-content/compose cell-props]))]
          (reduce f0 [:<>] cells)))
 
 (defn- item-list-row
@@ -34,7 +34,7 @@
   ; {:border-color (keyword or string)(opt)
   ;  :border-position (keyword)(opt)
   ;  :border-width (keyword, px or string)(opt)
-  ;  :cells (metamorphic-contents in vector)
+  ;  :cells (multitype-contents in vector)
   ;  :disabled? (boolean)(opt)
   ;  :drag-attributes (map)(opt)
   ;  :fill-color (keyword or string)(opt)

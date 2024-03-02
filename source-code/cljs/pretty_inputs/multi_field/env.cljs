@@ -1,7 +1,7 @@
 
 (ns pretty-inputs.multi-field.env
     (:require [fruits.vector.api       :as vector]
-              [metamorphic-content.api :as metamorphic-content]
+              [multitype-content.api :as multitype-content]
               [re-frame.api            :as r]))
 
 ;; ----------------------------------------------------------------------------
@@ -71,7 +71,7 @@
         (->  label)
         ; Multi-field label
         (and label (group-props->multi-field? group-id group-props field-dex))
-        (metamorphic-content/compose {:content label :suffix (str " #" (inc field-dex))})))
+        (multitype-content/compose {:content label :suffix (str " #" (inc field-dex))})))
 
 (defn field-dex->control-adornments
   ; @ignore

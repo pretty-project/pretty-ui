@@ -1,7 +1,7 @@
 
 (ns pretty-website.sidebar.views
     (:require [fruits.random.api                 :as random]
-              [metamorphic-content.api           :as metamorphic-content]
+              [multitype-content.api           :as multitype-content]
               [pretty-elements.api               :as pretty-elements]
               [pretty-elements.engine.api        :as pretty-elements.engine]
               [pretty-presets.engine.api         :as pretty-presets.engine]
@@ -30,7 +30,7 @@
         ;                            [:div (sidebar.attributes/sidebar-cover-attributes sidebar-id sidebar-props)]
         ;                            [:div (sidebar.attributes/sidebar-inner-attributes sidebar-id sidebar-props)
         ;                                  [:div {:class :pw-sidebar--content}
-        ;                                        [metamorphic-content/compose content placeholder])]])
+        ;                                        [multitype-content/compose content placeholder])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

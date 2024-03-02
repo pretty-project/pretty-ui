@@ -3,7 +3,7 @@
     (:require [components.input-table.helpers    :as input-table.helpers]
               [components.input-table.prototypes :as input-table.prototypes]
               [fruits.random.api                 :as random]
-              [metamorphic-content.api           :as metamorphic-content]
+              [multitype-content.api           :as multitype-content]
               [pretty-elements.api               :as pretty-elements]))
 
 ;; ----------------------------------------------------------------------------
@@ -14,7 +14,7 @@
   ; @param (map) table-props
   ; {:rows (vectors in vector)}
   [table-id {:keys [rows] :as table-props}]
-  (letfn [(f0 [row-blocks row-block] (conj row-blocks [metamorphic-content/compose row-block]))
+  (letfn [(f0 [row-blocks row-block] (conj row-blocks [multitype-content/compose row-block]))
           (f1 [rows [row-template & row-blocks]]
               (conj rows [:div.c-input-table--row {:style {:grid-template-columns row-template}}
                                                   (reduce f0 [:<>] row-blocks)]))]
@@ -26,7 +26,7 @@
   ; {:label (multitype-content)(opt)}
   [table-id {:keys [label] :as table-props}]
   (if label [:div.c-input-table--label (input-table.helpers/table-label-attributes table-id table-props)
-                                       (metamorphic-content/compose label)]))
+                                       (multitype-content/compose label)]))
 
 (defn- input-table
   ; @param (keyword) table-id
@@ -53,7 +53,7 @@
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
   ;  :rows (vectors in vector)
   ;   [[(string) row-template
-  ;     (list of metamorphic-contents or vectors) row-blocks
+  ;     (list of multitype-contents or vectors) row-blocks
   ;      [(multitype-content) input-label
   ;       (keyword) input-id
   ;       (multitype-content) input]]]

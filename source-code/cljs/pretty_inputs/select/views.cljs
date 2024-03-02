@@ -3,7 +3,7 @@
     (:require [fruits.hiccup.api               :as hiccup]
               [fruits.random.api               :as random]
               [fruits.vector.api               :as vector]
-              [metamorphic-content.api         :as metamorphic-content]
+              [multitype-content.api         :as multitype-content]
               [pretty-elements.api             :as pretty-elements]
               [pretty-inputs.engine.api        :as pretty-inputs.engine]
               [pretty-inputs.header.views      :as header.views]
@@ -66,7 +66,7 @@
          (let [options (pretty-inputs.engine/get-input-options select-id select-props)]
               (cond (-> options vector/not-empty?) (hiccup/put-with-indexed [:<>] options f0)
                     (-> placeholder) [:div (select.attributes/select-placeholder-attributes select-id select-props)
-                                           (metamorphic-content/compose placeholder)]))))
+                                           (multitype-content/compose placeholder)]))))
 
 (defn- select-popup-body
   ; @ignore
@@ -87,7 +87,7 @@
   [select-id {:keys [options-label] :as select-props}]
   [:div {:class :pi-select--popup-header}
         [:div (select.attributes/select-options-label-attributes select-id select-props)
-              (metamorphic-content/compose options-label)]
+              (multitype-content/compose options-label)]
         [option-field select-id select-props]])
 
 (defn- select-popup

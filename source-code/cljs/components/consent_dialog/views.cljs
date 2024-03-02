@@ -2,7 +2,7 @@
 (ns components.consent-dialog.views
     (:require [components.consent-dialog.prototypes :as consent-dialog.prototypes]
               [fruits.random.api                    :as random]
-              [metamorphic-content.api              :as metamorphic-content]
+              [multitype-content.api              :as multitype-content]
               [pretty-elements.api                  :as pretty-elements]
               [pretty-layouts.api                   :as pretty-layouts]))
 
@@ -14,7 +14,7 @@
   ; @param (map) dialog-props
   ; {:content (multitype-content)}
   [dialog-id {:keys [content]}]
-  [metamorphic-content/compose content])
+  [multitype-content/compose content])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

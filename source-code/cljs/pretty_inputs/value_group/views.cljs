@@ -3,7 +3,7 @@
     (:require [fruits.hiccup.api                   :as hiccup]
               [fruits.random.api                   :as random]
               [fruits.vector.api                   :as vector]
-              [metamorphic-content.api             :as metamorphic-content]
+              [multitype-content.api             :as multitype-content]
               [pretty-elements.api                 :as pretty-elements]
               [pretty-inputs.value-group.attributes :as value-group.attributes]
               [pretty-inputs.value-group.prototypes :as value-group.prototypes]
@@ -37,7 +37,7 @@
          (let [chips (pretty-inputs.engine/get-input-displayed-value group-id group-props)]
               (cond (-> chips vector/not-empty?) (hiccup/put-with-indexed [:<>] chips f0)
                     (-> chips-placeholder) [:div (value-group.attributes/value-group-values-placeholder-attributes group-id group-props)
-                                                 (metamorphic-content/compose chips-placeholder)]))))
+                                                 (multitype-content/compose chips-placeholder)]))))
 
 (defn- chip-group
   ; @ignore

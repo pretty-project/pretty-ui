@@ -3,7 +3,7 @@
     (:require [components.side-menu.helpers    :as side-menu.helpers]
               [components.side-menu.prototypes :as side-menu.prototypes]
               [fruits.random.api               :as random]
-              [metamorphic-content.api         :as metamorphic-content]
+              [multitype-content.api         :as multitype-content]
               [pretty-elements.api             :as pretty-elements]
               [window-observer.api             :as window-observer]))
 
@@ -20,7 +20,7 @@
           (-> threshold window-observer/viewport-width-min?))
       [:div.c-side-menu (side-menu.helpers/menu-attributes menu-id menu-props)
                         [:div.c-side-menu--inner (side-menu.helpers/menu-inner-attributes menu-id menu-props)
-                                                 [metamorphic-content/compose content]]]))
+                                                 [multitype-content/compose content]]]))
 
 (defn view
   ; @param (keyword)(opt) menu-id

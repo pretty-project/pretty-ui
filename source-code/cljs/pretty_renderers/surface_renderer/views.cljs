@@ -2,7 +2,7 @@
 (ns renderers.surface-renderer.views
     (:require [dom.api                               :as dom]
               [fruits.random.api                     :as random]
-              [metamorphic-content.api               :as metamorphic-content]
+              [multitype-content.api               :as multitype-content]
               [renderers.renderer.env                :as renderer.env]
               [renderers.surface-renderer.attributes :as surface-renderer.attributes]
               [renderers.surface-renderer.prototypes :as surface-renderer.prototypes]))
@@ -19,7 +19,7 @@
   (reagent/create-class surface-id
                         {:reagent-render         (fn [] (if-let [content (renderer.env/get-content-prop renderer-id surface-id :content)]
                                                                 [:div (surface-renderer.attributes/surface-content-attributes renderer-id surface-id)
-                                                                      [metamorphic-content/compose content]]))
+                                                                      [multitype-content/compose content]]))
                          :component-did-mount    (fn [] (if autoreset-scroll-y? (dom/set-scroll-y! 0))
                                                         (if-let [on-mount (renderer.env/get-content-prop renderer-id surface-id :on-mount)]
                                                                 (r/dispatch on-mount)))

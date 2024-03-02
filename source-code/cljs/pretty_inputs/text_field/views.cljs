@@ -2,7 +2,7 @@
 (ns pretty-inputs.text-field.views
     (:require [fruits.random.api                   :as random]
               [fruits.vector.api                   :as vector]
-              [metamorphic-content.api             :as metamorphic-content]
+              [multitype-content.api             :as multitype-content]
               [pretty-elements.api                 :as pretty-elements]
               [pretty-inputs.engine.api            :as pretty-inputs.engine]
               [pretty-inputs.header.views          :as header.views]
@@ -67,7 +67,7 @@
               [:div {:class :pi-text-field--input-structure}
                     (if placeholder (if-let [field-empty? (pretty-inputs.engine/input-empty? field-id field-props)]
                                             [:div (text-field.attributes/field-placeholder-attributes field-id field-props)
-                                                  (metamorphic-content/compose placeholder)]))
+                                                  (multitype-content/compose placeholder)]))
                     [:div (text-field.attributes/input-emphasize-attributes field-id field-props)
                           [(if multiline? :textarea :input)
                            (text-field.attributes/field-input-attributes field-id field-props)]]]
@@ -75,7 +75,7 @@
         (if surface (if (text-field.env/field-surface-visible? field-id field-props)
                         [:div {:class :pi-text-field--surface-wrapper}
                               [:div (text-field.attributes/field-surface-attributes field-id field-props)
-                                    [metamorphic-content/compose surface]]]))])
+                                    [multitype-content/compose surface]]]))])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

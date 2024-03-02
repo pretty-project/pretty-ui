@@ -3,7 +3,7 @@
     (:require [components.input-block.helpers    :as input-block.helpers]
               [components.input-block.prototypes :as input-block.prototypes]
               [fruits.random.api                 :as random]
-              [metamorphic-content.api           :as metamorphic-content]))
+              [multitype-content.api           :as multitype-content]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -15,8 +15,8 @@
   ;  :label (multitype-content)}
   [block-id {:keys [input label] :as block-props}]
   [:<> [:label.c-input-block--label (input-block.helpers/input-label-attributes block-id block-props)
-                                    [metamorphic-content/compose label]]
-       [:div.c-input-block--input   [metamorphic-content/compose input]]])
+                                    [multitype-content/compose label]]
+       [:div.c-input-block--input   [multitype-content/compose input]]])
 
 (defn view
   ; @description

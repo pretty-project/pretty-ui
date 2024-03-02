@@ -1,18 +1,18 @@
 
 (ns components.data-element.prototypes
     (:require [fruits.vector.api       :as vector]
-              [metamorphic-content.api :as metamorphic-content]))
+              [multitype-content.api :as multitype-content]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn element-props-prototype
   ; @param (map) element-props
-  ; {:value (metamorphic-content or metamorphic-contents in vector)}
+  ; {:value (multitype-content or multitype-contents in vector)}
   ;
   ; @return (map)
   ; {:font-size (keyword, px or string)
-  ;  :value (metamorphic-contents in vector)}
+  ;  :value (multitype-contents in vector)}
   [{:keys [marked? value] :as element-props}]
   ; XXX#0516 (source-code/app/common/frontend/data_element/views.cljs)
   ;
@@ -24,4 +24,4 @@
          (-> element-props)
          (cond (vector/not-empty? value) {:marked? false :value value}
                (vector?           value) {:marked? false :value [nil]}
-               :return {:value [value] :marked? (and marked? (-> value metamorphic-content/compose empty? not))})))
+               :return {:value [value] :marked? (and marked? (-> value multitype-content/compose empty? not))})))

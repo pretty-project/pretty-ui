@@ -2,7 +2,7 @@
 (ns pretty-website.contacts.views
     (:require [fruits.hiccup.api                  :as hiccup]
               [fruits.random.api                  :as random]
-              [metamorphic-content.api            :as metamorphic-content]
+              [multitype-content.api            :as multitype-content]
               [pretty-elements.engine.api         :as pretty-elements.engine]
               [pretty-presets.engine.api          :as pretty-presets.engine]
               [pretty-website.contacts.attributes :as contacts.attributes]
@@ -27,7 +27,7 @@
   [:div {:class :pw-contacts--contact-group}
         ; Contact group label
         (if label [:div (contacts.attributes/contact-group-label-attributes contacts-id contacts-props group-props)
-                        (metamorphic-content/compose label)])
+                        (multitype-content/compose label)])
         ; Contact group phone numbers
         (letfn [(f0 [%] [:a (contacts.attributes/contact-group-phone-number-attributes contacts-id contacts-props group-props %)
                             (str %)])]
@@ -42,7 +42,7 @@
                (hiccup/put-with [:<>] addresses f0))
         ; Contact group info
         (if info [:div (contacts.attributes/contact-group-info-attributes contacts-id contacts-props group-props)
-                       (hiccup/parse-newlines [:<> (metamorphic-content/compose info)])])])
+                       (hiccup/parse-newlines [:<> (multitype-content/compose info)])])])
 
 (defn- contacts
   ; @ignore

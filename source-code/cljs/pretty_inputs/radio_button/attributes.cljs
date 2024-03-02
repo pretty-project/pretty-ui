@@ -1,7 +1,7 @@
 
 (ns pretty-inputs.radio-button.attributes
     (:require [dom.api                  :as dom]
-              [metamorphic-content.api  :as metamorphic-content]
+              [multitype-content.api  :as multitype-content]
               [pretty-attributes.api    :as pretty-attributes]
               [pretty-inputs.engine.api :as pretty-inputs.engine]
               [re-frame.api             :as r]))

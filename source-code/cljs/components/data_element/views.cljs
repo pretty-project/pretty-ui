@@ -47,7 +47,7 @@
 (defn- data-element-values
   ; @param (keyword) element-id
   ; @param (map) element-props
-  ; {:value (metamorphic-contents in vector)(opt)}
+  ; {:value (multitype-contents in vector)(opt)}
   [element-id {:keys [value] :as element-props}]
   ; XXX#0516
   (letfn [(f0 [values value] (conj values [data-element-value element-id element-props value]))]
@@ -78,7 +78,7 @@
   ;  :label (multitype-content)(opt)
   ;  :outdent (map)(opt)
   ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :value (metamorphic-content or metamorphic-contents in vector)(opt)
+  ;  :value (multitype-content or multitype-contents in vector)(opt)
   ;  :value-placeholder (multitype-content)(opt)}
   ;
   ; @usage
@@ -91,8 +91,8 @@
 
   ([element-id element-props]
    ; XXX#0516
-   ; A data-element komponens value tulajdonságának típusa lehet metamorphic-content
-   ; típus vagy metamorphic-content típusok vektorban (egyszerre több értéket is
+   ; A data-element komponens value tulajdonságának típusa lehet multitype-content
+   ; típus vagy multitype-content típusok vektorban (egyszerre több értéket is
    ; fel tud sorolni).
    ;
    ; @note (tutorials#parameterizing)
