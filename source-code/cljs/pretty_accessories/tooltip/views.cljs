@@ -5,7 +5,8 @@
               [pretty-accessories.tooltip.prototypes :as tooltip.prototypes]
               [pretty-presets.engine.api :as pretty-presets.engine]
               [pretty-accessories.icon.views :as icon.views]
-              [pretty-accessories.label.views :as label.views]))
+              [pretty-accessories.label.views :as label.views]
+              [pretty-subitems.api :as pretty-subitems]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -13,16 +14,16 @@
 (defn- tooltip
   ; @ignore
   ;
-  ; @param (keyword) tooltip-id
-  ; @param (map) tooltip-props
+  ; @param (keyword) id
+  ; @param (map) props
   ; {:icon (map)(opt)
   ;  :label (map)(opt)
   ;  ...}
-  [tooltip-id {:keys [icon label] :as tooltip-props}]
-  [:div (tooltip.attributes/tooltip-attributes tooltip-id tooltip-props)
-        [:div (tooltip.attributes/tooltip-inner-attributes tooltip-id tooltip-props)
-              (cond label [label.views/view tooltip-id label]
-                    icon  [icon.views/view  tooltip-id icon])]])
+  [id {:keys [icon label] :as props}]
+  [:div (tooltip.attributes/outer-attributes id props)
+        [:div (tooltip.attributes/inner-attributes id props)
+              (cond label [label.views/view (pretty-subitems/subitem-id id :label) label]
+                    icon  [icon.views/view  (pretty-subitems/subitem-id id :icon)  icon])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -51,8 +52,8 @@
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
   ;
-  ; @param (keyword)(opt) tooltip-id
-  ; @param (map) tooltip-props
+  ; @param (keyword)(opt) id
+  ; @param (map) props
   ; Check out the implemented accessories.
   ; Check out the implemented properties.
   ;
@@ -62,12 +63,12 @@
   ;           :fill-color    :invert
   ;           :indent        {:all :xxs}
   ;           :position      :br}]
-  ([tooltip-props]
-   [view (random/generate-keyword) tooltip-props])
+  ([props]
+   [view (random/generate-keyword) props])
 
-  ([tooltip-id tooltip-props]
+  ([id props]
    ; @note (tutorials#parameterizing)
-   (fn [_ tooltip-props]
-       (let [tooltip-props (pretty-presets.engine/apply-preset         tooltip-id tooltip-props)
-             tooltip-props (tooltip.prototypes/tooltip-props-prototype tooltip-id tooltip-props)]
-            [tooltip tooltip-id tooltip-props]))))
+   (fn [_ props]
+       (let [props (pretty-presets.engine/apply-preset id props)
+             props (tooltip.prototypes/props-prototype id props)]
+            [tooltip id props]))))

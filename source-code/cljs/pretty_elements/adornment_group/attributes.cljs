@@ -5,40 +5,40 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn group-inner-attributes
+(defn inner-attributes
   ; @ignore
   ;
-  ; @param (keyword) group-id
-  ; @param (map) group-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ group-props]
+  [_ props]
   (-> {:class :pe-adornment-group--inner}
-      (pretty-attributes/flex-attributes        group-props)
-      (pretty-attributes/inner-size-attributes  group-props)
-      (pretty-attributes/inner-space-attributes group-props)
-      (pretty-attributes/style-attributes       group-props)))
+      (pretty-attributes/flex-attributes        props)
+      (pretty-attributes/inner-size-attributes  props)
+      (pretty-attributes/inner-space-attributes props)
+      (pretty-attributes/style-attributes       props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn group-attributes
+(defn outer-attributes
   ; @ignore
   ;
-  ; @param (keyword) group-id
-  ; @param (map) group-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ group-props]
-  (-> {:class :pe-adornment-group}
-      (pretty-attributes/class-attributes          group-props)
-      (pretty-attributes/inner-position-attributes group-props)
-      (pretty-attributes/outer-position-attributes group-props)
-      (pretty-attributes/outer-size-attributes     group-props)
-      (pretty-attributes/outer-space-attributes    group-props)
-      (pretty-attributes/state-attributes          group-props)
-      (pretty-attributes/theme-attributes          group-props)))
+  [_ props]
+  (-> {:class :pe-adornment-group--outer}
+      (pretty-attributes/class-attributes          props)
+      (pretty-attributes/inner-position-attributes props)
+      (pretty-attributes/outer-position-attributes props)
+      (pretty-attributes/outer-size-attributes     props)
+      (pretty-attributes/outer-space-attributes    props)
+      (pretty-attributes/state-attributes          props)
+      (pretty-attributes/theme-attributes          props)))

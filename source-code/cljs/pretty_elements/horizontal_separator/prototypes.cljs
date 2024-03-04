@@ -8,39 +8,39 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn label-props-prototype
+(defn label-prototype
   ; @ignore
   ;
-  ; @param (keyword) separator-id
-  ; @param (map) separator-props
-  ; {:label (map)(opt)
-  ;  ...}
+  ; @param (keyword) id
+  ; @param (map) props
+  ; @param (map) label
   ;
   ; @return (map)
-  [_ {:keys [label]}]
+  [_ _ label]
   (-> label (pretty-properties/default-font-props {:font-size :micro :font-weight :medium})
-            (pretty-properties/default-text-props {:text-color :muted :text-transform :uppercase :text-selectable? false})))
+            (pretty-properties/default-text-props {:text-color :muted :text-transform :uppercase})))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn separator-props-prototype
+(defn props-prototype
   ; @ignore
   ;
-  ; @param (keyword) separator-id
-  ; @param (map) separator-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
-  [separator-id separator-props]
-  (let [label-props-prototype-f (fn [_] (label-props-prototype separator-id separator-props))]
-       (-> separator-props (pretty-properties/default-flex-props       {:orientation :horizontal})
-                           (pretty-properties/default-line-props       {:line-color :muted :line-orientation :horizontal :line-size :grow})
-                           (pretty-properties/default-outer-size-props {:outer-height :content :outer-width :auto :outer-size-unit :full-block})
-                           (pretty-standards/standard-flex-props)
-                           (pretty-standards/standard-inner-position-props)
-                           (pretty-standards/standard-inner-size-props)
-                           (pretty-standards/standard-line-props)
-                           (pretty-standards/standard-outer-position-props)
-                           (pretty-standards/standard-outer-size-props)
-                          ;(pretty-rules/auto-align-scrollable-flex)
-                           (pretty-subitems/apply-subitem-prototype :label label-props-prototype-f))))
+  [id props]
+  (let [label-prototype-f (fn [%] (label-prototype id props %))]
+       (-> props (pretty-properties/default-flex-props       {:orientation :horizontal})
+                 (pretty-properties/default-line-props       {:line-color :muted :line-orientation :horizontal :line-size :grow})
+                 (pretty-properties/default-outer-size-props {:outer-height :content :outer-width :auto :outer-size-unit :full-block})
+                 (pretty-standards/standard-flex-props)
+                 (pretty-standards/standard-inner-position-props)
+                 (pretty-standards/standard-inner-size-props)
+                 (pretty-standards/standard-line-props)
+                 (pretty-standards/standard-outer-position-props)
+                 (pretty-standards/standard-outer-size-props)
+                ;(pretty-rules/auto-align-scrollable-flex)
+                 (pretty-rules/auto-set-mounted)
+                 (pretty-subitems/apply-subitem-prototype :label label-prototype-f))))

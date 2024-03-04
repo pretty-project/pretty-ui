@@ -1,42 +1,48 @@
 
 (ns pretty-inputs.radio-button.prototypes
-    (:require [fruits.noop.api :refer [none return]]
-              [pretty-standards.api :as pretty-standards]
+    (:require [pretty-standards.api :as pretty-standards]
               [pretty-rules.api :as pretty-rules]
-              [pretty-properties.api :as pretty-properties]))
+              [pretty-properties.api :as pretty-properties]
+              [pretty-subitems.api :as pretty-subitems]
+              [fruits.map.api :as map]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn button-props-prototype
+(defn option-group-prototype
   ; @ignore
   ;
-  ; @param (keyword) button-id
-  ; @param (map) button-props
+  ; @param (keyword) id
+  ; @param (map) props
+  ; @param (map) option-group
   ;
   ; @return (map)
-  ; {:border-color (keyword or string)
-  ;  :border-position (keyword)
-  ;  :border-radius (map)
-  ;  :border-width (keyword, px or string)
-  ;  :click-effect (keyword)
-  ;  :font-size (keyword, px or string)
-  ;  :max-selection (integer)
-  ;  :option-helper-f (function)
-  ;  :option-label-f (function)
-  ;  :option-value-f (function)
-  ;  :orientation (keyword)}
-  [_ button-props]
-  (merge {:border-color    :default
-          :border-position :all
-          :border-radius   {:all :m}
-          :border-width    :xs
-          :click-effect    :opacity
-          :font-size       :s
-          :max-selection   1
-          :option-helper-f none
-          :option-label-f  return
-          :option-value-f  return
-          :orientation     :vertical}
-         (-> button-props)))
-; standard-input-option-props
+  [_ _ option-group]
+  (-> option-group (update :option-default  map/reversed-deep-merge {:icon {:border-color :muted :border-radius {:all :m} :border-width :xs :inner-height :xs :inner-width :xs}})
+                   (update :option-selected map/reversed-deep-merge {:icon {:icon-family :material-symbols-filled :icon-name :circle :icon-size :xxs}})
+                   (pretty-properties/default-input-option-props {:max-selection 1})))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn props-prototype
+  ; @ignore
+  ;
+  ; @param (keyword) id
+  ; @param (map) props
+  ;
+  ; @return (map)
+  [id props]
+  (let [option-group-prototype-f (fn [%] (option-group-prototype id props %))]
+       (-> props (pretty-properties/default-flex-props       {:gap :xs :horizontal-align :left :orientation :vertical})
+                 (pretty-properties/default-outer-size-props {:outer-size-unit :full-block})
+                 (pretty-standards/standard-flex-props)
+                 (pretty-standards/standard-inner-position-props)
+                 (pretty-standards/standard-inner-size-props)
+                 (pretty-standards/standard-outer-position-props)
+                 (pretty-standards/standard-outer-size-props)
+                ;(pretty-rules/auto-align-scrollable-flex)
+                 (pretty-rules/auto-set-mounted)
+                 (pretty-subitems/subitem-group<-disabled-state :header :option-group)
+                 (pretty-subitems/leave-disabled-state          :header :option-group)
+                 (pretty-subitems/apply-subitem-prototype       :option-group option-group-prototype-f))))

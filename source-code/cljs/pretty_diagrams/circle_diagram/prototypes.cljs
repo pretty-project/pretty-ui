@@ -7,18 +7,19 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn diagram-props-prototype
+(defn props-prototype
   ; @ignore
   ;
-  ; @param (keyword) diagram-id
-  ; @param (map) diagram-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
-  [_ diagram-props]
-  (-> diagram-props (pretty-properties/default-outer-size-props {:outer-size-unit :full-block})
-                    (pretty-standards/standard-data-props)
-                    (pretty-standards/standard-inner-position-props)
-                    (pretty-standards/standard-inner-size-props)
-                    (pretty-standards/standard-outer-position-props)
-                    (pretty-standards/standard-outer-size-props)
-                    (pretty-standards/standard-shape-props)))
+  [_ props]
+  (-> props (pretty-properties/default-outer-size-props {:outer-size-unit :full-block})
+            (pretty-standards/standard-data-props)
+            (pretty-standards/standard-inner-position-props)
+            (pretty-standards/standard-inner-size-props)
+            (pretty-standards/standard-outer-position-props)
+            (pretty-standards/standard-outer-size-props)
+            (pretty-standards/standard-shape-props)
+            (pretty-rules/auto-set-mounted)))

@@ -1,63 +1,31 @@
 
 (ns pretty-inputs.radio-button.views
-    (:require [fruits.hiccup.api                     :as hiccup]
-              [fruits.random.api                     :as random]
-              [fruits.vector.api                     :as vector]
-              [multitype-content.api               :as multitype-content]
-              [pretty-inputs.engine.api              :as pretty-inputs.engine]
-              [pretty-inputs.header.views            :as header.views]
+    (:require [fruits.random.api :as random]
               [pretty-inputs.radio-button.attributes :as radio-button.attributes]
               [pretty-inputs.radio-button.prototypes :as radio-button.prototypes]
-              [pretty-presets.engine.api             :as pretty-presets.engine]
-              [reagent.core :as reagent]))
+              [pretty-inputs.engine.api          :as pretty-inputs.engine]
+              [pretty-presets.engine.api         :as pretty-presets.engine]
+              [reagent.core :as reagent]
+              [pretty-inputs.option-group.views :as option-group.views]
+              [pretty-inputs.header.views :as header.views]
+              [pretty-subitems.api :as pretty-subitems]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(defn- radio-button-option
-  ; @ignore
-  ;
-  ; @param (keyword) button-id
-  ; @param (map) button-props
-  ; @param (integer) option-dex
-  ; @param (*) option
-  [button-id button-props option-dex option]
-  [:button (radio-button.attributes/radio-button-option-attributes button-id button-props option-dex option)
-           [:div (radio-button.attributes/radio-button-option-button-attributes button-id button-props option-dex option)
-                 (if (pretty-inputs.engine/input-option-selected? button-id button-props option-dex option)
-                     [:div (radio-button.attributes/radio-button-option-thumb-attributes button-id button-props option-dex option)])]
-           [:div {:class :pi-radio-button--option-content}
-                 (if-some [option-label (pretty-inputs.engine/get-input-option-label button-id button-props option-dex option)]
-                          [:div (radio-button.attributes/radio-button-option-label-attributes button-id button-props option-dex option)
-                                (-> option-label)])
-                 (if-some [option-helper (pretty-inputs.engine/get-input-option-helper button-id button-props option-dex option)]
-                          [:div (radio-button.attributes/radio-button-option-helper-attributes button-id button-props option-dex option)
-                                (-> option-helper)])]])
-
-(defn- radio-button-option-list
-  ; @ignore
-  ;
-  ; @param (keyword) button-id
-  ; @param (map) button-props
-  ; {:placeholder (multitype-content)(opt)}
-  [button-id {:keys [placeholder] :as button-props}]
-  (letfn [(f0 [option-dex option] [radio-button-option button-id button-props option-dex option])]
-         (let [options (pretty-inputs.engine/get-input-options button-id button-props)]
-              (cond (-> options vector/not-empty?) (hiccup/put-with-indexed [:<>] options f0)
-                    (-> placeholder) [:div (radio-button.attributes/radio-button-placeholder-attributes button-id button-props)
-                                           (multitype-content/compose placeholder)]))))
 
 (defn- radio-button
   ; @ignore
   ;
-  ; @param (keyword) button-id
-  ; @param (map) button-props
-  [button-id button-props]
-  [:div (radio-button.attributes/radio-button-attributes button-id button-props)
-        [pretty-inputs.header.views/view                 button-id button-props]
-        [pretty-inputs.engine/input-synchronizer         button-id button-props]
-        [:div (radio-button.attributes/radio-button-inner-attributes button-id button-props)
-              [radio-button-option-list                              button-id button-props]]])
+  ; @param (keyword) id
+  ; @param (map) props
+  ; {:header (map)(opt)
+  ;  :option-group (map)(opt)
+  ;  ...}
+  [id {:keys [header option-group] :as props}]
+  [:div (radio-button.attributes/outer-attributes id props)
+        [:div (radio-button.attributes/inner-attributes id props)
+              (if header       [header.views/view       (pretty-subitems/subitem-id id :header)       header])
+              (if option-group [option-group.views/view (pretty-subitems/subitem-id id :option-group) option-group])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -65,79 +33,57 @@
 (defn- view-lifecycles
   ; @ignore
   ;
-  ; @param (keyword) button-id
-  ; @param (map) button-props
-  [button-id button-props]
+  ; @param (keyword) id
+  ; @param (map) props
+  [id props]
   ; @note (tutorials#parameterizing)
-  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-inputs.engine/input-did-mount    button-id button-props))
-                         :component-will-unmount (fn [_ _] (pretty-inputs.engine/input-will-unmount button-id button-props))
-                         :reagent-render         (fn [_ button-props] [radio-button button-id button-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-inputs.engine/pseudo-input-did-mount    id props))
+                         :component-will-unmount (fn [_ _] (pretty-inputs.engine/pseudo-input-will-unmount id props))
+                         :reagent-render         (fn [_ props] [radio-button id props])}))
 
 (defn view
-  ; @param (keyword) button-id
-  ; @param (map) button-props
-  ; {:border-color (keyword or string)(opt)
-  ;   Default: :default
-  ;  :border-radius (map)(opt)
-  ;   {:all, :tl, :tr, :br, :bl (keyword, px or string)(opt)}
-  ;   Default: {:all :m}
-  ;  :border-width (keyword, px or string)(opt)
-  ;   Default: :xs
-  ;  :class (keyword or keywords in vector)(opt)
-  ;  :click-effect (keyword)(opt)
-  ;   Default: :opacity
-  ;  :disabled? (boolean)(opt)
-  ;  :font-size (keyword, px or string)(opt)
-  ;   Default: :s
-  ;  :get-options-f (function)(opt)
-  ;  :get-value-f (function)(opt)
-  ;  :helper (multitype-content)(opt)
-  ;  :hover-effect (keyword)(opt)
-  ;  :indent (map)(opt)
-  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :info (multitype-content)(opt)
-  ;  :initial-value (*)(opt)
-  ;  :label (multitype-content)
-  ;  :marker (map)(opt)
-  ;  :max-selection (integer)(opt)
-  ;  :on-changed-f (function)(opt)
-  ;  :on-empty-f (function)(opt)
-  ;  :on-invalid-f (function)(opt)
-  ;  :on-mount-f (function)(opt)
-  ;  :on-selected-f (function)(opt)
-  ;  :on-unmount-f (function)(opt)
-  ;  :on-unselected-f (function)(opt)
-  ;  :on-valid-f (function)(opt)
-  ;  :option-color-f (function)(opt)
-  ;  :option-helper-f (function)(opt)
-  ;  :option-label-f (function)(opt)
-  ;  :option-value-f (function)(opt)
-  ;  :orientation (keyword)(opt)
-  ;  :outdent (map)(opt)
-  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :placeholder (multitype-content)(opt)
-  ;  :preset (keyword)(opt)
-  ;  :projected-value (*)(opt)
-  ;  :set-value-f (function)(opt)
-  ;  :style (map)(opt)
-  ;  :theme (keyword)(opt)
-  ;  :validate-when-change? (boolean)(opt)
-  ;  :validate-when-leave? (boolean)(opt)
-  ;  :validators (maps in vector)(opt)
-  ;   [{:f (function)
-  ;     :invalid-message (multitype-content)(opt)}]}
+  ; @description
+  ; Radio button style input.
   ;
-  ; @usage
-  ; [radio-button {...}]
+  ; @links Implemented inputs
+  ; [Header](pretty-core/cljs/pretty-inputs/api.html#header)
+  ; [Option-group](pretty-core/cljs/pretty-inputs/api.html#option-group)
   ;
-  ; @usage
-  ; [radio-button :my-radio-button {...}]
-  ([button-props]
-   [view (random/generate-keyword) button-props])
+  ; @links Implemented properties
+  ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
+  ; [Inner position properties](pretty-core/cljs/pretty-properties/api.html#inner-position-properties)
+  ; [Inner size properties](pretty-core/cljs/pretty-properties/api.html#inner-size-properties)
+  ; [Inner space properties](pretty-core/cljs/pretty-properties/api.html#inner-space-properties)
+  ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
+  ; [Outer position properties](pretty-core/cljs/pretty-properties/api.html#outer-position-properties)
+  ; [Outer size properties](pretty-core/cljs/pretty-properties/api.html#outer-size-properties)
+  ; [Outer space properties](pretty-core/cljs/pretty-properties/api.html#outer-space-properties)
+  ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
+  ; [State properties](pretty-core/cljs/pretty-properties/api.html#state-properties)
+  ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
+  ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
+  ;
+  ; @param (keyword)(opt) id
+  ; @param (map) props
+  ; Check out the implemented inputs.
+  ; Check out the implemented properties.
+  ;
+  ; @usage (pretty-inputs/radio-button.png)
+  ; [radio-button {:header {:label       {:content "My radio button"}
+  ;                         :helper-text {:content "My helper text"}
+  ;                         :info-text   {:content "My info text"}}}
+  ;                :option-group {:option-default  {}
+  ;                               :option-selected {}
+  ;                               :options [{:label {:content "My option #1"}}
+  ;                                         {:label {:content "My option #2"}}
+  ;                                         {:label {:content "My option #3"}}]}}]
+  ([props]
+   [view (random/generate-keyword) props])
 
-  ([button-id button-props]
+  ([id props]
    ; @note (tutorials#parameterizing)
-   (fn [_ button-props]
-       (let [button-props (pretty-presets.engine/apply-preset             button-id button-props)
-             button-props (radio-button.prototypes/button-props-prototype button-id button-props)]
-            [view-lifecycles button-id button-props]))))
+   (fn [_ props]
+       (let [props (pretty-presets.engine/apply-preset      id props)
+             props (radio-button.prototypes/props-prototype id props)]
+            (if (:mounted? props)
+                [view-lifecycles id props])))))

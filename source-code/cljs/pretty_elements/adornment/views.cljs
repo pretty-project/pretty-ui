@@ -6,7 +6,8 @@
               [pretty-elements.engine.api           :as pretty-elements.engine]
               [pretty-presets.engine.api            :as pretty-presets.engine]
               [pretty-accessories.api            :as pretty-accessories]
-              [pretty-models.api            :as pretty-models]
+              [pretty-models.api              :as pretty-models]
+              [pretty-subitems.api            :as pretty-subitems]
               [reagent.core :as reagent]))
 
 ;; ----------------------------------------------------------------------------
@@ -15,19 +16,21 @@
 (defn- adornment
   ; @ignore
   ;
-  ; @param (keyword) adornment-id
-  ; @param (map) adornment-props
+  ; @param (keyword) id
+  ; @param (map) props
   ; {:cover (map)(opt)
   ;  :icon (map)(opt)
   ;  :label (map)(opt)
+  ;  :tooltip (map)(opt)
   ;  ...}
-  [adornment-id {:keys [cover icon label] :as adornment-props}]
-  [:div (adornment.attributes/adornment-attributes adornment-id adornment-props)
-        [(pretty-models/clickable-auto-tag                adornment-id adornment-props)
-         (adornment.attributes/adornment-inner-attributes adornment-id adornment-props)
-         (cond label [pretty-accessories/label adornment-id label]
-               icon  [pretty-accessories/icon  adornment-id icon])
-         (when cover [pretty-accessories/cover adornment-id cover])]])
+  [id {:keys [cover icon label tooltip] :as props}]
+  [:div (adornment.attributes/outer-attributes id props)
+        [(pretty-models/clickable-auto-tag      id props)
+         (adornment.attributes/inner-attributes id props)
+         (cond label   [pretty-accessories/label   (pretty-subitems/subitem-id id :label)   label]
+               icon    [pretty-accessories/icon    (pretty-subitems/subitem-id id :icon)    icon])
+         (when cover   [pretty-accessories/cover   (pretty-subitems/subitem-id id :cover)   cover])
+         (when tooltip [pretty-accessories/tooltip (pretty-subitems/subitem-id id :tooltip) tooltip])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -35,17 +38,17 @@
 (defn- view-lifecycles
   ; @ignore
   ;
-  ; @param (keyword) adornment-id
-  ; @param (map) adornment-props
-  [adornment-id adornment-props]
+  ; @param (keyword) id
+  ; @param (map) props
+  [id props]
   ; @note (tutorials#parameterizing)
   ;
   ; @note (#8097)
   ; The 'element-did-update' function re-registers the keypress events of the element when the property map gets changed.
-  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    adornment-id adornment-props))
-                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount adornment-id adornment-props))
-                         :component-did-update   (fn [%]   (pretty-elements.engine/element-did-update   adornment-id adornment-props %))
-                         :reagent-render         (fn [_ adornment-props] [adornment adornment-id adornment-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    id props))
+                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount id props))
+                         :component-did-update   (fn [%]   (pretty-elements.engine/element-did-update   id props %))
+                         :reagent-render         (fn [_ props] [adornment id props])}))
 
 (defn view
   ; @description
@@ -59,6 +62,7 @@
   ;
   ; @links Implemented properties
   ; [Anchor properties](pretty-core/cljs/pretty-properties/api.html#anchor-properties)
+  ; [Background action properties](pretty-core/cljs/pretty-properties/api.html#background-action-properties)
   ; [Background color properties](pretty-core/cljs/pretty-properties/api.html#background-color-properties)
   ; [Border properties](pretty-core/cljs/pretty-properties/api.html#border-properties)
   ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
@@ -79,8 +83,8 @@
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
   ;
-  ; @param (keyword)(opt) adornment-id
-  ; @param (map) adornment-props
+  ; @param (keyword)(opt) id
+  ; @param (map) props
   ; Check out the implemented accessories.
   ; Check out the implemented properties.
   ;
@@ -89,13 +93,14 @@
   ;             :fill-color    :highlight
   ;             :hover-color   :highlight
   ;             :icon          {:icon-name :settings}}]
-  ([adornment-props]
-   [view (random/generate-keyword) adornment-props])
+  ([props]
+   [view (random/generate-keyword) props])
 
-  ([adornment-id adornment-props]
+  ([id props]
    ; @note (tutorials#parameterizing)
-   (fn [_ adornment-props]
-       (let [adornment-props (pretty-presets.engine/apply-preset             adornment-id adornment-props)
-             adornment-props (adornment.prototypes/adornment-props-prototype adornment-id adornment-props)
-             adornment-props (pretty-elements.engine/element-timeout-props   adornment-id adornment-props)]
-            [view-lifecycles adornment-id adornment-props]))))
+   (fn [_ props]
+       (let [props (pretty-presets.engine/apply-preset           id props)
+             props (adornment.prototypes/props-prototype         id props)
+             props (pretty-elements.engine/element-timeout-props id props)]
+            (if (:mounted? props)
+                [view-lifecycles id props])))))

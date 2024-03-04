@@ -14,60 +14,24 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- surface-header
-  ; @ignore
-  ;
-  ; @param (keyword) surface-id
-  ; @param (map) surface-props
-  [surface-id surface-props]
-  (let [header-id    (pretty-subitems/subitem-id                surface-id :header)
-        header-props (surface.prototypes/header-props-prototype surface-id surface-props)]
-       [header.views/view header-id header-props]))
-
-(defn- surface-body
-  ; @ignore
-  ;
-  ; @param (keyword) surface-id
-  ; @param (map) surface-props
-  ; {:footer (map)(opt)
-  ;  :header (map)(opt)
-  ;  ...}
-  [surface-id {:keys [footer header] :as surface-props}]
-  (let [body-id    (pretty-subitems/subitem-id              surface-id :body)
-        body-props (surface.prototypes/body-props-prototype surface-id surface-props)]
-       [:div (surface.attributes/surface-content-attributes surface-id surface-props)
-             (when header  [pretty-layouts.engine/layout-header-sensor surface-id surface-props])
-             (when :always [body.views/view                            body-id    body-props])
-             (when footer  [pretty-layouts.engine/layout-footer-sensor surface-id surface-props])]))
-
-(defn- surface-footer
-  ; @ignore
-  ;
-  ; @param (keyword) surface-id
-  ; @param (map) surface-props
-  [surface-id surface-props]
-  (let [footer-id    (pretty-subitems/subitem-id                surface-id :footer)
-        footer-props (surface.prototypes/footer-props-prototype surface-id surface-props)]
-       [footer.views/view footer-id footer-props]))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (defn- surface
   ; @ignore
   ;
-  ; @param (keyword) surface-id
-  ; @param (map) surface-props
+  ; @param (keyword) id
+  ; @param (map) props
   ; {:body (map)(opt)
   ;  :footer (map)(opt)
   ;  :header (map)(opt)
   ;  ...}
-  [surface-id {:keys [body footer header] :as surface-props}]
-  [:div (surface.attributes/surface-attributes surface-id surface-props)
-        [:div (surface.attributes/surface-inner-attributes surface-id surface-props)
-              (if header [surface-header surface-id surface-props])
-              (if body   [surface-body   surface-id surface-props])
-              (if footer [surface-footer surface-id surface-props])]])
+  [id {:keys [body footer header] :as props}]
+  [:div (surface.attributes/outer-attributes id props)
+        [:div (surface.attributes/inner-attributes id props)
+              (if header [header.views/view (pretty-subitems/subitem-id id :header) header])
+              (if body   [:div (surface.attributes/content-attributes id props)
+                               (if header [pretty-layouts.engine/layout-overlap-sensor (pretty-subitems/subitem-id id :header-sensor) header])
+                               (if body   [body.views/view                             (pretty-subitems/subitem-id id :body)          body])
+                               (if footer [pretty-layouts.engine/layout-overlap-sensor (pretty-subitems/subitem-id id :footer-sensor) footer])])
+              (if footer [footer.views/view (pretty-subitems/subitem-id id :footer) footer])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -75,13 +39,13 @@
 (defn- view-lifecycles
   ; @ignore
   ;
-  ; @param (keyword) surface-id
-  ; @param (map) surface-props
-  [surface-id surface-props]
+  ; @param (keyword) id
+  ; @param (map) props
+  [id props]
   ; @note (tutorials#parameterizing)
-  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-layouts.engine/layout-did-mount    surface-id surface-props))
-                         :component-will-unmount (fn [_ _] (pretty-layouts.engine/layout-will-unmount surface-id surface-props))
-                         :reagent-render         (fn [_ surface-props] [surface surface-id surface-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-layouts.engine/layout-did-mount    id props))
+                         :component-will-unmount (fn [_ _] (pretty-layouts.engine/layout-will-unmount id props))
+                         :reagent-render         (fn [_ props] [surface id props])}))
 
 (defn view
   ; @description
@@ -110,8 +74,8 @@
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
   ;
-  ; @param (keyword)(opt) surface-id
-  ; @param (map) surface-props
+  ; @param (keyword)(opt) id
+  ; @param (map) props
   ; Check out the implemented layouts.
   ; Check out the implemented properties.
   ;
@@ -120,12 +84,13 @@
   ;           :header     {:content "My header"}
   ;           :footer     {:content "My footer"}
   ;           :fill-color :default}]
-  ([surface-props]
-   [view (random/generate-keyword) surface-props])
+  ([props]
+   [view (random/generate-keyword) props])
 
-  ([surface-id surface-props]
+  ([id props]
    ; @note (tutorials#parameterizing)
-   (fn [_ surface-props]
-       (let [surface-props (pretty-presets.engine/apply-preset         surface-id surface-props)
-             surface-props (surface.prototypes/surface-props-prototype surface-id surface-props)]
-            [view-lifecycles surface-id surface-props]))))
+   (fn [_ props]
+       (let [props (pretty-presets.engine/apply-preset id props)
+             props (surface.prototypes/props-prototype id props)]
+            (if (:mounted? props)
+                [view-lifecycles id props])))))

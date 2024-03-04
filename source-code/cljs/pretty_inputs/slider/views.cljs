@@ -17,9 +17,9 @@
   ; @param (keyword) slider-id
   ; @param (map) slider-props
   [slider-id slider-props]
-  [:div (slider.attributes/slider-attributes slider-id slider-props)
+  [:div (slider.attributes/outer-attributes slider-id slider-props)
         ;[pretty-inputs.engine/input-label slider-id slider-props]
-        [:div (slider.attributes/slider-inner-attributes slider-id slider-props)
+        [:div (slider.attributes/inner-attributes slider-id slider-props)
               [:div {:class :pi-slider--track}]
               [:div (slider.attributes/slider-line-attributes            slider-id slider-props)]
               [:div (slider.attributes/slider-primary-thumb-attributes   slider-id slider-props)]

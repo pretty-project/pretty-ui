@@ -10,9 +10,9 @@
 (defn on-mouse-leave-f
   ; @ignore
   ;
-  ; @param (keyword) menu-id
-  ; @param (map) menu-props
-  [menu-id _]
+  ; @param (keyword) id
+  ; @param (map) props
+  [id _]
   ; @bug (#7016)
   ; - Using the 'on-mouse-out' event would cause that the child elements of the dropdown menu
   ;   (such as the menu items of the implemented 'menu-bar' element) would trigger their parent's 'on-mouse-out' event (by event bubbling).
@@ -22,7 +22,7 @@
   ;   the 'on-mouse-out' event of the 'dropdown-menu' element wouldn't fire at all.
   ; - https://www.geeksforgeeks.org/how-to-disable-mouseout-events-triggered-by-child-elements
   ;   According to this article, using the 'on-mouse-leave' event instead of using the 'on-mouse-out' event solves the problem.
-  (expandable.side-effects/collapse-content! menu-id))
+  (expandable.side-effects/collapse-content! (pretty-subitems/subitem-id id :expandable)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -30,8 +30,8 @@
 (defn set-dropdown-content!
   ; @ignore
   ;
-  ; @param (keyword) menu-id
+  ; @param (keyword) id
   ; @param (multitype-content) dropdown-content
-  [menu-id dropdown-content]
-  (dynamic-props/update-props!             menu-id assoc :content dropdown-content)
-  (expandable.side-effects/expand-content! menu-id))
+  [id dropdown-content]
+  (dynamic-props/update-props!             (pretty-subitems/subitem-id id :expandable) assoc :content dropdown-content)
+  (expandable.side-effects/expand-content! (pretty-subitems/subitem-id id :expandable)))

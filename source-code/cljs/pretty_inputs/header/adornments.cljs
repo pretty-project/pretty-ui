@@ -1,6 +1,6 @@
 
 (ns pretty-inputs.header.adornments
-    (:require [pretty-inputs.engine.api :as pretty-inputs.engine]))
+    (:require [dynamic-props.api :as dynamic-props]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -8,10 +8,14 @@
 (defn toggle-info-text-adornment
   ; @ignore
   ;
-  ; @param (keyword) header-id
-  ; @param (map) header-props
-  [header-id header-props]
-  (let [on-click-f #(pretty-inputs.engine/toggle-input-info-text-visibility! header-id header-props)]
-       (if (-> header-props :header :info-text)
+  ; @param (keyword) id
+  ; @param (map) props
+  ;
+  ; @return (map)
+  ; {:icon (map)
+  ;  :on-click-f (function)}
+  [id props]
+  (let [on-click-f (fn [_] (dynamic-props/update-props! id update :info-text-visible? not))]
+       (if (-> props :info-text)
            {:icon {:icon-name :info :icon-color :muted}
             :on-click-f on-click-f})))

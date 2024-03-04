@@ -5,56 +5,56 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn blank-content-attributes
+(defn content-attributes
   ; @ignore
   ;
-  ; @param (keyword) blank-id
-  ; @param (map) blank-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ blank-props]
+  [_ props]
   (-> {:class :pe-blank--content}
-      (pretty-attributes/font-attributes blank-props)
-      (pretty-attributes/text-attributes blank-props)))
+      (pretty-attributes/font-attributes props)
+      (pretty-attributes/text-attributes props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn blank-inner-attributes
+(defn inner-attributes
   ; @ignore
   ;
-  ; @param (keyword) blank-id
-  ; @param (map) blank-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ blank-props]
+  [_ props]
   (-> {:class :pe-blank--inner}
-      (pretty-attributes/inner-size-attributes  blank-props)
-      (pretty-attributes/inner-space-attributes blank-props)
-      (pretty-attributes/style-attributes       blank-props)))
+      (pretty-attributes/inner-size-attributes  props)
+      (pretty-attributes/inner-space-attributes props)
+      (pretty-attributes/style-attributes       props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn blank-attributes
+(defn outer-attributes
   ; @ignore
   ;
-  ; @param (keyword) blank-id
-  ; @param (map) blank-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ blank-props]
-  (-> {:class :pe-blank}
-      (pretty-attributes/class-attributes          blank-props)
-      (pretty-attributes/inner-position-attributes blank-props)
-      (pretty-attributes/outer-position-attributes blank-props)
-      (pretty-attributes/outer-size-attributes     blank-props)
-      (pretty-attributes/outer-space-attributes    blank-props)
-      (pretty-attributes/state-attributes          blank-props)
-      (pretty-attributes/theme-attributes          blank-props)))
+  [_ props]
+  (-> {:class :pe-blank--outer}
+      (pretty-attributes/class-attributes          props)
+      (pretty-attributes/inner-position-attributes props)
+      (pretty-attributes/outer-position-attributes props)
+      (pretty-attributes/outer-size-attributes     props)
+      (pretty-attributes/outer-space-attributes    props)
+      (pretty-attributes/state-attributes          props)
+      (pretty-attributes/theme-attributes          props)))

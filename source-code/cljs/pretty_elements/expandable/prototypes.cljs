@@ -7,24 +7,23 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn expandable-props-prototype
+(defn props-prototype
   ; @ignore
   ;
-  ; @param (keyword) expandable-id
-  ; @param (map) expandable-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
-  [_ expandable-props]
-  (-> expandable-props (pretty-properties/default-expandable-props {:expanded? true})
-                       (pretty-properties/default-outer-size-props {:outer-size-unit :double-block})
-                       (pretty-standards/standard-border-props)
-                       (pretty-standards/standard-font-props)
-                       (pretty-standards/standard-inner-position-props)
-                       (pretty-standards/standard-inner-size-props)
-                       (pretty-standards/standard-outer-position-props)
-                       (pretty-standards/standard-outer-size-props)
-                       (pretty-standards/standard-text-props)
-                       (pretty-rules/apply-auto-border-crop)
-                      ;(pretty-rules/auto-disable-highlight-color)
-                      ;(pretty-rules/auto-disable-hover-color)
-                       (pretty-rules/compose-content)))
+  [_ props]
+  (-> props (pretty-properties/default-outer-size-props {:outer-size-unit :double-block})
+            (pretty-properties/default-text-props       {:text-selectable? false})
+            (pretty-standards/standard-border-props)
+            (pretty-standards/standard-font-props)
+            (pretty-standards/standard-inner-position-props)
+            (pretty-standards/standard-inner-size-props)
+            (pretty-standards/standard-outer-position-props)
+            (pretty-standards/standard-outer-size-props)
+            (pretty-standards/standard-text-props)
+            (pretty-rules/apply-auto-border-crop)
+            (pretty-rules/auto-set-mounted)
+            (pretty-rules/compose-content)))

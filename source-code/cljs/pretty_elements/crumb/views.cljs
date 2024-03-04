@@ -7,7 +7,8 @@
               [pretty-presets.engine.api        :as pretty-presets.engine]
               [pretty-accessories.api :as pretty-accessories]
               [pretty-models.api             :as pretty-models]
-              [reagent.core :as reagent]))
+              [reagent.core :as reagent]
+              [pretty-subitems.api :as pretty-subitems]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -15,17 +16,17 @@
 (defn- crumb
   ; @ignore
   ;
-  ; @param (keyword) crumb-id
-  ; @param (map) crumb-props
+  ; @param (keyword) id
+  ; @param (map) props
   ; {:bullet (map)(opt)
   ;  :label (map)(opt)
   ;  ...}
-  [crumb-id {:keys [bullet label] :as crumb-props}]
-  [:div (crumb.attributes/crumb-attributes crumb-id crumb-props)
-        [(pretty-models/clickable-auto-tag        crumb-id crumb-props)
-         (crumb.attributes/crumb-inner-attributes crumb-id crumb-props)
-         (if bullet [pretty-accessories/bullet crumb-id bullet])
-         (if label  [pretty-accessories/label  crumb-id label])]])
+  [id {:keys [bullet label] :as props}]
+  [:div (crumb.attributes/outer-attributes id props)
+        [(pretty-models/clickable-auto-tag  id props)
+         (crumb.attributes/inner-attributes id props)
+         (if bullet [pretty-accessories/bullet (pretty-subitems/subitem-id id :bullet) bullet])
+         (if label  [pretty-accessories/label  (pretty-subitems/subitem-id id :label)  label])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -33,13 +34,13 @@
 (defn- view-lifecycles
   ; @ignore
   ;
-  ; @param (keyword) crumb-id
-  ; @param (map) crumb-props
-  [crumb-id crumb-props]
+  ; @param (keyword) id
+  ; @param (map) props
+  [id props]
   ; @note (tutorials#parameterizing)
-  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    crumb-id crumb-props))
-                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount crumb-id crumb-props))
-                         :reagent-render         (fn [_ crumb-props] [crumb crumb-id crumb-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    id props))
+                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount id props))
+                         :reagent-render         (fn [_ props] [crumb id props])}))
 
 (defn view
   ; @description
@@ -66,8 +67,8 @@
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
   ;
-  ; @param (keyword)(opt) crumb-id
-  ; @param (map) crumb-props
+  ; @param (keyword)(opt) id
+  ; @param (map) props
   ; Check out the implemented accessories.
   ; Check out the implemented properties.
   ;
@@ -76,12 +77,13 @@
   ;         :gap      :xs
   ;         :href-uri "/my-uri"
   ;         :label    {:content "My crumb"}}]
-  ([crumb-props]
-   [view (random/generate-keyword) crumb-props])
+  ([props]
+   [view (random/generate-keyword) props])
 
-  ([crumb-id crumb-props]
+  ([id props]
    ; @note (tutorials#parameterizing)
-   (fn [_ crumb-props]
-       (let [crumb-props (pretty-presets.engine/apply-preset     crumb-id crumb-props)
-             crumb-props (crumb.prototypes/crumb-props-prototype crumb-id crumb-props)]
-            [view-lifecycles crumb-id crumb-props]))))
+   (fn [_ props]
+       (let [props (pretty-presets.engine/apply-preset id props)
+             props (crumb.prototypes/props-prototype   id props)]
+            (if (:mounted? props)
+                [view-lifecycles id props])))))

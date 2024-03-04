@@ -5,7 +5,8 @@
               [pretty-accessories.badge.prototypes :as badge.prototypes]
               [pretty-presets.engine.api :as pretty-presets.engine]
               [pretty-accessories.icon.views :as icon.views]
-              [pretty-accessories.label.views :as label.views]))
+              [pretty-accessories.label.views :as label.views]
+              [pretty-subitems.api :as pretty-subitems]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -13,16 +14,16 @@
 (defn- badge
   ; @ignore
   ;
-  ; @param (keyword) badge-id
-  ; @param (map) badge-props
+  ; @param (keyword) id
+  ; @param (map) props
   ; {:icon (map)(opt)
   ;  :label (map)(opt)
   ;  ...}
-  [badge-id {:keys [icon label] :as badge-props}]
-  [:div (badge.attributes/badge-attributes badge-id badge-props)
-        [:div (badge.attributes/badge-inner-attributes badge-id badge-props)
-              (cond label [label.views/view badge-id label]
-                    icon  [icon.views/view  badge-id icon])]])
+  [id {:keys [icon label] :as props}]
+  [:div (badge.attributes/outer-attributes id props)
+        [:div (badge.attributes/inner-attributes id props)
+              (cond label [label.views/view (pretty-subitems/subitem-id id :label) label]
+                    icon  [icon.views/view  (pretty-subitems/subitem-id id :icon)  icon])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -51,8 +52,8 @@
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
   ;
-  ; @param (keyword)(opt) badge-id
-  ; @param (map) badge-props
+  ; @param (keyword)(opt) id
+  ; @param (map) props
   ; Check out the implemented accessories.
   ; Check out the implemented properties.
   ;
@@ -62,12 +63,12 @@
   ;         :fill-color    :highlight
   ;         :indent        {:all :xxs}
   ;         :position      :br}]
-  ([badge-props]
-   [view (random/generate-keyword) badge-props])
+  ([props]
+   [view (random/generate-keyword) props])
 
-  ([badge-id badge-props]
+  ([id props]
    ; @note (tutorials#parameterizing)
-   (fn [_ badge-props]
-       (let [badge-props (pretty-presets.engine/apply-preset     badge-id badge-props)
-             badge-props (badge.prototypes/badge-props-prototype badge-id badge-props)]
-            [badge badge-id badge-props]))))
+   (fn [_ props]
+       (let [props (pretty-presets.engine/apply-preset id props)
+             props (badge.prototypes/props-prototype   id props)]
+            [badge id props]))))

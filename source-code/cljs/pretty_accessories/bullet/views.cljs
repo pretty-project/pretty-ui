@@ -11,11 +11,11 @@
 (defn- bullet
   ; @ignore
   ;
-  ; @param (keyword) bullet-id
-  ; @param (map) bullet-props
-  [bullet-id bullet-props]
-  [:div (bullet.attributes/bullet-attributes bullet-id bullet-props)
-        [:div (bullet.attributes/bullet-inner-attributes bullet-id bullet-props)]])
+  ; @param (keyword) id
+  ; @param (map) props
+  [id props]
+  [:div (bullet.attributes/outer-attributes id props)
+        [:div (bullet.attributes/inner-attributes id props)]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -40,8 +40,8 @@
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
   ;
-  ; @param (keyword)(opt) bullet-id
-  ; @param (map) bullet-props
+  ; @param (keyword)(opt) id
+  ; @param (map) props
   ; Check out the implemented properties.
   ;
   ; @usage (pretty-accessories/bullet.png)
@@ -49,12 +49,12 @@
   ;          :fill-color    :muted
   ;          :outer-height  :xs
   ;          :outer-width   :xs}]
-  ([bullet-props]
-   [view (random/generate-keyword) bullet-props])
+  ([props]
+   [view (random/generate-keyword) props])
 
-  ([bullet-id bullet-props]
+  ([id props]
    ; @note (tutorials#parameterizing)
-   (fn [_ bullet-props]
-       (let [bullet-props (pretty-presets.engine/apply-preset       bullet-id bullet-props)
-             bullet-props (bullet.prototypes/bullet-props-prototype bullet-id bullet-props)]
-            [bullet bullet-id bullet-props]))))
+   (fn [_ props]
+       (let [props (pretty-presets.engine/apply-preset id props)
+             props (bullet.prototypes/props-prototype  id props)]
+            [bullet id props]))))

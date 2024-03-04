@@ -13,8 +13,8 @@
   ; the mouse over event of the menu item sets the given dropdown content
   ; on the dropdown menu (identified by the given menu ID).
   ;
-  ; @param (keyword) item-id
-  ; @param (map) item-props
+  ; @param (keyword) id
+  ; @param (map) props
   ; {:dropdown-content (multitype-content)(opt)
   ;  :dropdown-menu-id (keyword)(opt)
   ;  ...}

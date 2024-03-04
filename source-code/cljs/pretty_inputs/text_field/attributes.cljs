@@ -156,7 +156,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn field-inner-attributes
+(defn inner-attributes
   ; @ignore
   ;
   ; @param (keyword) field-id
@@ -177,7 +177,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn field-attributes
+(defn outer-attributes
   ; @ignore
   ;
   ; @param (keyword) field-id
@@ -188,7 +188,7 @@
   ; {:class (keyword or keywords in vector)
   ;  ...}
   [_ {:keys [disabled?] :as field-props}]
-  (-> {:class        :pi-text-field
+  (-> {:class        :pi-text-field--outer
        :data-covered disabled?}
       (pretty-attributes/class-attributes       field-props)
       (pretty-attributes/outer-size-attributes field-props)

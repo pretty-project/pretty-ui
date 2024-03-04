@@ -35,7 +35,7 @@
   ; @param (keyword) group-id
   ; @param (map) group-props
   [group-id group-props]
-  [:div (multi-field.attributes/group-attributes group-id group-props)
+  [:div (multi-field.attributes/outer-attributes group-id group-props)
         (let [group-value @(r/subscribe [:pretty-inputs.multi-field/get-group-value group-id group-props])]
              (letfn [(f0 [field-dex _] [multi-field-text-field group-id group-props field-dex])]
                     (hiccup/put-with-indexed [:<>] group-value f0)))])

@@ -5,52 +5,40 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn value-group-values-placeholder-attributes
+(defn inner-attributes
   ; @ignore
   ;
-  ; @param (keyword) group-id
-  ; @param (map) group-props
-  ;
-  ; @return (map)
-  ; {}
-  [_ _]
-  {:class               :pi-value-group--values-placeholder
-   :data-font-size      :s
-   :data-letter-spacing :auto
-   :data-line-height    :text-block
-   :data-text-color     :highlight})
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn value-group-inner-attributes
-  ; @ignore
-  ;
-  ; @param (keyword) group-id
-  ; @param (map) group-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ group-props]
-  (-> {:class :pi-value-group--inner}
-      (pretty-attributes/inner-space-attributes group-props)
-      (pretty-attributes/style-attributes       group-props)))
+  [_ props]
+  (-> {:class :pe-value-group--inner}
+      (pretty-attributes/flex-attributes        props)
+      (pretty-attributes/inner-size-attributes  props)
+      (pretty-attributes/inner-space-attributes props)
+      (pretty-attributes/style-attributes       props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn value-group-attributes
+(defn outer-attributes
   ; @ignore
   ;
-  ; @param (keyword) group-id
-  ; @param (map) group-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
-  ; {}
-  [_ group-props]
-  (-> {:class :pi-value-group}
-      ; + theme-attributes
-      (pretty-attributes/class-attributes  group-props)
-      (pretty-attributes/outer-space-attributes group-props)
-      (pretty-attributes/state-attributes  group-props)))
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
+  [_ props]
+  (-> {:class :pe-value-group--outer}
+      (pretty-attributes/class-attributes          props)
+      (pretty-attributes/inner-position-attributes props)
+      (pretty-attributes/outer-position-attributes props)
+      (pretty-attributes/outer-size-attributes     props)
+      (pretty-attributes/outer-space-attributes    props)
+      (pretty-attributes/state-attributes          props)
+      (pretty-attributes/theme-attributes          props)))

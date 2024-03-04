@@ -5,42 +5,42 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn ghost-inner-attributes
+(defn inner-attributes
   ; @ignore
   ;
-  ; @param (keyword) ghost-id
-  ; @param (map) ghost-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ ghost-props]
+  [_ props]
   (-> {:class :pe-ghost--inner}
-      (pretty-attributes/animation-attributes        ghost-props)
-      (pretty-attributes/background-color-attributes ghost-props)
-      (pretty-attributes/border-attributes           ghost-props)
-      (pretty-attributes/inner-size-attributes       ghost-props)
-      (pretty-attributes/inner-space-attributes      ghost-props)
-      (pretty-attributes/style-attributes            ghost-props)))
+      (pretty-attributes/animation-attributes        props)
+      (pretty-attributes/background-color-attributes props)
+      (pretty-attributes/border-attributes           props)
+      (pretty-attributes/inner-size-attributes       props)
+      (pretty-attributes/inner-space-attributes      props)
+      (pretty-attributes/style-attributes            props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn ghost-attributes
+(defn outer-attributes
   ; @ignore
   ;
-  ; @param (keyword) ghost-id
-  ; @param (map) ghost-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ ghost-props]
-  (-> {:class :pe-ghost}
-      (pretty-attributes/class-attributes          ghost-props)
-      (pretty-attributes/inner-position-attributes ghost-props)
-      (pretty-attributes/outer-position-attributes ghost-props)
-      (pretty-attributes/outer-size-attributes     ghost-props)
-      (pretty-attributes/outer-space-attributes    ghost-props)
-      (pretty-attributes/state-attributes          ghost-props)
-      (pretty-attributes/theme-attributes          ghost-props)))
+  [_ props]
+  (-> {:class :pe-ghost--outer}
+      (pretty-attributes/class-attributes          props)
+      (pretty-attributes/inner-position-attributes props)
+      (pretty-attributes/outer-position-attributes props)
+      (pretty-attributes/outer-size-attributes     props)
+      (pretty-attributes/outer-space-attributes    props)
+      (pretty-attributes/state-attributes          props)
+      (pretty-attributes/theme-attributes          props)))

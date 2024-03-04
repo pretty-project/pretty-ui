@@ -5,64 +5,65 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn toggle-content-attributes
+(defn content-attributes
   ; @ignore
   ;
-  ; @param (keyword) toggle-id
-  ; @param (map) toggle-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ toggle-props]
+  [_ props]
   (-> {:class :pe-toggle--content}
-      (pretty-attributes/font-attributes toggle-props)
-      (pretty-attributes/text-attributes toggle-props)))
+      (pretty-attributes/font-attributes props)
+      (pretty-attributes/text-attributes props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn toggle-inner-attributes
+(defn inner-attributes
   ; @ignore
   ;
-  ; @param (keyword) toggle-id
-  ; @param (map) toggle-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ toggle-props]
+  [_ props]
   (-> {:class :pe-toggle--inner}
-      (pretty-attributes/anchor-attributes           toggle-props)
-      (pretty-attributes/background-color-attributes toggle-props)
-      (pretty-attributes/border-attributes           toggle-props)
-      (pretty-attributes/clickable-state-attributes  toggle-props)
-      (pretty-attributes/cursor-attributes           toggle-props)
-      (pretty-attributes/effect-attributes           toggle-props)
-      (pretty-attributes/flex-attributes             toggle-props)
-      (pretty-attributes/inner-size-attributes       toggle-props)
-      (pretty-attributes/inner-space-attributes      toggle-props)
-      (pretty-attributes/mouse-event-attributes      toggle-props)
-      (pretty-attributes/react-attributes            toggle-props)))
+      (pretty-attributes/anchor-attributes            props)
+      (pretty-attributes/background-action-attributes props)
+      (pretty-attributes/background-color-attributes  props)
+      (pretty-attributes/border-attributes            props)
+      (pretty-attributes/clickable-state-attributes   props)
+      (pretty-attributes/cursor-attributes            props)
+      (pretty-attributes/effect-attributes            props)
+      (pretty-attributes/flex-attributes              props)
+      (pretty-attributes/inner-size-attributes        props)
+      (pretty-attributes/inner-space-attributes       props)
+      (pretty-attributes/mouse-event-attributes       props)
+      (pretty-attributes/react-attributes             props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn toggle-attributes
+(defn outer-attributes
   ; @ignore
   ;
-  ; @param (keyword) toggle-id
-  ; @param (map) toggle-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ toggle-props]
-  (-> {:class :pe-toggle}
-      (pretty-attributes/class-attributes          toggle-props)
-      (pretty-attributes/inner-position-attributes toggle-props)
-      (pretty-attributes/outer-position-attributes toggle-props)
-      (pretty-attributes/outer-size-attributes     toggle-props)
-      (pretty-attributes/outer-space-attributes    toggle-props)
-      (pretty-attributes/state-attributes          toggle-props)
-      (pretty-attributes/theme-attributes          toggle-props)))
+  [_ props]
+  (-> {:class :pe-toggle--outer}
+      (pretty-attributes/class-attributes          props)
+      (pretty-attributes/inner-position-attributes props)
+      (pretty-attributes/outer-position-attributes props)
+      (pretty-attributes/outer-size-attributes     props)
+      (pretty-attributes/outer-space-attributes    props)
+      (pretty-attributes/state-attributes          props)
+      (pretty-attributes/theme-attributes          props)))

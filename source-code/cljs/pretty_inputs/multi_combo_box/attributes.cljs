@@ -5,7 +5,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn box-inner-attributes
+(defn inner-attributes
   ; @ignore
   ;
   ; @param (keyword) box-id
@@ -22,7 +22,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn box-attributes
+(defn outer-attributes
   ; @ignore
   ;
   ; @param (keyword) box-id
@@ -31,7 +31,7 @@
   ; @return (map)
   ; {}
   [_ box-props]
-  (-> {:class :pi-multi-combo-box}
+  (-> {:class :pi-multi-combo-box--outer}
       (pretty-attributes/class-attributes  box-props)
       (pretty-attributes/outer-space-attributes box-props)
       (pretty-attributes/state-attributes  box-props)

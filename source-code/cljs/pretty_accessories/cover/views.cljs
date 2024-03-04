@@ -5,7 +5,8 @@
               [pretty-accessories.cover.prototypes :as cover.prototypes]
               [pretty-presets.engine.api :as pretty-presets.engine]
               [pretty-accessories.icon.views :as icon.views]
-              [pretty-accessories.label.views :as label.views]))
+              [pretty-accessories.label.views :as label.views]
+              [pretty-subitems.api :as pretty-subitems]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -13,16 +14,16 @@
 (defn- cover
   ; @ignore
   ;
-  ; @param (keyword) cover-id
-  ; @param (map) cover-props
+  ; @param (keyword) id
+  ; @param (map) props
   ; {:icon (map)(opt)
   ;  :label (map)(opt)
   ;  ...}
-  [cover-id {:keys [icon label] :as cover-props}]
-  [:div (cover.attributes/cover-attributes cover-id cover-props)
-        [:div (cover.attributes/cover-inner-attributes cover-id cover-props)
-              (cond label [label.views/view cover-id label]
-                    icon  [icon.views/view  cover-id icon])]])
+  [id {:keys [icon label] :as props}]
+  [:div (cover.attributes/outer-attributes id props)
+        [:div (cover.attributes/inner-attributes id props)
+              (cond label [label.views/view (pretty-subitems/subitem-id id :label) label]
+                    icon  [icon.views/view  (pretty-subitems/subitem-id id :icon)  icon])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -53,8 +54,8 @@
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
   ; [Visibility properties](pretty-core/cljs/pretty-properties/api.html#visibility-properties)
   ;
-  ; @param (keyword)(opt) cover-id
-  ; @param (map) cover-props
+  ; @param (keyword)(opt) id
+  ; @param (map) props
   ; Check out the implemented accessories.
   ; Check out the implemented properties.
   ;
@@ -62,12 +63,12 @@
   ; [cover {:fill-color :highlight
   ;         :label      {:content "My cover"}
   ;         :opacity    :medium}]
-  ([cover-props]
-   [view (random/generate-keyword) cover-props])
+  ([props]
+   [view (random/generate-keyword) props])
 
-  ([cover-id cover-props]
+  ([id props]
    ; @note (tutorials#parameterizing)
-   (fn [_ cover-props]
-       (let [cover-props (pretty-presets.engine/apply-preset     cover-id cover-props)
-             cover-props (cover.prototypes/cover-props-prototype cover-id cover-props)]
-            [cover cover-id cover-props]))))
+   (fn [_ props]
+       (let [props (pretty-presets.engine/apply-preset id props)
+             props (cover.prototypes/props-prototype   id props)]
+            [cover id props]))))

@@ -7,7 +7,8 @@
               [pretty-presets.engine.api             :as pretty-presets.engine]
               [pretty-accessories.api             :as pretty-accessories]
               [pretty-models.api             :as pretty-models]
-              [reagent.core :as reagent]))
+              [reagent.core :as reagent]
+              [pretty-subitems.api            :as pretty-subitems]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -15,15 +16,17 @@
 (defn- chip
   ; @ignore
   ;
-  ; @param (keyword) chip-id
-  ; @param (map) chip-props
+  ; @param (keyword) id
+  ; @param (map) props
   ; {:label (map)(opt)
+  ;  :tooltip (map)(opt)
   ;  ...}
-  [chip-id {:keys [label] :as chip-props}]
-  [:div (chip.attributes/chip-attributes chip-id chip-props)
-        [(pretty-models/clickable-auto-tag      chip-id chip-props)
-         (chip.attributes/chip-inner-attributes chip-id chip-props)
-         (if label [pretty-accessories/label chip-id label])]])
+  [id {:keys [label tooltip] :as props}]
+  [:div (chip.attributes/outer-attributes id props)
+        [(pretty-models/clickable-auto-tag id props)
+         (chip.attributes/inner-attributes id props)
+         (if label   [pretty-accessories/label   (pretty-subitems/subitem-id id :label)   label])
+         (if tooltip [pretty-accessories/tooltip (pretty-subitems/subitem-id id :tooltip) tooltip])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -31,13 +34,13 @@
 (defn- view-lifecycles
   ; @ignore
   ;
-  ; @param (keyword) chip-id
-  ; @param (map) chip-props
-  [chip-id chip-props]
+  ; @param (keyword) id
+  ; @param (map) props
+  [id props]
   ; @note (tutorials#parameterizing)
-  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    chip-id chip-props))
-                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount chip-id chip-props))
-                         :reagent-render         (fn [_ chip-props] [chip chip-id chip-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    id props))
+                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount id props))
+                         :reagent-render         (fn [_ props] [chip id props])}))
 
 (defn view
   ; @description
@@ -49,6 +52,7 @@
   ;
   ; @links Implemented properties
   ; [Anchor properties](pretty-core/cljs/pretty-properties/api.html#anchor-properties)
+  ; [Background action properties](pretty-core/cljs/pretty-properties/api.html#background-action-properties)
   ; [Background color properties](pretty-core/cljs/pretty-properties/api.html#background-color-properties)
   ; [Border properties](pretty-core/cljs/pretty-properties/api.html#border-properties)
   ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
@@ -67,8 +71,8 @@
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
   ;
-  ; @param (keyword)(opt) chip-id
-  ; @param (map) chip-props
+  ; @param (keyword)(opt) id
+  ; @param (map) props
   ; Check out the implemented accessories.
   ; Check out the implemented properties.
   ;
@@ -85,12 +89,13 @@
   ;        :indent        {:horizontal :s}
   ;        :label         {:content "My chip #2" :font-weight :semi-bold}
   ;        :outer-width   :l}]
-  ([chip-props]
-   [view (random/generate-keyword) chip-props])
+  ([props]
+   [view (random/generate-keyword) props])
 
-  ([chip-id chip-props]
+  ([id props]
    ; @note (tutorials#parameterizing)
-   (fn [_ chip-props]
-       (let [chip-props (pretty-presets.engine/apply-preset   chip-id chip-props)
-             chip-props (chip.prototypes/chip-props-prototype chip-id chip-props)]
-            [view-lifecycles chip-id chip-props]))))
+   (fn [_ props]
+       (let [props (pretty-presets.engine/apply-preset id props)
+             props (chip.prototypes/props-prototype    id props)]
+            (if (:mounted? props)
+                [view-lifecycles id props])))))

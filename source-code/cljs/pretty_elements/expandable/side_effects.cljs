@@ -9,22 +9,22 @@
   ; @description
   ; Expands the content of the expandable element.
   ;
-  ; @param (keyword) expandable-id
+  ; @param (keyword) id
   ;
   ; @usage
   ; [expandable :my-expandable {...}]
   ; (expand-content! :my-expandable)
-  [expandable-id]
-  (dynamic-props/update-props! expandable-id assoc :expanded? true))
+  [id]
+  (dynamic-props/update-props! id assoc :mounted? true))
 
 (defn collapse-content!
   ; @description
   ; Collapses the content of the expandable element.
   ;
-  ; @param (keyword) expandable-id
+  ; @param (keyword) id
   ;
   ; @usage
   ; [expandable :my-expandable {...}]
   ; (collapse-content! :my-expandable)
-  [expandable-id]
-  (dynamic-props/update-props! expandable-id assoc :expanded? false))
+  [id]
+  (dynamic-props/update-props! id assoc :mounted? false))

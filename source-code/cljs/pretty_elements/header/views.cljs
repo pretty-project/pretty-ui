@@ -7,7 +7,8 @@
               [pretty-presets.engine.api         :as pretty-presets.engine]
               [pretty-accessories.api         :as pretty-accessories]
               [reagent.core :as reagent]
-              [pretty-elements.adornment-group.views :as adornment-group.views]))
+              [pretty-elements.adornment-group.views :as adornment-group.views]
+              [pretty-subitems.api :as pretty-subitems]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -15,18 +16,18 @@
 (defn- header
   ; @ignore
   ;
-  ; @param (keyword) header-id
-  ; @param (map) header-props
+  ; @param (keyword) id
+  ; @param (map) props
   ; {:end-adornment-group (map)(opt)
   ;  :label (map)(opt)
   ;  :start-adornment-group (map)(opt)
   ;  ...}
-  [header-id {:keys [end-adornment-group label start-adornment-group] :as header-props}]
-  [:div (header.attributes/header-attributes header-id header-props)
-        [:div (header.attributes/header-inner-attributes header-id header-props)
-              (if start-adornment-group [adornment-group.views/view header-id start-adornment-group])
-              (if label                 [pretty-accessories/label   header-id label])
-              (if end-adornment-group   [adornment-group.views/view header-id end-adornment-group])]])
+  [id {:keys [end-adornment-group label start-adornment-group] :as props}]
+  [:div (header.attributes/outer-attributes id props)
+        [:div (header.attributes/inner-attributes id props)
+              (if start-adornment-group [adornment-group.views/view (pretty-subitems/subitem-id id :start-adornment-group) start-adornment-group])
+              (if label                 [pretty-accessories/label   (pretty-subitems/subitem-id id :label)                 label])
+              (if end-adornment-group   [adornment-group.views/view (pretty-subitems/subitem-id id :end-adornment-group)   end-adornment-group])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -34,13 +35,13 @@
 (defn- view-lifecycles
   ; @ignore
   ;
-  ; @param (keyword) header-id
-  ; @param (map) header-props
-  [header-id header-props]
+  ; @param (keyword) id
+  ; @param (map) props
+  [id props]
   ; @note (tutorials#parameterizing)
-  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    header-id header-props))
-                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount header-id header-props))
-                         :reagent-render         (fn [_ header-props] [header header-id header-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    id props))
+                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount id props))
+                         :reagent-render         (fn [_ props] [header id props])}))
 
 (defn view
   ; @description
@@ -69,8 +70,8 @@
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
   ;
-  ; @param (keyword)(opt) header-id
-  ; @param (map) header-props
+  ; @param (keyword)(opt) id
+  ; @param (map) props
   ; Check out the implemented accessories.
   ; Check out the implemented elements.
   ; Check out the implemented properties.
@@ -95,12 +96,13 @@
   ;          :outer-width         :xxl
   ;          :end-adornment-group {:adornment-default {:icon {:icon-color :default}}}
   ;                                :adornments        [{:icon {:icon-name :star}}]}]
-  ([header-props]
-   [view (random/generate-keyword) header-props])
+  ([props]
+   [view (random/generate-keyword) props])
 
-  ([header-id header-props]
+  ([id props]
    ; @note (tutorials#parameterizing)
-   (fn [_ header-props]
-       (let [header-props (pretty-presets.engine/apply-preset       header-id header-props)
-             header-props (header.prototypes/header-props-prototype header-id header-props)]
-            [view-lifecycles header-id header-props]))))
+   (fn [_ props]
+       (let [props (pretty-presets.engine/apply-preset id props)
+             props (header.prototypes/props-prototype  id props)]
+            (if (:mounted? props)
+                [view-lifecycles id props])))))

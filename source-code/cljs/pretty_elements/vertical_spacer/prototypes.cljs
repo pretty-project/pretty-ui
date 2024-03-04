@@ -7,17 +7,18 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn spacer-props-prototype
+(defn props-prototype
   ; @ignore
   ;
-  ; @param (keyword) spacer-id
-  ; @param (map) spacer-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
-  [_ spacer-props]
-  (-> spacer-props (pretty-properties/default-flex-props       {:shrink 0})
-                   (pretty-properties/default-outer-size-props {:outer-height :parent :outer-width :s :outer-size-unit :quarter-block})
-                   (pretty-standards/standard-inner-position-props)
-                   (pretty-standards/standard-inner-size-props)
-                   (pretty-standards/standard-outer-position-props)
-                   (pretty-standards/standard-outer-size-props)))
+  [_ props]
+  (-> props (pretty-properties/default-flex-props       {:shrink 0})
+            (pretty-properties/default-outer-size-props {:outer-height :parent :outer-width :s :outer-size-unit :quarter-block})
+            (pretty-standards/standard-inner-position-props)
+            (pretty-standards/standard-inner-size-props)
+            (pretty-standards/standard-outer-position-props)
+            (pretty-standards/standard-outer-size-props)
+            (pretty-rules/auto-set-mounted)))

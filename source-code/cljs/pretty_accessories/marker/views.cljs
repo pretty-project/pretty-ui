@@ -11,11 +11,11 @@
 (defn- marker
   ; @ignore
   ;
-  ; @param (keyword) marker-id
-  ; @param (map) marker-props
-  [marker-id marker-props]
-  [:div (marker.attributes/marker-attributes marker-id marker-props)
-        [:div (marker.attributes/marker-inner-attributes marker-id marker-props)]])
+  ; @param (keyword) id
+  ; @param (map) props
+  [id props]
+  [:div (marker.attributes/outer-attributes id props)
+        [:div (marker.attributes/inner-attributes id props)]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -40,20 +40,20 @@
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
   ;
-  ; @param (keyword)(opt) marker-id
-  ; @param (map) marker-props
+  ; @param (keyword)(opt) id
+  ; @param (map) props
   ; Check out the implemented properties.
   ;
   ; @usage (pretty-accessories/marker.png)
   ; [marker {:border-radius {:all :s}
   ;          :fill-color    :primary
   ;          :position      :tr}]
-  ([marker-props]
-   [view (random/generate-keyword) marker-props])
+  ([props]
+   [view (random/generate-keyword) props])
 
-  ([marker-id marker-props]
+  ([id props]
    ; @note (tutorials#parameterizing)
-   (fn [_ marker-props]
-       (let [marker-props (pretty-presets.engine/apply-preset       marker-id marker-props)
-             marker-props (marker.prototypes/marker-props-prototype marker-id marker-props)]
-            [marker marker-id marker-props]))))
+   (fn [_ props]
+       (let [props (pretty-presets.engine/apply-preset id props)
+             props (marker.prototypes/props-prototype  id props)]
+            [marker id props]))))

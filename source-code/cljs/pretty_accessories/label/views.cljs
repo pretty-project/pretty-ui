@@ -11,14 +11,14 @@
 (defn- label
   ; @ignore
   ;
-  ; @param (keyword) label-id
-  ; @param (map) label-props
+  ; @param (keyword) id
+  ; @param (map) props
   ; {:content (multitype-content)(opt)
   ;  ...}
-  [label-id {:keys [content end-adornments start-adornments] :as label-props}]
-  [:div (label.attributes/label-attributes label-id label-props)
-        [:div (label.attributes/label-inner-attributes label-id label-props)
-              [:div (label.attributes/label-content-attributes label-id label-props) content]]])
+  [id {:keys [content end-adornments start-adornments] :as props}]
+  [:div (label.attributes/outer-attributes id props)
+        [:div (label.attributes/inner-attributes id props)
+              [:div (label.attributes/content-attributes id props) content]]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -46,8 +46,8 @@
   ; [Text properties](pretty-core/cljs/pretty-properties/api.html#text-properties)
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
   ;
-  ; @param (keyword)(opt) label-id
-  ; @param (map) label-props
+  ; @param (keyword)(opt) id
+  ; @param (map) props
   ; Check out the implemented properties.
   ;
   ; @usage (pretty-accessories/label.png)
@@ -59,12 +59,12 @@
   ;         :horizontal-align :left
   ;         :outer-width      :xxl}]
   ;
-  ([label-props]
-   [view (random/generate-keyword) label-props])
+  ([props]
+   [view (random/generate-keyword) props])
 
-  ([label-id label-props]
+  ([id props]
    ; @note (tutorials#parameterizing)
-   (fn [_ label-props]
-       (let [label-props (pretty-presets.engine/apply-preset     label-id label-props)
-             label-props (label.prototypes/label-props-prototype label-id label-props)]
-            [label label-id label-props]))))
+   (fn [_ props]
+       (let [props (pretty-presets.engine/apply-preset id props)
+             props (label.prototypes/props-prototype   id props)]
+            [label id props]))))

@@ -14,14 +14,14 @@
 (defn- text
   ; @ignore
   ;
-  ; @param (keyword) text-id
-  ; @param (map) text-props
+  ; @param (keyword) id
+  ; @param (map) props
   ; {:content (multitype-content)(opt)
   ;  ...}
-  [text-id {:keys [content] :as text-props}]
-  [:div (text.attributes/text-attributes text-id text-props)
-        [:div (text.attributes/text-inner-attributes text-id text-props)
-              [:div (text.attributes/text-content-attributes text-id text-props)
+  [id {:keys [content] :as props}]
+  [:div (text.attributes/outer-attributes id props)
+        [:div (text.attributes/inner-attributes id props)
+              [:div (text.attributes/content-attributes id props)
                     (hiccup/parse-newlines [:<> content])]]])
 
 ;; ----------------------------------------------------------------------------
@@ -30,13 +30,13 @@
 (defn- view-lifecycles
   ; @ignore
   ;
-  ; @param (keyword) text-id
-  ; @param (map) text-props
-  [text-id text-props]
+  ; @param (keyword) id
+  ; @param (map) props
+  [id props]
   ; @note (tutorials#parameterizing)
-  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    text-id text-props))
-                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount text-id text-props))
-                         :reagent-render         (fn [_ text-props] [text text-id text-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    id props))
+                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount id props))
+                         :reagent-render         (fn [_ props] [text id props])}))
 
 (defn view
   ; @description
@@ -63,8 +63,8 @@
   ; [Text properties](pretty-core/cljs/pretty-properties/api.html#text-properties)
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
   ;
-  ; @param (keyword)(opt) text-id
-  ; @param (map) text-props
+  ; @param (keyword)(opt) id
+  ; @param (map) props
   ; Check out the implemented properties.
   ;
   ; @usage (pretty-elements/text.png)
@@ -73,12 +73,13 @@
   ;        :fill-color    :highlight
   ;        :outer-height  :5xl
   ;        :outer-width   :5xl}]
-  ([text-props]
-   [view (random/generate-keyword) text-props])
+  ([props]
+   [view (random/generate-keyword) props])
 
-  ([text-id text-props]
+  ([id props]
    ; @note (tutorials#parameterizing)
-   (fn [_ text-props]
-       (let [text-props (pretty-presets.engine/apply-preset   text-id text-props)
-             text-props (text.prototypes/text-props-prototype text-id text-props)]
-            [view-lifecycles text-id text-props]))))
+   (fn [_ props]
+       (let [props (pretty-presets.engine/apply-preset id props)
+             props (text.prototypes/props-prototype    id props)]
+            (if (:mounted? props)
+                [view-lifecycles id props])))))

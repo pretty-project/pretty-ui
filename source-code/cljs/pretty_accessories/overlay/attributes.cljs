@@ -5,43 +5,43 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn overlay-inner-attributes
+(defn inner-attributes
   ; @ignore
   ;
-  ; @param (keyword) overlay-id
-  ; @param (map) overlay-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ overlay-props]
+  [_ props]
   (-> {:class :pa-overlay--inner}
-      (pretty-attributes/animation-attributes        overlay-props)
-      (pretty-attributes/background-color-attributes overlay-props)
-      (pretty-attributes/inner-size-attributes       overlay-props)
-      (pretty-attributes/inner-space-attributes      overlay-props)
-      (pretty-attributes/mouse-event-attributes      overlay-props)
-      (pretty-attributes/style-attributes            overlay-props)))
+      (pretty-attributes/animation-attributes        props)
+      (pretty-attributes/background-color-attributes props)
+      (pretty-attributes/inner-size-attributes       props)
+      (pretty-attributes/inner-space-attributes      props)
+      (pretty-attributes/mouse-event-attributes      props)
+      (pretty-attributes/style-attributes            props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn overlay-attributes
+(defn outer-attributes
   ; @ignore
   ;
-  ; @param (keyword) overlay-id
-  ; @param (map) overlay-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ overlay-props]
-  (-> {:class :pa-overlay}
-      (pretty-attributes/class-attributes          overlay-props)
-      (pretty-attributes/inner-position-attributes overlay-props)
-      (pretty-attributes/outer-position-attributes overlay-props)
-      (pretty-attributes/outer-size-attributes     overlay-props)
-      (pretty-attributes/outer-space-attributes    overlay-props)
-      (pretty-attributes/state-attributes          overlay-props)
-      (pretty-attributes/theme-attributes          overlay-props)
-      (pretty-attributes/visibility-attributes     overlay-props)))
+  [_ props]
+  (-> {:class :pa-overlay--outer}
+      (pretty-attributes/class-attributes          props)
+      (pretty-attributes/inner-position-attributes props)
+      (pretty-attributes/outer-position-attributes props)
+      (pretty-attributes/outer-size-attributes     props)
+      (pretty-attributes/outer-space-attributes    props)
+      (pretty-attributes/state-attributes          props)
+      (pretty-attributes/theme-attributes          props)
+      (pretty-attributes/visibility-attributes     props)))

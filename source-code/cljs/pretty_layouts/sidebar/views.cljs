@@ -15,62 +15,26 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- sidebar-header
-  ; @ignore
-  ;
-  ; @param (keyword) sidebar-id
-  ; @param (map) sidebar-props
-  [sidebar-id sidebar-props]
-  (let [header-id    (pretty-subitems/subitem-id                sidebar-id :header)
-        header-props (sidebar.prototypes/header-props-prototype sidebar-id sidebar-props)]
-       [header.views/view header-id header-props]))
-
-(defn- sidebar-body
-  ; @ignore
-  ;
-  ; @param (keyword) sidebar-id
-  ; @param (map) sidebar-props
-  ; {:footer (map)(opt)
-  ;  :header (map)(opt)
-  ;  ...}
-  [sidebar-id {:keys [footer header] :as sidebar-props}]
-  (let [body-id    (pretty-subitems/subitem-id              sidebar-id :body)
-        body-props (sidebar.prototypes/body-props-prototype sidebar-id sidebar-props)]
-       [:div (sidebar.attributes/sidebar-content-attributes sidebar-id sidebar-props)
-             (when header  [pretty-layouts.engine/layout-header-sensor sidebar-id sidebar-props])
-             (when :always [body.views/view                            body-id    body-props])
-             (when footer  [pretty-layouts.engine/layout-footer-sensor sidebar-id sidebar-props])]))
-
-(defn- sidebar-footer
-  ; @ignore
-  ;
-  ; @param (keyword) sidebar-id
-  ; @param (map) sidebar-props
-  [sidebar-id sidebar-props]
-  (let [footer-id    (pretty-subitems/subitem-id                sidebar-id :footer)
-        footer-props (sidebar.prototypes/footer-props-prototype sidebar-id sidebar-props)]
-       [footer.views/view footer-id footer-props]))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (defn- sidebar
   ; @ignore
   ;
-  ; @param (keyword) sidebar-id
-  ; @param (map) sidebar-props
+  ; @param (keyword) id
+  ; @param (map) props
   ; {:body (map)(opt)
   ;  :footer (map)(opt)
   ;  :header (map)(opt)
   ;  :overlay (map)(opt)
   ;  ...}
-  [sidebar-id {:keys [body footer header overlay] :as sidebar-props}]
-  [:div (sidebar.attributes/sidebar-attributes sidebar-id sidebar-props)
-        (if overlay [pretty-accessories/overlay sidebar-id overlay])
-        [:div (sidebar.attributes/sidebar-inner-attributes sidebar-id sidebar-props)
-              (if header [sidebar-header sidebar-id sidebar-props])
-              (if body   [sidebar-body   sidebar-id sidebar-props])
-              (if footer [sidebar-footer sidebar-id sidebar-props])]])
+  [id {:keys [body footer header overlay] :as props}]
+  [:div (sidebar.attributes/outer-attributes id props)
+        (if overlay [pretty-accessories/overlay (pretty-subitems/subitem-id id :overlay) overlay])
+        [:div (sidebar.attributes/inner-attributes id props)
+              (if header [header.views/view (pretty-subitems/subitem-id id :header) header])
+              (if body   [:div (sidebar.attributes/content-attributes id props)
+                               (if header [pretty-layouts.engine/layout-overlap-sensor (pretty-subitems/subitem-id id :header-sensor) header])
+                               (if body   [body.views/view                             (pretty-subitems/subitem-id id :body)          body])
+                               (if footer [pretty-layouts.engine/layout-overlap-sensor (pretty-subitems/subitem-id id :footer-sensor) footer])])
+              (if footer [footer.views/view (pretty-subitems/subitem-id id :footer) footer])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -78,13 +42,13 @@
 (defn- view-lifecycles
   ; @ignore
   ;
-  ; @param (keyword) sidebar-id
-  ; @param (map) sidebar-props
-  [sidebar-id sidebar-props]
+  ; @param (keyword) id
+  ; @param (map) props
+  [id props]
   ; @note (tutorials#parameterizing)
-  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-layouts.engine/layout-did-mount    sidebar-id sidebar-props))
-                         :component-will-unmount (fn [_ _] (pretty-layouts.engine/layout-will-unmount sidebar-id sidebar-props))
-                         :reagent-render         (fn [_ sidebar-props] [sidebar sidebar-id sidebar-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-layouts.engine/layout-did-mount    id props))
+                         :component-will-unmount (fn [_ _] (pretty-layouts.engine/layout-will-unmount id props))
+                         :reagent-render         (fn [_ props] [sidebar id props])}))
 
 (defn view
   ; @description
@@ -120,8 +84,8 @@
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
   ;
-  ; @param (keyword)(opt) sidebar-id
-  ; @param (map) sidebar-props
+  ; @param (keyword)(opt) id
+  ; @param (map) props
   ; Check out the implemented accessories.
   ; Check out the implemented layouts.
   ; Check out the implemented properties.
@@ -135,12 +99,12 @@
   ;           :inner-position :left
   ;           :inner-width    :micro
   ;           :outer-width    :parent}]
-  ([sidebar-props]
-   [view (random/generate-keyword) sidebar-props])
+  ([props]
+   [view (random/generate-keyword) props])
 
-  ([sidebar-id sidebar-props]
+  ([id props]
    ; @note (tutorials#parameterizing)
-   (fn [_ sidebar-props]
-       (let [sidebar-props (pretty-presets.engine/apply-preset         sidebar-id sidebar-props)
-             sidebar-props (sidebar.prototypes/sidebar-props-prototype sidebar-id sidebar-props)]
-            [view-lifecycles sidebar-id sidebar-props]))))
+   (fn [_ props]
+       (let [props (pretty-presets.engine/apply-preset id props)
+             props (sidebar.prototypes/props-prototype id props)]
+            [view-lifecycles id props]))))

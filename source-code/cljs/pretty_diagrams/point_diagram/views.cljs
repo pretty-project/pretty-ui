@@ -14,31 +14,31 @@
 (defn- point-diagram-datum
   ; @ignore
   ;
-  ; @param (keyword) diagram-id
-  ; @param (map) diagram-props
-  ; @param (integer) datum-dex
+  ; @param (keyword) id
+  ; @param (map) props
+  ; @param (integer) dex
   ; @param (*) datum
-  [diagram-id diagram-props datum-dex datum]
-  [:div (point-diagram.attributes/diagram-datum-attributes diagram-id diagram-props datum-dex datum)])
+  [id props dex datum]
+  [:div (point-diagram.attributes/datum-attributes id props dex datum)])
 
 (defn- point-diagram-datum-list
   ; @ignore
   ;
-  ; @param (keyword) diagram-id
-  ; @param (map) diagram-props
-  [diagram-id diagram-props]
-  (letfn [(f0 [datum-dex datum] [point-diagram-datum diagram-id diagram-props datum-dex datum])]
-         (let [data (pretty-diagrams.engine/get-diagram-data diagram-id diagram-props)]
+  ; @param (keyword) id
+  ; @param (map) props
+  [id props]
+  (letfn [(f0 [dex datum] [point-diagram-datum id props dex datum])]
+         (let [data (pretty-diagrams.engine/get-diagram-data id props)]
               (hiccup/put-with-indexed [:<>] data f0))))
 
 (defn- point-diagram
   ; @ignore
   ;
-  ; @param (keyword) diagram-id
-  ; @param (map) diagram-props
-  [diagram-id diagram-props]
-  [:div (point-diagram.attributes/diagram-attributes diagram-id diagram-props)
-        [:div (point-diagram.attributes/diagram-inner-attributes diagram-id diagram-props)]])
+  ; @param (keyword) id
+  ; @param (map) props
+  [id props]
+  [:div (point-diagram.attributes/outer-attributes id props)
+        [:div (point-diagram.attributes/inner-attributes id props)]])
               ; Point diagrams display value pairs (as coordinates)
               ; Use SVG polyline to display points connected with lines (=? graph-diagram).
 
@@ -48,13 +48,13 @@
 (defn- view-lifecycles
   ; @ignore
   ;
-  ; @param (keyword) diagram-id
-  ; @param (map) diagram-props
-  [diagram-id diagram-props]
+  ; @param (keyword) id
+  ; @param (map) props
+  [id props]
   ; @note (tutorials#parameterizing)
-  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-diagrams.engine/diagram-did-mount    diagram-id diagram-props))
-                         :component-will-unmount (fn [_ _] (pretty-diagrams.engine/diagram-will-unmount diagram-id diagram-props))
-                         :reagent-render         (fn [_ diagram-props] [point-diagram diagram-id diagram-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-diagrams.engine/diagram-did-mount    id props))
+                         :component-will-unmount (fn [_ _] (pretty-diagrams.engine/diagram-will-unmount id props))
+                         :reagent-render         (fn [_ props] [point-diagram id props])}))
 
 (defn view
   ; @important
@@ -79,19 +79,20 @@
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
   ;
-  ; @param (keyword)(opt) diagram-id
-  ; @param (map) diagram-props
+  ; @param (keyword)(opt) id
+  ; @param (map) props
   ; Check out the implemented properties.
   ;
   ; @usage (pretty-diagrams/point-diagram.png)
   ; ...
-  ([diagram-props]
-   [view (random/generate-keyword) diagram-props])
+  ([props]
+   [view (random/generate-keyword) props])
 
-  ([diagram-id diagram-props]
+  ([id props]
    ; @note (tutorials#parameterizing)
-   (fn [_ diagram-props]
-       (let [diagram-props (pretty-presets.engine/apply-preset                diagram-id diagram-props)
-             diagram-props (point-diagram.prototypes/diagram-props-prototype  diagram-id diagram-props)
-             diagram-props (pretty-diagrams.engine/calculate-diagram-data-sum diagram-id diagram-props)]
-            [view-lifecycles diagram-id diagram-props]))))
+   (fn [_ props]
+       (let [props (pretty-presets.engine/apply-preset                id props)
+             props (point-diagram.prototypes/props-prototype          id props)
+             props (pretty-diagrams.engine/calculate-diagram-data-sum id props)]
+            (if (:mounted? props)
+                [view-lifecycles id props])))))

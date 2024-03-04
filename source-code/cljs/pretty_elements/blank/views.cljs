@@ -13,14 +13,14 @@
 (defn- blank
   ; @ignore
   ;
-  ; @param (keyword) blank-id
-  ; @param (map) blank-props
+  ; @param (keyword) id
+  ; @param (map) props
   ; {:content (multitype-content)(opt)
   ;  ...}
-  [blank-id {:keys [content] :as blank-props}]
-  [:div (blank.attributes/blank-attributes blank-id blank-props)
-        [:div (blank.attributes/blank-inner-attributes blank-id blank-props)
-              [:div (blank.attributes/blank-content-attributes blank-id blank-props) content]]])
+  [id {:keys [content] :as props}]
+  [:div (blank.attributes/outer-attributes id props)
+        [:div (blank.attributes/inner-attributes id props)
+              [:div (blank.attributes/content-attributes id props) content]]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -28,13 +28,13 @@
 (defn- view-lifecycles
   ; @ignore
   ;
-  ; @param (keyword) blank-id
-  ; @param (map) blank-props
-  [blank-id blank-props]
+  ; @param (keyword) id
+  ; @param (map) props
+  [id props]
   ; @note (tutorials#parameterizing)
-  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    blank-id blank-props))
-                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount blank-id blank-props))
-                         :reagent-render         (fn [_ blank-props] [blank blank-id blank-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    id props))
+                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount id props))
+                         :reagent-render         (fn [_ props] [blank id props])}))
 
 (defn view
   ; @description
@@ -57,18 +57,19 @@
   ; [Text properties](pretty-core/cljs/pretty-properties/api.html#text-properties)
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
   ;
-  ; @param (keyword)(opt) blank-id
-  ; @param (map) blank-props
+  ; @param (keyword)(opt) id
+  ; @param (map) props
   ; Check out the implemented properties.
   ;
   ; @usage (pretty-elements/blank.png)
   ; [blank {:content [:div "My content"]}]
-  ([blank-props]
-   [view (random/generate-keyword) blank-props])
+  ([props]
+   [view (random/generate-keyword) props])
 
-  ([blank-id blank-props]
+  ([id props]
    ; @note (tutorials#parameterizing)
-   (fn [_ blank-props]
-       (let [blank-props (pretty-presets.engine/apply-preset     blank-id blank-props)
-             blank-props (blank.prototypes/blank-props-prototype blank-id blank-props)]
-            [view-lifecycles blank-id blank-props]))))
+   (fn [_ props]
+       (let [props (pretty-presets.engine/apply-preset id props)
+             props (blank.prototypes/props-prototype   id props)]
+            (if (:mounted? props)
+                [view-lifecycles id props])))))

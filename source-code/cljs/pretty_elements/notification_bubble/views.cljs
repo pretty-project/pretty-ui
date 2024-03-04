@@ -7,7 +7,8 @@
               [pretty-elements.notification-bubble.prototypes :as notification-bubble.prototypes]
               [pretty-presets.engine.api :as pretty-presets.engine]
               [reagent.core :as reagent]
-              [pretty-accessories.api :as pretty-accessories]))
+              [pretty-accessories.api :as pretty-accessories]
+              [pretty-subitems.api :as pretty-subitems]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -15,19 +16,19 @@
 (defn- notification-bubble
   ; @ignore
   ;
-  ; @param (keyword) bubble-id
-  ; @param (map) bubble-props
+  ; @param (keyword) id
+  ; @param (map) props
   ; {:content (multitype-content)(opt)
   ;  :cover (map)(opt)
   ;  :end-adornment-group (map)(opt)
   ;  :start-adornment-group (map)(opt)
   ;  ...}
-  [bubble-id {:keys [content cover end-adornment-group start-adornment-group] :as bubble-props}]
-  [:div (notification-bubble.attributes/bubble-attributes bubble-id bubble-props)
-        [:div (notification-bubble.attributes/bubble-inner-attributes bubble-id bubble-props)
-              (if start-adornment-group [adornment-group.views/view bubble-id start-adornment-group])
-              (if content               [:div (notification-bubble.attributes/bubble-content-attributes bubble-id bubble-props) content])
-              (if end-adornment-group   [adornment-group.views/view bubble-id end-adornment-group])]])
+  [id {:keys [content cover end-adornment-group start-adornment-group] :as props}]
+  [:div (notification-bubble.attributes/outer-attributes id props)
+        [:div (notification-bubble.attributes/inner-attributes id props)
+              (if start-adornment-group [adornment-group.views/view (pretty-subitems/subitem-id id :start-adornment-group) start-adornment-group])
+              (if content               [:div (notification-bubble.attributes/content-attributes id props) content])
+              (if end-adornment-group   [adornment-group.views/view (pretty-subitems/subitem-id id :end-adornment-group) end-adornment-group])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -35,13 +36,13 @@
 (defn- view-lifecycles
   ; @ignore
   ;
-  ; @param (keyword) bubble-id
-  ; @param (map) bubble-props
-  [bubble-id bubble-props]
+  ; @param (keyword) id
+  ; @param (map) props
+  [id props]
   ; @note (tutorials#parameterizing)
-  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    bubble-id bubble-props))
-                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount bubble-id bubble-props))
-                         :reagent-render         (fn [_ bubble-props] [notification-bubble bubble-id bubble-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    id props))
+                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount id props))
+                         :reagent-render         (fn [_ props] [notification-bubble id props])}))
 
 (defn view
   ; @description
@@ -72,8 +73,8 @@
   ; [Text properties](pretty-core/cljs/pretty-properties/api.html#text-properties)
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
   ;
-  ; @param (keyword)(opt) bubble-id
-  ; @param (map) bubble-props
+  ; @param (keyword)(opt) id
+  ; @param (map) props
   ; Check out the implemented elements.
   ; Check out the implemented properties.
   ;
@@ -96,12 +97,13 @@
   ;                       :outer-width           :3xl
   ;                       :start-adornment-group {:adornment-default {:fill-color :default :border-color :highlight :border-radius {:all :s}}
   ;                                               :adornments        [{:icon {:icon-name :close}}]}}]
-  ([bubble-props]
-   [view (random/generate-keyword) bubble-props])
+  ([props]
+   [view (random/generate-keyword) props])
 
-  ([bubble-id bubble-props]
+  ([id props]
    ; @note (tutorials#parameterizing)
-   (fn [_ bubble-props]
-       (let [bubble-props (pretty-presets.engine/apply-preset                    bubble-id bubble-props)
-             bubble-props (notification-bubble.prototypes/bubble-props-prototype bubble-id bubble-props)]
-            [view-lifecycles bubble-id bubble-props]))))
+   (fn [_ props]
+       (let [props (pretty-presets.engine/apply-preset             id props)
+             props (notification-bubble.prototypes/props-prototype id props)]
+            (if (:mounted? props)
+                [view-lifecycles id props])))))

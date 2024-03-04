@@ -5,42 +5,42 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn bullet-inner-attributes
+(defn inner-attributes
   ; @ignore
   ;
-  ; @param (keyword) bullet-id
-  ; @param (map) bullet-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ bullet-props]
+  [_ props]
   (-> {:class :pa-bullet--inner}
-      (pretty-attributes/animation-attributes        bullet-props)
-      (pretty-attributes/background-color-attributes bullet-props)
-      (pretty-attributes/border-attributes           bullet-props)
-      (pretty-attributes/inner-size-attributes       bullet-props)
-      (pretty-attributes/inner-space-attributes      bullet-props)
-      (pretty-attributes/style-attributes            bullet-props)))
+      (pretty-attributes/animation-attributes        props)
+      (pretty-attributes/background-color-attributes props)
+      (pretty-attributes/border-attributes           props)
+      (pretty-attributes/inner-size-attributes       props)
+      (pretty-attributes/inner-space-attributes      props)
+      (pretty-attributes/style-attributes            props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn bullet-attributes
+(defn outer-attributes
   ; @ignore
   ;
-  ; @param (keyword) bullet-id
-  ; @param (map) bullet-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ bullet-props]
-  (-> {:class :pa-bullet}
-      (pretty-attributes/class-attributes          bullet-props)
-      (pretty-attributes/inner-position-attributes bullet-props)
-      (pretty-attributes/outer-position-attributes bullet-props)
-      (pretty-attributes/outer-size-attributes     bullet-props)
-      (pretty-attributes/outer-space-attributes    bullet-props)
-      (pretty-attributes/state-attributes          bullet-props)
-      (pretty-attributes/theme-attributes          bullet-props)))
+  [_ props]
+  (-> {:class :pa-bullet--outer}
+      (pretty-attributes/class-attributes          props)
+      (pretty-attributes/inner-position-attributes props)
+      (pretty-attributes/outer-position-attributes props)
+      (pretty-attributes/outer-size-attributes     props)
+      (pretty-attributes/outer-space-attributes    props)
+      (pretty-attributes/state-attributes          props)
+      (pretty-attributes/theme-attributes          props)))

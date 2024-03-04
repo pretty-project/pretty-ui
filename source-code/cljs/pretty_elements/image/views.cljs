@@ -10,6 +10,7 @@
               [reagent.core :as reagent]
               [pretty-models.api             :as pretty-models]
               [pretty-accessories.api :as pretty-accessories]
+              [pretty-subitems.api :as pretty-subitems]
               [lazy-loader.api :as lazy-loader]))
 
 ;; ----------------------------------------------------------------------------
@@ -29,8 +30,8 @@
 (defn- image
   ; @ignore
   ;
-  ; @param (keyword) image-id
-  ; @param (map) image-props
+  ; @param (keyword) id
+  ; @param (map) props
   ; {:badge (map)(opt)
   ;  :cover (map)(opt)
   ;  :icon (map)(opt)
@@ -38,18 +39,20 @@
   ;  :loaded? (boolean)(opt)
   ;  :marker (map)(opt)
   ;  :sensor (map)(opt)
+  ;  :tooltip (map)(opt)
   ;  ...}
-  [image-id {:keys [badge cover icon label loaded? marker sensor] :as image-props}]
-  [:div (image.attributes/image-attributes image-id image-props)
-        [(pretty-models/clickable-auto-tag        image-id image-props)
-         (image.attributes/image-inner-attributes image-id image-props)
-         (if     loaded? [:div (image.attributes/image-canvas-attributes image-id image-props)])
-         (if-not loaded? [lazy-loader/image-sensor  image-id sensor])
-         (if-not loaded? [pretty-accessories/icon   image-id icon])
-         (if     label   [pretty-accessories/label  image-id label])
-         (if     badge   [pretty-accessories/badge  image-id badge])
-         (if     marker  [pretty-accessories/marker image-id marker])
-         (if     cover   [pretty-accessories/cover  image-id cover])]])
+  [id {:keys [badge cover icon label loaded? marker sensor tooltip] :as props}]
+  [:div (image.attributes/outer-attributes id props)
+        [(pretty-models/clickable-auto-tag  id props)
+         (image.attributes/inner-attributes id props)
+         (when   loaded? [:div (image.attributes/image-canvas-attributes id props)])
+         (if-not loaded? [lazy-loader/image-sensor   (pretty-subitems/subitem-id id :sensor)  sensor])
+         (if-not loaded? [pretty-accessories/icon    (pretty-subitems/subitem-id id :icon)    icon])
+         (when   label   [pretty-accessories/label   (pretty-subitems/subitem-id id :label)   label])
+         (when   badge   [pretty-accessories/badge   (pretty-subitems/subitem-id id :badge)   badge])
+         (when   marker  [pretty-accessories/marker  (pretty-subitems/subitem-id id :marker)  marker])
+         (when   cover   [pretty-accessories/cover   (pretty-subitems/subitem-id id :cover)   cover])
+         (when   tooltip [pretty-accessories/tooltip (pretty-subitems/subitem-id id :tooltip) tooltip])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -57,15 +60,15 @@
 (defn- view-lifecycles
   ; @ignore
   ;
-  ; @param (keyword) image-id
-  ; @param (map) image-props
-  [image-id image-props]
+  ; @param (keyword) id
+  ; @param (map) props
+  [id props]
   ; @note (tutorials#parameterizing)
   ; @note (pretty-elements.adornment.views#8097)
-  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    image-id image-props))
-                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount image-id image-props))
-                         :component-did-update   (fn [%]   (pretty-elements.engine/element-did-update   image-id image-props %))
-                         :reagent-render         (fn [_ image-props] [image image-id image-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    id props))
+                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount id props))
+                         :component-did-update   (fn [%]   (pretty-elements.engine/element-did-update   id props %))
+                         :reagent-render         (fn [_ props] [image id props])}))
 
 (defn view
   ; @description
@@ -82,6 +85,7 @@
   ; @links Implemented properties
   ; [Anchor properties](pretty-core/cljs/pretty-properties/api.html#anchor-properties)
   ; [Animation properties](pretty-core/cljs/pretty-properties/api.html#animation-properties)
+  ; [Background action properties](pretty-core/cljs/pretty-properties/api.html#background-action-properties)
   ; [Background color properties](pretty-core/cljs/pretty-properties/api.html#background-color-properties)
   ; [Background image properties](pretty-core/cljs/pretty-properties/api.html#background-image-properties)
   ; [Border properties](pretty-core/cljs/pretty-properties/api.html#border-properties)
@@ -103,8 +107,8 @@
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
   ;
-  ; @param (keyword)(opt) image-id
-  ; @param (map) image-props
+  ; @param (keyword)(opt) id
+  ; @param (map) props
   ; Check out the implemented accessories.
   ; Check out the implemented properties.
   ;
@@ -116,14 +120,15 @@
   ;         :label           {:content "My image"}
   ;         :outer-height    :s
   ;         :outer-width     :l}]
-  ([image-props]
-   [view (random/generate-keyword) image-props])
+  ([props]
+   [view (random/generate-keyword) props])
 
-  ([image-id image-props]
+  ([id props]
    ; @note (tutorials#parameterizing)
-   (fn [_ image-props]
-       (let [image-props (pretty-presets.engine/apply-preset           image-id image-props)
-             image-props (image.prototypes/image-props-prototype       image-id image-props)
-             image-props (pretty-elements.engine/element-timeout-props image-id image-props)
-             image-props (dynamic-props/import-props                   image-id image-props)]
-            [view-lifecycles image-id image-props]))))
+   (fn [_ props]
+       (let [props (pretty-presets.engine/apply-preset           id props)
+             props (image.prototypes/props-prototype             id props)
+             props (pretty-elements.engine/element-timeout-props id props)
+             props (dynamic-props/import-props                   id props)]
+            (if (:mounted? props)
+                [view-lifecycles id props])))))

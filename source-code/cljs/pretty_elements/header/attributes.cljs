@@ -5,42 +5,42 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn header-inner-attributes
+(defn inner-attributes
   ; @ignore
   ;
-  ; @param (keyword) header-id
-  ; @param (map) header-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ header-props]
+  [_ props]
   (-> {:class :pe-header--inner}
-      (pretty-attributes/background-color-attributes header-props)
-      (pretty-attributes/border-attributes           header-props)
-      (pretty-attributes/flex-attributes             header-props)
-      (pretty-attributes/inner-size-attributes       header-props)
-      (pretty-attributes/inner-space-attributes      header-props)
-      (pretty-attributes/style-attributes            header-props)))
+      (pretty-attributes/background-color-attributes props)
+      (pretty-attributes/border-attributes           props)
+      (pretty-attributes/flex-attributes             props)
+      (pretty-attributes/inner-size-attributes       props)
+      (pretty-attributes/inner-space-attributes      props)
+      (pretty-attributes/style-attributes            props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn header-attributes
+(defn outer-attributes
   ; @ignore
   ;
-  ; @param (keyword) header-id
-  ; @param (map) header-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ header-props]
-  (-> {:class :pe-header}
-      (pretty-attributes/class-attributes          header-props)
-      (pretty-attributes/inner-position-attributes header-props)
-      (pretty-attributes/outer-position-attributes header-props)
-      (pretty-attributes/outer-size-attributes     header-props)
-      (pretty-attributes/outer-space-attributes    header-props)
-      (pretty-attributes/state-attributes          header-props)
-      (pretty-attributes/theme-attributes          header-props)))
+  [_ props]
+  (-> {:class :pe-header--outer}
+      (pretty-attributes/class-attributes          props)
+      (pretty-attributes/inner-position-attributes props)
+      (pretty-attributes/outer-position-attributes props)
+      (pretty-attributes/outer-size-attributes     props)
+      (pretty-attributes/outer-space-attributes    props)
+      (pretty-attributes/state-attributes          props)
+      (pretty-attributes/theme-attributes          props)))

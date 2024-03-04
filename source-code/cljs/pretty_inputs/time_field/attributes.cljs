@@ -6,7 +6,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn field-inner-attributes
+(defn inner-attributes
   ; @ignore
   ;
   ; @param (keyword) field-id
@@ -20,7 +20,7 @@
       (pretty-attributes/inner-space-attributes field-props)
       (pretty-attributes/style-attributes  field-props)))
 
-(defn field-attributes
+(defn outer-attributes
   ; @ignore
   ;
   ; @param (keyword) field-id
@@ -29,7 +29,7 @@
   ; @return (map)
   ; {}
   [_ field-props]
-  (-> {:class :pi-time-field}
+  (-> {:class :pi-time-field--outer}
       (pretty-attributes/class-attributes  field-props)
       (pretty-attributes/outer-space-attributes field-props)
       (pretty-attributes/state-attributes  field-props)))

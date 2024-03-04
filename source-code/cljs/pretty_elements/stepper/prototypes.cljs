@@ -4,12 +4,12 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn stepper-props-prototype
+(defn props-prototype
   ; @ignore
   ;
-  ; @param (keyword) stepper-id
-  ; @param (map) stepper-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
-  [_ stepper-props]
-  (-> stepper-props))
+  [_ props]
+  (-> props))

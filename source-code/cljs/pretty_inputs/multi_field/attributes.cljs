@@ -5,7 +5,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn group-inner-attributes
+(defn inner-attributes
   ; @ignore
   ;
   ; @param (keyword) group-id
@@ -22,7 +22,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn group-attributes
+(defn outer-attributes
   ; @ignore
   ;
   ; @param (keyword) group-id
@@ -34,7 +34,7 @@
   ; Each field separatelly reacts to the disabled state.
   ; Therefore, no need to the group reacts to it.
   (let [group-props (dissoc group-props :disabled?)]
-       (-> {:class :pi-multi-field}
+       (-> {:class :pi-multi-field--outer}
            (pretty-attributes/class-attributes  group-props)
            (pretty-attributes/outer-space-attributes group-props)
            (pretty-attributes/state-attributes  group-props))))

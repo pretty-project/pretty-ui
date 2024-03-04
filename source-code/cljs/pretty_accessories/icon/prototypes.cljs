@@ -6,24 +6,22 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn icon-props-prototype
+(defn props-prototype
   ; @ignore
   ;
-  ; @param (keyword) icon-id
-  ; @param (map) icon-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
-  [_ icon-props]
-  (-> icon-props (pretty-properties/default-flex-props       {:orientation :horizontal})
-                 (pretty-properties/default-icon-props       {:icon-size :m})
-                 (pretty-properties/default-outer-size-props {:outer-size-unit :half-block})
-                 (pretty-standards/standard-border-props)
-                 (pretty-standards/standard-flex-props)
-                 (pretty-standards/standard-icon-props)
-                 (pretty-standards/standard-inner-position-props)
-                 (pretty-standards/standard-inner-size-props)
-                 (pretty-standards/standard-outer-position-props)
-                 (pretty-standards/standard-outer-size-props)))
-                ;(pretty-rules/apply-auto-border-crop)
-                ;(pretty-rules/auto-disable-highlight-color)
-                ;(pretty-rules/auto-disable-hover-color)
+  [_ props]
+  (-> props (pretty-properties/default-flex-props       {:orientation :horizontal})
+            (pretty-properties/default-icon-props       {:icon-size :s})
+            (pretty-properties/default-outer-size-props {:outer-size-unit :half-block})
+            (pretty-standards/standard-border-props)
+            (pretty-standards/standard-flex-props)
+            (pretty-standards/standard-icon-props)
+            (pretty-standards/standard-inner-position-props)
+            (pretty-standards/standard-inner-size-props)
+            (pretty-standards/standard-outer-position-props)
+            (pretty-standards/standard-outer-size-props)))
+           ;(pretty-rules/apply-auto-border-crop)

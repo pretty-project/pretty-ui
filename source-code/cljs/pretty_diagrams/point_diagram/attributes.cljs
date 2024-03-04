@@ -6,56 +6,56 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn diagram-datum-attributes
+(defn datum-attributes
   ; @ignore
   ;
-  ; @param (keyword) diagram-id
-  ; @param (map) diagram-props
-  ; @param (integer) datum-dex
+  ; @param (keyword) id
+  ; @param (map) props
+  ; @param (integer) dex
   ; @param (*) datum
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [diagram-id diagram-props datum-dex datum]
+  [id props dex datum]
   (-> {:class :pd-point-diagram--datum}))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn diagram-inner-attributes
+(defn inner-attributes
   ; @ignore
   ;
-  ; @param (keyword) diagram-id
-  ; @param (map) diagram-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ diagram-props]
+  [_ props]
   (-> {:class :pd-point-diagram--inner}
-      (pretty-attributes/inner-size-attributes  diagram-props)
-      (pretty-attributes/inner-space-attributes diagram-props)
-      (pretty-attributes/style-attributes       diagram-props)))
+      (pretty-attributes/inner-size-attributes  props)
+      (pretty-attributes/inner-space-attributes props)
+      (pretty-attributes/style-attributes       props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn diagram-attributes
+(defn outer-attributes
   ; @ignore
   ;
-  ; @param (keyword) diagram-id
-  ; @param (map) diagram-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ diagram-props]
-  (-> {:class :pd-point-diagram}
-      (pretty-attributes/class-attributes          diagram-props)
-      (pretty-attributes/inner-position-attributes diagram-props)
-      (pretty-attributes/outer-position-attributes diagram-props)
-      (pretty-attributes/outer-size-attributes     diagram-props)
-      (pretty-attributes/outer-space-attributes    diagram-props)
-      (pretty-attributes/state-attributes          diagram-props)
-      (pretty-attributes/theme-attributes          diagram-props)))
+  [_ props]
+  (-> {:class :pd-point-diagram--outer}
+      (pretty-attributes/class-attributes          props)
+      (pretty-attributes/inner-position-attributes props)
+      (pretty-attributes/outer-position-attributes props)
+      (pretty-attributes/outer-size-attributes     props)
+      (pretty-attributes/outer-space-attributes    props)
+      (pretty-attributes/state-attributes          props)
+      (pretty-attributes/theme-attributes          props)))

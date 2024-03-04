@@ -5,42 +5,42 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn badge-inner-attributes
+(defn inner-attributes
   ; @ignore
   ;
-  ; @param (keyword) badge-id
-  ; @param (map) badge-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ badge-props]
+  [_ props]
   (-> {:class :pa-badge--inner}
-      (pretty-attributes/animation-attributes        badge-props)
-      (pretty-attributes/background-color-attributes badge-props)
-      (pretty-attributes/border-attributes           badge-props)
-      (pretty-attributes/inner-size-attributes       badge-props)
-      (pretty-attributes/inner-space-attributes      badge-props)
-      (pretty-attributes/style-attributes            badge-props)))
+      (pretty-attributes/animation-attributes        props)
+      (pretty-attributes/background-color-attributes props)
+      (pretty-attributes/border-attributes           props)
+      (pretty-attributes/inner-size-attributes       props)
+      (pretty-attributes/inner-space-attributes      props)
+      (pretty-attributes/style-attributes            props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn badge-attributes
+(defn outer-attributes
   ; @ignore
   ;
-  ; @param (keyword) badge-id
-  ; @param (map) badge-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ badge-props]
-  (-> {:class :pa-badge}
-      (pretty-attributes/class-attributes          badge-props)
-      (pretty-attributes/inner-position-attributes badge-props)
-      (pretty-attributes/outer-position-attributes badge-props)
-      (pretty-attributes/outer-size-attributes     badge-props)
-      (pretty-attributes/outer-space-attributes    badge-props)
-      (pretty-attributes/state-attributes          badge-props)
-      (pretty-attributes/theme-attributes          badge-props)))
+  [_ props]
+  (-> {:class :pa-badge--outer}
+      (pretty-attributes/class-attributes          props)
+      (pretty-attributes/inner-position-attributes props)
+      (pretty-attributes/outer-position-attributes props)
+      (pretty-attributes/outer-size-attributes     props)
+      (pretty-attributes/outer-space-attributes    props)
+      (pretty-attributes/state-attributes          props)
+      (pretty-attributes/theme-attributes          props)))

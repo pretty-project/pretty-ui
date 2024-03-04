@@ -5,46 +5,47 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn chip-inner-attributes
+(defn inner-attributes
   ; @ignore
   ;
-  ; @param (keyword) chip-id
-  ; @param (map) chip-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ chip-props]
+  [_ props]
   (-> {:class :pe-chip--inner}
-      (pretty-attributes/anchor-attributes           chip-props)
-      (pretty-attributes/background-color-attributes chip-props)
-      (pretty-attributes/border-attributes           chip-props)
-      (pretty-attributes/clickable-state-attributes  chip-props)
-      (pretty-attributes/cursor-attributes           chip-props)
-      (pretty-attributes/effect-attributes           chip-props)
-      (pretty-attributes/inner-size-attributes       chip-props)
-      (pretty-attributes/inner-space-attributes      chip-props)
-      (pretty-attributes/mouse-event-attributes      chip-props)
-      (pretty-attributes/style-attributes            chip-props)))
+      (pretty-attributes/anchor-attributes            props)
+      (pretty-attributes/background-action-attributes props)
+      (pretty-attributes/background-color-attributes  props)
+      (pretty-attributes/border-attributes            props)
+      (pretty-attributes/clickable-state-attributes   props)
+      (pretty-attributes/cursor-attributes            props)
+      (pretty-attributes/effect-attributes            props)
+      (pretty-attributes/inner-size-attributes        props)
+      (pretty-attributes/inner-space-attributes       props)
+      (pretty-attributes/mouse-event-attributes       props)
+      (pretty-attributes/style-attributes             props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn chip-attributes
+(defn outer-attributes
   ; @ignore
   ;
-  ; @param (keyword) chip-id
-  ; @param (map) chip-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ chip-props]
-  (-> {:class :pe-chip}
-      (pretty-attributes/class-attributes          chip-props)
-      (pretty-attributes/inner-position-attributes chip-props)
-      (pretty-attributes/outer-position-attributes chip-props)
-      (pretty-attributes/outer-size-attributes     chip-props)
-      (pretty-attributes/outer-space-attributes    chip-props)
-      (pretty-attributes/state-attributes          chip-props)
-      (pretty-attributes/theme-attributes          chip-props)))
+  [_ props]
+  (-> {:class :pe-chip--outer}
+      (pretty-attributes/class-attributes          props)
+      (pretty-attributes/inner-position-attributes props)
+      (pretty-attributes/outer-position-attributes props)
+      (pretty-attributes/outer-size-attributes     props)
+      (pretty-attributes/outer-space-attributes    props)
+      (pretty-attributes/state-attributes          props)
+      (pretty-attributes/theme-attributes          props)))

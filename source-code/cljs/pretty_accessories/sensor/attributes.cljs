@@ -5,43 +5,43 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn sensor-inner-attributes
+(defn inner-attributes
   ; @ignore
   ;
-  ; @param (keyword) sensor-id
-  ; @param (map) sensor-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ sensor-props]
+  [_ props]
   (-> {:class :pa-sensor--inner}
-      (pretty-attributes/animation-attributes        sensor-props)
-      (pretty-attributes/background-color-attributes sensor-props)
-      (pretty-attributes/inner-size-attributes       sensor-props)
-      (pretty-attributes/inner-space-attributes      sensor-props)
-      (pretty-attributes/mouse-event-attributes      sensor-props)
-      (pretty-attributes/style-attributes            sensor-props)))
+      (pretty-attributes/animation-attributes        props)
+      (pretty-attributes/background-color-attributes props)
+      (pretty-attributes/inner-size-attributes       props)
+      (pretty-attributes/inner-space-attributes      props)
+      (pretty-attributes/mouse-event-attributes      props)
+      (pretty-attributes/style-attributes            props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn sensor-attributes
+(defn outer-attributes
   ; @ignore
   ;
-  ; @param (keyword) sensor-id
-  ; @param (map) sensor-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ sensor-props]
-  (-> {:class :pa-sensor}
-      (pretty-attributes/class-attributes          sensor-props)
-      (pretty-attributes/inner-position-attributes sensor-props)
-      (pretty-attributes/outer-position-attributes sensor-props)
-      (pretty-attributes/outer-size-attributes     sensor-props)
-      (pretty-attributes/outer-space-attributes    sensor-props)
-      (pretty-attributes/state-attributes          sensor-props)
-      (pretty-attributes/theme-attributes          sensor-props)
-      (pretty-attributes/visibility-attributes     sensor-props)))
+  [_ props]
+  (-> {:class :pa-sensor--outer}
+      (pretty-attributes/class-attributes          props)
+      (pretty-attributes/inner-position-attributes props)
+      (pretty-attributes/outer-position-attributes props)
+      (pretty-attributes/outer-size-attributes     props)
+      (pretty-attributes/outer-space-attributes    props)
+      (pretty-attributes/state-attributes          props)
+      (pretty-attributes/theme-attributes          props)
+      (pretty-attributes/visibility-attributes     props)))

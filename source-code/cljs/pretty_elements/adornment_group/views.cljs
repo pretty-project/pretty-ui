@@ -15,14 +15,14 @@
 (defn- adornment-group
   ; @ignore
   ;
-  ; @param (keyword) group-id
-  ; @param (map) group-props
+  ; @param (keyword) id
+  ; @param (map) props
   ; {:adornments (maps in vector)(opt)
   ;  ...}
-  [group-id {:keys [adornments] :as group-props}]
-  [:div (adornment-group.attributes/group-attributes group-id group-props)
-        [:div (adornment-group.attributes/group-inner-attributes group-id group-props)
-              (letfn [(f0 [adornment-props] [adornment.views/view adornment-props])]
+  [id {:keys [adornments] :as props}]
+  [:div (adornment-group.attributes/outer-attributes id props)
+        [:div (adornment-group.attributes/inner-attributes id props)
+              (letfn [(f0 [adornment] [adornment.views/view adornment])]
                      (hiccup/put-with [:<>] adornments f0))]])
 
 ;; ----------------------------------------------------------------------------
@@ -31,13 +31,13 @@
 (defn- view-lifecycles
   ; @ignore
   ;
-  ; @param (keyword) group-id
-  ; @param (map) group-props
-  [group-id group-props]
+  ; @param (keyword) id
+  ; @param (map) props
+  [id props]
   ; @note (tutorials#parameterizing)
-  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    group-id group-props))
-                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount group-id group-props))
-                         :reagent-render         (fn [_ group-props] [adornment-group group-id group-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    id props))
+                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount id props))
+                         :reagent-render         (fn [_ props] [adornment-group id props])}))
 
 (defn view
   ; @description
@@ -61,8 +61,8 @@
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
   ;
-  ; @param (keyword)(opt) group-id
-  ; @param (map) group-props
+  ; @param (keyword)(opt) id
+  ; @param (map) props
   ; Check out the implemented elements.
   ; Check out the implemented properties.
   ;
@@ -75,12 +75,13 @@
   ;                                {:icon {:icon-name :add}}
   ;                                {:icon {:icon-name :favorite :icon-color :warning :icon-family :material-symbols-filled}}]
   ;                   :gap :xs}]
-  ([group-props]
-   [view (random/generate-keyword) group-props])
+  ([props]
+   [view (random/generate-keyword) props])
 
-  ([group-id group-props]
+  ([id props]
    ; @note (tutorials#parameterizing)
-   (fn [_ group-props]
-       (let [group-props (pretty-presets.engine/apply-preset               group-id group-props)
-             group-props (adornment-group.prototypes/group-props-prototype group-id group-props)]
-            [view-lifecycles group-id group-props]))))
+   (fn [_ props]
+       (let [props (pretty-presets.engine/apply-preset         id props)
+             props (adornment-group.prototypes/props-prototype id props)]
+            (if (:mounted? props)
+                [view-lifecycles id props])))))

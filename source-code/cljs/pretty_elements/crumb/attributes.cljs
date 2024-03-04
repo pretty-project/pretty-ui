@@ -5,45 +5,45 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn crumb-inner-attributes
+(defn inner-attributes
   ; @ignore
   ;
-  ; @param (keyword) crumb-id
-  ; @param (map) crumb-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ crumb-props]
+  [_ props]
   (-> {:class :pe-crumb--inner}
-      (pretty-attributes/anchor-attributes          crumb-props)
-      (pretty-attributes/clickable-state-attributes crumb-props)
-      (pretty-attributes/effect-attributes          crumb-props)
-      (pretty-attributes/flex-attributes            crumb-props)
-      (pretty-attributes/inner-size-attributes      crumb-props)
-      (pretty-attributes/inner-space-attributes     crumb-props)
-      (pretty-attributes/mouse-event-attributes     crumb-props)
-      (pretty-attributes/state-attributes           crumb-props)
-      (pretty-attributes/style-attributes           crumb-props)))
+      (pretty-attributes/anchor-attributes          props)
+      (pretty-attributes/clickable-state-attributes props)
+      (pretty-attributes/effect-attributes          props)
+      (pretty-attributes/flex-attributes            props)
+      (pretty-attributes/inner-size-attributes      props)
+      (pretty-attributes/inner-space-attributes     props)
+      (pretty-attributes/mouse-event-attributes     props)
+      (pretty-attributes/state-attributes           props)
+      (pretty-attributes/style-attributes           props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn crumb-attributes
+(defn outer-attributes
   ; @ignore
   ;
-  ; @param (keyword) crumb-id
-  ; @param (map) crumb-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ crumb-props]
-  (-> {:class :pe-crumb}
-      (pretty-attributes/class-attributes          crumb-props)
-      (pretty-attributes/inner-position-attributes crumb-props)
-      (pretty-attributes/outer-position-attributes crumb-props)
-      (pretty-attributes/outer-size-attributes     crumb-props)
-      (pretty-attributes/outer-space-attributes    crumb-props)
-      (pretty-attributes/state-attributes          crumb-props)
-      (pretty-attributes/theme-attributes          crumb-props)))
+  [_ props]
+  (-> {:class :pe-crumb--outer}
+      (pretty-attributes/class-attributes          props)
+      (pretty-attributes/inner-position-attributes props)
+      (pretty-attributes/outer-position-attributes props)
+      (pretty-attributes/outer-size-attributes     props)
+      (pretty-attributes/outer-space-attributes    props)
+      (pretty-attributes/state-attributes          props)
+      (pretty-attributes/theme-attributes          props)))

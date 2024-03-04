@@ -15,33 +15,33 @@
 (defn- circle-diagram-datum
   ; @ignore
   ;
-  ; @param (keyword) diagram-id
-  ; @param (map) diagram-props
-  ; @param (integer) datum-dex
+  ; @param (keyword) id
+  ; @param (map) props
+  ; @param (integer) dex
   ; @param (map) datum-props
-  [diagram-id diagram-props datum-dex datum-props]
-  [:circle (circle-diagram.attributes/diagram-datum-attributes diagram-id diagram-props datum-dex datum-props)])
+  [id props dex datum-props]
+  [:circle (circle-diagram.attributes/datum-attributes id props dex datum-props)])
 
 (defn- circle-diagram-datum-list
   ; @ignore
   ;
-  ; @param (keyword) diagram-id
-  ; @param (map) diagram-props
-  [diagram-id diagram-props]
-  (letfn [(f0 [datum-dex datum] [circle-diagram-datum diagram-id diagram-props datum-dex datum])]
-         (let [data (pretty-diagrams.engine/get-diagram-data diagram-id diagram-props)]
+  ; @param (keyword) id
+  ; @param (map) props
+  [id props]
+  (letfn [(f0 [dex datum] [circle-diagram-datum id props dex datum])]
+         (let [data (pretty-diagrams.engine/get-diagram-data id props)]
               (hiccup/put-with-indexed [:<>] data f0))))
 
 (defn- circle-diagram
   ; @ignore
   ;
-  ; @param (keyword) diagram-id
-  ; @param (map) diagram-props
-  [diagram-id diagram-props]
-  [:div (circle-diagram.attributes/diagram-attributes diagram-id diagram-props)
-        [:div (circle-diagram.attributes/diagram-inner-attributes diagram-id diagram-props)
+  ; @param (keyword) id
+  ; @param (map) props
+  [id props]
+  [:div (circle-diagram.attributes/outer-attributes id props)
+        [:div (circle-diagram.attributes/inner-attributes id props)
               [:svg (svg/wrapper-attributes {:height 200 :width 200})
-                    [circle-diagram-datum-list diagram-id diagram-props]]]])
+                    [circle-diagram-datum-list id props]]]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -49,13 +49,13 @@
 (defn- view-lifecycles
   ; @ignore
   ;
-  ; @param (keyword) diagram-id
-  ; @param (map) diagram-props
-  [diagram-id diagram-props]
+  ; @param (keyword) id
+  ; @param (map) props
+  [id props]
   ; @note (tutorials#parameterizing)
-  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-diagrams.engine/diagram-did-mount    diagram-id diagram-props))
-                         :component-will-unmount (fn [_ _] (pretty-diagrams.engine/diagram-will-unmount diagram-id diagram-props))
-                         :reagent-render         (fn [_ diagram-props] [circle-diagram diagram-id diagram-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-diagrams.engine/diagram-did-mount    id props))
+                         :component-will-unmount (fn [_ _] (pretty-diagrams.engine/diagram-will-unmount id props))
+                         :reagent-render         (fn [_ props] [circle-diagram id props])}))
 
 (defn view
   ; @description
@@ -77,8 +77,8 @@
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
   ;
-  ; @param (keyword)(opt) diagram-id
-  ; @param (map) diagram-props
+  ; @param (keyword)(opt) id
+  ; @param (map) props
   ; Check out the implemented properties.
   ;
   ; @usage (pretty-diagrams/circle-diagram.png)
@@ -90,13 +90,14 @@
   ;                  :outer-height  :m
   ;                  :outer-width   :m
   ;                  :strength      50}]
-  ([diagram-props]
-   [view (random/generate-keyword) diagram-props])
+  ([props]
+   [view (random/generate-keyword) props])
 
-  ([diagram-id diagram-props]
+  ([id props]
    ; @note (tutorials#parameterizing)
-   (fn [_ diagram-props]
-       (let [diagram-props (pretty-presets.engine/apply-preset                diagram-id diagram-props)
-             diagram-props (circle-diagram.prototypes/diagram-props-prototype diagram-id diagram-props)
-             diagram-props (pretty-diagrams.engine/calculate-diagram-data-sum diagram-id diagram-props)]
-            [view-lifecycles diagram-id diagram-props]))))
+   (fn [_ props]
+       (let [props (pretty-presets.engine/apply-preset                id props)
+             props (circle-diagram.prototypes/props-prototype         id props)
+             props (pretty-diagrams.engine/calculate-diagram-data-sum id props)]
+            (if (:mounted? props)
+                [view-lifecycles id props])))))

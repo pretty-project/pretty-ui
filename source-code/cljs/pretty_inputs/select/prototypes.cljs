@@ -1,131 +1,126 @@
 
 (ns pretty-inputs.select.prototypes
-    (:require [fruits.noop.api                   :refer [none return]]
-              [fruits.vector.api                 :as vector]
+    (:require [fruits.vector.api                 :as vector]
+              [fruits.map.api                 :as map]
               [pretty-inputs.engine.api          :as pretty-inputs.engine]
-              [pretty-inputs.select.env          :as select.env]
               [pretty-inputs.select.side-effects :as select.side-effects]
               [pretty-standards.api :as pretty-standards]
+              [pretty-subitems.api :as pretty-subitems]
               [pretty-rules.api :as pretty-rules]
-              [pretty-properties.api :as pretty-properties]))
+              [pretty-properties.api :as pretty-properties]
+              [dynamic-props.api :as dynamic-props]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn select-button-props-prototype
+(defn button-prototype
   ; @ignore
   ;
-  ; @param (keyword) select-id
-  ; @param (map) select-props
+  ; @param (keyword) id
+  ; @param (map) props
+  ; @param (map) button
   ;
   ; @return (map)
-  ; {}
-  [select-id {:keys [button] :as select-props}]
-  (let [on-click-f (fn [_] (pretty-inputs.engine/show-input-popup! select-id select-props))
-        label      (select.env/select-button-label select-id select-props)]
-       (merge button {:gap           :auto
-                      :icon          :unfold_more
-                      :icon-position :right
-                      :label         label
-                      :on-click-f    on-click-f})))
+  [id _ button]
+  (let [on-click-f (fn [_] (dynamic-props/update-props! id update :popup-visible? not))]
+       (-> button (pretty-properties/default-mouse-event-props {:on-click-f on-click-f}))))
 
-(defn icon-button-props-prototype
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn icon-button-prototype
   ; @ignore
   ;
-  ; @param (keyword) select-id
-  ; @param (map) select-props
+  ; @param (keyword) id
+  ; @param (map) props
+  ; @param (map) icon-button
   ;
   ; @return (map)
-  ; {}
-  [select-id {:keys [button] :as select-props}]
-  (let [on-click-f (fn [_] (pretty-inputs.engine/show-input-popup! select-id select-props))]
-       (merge button {:on-click-f on-click-f})))
+  [id _ icon-button]
+  (let [on-click-f (fn [_] (dynamic-props/update-props! id update :popup-visible? not))]
+       (-> icon-button (pretty-properties/default-mouse-event-props {:on-click-f on-click-f}))))
 
-(defn button-props-prototype
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn popup-prototype
   ; @ignore
   ;
-  ; @param (keyword) select-id
-  ; @param (map) select-props
+  ; @param (keyword) id
+  ; @param (map) props
+  ; @param (map) popup
   ;
   ; @return (map)
-  ; {}
-  [select-id {:keys [button] :as select-props}]
-  (let [on-click-f (fn [_] (pretty-inputs.engine/show-input-popup! select-id select-props))]
-       (merge button {:on-click-f on-click-f})))
-
+  [id _ popup]
+  (let [close-popup-f (fn [_] (dynamic-props/update-props! id dissoc :popup-visible?))]
+       (-> popup (pretty-properties/default-background-color-props {:fill-color :default})
+                 (pretty-properties/default-inner-size-props       {:inner-height :content :inner-width :content})
+                 (pretty-properties/default-outer-size-props       {:outer-height :parent :outer-layer :uppermost :outer-width :parent})
+                 (assoc :overlay {:fill-color :invert :on-click-f close-popup-f} :on-escape-f close-popup-f))))
+                
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn field-props-prototype
+(defn select-button-prototype
   ; @ignore
   ;
-  ; @param (keyword) select-id
-  ; @param (map) select-props
-  ; {}
+  ; @param (keyword) id
+  ; @param (map) props
+  ; @param (map) select-button
   ;
   ; @return (map)
-  ; {}
-  [select-id {:keys [option-field] {:keys [end-adornments]} :option-field :as select-props}]
-  (let [add-option-f         (fn [%] (select.side-effects/add-option! select-id select-props %))
-        add-option-adornment {:icon :add :on-click-f add-option-f}
-        end-adornments       (vector/conj-item end-adornments add-option-adornment)]
-       (merge {:autofocus?      true
-               :border-color    :highlight
-               :border-position :bottom
-               :border-width    :xxs
-               :outdent         {:bottom :xs :vertical :xs}
-               :placeholder     "..."}
-              (-> option-field)
-              {:end-adornments end-adornments
-               :on-enter-f     add-option-f})))
+  [id props select-button]
+  (let [on-click-f  (fn [_] (dynamic-props/update-props! id update :popup-visible? not))
+        get-value-f (-> props :option-group :get-value-f)]
+       (-> select-button (pretty-properties/default-mouse-event-props {:on-click-f  on-click-f})
+                         (pretty-properties/default-input-value-props {:get-value-f get-value-f}))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn popup-props-prototype
+(defn option-group-prototype
   ; @ignore
   ;
-  ; @param (keyword) select-id
-  ; @param (map) select-props
-  ; {}
+  ; @param (keyword) id
+  ; @param (map) props
+  ; @param (map) option-group
   ;
   ; @return (map)
-  ; {}
-  [select-id {:keys [popup] :as select-props}]
-  (let [on-cover-f (fn [_] (pretty-inputs.engine/hide-input-popup! select-id select-props))]
-       (merge {:cover-color :black
-               :fill-color  :default}
-              (-> popup)
-              {:on-cover-f on-cover-f})))
+  [_ _ option-group]
+  (-> option-group (update :option-default  map/reversed-deep-merge {:hover-color :muted :indent {:horizontal :s :vertical :xxs}})
+                   (update :option-selected map/reversed-deep-merge {:fill-color  :muted})
+                   (pretty-properties/default-input-option-props {:max-selection 1})))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn select-props-prototype
+(defn props-prototype
   ; @ignore
   ;
-  ; @param (keyword) select-id
-  ; @param (map) select-props
-  ; {:border-color (keyword or string)(opt)}
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
-  ; {:border-position (keyword)
-  ;  :border-width (keyword, px or string)
-  ;  :max-selection (integer)
-  ;  :layout (keyword)
-  ;  :option-label-f (function)
-  ;  :option-value-f (function)
-  ;  :orientation (keyword)}
-  [_ {:keys [border-color] :as select-props}]
-  (merge {:click-effect    :opacity
-          :font-size       :s
-          :hover-effect    :opacity
-          :max-selection   1
-          :option-helper-f none
-          :option-label-f  return
-          :option-value-f  return
-          :layout          :select-button
-          :orientation     :vertical}
-         (if border-color {:border-position :all :border-width :xxs})
-         (-> select-props)))
-; standard-input-option-props
+  [id props]
+  (let [button-prototype-f        (fn [%] (button-prototype        id props %))
+        option-group-prototype-f  (fn [%] (option-group-prototype  id props %))
+        icon-button-prototype-f   (fn [%] (icon-button-prototype   id props %))
+        popup-prototype-f         (fn [%] (popup-prototype         id props %))
+        select-button-prototype-f (fn [%] (select-button-prototype id props %))]
+       (-> props (pretty-properties/default-flex-props       {:gap :xs :horizontal-align :left :orientation :vertical})
+                 (pretty-properties/default-outer-size-props {:outer-size-unit :full-block})
+                 (pretty-standards/standard-flex-props)
+                 (pretty-standards/standard-inner-position-props)
+                 (pretty-standards/standard-inner-size-props)
+                 (pretty-standards/standard-outer-position-props)
+                 (pretty-standards/standard-outer-size-props)
+                ;(pretty-rules/auto-align-scrollable-flex)
+                 (pretty-rules/auto-set-mounted)
+                 (pretty-subitems/ensure-subitem           :popup)
+                 (pretty-subitems/subitems<-disabled-state :button :header :icon-button :option-group :popup :select-button)
+                 (pretty-subitems/leave-disabled-state     :button :header :icon-button :option-group :popup :select-button)
+                 (pretty-subitems/apply-subitem-prototype  :button        button-prototype-f)
+                 (pretty-subitems/apply-subitem-prototype  :option-group  option-group-prototype-f)
+                 (pretty-subitems/apply-subitem-prototype  :icon-button   icon-button-prototype-f)
+                 (pretty-subitems/apply-subitem-prototype  :popup         popup-prototype-f)
+                 (pretty-subitems/apply-subitem-prototype  :select-button select-button-prototype-f))))

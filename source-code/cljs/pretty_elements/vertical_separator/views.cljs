@@ -6,7 +6,8 @@
               [pretty-elements.vertical-separator.prototypes :as vertical-separator.prototypes]
               [pretty-presets.engine.api                     :as pretty-presets.engine]
               [reagent.core :as reagent]
-              [pretty-accessories.api :as pretty-accessories]))
+              [pretty-accessories.api :as pretty-accessories]
+              [pretty-subitems.api :as pretty-subitems]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -14,16 +15,16 @@
 (defn- vertical-separator
   ; @ignore
   ;
-  ; @param (keyword) separator-id
-  ; @param (map) separator-props
+  ; @param (keyword) id
+  ; @param (map) props
   ; {:label (map)(opt)
   ;  ...}
-  [separator-id {:keys [label] :as separator-props}]
-  [:div (vertical-separator.attributes/separator-attributes separator-id separator-props)
-        [:div (vertical-separator.attributes/separator-inner-attributes separator-id separator-props)
-              (when :always [:hr (vertical-separator.attributes/separator-line-attributes separator-id separator-props)])
-              (when label   [:<> [pretty-accessories/label                                separator-id label]])
-              (when :always [:hr (vertical-separator.attributes/separator-line-attributes separator-id separator-props)])]])
+  [id {:keys [label] :as props}]
+  [:div (vertical-separator.attributes/outer-attributes id props)
+        [:div (vertical-separator.attributes/inner-attributes id props)
+              (when :always [:hr (vertical-separator.attributes/line-attributes id props)])
+              (when label   [pretty-accessories/label (pretty-subitems/subitem-id id :label) label])
+              (when :always [:hr (vertical-separator.attributes/line-attributes id props)])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -31,13 +32,13 @@
 (defn- view-lifecycles
   ; @ignore
   ;
-  ; @param (keyword) separator-id
-  ; @param (map) separator-props
-  [separator-id separator-props]
+  ; @param (keyword) id
+  ; @param (map) props
+  [id props]
   ; @note (tutorials#parameterizing)
-  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    separator-id separator-props))
-                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount separator-id separator-props))
-                         :reagent-render         (fn [_ separator-props] [vertical-separator separator-id separator-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    id props))
+                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount id props))
+                         :reagent-render         (fn [_ props] [vertical-separator id props])}))
 
 (defn view
   ; @description
@@ -63,8 +64,8 @@
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
   ;
-  ; @param (keyword)(opt) separator-id
-  ; @param (map) separator-props
+  ; @param (keyword)(opt) id
+  ; @param (map) props
   ; Check out the implemented accessories.
   ; Check out the implemented properties.
   ;
@@ -72,12 +73,13 @@
   ; [vertical-separator {:label        {:content "My vertical separator" :text-color :muted}
   ;                      :line-color   :muted
   ;                      :outer-height :5xl}]
-  ([separator-props]
-   [view (random/generate-keyword) separator-props])
+  ([props]
+   [view (random/generate-keyword) props])
 
-  ([separator-id separator-props]
+  ([id props]
    ; @note (tutorials#parameterizing)
-   (fn [_ separator-props]
-       (let [separator-props (pretty-presets.engine/apply-preset                      separator-id separator-props)
-             separator-props (vertical-separator.prototypes/separator-props-prototype separator-id separator-props)]
-            [view-lifecycles separator-id separator-props]))))
+   (fn [_ props]
+       (let [props (pretty-presets.engine/apply-preset            id props)
+             props (vertical-separator.prototypes/props-prototype id props)]
+            (if (:mounted? props)
+                [view-lifecycles id props])))))

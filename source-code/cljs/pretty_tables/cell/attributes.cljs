@@ -5,44 +5,44 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn cell-inner-attributes
+(defn inner-attributes
   ; @ignore
   ;
-  ; @param (keyword) cell-id
-  ; @param (map) cell-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ cell-props]
+  [_ props]
   (-> {:class :pt-cell--inner}
-      (pretty-attributes/background-color-attributes cell-props)
-      (pretty-attributes/border-attributes           cell-props)
-      (pretty-attributes/flex-attributes             cell-props)
-      (pretty-attributes/font-attributes             cell-props)
-      (pretty-attributes/inner-size-attributes       cell-props)
-      (pretty-attributes/inner-space-attributes      cell-props)
-      (pretty-attributes/style-attributes            cell-props)
-      (pretty-attributes/text-attributes             cell-props)))
+      (pretty-attributes/background-color-attributes props)
+      (pretty-attributes/border-attributes           props)
+      (pretty-attributes/flex-attributes             props)
+      (pretty-attributes/font-attributes             props)
+      (pretty-attributes/inner-size-attributes       props)
+      (pretty-attributes/inner-space-attributes      props)
+      (pretty-attributes/style-attributes            props)
+      (pretty-attributes/text-attributes             props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn cell-attributes
+(defn outer-attributes
   ; @ignore
   ;
-  ; @param (keyword) cell-id
-  ; @param (map) cell-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ cell-props]
-  (-> {:class :pt-cell}
-      (pretty-attributes/class-attributes          cell-props)
-      (pretty-attributes/inner-position-attributes cell-props)
-      (pretty-attributes/outer-position-attributes cell-props)
-      (pretty-attributes/outer-size-attributes     cell-props)
-      (pretty-attributes/outer-space-attributes    cell-props)
-      (pretty-attributes/state-attributes          cell-props)
-      (pretty-attributes/theme-attributes          cell-props)))
+  [_ props]
+  (-> {:class :pt-cell--outer}
+      (pretty-attributes/class-attributes          props)
+      (pretty-attributes/inner-position-attributes props)
+      (pretty-attributes/outer-position-attributes props)
+      (pretty-attributes/outer-size-attributes     props)
+      (pretty-attributes/outer-space-attributes    props)
+      (pretty-attributes/state-attributes          props)
+      (pretty-attributes/theme-attributes          props)))

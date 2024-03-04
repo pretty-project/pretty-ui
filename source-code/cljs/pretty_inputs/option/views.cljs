@@ -8,7 +8,8 @@
               [reagent.core :as reagent]
               [pretty-guides.api :as pretty-guides]
               [pretty-accessories.api :as pretty-accessories]
-              [pretty-models.api :as pretty-models]))
+              [pretty-models.api :as pretty-models]
+              [pretty-subitems.api :as pretty-subitems]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -16,19 +17,19 @@
 (defn- option
   ; @ignore
   ;
-  ; @param (keyword) option-id
-  ; @param (map) option-props
+  ; @param (keyword) id
+  ; @param (map) props
   ; {:helper-text (map)(opt)
   ;  :icon (map)(opt)
   ;  :label (map)(opt)
   ;  ...}
-  [option-id {:keys [helper-text icon label] :as option-props}]
-  [:div (option.attributes/option-attributes option-id option-props)
-        [(pretty-models/clickable-auto-tag          option-id option-props)
-         (option.attributes/option-inner-attributes option-id option-props)
-         (if icon  [:div {:class :pi-option--checkmark} [pretty-accessories/icon   option-id icon]])
-         (if label [:div {:class :pi-option--content}   [pretty-accessories/label  option-id label]
-                                        (if helper-text [pretty-guides/helper-text option-id helper-text])])]])
+  [id {:keys [helper-text icon label] :as props}]
+  [:div (option.attributes/outer-attributes id props)
+        [(pretty-models/clickable-auto-tag   id props)
+         (option.attributes/inner-attributes id props)
+         (if icon  [:div {:class :pi-option--checkmark} [pretty-accessories/icon   (pretty-subitems/subitem-id id :icon)        icon]])
+         (if label [:div {:class :pi-option--content}   [pretty-accessories/label  (pretty-subitems/subitem-id id :label)       label]])
+         (if helper-text                                [pretty-guides/helper-text (pretty-subitems/subitem-id id :helper-text) helper-text])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -36,13 +37,13 @@
 (defn- view-lifecycles
   ; @ignore
   ;
-  ; @param (keyword) option-id
-  ; @param (map) option-props
-  [option-id option-props]
+  ; @param (keyword) id
+  ; @param (map) props
+  [id props]
   ; @note (tutorials#parameterizing)
-  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-inputs.engine/input-did-mount    option-id option-props))
-                         :component-will-unmount (fn [_ _] (pretty-inputs.engine/input-will-unmount option-id option-props))
-                         :reagent-render         (fn [_ option-props] [option option-id option-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-inputs.engine/pseudo-input-did-mount    id props))
+                         :component-will-unmount (fn [_ _] (pretty-inputs.engine/pseudo-input-will-unmount id props))
+                         :reagent-render         (fn [_ props] [option id props])}))
 
 (defn view
   ; @description
@@ -57,6 +58,7 @@
   ;
   ; @links Implemented properties
   ; [Anchor properties](pretty-core/cljs/pretty-properties/api.html#anchor-properties)
+  ; [Background action properties](pretty-core/cljs/pretty-properties/api.html#background-action-properties)
   ; [Background color properties](pretty-core/cljs/pretty-properties/api.html#background-color-properties)
   ; [Border properties](pretty-core/cljs/pretty-properties/api.html#border-properties)
   ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
@@ -76,8 +78,8 @@
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
   ;
-  ; @param (keyword)(opt) option-id
-  ; @param (map) option-props
+  ; @param (keyword)(opt) id
+  ; @param (map) props
   ; Check out the implemented accessories.
   ; Check out the implemented guides.
   ; Check out the implemented properties.
@@ -88,13 +90,15 @@
   ;                        :border-radius {:all :s}
   ;                        :border-width  :xs
   ;                        :icon-name     :done
+  ;          :gap         :xs
   ;          :label       {:content "My option"}}]
-  ([option-props]
-   [view (random/generate-keyword) option-props])
+  ([props]
+   [view (random/generate-keyword) props])
 
-  ([option-id option-props]
+  ([id props]
    ; @note (tutorials#parameterizing)
-   (fn [_ option-props]
-       (let [option-props (pretty-presets.engine/apply-preset       option-id option-props)
-             option-props (option.prototypes/option-props-prototype option-id option-props)]
-            [view-lifecycles option-id option-props]))))
+   (fn [_ props]
+       (let [props (pretty-presets.engine/apply-preset id props)
+             props (option.prototypes/props-prototype  id props)]
+            (if (:mounted? props)
+                [view-lifecycles id props])))))

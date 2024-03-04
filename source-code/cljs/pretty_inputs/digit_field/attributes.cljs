@@ -5,7 +5,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn field-inner-attributes
+(defn inner-attributes
   ; @ignore
   ;
   ; @param (keyword) field-id
@@ -22,7 +22,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn field-attributes
+(defn outer-attributes
   ; @ignore
   ;
   ; @param (keyword) field-id
@@ -31,7 +31,7 @@
   ; @return (map)
   ; {}
   [_ field-props]
-  (-> {:class :pi-digit-field}
+  (-> {:class :pi-digit-field--outer}
       (pretty-attributes/class-attributes  field-props)
       (pretty-attributes/outer-space-attributes field-props)
       (pretty-attributes/state-attributes  field-props)

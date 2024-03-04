@@ -6,18 +6,19 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn blank-props-prototype
+(defn props-prototype
   ; @ignore
   ;
-  ; @param (keyword) blank-id
-  ; @param (map) blank-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
-  [_ blank-props]
-  (-> blank-props (pretty-standards/standard-font-props)
-                  (pretty-standards/standard-inner-position-props)
-                  (pretty-standards/standard-inner-size-props)
-                  (pretty-standards/standard-outer-position-props)
-                  (pretty-standards/standard-outer-size-props)
-                  (pretty-standards/standard-text-props)
-                  (pretty-rules/compose-content)))
+  [_ props]
+  (-> props (pretty-standards/standard-font-props)
+            (pretty-standards/standard-inner-position-props)
+            (pretty-standards/standard-inner-size-props)
+            (pretty-standards/standard-outer-position-props)
+            (pretty-standards/standard-outer-size-props)
+            (pretty-standards/standard-text-props)
+            (pretty-rules/auto-set-mounted)
+            (pretty-rules/compose-content)))

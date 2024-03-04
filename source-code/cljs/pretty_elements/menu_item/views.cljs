@@ -7,7 +7,8 @@
               [pretty-presets.engine.api            :as pretty-presets.engine]
               [reagent.core :as reagent]
               [pretty-models.api             :as pretty-models]
-              [pretty-accessories.api :as pretty-accessories]))
+              [pretty-accessories.api :as pretty-accessories]
+              [pretty-subitems.api :as pretty-subitems]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -15,21 +16,23 @@
 (defn- menu-item
   ; @ignore
   ;
-  ; @param (keyword) item-id
-  ; @param (map) item-props
+  ; @param (keyword) id
+  ; @param (map) props
   ; {:badge (map)(opt)
   ;  :icon (map)(opt)
   ;  :label (map)(opt)
   ;  :marker (map)(opt)
+  ;  :tooltip (map)(opt)
   ;  ...}
-  [item-id {:keys [badge icon label marker] :as item-props}]
-  [:div (menu-item.attributes/menu-item-attributes item-id item-props)
-        [(pretty-models/clickable-auto-tag                item-id item-props)
-         (menu-item.attributes/menu-item-inner-attributes item-id item-props)
-         (if label  [pretty-accessories/label  item-id label])
-         (if icon   [pretty-accessories/icon   item-id icon])
-         (if badge  [pretty-accessories/badge  item-id badge])
-         (if marker [pretty-accessories/marker item-id marker])]])
+  [id {:keys [badge icon label marker tooltip] :as props}]
+  [:div (menu-item.attributes/outer-attributes id props)
+        [(pretty-models/clickable-auto-tag      id props)
+         (menu-item.attributes/inner-attributes id props)
+         (if label   [pretty-accessories/label   (pretty-subitems/subitem-id id :label)   label])
+         (if icon    [pretty-accessories/icon    (pretty-subitems/subitem-id id :icon)    icon])
+         (if badge   [pretty-accessories/badge   (pretty-subitems/subitem-id id :badge)   badge])
+         (if marker  [pretty-accessories/marker  (pretty-subitems/subitem-id id :marker)  marker])
+         (if tooltip [pretty-accessories/tooltip (pretty-subitems/subitem-id id :tooltip) tooltip])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -37,14 +40,14 @@
 (defn- view-lifecycles
   ; @ignore
   ;
-  ; @param (keyword) item-id
-  ; @param (map) item-props
-  [item-id item-props]
+  ; @param (keyword) id
+  ; @param (map) props
+  [id props]
   ; @note (tutorials#parameterizing)
   ; @note (pretty-elements.adornment.views#8097)
-  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    item-id item-props))
-                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount item-id item-props))
-                         :reagent-render         (fn [_ item-props] [menu-item item-id item-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    id props))
+                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount id props))
+                         :reagent-render         (fn [_ props] [menu-item id props])}))
 
 (defn view
   ; @description
@@ -59,6 +62,7 @@
   ;
   ; @links Implemented properties
   ; [Anchor properties](pretty-core/cljs/pretty-properties/api.html#anchor-properties)
+  ; [Background action properties](pretty-core/cljs/pretty-properties/api.html#background-action-properties)
   ; [Background color properties](pretty-core/cljs/pretty-properties/api.html#background-color-properties)
   ; [Border properties](pretty-core/cljs/pretty-properties/api.html#border-properties)
   ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
@@ -79,8 +83,8 @@
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
   ;
-  ; @param (keyword)(opt) item-id
-  ; @param (map) item-props
+  ; @param (keyword)(opt) id
+  ; @param (map) props
   ; Check out the implemented accessories.
   ; Check out the implemented properties.
   ;
@@ -90,12 +94,13 @@
   ;             :border-position :bottom
   ;             :href-uri        "/my-uri"
   ;             :label           {:content "My menu item"}}]
-  ([item-props]
-   [view (random/generate-keyword) item-props])
+  ([props]
+   [view (random/generate-keyword) props])
 
-  ([item-id item-props]
+  ([id props]
    ; @note (tutorials#parameterizing)
-   (fn [_ item-props]
-       (let [item-props (pretty-presets.engine/apply-preset        item-id item-props)
-             item-props (menu-item.prototypes/item-props-prototype item-id item-props)]
-            [view-lifecycles item-id item-props]))))
+   (fn [_ props]
+       (let [props (pretty-presets.engine/apply-preset   id props)
+             props (menu-item.prototypes/props-prototype id props)]
+            (if (:mounted? props)
+                [view-lifecycles id props])))))

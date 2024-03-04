@@ -13,11 +13,11 @@
 (defn ghost
   ; @ignore
   ;
-  ; @param (keyword) ghost-id
-  ; @param (map) ghost-props
-  [ghost-id ghost-props]
-  [:div (ghost.attributes/ghost-attributes ghost-id ghost-props)
-        [:div (ghost.attributes/ghost-inner-attributes ghost-id ghost-props)]])
+  ; @param (keyword) id
+  ; @param (map) props
+  [id props]
+  [:div (ghost.attributes/outer-attributes id props)
+        [:div (ghost.attributes/inner-attributes id props)]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -25,13 +25,13 @@
 (defn- view-lifecycles
   ; @ignore
   ;
-  ; @param (keyword) ghost-id
-  ; @param (map) ghost-props
-  [ghost-id ghost-props]
+  ; @param (keyword) id
+  ; @param (map) props
+  [id props]
   ; @note (tutorials#parameterizing)
-  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    ghost-id ghost-props))
-                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount ghost-id ghost-props))
-                         :reagent-render         (fn [_ ghost-props] [ghost ghost-id ghost-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    id props))
+                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount id props))
+                         :reagent-render         (fn [_ props] [ghost id props])}))
 
 (defn view
   ; @description
@@ -54,8 +54,8 @@
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
   ;
-  ; @param (keyword)(opt) ghost-id
-  ; @param (map) ghost-props
+  ; @param (keyword)(opt) id
+  ; @param (map) props
   ; Check out the implemented properties.
   ;
   ; @usage (pretty-elements/ghost.png)
@@ -63,12 +63,13 @@
   ;         :fill-color    :muted
   ;         :outer-height  :xs
   ;         :outer-width   :5xl}]
-  ([ghost-props]
-   [view (random/generate-keyword) ghost-props])
+  ([props]
+   [view (random/generate-keyword) props])
 
-  ([ghost-id ghost-props]
+  ([id props]
    ; @note (tutorials#parameterizing)
-   (fn [_ ghost-props]
-       (let [ghost-props (pretty-presets.engine/apply-preset     ghost-id ghost-props)
-             ghost-props (ghost.prototypes/ghost-props-prototype ghost-id ghost-props)]
-            [view-lifecycles ghost-id ghost-props]))))
+   (fn [_ props]
+       (let [props (pretty-presets.engine/apply-preset id props)
+             props (ghost.prototypes/props-prototype   id props)]
+            (if (:mounted? props)
+                [view-lifecycles id props])))))

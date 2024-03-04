@@ -6,7 +6,9 @@
               [pretty-inputs.engine.api        :as pretty-inputs.engine]
               [pretty-presets.engine.api         :as pretty-presets.engine]
               [reagent.core :as reagent]
-              [pretty-elements.api :as pretty-elements]))
+              [pretty-elements.api :as pretty-elements]
+              [pretty-accessories.api :as pretty-accessories]
+              [pretty-subitems.api :as pretty-subitems]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -14,19 +16,18 @@
 (defn- value
   ; @ignore
   ;
-  ; @param (keyword) value-id
-  ; @param (map) value-props
-  ; {:end-adornments (maps in vector)(opt)
-  ;  :start-adornments (maps in vector)(opt)
+  ; @param (keyword) id
+  ; @param (map) props
+  ; {:end-adornment-group (map)(opt)
+  ;  :label (map)(opt)
+  ;  :start-adornment-group (map)(opt)
   ;  ...}
-  [value-id {:keys [end-adornments start-adornments] :as value-props}]
-  [:div (value.attributes/value-attributes       value-id value-props)
-        [pretty-inputs.engine/input-synchronizer value-id value-props]
-        [:div (value.attributes/value-inner-attributes value-id value-props)
-              (let [value (pretty-inputs.engine/get-input-internal-value value-id value-props)]
-                   [:<> (when start-adornments [pretty-elements/adornment-group value-id {:adornments start-adornments}])
-                        (when :always          [:div (value.attributes/value-content-attributes value-id value-props) value])
-                        (when end-adornments   [pretty-elements/adornment-group value-id {:adornments end-adornments}])])]])
+  [id {:keys [end-adornment-group label start-adornment-group] :as props}]
+  [:div (value.attributes/outer-attributes       id props)
+        [:div (value.attributes/inner-attributes id props)
+              [:<> (if start-adornment-group [pretty-elements/adornment-group (pretty-subitems/subitem-id id :start-adornment-group) start-adornment-group])
+                   (if label                 [pretty-accessories/label        (pretty-subitems/subitem-id id :label)                 label])
+                   (if end-adornment-group   [pretty-elements/adornment-group (pretty-subitems/subitem-id id :end-adornment-group)   end-adornment-group])]]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -34,17 +35,20 @@
 (defn- view-lifecycles
   ; @ignore
   ;
-  ; @param (keyword) value-id
-  ; @param (map) value-props
-  [value-id value-props]
+  ; @param (keyword) id
+  ; @param (map) props
+  [id props]
   ; @note (tutorials#parameterizing)
-  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-inputs.engine/input-did-mount    value-id value-props))
-                         :component-will-unmount (fn [_ _] (pretty-inputs.engine/input-will-unmount value-id value-props))
-                         :reagent-render         (fn [_ value-props] [value value-id value-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-inputs.engine/pseudo-input-did-mount    id props))
+                         :component-will-unmount (fn [_ _] (pretty-inputs.engine/pseudo-input-will-unmount id props))
+                         :reagent-render         (fn [_ props] [value id props])}))
 
 (defn view
   ; @description
   ; Customizable value element with optional adornments.
+  ;
+  ; @links Implemented accessories
+  ; [Label](pretty-ui/cljs/pretty-accessories/api.html#label)
   ;
   ; @links Implemented elements
   ; [Adornment-group](pretty-ui/cljs/pretty-elements/api.html#adornment-group)
@@ -54,7 +58,6 @@
   ; [Border properties](pretty-core/cljs/pretty-properties/api.html#border-properties)
   ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
   ; [Flex properties](pretty-core/cljs/pretty-properties/api.html#flex-properties)
-  ; [Font properties](pretty-core/cljs/pretty-properties/api.html#font-properties)
   ; [Inner position properties](pretty-core/cljs/pretty-properties/api.html#inner-position-properties)
   ; [Inner size properties](pretty-core/cljs/pretty-properties/api.html#inner-size-properties)
   ; [Inner space properties](pretty-core/cljs/pretty-properties/api.html#inner-space-properties)
@@ -66,7 +69,6 @@
   ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
   ; [State properties](pretty-core/cljs/pretty-properties/api.html#state-properties)
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
-  ; [Text properties](pretty-core/cljs/pretty-properties/api.html#text-properties)
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
   ;
   ; @param (keyword)(opt) value-id
@@ -75,29 +77,32 @@
   ; Check out the implemented properties.
   ;
   ; @usage (pretty-inputs/value.png)
-  ; [value {:border-radius           {:all :l}
-  ;         :fill-color              :highlight
-  ;         :gap                     :auto
-  ;         :get-value-f             #(-> "My value #1")
-  ;         :indent                  {:right :s}
-  ;         :outer-width             :xxl
-  ;         :start-adornment-default {:fill-color :default :border-color :muted :border-radius {:all :l}}
-  ;         :start-adornments        [{:icon :close :on-click-f (fn [_] ...)}]}]
-  ;
   ; [value {:border-radius         {:all :l}
   ;         :fill-color            :highlight
   ;         :gap                   :auto
-  ;         :get-value-f           #(-> "My value #2")
-  ;         :indent                {:left :s}
+  ;         :get-value-f           #(-> "My value #1")
+  ;         :indent                {:right :s}
+  ;         :label                 {:content "My value (default label)"}
   ;         :outer-width           :xxl
-  ;         :end-adornment-default {:fill-color :default :border-color :muted :border-radius {:all :l}}
-  ;         :end-adornments        [{:icon :close :on-click-f (fn [_] ...)}]}]
-  ([value-props]
-   [view (random/generate-keyword) value-props])
+  ;         :start-adornment-group {:adornment-default {:fill-color :default :border-color :muted :border-radius {:all :l}}
+  ;                                 :adornments        [{:icon {:icon-name :close} :on-click-f (fn [_] ...)}]}}]
+  ;
+  ; [value {:border-radius       {:all :l}
+  ;         :fill-color          :highlight
+  ;         :gap                 :auto
+  ;         :get-value-f         #(-> "My value #2")
+  ;         :indent              {:left :s}
+  ;         :label               {:content "My value (default label)"}
+  ;         :outer-width         :xxl
+  ;         :end-adornment-group {:adornment-default {:fill-color :default :border-color :muted :border-radius {:all :l}}
+  ;                               :adornments        [{:icon {:icon-name :close} :on-click-f (fn [_] ...)}]}}]
+  ([props]
+   [view (random/generate-keyword) props])
 
-  ([value-id value-props]
+  ([id props]
    ; @note (tutorials#parameterizing)
-   (fn [_ value-props]
-       (let [value-props (pretty-presets.engine/apply-preset     value-id value-props)
-             value-props (value.prototypes/value-props-prototype value-id value-props)]
-            [view-lifecycles value-id value-props]))))
+   (fn [_ props]
+       (let [props (pretty-presets.engine/apply-preset id props)
+             props (value.prototypes/props-prototype   id props)]
+            (if (:mounted? props)
+                [view-lifecycles id props])))))

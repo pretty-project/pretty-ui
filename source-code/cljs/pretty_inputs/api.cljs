@@ -30,6 +30,7 @@
               [pretty-inputs.radio-button.views    :as radio-button.views]
               [pretty-inputs.search-field.views    :as search-field.views]
               [pretty-inputs.select.views          :as select.views]
+              [pretty-inputs.select-button.views          :as select-button.views]
               [pretty-inputs.value.views :as value.views]
               [pretty-inputs.slider.views          :as slider.views]
               [pretty-inputs.switch.views          :as switch.views]
@@ -57,6 +58,7 @@
 (def radio-button    radio-button.views/view)
 (def search-field    search-field.views/view)
 (def select          select.views/view)
+(def select-button   select-button.views/view)
 (def slider          slider.views/view)
 (def switch          switch.views/view)
 (def text-field      text-field.views/view)

@@ -8,7 +8,9 @@
               [pretty-presets.engine.api       :as pretty-presets.engine]
               [reagent.core :as reagent]
               [pretty-guides.api :as pretty-guides]
-              [pretty-accessories.api :as pretty-accessories]))
+              [pretty-accessories.api :as pretty-accessories]
+              [dynamic-props.api :as dynamic-props]
+              [pretty-subitems.api :as pretty-subitems]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -16,25 +18,25 @@
 (defn- header
   ; @ignore
   ;
-  ; @param (keyword) header-id
-  ; @param (map) header-props
+  ; @param (keyword) id
+  ; @param (map) props
   ; {:error-text (map)(opt)
-  ;  :header (map)(opt)
   ;  :helper-text (map)(opt)
   ;  :info-text (map)(opt)
+  ;  :info-text-visible? (boolean)(opt)
+  ;  :label (map)(opt)
   ;  :marker (map)(opt)
   ;  ...}
-  [header-id {:keys [error-text header helper-text info-text marker] :as header-props}]
+  [id {:keys [error-text helper-text info-text info-text-visible? label marker] :as props}]
   ; https://css-tricks.com/html-inputs-and-labels-a-love-story/
   ; ... it is always the best idea to use an explicit label instead of an implicit label.
-  [:div (header.attributes/header-attributes header-id header-props)
-        [:div (header.attributes/header-inner-attributes header-id header-props)
-              (let [info-text-visible? (pretty-inputs.engine/input-info-text-visible? header-id header-props)]
-                   [:<> (if header             [pretty-elements/header    header-id header])
-                        (if info-text-visible? [pretty-guides/info-text   header-id info-text])
-                        (if helper-text        [pretty-guides/helper-text header-id helper-text])
-                        (if error-text         [pretty-guides/error-text  header-id error-text])
-                        (if marker             [pretty-accessories/marker header-id marker])])]])
+  [:div (header.attributes/outer-attributes id props)
+        [:div (header.attributes/inner-attributes id props)
+              (if label              [pretty-elements/header    (pretty-subitems/subitem-id id :label)       label])
+              (if info-text-visible? [pretty-guides/info-text   (pretty-subitems/subitem-id id :info-text)   info-text])
+              (if helper-text        [pretty-guides/helper-text (pretty-subitems/subitem-id id :helper-text) helper-text])
+              (if error-text         [pretty-guides/error-text  (pretty-subitems/subitem-id id :error-text)  error-text])
+              (if marker             [pretty-accessories/marker (pretty-subitems/subitem-id id :marker)      marker])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -42,13 +44,13 @@
 (defn- view-lifecycles
   ; @ignore
   ;
-  ; @param (keyword) header-id
-  ; @param (map) header-props
-  [header-id header-props]
+  ; @param (keyword) id
+  ; @param (map) props
+  [id props]
   ; @note (tutorials#parameterizing)
-  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-inputs.engine/input-did-mount    header-id header-props))
-                         :component-will-unmount (fn [_ _] (pretty-inputs.engine/input-will-unmount header-id header-props))
-                         :reagent-render         (fn [_ header-props] [header header-id header-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-inputs.engine/pseudo-input-did-mount    id props))
+                         :component-will-unmount (fn [_ _] (pretty-inputs.engine/pseudo-input-will-unmount id props))
+                         :reagent-render         (fn [_ props] [header id props])}))
 
 (defn view
   ; @description
@@ -79,26 +81,31 @@
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
   ;
-  ; @param (keyword)(opt) header-id
-  ; @param (map) header-props
+  ; @param (keyword)(opt) id
+  ; @param (map) props
   ; Check out the implemented accessories.
   ; Check out the implemented guides.
   ; Check out the implemented properties.
   ;
   ; @usage (pretty-inputs/header.png)
-  ; [header {}]
+  ; [header {:label       {:content "My header"}
+  ;          :helper-text {:content "My helper text"}
+  ;          :error-text  {:content "My error text"}
+  ;          :info-text   {:content "My info text"}}]
   ;
   ; @usage
-  ; ;; To associate a header to an input, use the same ID for both.
+  ; ;; To associate a header to an input (to subscribe to its error text), use the same ID for both.
   ; [:<> [header     :my-field {...}]
   ;      [text-field :my-field {...}]]
-  ([header-props]
-   [view (random/generate-keyword) header-props])
+  ([props]
+   [view (random/generate-keyword) props])
 
-  ([header-id header-props]
+  ([id props]
    ; @note (tutorials#parameterizing)
-   (fn [_ header-props]
-       (let [header-props (pretty-presets.engine/apply-preset           header-id header-props)
-             header-props (header.prototypes/header-props-prototype     header-id header-props)
-             header-props (pretty-inputs.engine/import-input-error-text header-id header-props)]
-            [view-lifecycles header-id header-props]))))
+   (fn [_ props]
+       (let [props (pretty-presets.engine/apply-preset           id props)
+             props (header.prototypes/props-prototype            id props)
+             props (dynamic-props/import-props                   id props)
+             props (pretty-inputs.engine/import-input-error-text id props)]
+            (if (:mounted? props)
+                [view-lifecycles id props])))))

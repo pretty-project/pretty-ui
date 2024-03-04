@@ -8,41 +8,38 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn label-props-prototype
+(defn label-prototype
   ; @ignore
   ;
-  ; @param (keyword) badge-id
-  ; @param (map) badge-props
-  ; {:label (map)(opt)
-  ;  ...}
+  ; @param (keyword) id
+  ; @param (map) props
+  ; @param (map) label
   ;
   ; @return (map)
-  [_ {:keys [label]}]
+  [_ _ label]
   (-> label (pretty-properties/default-font-props {:font-size :micro :font-weight :semi-bold})
-            (pretty-properties/default-text-props {:text-color :invert :text-selectable? false})))
+            (pretty-properties/default-text-props {:text-color :invert})))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn tooltip-props-prototype
+(defn props-prototype
   ; @ignore
   ;
-  ; @param (keyword) tooltip-id
-  ; @param (map) tooltip-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
-  [tooltip-id tooltip-props]
-  (let [label-props-prototype-f (fn [_] (label-props-prototype tooltip-id tooltip-props))]
-       (-> tooltip-props (pretty-properties/default-background-color-props {:fill-color :invert})
-                         (pretty-properties/default-outer-position-props   {:outer-position :right :outer-position-base :external :outer-position-method :absolute :layer :uppermost})
-                         (pretty-properties/default-outer-size-props       {:outer-size-unit :quarter-block})
-                         (pretty-standards/standard-animation-props)
-                         (pretty-standards/standard-border-props)
-                         (pretty-standards/standard-inner-position-props)
-                         (pretty-standards/standard-inner-size-props)
-                         (pretty-standards/standard-outer-position-props)
-                         (pretty-standards/standard-outer-size-props)
-                         (pretty-rules/apply-auto-border-crop)
-                        ;(pretty-rules/auto-disable-highlight-color)
-                        ;(pretty-rules/auto-disable-hover-color)
-                         (pretty-subitems/apply-subitem-prototype :label label-props-prototype-f))))
+  [id props]
+  (let [label-prototype-f (fn [%] (label-prototype id props %))]
+       (-> props (pretty-properties/default-background-color-props {:fill-color :invert})
+                 (pretty-properties/default-outer-position-props   {:outer-position :right :outer-position-base :external :outer-position-method :absolute :layer :uppermost})
+                 (pretty-properties/default-outer-size-props       {:outer-size-unit :quarter-block})
+                 (pretty-standards/standard-animation-props)
+                 (pretty-standards/standard-border-props)
+                 (pretty-standards/standard-inner-position-props)
+                 (pretty-standards/standard-inner-size-props)
+                 (pretty-standards/standard-outer-position-props)
+                 (pretty-standards/standard-outer-size-props)
+                 (pretty-rules/apply-auto-border-crop)
+                 (pretty-subitems/apply-subitem-prototype :label label-prototype-f))))

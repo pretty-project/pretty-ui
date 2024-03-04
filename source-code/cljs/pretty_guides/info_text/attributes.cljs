@@ -5,56 +5,56 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn text-content-attributes
+(defn content-attributes
   ; @ignore
   ;
-  ; @param (keyword) text-id
-  ; @param (map) text-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ text-props]
+  [_ props]
   (-> {:class :pg-info-text--content}
-      (pretty-attributes/font-attributes text-props)
-      (pretty-attributes/text-attributes text-props)))
+      (pretty-attributes/font-attributes props)
+      (pretty-attributes/text-attributes props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn text-inner-attributes
+(defn inner-attributes
   ; @ignore
   ;
-  ; @param (keyword) text-id
-  ; @param (map) text-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [text-id text-props]
+  [id props]
   (-> {:class :pg-info-text--inner}
-      (pretty-attributes/inner-size-attributes  text-props)
-      (pretty-attributes/inner-space-attributes text-props)
-      (pretty-attributes/style-attributes       text-props)))
+      (pretty-attributes/inner-size-attributes  props)
+      (pretty-attributes/inner-space-attributes props)
+      (pretty-attributes/style-attributes       props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn text-attributes
+(defn outer-attributes
   ; @ignore
   ;
-  ; @param (keyword) text-id
-  ; @param (map) text-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ text-props]
-  (-> {:class :pg-info-text}
-      (pretty-attributes/class-attributes          text-props)
-      (pretty-attributes/inner-position-attributes text-props)
-      (pretty-attributes/outer-position-attributes text-props)
-      (pretty-attributes/outer-size-attributes     text-props)
-      (pretty-attributes/outer-space-attributes    text-props)
-      (pretty-attributes/state-attributes          text-props)
-      (pretty-attributes/theme-attributes          text-props)))
+  [_ props]
+  (-> {:class :pg-info-text--outer}
+      (pretty-attributes/class-attributes          props)
+      (pretty-attributes/inner-position-attributes props)
+      (pretty-attributes/outer-position-attributes props)
+      (pretty-attributes/outer-size-attributes     props)
+      (pretty-attributes/outer-space-attributes    props)
+      (pretty-attributes/state-attributes          props)
+      (pretty-attributes/theme-attributes          props)))

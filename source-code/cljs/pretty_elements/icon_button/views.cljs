@@ -7,7 +7,8 @@
               [pretty-presets.engine.api              :as pretty-presets.engine]
               [pretty-models.api             :as pretty-models]
               [reagent.core :as reagent]
-              [pretty-accessories.api :as pretty-accessories]))
+              [pretty-accessories.api :as pretty-accessories]
+              [pretty-subitems.api :as pretty-subitems]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -15,23 +16,25 @@
 (defn- icon-button
   ; @ignore
   ;
-  ; @param (keyword) button-id
-  ; @param (map) button-props
+  ; @param (keyword) id
+  ; @param (map) props
   ; {:badge (map)(opt)
   ;  :cover (map)(opt)
   ;  :icon (map)(opt)
   ;  :label (map)(opt)
   ;  :marker (map)(opt)
+  ;  :tooltip (map)(opt)
   ;  ...}
-  [button-id {:keys [badge cover icon label marker] :as button-props}]
-  [:div (icon-button.attributes/button-attributes button-id button-props)
-        [(pretty-models/clickable-auto-tag               button-id button-props)
-         (icon-button.attributes/button-inner-attributes button-id button-props)
-         (if icon   [pretty-accessories/icon   button-id icon])
-         (if label  [pretty-accessories/label  button-id label])
-         (if badge  [pretty-accessories/badge  button-id badge])
-         (if marker [pretty-accessories/marker button-id marker])
-         (if cover  [pretty-accessories/cover  button-id cover])]])
+  [id {:keys [badge cover icon label marker tooltip] :as props}]
+  [:div (icon-button.attributes/outer-attributes id props)
+        [(pretty-models/clickable-auto-tag        id props)
+         (icon-button.attributes/inner-attributes id props)
+         (if icon    [pretty-accessories/icon   (pretty-subitems/subitem-id id :icon)   icon])
+         (if label   [pretty-accessories/label  (pretty-subitems/subitem-id id :label)  label])
+         (if badge   [pretty-accessories/badge  (pretty-subitems/subitem-id id :badge)  badge])
+         (if marker  [pretty-accessories/marker (pretty-subitems/subitem-id id :marker) marker])
+         (if cover   [pretty-accessories/cover  (pretty-subitems/subitem-id id :cover)  cover])
+         (if tooltip [pretty-accessories/cover  (pretty-subitems/subitem-id id :cover)  cover])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -39,15 +42,15 @@
 (defn- view-lifecycles
   ; @ignore
   ;
-  ; @param (keyword) button-id
-  ; @param (map) button-props
-  [button-id button-props]
+  ; @param (keyword) id
+  ; @param (map) props
+  [id props]
   ; @note (tutorials#parameterizing)
   ; @note (pretty-elements.adornment.views#8097)
-  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    button-id button-props))
-                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount button-id button-props))
-                         :component-did-update   (fn [%]   (pretty-elements.engine/element-did-update   button-id button-props %))
-                         :reagent-render         (fn [_ button-props] [icon-button button-id button-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    id props))
+                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount id props))
+                         :component-did-update   (fn [%]   (pretty-elements.engine/element-did-update   id props %))
+                         :reagent-render         (fn [_ props] [icon-button id props])}))
 
 (defn view
   ; @description
@@ -63,6 +66,7 @@
   ;
   ; @links Implemented properties
   ; [Anchor properties](pretty-core/cljs/pretty-properties/api.html#anchor-properties)
+  ; [Background action properties](pretty-core/cljs/pretty-properties/api.html#background-action-properties)
   ; [Background color properties](pretty-core/cljs/pretty-properties/api.html#background-color-properties)
   ; [Border properties](pretty-core/cljs/pretty-properties/api.html#border-properties)
   ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
@@ -84,8 +88,8 @@
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
   ;
-  ; @param (keyword)(opt) button-id
-  ; @param (map) button-props
+  ; @param (keyword)(opt) id
+  ; @param (map) props
   ; Check out the implemented accessories.
   ; Check out the implemented properties.
   ;
@@ -96,13 +100,14 @@
   ;               :gap           :xxs
   ;               :indent        {:all :xxs}
   ;               :label         {:content "My icon button"}}]
-  ([button-props]
-   [view (random/generate-keyword) button-props])
+  ([props]
+   [view (random/generate-keyword) props])
 
-  ([button-id button-props]
+  ([id props]
    ; @note (tutorials#parameterizing)
-   (fn [_ button-props]
-       (let [button-props (pretty-presets.engine/apply-preset            button-id button-props)
-             button-props (icon-button.prototypes/button-props-prototype button-id button-props)
-             button-props (pretty-elements.engine/element-timeout-props  button-id button-props)]
-            [view-lifecycles button-id button-props]))))
+   (fn [_ props]
+       (let [props (pretty-presets.engine/apply-preset           id props)
+             props (icon-button.prototypes/props-prototype       id props)
+             props (pretty-elements.engine/element-timeout-props id props)]
+            (if (:mounted? props)
+                [view-lifecycles id props])))))

@@ -5,60 +5,60 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn sidebar-content-attributes
+(defn content-attributes
   ; @ignore
   ;
-  ; @param (keyword) sidebar-id
-  ; @param (map) sidebar-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ sidebar-props]
+  [_ props]
   (-> {:class :pl-sidebar--content}
-      (pretty-attributes/content-size-attributes sidebar-props)
-      (pretty-attributes/overflow-attributes     sidebar-props)))
+      (pretty-attributes/content-size-attributes props)
+      (pretty-attributes/overflow-attributes     props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn sidebar-inner-attributes
+(defn inner-attributes
   ; @ignore
   ;
-  ; @param (keyword) sidebar-id
-  ; @param (map) sidebar-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ sidebar-props]
+  [_ props]
   (-> {:class :pl-sidebar--inner}
-      (pretty-attributes/animation-attributes        sidebar-props)
-      (pretty-attributes/background-color-attributes sidebar-props)
-      (pretty-attributes/border-attributes           sidebar-props)
-      (pretty-attributes/flex-attributes             sidebar-props)
-      (pretty-attributes/inner-size-attributes       sidebar-props)
-      (pretty-attributes/inner-space-attributes      sidebar-props)
-      (pretty-attributes/style-attributes            sidebar-props)))
+      (pretty-attributes/animation-attributes        props)
+      (pretty-attributes/background-color-attributes props)
+      (pretty-attributes/border-attributes           props)
+      (pretty-attributes/flex-attributes             props)
+      (pretty-attributes/inner-size-attributes       props)
+      (pretty-attributes/inner-space-attributes      props)
+      (pretty-attributes/style-attributes            props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn sidebar-attributes
+(defn outer-attributes
   ; @ignore
   ;
-  ; @param (keyword) sidebar-id
-  ; @param (map) sidebar-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ sidebar-props]
-  (-> {:class :pl-sidebar}
-      (pretty-attributes/class-attributes          sidebar-props)
-      (pretty-attributes/inner-position-attributes sidebar-props)
-      (pretty-attributes/outer-position-attributes sidebar-props)
-      (pretty-attributes/outer-size-attributes     sidebar-props)
-      (pretty-attributes/outer-space-attributes    sidebar-props)
-      (pretty-attributes/state-attributes          sidebar-props)
-      (pretty-attributes/theme-attributes          sidebar-props)))
+  [_ props]
+  (-> {:class :pl-sidebar--outer}
+      (pretty-attributes/class-attributes          props)
+      (pretty-attributes/inner-position-attributes props)
+      (pretty-attributes/outer-position-attributes props)
+      (pretty-attributes/outer-size-attributes     props)
+      (pretty-attributes/outer-space-attributes    props)
+      (pretty-attributes/state-attributes          props)
+      (pretty-attributes/theme-attributes          props)))

@@ -5,42 +5,42 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn row-inner-attributes
+(defn inner-attributes
   ; @ignore
   ;
-  ; @param (keyword) row-id
-  ; @param (map) row-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ row-props]
+  [_ props]
   (-> {:class :pt-row--inner}
-      (pretty-attributes/background-color-attributes row-props)
-      (pretty-attributes/border-attributes           row-props)
-      (pretty-attributes/grid-attributes             row-props)
-      (pretty-attributes/inner-size-attributes       row-props)
-      (pretty-attributes/inner-space-attributes      row-props)
-      (pretty-attributes/style-attributes            row-props)))
+      (pretty-attributes/background-color-attributes props)
+      (pretty-attributes/border-attributes           props)
+      (pretty-attributes/grid-attributes             props)
+      (pretty-attributes/inner-size-attributes       props)
+      (pretty-attributes/inner-space-attributes      props)
+      (pretty-attributes/style-attributes            props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn row-attributes
+(defn outer-attributes
   ; @ignore
   ;
-  ; @param (keyword) row-id
-  ; @param (map) row-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ row-props]
-  (-> {:class :pt-row}
-      (pretty-attributes/class-attributes          row-props)
-      (pretty-attributes/inner-position-attributes row-props)
-      (pretty-attributes/outer-position-attributes row-props)
-      (pretty-attributes/outer-size-attributes     row-props)
-      (pretty-attributes/outer-space-attributes    row-props)
-      (pretty-attributes/state-attributes          row-props)
-      (pretty-attributes/theme-attributes          row-props)))
+  [_ props]
+  (-> {:class :pt-row--outer}
+      (pretty-attributes/class-attributes          props)
+      (pretty-attributes/inner-position-attributes props)
+      (pretty-attributes/outer-position-attributes props)
+      (pretty-attributes/outer-size-attributes     props)
+      (pretty-attributes/outer-space-attributes    props)
+      (pretty-attributes/state-attributes          props)
+      (pretty-attributes/theme-attributes          props)))

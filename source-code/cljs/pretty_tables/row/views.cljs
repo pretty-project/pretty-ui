@@ -12,27 +12,18 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- row-cell
-  ; @ignore
-  ;
-  ; @param (integer) cell-dex
-  ; @param (map) cell-props
-  [cell-dex cell-props]
-  (let [cell-props (row.prototypes/cell-props-prototype cell-dex cell-props)]
-       [cell.views/view cell-props]))
-
 (defn- row
   ; @ignore
   ;
-  ; @param (keyword) row-id
-  ; @param (map) row-props
+  ; @param (keyword) id
+  ; @param (map) props
   ; {:cells (maps in vector)
   ;  ...}
-  [row-id {:keys [cells] :as row-props}]
-  [:div (row.attributes/row-attributes row-id row-props)
-        [:div (row.attributes/row-inner-attributes row-id row-props)
-              (letfn [(f0 [cell-dex cell-props] [row-cell cell-dex cell-props])]
-                     (hiccup/put-with-indexed [:<>] cells f0))]])
+  [id {:keys [cells] :as props}]
+  [:div (row.attributes/outer-attributes id props)
+        [:div (row.attributes/inner-attributes id props)
+              (letfn [(f0 [cell] [cell.views/view cell])]
+                     (hiccup/put-with [:<>] cells f0))]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -40,13 +31,13 @@
 (defn- view-lifecycles
   ; @ignore
   ;
-  ; @param (keyword) row-id
-  ; @param (map) row-props
-  [row-id row-props]
+  ; @param (keyword) id
+  ; @param (map) props
+  [id props]
   ; @note (tutorials#parameterizing)
-  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    row-id row-props))
-                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount row-id row-props))
-                         :reagent-render         (fn [_ row-props] [row row-id row-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    id props))
+                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount id props))
+                         :reagent-render         (fn [_ props] [row id props])}))
 
 (defn view
   ; @description
@@ -72,8 +63,8 @@
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
   ;
-  ; @param (keyword)(opt) row-id
-  ; @param (map) row-props
+  ; @param (keyword)(opt) id
+  ; @param (map) props
   ; Check out the implemented elements.
   ; Check out the implemented properties.
   ;
@@ -85,12 +76,12 @@
   ;       :fill-color    :muted
   ;       :cell-default  {:outer-height :xs :fill-color :highlight}
   ;       :cells         [{:content "My cell #1"} {:content "My cell #2"}]}]
-  ([row-props]
-   [view (random/generate-keyword) row-props])
+  ([props]
+   [view (random/generate-keyword) props])
 
-  ([row-id row-props]
+  ([id props]
    ; @note (tutorials#parameterizing)
-   (fn [_ row-props]
-       (let [row-props (pretty-presets.engine/apply-preset row-id row-props)
-             row-props (row.prototypes/row-props-prototype row-id row-props)]
-            [view-lifecycles row-id row-props]))))
+   (fn [_ props]
+       (let [props (pretty-presets.engine/apply-preset id props)
+             props (row.prototypes/props-prototype     id props)]
+            [view-lifecycles id props]))))

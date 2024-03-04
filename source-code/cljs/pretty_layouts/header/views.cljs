@@ -13,14 +13,14 @@
 (defn- header
   ; @ignore
   ;
-  ; @param (keyword) header-id
-  ; @param (map) header-props
+  ; @param (keyword) id
+  ; @param (map) props
   ; {:content (multitype-content)(opt)
   ;  ...}
-  [header-id {:keys [content] :as header-props}]
-  [:div (header.attributes/header-attributes header-id header-props)
-        [:div (header.attributes/header-inner-attributes header-id header-props)
-              (-> content)]])
+  [id {:keys [content] :as props}]
+  [:div (header.attributes/outer-attributes id props)
+        [:div (header.attributes/inner-attributes id props)
+              [:div (header.attributes/content-attributes id props) content]]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -28,13 +28,13 @@
 (defn- view-lifecycles
   ; @ignore
   ;
-  ; @param (keyword) header-id
-  ; @param (map) header-props
-  [header-id header-props]
+  ; @param (keyword) id
+  ; @param (map) props
+  [id props]
   ; @note (tutorials#parameterizing)
-  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-layouts.engine/layout-did-mount    header-id header-props))
-                         :component-will-unmount (fn [_ _] (pretty-layouts.engine/layout-will-unmount header-id header-props))
-                         :reagent-render         (fn [_ header-props] [header header-id header-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-layouts.engine/pseudo-layout-did-mount    id props))
+                         :component-will-unmount (fn [_ _] (pretty-layouts.engine/pseudo-layout-will-unmount id props))
+                         :reagent-render         (fn [_ props] [header id props])}))
 
 (defn view
   ; @description
@@ -46,6 +46,7 @@
   ; [Content properties](pretty-core/cljs/pretty-properties/api.html#content-properties)
   ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
   ; [Flex properties](pretty-core/cljs/pretty-properties/api.html#flex-properties)
+  ; [Font properties](pretty-core/cljs/pretty-properties/api.html#font-properties)
   ; [Inner position properties](pretty-core/cljs/pretty-properties/api.html#inner-position-properties)
   ; [Inner size properties](pretty-core/cljs/pretty-properties/api.html#inner-size-properties)
   ; [Inner space properties](pretty-core/cljs/pretty-properties/api.html#inner-space-properties)
@@ -56,22 +57,24 @@
   ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
   ; [State properties](pretty-core/cljs/pretty-properties/api.html#state-properties)
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
+  ; [Text properties](pretty-core/cljs/pretty-properties/api.html#text-properties)
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
   ;
-  ; @param (keyword)(opt) header-id
-  ; @param (map) header-props
+  ; @param (keyword)(opt) id
+  ; @param (map) props
   ; Check out the implemented properties.
   ;
   ; @usage (pretty-layouts/header.png)
   ; [header {:content    "My header"
   ;          :fill-color :highlight
   ;          :indent     {:all :s}}]
-  ([header-props]
-   [view (random/generate-keyword) header-props])
+  ([props]
+   [view (random/generate-keyword) props])
 
-  ([header-id header-props]
+  ([id props]
    ; @note (tutorials#parameterizing)
-   (fn [_ header-props]
-       (let [header-props (pretty-presets.engine/apply-preset       header-id header-props)
-             header-props (header.prototypes/header-props-prototype header-id header-props)]
-            [view-lifecycles header-id header-props]))))
+   (fn [_ props]
+       (let [props (pretty-presets.engine/apply-preset id props)
+             props (header.prototypes/props-prototype  id props)]
+            (if (:mounted? props)
+                [view-lifecycles id props])))))

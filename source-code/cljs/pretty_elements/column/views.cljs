@@ -13,14 +13,14 @@
 (defn- column
   ; @ignore
   ;
-  ; @param (keyword) column-id
-  ; @param (map) column-props
+  ; @param (keyword) id
+  ; @param (map) props
   ; {:content (multitype-content)(opt)
   ;  ...}
-  [column-id {:keys [content] :as column-props}]
-  [:div (column.attributes/column-attributes column-id column-props)
-        [:div (column.attributes/column-inner-attributes column-id column-props)
-              [:div (column.attributes/column-content-attributes column-id column-props) content]]])
+  [id {:keys [content] :as props}]
+  [:div (column.attributes/outer-attributes id props)
+        [:div (column.attributes/inner-attributes id props)
+              [:div (column.attributes/content-attributes id props) content]]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -28,13 +28,13 @@
 (defn- view-lifecycles
   ; @ignore
   ;
-  ; @param (keyword) column-id
-  ; @param (map) column-props
-  [column-id column-props]
+  ; @param (keyword) id
+  ; @param (map) props
+  [id props]
   ; @note (tutorials#parameterizing)
-  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    column-id column-props))
-                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount column-id column-props))
-                         :reagent-render         (fn [_ column-props] [column column-id column-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    id props))
+                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount id props))
+                         :reagent-render         (fn [_ props] [column id props])}))
 
 (defn view
   ; @description
@@ -53,15 +53,15 @@
   ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
   ; [Outer position properties](pretty-core/cljs/pretty-properties/api.html#outer-position-properties)
   ; [Outer size properties](pretty-core/cljs/pretty-properties/api.html#outer-size-properties)
-  ; [Outer space properties](pretty-core/cljs/pretty-properties/api.html#outer-space-properties)  
+  ; [Outer space properties](pretty-core/cljs/pretty-properties/api.html#outer-space-properties)
   ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
   ; [State properties](pretty-core/cljs/pretty-properties/api.html#state-properties)
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
   ; [Text properties](pretty-core/cljs/pretty-properties/api.html#text-properties)
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
   ;
-  ; @param (keyword)(opt) column-id
-  ; @param (map) column-props
+  ; @param (keyword)(opt) id
+  ; @param (map) props
   ; Check out the implemented properties.
   ;
   ; @usage (pretty-elements/column.png)
@@ -77,12 +77,13 @@
   ;          :vertical-align   :center
   ;          :outer-height     :s
   ;          :outer-width      :5xl}]
-  ([column-props]
-   [view (random/generate-keyword) column-props])
+  ([props]
+   [view (random/generate-keyword) props])
 
-  ([column-id column-props]
+  ([id props]
    ; @note (tutorials#parameterizing)
-   (fn [_ column-props]
-       (let [column-props (pretty-presets.engine/apply-preset       column-id column-props)
-             column-props (column.prototypes/column-props-prototype column-id column-props)]
-            [view-lifecycles column-id column-props]))))
+   (fn [_ props]
+       (let [props (pretty-presets.engine/apply-preset id props)
+             props (column.prototypes/props-prototype  id props)]
+            (if (:mounted? props)
+                [view-lifecycles id props])))))

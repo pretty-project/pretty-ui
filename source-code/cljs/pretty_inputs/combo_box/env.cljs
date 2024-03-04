@@ -36,12 +36,12 @@
   ; @param (map) box-props
   ;
   ; @return (vector)
-  [box-id box-props]
-  (let [options (pretty-inputs.engine/get-input-options box-id box-props)]
-       (letfn [(f0 [options option] (if (pretty-inputs.engine/render-input-option? box-id box-props option)
-                                        (conj options option)
-                                        (->   options)))]
-              (reduce f0 [] options))))
+  [box-id box-props])
+  ;(let [options (pretty-inputs.engine/get-input-options box-id box-props)]
+  ;     (letfn [(f0 [options option] (if (pretty-inputs.engine/render-input-option? box-id box-props option)
+  ;                                      (conj options option)
+  ;                                      (->   options)
+  ;            (reduce f0 [] options)])
 
 (defn get-highlighted-option
   ; @ignore

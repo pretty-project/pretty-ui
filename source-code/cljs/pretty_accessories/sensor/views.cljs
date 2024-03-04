@@ -11,11 +11,11 @@
 (defn- sensor
   ; @ignore
   ;
-  ; @param (keyword) sensor-id
-  ; @param (map) sensor-props
-  [sensor-id sensor-props]
-  [:div (sensor.attributes/sensor-attributes sensor-id sensor-props)
-        [:div (sensor.attributes/sensor-inner-attributes sensor-id sensor-props)]])
+  ; @param (keyword) id
+  ; @param (map) props
+  [id props]
+  [:div (sensor.attributes/outer-attributes id props)
+        [:div (sensor.attributes/inner-attributes id props)]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -41,19 +41,19 @@
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
   ; [Visibility properties](pretty-core/cljs/pretty-properties/api.html#visibility-properties)
   ;
-  ; @param (keyword)(opt) sensor-id
-  ; @param (map) sensor-props
+  ; @param (keyword)(opt) id
+  ; @param (map) props
   ; Check out the implemented properties.
   ;
   ; @usage (pretty-accessories/sensor.png)
   ; [sensor {:fill-color      :invert
   ;          :on-mouse-over-f (fn [_] ...)}]
-  ([sensor-props]
-   [view (random/generate-keyword) sensor-props])
+  ([props]
+   [view (random/generate-keyword) props])
 
-  ([sensor-id sensor-props]
+  ([id props]
    ; @note (tutorials#parameterizing)
-   (fn [_ sensor-props]
-       (let [sensor-props (pretty-presets.engine/apply-preset       sensor-id sensor-props)
-             sensor-props (sensor.prototypes/sensor-props-prototype sensor-id sensor-props)]
-            [sensor sensor-id sensor-props]))))
+   (fn [_ props]
+       (let [props (pretty-presets.engine/apply-preset id props)
+             props (sensor.prototypes/props-prototype  id props)]
+            [sensor id props]))))

@@ -5,39 +5,39 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn spacer-inner-attributes
+(defn inner-attributes
   ; @ignore
   ;
-  ; @param (keyword) spacer-id
-  ; @param (map) spacer-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ spacer-props]
+  [_ props]
   (-> {:class :pe-vertical-spacer--inner}
-      (pretty-attributes/inner-size-attributes  spacer-props)
-      (pretty-attributes/inner-space-attributes spacer-props)
-      (pretty-attributes/style-attributes       spacer-props)))
+      (pretty-attributes/inner-size-attributes  props)
+      (pretty-attributes/inner-space-attributes props)
+      (pretty-attributes/style-attributes       props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn spacer-attributes
+(defn outer-attributes
   ; @ignore
   ;
-  ; @param (keyword) spacer-id
-  ; @param (map) spacer-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ spacer-props]
-  (-> {:class :pe-vertical-spacer}
-      (pretty-attributes/class-attributes          spacer-props)
-      (pretty-attributes/inner-position-attributes spacer-props)
-      (pretty-attributes/outer-position-attributes spacer-props)
-      (pretty-attributes/outer-size-attributes     spacer-props)
-      (pretty-attributes/outer-space-attributes    spacer-props)
-      (pretty-attributes/state-attributes          spacer-props)
-      (pretty-attributes/theme-attributes          spacer-props)))
+  [_ props]
+  (-> {:class :pe-vertical-spacer--outer}
+      (pretty-attributes/class-attributes          props)
+      (pretty-attributes/inner-position-attributes props)
+      (pretty-attributes/outer-position-attributes props)
+      (pretty-attributes/outer-size-attributes     props)
+      (pretty-attributes/outer-space-attributes    props)
+      (pretty-attributes/state-attributes          props)
+      (pretty-attributes/theme-attributes          props)))

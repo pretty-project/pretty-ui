@@ -13,14 +13,14 @@
 (defn- body
   ; @ignore
   ;
-  ; @param (keyword) body-id
-  ; @param (map) body-props
+  ; @param (keyword) id
+  ; @param (map) props
   ; {:content (multitype-content)(opt)
   ;  ...}
-  [body-id {:keys [content] :as body-props}]
-  [:div (body.attributes/body-attributes body-id body-props)
-        [:div (body.attributes/body-inner-attributes body-id body-props)
-              (-> content)]])
+  [id {:keys [content] :as props}]
+  [:div (body.attributes/outer-attributes id props)
+        [:div (body.attributes/inner-attributes id props)
+              [:div (body.attributes/content-attributes id props) content]]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -28,13 +28,13 @@
 (defn- view-lifecycles
   ; @ignore
   ;
-  ; @param (keyword) body-id
-  ; @param (map) body-props
-  [body-id body-props]
+  ; @param (keyword) id
+  ; @param (map) props
+  [id props]
   ; @note (tutorials#parameterizing)
-  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-layouts.engine/layout-did-mount    body-id body-props))
-                         :component-will-unmount (fn [_ _] (pretty-layouts.engine/layout-will-unmount body-id body-props))
-                         :reagent-render         (fn [_ body-props] [body body-id body-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-layouts.engine/pseudo-layout-did-mount    id props))
+                         :component-will-unmount (fn [_ _] (pretty-layouts.engine/pseudo-layout-will-unmount id props))
+                         :reagent-render         (fn [_ props] [body id props])}))
 
 (defn view
   ; @description
@@ -46,6 +46,7 @@
   ; [Content properties](pretty-core/cljs/pretty-properties/api.html#content-properties)
   ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
   ; [Flex properties](pretty-core/cljs/pretty-properties/api.html#flex-properties)
+  ; [Font properties](pretty-core/cljs/pretty-properties/api.html#font-properties)
   ; [Inner position properties](pretty-core/cljs/pretty-properties/api.html#inner-position-properties)
   ; [Inner size properties](pretty-core/cljs/pretty-properties/api.html#inner-size-properties)
   ; [Inner space properties](pretty-core/cljs/pretty-properties/api.html#inner-space-properties)
@@ -56,22 +57,24 @@
   ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
   ; [State properties](pretty-core/cljs/pretty-properties/api.html#state-properties)
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
+  ; [Text properties](pretty-core/cljs/pretty-properties/api.html#text-properties)
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
   ;
-  ; @param (keyword)(opt) body-id
-  ; @param (map) body-props
+  ; @param (keyword)(opt) id
+  ; @param (map) props
   ; Check out the implemented properties.
   ;
   ; @usage (pretty-layouts/body.png)
   ; [body {:content    "My body"
   ;        :fill-color :highlight
   ;        :indent     {:all :s}}]
-  ([body-props]
-   [view (random/generate-keyword) body-props])
+  ([props]
+   [view (random/generate-keyword) props])
 
-  ([body-id body-props]
+  ([id props]
    ; @note (tutorials#parameterizing)
-   (fn [_ body-props]
-       (let [body-props (pretty-presets.engine/apply-preset       body-id body-props)
-             body-props (body.prototypes/body-props-prototype body-id body-props)]
-            [view-lifecycles body-id body-props]))))
+   (fn [_ props]
+       (let [props (pretty-presets.engine/apply-preset id props)
+             props (body.prototypes/props-prototype    id props)]
+            (if (:mounted? props)
+                [view-lifecycles id props])))))

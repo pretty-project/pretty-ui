@@ -5,37 +5,37 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn menu-inner-attributes
+(defn inner-attributes
   ; @ignore
   ;
-  ; @param (keyword) menu-id
-  ; @param (map) menu-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ menu-props]
+  [_ props]
   (-> {:class :pe-dropdown-menu--inner}
-      (pretty-attributes/inner-size-attributes  menu-props)
-      (pretty-attributes/inner-space-attributes menu-props)
-      (pretty-attributes/mouse-event-attributes menu-props)
-      (pretty-attributes/style-attributes       menu-props)))
+      (pretty-attributes/inner-size-attributes  props)
+      (pretty-attributes/inner-space-attributes props)
+      (pretty-attributes/mouse-event-attributes props)
+      (pretty-attributes/style-attributes       props)))
 
-(defn menu-attributes
+(defn outer-attributes
   ; @ignore
   ;
-  ; @param (keyword) menu-id
-  ; @param (map) menu-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ menu-props]
-  (-> {:class :pe-dropdown-menu}
-      (pretty-attributes/class-attributes          menu-props)
-      (pretty-attributes/inner-position-attributes menu-props)
-      (pretty-attributes/outer-position-attributes menu-props)
-      (pretty-attributes/outer-size-attributes     menu-props)
-      (pretty-attributes/outer-space-attributes    menu-props)
-      (pretty-attributes/state-attributes          menu-props)
-      (pretty-attributes/theme-attributes          menu-props)))
+  [_ props]
+  (-> {:class :pe-dropdown-menu--outer}
+      (pretty-attributes/class-attributes          props)
+      (pretty-attributes/inner-position-attributes props)
+      (pretty-attributes/outer-position-attributes props)
+      (pretty-attributes/outer-size-attributes     props)
+      (pretty-attributes/outer-space-attributes    props)
+      (pretty-attributes/state-attributes          props)
+      (pretty-attributes/theme-attributes          props)))

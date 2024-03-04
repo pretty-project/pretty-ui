@@ -13,14 +13,14 @@
 (defn- row
   ; @ignore
   ;
-  ; @param (keyword) row-id
-  ; @param (map) row-props
+  ; @param (keyword) id
+  ; @param (map) props
   ; {:content (multitype-content)(opt)
   ;  ...}
-  [row-id {:keys [content] :as row-props}]
-  [:div (row.attributes/row-attributes row-id row-props)
-        [:div (row.attributes/row-inner-attributes row-id row-props)
-              [:div (row.attributes/row-content-attributes row-id row-props) content]]])
+  [id {:keys [content] :as props}]
+  [:div (row.attributes/outer-attributes id props)
+        [:div (row.attributes/inner-attributes id props)
+              [:div (row.attributes/content-attributes id props) content]]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -28,13 +28,13 @@
 (defn- view-lifecycles
   ; @ignore
   ;
-  ; @param (keyword) row-id
-  ; @param (map) row-props
-  [row-id row-props]
+  ; @param (keyword) id
+  ; @param (map) props
+  [id props]
   ; @note (tutorials#parameterizing)
-  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    row-id row-props))
-                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount row-id row-props))
-                         :reagent-render         (fn [_ row-props] [row row-id row-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    id props))
+                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount id props))
+                         :reagent-render         (fn [_ props] [row id props])}))
 
 (defn view
   ; @description
@@ -54,14 +54,14 @@
   ; [Outer position properties](pretty-core/cljs/pretty-properties/api.html#outer-position-properties)
   ; [Outer size properties](pretty-core/cljs/pretty-properties/api.html#outer-size-properties)
   ; [Outer space properties](pretty-core/cljs/pretty-properties/api.html#outer-space-properties)
-  ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)  
+  ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
   ; [State properties](pretty-core/cljs/pretty-properties/api.html#state-properties)
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
   ; [Text properties](pretty-core/cljs/pretty-properties/api.html#text-properties)
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
   ;
-  ; @param (keyword)(opt) row-id
-  ; @param (map) row-props
+  ; @param (keyword)(opt) id
+  ; @param (map) props
   ; Check out the implemented properties.
   ;
   ; @usage (pretty-elements/row.png)
@@ -77,12 +77,13 @@
   ;       :vertical-align   :center
   ;       :outer-height     :s
   ;       :outer-width      :5xl}]
-  ([row-props]
-   [view (random/generate-keyword) row-props])
+  ([props]
+   [view (random/generate-keyword) props])
 
-  ([row-id row-props]
+  ([id props]
    ; @note (tutorials#parameterizing)
-   (fn [_ row-props]
-       (let [row-props (pretty-presets.engine/apply-preset row-id row-props)
-             row-props (row.prototypes/row-props-prototype row-id row-props)]
-            [view-lifecycles row-id row-props]))))
+   (fn [_ props]
+       (let [props (pretty-presets.engine/apply-preset id props)
+             props (row.prototypes/props-prototype     id props)]
+            (if (:mounted? props)
+                [view-lifecycles id props])))))

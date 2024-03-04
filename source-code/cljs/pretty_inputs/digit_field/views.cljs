@@ -47,7 +47,7 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   [field-id field-props]
-  [:div (digit-field.attributes/field-attributes field-id field-props)
+  [:div (digit-field.attributes/outer-attributes field-id field-props)
         [digit-field-input                       field-id field-props]
         [digit-field-cover                       field-id field-props]])
 

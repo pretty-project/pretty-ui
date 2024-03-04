@@ -8,23 +8,23 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn diagram-datum-attributes
+(defn datum-attributes
   ; @ignore
   ;
-  ; @param (keyword) diagram-id
-  ; @param (map) diagram-props
+  ; @param (keyword) id
+  ; @param (map) props
   ; {:strength (percentage)
   ;  ...}
-  ; @param (integer) datum-dex
+  ; @param (integer) dex
   ; @param (*) datum
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [diagram-id {:keys [strength] :as diagram-props} datum-dex datum]
-  (let [datum-color     (pretty-diagrams.engine/get-diagram-datum-color diagram-id diagram-props datum-dex datum)
-        datum-pattern   (circle-diagram.utils/diagram-datum-pattern     diagram-id diagram-props datum-dex datum)
-        datum-transform (circle-diagram.utils/diagram-datum-transform   diagram-id diagram-props datum-dex datum)]
+  [id {:keys [strength] :as props} dex datum]
+  (let [datum-color     (pretty-diagrams.engine/get-diagram-datum-color id props dex datum)
+        datum-pattern   (circle-diagram.utils/diagram-datum-pattern     id props dex datum)
+        datum-transform (circle-diagram.utils/diagram-datum-transform   id props dex datum)]
        (-> {:class :pd-circle-diagram--datum}
            (pretty-attributes/svg-circle-attributes {:diameter circle-diagram.config/CIRCLE-DIAMETER         :stroke-width strength})
            (pretty-attributes/svg-stroke-attributes {:stroke-color datum-color :stroke-pattern datum-pattern :stroke-width strength})
@@ -33,39 +33,39 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn diagram-inner-attributes
+(defn inner-attributes
   ; @ignore
   ;
-  ; @param (keyword) diagram-id
-  ; @param (map) diagram-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ diagram-props]
+  [_ props]
   (-> {:class :pd-circle-diagram--inner}
-      (pretty-attributes/inner-size-attributes  diagram-props)
-      (pretty-attributes/inner-space-attributes diagram-props)
-      (pretty-attributes/style-attributes       diagram-props)))
+      (pretty-attributes/inner-size-attributes  props)
+      (pretty-attributes/inner-space-attributes props)
+      (pretty-attributes/style-attributes       props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn diagram-attributes
+(defn outer-attributes
   ; @ignore
   ;
-  ; @param (keyword) diagram-id
-  ; @param (map) diagram-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ diagram-props]
-  (-> {:class :pd-circle-diagram}
-      (pretty-attributes/class-attributes          diagram-props)
-      (pretty-attributes/inner-position-attributes diagram-props)
-      (pretty-attributes/outer-position-attributes diagram-props)
-      (pretty-attributes/outer-size-attributes     diagram-props)
-      (pretty-attributes/outer-space-attributes    diagram-props)
-      (pretty-attributes/state-attributes          diagram-props)
-      (pretty-attributes/theme-attributes          diagram-props)))
+  [_ props]
+  (-> {:class :pd-circle-diagram--outer}
+      (pretty-attributes/class-attributes          props)
+      (pretty-attributes/inner-position-attributes props)
+      (pretty-attributes/outer-position-attributes props)
+      (pretty-attributes/outer-size-attributes     props)
+      (pretty-attributes/outer-space-attributes    props)
+      (pretty-attributes/state-attributes          props)
+      (pretty-attributes/theme-attributes          props)))

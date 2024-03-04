@@ -13,13 +13,13 @@
 (defn- cell
   ; @ignore
   ;
-  ; @param (keyword) cell-id
-  ; @param (map) cell-props
+  ; @param (keyword) id
+  ; @param (map) props
   ; {:content (multitype-content)(opt)
   ;  ...}
-  [cell-id {:keys [content] :as cell-props}]
-  [:div (cell.attributes/cell-attributes cell-id cell-props)
-        [:div (cell.attributes/cell-inner-attributes cell-id cell-props)
+  [id {:keys [content] :as props}]
+  [:div (cell.attributes/outer-attributes id props)
+        [:div (cell.attributes/inner-attributes id props)
               (-> content)]])
 
 ;; ----------------------------------------------------------------------------
@@ -28,13 +28,13 @@
 (defn- view-lifecycles
   ; @ignore
   ;
-  ; @param (keyword) cell-id
-  ; @param (map) cell-props
-  [cell-id cell-props]
+  ; @param (keyword) id
+  ; @param (map) props
+  [id props]
   ; @note (tutorials#parameterizing)
-  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    cell-id cell-props))
-                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount cell-id cell-props))
-                         :reagent-render         (fn [_ cell-props] [cell cell-id cell-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    id props))
+                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount id props))
+                         :reagent-render         (fn [_ props] [cell id props])}))
 
 (defn view
   ; @description
@@ -60,8 +60,8 @@
   ; [Text properties](pretty-core/cljs/pretty-properties/api.html#text-properties)
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
   ;
-  ; @param (keyword)(opt) cell-id
-  ; @param (map) cell-props
+  ; @param (keyword)(opt) id
+  ; @param (map) props
   ; Check out the implemented properties.
   ;
   ; @usage (pretty-tables/cell.png)
@@ -70,12 +70,12 @@
   ;        :content       "My cell"
   ;        :fill-color    :highlight
   ;        :outer-height  :xs}]
-  ([cell-props]
-   [view (random/generate-keyword) cell-props])
+  ([props]
+   [view (random/generate-keyword) props])
 
-  ([cell-id cell-props]
+  ([id props]
    ; @note (tutorials#parameterizing)
-   (fn [_ cell-props]
-       (let [cell-props (pretty-presets.engine/apply-preset   cell-id cell-props)
-             cell-props (cell.prototypes/cell-props-prototype cell-id cell-props)]
-            [view-lifecycles cell-id cell-props]))))
+   (fn [_ props]
+       (let [props (pretty-presets.engine/apply-preset id props)
+             props (cell.prototypes/props-prototype    id props)]
+            [view-lifecycles id props]))))

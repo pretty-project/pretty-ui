@@ -7,7 +7,8 @@
               [pretty-elements.menu-bar.views           :as menu-bar.views]
               [pretty-elements.expandable.views         :as expandable.views]
               [pretty-presets.engine.api                :as pretty-presets.engine]
-              [reagent.core :as reagent]))
+              [reagent.core :as reagent]
+              [pretty-subitems.api :as pretty-subitems]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -15,16 +16,16 @@
 (defn- dropdown-menu
   ; @ignore
   ;
-  ; @param (keyword) menu-id
-  ; @param (map) menu-props
+  ; @param (keyword) id
+  ; @param (map) props
   ; {:expandable (map)(opt)
   ;  :menu-bar (map)(opt)
   ;  ...}
-  [menu-id {:keys [expandable menu-bar] :as menu-props}]
-  [:div (dropdown-menu.attributes/menu-attributes menu-id menu-props)
-        [:div (dropdown-menu.attributes/menu-inner-attributes menu-id menu-props)
-              (if menu-bar   [menu-bar.views/view   menu-id menu-bar])
-              (if expandable [expandable.views/view menu-id expandable])]])
+  [id {:keys [expandable menu-bar] :as props}]
+  [:div (dropdown-menu.attributes/outer-attributes id props)
+        [:div (dropdown-menu.attributes/inner-attributes id props)
+              (if menu-bar   [menu-bar.views/view   (pretty-subitems/subitem-id id :menu-bar)   menu-bar])
+              (if expandable [expandable.views/view (pretty-subitems/subitem-id id :expandable) expandable])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -32,13 +33,13 @@
 (defn- view-lifecycles
   ; @ignore
   ;
-  ; @param (keyword) menu-id
-  ; @param (map) menu-props
-  [menu-id menu-props]
+  ; @param (keyword) id
+  ; @param (map) props
+  [id props]
   ; @note (tutorials#parameterizing)
-  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    menu-id menu-props))
-                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount menu-id menu-props))
-                         :reagent-render         (fn [_ menu-props] [dropdown-menu menu-id menu-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    id props))
+                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount id props))
+                         :reagent-render         (fn [_ props] [dropdown-menu id props])}))
 
 (defn view
   ; @description
@@ -62,8 +63,8 @@
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
   ;
-  ; @param (keyword)(opt) menu-id
-  ; @param (map) menu-props
+  ; @param (keyword)(opt) id
+  ; @param (map) props
   ; Check out the implemented elements.
   ; Check out the implemented properties.
   ;
@@ -78,12 +79,13 @@
   ;                              :menu-items        [{:label {:content "My menu item #1"} :dropdown-content [:div "My dropdown content #1"]}
   ;                                                  {:label {:content "My menu item #2"} :dropdown-content [:div "My dropdown content #2"]}
   ;                                                  {:label {:content "My menu item #3"} :dropdown-content [:div "My dropdown content #3"]}}]
-  ([menu-props]
-   [view (random/generate-keyword) menu-props])
+  ([props]
+   [view (random/generate-keyword) props])
 
-  ([menu-id menu-props]
+  ([id props]
    ; @note (tutorials#parameterizing)
-   (fn [_ menu-props]
-       (let [menu-props (pretty-presets.engine/apply-preset            menu-id menu-props)
-             menu-props (dropdown-menu.prototypes/menu-props-prototype menu-id menu-props)]
-            [view-lifecycles menu-id menu-props]))))
+   (fn [_ props]
+       (let [props (pretty-presets.engine/apply-preset       id props)
+             props (dropdown-menu.prototypes/props-prototype id props)]
+            (if (:mounted? props)
+                [view-lifecycles id props])))))

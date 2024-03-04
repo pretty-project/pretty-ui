@@ -6,7 +6,8 @@
               [pretty-elements.toggle.prototypes :as toggle.prototypes]
               [pretty-presets.engine.api         :as pretty-presets.engine]
               [reagent.core :as reagent]
-              [pretty-models.api             :as pretty-models]
+              [pretty-models.api :as pretty-models]
+              [pretty-subitems.api :as pretty-subitems]
               [pretty-accessories.api :as pretty-accessories]))
 
 ;; ----------------------------------------------------------------------------
@@ -15,21 +16,23 @@
 (defn- toggle
   ; @ignore
   ;
-  ; @param (keyword) toggle-id
-  ; @param (map) toggle-props
+  ; @param (keyword) id
+  ; @param (map) props
   ; {:badge (map)(opt)
   ;  :content (multitype-content)(opt)
   ;  :cover (map)(opt)
   ;  :marker (map)(opt)
+  ;  :tooltip (map)(opt)
   ;  ...}
-  [toggle-id {:keys [badge content cover marker] :as toggle-props}]
-  [:div (toggle.attributes/toggle-attributes toggle-id toggle-props)
-        [(pretty-models/clickable-auto-tag          toggle-id toggle-props)
-         (toggle.attributes/toggle-inner-attributes toggle-id toggle-props)
-         (if content [:div (toggle.attributes/toggle-content-attributes toggle-id toggle-props) content])
-         (if badge   [pretty-accessories/badge  toggle-id badge])
-         (if marker  [pretty-accessories/marker toggle-id marker])
-         (if cover   [pretty-accessories/cover  toggle-id cover])]])
+  [id {:keys [badge content cover marker tooltip] :as props}]
+  [:div (toggle.attributes/outer-attributes id props)
+        [(pretty-models/clickable-auto-tag   id props)
+         (toggle.attributes/inner-attributes id props)
+         (if content [:div (toggle.attributes/content-attributes id props) content])
+         (if badge   [pretty-accessories/badge   (pretty-subitems/subitem-id id :badge)   badge])
+         (if marker  [pretty-accessories/marker  (pretty-subitems/subitem-id id :marker)  marker])
+         (if cover   [pretty-accessories/cover   (pretty-subitems/subitem-id id :cover)   cover])
+         (if tooltip [pretty-accessories/tooltip (pretty-subitems/subitem-id id :tooltip) tooltip])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -37,15 +40,15 @@
 (defn- view-lifecycles
   ; @ignore
   ;
-  ; @param (keyword) toggle-id
-  ; @param (map) toggle-props
-  [toggle-id toggle-props]
+  ; @param (keyword) id
+  ; @param (map) props
+  [id props]
   ; @note (tutorials#parameterizing)
   ; @note (pretty-elements.adornment.views#8097)
-  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    toggle-id toggle-props))
-                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount toggle-id toggle-props))
-                         :component-did-update   (fn [%]   (pretty-elements.engine/element-did-update   toggle-id toggle-props %))
-                         :reagent-render         (fn [_ toggle-props] [toggle toggle-id toggle-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    id props))
+                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount id props))
+                         :component-did-update   (fn [%]   (pretty-elements.engine/element-did-update   id props %))
+                         :reagent-render         (fn [_ props] [toggle id props])}))
 
 (defn view
   ; @description
@@ -59,6 +62,7 @@
   ;
   ; @links Implemented properties
   ; [Anchor properties](pretty-core/cljs/pretty-properties/api.html#anchor-properties)
+  ; [Background action properties](pretty-core/cljs/pretty-properties/api.html#background-action-properties)
   ; [Background color properties](pretty-core/cljs/pretty-properties/api.html#background-color-properties)
   ; [Border properties](pretty-core/cljs/pretty-properties/api.html#border-properties)
   ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
@@ -82,8 +86,8 @@
   ; [Text properties](pretty-core/cljs/pretty-properties/api.html#text-properties)
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
   ;
-  ; @param (keyword)(opt) toggle-id
-  ; @param (map) toggle-props
+  ; @param (keyword)(opt) id
+  ; @param (map) props
   ; Check out the implemented accessories.
   ; Check out the implemented properties.
   ;
@@ -93,13 +97,14 @@
   ;          :fill-color    :highlight
   ;          :href-uri      "/my-uri"
   ;          :indent        {:all :s}}]
-  ([toggle-props]
-   [view (random/generate-keyword) toggle-props])
+  ([props]
+   [view (random/generate-keyword) props])
 
-  ([toggle-id toggle-props]
+  ([id props]
    ; @note (tutorials#parameterizing)
-   (fn [_ toggle-props]
-       (let [toggle-props (pretty-presets.engine/apply-preset           toggle-id toggle-props)
-             toggle-props (toggle.prototypes/toggle-props-prototype     toggle-id toggle-props)
-             toggle-props (pretty-elements.engine/element-timeout-props toggle-id toggle-props)]
-            [view-lifecycles toggle-id toggle-props]))))
+   (fn [_ props]
+       (let [props (pretty-presets.engine/apply-preset           id props)
+             props (toggle.prototypes/props-prototype            id props)
+             props (pretty-elements.engine/element-timeout-props id props)]
+            (if (:mounted? props)
+                [view-lifecycles id props])))))

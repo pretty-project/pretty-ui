@@ -13,11 +13,11 @@
 (defn- stepper
   ; @ignore
   ;
-  ; @param (keyword) stepper-id
-  ; @param (map) stepper-props
-  [stepper-id stepper-props]
-  [:div (stepper.attributes/stepper-attributes stepper-id stepper-props)
-        [:div (stepper.attributes/stepper-inner-attributes stepper-id stepper-props)]])
+  ; @param (keyword) id
+  ; @param (map) props
+  [id props]
+  [:div (stepper.attributes/outer-attributes id props)
+        [:div (stepper.attributes/inner-attributes id props)]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -25,29 +25,30 @@
 (defn- view-lifecycles
   ; @ignore
   ;
-  ; @param (keyword) stepper-id
-  ; @param (map) stepper-props
-  [stepper-id stepper-props]
+  ; @param (keyword) id
+  ; @param (map) props
+  [id props]
   ; @note (tutorials#parameterizing)
-  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    stepper-id stepper-props))
-                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount stepper-id stepper-props))
-                         :reagent-render         (fn [_ stepper-props] [stepper stepper-id stepper-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    id props))
+                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount id props))
+                         :reagent-render         (fn [_ props] [stepper id props])}))
 
 (defn view
   ; @important
   ; This function is incomplete and may not behave as expected.
   ;
-  ; @param (keyword)(opt) stepper-id
-  ; @param (map) stepper-props
+  ; @param (keyword)(opt) id
+  ; @param (map) props
   ;
   ; @usage (pretty-elements/stepper.png)
   ; [stepper {...}]
-  ([stepper-props]
-   [view (random/generate-keyword) stepper-props])
+  ([props]
+   [view (random/generate-keyword) props])
 
-  ([stepper-id stepper-props]
+  ([id props]
    ; @note (tutorials#parameterizing)
-   (fn [_ stepper-props]
-       (let [stepper-props (pretty-presets.engine/apply-preset         stepper-id stepper-props)
-             stepper-props (stepper.prototypes/stepper-props-prototype stepper-id stepper-props)]
-            [view-lifecycles stepper-id stepper-props]))))
+   (fn [_ props]
+       (let [props (pretty-presets.engine/apply-preset id props)
+             props (stepper.prototypes/props-prototype id props)]
+            (if (:mounted? props)
+                [view-lifecycles id props])))))

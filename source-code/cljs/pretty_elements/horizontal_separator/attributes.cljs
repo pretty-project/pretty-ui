@@ -5,56 +5,56 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn separator-line-attributes
+(defn line-attributes
   ; @ignore
   ;
-  ; @param (keyword) separator-id
-  ; @param (map) separator-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ separator-props]
+  [_ props]
   (-> {:class :pe-horizontal-separator--line}
-      (pretty-attributes/line-attributes separator-props)))
+      (pretty-attributes/line-attributes props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn separator-inner-attributes
+(defn inner-attributes
   ; @ignore
   ;
-  ; @param (keyword) separator-id
-  ; @param (map) separator-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ separator-props]
+  [_ props]
   (-> {:class :pe-horizontal-separator--inner}
-      (pretty-attributes/flex-attributes        separator-props)
-      (pretty-attributes/inner-size-attributes  separator-props)
-      (pretty-attributes/inner-space-attributes separator-props)
-      (pretty-attributes/style-attributes       separator-props)))
+      (pretty-attributes/flex-attributes        props)
+      (pretty-attributes/inner-size-attributes  props)
+      (pretty-attributes/inner-space-attributes props)
+      (pretty-attributes/style-attributes       props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn separator-attributes
+(defn outer-attributes
   ; @ignore
   ;
-  ; @param (keyword) separator-id
-  ; @param (map) separator-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ separator-props]
-  (-> {:class :pe-horizontal-separator}
-      (pretty-attributes/class-attributes          separator-props)
-      (pretty-attributes/inner-position-attributes separator-props)
-      (pretty-attributes/outer-position-attributes separator-props)
-      (pretty-attributes/outer-size-attributes     separator-props)
-      (pretty-attributes/outer-space-attributes    separator-props)
-      (pretty-attributes/state-attributes          separator-props)
-      (pretty-attributes/theme-attributes          separator-props)))
+  [_ props]
+  (-> {:class :pe-horizontal-separator--outer}
+      (pretty-attributes/class-attributes          props)
+      (pretty-attributes/inner-position-attributes props)
+      (pretty-attributes/outer-position-attributes props)
+      (pretty-attributes/outer-size-attributes     props)
+      (pretty-attributes/outer-space-attributes    props)
+      (pretty-attributes/state-attributes          props)
+      (pretty-attributes/theme-attributes          props)))

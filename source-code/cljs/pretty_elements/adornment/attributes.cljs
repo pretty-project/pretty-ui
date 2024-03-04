@@ -5,49 +5,50 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn adornment-inner-attributes
+(defn inner-attributes
   ; @ignore
   ;
-  ; @param (keyword) adornment-id
-  ; @param (map) adornment-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ adornment-props]
+  [_ props]
   (-> {:class :pe-adornment--inner}
-      (pretty-attributes/anchor-attributes           adornment-props)
-      (pretty-attributes/background-color-attributes adornment-props)
-      (pretty-attributes/border-attributes           adornment-props)
-      (pretty-attributes/clickable-state-attributes  adornment-props)
-      (pretty-attributes/cursor-attributes           adornment-props)
-      (pretty-attributes/effect-attributes           adornment-props)
-      (pretty-attributes/flex-attributes             adornment-props)
-      (pretty-attributes/inner-size-attributes       adornment-props)
-      (pretty-attributes/inner-space-attributes      adornment-props)
-      (pretty-attributes/mouse-event-attributes      adornment-props)
-      (pretty-attributes/progress-attributes         adornment-props)
-      (pretty-attributes/react-attributes            adornment-props)
-      (pretty-attributes/style-attributes            adornment-props)))
+      (pretty-attributes/anchor-attributes            props)
+      (pretty-attributes/background-action-attributes props)
+      (pretty-attributes/background-color-attributes  props)
+      (pretty-attributes/border-attributes            props)
+      (pretty-attributes/clickable-state-attributes   props)
+      (pretty-attributes/cursor-attributes            props)
+      (pretty-attributes/effect-attributes            props)
+      (pretty-attributes/flex-attributes              props)
+      (pretty-attributes/inner-size-attributes        props)
+      (pretty-attributes/inner-space-attributes       props)
+      (pretty-attributes/mouse-event-attributes       props)
+      (pretty-attributes/progress-attributes          props)
+      (pretty-attributes/react-attributes             props)
+      (pretty-attributes/style-attributes             props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn adornment-attributes
+(defn outer-attributes
   ; @ignore
   ;
-  ; @param (keyword) adornment-id
-  ; @param (map) adornment-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ adornment-props]
-  (-> {:class :pe-adornment}
-      (pretty-attributes/class-attributes          adornment-props)
-      (pretty-attributes/inner-position-attributes adornment-props)
-      (pretty-attributes/outer-position-attributes adornment-props)
-      (pretty-attributes/outer-size-attributes     adornment-props)
-      (pretty-attributes/outer-space-attributes    adornment-props)
-      (pretty-attributes/state-attributes          adornment-props)
-      (pretty-attributes/theme-attributes          adornment-props)))
+  [_ props]
+  (-> {:class :pe-adornment--outer}
+      (pretty-attributes/class-attributes          props)
+      (pretty-attributes/inner-position-attributes props)
+      (pretty-attributes/outer-position-attributes props)
+      (pretty-attributes/outer-size-attributes     props)
+      (pretty-attributes/outer-space-attributes    props)
+      (pretty-attributes/state-attributes          props)
+      (pretty-attributes/theme-attributes          props)))

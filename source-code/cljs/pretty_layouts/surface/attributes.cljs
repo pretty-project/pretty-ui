@@ -5,59 +5,59 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn surface-content-attributes
+(defn content-attributes
   ; @ignore
   ;
-  ; @param (keyword) surface-id
-  ; @param (map) surface-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ surface-props]
+  [_ props]
   (-> {:class :pl-surface--content}
-      (pretty-attributes/content-size-attributes surface-props)
-      (pretty-attributes/overflow-attributes     surface-props)))
+      (pretty-attributes/content-size-attributes props)
+      (pretty-attributes/overflow-attributes     props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn surface-inner-attributes
+(defn inner-attributes
   ; @ignore
   ;
-  ; @param (keyword) surface-id
-  ; @param (map) surface-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ surface-props]
+  [_ props]
   (-> {:class :pl-surface--inner}
-      (pretty-attributes/animation-attributes        surface-props)
-      (pretty-attributes/background-color-attributes surface-props)
-      (pretty-attributes/flex-attributes             surface-props)
-      (pretty-attributes/inner-size-attributes       surface-props)
-      (pretty-attributes/inner-space-attributes      surface-props)
-      (pretty-attributes/style-attributes            surface-props)))
+      (pretty-attributes/animation-attributes        props)
+      (pretty-attributes/background-color-attributes props)
+      (pretty-attributes/flex-attributes             props)
+      (pretty-attributes/inner-size-attributes       props)
+      (pretty-attributes/inner-space-attributes      props)
+      (pretty-attributes/style-attributes            props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn surface-attributes
+(defn outer-attributes
   ; @ignore
   ;
-  ; @param (keyword) surface-id
-  ; @param (map) surface-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ surface-props]
-  (-> {:class :pl-surface}
-      (pretty-attributes/class-attributes          surface-props)
-      (pretty-attributes/inner-position-attributes surface-props)
-      (pretty-attributes/outer-position-attributes surface-props)
-      (pretty-attributes/outer-size-attributes     surface-props)
-      (pretty-attributes/outer-space-attributes    surface-props)
-      (pretty-attributes/state-attributes          surface-props)
-      (pretty-attributes/theme-attributes          surface-props)))
+  [_ props]
+  (-> {:class :pl-surface--outer}
+      (pretty-attributes/class-attributes          props)
+      (pretty-attributes/inner-position-attributes props)
+      (pretty-attributes/outer-position-attributes props)
+      (pretty-attributes/outer-size-attributes     props)
+      (pretty-attributes/outer-space-attributes    props)
+      (pretty-attributes/state-attributes          props)
+      (pretty-attributes/theme-attributes          props)))

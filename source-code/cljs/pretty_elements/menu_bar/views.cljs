@@ -15,14 +15,14 @@
 (defn- menu-bar
   ; @ignore
   ;
-  ; @param (keyword) bar-id
-  ; @param (map) bar-props
+  ; @param (keyword) id
+  ; @param (map) props
   ; {:menu-items (maps in vector)(opt)
   ;  ...}
-  [bar-id {:keys [menu-items] :as bar-props}]
-  [:div (menu-bar.attributes/menu-bar-attributes bar-id bar-props)
-        [:div (menu-bar.attributes/menu-bar-inner-attributes bar-id bar-props)
-              (letfn [(f0 [item-props] [menu-item.views/view item-props])]
+  [id {:keys [menu-items] :as props}]
+  [:div (menu-bar.attributes/outer-attributes id props)
+        [:div (menu-bar.attributes/inner-attributes id props)
+              (letfn [(f0 [menu-item] [menu-item.views/view menu-item])]
                      (hiccup/put-with [:<>] menu-items f0))]])
 
 ;; ----------------------------------------------------------------------------
@@ -31,13 +31,13 @@
 (defn- view-lifecycles
   ; @ignore
   ;
-  ; @param (keyword) bar-id
-  ; @param (map) bar-props
-  [bar-id bar-props]
+  ; @param (keyword) id
+  ; @param (map) props
+  [id props]
   ; @note (tutorials#parameterizing)
-  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    bar-id bar-props))
-                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount bar-id bar-props))
-                         :reagent-render         (fn [_ bar-props] [menu-bar bar-id bar-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    id props))
+                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount id props))
+                         :reagent-render         (fn [_ props] [menu-bar id props])}))
 
 (defn view
   ; @description
@@ -63,8 +63,8 @@
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
   ;
-  ; @param (keyword)(opt) bar-id
-  ; @param (map) bar-props
+  ; @param (keyword)(opt) id
+  ; @param (map) props
   ; Check out the implemented elements.
   ; Check out the implemented properties.
   ;
@@ -74,12 +74,13 @@
   ;            :menu-items        [{:label {:content "My menu item #1"} :href-uri "/my-uri-1" :border-color :secondary}
   ;                                {:label {:content "My menu item #2"} :href-uri "/my-uri-2"}
   ;                                {:label {:content "My menu item #3"} :href-uri "/my-uri-3"}]}]
-  ([bar-props]
-   [view (random/generate-keyword) bar-props])
+  ([props]
+   [view (random/generate-keyword) props])
 
-  ([bar-id bar-props]
+  ([id props]
    ; @note (tutorials#parameterizing)
-   (fn [_ bar-props]
-       (let [bar-props (pretty-presets.engine/apply-preset      bar-id bar-props)
-             bar-props (menu-bar.prototypes/bar-props-prototype bar-id bar-props)]
-            [view-lifecycles bar-id bar-props]))))
+   (fn [_ props]
+       (let [props (pretty-presets.engine/apply-preset  id props)
+             props (menu-bar.prototypes/props-prototype id props)]
+            (if (:mounted? props)
+                [view-lifecycles id props])))))

@@ -5,42 +5,42 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn table-inner-attributes
+(defn inner-attributes
   ; @ignore
   ;
-  ; @param (keyword) table-id
-  ; @param (map) table-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ table-props]
+  [_ props]
   (-> {:class :pe-table--inner}
-      (pretty-attributes/background-color-attributes table-props)
-      (pretty-attributes/border-attributes           table-props)
-      (pretty-attributes/flex-attributes             table-props)
-      (pretty-attributes/inner-size-attributes       table-props)
-      (pretty-attributes/inner-space-attributes      table-props)
-      (pretty-attributes/style-attributes            table-props)))
+      (pretty-attributes/background-color-attributes props)
+      (pretty-attributes/border-attributes           props)
+      (pretty-attributes/flex-attributes             props)
+      (pretty-attributes/inner-size-attributes       props)
+      (pretty-attributes/inner-space-attributes      props)
+      (pretty-attributes/style-attributes            props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn table-attributes
+(defn outer-attributes
   ; @ignore
   ;
-  ; @param (keyword) table-id
-  ; @param (map) table-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ table-props]
-  (-> {:class :pe-table}
-      (pretty-attributes/class-attributes          table-props)
-      (pretty-attributes/inner-position-attributes table-props)
-      (pretty-attributes/outer-position-attributes table-props)
-      (pretty-attributes/outer-size-attributes     table-props)
-      (pretty-attributes/outer-space-attributes    table-props)
-      (pretty-attributes/state-attributes          table-props)
-      (pretty-attributes/theme-attributes          table-props)))
+  [_ props]
+  (-> {:class :pe-table--outer}
+      (pretty-attributes/class-attributes          props)
+      (pretty-attributes/inner-position-attributes props)
+      (pretty-attributes/outer-position-attributes props)
+      (pretty-attributes/outer-size-attributes     props)
+      (pretty-attributes/outer-space-attributes    props)
+      (pretty-attributes/state-attributes          props)
+      (pretty-attributes/theme-attributes          props)))

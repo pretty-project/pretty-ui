@@ -5,60 +5,60 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn popup-content-attributes
+(defn content-attributes
   ; @ignore
   ;
-  ; @param (keyword) popup-id
-  ; @param (map) popup-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ popup-props]
+  [_ props]
   (-> {:class :pl-popup--content}
-      (pretty-attributes/content-size-attributes popup-props)
-      (pretty-attributes/overflow-attributes     popup-props)))
+      (pretty-attributes/content-size-attributes props)
+      (pretty-attributes/overflow-attributes     props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn popup-inner-attributes
+(defn inner-attributes
   ; @ignore
   ;
-  ; @param (keyword) popup-id
-  ; @param (map) popup-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ popup-props]
+  [_ props]
   (-> {:class :pl-popup--inner}
-      (pretty-attributes/animation-attributes        popup-props)
-      (pretty-attributes/background-color-attributes popup-props)
-      (pretty-attributes/border-attributes           popup-props)
-      (pretty-attributes/flex-attributes             popup-props)
-      (pretty-attributes/inner-size-attributes       popup-props)
-      (pretty-attributes/inner-space-attributes      popup-props)
-      (pretty-attributes/style-attributes            popup-props)))
+      (pretty-attributes/animation-attributes        props)
+      (pretty-attributes/background-color-attributes props)
+      (pretty-attributes/border-attributes           props)
+      (pretty-attributes/flex-attributes             props)
+      (pretty-attributes/inner-size-attributes       props)
+      (pretty-attributes/inner-space-attributes      props)
+      (pretty-attributes/style-attributes            props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn popup-attributes
+(defn outer-attributes
   ; @ignore
   ;
-  ; @param (keyword) popup-id
-  ; @param (map) popup-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ popup-props]
-  (-> {:class :pl-popup}
-      (pretty-attributes/class-attributes          popup-props)
-      (pretty-attributes/inner-position-attributes popup-props)
-      (pretty-attributes/outer-position-attributes popup-props)
-      (pretty-attributes/outer-size-attributes     popup-props)
-      (pretty-attributes/outer-space-attributes    popup-props)
-      (pretty-attributes/state-attributes          popup-props)
-      (pretty-attributes/theme-attributes          popup-props)))
+  [_ props]
+  (-> {:class :pl-popup--outer}
+      (pretty-attributes/class-attributes          props)
+      (pretty-attributes/inner-position-attributes props)
+      (pretty-attributes/outer-position-attributes props)
+      (pretty-attributes/outer-size-attributes     props)
+      (pretty-attributes/outer-space-attributes    props)
+      (pretty-attributes/state-attributes          props)
+      (pretty-attributes/theme-attributes          props)))

@@ -5,49 +5,50 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn button-inner-attributes
+(defn inner-attributes
   ; @ignore
   ;
-  ; @param (keyword) button-id
-  ; @param (map) button-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ button-props]
+  [_ props]
   (-> {:class :pe-button--inner}
-      (pretty-attributes/anchor-attributes           button-props)
-      (pretty-attributes/background-color-attributes button-props)
-      (pretty-attributes/border-attributes           button-props)
-      (pretty-attributes/clickable-state-attributes  button-props)
-      (pretty-attributes/cursor-attributes           button-props)
-      (pretty-attributes/effect-attributes           button-props)
-      (pretty-attributes/flex-attributes             button-props)
-      (pretty-attributes/inner-size-attributes       button-props)
-      (pretty-attributes/inner-space-attributes      button-props)
-      (pretty-attributes/mouse-event-attributes      button-props)
-      (pretty-attributes/progress-attributes         button-props)
-      (pretty-attributes/react-attributes            button-props)
-      (pretty-attributes/style-attributes            button-props)))
+      (pretty-attributes/anchor-attributes            props)
+      (pretty-attributes/background-action-attributes props)
+      (pretty-attributes/background-color-attributes  props)
+      (pretty-attributes/border-attributes            props)
+      (pretty-attributes/clickable-state-attributes   props)
+      (pretty-attributes/cursor-attributes            props)
+      (pretty-attributes/effect-attributes            props)
+      (pretty-attributes/flex-attributes              props)
+      (pretty-attributes/inner-size-attributes        props)
+      (pretty-attributes/inner-space-attributes       props)
+      (pretty-attributes/mouse-event-attributes       props)
+      (pretty-attributes/progress-attributes          props)
+      (pretty-attributes/react-attributes             props)
+      (pretty-attributes/style-attributes             props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn button-attributes
+(defn outer-attributes
   ; @ignore
   ;
-  ; @param (keyword) button-id
-  ; @param (map) button-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ button-props]
-  (-> {:class :pe-button}
-      (pretty-attributes/class-attributes          button-props)
-      (pretty-attributes/inner-position-attributes button-props)
-      (pretty-attributes/outer-position-attributes button-props)
-      (pretty-attributes/outer-size-attributes     button-props)
-      (pretty-attributes/outer-space-attributes    button-props)
-      (pretty-attributes/state-attributes          button-props)
-      (pretty-attributes/theme-attributes          button-props)))
+  [_ props]
+  (-> {:class :pe-button--outer}
+      (pretty-attributes/class-attributes          props)
+      (pretty-attributes/inner-position-attributes props)
+      (pretty-attributes/outer-position-attributes props)
+      (pretty-attributes/outer-size-attributes     props)
+      (pretty-attributes/outer-space-attributes    props)
+      (pretty-attributes/state-attributes          props)
+      (pretty-attributes/theme-attributes          props)))

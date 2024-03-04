@@ -11,14 +11,14 @@
 (defn- icon
   ; @ignore
   ;
-  ; @param (keyword) icon-id
-  ; @param (map) icon-props
+  ; @param (keyword) id
+  ; @param (map) props
   ; {:icon-name (keyword)(opt)
   ;  ...}
-  [icon-id {:keys [icon-name] :as icon-props}]
-  [:div (icon.attributes/icon-attributes icon-id icon-props)
-        [:div (icon.attributes/icon-inner-attributes icon-id icon-props)
-              [:i (icon.attributes/icon-content-attributes icon-id icon-props) icon-name]]])
+  [id {:keys [icon-name] :as props}]
+  [:div (icon.attributes/outer-attributes id props)
+        [:div (icon.attributes/inner-attributes id props)
+              [:i (icon.attributes/content-attributes id props) icon-name]]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -44,18 +44,18 @@
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
   ;
-  ; @param (keyword)(opt) icon-id
-  ; @param (map) icon-props
+  ; @param (keyword)(opt) id
+  ; @param (map) props
   ; Check out the implemented properties.
   ;
   ; @usage (pretty-accessories/icon.png)
   ; [icon {:icon-name :settings}]
-  ([icon-props]
-   [view (random/generate-keyword) icon-props])
+  ([props]
+   [view (random/generate-keyword) props])
 
-  ([icon-id icon-props]
+  ([id props]
    ; @note (tutorials#parameterizing)
-   (fn [_ icon-props]
-       (let [icon-props (pretty-presets.engine/apply-preset   icon-id icon-props)
-             icon-props (icon.prototypes/icon-props-prototype icon-id icon-props)]
-            [icon icon-id icon-props]))))
+   (fn [_ props]
+       (let [props (pretty-presets.engine/apply-preset id props)
+             props (icon.prototypes/props-prototype    id props)]
+            [icon id props]))))

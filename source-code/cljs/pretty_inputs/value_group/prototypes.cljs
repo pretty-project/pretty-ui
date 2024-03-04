@@ -27,7 +27,7 @@
               (if chips-deletable? (-> chip (update :end-adornments vector/conj-item delete-chip-adornment))
                                    (-> chip)))))
 
-(defn group-props-prototype
+(defn props-prototype
   ; @ignore
   ;
   ; @param (keyword) group-id

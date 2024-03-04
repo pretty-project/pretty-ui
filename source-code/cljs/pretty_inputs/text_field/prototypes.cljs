@@ -109,3 +109,4 @@
           ;field-props (pretty-elements.engine/element-subitem-field<-disabled-state  field-id field-props :end-adornments   :end-adornment-default)
           ; auto-disable-input-autofill
           ; generate-input-autofill
+            ; (pretty-properties/default-input-validation-props {:validate-when-leave? true})

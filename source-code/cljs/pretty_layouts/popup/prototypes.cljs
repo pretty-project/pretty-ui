@@ -9,77 +9,63 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn footer-props-prototype
+(defn footer-prototype
   ; @ignore
   ;
-  ; @param (keyword) popup-id
-  ; @param (map) popup-props
-  ; {:footer (map)(opt)
-  ;  ...}
+  ; @param (keyword) id
+  ; @param (map) props
+  ; @param (map) footer
   ;
   ; @return (map)
-  [popup-id {:keys [footer] :as popup-props}]
-  (if (pretty-layouts.engine/layout-footer-overlapping? popup-id popup-props)
+  [id _ footer]
+  (if (pretty-layouts.engine/layout-sensor-overlapping?  (pretty-subitems/subitem-id id :footer-sensor) footer)
       (-> footer (pretty-properties/default-border-props {:border-color :default     :border-position :top :border-width :xxs}))
       (-> footer (pretty-properties/default-border-props {:border-color :transparent :border-position :top :border-width :xxs}))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn body-props-prototype
+(defn header-prototype
   ; @ignore
   ;
-  ; @param (keyword) popup-id
-  ; @param (map) popup-props
-  ; {:body (map)(opt)
-  ;  ...}
+  ; @param (keyword) id
+  ; @param (map) props
+  ; @param (map) header
   ;
   ; @return (map)
-  [_ {:keys [body]}]
-  (-> body))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn header-props-prototype
-  ; @ignore
-  ;
-  ; @param (keyword) popup-id
-  ; @param (map) popup-props
-  ; {:header (map)(opt)
-  ;  ...}
-  ;
-  ; @return (map)
-  [popup-id {:keys [header] :as popup-props}]
-  (if (pretty-layouts.engine/layout-header-overlapping? popup-id popup-props)
+  [id _ header]
+  (if (pretty-layouts.engine/layout-sensor-overlapping?  (pretty-subitems/subitem-id id :header-sensor) header)
       (-> header (pretty-properties/default-border-props {:border-color :default     :border-position :bottom :border-width :xxs}))
       (-> header (pretty-properties/default-border-props {:border-color :transparent :border-position :bottom :border-width :xxs}))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn popup-props-prototype
+(defn props-prototype
   ; @ignore
   ;
-  ; @param (keyword) popup-id
-  ; @param (map) popup-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
-  [_ popup-props]
-  (-> popup-props (pretty-properties/default-content-size-props   {:content-height :grow :content-width :parent})
-                  (pretty-properties/default-flex-props           {:orientation :vertical})
-                  (pretty-properties/default-inner-position-props {:inner-position :center :inner-position-method :flex})
-                  (pretty-properties/default-outer-position-props {:outer-position :center :outer-position-method :fixed})
-                  (pretty-properties/default-outer-size-props     {:outer-size-unit :screen})
-                  (pretty-properties/default-overflow-props       {:vertical-overflow :scroll})
-                  (pretty-standards/standard-animation-props)
-                  (pretty-standards/standard-border-props)
-                  (pretty-standards/standard-inner-position-props)
-                  (pretty-standards/standard-inner-size-props)
-                  (pretty-standards/standard-outer-position-props)
-                  (pretty-standards/standard-outer-size-props)
-                  (pretty-rules/apply-auto-border-crop)
-                 ;(pretty-rules/auto-disable-highlight-color)
-                 ;(pretty-rules/auto-disable-hover-color)
-                  (pretty-subitems/subitems<-disabled-state :body :footer :header)
-                  (pretty-subitems/leave-disabled-state     :body :footer :header)))
+  [id props]
+  (let [footer-prototype-f (fn [%] (footer-prototype id props %))
+        header-prototype-f (fn [%] (header-prototype id props %))]
+       (-> props (pretty-properties/default-content-size-props   {:content-height :grow :content-width :parent})
+                 (pretty-properties/default-flex-props           {:orientation :vertical})
+                 (pretty-properties/default-inner-position-props {:inner-position :center :inner-position-method :flex})
+                 (pretty-properties/default-outer-position-props {:outer-position :center :outer-position-method :fixed})
+                 (pretty-properties/default-outer-size-props     {:outer-size-unit :screen})
+                 (pretty-properties/default-overflow-props       {:vertical-overflow :scroll})
+                 (pretty-standards/standard-animation-props)
+                 (pretty-standards/standard-border-props)
+                 (pretty-standards/standard-inner-position-props)
+                 (pretty-standards/standard-inner-size-props)
+                 (pretty-standards/standard-outer-position-props)
+                 (pretty-standards/standard-outer-size-props)
+                 (pretty-rules/apply-auto-border-crop)
+                 (pretty-rules/auto-set-mounted)
+                 (pretty-subitems/subitems<-disabled-state :body :footer :header)
+                 (pretty-subitems/leave-disabled-state     :body :footer :header)
+                 (pretty-subitems/apply-subitem-prototype  :footer footer-prototype-f)
+                 (pretty-subitems/apply-subitem-prototype  :header header-prototype-f))))

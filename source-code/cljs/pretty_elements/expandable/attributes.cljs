@@ -5,58 +5,58 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn expandable-content-attributes
+(defn content-attributes
   ; @ignore
   ;
-  ; @param (keyword) expandable-id
-  ; @param (map) expandable-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ expandable-props]
+  [_ props]
   (-> {:class :pe-expandable--content}
-      (pretty-attributes/font-attributes expandable-props)
-      (pretty-attributes/text-attributes expandable-props)))
+      (pretty-attributes/font-attributes props)
+      (pretty-attributes/text-attributes props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn expandable-inner-attributes
+(defn inner-attributes
   ; @ignore
   ;
-  ; @param (keyword) expandable-id
-  ; @param (map) expandable-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ expandable-props]
+  [_ props]
   (-> {:class :pe-expandable--inner}
-      (pretty-attributes/background-color-attributes expandable-props)
-      (pretty-attributes/border-attributes           expandable-props)
-      (pretty-attributes/inner-size-attributes       expandable-props)
-      (pretty-attributes/inner-space-attributes      expandable-props)
-      (pretty-attributes/style-attributes            expandable-props)))
+      (pretty-attributes/background-color-attributes props)
+      (pretty-attributes/border-attributes           props)
+      (pretty-attributes/inner-size-attributes       props)
+      (pretty-attributes/inner-space-attributes      props)
+      (pretty-attributes/style-attributes            props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn expandable-attributes
+(defn outer-attributes
   ; @ignore
   ;
-  ; @param (keyword) expandable-id
-  ; @param (map) expandable-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ expandable-props]
-  (-> {:class :pe-expandable}
-      (pretty-attributes/class-attributes          expandable-props)
-      (pretty-attributes/inner-position-attributes expandable-props)
-      (pretty-attributes/outer-position-attributes expandable-props)
-      (pretty-attributes/outer-size-attributes     expandable-props)
-      (pretty-attributes/outer-space-attributes    expandable-props)
-      (pretty-attributes/state-attributes          expandable-props)
-      (pretty-attributes/theme-attributes          expandable-props)))
+  [_ props]
+  (-> {:class :pe-expandable--outer}
+      (pretty-attributes/class-attributes          props)
+      (pretty-attributes/inner-position-attributes props)
+      (pretty-attributes/outer-position-attributes props)
+      (pretty-attributes/outer-size-attributes     props)
+      (pretty-attributes/outer-space-attributes    props)
+      (pretty-attributes/state-attributes          props)
+      (pretty-attributes/theme-attributes          props)))

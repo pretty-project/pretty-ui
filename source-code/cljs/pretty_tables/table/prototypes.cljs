@@ -8,39 +8,39 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn row-props-prototype
+(defn row-prototype
   ; @ignore
   ;
-  ; @param (integer) row-dex
-  ; @param (map) row-props
+  ; @param (integer) dex
+  ; @param (map) row
   ;
   ; @return (map)
-  [_ row-props]
-  (-> row-props (pretty-properties/default-outer-size-props {:outer-height :content :outer-width :parent})))
+  [_ row]
+  (-> row (pretty-properties/default-outer-size-props {:outer-height :content :outer-width :parent})))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn table-props-prototype
+(defn props-prototype
   ; @ignore
   ;
-  ; @param (keyword) table-id
-  ; @param (map) table-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
-  [_ table-props]
-  (-> table-props (pretty-properties/default-flex-props       {:orientation :vertical :vertical-align :top})
-                  (pretty-properties/default-outer-size-props {:outer-height :content :outer-width :auto :outer-size-unit :double-block})
-                  (pretty-standards/standard-border-props)
-                  (pretty-standards/standard-flex-props)
-                  (pretty-standards/standard-inner-position-props)
-                  (pretty-standards/standard-inner-size-props)
-                  (pretty-standards/standard-outer-position-props)
-                  (pretty-standards/standard-outer-size-props)
-                  (pretty-rules/apply-auto-border-crop)
-                  (pretty-rules/auto-align-scrollable-flex)
-                 ;(pretty-rules/auto-disable-highlight-color)
-                 ;(pretty-rules/auto-disable-hover-color)
-                  (pretty-subitems/subitem-group<-subitem-default :rows)
-                  (pretty-subitems/subitem-group<-disabled-state  :rows)
-                  (pretty-subitems/leave-disabled-state           :rows)))
+  [_ props]
+  (-> props (pretty-properties/default-flex-props       {:orientation :vertical :vertical-align :top})
+            (pretty-properties/default-outer-size-props {:outer-height :content :outer-width :auto :outer-size-unit :double-block})
+            (pretty-standards/standard-border-props)
+            (pretty-standards/standard-flex-props)
+            (pretty-standards/standard-inner-position-props)
+            (pretty-standards/standard-inner-size-props)
+            (pretty-standards/standard-outer-position-props)
+            (pretty-standards/standard-outer-size-props)
+            (pretty-rules/apply-auto-border-crop)
+            (pretty-rules/auto-align-scrollable-flex)
+            (pretty-rules/auto-set-mounted)
+            (pretty-subitems/subitem-group<-subitem-default :rows)
+            (pretty-subitems/subitem-group<-disabled-state  :rows)
+            (pretty-subitems/leave-disabled-state           :rows)
+            (pretty-subitems/apply-group-item-prototype     :rows row-prototype)))

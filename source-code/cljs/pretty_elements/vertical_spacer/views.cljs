@@ -13,11 +13,11 @@
 (defn- vertical-spacer
   ; @ignore
   ;
-  ; @param (keyword) spacer-id
-  ; @param (map) spacer-props
-  [spacer-id spacer-props]
-  [:div (vertical-spacer.attributes/spacer-attributes spacer-id spacer-props)
-        [:div (vertical-spacer.attributes/spacer-inner-attributes spacer-id spacer-props)]])
+  ; @param (keyword) id
+  ; @param (map) props
+  [id props]
+  [:div (vertical-spacer.attributes/outer-attributes id props)
+        [:div (vertical-spacer.attributes/inner-attributes id props)]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -25,13 +25,13 @@
 (defn- view-lifecycles
   ; @ignore
   ;
-  ; @param (keyword) spacer-id
-  ; @param (map) spacer-props
-  [spacer-id spacer-props]
+  ; @param (keyword) id
+  ; @param (map) props
+  [id props]
   ; @note (tutorials#parameterizing)
-  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    spacer-id spacer-props))
-                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount spacer-id spacer-props))
-                         :reagent-render         (fn [_ spacer-props] [vertical-spacer spacer-id spacer-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    id props))
+                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount id props))
+                         :reagent-render         (fn [_ props] [vertical-spacer id props])}))
 
 (defn view
   ; @description
@@ -51,18 +51,19 @@
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
   ;
-  ; @param (keyword)(opt) spacer-id
-  ; @param (map) spacer-props
+  ; @param (keyword)(opt) id
+  ; @param (map) props
   ; Check out the implemented properties.
   ;
   ; @usage (pretty-elements/vertical-spacer.png)
   ; [vertical-spacer {:outer-width :s}]
-  ([spacer-props]
-   [view (random/generate-keyword) spacer-props])
+  ([props]
+   [view (random/generate-keyword) props])
 
-  ([spacer-id spacer-props]
+  ([id props]
    ; @note (tutorials#parameterizing)
-   (fn [_ spacer-props]
-       (let [spacer-props (pretty-presets.engine/apply-preset                spacer-id spacer-props)
-             spacer-props (vertical-spacer.prototypes/spacer-props-prototype spacer-id spacer-props)]
-            [view-lifecycles spacer-id spacer-props]))))
+   (fn [_ props]
+       (let [props (pretty-presets.engine/apply-preset         id props)
+             props (vertical-spacer.prototypes/props-prototype id props)]
+            (if (:mounted? props)
+                [view-lifecycles id props])))))

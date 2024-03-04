@@ -5,42 +5,42 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn tooltip-inner-attributes
+(defn inner-attributes
   ; @ignore
   ;
-  ; @param (keyword) tooltip-id
-  ; @param (map) tooltip-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ tooltip-props]
+  [_ props]
   (-> {:class :pa-tooltip--inner}
-      (pretty-attributes/animation-attributes        tooltip-props)
-      (pretty-attributes/background-color-attributes tooltip-props)
-      (pretty-attributes/border-attributes           tooltip-props)
-      (pretty-attributes/inner-size-attributes       tooltip-props)
-      (pretty-attributes/inner-space-attributes      tooltip-props)
-      (pretty-attributes/style-attributes            tooltip-props)))
+      (pretty-attributes/animation-attributes        props)
+      (pretty-attributes/background-color-attributes props)
+      (pretty-attributes/border-attributes           props)
+      (pretty-attributes/inner-size-attributes       props)
+      (pretty-attributes/inner-space-attributes      props)
+      (pretty-attributes/style-attributes            props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn tooltip-attributes
+(defn outer-attributes
   ; @ignore
   ;
-  ; @param (keyword) tooltip-id
-  ; @param (map) tooltip-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ tooltip-props]
-  (-> {:class :pa-tooltip}
-      (pretty-attributes/class-attributes          tooltip-props)
-      (pretty-attributes/inner-position-attributes tooltip-props)
-      (pretty-attributes/outer-position-attributes tooltip-props)
-      (pretty-attributes/outer-size-attributes     tooltip-props)
-      (pretty-attributes/outer-space-attributes    tooltip-props)
-      (pretty-attributes/state-attributes          tooltip-props)
-      (pretty-attributes/theme-attributes          tooltip-props)))
+  [_ props]
+  (-> {:class :pa-tooltip--outer}
+      (pretty-attributes/class-attributes          props)
+      (pretty-attributes/inner-position-attributes props)
+      (pretty-attributes/outer-position-attributes props)
+      (pretty-attributes/outer-size-attributes     props)
+      (pretty-attributes/outer-space-attributes    props)
+      (pretty-attributes/state-attributes          props)
+      (pretty-attributes/theme-attributes          props)))

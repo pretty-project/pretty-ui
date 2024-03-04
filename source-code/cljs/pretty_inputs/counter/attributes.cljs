@@ -82,7 +82,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn counter-inner-attributes
+(defn inner-attributes
   ; @ignore
   ;
   ; @param (keyword) counter-id
@@ -103,7 +103,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn counter-attributes
+(defn outer-attributes
   ; @ignore
   ;
   ; @param (keyword) counter-id
@@ -111,7 +111,7 @@
   ;
   ; @return (map)
   [_ counter-props]
-  (-> {:class :pi-counter}
+  (-> {:class :pi-counter--outer}
       (pretty-attributes/class-attributes  counter-props)
       (pretty-attributes/outer-space-attributes counter-props)
       (pretty-attributes/state-attributes  counter-props)

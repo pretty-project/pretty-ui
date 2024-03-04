@@ -8,25 +8,25 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn diagram-datum-attributes
+(defn datum-attributes
   ; @ignore
   ;
-  ; @param (keyword) diagram-id
-  ; @param (map) diagram-props
+  ; @param (keyword) id
+  ; @param (map) props
   ; {:datum-count (integer)
   ;  :datum-max (number)
   ;  :max-value (number)
   ;  :strength (percentage)
   ;  ...}
-  ; @param (integer) datum-dex
+  ; @param (integer) dex
   ; @param (*) datum
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [diagram-id {:keys [datum-count datum-max max-value strength] :as diagram-props} datum-dex datum]
-  (let [datum-color  (pretty-diagrams.engine/get-diagram-datum-color diagram-id diagram-props datum-dex datum)
-        datum-value  (pretty-diagrams.engine/get-diagram-datum-value diagram-id diagram-props datum-dex datum)
+  [id {:keys [datum-count datum-max max-value strength] :as props} dex datum]
+  (let [datum-color  (pretty-diagrams.engine/get-diagram-datum-color id props dex datum)
+        datum-value  (pretty-diagrams.engine/get-diagram-datum-value id props dex datum)
         data-limit   (max max-value datum-max)
         datum-ratio  (math/percent data-limit datum-value)
         datum-height (css/percent  (/ strength datum-count))
@@ -38,39 +38,39 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn diagram-inner-attributes
+(defn inner-attributes
   ; @ignore
   ;
-  ; @param (keyword) diagram-id
-  ; @param (map) diagram-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ diagram-props]
+  [_ props]
   (-> {:class :pd-bar-diagram--inner}
-      (pretty-attributes/inner-size-attributes  diagram-props)
-      (pretty-attributes/inner-space-attributes diagram-props)
-      (pretty-attributes/style-attributes       diagram-props)))
+      (pretty-attributes/inner-size-attributes  props)
+      (pretty-attributes/inner-space-attributes props)
+      (pretty-attributes/style-attributes       props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn diagram-attributes
+(defn outer-attributes
   ; @ignore
   ;
-  ; @param (keyword) diagram-id
-  ; @param (map) diagram-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ diagram-props]
-  (-> {:class :pd-bar-diagram}
-      (pretty-attributes/class-attributes          diagram-props)
-      (pretty-attributes/inner-position-attributes diagram-props)
-      (pretty-attributes/outer-position-attributes diagram-props)
-      (pretty-attributes/outer-size-attributes     diagram-props)
-      (pretty-attributes/outer-space-attributes    diagram-props)
-      (pretty-attributes/state-attributes          diagram-props)
-      (pretty-attributes/theme-attributes          diagram-props)))
+  [_ props]
+  (-> {:class :pd-bar-diagram--outer}
+      (pretty-attributes/class-attributes          props)
+      (pretty-attributes/inner-position-attributes props)
+      (pretty-attributes/outer-position-attributes props)
+      (pretty-attributes/outer-size-attributes     props)
+      (pretty-attributes/outer-space-attributes    props)
+      (pretty-attributes/state-attributes          props)
+      (pretty-attributes/theme-attributes          props)))

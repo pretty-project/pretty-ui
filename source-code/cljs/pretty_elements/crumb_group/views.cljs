@@ -15,14 +15,14 @@
 (defn crumb-group
   ; @ignore
   ;
-  ; @param (keyword) group-id
-  ; @param (map) group-props
+  ; @param (keyword) id
+  ; @param (map) props
   ; {:crumbs (maps in vector)(opt)
   ;  ...}
-  [group-id {:keys [crumbs] :as group-props}]
-  [:div (crumb-group.attributes/group-attributes group-id group-props)
-        [:div (crumb-group.attributes/group-inner-attributes group-id group-props)
-              (letfn [(f0 [crumb-props] [crumb.views/view crumb-props])]
+  [id {:keys [crumbs] :as props}]
+  [:div (crumb-group.attributes/outer-attributes id props)
+        [:div (crumb-group.attributes/inner-attributes id props)
+              (letfn [(f0 [crumb] [crumb.views/view crumb])]
                      (hiccup/put-with [:<>] crumbs f0))]])
 
 ;; ----------------------------------------------------------------------------
@@ -31,13 +31,13 @@
 (defn- view-lifecycles
   ; @ignore
   ;
-  ; @param (keyword) group-id
-  ; @param (map) group-props
-  [group-id group-props]
+  ; @param (keyword) id
+  ; @param (map) props
+  [id props]
   ; @note (tutorials#parameterizing)
-  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    group-id group-props))
-                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount group-id group-props))
-                         :reagent-render         (fn [_ group-props] [crumb-group group-id group-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    id props))
+                         :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount id props))
+                         :reagent-render         (fn [_ props] [crumb-group id props])}))
 
 (defn view
   ; @description
@@ -61,8 +61,8 @@
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
   ;
-  ; @param (keyword)(opt) group-id
-  ; @param (map) group-props
+  ; @param (keyword)(opt) id
+  ; @param (map) props
   ; Check out the implemented elements.
   ; Check out the implemented properties.
   ;
@@ -72,12 +72,13 @@
   ;                               {:label {:content "My crumb #2"} :href-uri "/my-uri-2"}
   ;                               {:label {:content "My crumb #3" :text-color :muted}}]
   ;               :gap           :xs}
-  ([group-props]
-   [view (random/generate-keyword) group-props])
+  ([props]
+   [view (random/generate-keyword) props])
 
-  ([group-id group-props]
+  ([id props]
    ; @note (tutorials#parameterizing)
-   (fn [_ group-props]
-       (let [group-props (pretty-presets.engine/apply-preset           group-id group-props)
-             group-props (crumb-group.prototypes/group-props-prototype group-id group-props)]
-            [view-lifecycles group-id group-props]))))
+   (fn [_ props]
+       (let [props (pretty-presets.engine/apply-preset     id props)
+             props (crumb-group.prototypes/props-prototype id props)]
+            (if (:mounted? props)
+                [view-lifecycles id props])))))

@@ -5,42 +5,42 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn menu-bar-inner-attributes
+(defn inner-attributes
   ; @ignore
   ;
-  ; @param (keyword) bar-id
-  ; @param (map) bar-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ bar-props]
+  [_ props]
   (-> {:class :pe-menu-bar--inner}
-      (pretty-attributes/background-color-attributes bar-props)
-      (pretty-attributes/border-attributes           bar-props)
-      (pretty-attributes/flex-attributes             bar-props)
-      (pretty-attributes/inner-size-attributes       bar-props)
-      (pretty-attributes/inner-space-attributes      bar-props)
-      (pretty-attributes/style-attributes            bar-props)))
+      (pretty-attributes/background-color-attributes props)
+      (pretty-attributes/border-attributes           props)
+      (pretty-attributes/flex-attributes             props)
+      (pretty-attributes/inner-size-attributes       props)
+      (pretty-attributes/inner-space-attributes      props)
+      (pretty-attributes/style-attributes            props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn menu-bar-attributes
+(defn outer-attributes
   ; @ignore
   ;
-  ; @param (keyword) bar-id
-  ; @param (map) bar-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ bar-props]
-  (-> {:class :pe-menu-bar}
-      (pretty-attributes/class-attributes          bar-props)
-      (pretty-attributes/inner-position-attributes bar-props)
-      (pretty-attributes/outer-position-attributes bar-props)
-      (pretty-attributes/outer-size-attributes     bar-props)
-      (pretty-attributes/outer-space-attributes    bar-props)
-      (pretty-attributes/state-attributes          bar-props)
-      (pretty-attributes/theme-attributes          bar-props)))
+  [_ props]
+  (-> {:class :pe-menu-bar--outer}
+      (pretty-attributes/class-attributes          props)
+      (pretty-attributes/inner-position-attributes props)
+      (pretty-attributes/outer-position-attributes props)
+      (pretty-attributes/outer-size-attributes     props)
+      (pretty-attributes/outer-space-attributes    props)
+      (pretty-attributes/state-attributes          props)
+      (pretty-attributes/theme-attributes          props)))

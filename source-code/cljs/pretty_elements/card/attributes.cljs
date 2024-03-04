@@ -5,65 +5,66 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn card-content-attributes
+(defn content-attributes
   ; @ignore
   ;
-  ; @param (keyword) card-id
-  ; @param (map) card-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ card-props]
+  [_ props]
   (-> {:class :pe-card--content}
-      (pretty-attributes/font-attributes card-props)
-      (pretty-attributes/text-attributes card-props)))
+      (pretty-attributes/font-attributes props)
+      (pretty-attributes/text-attributes props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn card-inner-attributes
+(defn inner-attributes
   ; @ignore
   ;
-  ; @param (keyword) card-id
-  ; @param (map) card-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ card-props]
+  [_ props]
   (-> {:class :pe-card--inner}
-      (pretty-attributes/anchor-attributes           card-props)
-      (pretty-attributes/background-color-attributes card-props)
-      (pretty-attributes/border-attributes           card-props)
-      (pretty-attributes/clickable-state-attributes  card-props)
-      (pretty-attributes/cursor-attributes           card-props)
-      (pretty-attributes/effect-attributes           card-props)
-      (pretty-attributes/flex-attributes             card-props)
-      (pretty-attributes/inner-size-attributes       card-props)
-      (pretty-attributes/inner-space-attributes      card-props)
-      (pretty-attributes/mouse-event-attributes      card-props)
-      (pretty-attributes/react-attributes            card-props)
-      (pretty-attributes/style-attributes            card-props)))
+      (pretty-attributes/anchor-attributes            props)
+      (pretty-attributes/background-action-attributes props)
+      (pretty-attributes/background-color-attributes  props)
+      (pretty-attributes/border-attributes            props)
+      (pretty-attributes/clickable-state-attributes   props)
+      (pretty-attributes/cursor-attributes            props)
+      (pretty-attributes/effect-attributes            props)
+      (pretty-attributes/flex-attributes              props)
+      (pretty-attributes/inner-size-attributes        props)
+      (pretty-attributes/inner-space-attributes       props)
+      (pretty-attributes/mouse-event-attributes       props)
+      (pretty-attributes/react-attributes             props)
+      (pretty-attributes/style-attributes             props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn card-attributes
+(defn outer-attributes
   ; @ignore
   ;
-  ; @param (keyword) card-id
-  ; @param (map) card-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ card-props]
-  (-> {:class :pe-card}
-      (pretty-attributes/class-attributes          card-props)
-      (pretty-attributes/inner-position-attributes card-props)
-      (pretty-attributes/outer-position-attributes card-props)
-      (pretty-attributes/outer-size-attributes     card-props)
-      (pretty-attributes/outer-space-attributes    card-props)
-      (pretty-attributes/state-attributes          card-props)
-      (pretty-attributes/theme-attributes          card-props)))
+  [_ props]
+  (-> {:class :pe-card--outer}
+      (pretty-attributes/class-attributes          props)
+      (pretty-attributes/inner-position-attributes props)
+      (pretty-attributes/outer-position-attributes props)
+      (pretty-attributes/outer-size-attributes     props)
+      (pretty-attributes/outer-space-attributes    props)
+      (pretty-attributes/state-attributes          props)
+      (pretty-attributes/theme-attributes          props)))

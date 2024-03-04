@@ -64,7 +64,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn slider-inner-attributes
+(defn inner-attributes
   ; @ignore
   ;
   ; @param (keyword) slider-id
@@ -82,7 +82,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn slider-attributes
+(defn outer-attributes
   ; @ignore
   ;
   ; @param (keyword) slider-id
@@ -91,7 +91,7 @@
   ; @return (map)
   ; {}
   [_ slider-props]
-  (-> {:class :pi-slider}
+  (-> {:class :pi-slider--outer}
       (pretty-attributes/class-attributes       slider-props)
       (pretty-attributes/state-attributes       slider-props)
       (pretty-attributes/outer-size-attributes slider-props)

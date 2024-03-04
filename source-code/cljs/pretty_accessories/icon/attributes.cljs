@@ -5,58 +5,58 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn icon-content-attributes
+(defn content-attributes
   ; @ignore
   ;
-  ; @param (keyword) icon-id
-  ; @param (map) icon-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ icon-props]
+  [_ props]
   (-> {:class :pa-icon--content}
-      (pretty-attributes/icon-attributes icon-props)))
+      (pretty-attributes/icon-attributes props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn icon-inner-attributes
+(defn inner-attributes
   ; @ignore
   ;
-  ; @param (keyword) icon-id
-  ; @param (map) icon-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ icon-props]
+  [_ props]
   (-> {:class :pa-icon--inner}
-      (pretty-attributes/background-color-attributes icon-props)
-      (pretty-attributes/border-attributes           icon-props)
-      (pretty-attributes/flex-attributes             icon-props)
-      (pretty-attributes/inner-size-attributes       icon-props)
-      (pretty-attributes/inner-space-attributes      icon-props)
-      (pretty-attributes/style-attributes            icon-props)))
+      (pretty-attributes/background-color-attributes props)
+      (pretty-attributes/border-attributes           props)
+      (pretty-attributes/flex-attributes             props)
+      (pretty-attributes/inner-size-attributes       props)
+      (pretty-attributes/inner-space-attributes      props)
+      (pretty-attributes/style-attributes            props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn icon-attributes
+(defn outer-attributes
   ; @ignore
   ;
-  ; @param (keyword) icon-id
-  ; @param (map) icon-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ icon-props]
-  (-> {:class :pa-icon}
-      (pretty-attributes/class-attributes          icon-props)
-      (pretty-attributes/inner-position-attributes icon-props)
-      (pretty-attributes/outer-position-attributes icon-props)
-      (pretty-attributes/outer-size-attributes     icon-props)
-      (pretty-attributes/outer-space-attributes    icon-props)
-      (pretty-attributes/state-attributes          icon-props)
-      (pretty-attributes/theme-attributes          icon-props)))
+  [_ props]
+  (-> {:class :pa-icon--outer}
+      (pretty-attributes/class-attributes          props)
+      (pretty-attributes/inner-position-attributes props)
+      (pretty-attributes/outer-position-attributes props)
+      (pretty-attributes/outer-size-attributes     props)
+      (pretty-attributes/outer-space-attributes    props)
+      (pretty-attributes/state-attributes          props)
+      (pretty-attributes/theme-attributes          props)))

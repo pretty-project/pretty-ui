@@ -5,61 +5,61 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn bubble-content-attributes
+(defn content-attributes
   ; @ignore
   ;
-  ; @param (keyword) bubble-id
-  ; @param (map) bubble-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ bubble-props]
+  [_ props]
   (-> {:class :pe-bubble--content}
-      (pretty-attributes/font-attributes bubble-props)
-      (pretty-attributes/text-attributes bubble-props)))
+      (pretty-attributes/font-attributes props)
+      (pretty-attributes/text-attributes props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn bubble-inner-attributes
+(defn inner-attributes
   ; @ignore
   ;
-  ; @param (keyword) bubble-id
-  ; @param (map) bubble-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ bubble-props]
+  [_ props]
   (-> {:class :pe-notification-bubble--inner}
-      (pretty-attributes/background-color-attributes bubble-props)
-      (pretty-attributes/border-attributes           bubble-props)
-      (pretty-attributes/flex-attributes             bubble-props)
-      (pretty-attributes/inner-size-attributes       bubble-props)
-      (pretty-attributes/inner-space-attributes      bubble-props)
-      (pretty-attributes/mouse-event-attributes      bubble-props)
-      (pretty-attributes/progress-attributes         bubble-props)
-      (pretty-attributes/style-attributes            bubble-props)))
+      (pretty-attributes/background-color-attributes props)
+      (pretty-attributes/border-attributes           props)
+      (pretty-attributes/flex-attributes             props)
+      (pretty-attributes/inner-size-attributes       props)
+      (pretty-attributes/inner-space-attributes      props)
+      (pretty-attributes/mouse-event-attributes      props)
+      (pretty-attributes/progress-attributes         props)
+      (pretty-attributes/style-attributes            props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn bubble-attributes
+(defn outer-attributes
   ; @ignore
   ;
-  ; @param (keyword) bubble-id
-  ; @param (map) bubble-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ bubble-props]
-  (-> {:class :pe-notification-bubble}
-      (pretty-attributes/class-attributes          bubble-props)
-      (pretty-attributes/inner-position-attributes bubble-props)
-      (pretty-attributes/outer-position-attributes bubble-props)
-      (pretty-attributes/outer-size-attributes     bubble-props)
-      (pretty-attributes/outer-space-attributes    bubble-props)
-      (pretty-attributes/state-attributes          bubble-props)
-      (pretty-attributes/theme-attributes          bubble-props)))
+  [_ props]
+  (-> {:class :pe-notification-bubble--outer}
+      (pretty-attributes/class-attributes          props)
+      (pretty-attributes/inner-position-attributes props)
+      (pretty-attributes/outer-position-attributes props)
+      (pretty-attributes/outer-size-attributes     props)
+      (pretty-attributes/outer-space-attributes    props)
+      (pretty-attributes/state-attributes          props)
+      (pretty-attributes/theme-attributes          props)))

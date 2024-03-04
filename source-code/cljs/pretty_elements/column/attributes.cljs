@@ -5,59 +5,59 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn column-content-attributes
+(defn content-attributes
   ; @ignore
   ;
-  ; @param (keyword) column-id
-  ; @param (map) column-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ column-props]
+  [_ props]
   (-> {:class :pe-column--content}
-      (pretty-attributes/font-attributes column-props)
-      (pretty-attributes/text-attributes column-props)))
+      (pretty-attributes/font-attributes props)
+      (pretty-attributes/text-attributes props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn column-inner-attributes
+(defn inner-attributes
   ; @ignore
   ;
-  ; @param (keyword) column-id
-  ; @param (map) column-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ column-props]
+  [_ props]
   (-> {:class :pe-column--inner}
-      (pretty-attributes/background-color-attributes column-props)
-      (pretty-attributes/border-attributes           column-props)
-      (pretty-attributes/flex-attributes             column-props)
-      (pretty-attributes/inner-size-attributes       column-props)
-      (pretty-attributes/inner-space-attributes      column-props)
-      (pretty-attributes/style-attributes            column-props)))
+      (pretty-attributes/background-color-attributes props)
+      (pretty-attributes/border-attributes           props)
+      (pretty-attributes/flex-attributes             props)
+      (pretty-attributes/inner-size-attributes       props)
+      (pretty-attributes/inner-space-attributes      props)
+      (pretty-attributes/style-attributes            props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn column-attributes
+(defn outer-attributes
   ; @ignore
   ;
-  ; @param (keyword) column-id
-  ; @param (map) column-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ column-props]
-  (-> {:class :pe-column}
-      (pretty-attributes/class-attributes          column-props)
-      (pretty-attributes/inner-position-attributes column-props)
-      (pretty-attributes/outer-position-attributes column-props)
-      (pretty-attributes/outer-size-attributes     column-props)
-      (pretty-attributes/outer-space-attributes    column-props)
-      (pretty-attributes/state-attributes          column-props)
-      (pretty-attributes/theme-attributes          column-props)))
+  [_ props]
+  (-> {:class :pe-column--outer}
+      (pretty-attributes/class-attributes          props)
+      (pretty-attributes/inner-position-attributes props)
+      (pretty-attributes/outer-position-attributes props)
+      (pretty-attributes/outer-size-attributes     props)
+      (pretty-attributes/outer-space-attributes    props)
+      (pretty-attributes/state-attributes          props)
+      (pretty-attributes/theme-attributes          props)))

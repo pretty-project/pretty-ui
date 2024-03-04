@@ -15,62 +15,26 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- popup-header
-  ; @ignore
-  ;
-  ; @param (keyword) popup-id
-  ; @param (map) popup-props
-  [popup-id popup-props]
-  (let [header-id    (pretty-subitems/subitem-id              popup-id :header)
-        header-props (popup.prototypes/header-props-prototype popup-id popup-props)]
-       [header.views/view header-id header-props]))
-
-(defn- popup-body
-  ; @ignore
-  ;
-  ; @param (keyword) popup-id
-  ; @param (map) popup-props
-  ; {:footer (map)(opt)
-  ;  :header (map)(opt)
-  ;  ...}
-  [popup-id {:keys [footer header] :as popup-props}]
-  (let [body-id    (pretty-subitems/subitem-id            popup-id :body)
-        body-props (popup.prototypes/body-props-prototype popup-id popup-props)]
-       [:div (popup.attributes/popup-content-attributes popup-id popup-props)
-             (when header  [pretty-layouts.engine/layout-header-sensor popup-id popup-props])
-             (when :always [body.views/view                            body-id  body-props])
-             (when footer  [pretty-layouts.engine/layout-footer-sensor popup-id popup-props])]))
-
-(defn- popup-footer
-  ; @ignore
-  ;
-  ; @param (keyword) popup-id
-  ; @param (map) popup-props
-  [popup-id popup-props]
-  (let [footer-id    (pretty-subitems/subitem-id              popup-id :footer)
-        footer-props (popup.prototypes/footer-props-prototype popup-id popup-props)]
-       [footer.views/view footer-id footer-props]))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (defn- popup
   ; @ignore
   ;
-  ; @param (keyword) popup-id
-  ; @param (map) popup-props
+  ; @param (keyword) id
+  ; @param (map) props
   ; {:body (map)(opt)
   ;  :footer (map)(opt)
   ;  :header (map)(opt)
   ;  :overlay (map)(opt)
   ;  ...}
-  [popup-id {:keys [body footer header overlay] :as popup-props}]
-  [:div (popup.attributes/popup-attributes popup-id popup-props)
-        (if overlay [pretty-accessories/overlay popup-id overlay])
-        [:div (popup.attributes/popup-inner-attributes popup-id popup-props)
-              (if header [popup-header popup-id popup-props])
-              (if body   [popup-body   popup-id popup-props])
-              (if footer [popup-footer popup-id popup-props])]])
+  [id {:keys [body footer header overlay] :as props}]
+  [:div (popup.attributes/outer-attributes id props)
+        (if overlay [pretty-accessories/overlay (pretty-subitems/subitem-id id :overlay) overlay])
+        [:div (popup.attributes/inner-attributes id props)
+              (if header [header.views/view (pretty-subitems/subitem-id id :header) header])
+              (if body   [:div (popup.attributes/content-attributes id props)
+                               (if header [pretty-layouts.engine/layout-overlap-sensor (pretty-subitems/subitem-id id :header-sensor) header])
+                               (if body   [body.views/view                             (pretty-subitems/subitem-id id :body)          body])
+                               (if footer [pretty-layouts.engine/layout-overlap-sensor (pretty-subitems/subitem-id id :footer-sensor) footer])])
+              (if footer [footer.views/view (pretty-subitems/subitem-id id :footer) footer])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -78,13 +42,13 @@
 (defn- view-lifecycles
   ; @ignore
   ;
-  ; @param (keyword) popup-id
-  ; @param (map) popup-props
-  [popup-id popup-props]
+  ; @param (keyword) id
+  ; @param (map) props
+  [id props]
   ; @note (tutorials#parameterizing)
-  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-layouts.engine/layout-did-mount    popup-id popup-props))
-                         :component-will-unmount (fn [_ _] (pretty-layouts.engine/layout-will-unmount popup-id popup-props))
-                         :reagent-render         (fn [_ popup-props] [popup popup-id popup-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-layouts.engine/layout-did-mount    id props))
+                         :component-will-unmount (fn [_ _] (pretty-layouts.engine/layout-will-unmount id props))
+                         :reagent-render         (fn [_ props] [popup id props])}))
 
 (defn view
   ; @description
@@ -117,8 +81,8 @@
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
   ;
-  ; @param (keyword)(opt) popup-id
-  ; @param (map) popup-props
+  ; @param (keyword)(opt) id
+  ; @param (map) props
   ; Check out the implemented accessories.
   ; Check out the implemented layouts.
   ; Check out the implemented properties.
@@ -134,12 +98,13 @@
   ;         :inner-width   :xxs
   ;         :outer-height  :parent
   ;         :outer-width   :parent}]
-  ([popup-props]
-   [view (random/generate-keyword) popup-props])
+  ([props]
+   [view (random/generate-keyword) props])
 
-  ([popup-id popup-props]
+  ([id props]
    ; @note (tutorials#parameterizing)
-   (fn [_ popup-props]
-       (let [popup-props (pretty-presets.engine/apply-preset     popup-id popup-props)
-             popup-props (popup.prototypes/popup-props-prototype popup-id popup-props)]
-            [view-lifecycles popup-id popup-props]))))
+   (fn [_ props]
+       (let [props (pretty-presets.engine/apply-preset id props)
+             props (popup.prototypes/props-prototype   id props)]
+            (if (:mounted? props)
+                [view-lifecycles id props])))))
