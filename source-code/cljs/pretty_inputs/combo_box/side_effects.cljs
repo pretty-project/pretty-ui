@@ -4,7 +4,6 @@
               [keypress-handler.api                  :as keypress-handler]
               [pretty-inputs.combo-box.env           :as combo-box.env]
               [pretty-inputs.combo-box.state         :as combo-box.state]
-              [pretty-inputs.text-field.side-effects :as text-field.side-effects]
               [re-frame.api                          :as r]))
 
 ;; ----------------------------------------------------------------------------

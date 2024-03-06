@@ -9,7 +9,13 @@
               [pretty-inputs.combo-box.prototypes :as combo-box.prototypes]
               [pretty-inputs.text-field.views     :as text-field.views]
               [re-frame.api                       :as r]
-              [reagent.core                       :as reagent]))
+              [reagent.core                       :as reagent]
+              [pretty-inputs.engine.api :as pretty-inputs.engine]
+              [pretty-presets.engine.api :as pretty-presets.engine]
+              [pretty-inputs.field.views :as field.views]
+              [pretty-inputs.header.views :as header.views]
+              [pretty-inputs.option-group.views :as option-group.views]
+              [pretty-subitems.api :as pretty-subitems]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -53,19 +59,34 @@
 (defn- combo-box
   ; @ignore
   ;
-  ; @param (keyword) box-id
-  ; @param (map) box-props
-  [box-id box-props]
-  (let [box-props (assoc-in box-props [:surface :content] [combo-box-surface-content box-id box-props])]
-       [text-field.views/view box-id box-props]))
+  ; @param (keyword) id
+  ; @param (map) props
+  ; {:field (map)(opt)
+  ;  :header (map)(opt)
+  ;  :option-group (map)(opt)
+  ;  ...}
+  [id {:keys [field header option-group] :as props}]
+  (let [field (assoc field :expandable {:content [option-group.views/view (pretty-subitems/subitem-id id :option-group) option-group]})]
+       [:div (combo-box.attributes/outer-attributes id props)
+             [:div (combo-box.attributes/inner-attributes id props)
+                   (if header [header.views/view (pretty-subitems/subitem-id id :header) header])
+                   (if field  [field.views/view  (pretty-subitems/subitem-id id :field)  field])]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+(defn- view-lifecycles
+  ; @ignore
+  ;
+  ; @param (keyword) id
+  ; @param (map) props
+  [id props]
+  ; @note (tutorials#parameterizing)
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-inputs.engine/pseudo-input-did-mount    id props))
+                         :component-will-unmount (fn [_ _] (pretty-inputs.engine/pseudo-input-will-unmount id props))
+                         :reagent-render         (fn [_ props] [combo-box id props])}))
 
 (defn view
-  ; @note
-  ; For more information, check out the documentation of the ['text-field'](#text-field) input.
-  ;
   ; @param (keyword)(opt) box-id
   ; @param (map) box-props
   ; {:field-content-f (function)(opt)
@@ -89,11 +110,13 @@
   ;
   ; @usage
   ; [combo-box :my-combo-box {...}]
-  ([box-props]
-   [view (random/generate-keyword) box-props])
+  ([props]
+   [view (random/generate-keyword) props])
 
-  ([box-id box-props]
+  ([id props]
    ; @note (tutorials#parameterizing)
-   (fn [_ box-props]
-       (let [box-props (combo-box.prototypes/box-props-prototype box-id box-props)]
-            [combo-box box-id box-props]))))
+   (fn [_ props]
+       (let [props (pretty-presets.engine/apply-preset   id props)
+             props (combo-box.prototypes/props-prototype id props)]
+            (if (:mounted? props)
+                [view-lifecycles id props])))))

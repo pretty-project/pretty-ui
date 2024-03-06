@@ -4,7 +4,6 @@
               [pretty-inputs.engine.api                 :as pretty-inputs.engine]
               [pretty-inputs.multi-combo-box.events     :as multi-combo-box.events]
               [pretty-inputs.multi-combo-box.prototypes :as multi-combo-box.prototypes]
-              [pretty-inputs.text-field.env             :as text-field.env]
               [pretty-subitems.api                      :as pretty-subitems]
               [re-frame.api                             :as r :refer [r]]))
 
@@ -20,16 +19,16 @@
   (fn [{:keys [db]} [_ box-id box-props]]
       ; XXX#4146 (source-code/cljs/pretty_inputs/combo_box/effects.cljs)
       (let [field-id    (pretty-subitems/subitem-id box-id :text-field)
-            field-props (multi-combo-box.prototypes/field-props-prototype box-id box-props)]
-           (if (text-field.env/field-surface-visible? field-id field-props)
-               (if-let [highlighted-option (combo-box.env/get-highlighted-option field-id field-props)]
-                       [:pretty-inputs.multi-combo-box/use-option! box-id box-props highlighted-option]
-                       (if (pretty-inputs.engine/input-empty? field-id field-props)
-                           {:fx       [:pretty-inputs.text-field/hide-surface! field-id]}
-                           {:fx       [:pretty-inputs.text-field/hide-surface! field-id]
-                            :dispatch [:pretty-inputs.multi-combo-box/use-field-content! box-id box-props]}))
-               (if (pretty-inputs.engine/input-not-empty? field-id field-props)
-                   [:pretty-inputs.multi-combo-box/use-field-content! box-id box-props])))))
+            field-props (multi-combo-box.prototypes/field-props-prototype box-id box-props)])))
+           ;(if (text-field.env/field-surface-visible? field-id field-props)
+            ;   (if-let [highlighted-option (combo-box.env/get-highlighted-option field-id field-props)]
+            ;           [:pretty-inputs.multi-combo-box/use-option! box-id box-props highlighted-option]
+            ;           (if (pretty-inputs.engine/input-empty? field-id field-props)
+            ;               {:fx       [:pretty-inputs.text-field/hide-surface! field-id]}
+            ;               {:fx       [:pretty-inputs.text-field/hide-surface! field-id]
+            ;                :dispatch [:pretty-inputs.multi-combo-box/use-field-content! box-id box-props])
+            ;   (if (pretty-inputs.engine/input-not-empty? field-id field-props)
+            ;       [:pretty-inputs.multi-combo-box/use-field-content! box-id box-props]])))
 
 (r/reg-event-fx :pretty-inputs.multi-combo-box/COMMA-pressed
   ; @ignore

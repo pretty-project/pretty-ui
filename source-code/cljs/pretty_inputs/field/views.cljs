@@ -14,18 +14,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- field-input
-  ; @ignore
-  ;
-  ; @param (keyword) id
-  ; @param (map) props
-  [id props]
-  [(pretty-models/input-field-auto-tag id props)
-   (field.attributes/input-attributes  id props)])
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (defn- field-structure
   ; @ignore
   ;
@@ -36,7 +24,8 @@
   [id {:keys [placeholder-text] :as props}]
   [:div (field.attributes/structure-attributes id props)
         (when placeholder-text [pretty-guides/placeholder-text (pretty-subitems/subitem-id id :placeholder-text) placeholder-text])
-        (when :always          [field-input                    (pretty-subitems/subitem-id id :input)            props])])
+        (when :always          [(pretty-models/input-field-auto-tag id props)
+                                (field.attributes/input-attributes  id props)])])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -77,6 +66,9 @@
   ; @description
   ; Customizable input field for field type inputs.
   ;
+  ; @links Implemented controls
+  ; + add empty-field control! TODO
+  ;
   ; @links Implemented elements
   ; [Adornment-group](pretty-core/cljs/pretty-elements/api.html#adornment-group)
   ; [Expandable](pretty-core/cljs/pretty-elements/api.html#expandable)
@@ -88,15 +80,17 @@
   ; [Background color properties](pretty-core/cljs/pretty-properties/api.html#background-color-properties)
   ; [Border properties](pretty-core/cljs/pretty-properties/api.html#border-properties)
   ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
-  ; [Cursor properties](pretty-core/cljs/pretty-properties/api.html#cursor-properties)
   ; [Flex properties](pretty-core/cljs/pretty-properties/api.html#flex-properties)
+  ; [Focus properties](pretty-core/cljs/pretty-properties/api.html#focus-properties)
   ; [Font properties](pretty-core/cljs/pretty-properties/api.html#font-properties)
   ; [Inner position properties](pretty-core/cljs/pretty-properties/api.html#inner-position-properties)
   ; [Inner size properties](pretty-core/cljs/pretty-properties/api.html#inner-size-properties)
   ; [Inner space properties](pretty-core/cljs/pretty-properties/api.html#inner-space-properties)
+  ; [Input field properties](pretty-core/cljs/pretty-properties/api.html#input-field-properties)
   ; [Input state properties](pretty-core/cljs/pretty-properties/api.html#input-state-properties)
   ; [Input validation properties](pretty-core/cljs/pretty-properties/api.html#input-validation-properties)
   ; [Input value properties](pretty-core/cljs/pretty-properties/api.html#input-value-properties)
+  ; [Keypress control properties](pretty-core/cljs/pretty-properties/api.html#keypress-control-properties)
   ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
   ; [Outer position properties](pretty-core/cljs/pretty-properties/api.html#outer-position-properties)
   ; [Outer size properties](pretty-core/cljs/pretty-properties/api.html#outer-size-properties)
@@ -108,21 +102,31 @@
   ;
   ; @param (keyword)(opt) id
   ; @param (map) props
+  ; Check out the implemented controls.
   ; Check out the implemented elements.
   ; Check out the implemented guides.
   ; Check out the implemented properties.
   ;
   ; @usage (pretty-inputs/field.png)
-  ; [field {}]
+  ; [field {:border-radius       {:all :s}
+  ;         :fill-color          :highlight
+  ;         :indent              {:all :xs}
+  ;         :get-value-f         #(deref  MY-ATOM)
+  ;         :set-value-f         #(reset! MY-ATOM %)
+  ;         :placeholder-text    {:content "My placeholder text"}
+  ;         :end-adornment-group {:adornment-default {:icon {:icon-size :m}}
+  ;                               :adornments [{:icon {:icon-name :close}}]}]
   ([props]
    [view (random/generate-keyword) props])
 
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
-       (let [props (pretty-presets.engine/apply-preset             id props)
-             props (pretty-inputs.engine/import-input-value        id props)
-             props (pretty-inputs.engine/import-input-field-events id props)
-             props (field.prototypes/props-prototype               id props)]
+       ; Imports the field related properties before applying the prototype function
+       ; to make the imported field content available for the content related rule functions.
+       (let [props (pretty-presets.engine/apply-preset                        id props)
+             props (pretty-inputs.engine/import-input-field-displayed-content id props)
+             props (pretty-inputs.engine/import-input-field-events            id props)
+             props (field.prototypes/props-prototype                          id props)]
             (if (:mounted? props)
                 [view-lifecycles id props])))))

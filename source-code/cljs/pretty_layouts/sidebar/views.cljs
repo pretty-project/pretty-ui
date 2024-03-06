@@ -74,6 +74,7 @@
   ; [Inner position properties](pretty-core/cljs/pretty-properties/api.html#inner-position-properties)
   ; [Inner size properties](pretty-core/cljs/pretty-properties/api.html#inner-size-properties)
   ; [Inner space properties](pretty-core/cljs/pretty-properties/api.html#inner-space-properties)
+  ; [Keypress control properties](pretty-core/cljs/pretty-properties/api.html#keypress-control-properties)
   ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
   ; [Outer position properties](pretty-core/cljs/pretty-properties/api.html#outer-position-properties)
   ; [Outer size properties](pretty-core/cljs/pretty-properties/api.html#outer-size-properties)

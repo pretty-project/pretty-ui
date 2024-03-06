@@ -2,7 +2,6 @@
 (ns pretty-inputs.combo-box.effects
     (:require [pretty-inputs.combo-box.env    :as combo-box.env]
               [pretty-inputs.combo-box.events :as combo-box.events]
-              [pretty-inputs.text-field.env   :as text-field.env]
               [re-frame.api                   :as r :refer [r]]))
 
 ;; ----------------------------------------------------------------------------
@@ -52,7 +51,7 @@
   ; @param (map) box-props
   ; {:on-type-ended (Re-Frame metamorphic-event)(opt)
   ;  :option-value-f (function)}
-  (fn [{:keys [db]} [_ box-id {:keys [on-type-ended option-value-f] :as box-props}]]
+  (fn [{:keys [db]} [_ box-id {:keys [on-type-ended option-value-f] :as box-props}]]))
       ; XXX#4146 (source-code/cljs/pretty_inputs/multi_combo_box/effects.cljs)
       ; If the surface of the combo-box is visible ...
       ; ... and any option is highlighted, pressing the ENTER button ...
@@ -67,11 +66,11 @@
       ; If the surface of the combo-box isn't visible ...
       ; ... pressing the ENTER button ...
       ;     ... fires the original ENTER event of the text-field.
-      (if (text-field.env/field-surface-visible? box-id box-props)
-          (if-let [highlighted-option (combo-box.env/get-highlighted-option box-id box-props)]
-                  {:dispatch [:pretty-inputs.combo-box/select-option!  box-id box-props highlighted-option]}
-                  {:fx       [:pretty-inputs.text-field/hide-surface! box-id]})
-          [:pretty-inputs.text-field/ENTER-pressed box-id box-props])))
+      ;(if (text-field.env/field-surface-visible? box-id box-props)
+      ;    (if-let [highlighted-option (combo-box.env/get-highlighted-option box-id box-props)]
+      ;            {:dispatch [:pretty-inputs.combo-box/select-option!  box-id box-props highlighted-option]}
+      ;            {:fx       [:pretty-inputs.text-field/hide-surface! box-id]}
+      ;    [:pretty-inputs.text-field/ENTER-pressed box-id box-props]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

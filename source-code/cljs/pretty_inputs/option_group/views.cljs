@@ -28,8 +28,8 @@
         [pretty-inputs.engine/input-synchronizer  id props]
         [:div (option-group.attributes/inner-attributes id props)
               (letfn [(f0 [option] [option.views/view option])]
-                     (if (-> options vector/not-empty?) (hiccup/put-with [:<>] options f0)
-                         (if placeholder-text [pretty-guides/placeholder-text (pretty-subitems/subitem-id id :placeholder-text) placeholder-text])))]])
+                     (cond (-> options vector/not-empty?) (hiccup/put-with [:<>] options f0)
+                           (-> placeholder-text) [pretty-guides/placeholder-text (pretty-subitems/subitem-id id :placeholder-text) placeholder-text]))]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -75,6 +75,7 @@
   ;
   ; @param (keyword)(opt) id
   ; @param (map) props
+  ; Check out the implemented guides.
   ; Check out the implemented inputs.
   ; Check out the implemented properties.
   ;
@@ -93,9 +94,11 @@
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
+       ; Applies the prototype function before importing option related properties
+       ; to make the default 'get-option-value-f' property available for the importing functions.
        (let [props (pretty-presets.engine/apply-preset                 id props)
+             props (option-group.prototypes/props-prototype            id props)
              props (pretty-inputs.engine/import-input-option-events    id props)
-             props (pretty-inputs.engine/import-input-option-selection id props)
-             props (option-group.prototypes/props-prototype            id props)]
+             props (pretty-inputs.engine/import-input-option-selection id props)]
             (if (:mounted? props)
                 [view-lifecycles id props])))))
