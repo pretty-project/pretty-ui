@@ -1,15 +1,15 @@
 
 (ns pretty-inputs.option.views
-    (:require [fruits.random.api                 :as random]
+    (:require [fruits.random.api               :as random]
+              [pretty-accessories.api          :as pretty-accessories]
+              [pretty-guides.api               :as pretty-guides]
+              [pretty-inputs.engine.api        :as pretty-inputs.engine]
               [pretty-inputs.option.attributes :as option.attributes]
               [pretty-inputs.option.prototypes :as option.prototypes]
-              [pretty-inputs.engine.api          :as pretty-inputs.engine]
-              [pretty-presets.engine.api         :as pretty-presets.engine]
-              [reagent.core :as reagent]
-              [pretty-guides.api :as pretty-guides]
-              [pretty-accessories.api :as pretty-accessories]
-              [pretty-models.api :as pretty-models]
-              [pretty-subitems.api :as pretty-subitems]))
+              [pretty-models.api               :as pretty-models]
+              [pretty-presets.engine.api       :as pretty-presets.engine]
+              [pretty-subitems.api             :as pretty-subitems]
+              [reagent.core                    :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

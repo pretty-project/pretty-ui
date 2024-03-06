@@ -1,8 +1,8 @@
 
 (ns pretty-inputs.option.prototypes
-    (:require [pretty-standards.api :as pretty-standards]
-              [pretty-rules.api :as pretty-rules]
-              [pretty-properties.api :as pretty-properties]))
+    (:require [pretty-properties.api :as pretty-properties]
+              [pretty-rules.api      :as pretty-rules]
+              [pretty-standards.api  :as pretty-standards]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

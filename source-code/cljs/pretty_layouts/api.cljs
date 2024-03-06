@@ -1,11 +1,11 @@
 
 (ns pretty-layouts.api
-    (:require [pretty-layouts.surface.views :as surface.views]
-              [pretty-layouts.sidebar.views       :as sidebar.views]
-              [pretty-layouts.popup.views  :as popup.views]
-              [pretty-layouts.body.views  :as body.views]
+    (:require [pretty-layouts.body.views    :as body.views]
               [pretty-layouts.footer.views  :as footer.views]
-              [pretty-layouts.header.views  :as header.views]))
+              [pretty-layouts.header.views  :as header.views]
+              [pretty-layouts.popup.views   :as popup.views]
+              [pretty-layouts.sidebar.views :as sidebar.views]
+              [pretty-layouts.surface.views :as surface.views]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

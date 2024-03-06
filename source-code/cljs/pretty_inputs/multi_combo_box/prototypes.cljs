@@ -1,7 +1,7 @@
 
 (ns pretty-inputs.multi-combo-box.prototypes
-    (:require [fruits.loop.api          :refer [<-walk]]
-              [fruits.noop.api          :refer [return]]
+    (:require [fruits.loop.api     :refer [<-walk]]
+              [fruits.noop.api     :refer [return]]
               [pretty-subitems.api :as pretty-subitems]))
 
 ;; ----------------------------------------------------------------------------

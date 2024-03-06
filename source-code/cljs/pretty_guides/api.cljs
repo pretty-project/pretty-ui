@@ -1,9 +1,9 @@
 
 (ns pretty-guides.api
-    (:require [pretty-guides.helper-text.views :as helper-text.views]
-              [pretty-guides.info-text.views   :as info-text.views]
-              [pretty-guides.error-text.views  :as error-text.views]
-              [pretty-guides.placeholder-text.views  :as placeholder-text.views]))
+    (:require [pretty-guides.error-text.views       :as error-text.views]
+              [pretty-guides.helper-text.views      :as helper-text.views]
+              [pretty-guides.info-text.views        :as info-text.views]
+              [pretty-guides.placeholder-text.views :as placeholder-text.views]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

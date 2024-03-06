@@ -1,16 +1,16 @@
 
 (ns pretty-inputs.header.views
-    (:require [fruits.random.api               :as random]
+    (:require [dynamic-props.api               :as dynamic-props]
+              [fruits.random.api               :as random]
+              [pretty-accessories.api          :as pretty-accessories]
               [pretty-elements.api             :as pretty-elements]
+              [pretty-guides.api               :as pretty-guides]
               [pretty-inputs.engine.api        :as pretty-inputs.engine]
               [pretty-inputs.header.attributes :as header.attributes]
               [pretty-inputs.header.prototypes :as header.prototypes]
               [pretty-presets.engine.api       :as pretty-presets.engine]
-              [reagent.core :as reagent]
-              [pretty-guides.api :as pretty-guides]
-              [pretty-accessories.api :as pretty-accessories]
-              [dynamic-props.api :as dynamic-props]
-              [pretty-subitems.api :as pretty-subitems]))
+              [pretty-subitems.api             :as pretty-subitems]
+              [reagent.core                    :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -5,7 +5,7 @@
               [pretty-elements.vertical-spacer.attributes :as vertical-spacer.attributes]
               [pretty-elements.vertical-spacer.prototypes :as vertical-spacer.prototypes]
               [pretty-presets.engine.api                  :as pretty-presets.engine]
-              [reagent.core :as reagent]))
+              [reagent.core                               :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

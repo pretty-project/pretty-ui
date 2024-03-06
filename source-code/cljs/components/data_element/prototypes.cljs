@@ -1,6 +1,6 @@
 
 (ns components.data-element.prototypes
-    (:require [fruits.vector.api       :as vector]
+    (:require [fruits.vector.api     :as vector]
               [multitype-content.api :as multitype-content]))
 
 ;; ----------------------------------------------------------------------------

@@ -6,7 +6,7 @@
               [pretty-elements.text.attributes :as text.attributes]
               [pretty-elements.text.prototypes :as text.prototypes]
               [pretty-presets.engine.api       :as pretty-presets.engine]
-              [reagent.core :as reagent]))
+              [reagent.core                    :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

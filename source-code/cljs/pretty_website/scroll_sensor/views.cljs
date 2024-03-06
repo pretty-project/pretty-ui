@@ -6,7 +6,7 @@
               [pretty-website.scroll-sensor.attributes   :as scroll-sensor.attributes]
               [pretty-website.scroll-sensor.prototypes   :as scroll-sensor.prototypes]
               [pretty-website.scroll-sensor.side-effects :as scroll-sensor.side-effects]
-              [reagent.core :as reagent]))
+              [reagent.core                              :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

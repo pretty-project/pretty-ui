@@ -1,12 +1,12 @@
 
 (ns pretty-inputs.header.prototypes
-    (:require [pretty-properties.api :as pretty-properties]
-              [pretty-rules.api :as pretty-rules]
-              [pretty-standards.api :as pretty-standards]
-              [pretty-subitems.api :as pretty-subitems]
-              [fruits.vector.api :as vector]
-              [pretty-inputs.engine.api :as pretty-inputs.engine]
-              [pretty-inputs.header.adornments :as header.adornments]))
+    (:require [fruits.vector.api               :as vector]
+              [pretty-inputs.engine.api        :as pretty-inputs.engine]
+              [pretty-inputs.header.adornments :as header.adornments]
+              [pretty-properties.api           :as pretty-properties]
+              [pretty-rules.api                :as pretty-rules]
+              [pretty-standards.api            :as pretty-standards]
+              [pretty-subitems.api             :as pretty-subitems]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -1,14 +1,14 @@
 
 (ns pretty-inputs.value.views
-    (:require [fruits.random.api                 :as random]
+    (:require [fruits.random.api              :as random]
+              [pretty-accessories.api         :as pretty-accessories]
+              [pretty-elements.api            :as pretty-elements]
+              [pretty-inputs.engine.api       :as pretty-inputs.engine]
               [pretty-inputs.value.attributes :as value.attributes]
               [pretty-inputs.value.prototypes :as value.prototypes]
-              [pretty-inputs.engine.api        :as pretty-inputs.engine]
-              [pretty-presets.engine.api         :as pretty-presets.engine]
-              [reagent.core :as reagent]
-              [pretty-elements.api :as pretty-elements]
-              [pretty-accessories.api :as pretty-accessories]
-              [pretty-subitems.api :as pretty-subitems]))
+              [pretty-presets.engine.api      :as pretty-presets.engine]
+              [pretty-subitems.api            :as pretty-subitems]
+              [reagent.core                   :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

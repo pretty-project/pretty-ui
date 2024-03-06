@@ -1,9 +1,9 @@
 
 (ns pretty-accessories.overlay.views
-    (:require [fruits.random.api :as random]
+    (:require [fruits.random.api                     :as random]
               [pretty-accessories.overlay.attributes :as overlay.attributes]
               [pretty-accessories.overlay.prototypes :as overlay.prototypes]
-              [pretty-presets.engine.api :as pretty-presets.engine]))
+              [pretty-presets.engine.api             :as pretty-presets.engine]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

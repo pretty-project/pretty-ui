@@ -2,6 +2,15 @@
 (ns pretty-presets.default-presets.presets
     (:require [pretty-presets.engine.api :refer [reg-preset!]]))
 
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(reg-preset! :default-presets/checkbox.switch-style
+             {:option-group {:option-selected {:icon {:icon-color   :muted :icon-name :circle :horizontal-align :right}}
+                              :option-default {:icon {:icon-color   :muted :icon-name :circle :horizontal-align :left
+                                                      :border-color :muted :border-radius {:all :l} :border-width :xs
+                                                      :inner-height :xs :inner-width :m}}}})
+
 ;; -- Popup menu buttons ------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 

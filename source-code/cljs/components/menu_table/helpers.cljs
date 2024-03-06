@@ -1,6 +1,6 @@
 
 (ns components.menu-table.helpers
-    (:require [pretty-attributes.api  :as pretty-attributes]))
+    (:require [pretty-attributes.api :as pretty-attributes]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

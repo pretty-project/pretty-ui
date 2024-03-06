@@ -15,8 +15,8 @@
               [pretty-inputs.slider.effects]
               [pretty-inputs.slider.events]
               [pretty-inputs.slider.subs]
+              [pretty-inputs.field.views :as field.views]
               [pretty-inputs.checkbox.views        :as checkbox.views]
-              [pretty-inputs.value-group.views      :as value-group.views]
               [pretty-inputs.combo-box.views       :as combo-box.views]
               [pretty-inputs.counter.views         :as counter.views]
               [pretty-inputs.date-field.views      :as date-field.views]
@@ -26,17 +26,17 @@
               [pretty-inputs.multi-field.views     :as multi-field.views]
               [pretty-inputs.multiline-field.views :as multiline-field.views]
               [pretty-inputs.number-field.views    :as number-field.views]
+              [pretty-inputs.option-group.views    :as option-group.views]
+              [pretty-inputs.option.views          :as option.views]
               [pretty-inputs.password-field.views  :as password-field.views]
               [pretty-inputs.radio-button.views    :as radio-button.views]
               [pretty-inputs.search-field.views    :as search-field.views]
+              [pretty-inputs.select-button.views   :as select-button.views]
               [pretty-inputs.select.views          :as select.views]
-              [pretty-inputs.select-button.views          :as select-button.views]
-              [pretty-inputs.value.views :as value.views]
               [pretty-inputs.slider.views          :as slider.views]
-              [pretty-inputs.switch.views          :as switch.views]
-              [pretty-inputs.option.views          :as option.views]
-              [pretty-inputs.option-group.views          :as option-group.views]
-              [pretty-inputs.text-field.views      :as text-field.views]))
+              [pretty-inputs.text-field.views      :as text-field.views]
+              [pretty-inputs.value-group.views     :as value-group.views]
+              [pretty-inputs.value.views           :as value.views]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -47,6 +47,7 @@
 (def counter         counter.views/view)
 (def date-field      date-field.views/view)
 (def digit-field     digit-field.views/view)
+(def field           field.views/view)
 (def header          header.views/view)
 (def multi-combo-box multi-combo-box.views/view)
 (def multi-field     multi-field.views/view)
@@ -60,7 +61,6 @@
 (def select          select.views/view)
 (def select-button   select-button.views/view)
 (def slider          slider.views/view)
-(def switch          switch.views/view)
 (def text-field      text-field.views/view)
 (def value           value.views/view)
 (def value-group     value-group.views/view)

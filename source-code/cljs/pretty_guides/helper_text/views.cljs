@@ -1,9 +1,9 @@
 
 (ns pretty-guides.helper-text.views
-    (:require [fruits.random.api :as random]
+    (:require [fruits.random.api                    :as random]
               [pretty-guides.helper-text.attributes :as helper-text.attributes]
               [pretty-guides.helper-text.prototypes :as helper-text.prototypes]
-              [pretty-presets.engine.api :as pretty-presets.engine]))
+              [pretty-presets.engine.api            :as pretty-presets.engine]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

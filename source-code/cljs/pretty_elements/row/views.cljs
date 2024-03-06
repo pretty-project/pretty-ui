@@ -5,7 +5,7 @@
               [pretty-elements.row.attributes :as row.attributes]
               [pretty-elements.row.prototypes :as row.prototypes]
               [pretty-presets.engine.api      :as pretty-presets.engine]
-              [reagent.core :as reagent]))
+              [reagent.core                   :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

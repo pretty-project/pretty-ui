@@ -1,10 +1,10 @@
 
 (ns pretty-layouts.popup.prototypes
-    (:require [pretty-rules.api :as pretty-rules]
-              [pretty-properties.api :as pretty-properties]
-              [pretty-standards.api :as pretty-standards]
-              [pretty-subitems.api :as pretty-subitems]
-              [pretty-layouts.engine.api :as pretty-layouts.engine]))
+    (:require [pretty-layouts.engine.api :as pretty-layouts.engine]
+              [pretty-properties.api     :as pretty-properties]
+              [pretty-rules.api          :as pretty-rules]
+              [pretty-standards.api      :as pretty-standards]
+              [pretty-subitems.api       :as pretty-subitems]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

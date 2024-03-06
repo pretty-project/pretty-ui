@@ -4,11 +4,11 @@
               [fruits.vector.api                   :as vector]
               [pretty-inputs.engine.api            :as pretty-inputs.engine]
               [pretty-inputs.text-field.adornments :as text-field.adornments]
-              [react-references.api :as react-references]
-              [pretty-standards.api :as pretty-standards]
-              [pretty-rules.api :as pretty-rules]
-              [pretty-properties.api :as pretty-properties]
-              [react-references.api :as react-references]))
+              [pretty-properties.api               :as pretty-properties]
+              [pretty-rules.api                    :as pretty-rules]
+              [pretty-standards.api                :as pretty-standards]
+              [pretty-subitems.api                :as pretty-subitems]
+              [react-references.api                :as react-references]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -59,54 +59,43 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn field-props-prototype
+(defn props-prototype
   ; @ignore
   ;
-  ; @param (keyword) field-id
-  ; @param (map) field-props
-  ; {:border-color (keyword or string)(opt)
-  ;  :marker-color (keyword or string)(opt)}
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
-  ; {:border-position (keyword)
-  ;  :border-width (keyword, px or string)
-  ;  :font-size (keyword, px or string)
-  ;  :font-weight (keyword or integer)
-  ;  :form-id (keyword)
-  ;  :line-height (keyword, px or string)
-  ;  :marker-position (keyword)
-  ;  :type (keyword)
-  ;  :value-path (Re-Frame path vector)}
-  [field-id {:keys [border-color marker-color] :as field-props}]
-  (let [set-reference-f (react-references/set-reference-f field-id)])
+  [id props]
+  (-> props (pretty-properties/default-flex-props {:gap :xs :horizontal-align :left :orientation :vertical})
+            (pretty-rules/auto-set-mounted)
+            (pretty-subitems/ensure-subitem           :field)
+            (pretty-subitems/subitems<-disabled-state :header :field)))
+
   ; XXX#5068
   ; By using the '<-walk' function the ':on-blur', ':on-type-ended' and ':on-focus'
   ; events take the 'field-props' map AFTER it gets merged with the default values!
-  (let [set-reference-f (react-references/set-reference-f field-id)]
 
-    (<-walk {:font-size   :s
-             ;:focus-id    field-id
-             :form-id     field-id
-             :font-weight :normal
-             :line-height :text-block
-             :type        :text
+  ;(<-walk {}));:font-size   :s
+           ;:focus-id    field-id
+           ;:form-id     field-id
+           ;:font-weight :normal
+           ;:line-height :text-block
 
-             :set-reference-f set-reference-f}
-
-            (fn [%] (merge % (if border-color {:border-position :all
-                                               :border-width    :xxs})
-                             (if marker-color {:marker-position :tr})))
-            (fn [%] (merge % field-props))
-            (fn [%] (merge % {:on-blur       [:pretty-inputs.text-field/field-blurred field-id %]
-                              :on-focus      [:pretty-inputs.text-field/field-focused field-id %]
-                              :on-type-ended [:pretty-inputs.text-field/type-ended    field-id %]})))))
-          ; input/autofill-rules
+;          (fn [%] (merge % (if border-color {:border-position :all
+;                                             :border-width    :xxs
+;                           (if marker-color {:marker-position :tr})}
+          ;(fn [%] (merge % field-props))))
+;          (fn [%] (merge % {:on-blur       [:pretty-inputs.text-field/field-blurred field-id %]
+;                            :on-focus      [:pretty-inputs.text-field/field-focused field-id %]
+;                            :on-type-ended [:pretty-inputs.text-field/type-ended    field-id %]))))
+        ; input/autofill-rules
 
 
-          ;field-props (pretty-elements.engine/element-subitem-field<-subitem-default field-id field-props :start-adornments :start-adornment-default)
-          ;field-props (pretty-elements.engine/element-subitem-field<-disabled-state  field-id field-props :end-adornments   :end-adornment-default)
-          ;field-props (pretty-elements.engine/element-subitem-field<-subitem-default field-id field-props :start-adornments :start-adornment-default)
-          ;field-props (pretty-elements.engine/element-subitem-field<-disabled-state  field-id field-props :end-adornments   :end-adornment-default)
-          ; auto-disable-input-autofill
-          ; generate-input-autofill
-            ; (pretty-properties/default-input-validation-props {:validate-when-leave? true})
+        ;field-props (pretty-elements.engine/element-subitem-field<-subitem-default field-id field-props :start-adornments :start-adornment-default)
+        ;field-props (pretty-elements.engine/element-subitem-field<-disabled-state  field-id field-props :end-adornments   :end-adornment-default)
+        ;field-props (pretty-elements.engine/element-subitem-field<-subitem-default field-id field-props :start-adornments :start-adornment-default)
+        ;field-props (pretty-elements.engine/element-subitem-field<-disabled-state  field-id field-props :end-adornments   :end-adornment-default)
+        ; auto-disable-input-autofill
+        ; generate-input-autofill
+          ; (pretty-properties/default-input-validation-props {:validate-when-leave? true})

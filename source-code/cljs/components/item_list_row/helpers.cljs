@@ -1,6 +1,6 @@
 
 (ns components.item-list-row.helpers
-    (:require [pretty-attributes.api            :as pretty-attributes]))
+    (:require [pretty-attributes.api :as pretty-attributes]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

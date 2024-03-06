@@ -1,6 +1,6 @@
 
 (ns pretty-elements.blank.prototypes
-    (:require [pretty-rules.api :as pretty-rules]
+    (:require [pretty-rules.api     :as pretty-rules]
               [pretty-standards.api :as pretty-standards]))
 
 ;; ----------------------------------------------------------------------------

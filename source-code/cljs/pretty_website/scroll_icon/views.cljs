@@ -6,7 +6,7 @@
               [pretty-website.scroll-icon.attributes :as scroll-icon.attributes]
               [pretty-website.scroll-icon.prototypes :as scroll-icon.prototypes]
               [pretty-website.scroll-sensor.views    :as scroll-sensor.views]
-              [reagent.core :as reagent]))
+              [reagent.core                          :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

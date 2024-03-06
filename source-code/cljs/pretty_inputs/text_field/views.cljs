@@ -2,15 +2,17 @@
 (ns pretty-inputs.text-field.views
     (:require [fruits.random.api                   :as random]
               [fruits.vector.api                   :as vector]
-              [multitype-content.api             :as multitype-content]
+              [multitype-content.api               :as multitype-content]
               [pretty-elements.api                 :as pretty-elements]
               [pretty-inputs.engine.api            :as pretty-inputs.engine]
+              [pretty-inputs.field.views :as field.views]
               [pretty-inputs.header.views          :as header.views]
               [pretty-inputs.text-field.attributes :as text-field.attributes]
               [pretty-inputs.text-field.env        :as text-field.env]
               [pretty-inputs.text-field.prototypes :as text-field.prototypes]
               [pretty-presets.engine.api           :as pretty-presets.engine]
-              [reagent.core :as reagent]))
+              [reagent.core                        :as reagent]
+              [pretty-subitems.api :as pretty-subitems]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -44,11 +46,11 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- text-field
+(defn- text-field_
   ; @ignore
   ;
-  ; @param (keyword) field-id
-  ; @param (map) field-props
+  ; @param (keyword) id
+  ; @param (map) props
   ; {}
   [field-id {:keys [multiline? placeholder surface] :as field-props}]
   ; - The placeholder element has an absolute position. Therefore, ...
@@ -77,23 +79,93 @@
                               [:div (text-field.attributes/field-surface-attributes field-id field-props)
                                     [multitype-content/compose surface]]]))])
 
+(defn- text-field-input
+  [])
+  ;[(pretty-models/input-field-auto-tag     id props)
+   ;(text-field.attributes/value-attributes id props)])
+
+(defn- text-field-structure
+  [])
+  ;[:div (text-field.attributes/structure-attributes id props)
+  ;      (when start-adornment-group [pretty-elements/adornment-group (pretty-subitems/subitem-id id :start-adornment-group) start-adornment-group])
+  ;      (cond value                 [text-field-input                (pretty-subitems/subitem-id id :input)                 props]
+  ;            placeholder-text      [pretty-guides/placeholder-text  (pretty-subitems/subitem-id id :placeholder-text)      placeholder-text]
+  ;      (when end-adornment-group   [pretty-elements/adornment-group (pretty-subitems/subitem-id id :end-adornment-group)   end-adornment-group])])
+
+(defn- text-field
+  ; @ignore
+  ;
+  ; @param (keyword) id
+  ; @param (map) props
+  ; {field (map)(opt)
+  ;  :header (map)(opt)
+  ;  ...}
+  [id {:keys [field header] :as props}]
+  [:div (text-field.attributes/outer-attributes id props)
+        [:div (text-field.attributes/inner-attributes id props)
+              (if header [header.views/view (pretty-subitems/subitem-id id :header) header])
+              (if field  [field.views/view  (pretty-subitems/subitem-id id :field)  field])]])
+
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn- view-lifecycles
   ; @ignore
   ;
-  ; @param (keyword) field-id
-  ; @param (map) field-props
-  [field-id field-props]
+  ; @param (keyword) id
+  ; @param (map) props
+  [id props]
   ; @note (tutorials#parameterizing)
-  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-inputs.engine/input-did-mount    field-id field-props))
-                         :component-will-unmount (fn [_ _] (pretty-inputs.engine/input-will-unmount field-id field-props))
-                         :reagent-render         (fn [_ field-props] [text-field field-id field-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-inputs.engine/pseudo-input-did-mount    id props))
+                         :component-will-unmount (fn [_ _] (pretty-inputs.engine/pseudo-input-will-unmount id props))
+                         :reagent-render         (fn [_ props] [text-field id props])}))
 
 (defn view
-  ; @param (keyword)(opt) field-id
-  ; @param (map) field-props
+  ; @description
+  ; Text field input.
+  ;
+  ; @links Implemented elements
+  ; [Adornment-group](pretty-core/cljs/pretty-elements/api.html#adornment-group)
+  ;
+  ; @links Implemented guides
+  ; [Placeholder-text](pretty-core/cljs/pretty-guides/api.html#placeholder-text)
+  ;
+  ; @links Implemented properties
+  ; [Background color properties](pretty-core/cljs/pretty-properties/api.html#background-color-properties)
+  ; [Border properties](pretty-core/cljs/pretty-properties/api.html#border-properties)
+  ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
+  ; [Cursor properties](pretty-core/cljs/pretty-properties/api.html#cursor-properties)
+  ; [Flex properties](pretty-core/cljs/pretty-properties/api.html#flex-properties)
+  ; [Font properties](pretty-core/cljs/pretty-properties/api.html#font-properties)
+  ; [Inner position properties](pretty-core/cljs/pretty-properties/api.html#inner-position-properties)
+  ; [Inner size properties](pretty-core/cljs/pretty-properties/api.html#inner-size-properties)
+  ; [Inner space properties](pretty-core/cljs/pretty-properties/api.html#inner-space-properties)
+  ; [Input state properties](pretty-core/cljs/pretty-properties/api.html#input-state-properties)
+  ; [Input validation properties](pretty-core/cljs/pretty-properties/api.html#input-validation-properties)
+  ; [Input value properties](pretty-core/cljs/pretty-properties/api.html#input-value-properties)
+  ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
+  ; [Outer position properties](pretty-core/cljs/pretty-properties/api.html#outer-position-properties)
+  ; [Outer size properties](pretty-core/cljs/pretty-properties/api.html#outer-size-properties)
+  ; [Outer space properties](pretty-core/cljs/pretty-properties/api.html#outer-space-properties)
+  ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
+  ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
+  ; [Text properties](pretty-core/cljs/pretty-properties/api.html#text-properties)
+  ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
+  ;
+  ; @param (keyword)(opt) id
+  ; @param (map) props
+  ; Check out the implemented elements.
+  ; Check out the implemented guides.
+  ; Check out the implemented properties.
+  ;
+  ; @usage (pretty-inputs/field.png)
+  ; [text-field {:header      {}
+  ;              :field {:placeholder-text {}}
+  ;              }]
+
+
+  ; @param (keyword)(opt) id
+  ; @param (map) props
   ; {:autofill-name (keyword)(opt)
   ;  :autofocus? (boolean)(opt)
   ;  :border-color (keyword or string)(opt)
@@ -168,12 +240,13 @@
   ;
   ; @usage
   ; [text-field :my-text-field {...}]
-  ([field-props]
-   [view (random/generate-keyword) field-props])
+  ([props]
+   [view (random/generate-keyword) props])
 
-  ([field-id field-props]
+  ([id props]
    ; @note (tutorials#parameterizing)
-   (fn [_ field-props]
-       (let [field-props (pretty-presets.engine/apply-preset          field-id field-props)
-             field-props (text-field.prototypes/field-props-prototype field-id field-props)]
-            [view-lifecycles field-id field-props]))))
+   (fn [_ props]
+       (let [props (pretty-presets.engine/apply-preset    id props)
+             props (text-field.prototypes/props-prototype id props)]
+            (if (:mounted? props)
+                [view-lifecycles id props])))))

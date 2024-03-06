@@ -1,13 +1,13 @@
 
 (ns pretty-tables.row.views
-    (:require [fruits.hiccup.api                 :as hiccup]
-              [fruits.random.api                 :as random]
-              [pretty-elements.engine.api        :as pretty-elements.engine]
-              [pretty-presets.engine.api         :as pretty-presets.engine]
+    (:require [fruits.hiccup.api            :as hiccup]
+              [fruits.random.api            :as random]
+              [pretty-elements.engine.api   :as pretty-elements.engine]
+              [pretty-presets.engine.api    :as pretty-presets.engine]
               [pretty-tables.cell.views     :as cell.views]
               [pretty-tables.row.attributes :as row.attributes]
               [pretty-tables.row.prototypes :as row.prototypes]
-              [reagent.core :as reagent]))
+              [reagent.core                 :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

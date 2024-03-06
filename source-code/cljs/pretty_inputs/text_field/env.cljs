@@ -1,7 +1,7 @@
 
 (ns pretty-inputs.text-field.env
-    (:require [fruits.string.api :as string]
-              [pretty-attributes.api :as pretty-attributes]
+    (:require [fruits.string.api        :as string]
+              [pretty-attributes.api    :as pretty-attributes]
               [pretty-inputs.engine.api :as pretty-inputs.engine]))
 
 ;; ----------------------------------------------------------------------------

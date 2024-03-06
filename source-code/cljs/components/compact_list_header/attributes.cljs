@@ -1,6 +1,6 @@
 
 (ns components.compact-list-header.attributes
-    (:require [pretty-attributes.api        :as pretty-attributes]))
+    (:require [pretty-attributes.api :as pretty-attributes]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

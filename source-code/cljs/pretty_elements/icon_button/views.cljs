@@ -1,14 +1,14 @@
 
 (ns pretty-elements.icon-button.views
     (:require [fruits.random.api                      :as random]
+              [pretty-accessories.api                 :as pretty-accessories]
               [pretty-elements.engine.api             :as pretty-elements.engine]
               [pretty-elements.icon-button.attributes :as icon-button.attributes]
               [pretty-elements.icon-button.prototypes :as icon-button.prototypes]
+              [pretty-models.api                      :as pretty-models]
               [pretty-presets.engine.api              :as pretty-presets.engine]
-              [pretty-models.api             :as pretty-models]
-              [reagent.core :as reagent]
-              [pretty-accessories.api :as pretty-accessories]
-              [pretty-subitems.api :as pretty-subitems]))
+              [pretty-subitems.api                    :as pretty-subitems]
+              [reagent.core                           :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

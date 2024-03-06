@@ -1,10 +1,10 @@
 
 (ns pretty-inputs.value.prototypes
-    (:require [pretty-properties.api :as pretty-properties]
-              [pretty-rules.api :as pretty-rules]
-              [pretty-standards.api :as pretty-standards]
-              [pretty-subitems.api :as pretty-subitems]
-              [pretty-inputs.engine.api :as pretty-inputs.engine]))
+    (:require [pretty-inputs.engine.api :as pretty-inputs.engine]
+              [pretty-properties.api    :as pretty-properties]
+              [pretty-rules.api         :as pretty-rules]
+              [pretty-standards.api     :as pretty-standards]
+              [pretty-subitems.api      :as pretty-subitems]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

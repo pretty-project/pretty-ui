@@ -1,12 +1,12 @@
 
 (ns pretty-accessories.cover.views
-    (:require [fruits.random.api :as random]
+    (:require [fruits.random.api                   :as random]
               [pretty-accessories.cover.attributes :as cover.attributes]
               [pretty-accessories.cover.prototypes :as cover.prototypes]
-              [pretty-presets.engine.api :as pretty-presets.engine]
-              [pretty-accessories.icon.views :as icon.views]
-              [pretty-accessories.label.views :as label.views]
-              [pretty-subitems.api :as pretty-subitems]))
+              [pretty-accessories.icon.views       :as icon.views]
+              [pretty-accessories.label.views      :as label.views]
+              [pretty-presets.engine.api           :as pretty-presets.engine]
+              [pretty-subitems.api                 :as pretty-subitems]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

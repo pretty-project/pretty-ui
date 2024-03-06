@@ -6,7 +6,7 @@
               [pretty-presets.engine.api                 :as pretty-presets.engine]
               [pretty-website.follow-us-links.attributes :as follow-us-links.attributes]
               [pretty-website.follow-us-links.prototypes :as follow-us-links.prototypes]
-              [reagent.core :as reagent]))
+              [reagent.core                              :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

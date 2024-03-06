@@ -2,8 +2,8 @@
 (ns pretty-elements.menu-item.prototypes
     (:require [pretty-elements.menu-item.side-effects :as menu-item.side-effects]
               [pretty-properties.api                  :as pretty-properties]
-              [pretty-rules.api :as pretty-rules]
-              [pretty-standards.api :as pretty-standards]))
+              [pretty-rules.api                       :as pretty-rules]
+              [pretty-standards.api                   :as pretty-standards]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

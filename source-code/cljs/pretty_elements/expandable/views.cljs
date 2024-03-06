@@ -1,13 +1,13 @@
 
 (ns pretty-elements.expandable.views
-    (:require [fruits.random.api                     :as random]
+    (:require [dynamic-props.api                     :as dynamic-props]
+              [fruits.random.api                     :as random]
               [pretty-elements.engine.api            :as pretty-elements.engine]
               [pretty-elements.expandable.attributes :as expandable.attributes]
               [pretty-elements.expandable.prototypes :as expandable.prototypes]
               [pretty-presets.engine.api             :as pretty-presets.engine]
-              [pretty-subitems.api             :as pretty-subitems]
-              [reagent.core :as reagent]
-              [dynamic-props.api :as dynamic-props]))
+              [pretty-subitems.api                   :as pretty-subitems]
+              [reagent.core                          :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

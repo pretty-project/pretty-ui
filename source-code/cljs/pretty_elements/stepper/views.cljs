@@ -5,7 +5,7 @@
               [pretty-elements.stepper.attributes :as stepper.attributes]
               [pretty-elements.stepper.prototypes :as stepper.prototypes]
               [pretty-presets.engine.api          :as pretty-presets.engine]
-              [reagent.core :as reagent]))
+              [reagent.core                       :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

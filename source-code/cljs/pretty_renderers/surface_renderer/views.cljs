@@ -2,7 +2,7 @@
 (ns renderers.surface-renderer.views
     (:require [dom.api                               :as dom]
               [fruits.random.api                     :as random]
-              [multitype-content.api               :as multitype-content]
+              [multitype-content.api                 :as multitype-content]
               [renderers.renderer.env                :as renderer.env]
               [renderers.surface-renderer.attributes :as surface-renderer.attributes]
               [renderers.surface-renderer.prototypes :as surface-renderer.prototypes]))

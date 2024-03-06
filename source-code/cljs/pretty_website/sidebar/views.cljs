@@ -1,15 +1,15 @@
 
 (ns pretty-website.sidebar.views
-    (:require [fruits.random.api                 :as random]
-              [multitype-content.api           :as multitype-content]
+    (:require ;[react.api                         :as react]
+              [fruits.random.api                 :as random]
+              [multitype-content.api             :as multitype-content]
               [pretty-elements.api               :as pretty-elements]
               [pretty-elements.engine.api        :as pretty-elements.engine]
               [pretty-presets.engine.api         :as pretty-presets.engine]
               [pretty-website.sidebar.attributes :as sidebar.attributes]
               [pretty-website.sidebar.prototypes :as sidebar.prototypes]
               [pretty-website.sidebar.state      :as sidebar.state]
-              ;[react.api                         :as react]
-              [reagent.core :as reagent]))
+              [reagent.core                      :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

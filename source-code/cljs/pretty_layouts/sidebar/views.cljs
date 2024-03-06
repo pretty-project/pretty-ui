@@ -1,16 +1,16 @@
 
 (ns pretty-layouts.sidebar.views
     (:require [fruits.random.api                 :as random]
+              [pretty-accessories.api            :as pretty-accessories]
+              [pretty-layouts.body.views         :as body.views]
               [pretty-layouts.engine.api         :as pretty-layouts.engine]
-              [pretty-subitems.api         :as pretty-subitems]
+              [pretty-layouts.footer.views       :as footer.views]
+              [pretty-layouts.header.views       :as header.views]
               [pretty-layouts.sidebar.attributes :as sidebar.attributes]
               [pretty-layouts.sidebar.prototypes :as sidebar.prototypes]
               [pretty-presets.engine.api         :as pretty-presets.engine]
-              [reagent.core :as reagent]
-              [pretty-layouts.footer.views :as footer.views]
-              [pretty-layouts.body.views :as body.views]
-              [pretty-layouts.header.views :as header.views]
-              [pretty-accessories.api :as pretty-accessories]))
+              [pretty-subitems.api               :as pretty-subitems]
+              [reagent.core                      :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

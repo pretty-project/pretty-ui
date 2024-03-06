@@ -5,8 +5,8 @@
               [pretty-inputs.multi-combo-box.events     :as multi-combo-box.events]
               [pretty-inputs.multi-combo-box.prototypes :as multi-combo-box.prototypes]
               [pretty-inputs.text-field.env             :as text-field.env]
-              [re-frame.api                             :as r :refer [r]]
-              [pretty-subitems.api :as pretty-subitems]))
+              [pretty-subitems.api                      :as pretty-subitems]
+              [re-frame.api                             :as r :refer [r]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

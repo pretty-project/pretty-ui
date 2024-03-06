@@ -1,14 +1,14 @@
 
 (ns pretty-inputs.checkbox.views
-    (:require [fruits.random.api :as random]
+    (:require [fruits.random.api                 :as random]
               [pretty-inputs.checkbox.attributes :as checkbox.attributes]
               [pretty-inputs.checkbox.prototypes :as checkbox.prototypes]
               [pretty-inputs.engine.api          :as pretty-inputs.engine]
+              [pretty-inputs.header.views        :as header.views]
+              [pretty-inputs.option-group.views  :as option-group.views]
               [pretty-presets.engine.api         :as pretty-presets.engine]
-              [reagent.core :as reagent]
-              [pretty-inputs.option-group.views :as option-group.views]
-              [pretty-inputs.header.views :as header.views]
-              [pretty-subitems.api :as pretty-subitems]))
+              [pretty-subitems.api               :as pretty-subitems]
+              [reagent.core                      :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -51,6 +51,7 @@
   ;
   ; @links Implemented properties
   ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
+  ; [Flex properties](pretty-core/cljs/pretty-properties/api.html#flex-properties)
   ; [Inner position properties](pretty-core/cljs/pretty-properties/api.html#inner-position-properties)
   ; [Inner size properties](pretty-core/cljs/pretty-properties/api.html#inner-size-properties)
   ; [Inner space properties](pretty-core/cljs/pretty-properties/api.html#inner-space-properties)
@@ -76,7 +77,9 @@
   ;                           :option-selected {}
   ;                           :options [{:label {:content "My option #1"}}
   ;                                     {:label {:content "My option #2"}}
-  ;                                     {:label {:content "My option #3"}}]}}]
+  ;                                     {:label {:content "My option #3"}}]
+  ;                           :get-value-f #(deref  MY-ATOM)
+  ;                           :set-value-f #(reset! MY-ATOM %)}}]
   ([props]
    [view (random/generate-keyword) props])
 

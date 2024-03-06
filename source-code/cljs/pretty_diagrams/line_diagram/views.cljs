@@ -6,7 +6,7 @@
               [pretty-diagrams.line-diagram.attributes :as line-diagram.attributes]
               [pretty-diagrams.line-diagram.prototypes :as line-diagram.prototypes]
               [pretty-presets.engine.api               :as pretty-presets.engine]
-              [reagent.core :as reagent]))
+              [reagent.core                            :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

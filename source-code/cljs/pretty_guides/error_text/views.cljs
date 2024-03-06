@@ -1,9 +1,9 @@
 
 (ns pretty-guides.error-text.views
-    (:require [fruits.random.api :as random]
+    (:require [fruits.random.api                   :as random]
               [pretty-guides.error-text.attributes :as error-text.attributes]
               [pretty-guides.error-text.prototypes :as error-text.prototypes]
-              [pretty-presets.engine.api :as pretty-presets.engine]))
+              [pretty-presets.engine.api           :as pretty-presets.engine]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

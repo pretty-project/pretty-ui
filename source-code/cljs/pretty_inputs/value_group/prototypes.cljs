@@ -1,11 +1,11 @@
 
 (ns pretty-inputs.value-group.prototypes
-    (:require [fruits.noop.api                     :refer [return]]
-              [fruits.vector.api                   :as vector]
+    (:require [fruits.noop.api                      :refer [return]]
+              [fruits.vector.api                    :as vector]
               [pretty-inputs.value-group.adornments :as value-group.adornments]
-              [pretty-standards.api :as pretty-standards]
-              [pretty-rules.api :as pretty-rules]
-              [pretty-properties.api :as pretty-properties]))
+              [pretty-properties.api                :as pretty-properties]
+              [pretty-rules.api                     :as pretty-rules]
+              [pretty-standards.api                 :as pretty-standards]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

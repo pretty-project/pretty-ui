@@ -1,12 +1,12 @@
 
 (ns pretty-accessories.badge.views
-    (:require [fruits.random.api :as random]
+    (:require [fruits.random.api                   :as random]
               [pretty-accessories.badge.attributes :as badge.attributes]
               [pretty-accessories.badge.prototypes :as badge.prototypes]
-              [pretty-presets.engine.api :as pretty-presets.engine]
-              [pretty-accessories.icon.views :as icon.views]
-              [pretty-accessories.label.views :as label.views]
-              [pretty-subitems.api :as pretty-subitems]))
+              [pretty-accessories.icon.views       :as icon.views]
+              [pretty-accessories.label.views      :as label.views]
+              [pretty-presets.engine.api           :as pretty-presets.engine]
+              [pretty-subitems.api                 :as pretty-subitems]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

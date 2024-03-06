@@ -5,7 +5,7 @@
               [pretty-elements.ghost.attributes :as ghost.attributes]
               [pretty-elements.ghost.prototypes :as ghost.prototypes]
               [pretty-presets.engine.api        :as pretty-presets.engine]
-              [reagent.core :as reagent]))
+              [reagent.core                     :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

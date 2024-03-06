@@ -5,7 +5,7 @@
               [pretty-elements.blank.prototypes :as blank.prototypes]
               [pretty-elements.engine.api       :as pretty-elements.engine]
               [pretty-presets.engine.api        :as pretty-presets.engine]
-              [reagent.core :as reagent]))
+              [reagent.core                     :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

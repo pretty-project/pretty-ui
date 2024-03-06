@@ -1,16 +1,16 @@
 
 (ns pretty-elements.thumbnail.views
-    (:require [fruits.random.api                    :as random]
+    (:require [dynamic-props.api                    :as dynamic-props]
+              [fruits.random.api                    :as random]
+              [lazy-loader.api                      :as lazy-loader]
+              [pretty-accessories.api               :as pretty-accessories]
               [pretty-elements.engine.api           :as pretty-elements.engine]
               [pretty-elements.thumbnail.attributes :as thumbnail.attributes]
               [pretty-elements.thumbnail.prototypes :as thumbnail.prototypes]
+              [pretty-models.api                    :as pretty-models]
               [pretty-presets.engine.api            :as pretty-presets.engine]
-              [pretty-accessories.api :as pretty-accessories]
-              [dynamic-props.api :as dynamic-props]
-              [reagent.core :as reagent]
-              [pretty-subitems.api             :as pretty-subitems]
-              [pretty-models.api             :as pretty-models]
-              [lazy-loader.api :as lazy-loader]))
+              [pretty-subitems.api                  :as pretty-subitems]
+              [reagent.core                         :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

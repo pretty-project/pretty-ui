@@ -5,7 +5,7 @@
               [pretty-elements.horizontal-spacer.attributes :as horizontal-spacer.attributes]
               [pretty-elements.horizontal-spacer.prototypes :as horizontal-spacer.prototypes]
               [pretty-presets.engine.api                    :as pretty-presets.engine]
-              [reagent.core :as reagent]))
+              [reagent.core                                 :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

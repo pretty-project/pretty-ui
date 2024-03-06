@@ -1,9 +1,9 @@
 
 (ns pretty-elements.toggle.prototypes
-    (:require [react-references.api :as react-references]
-              [pretty-rules.api :as pretty-rules]
-              [pretty-standards.api :as pretty-standards]
-              [pretty-properties.api :as pretty-properties]))
+    (:require [pretty-properties.api :as pretty-properties]
+              [pretty-rules.api      :as pretty-rules]
+              [pretty-standards.api  :as pretty-standards]
+              [react-references.api  :as react-references]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

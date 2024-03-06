@@ -1,19 +1,19 @@
 
 (ns pretty-inputs.select.views
-    (:require [fruits.hiccup.api               :as hiccup]
-              [fruits.random.api               :as random]
-              [pretty-elements.api             :as pretty-elements]
-              [pretty-inputs.engine.api        :as pretty-inputs.engine]
-              [pretty-inputs.select.attributes :as select.attributes]
-              [pretty-inputs.select.prototypes :as select.prototypes]
-              [pretty-layouts.api              :as pretty-layouts]
-              [pretty-presets.engine.api       :as pretty-presets.engine]
-              [reagent.core :as reagent]
-              [dynamic-props.api :as dynamic-props]
-              [pretty-inputs.option-group.views :as option-group.views]
-              [pretty-inputs.header.views :as header.views]
+    (:require [dynamic-props.api                 :as dynamic-props]
+              [fruits.hiccup.api                 :as hiccup]
+              [fruits.random.api                 :as random]
+              [pretty-elements.api               :as pretty-elements]
+              [pretty-inputs.engine.api          :as pretty-inputs.engine]
+              [pretty-inputs.header.views        :as header.views]
+              [pretty-inputs.option-group.views  :as option-group.views]
               [pretty-inputs.select-button.views :as select-button.views]
-              [pretty-subitems.api :as pretty-subitems]))
+              [pretty-inputs.select.attributes   :as select.attributes]
+              [pretty-inputs.select.prototypes   :as select.prototypes]
+              [pretty-layouts.api                :as pretty-layouts]
+              [pretty-presets.engine.api         :as pretty-presets.engine]
+              [pretty-subitems.api               :as pretty-subitems]
+              [reagent.core                      :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -91,54 +91,18 @@
   ; Check out the implemented inputs.
   ; Check out the implemented layouts.
   ; Check out the implemented properties.
-
-
-  ; @param (keyword)(opt) select-id
-  ; @param (map) select-props
-  ;  :font-size (keyword, px or string)(opt)
-  ;  :get-options-f (function)(opt)
-  ;  :get-value-f (function)(opt)
-  ;  :helper (multitype-content)(opt)
-  ;  :hover-effect (keyword)(opt)
-  ;  :info (multitype-content)(opt)
-  ;  :initial-value (*)(opt)
-  ;  :label (multitype-content)(opt)
-  ;  :layout (keyword)(opt)
-  ;   :button, :icon-button, :select-button
-  ;   Default: :select-button
-  ;  :max-selection (integer)(opt)
-  ;  :on-empty-f (function)(opt)
-  ;  :on-invalid-f (function)(opt)
-  ;  :on-mount-f (function)(opt)
-  ;  :on-selected-f (function)(opt)
-  ;  :on-unmount-f (function)(opt)
-  ;  :on-unselected-f (function)(opt)
-  ;  :on-valid-f (function)(opt)
-  ;  :option-field (map)(opt)
-  ;  :option-color-f (function)(opt)
-  ;  :option-helper-f (function)(opt)
-  ;  :option-label-f (function)(opt)
-  ;  :option-value-f (function)(opt)
-  ;  :options-label (multitype-content)(opt)
-  ;  :orientation (keyword)(opt)
-  ;  :placeholder (multitype-content)(opt)
-  ;  :preset (keyword)(opt)
-  ;  :popup (map)(opt)
-  ;  :projected-value (*)(opt)
-  ;  :set-value-f (function)(opt)
-  ;  :style (map)(opt)
-  ;  :theme (keyword)(opt)
-  ;  :validate-when-change? (boolean)(opt)
-  ;  :validate-when-leave? (boolean)(opt)
-  ;  :validators (maps in vector)(opt)
-  ;   [{:f (function)
-  ;     :invalid-message (multitype-content)(opt)}]}
   ;
-  ; @usage
-  ; [select {...}]
-  ;
-  ; @usage
-  ; [select :my-select {...}]
+  ; @usage (pretty-inputs/select.png)
+  ; [select {:header {:label       {:content "My select"}
+  ;                   :helper-text {:content "My helper text"}
+  ;                   :info-text   {:content "My info text"}}
+  ;          :option-group {:option-default  {}
+  ;                         :option-selected {}
+  ;                         :options [{:label {:content "My option #1"}}
+  ;                                   {:label {:content "My option #2"}}
+  ;                                   {:label {:content "My option #3"}}]}
+  ;          :popup {:border-crop :auto :border-radius {:all :s}}
+  ;          :select-button {:label {:content "My select"}}}]
   ([props]
    [view (random/generate-keyword) props])
 

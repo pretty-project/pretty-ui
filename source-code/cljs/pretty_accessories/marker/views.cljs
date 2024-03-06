@@ -1,9 +1,9 @@
 
 (ns pretty-accessories.marker.views
-    (:require [fruits.random.api :as random]
+    (:require [fruits.random.api                    :as random]
               [pretty-accessories.marker.attributes :as marker.attributes]
               [pretty-accessories.marker.prototypes :as marker.prototypes]
-              [pretty-presets.engine.api :as pretty-presets.engine]))
+              [pretty-presets.engine.api            :as pretty-presets.engine]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

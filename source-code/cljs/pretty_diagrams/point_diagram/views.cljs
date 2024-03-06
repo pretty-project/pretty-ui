@@ -6,7 +6,7 @@
               [pretty-diagrams.point-diagram.attributes :as point-diagram.attributes]
               [pretty-diagrams.point-diagram.prototypes :as point-diagram.prototypes]
               [pretty-presets.engine.api                :as pretty-presets.engine]
-              [reagent.core :as reagent]))
+              [reagent.core                             :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

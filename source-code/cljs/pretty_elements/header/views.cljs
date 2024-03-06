@@ -1,14 +1,14 @@
 
 (ns pretty-elements.header.views
-    (:require [fruits.random.api                 :as random]
-              [pretty-elements.header.attributes :as header.attributes]
-              [pretty-elements.header.prototypes :as header.prototypes]
-              [pretty-elements.engine.api        :as pretty-elements.engine]
-              [pretty-presets.engine.api         :as pretty-presets.engine]
-              [pretty-accessories.api         :as pretty-accessories]
-              [reagent.core :as reagent]
+    (:require [fruits.random.api                     :as random]
+              [pretty-accessories.api                :as pretty-accessories]
               [pretty-elements.adornment-group.views :as adornment-group.views]
-              [pretty-subitems.api :as pretty-subitems]))
+              [pretty-elements.engine.api            :as pretty-elements.engine]
+              [pretty-elements.header.attributes     :as header.attributes]
+              [pretty-elements.header.prototypes     :as header.prototypes]
+              [pretty-presets.engine.api             :as pretty-presets.engine]
+              [pretty-subitems.api                   :as pretty-subitems]
+              [reagent.core                          :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

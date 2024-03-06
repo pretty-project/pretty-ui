@@ -1,9 +1,9 @@
 
 (ns pretty-elements.adornment-group.prototypes
     (:require [pretty-properties.api :as pretty-properties]
-              [pretty-rules.api :as pretty-rules]
-              [pretty-standards.api :as pretty-standards]
-              [pretty-subitems.api :as pretty-subitems]))
+              [pretty-rules.api      :as pretty-rules]
+              [pretty-standards.api  :as pretty-standards]
+              [pretty-subitems.api   :as pretty-subitems]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

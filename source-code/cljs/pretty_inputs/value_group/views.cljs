@@ -1,16 +1,16 @@
 
 (ns pretty-inputs.value-group.views
-    (:require [fruits.hiccup.api                   :as hiccup]
-              [fruits.random.api                   :as random]
-              [fruits.vector.api                   :as vector]
-              [multitype-content.api             :as multitype-content]
-              [pretty-elements.api                 :as pretty-elements]
+    (:require [fruits.hiccup.api                    :as hiccup]
+              [fruits.random.api                    :as random]
+              [fruits.vector.api                    :as vector]
+              [multitype-content.api                :as multitype-content]
+              [pretty-elements.api                  :as pretty-elements]
+              [pretty-inputs.engine.api             :as pretty-inputs.engine]
+              [pretty-inputs.header.views           :as header.views]
               [pretty-inputs.value-group.attributes :as value-group.attributes]
               [pretty-inputs.value-group.prototypes :as value-group.prototypes]
-              [pretty-inputs.engine.api            :as pretty-inputs.engine]
-              [pretty-inputs.header.views          :as header.views]
-              [pretty-presets.engine.api           :as pretty-presets.engine]
-              [reagent.core :as reagent]))
+              [pretty-presets.engine.api            :as pretty-presets.engine]
+              [reagent.core                         :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

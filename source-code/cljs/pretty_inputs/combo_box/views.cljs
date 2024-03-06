@@ -3,13 +3,13 @@
     (:require [fruits.hiccup.api                  :as hiccup]
               [fruits.loop.api                    :refer [reduce-indexed]]
               [fruits.random.api                  :as random]
-              [multitype-content.api            :as multitype-content]
+              [multitype-content.api              :as multitype-content]
               [pretty-inputs.combo-box.attributes :as combo-box.attributes]
               [pretty-inputs.combo-box.env        :as combo-box.env]
               [pretty-inputs.combo-box.prototypes :as combo-box.prototypes]
               [pretty-inputs.text-field.views     :as text-field.views]
               [re-frame.api                       :as r]
-              [reagent.core :as reagent]))
+              [reagent.core                       :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -1,11 +1,11 @@
 
 (ns pretty-elements.image.prototypes
-    (:require [pretty-properties.api :as pretty-properties]
-              [react-references.api :as react-references]
-              [dynamic-props.api :as dynamic-props]
-              [pretty-rules.api :as pretty-rules]
-              [pretty-standards.api :as pretty-standards]
-              [pretty-subitems.api :as pretty-subitems]))
+    (:require [dynamic-props.api     :as dynamic-props]
+              [pretty-properties.api :as pretty-properties]
+              [pretty-rules.api      :as pretty-rules]
+              [pretty-standards.api  :as pretty-standards]
+              [pretty-subitems.api   :as pretty-subitems]
+              [react-references.api  :as react-references]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

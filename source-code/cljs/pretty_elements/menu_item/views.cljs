@@ -1,14 +1,14 @@
 
 (ns pretty-elements.menu-item.views
     (:require [fruits.random.api                    :as random]
+              [pretty-accessories.api               :as pretty-accessories]
               [pretty-elements.engine.api           :as pretty-elements.engine]
               [pretty-elements.menu-item.attributes :as menu-item.attributes]
               [pretty-elements.menu-item.prototypes :as menu-item.prototypes]
+              [pretty-models.api                    :as pretty-models]
               [pretty-presets.engine.api            :as pretty-presets.engine]
-              [reagent.core :as reagent]
-              [pretty-models.api             :as pretty-models]
-              [pretty-accessories.api :as pretty-accessories]
-              [pretty-subitems.api :as pretty-subitems]))
+              [pretty-subitems.api                  :as pretty-subitems]
+              [reagent.core                         :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

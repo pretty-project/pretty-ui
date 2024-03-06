@@ -1,9 +1,9 @@
 
 (ns pretty-guides.placeholder-text.views
-    (:require [fruits.random.api :as random]
+    (:require [fruits.random.api                         :as random]
               [pretty-guides.placeholder-text.attributes :as placeholder-text.attributes]
               [pretty-guides.placeholder-text.prototypes :as placeholder-text.prototypes]
-              [pretty-presets.engine.api :as pretty-presets.engine]))
+              [pretty-presets.engine.api                 :as pretty-presets.engine]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

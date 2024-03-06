@@ -1,8 +1,8 @@
 
 (ns pretty-elements.dropdown-menu.side-effects
-    (:require [pretty-subitems.api :as pretty-subitems]
+    (:require [dynamic-props.api                       :as dynamic-props]
               [pretty-elements.expandable.side-effects :as expandable.side-effects]
-              [dynamic-props.api :as dynamic-props]))
+              [pretty-subitems.api                     :as pretty-subitems]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

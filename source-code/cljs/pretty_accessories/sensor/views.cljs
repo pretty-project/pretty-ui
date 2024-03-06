@@ -1,9 +1,9 @@
 
 (ns pretty-accessories.sensor.views
-    (:require [fruits.random.api :as random]
+    (:require [fruits.random.api                    :as random]
               [pretty-accessories.sensor.attributes :as sensor.attributes]
               [pretty-accessories.sensor.prototypes :as sensor.prototypes]
-              [pretty-presets.engine.api :as pretty-presets.engine]))
+              [pretty-presets.engine.api            :as pretty-presets.engine]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

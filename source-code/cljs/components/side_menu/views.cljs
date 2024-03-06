@@ -3,7 +3,7 @@
     (:require [components.side-menu.helpers    :as side-menu.helpers]
               [components.side-menu.prototypes :as side-menu.prototypes]
               [fruits.random.api               :as random]
-              [multitype-content.api         :as multitype-content]
+              [multitype-content.api           :as multitype-content]
               [pretty-elements.api             :as pretty-elements]
               [window-observer.api             :as window-observer]))
 

@@ -1,6 +1,6 @@
 
 (ns components.input-table.helpers
-    (:require [fruits.hiccup.api                :as hiccup]
+    (:require [fruits.hiccup.api     :as hiccup]
               [pretty-attributes.api :as pretty-attributes]))
 
 ;; ----------------------------------------------------------------------------

@@ -1,16 +1,16 @@
 
 (ns pretty-inputs.option-group.views
-    (:require [fruits.hiccup.api                          :as hiccup]
-              [fruits.random.api                          :as random]
-              [fruits.vector.api                          :as vector]
+    (:require [fruits.hiccup.api                     :as hiccup]
+              [fruits.random.api                     :as random]
+              [fruits.vector.api                     :as vector]
+              [pretty-guides.api                     :as pretty-guides]
+              [pretty-inputs.engine.api              :as pretty-inputs.engine]
               [pretty-inputs.option-group.attributes :as option-group.attributes]
               [pretty-inputs.option-group.prototypes :as option-group.prototypes]
-              [pretty-inputs.option.views :as option.views]
-              [pretty-inputs.engine.api :as pretty-inputs.engine]
-              [pretty-guides.api :as pretty-guides]
-              [pretty-presets.engine.api :as pretty-presets.engine]
-              [reagent.core :as reagent]
-              [pretty-subitems.api :as pretty-subitems]))
+              [pretty-inputs.option.views            :as option.views]
+              [pretty-presets.engine.api             :as pretty-presets.engine]
+              [pretty-subitems.api                   :as pretty-subitems]
+              [reagent.core                          :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -79,12 +79,14 @@
   ; Check out the implemented properties.
   ;
   ; @usage (pretty-inputs/option-group.png)
-  ; [option-group {:option-default  {:icon {:border-color :muted :border-radius {:all :s} :border-width :xs}}
+  ; [option-group {:gap :xs
+  ;                :option-default  {:gap :xs :icon {:border-color :muted :border-radius {:all :s} :border-width :xs}}
   ;                :option-selected {:icon {:icon-name :done}}
   ;                :options [{:label {:content "My option #1"}}
   ;                          {:label {:content "My option #2"}}
   ;                          {:label {:content "My option #2"}}]
-  ;                :gap :xs}]
+  ;                :get-value-f #(deref  MY-ATOM)
+  ;                :set-value-f #(reset! MY-ATOM %)}]
   ([props]
    [view (random/generate-keyword) props])
 
@@ -92,8 +94,8 @@
    ; @note (tutorials#parameterizing)
    (fn [_ props]
        (let [props (pretty-presets.engine/apply-preset                 id props)
-             props (option-group.prototypes/props-prototype            id props)
              props (pretty-inputs.engine/import-input-option-events    id props)
-             props (pretty-inputs.engine/import-input-option-selection id props)]
+             props (pretty-inputs.engine/import-input-option-selection id props)
+             props (option-group.prototypes/props-prototype            id props)]
             (if (:mounted? props)
                 [view-lifecycles id props])))))

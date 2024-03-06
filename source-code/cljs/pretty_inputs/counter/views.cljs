@@ -7,7 +7,7 @@
               [pretty-inputs.header.views       :as header.views]
               [pretty-presets.engine.api        :as pretty-presets.engine]
               [re-frame.api                     :as r]
-              [reagent.core :as reagent]))
+              [reagent.core                     :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

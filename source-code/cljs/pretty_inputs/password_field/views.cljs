@@ -4,7 +4,7 @@
               [pretty-inputs.password-field.prototypes   :as password-field.prototypes]
               [pretty-inputs.password-field.side-effects :as password-field.side-effects]
               [pretty-inputs.text-field.views            :as text-field.views]
-              [reagent.core :as reagent]))
+              [reagent.core                              :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

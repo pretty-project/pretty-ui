@@ -1,8 +1,8 @@
 
 (ns pretty-guides.placeholder-text.prototypes
     (:require [pretty-properties.api :as pretty-properties]
-              [pretty-rules.api :as pretty-rules]
-              [pretty-standards.api :as pretty-standards]))
+              [pretty-rules.api      :as pretty-rules]
+              [pretty-standards.api  :as pretty-standards]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -17,7 +17,7 @@
   [_ props]
   (-> props (pretty-properties/default-font-props       {:font-size :xs :font-weight :normal})
             (pretty-properties/default-outer-size-props {:outer-size-unit :quarter-block})
-            (pretty-properties/default-text-props       {:text-color :muted :text-selectable? true})
+            (pretty-properties/default-text-props       {:text-color :muted :text-selectable? false})
             (pretty-standards/standard-font-props)
             (pretty-standards/standard-inner-position-props)
             (pretty-standards/standard-inner-size-props)

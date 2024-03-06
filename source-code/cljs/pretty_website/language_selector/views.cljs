@@ -6,7 +6,7 @@
               [pretty-presets.engine.api                   :as pretty-presets.engine]
               [pretty-website.language-selector.attributes :as language-selector.attributes]
               [pretty-website.language-selector.prototypes :as language-selector.prototypes]
-              [reagent.core :as reagent]))
+              [reagent.core                                :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

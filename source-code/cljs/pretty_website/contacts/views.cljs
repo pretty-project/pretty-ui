@@ -2,12 +2,12 @@
 (ns pretty-website.contacts.views
     (:require [fruits.hiccup.api                  :as hiccup]
               [fruits.random.api                  :as random]
-              [multitype-content.api            :as multitype-content]
+              [multitype-content.api              :as multitype-content]
               [pretty-elements.engine.api         :as pretty-elements.engine]
               [pretty-presets.engine.api          :as pretty-presets.engine]
               [pretty-website.contacts.attributes :as contacts.attributes]
               [pretty-website.contacts.prototypes :as contacts.prototypes]
-              [reagent.core :as reagent]))
+              [reagent.core                       :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

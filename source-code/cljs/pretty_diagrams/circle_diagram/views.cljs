@@ -7,7 +7,7 @@
               [pretty-diagrams.circle-diagram.prototypes :as circle-diagram.prototypes]
               [pretty-diagrams.engine.api                :as pretty-diagrams.engine]
               [pretty-presets.engine.api                 :as pretty-presets.engine]
-              [reagent.core :as reagent]))
+              [reagent.core                              :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -1,9 +1,9 @@
 
 (ns pretty-accessories.icon.views
-    (:require [fruits.random.api               :as random]
+    (:require [fruits.random.api                  :as random]
               [pretty-accessories.icon.attributes :as icon.attributes]
               [pretty-accessories.icon.prototypes :as icon.prototypes]
-              [pretty-presets.engine.api       :as pretty-presets.engine]))
+              [pretty-presets.engine.api          :as pretty-presets.engine]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

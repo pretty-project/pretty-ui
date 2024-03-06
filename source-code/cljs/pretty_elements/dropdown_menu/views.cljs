@@ -4,11 +4,11 @@
               [pretty-elements.dropdown-menu.attributes :as dropdown-menu.attributes]
               [pretty-elements.dropdown-menu.prototypes :as dropdown-menu.prototypes]
               [pretty-elements.engine.api               :as pretty-elements.engine]
-              [pretty-elements.menu-bar.views           :as menu-bar.views]
               [pretty-elements.expandable.views         :as expandable.views]
+              [pretty-elements.menu-bar.views           :as menu-bar.views]
               [pretty-presets.engine.api                :as pretty-presets.engine]
-              [reagent.core :as reagent]
-              [pretty-subitems.api :as pretty-subitems]))
+              [pretty-subitems.api                      :as pretty-subitems]
+              [reagent.core                             :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -1,14 +1,12 @@
 
 (ns pretty-inputs.select.prototypes
-    (:require [fruits.vector.api                 :as vector]
-              [fruits.map.api                 :as map]
-              [pretty-inputs.engine.api          :as pretty-inputs.engine]
-              [pretty-inputs.select.side-effects :as select.side-effects]
-              [pretty-standards.api :as pretty-standards]
-              [pretty-subitems.api :as pretty-subitems]
-              [pretty-rules.api :as pretty-rules]
+    (:require [dynamic-props.api     :as dynamic-props]
+              [fruits.map.api        :as map]
               [pretty-properties.api :as pretty-properties]
-              [dynamic-props.api :as dynamic-props]))
+              [pretty-rules.api      :as pretty-rules]
+              [pretty-standards.api  :as pretty-standards]
+              [pretty-subitems.api   :as pretty-subitems]
+              [pretty-inputs.select.side-effects :as select.side-effects]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -22,8 +20,8 @@
   ;
   ; @return (map)
   [id _ button]
-  (let [on-click-f (fn [_] (dynamic-props/update-props! id update :popup-visible? not))]
-       (-> button (pretty-properties/default-mouse-event-props {:on-click-f on-click-f}))))
+  (let [toggle-popup-f (fn [_] (dynamic-props/update-props! id update :popup-visible? not))]
+       (-> button (pretty-properties/default-mouse-event-props {:on-click-f toggle-popup-f}))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -37,8 +35,25 @@
   ;
   ; @return (map)
   [id _ icon-button]
-  (let [on-click-f (fn [_] (dynamic-props/update-props! id update :popup-visible? not))]
-       (-> icon-button (pretty-properties/default-mouse-event-props {:on-click-f on-click-f}))))
+  (let [toggle-popup-f (fn [_] (dynamic-props/update-props! id update :popup-visible? not))]
+       (-> icon-button (pretty-properties/default-mouse-event-props {:on-click-f toggle-popup-f}))))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn option-group-prototype
+  ; @ignore
+  ;
+  ; @param (keyword) id
+  ; @param (map) props
+  ; @param (map) option-group
+  ;
+  ; @return (map)
+  [id props option-group]
+  (let [on-selected-f (fn [%] (if-let [f (:on-selected-f option-group)] (f %)) (select.side-effects/auto-close-popup! id props))]
+       (-> option-group (update :option-default  map/reversed-deep-merge {:hover-color :muted :indent {:horizontal :s :vertical :xxs}})
+                        (update :option-selected map/reversed-deep-merge {:fill-color  :muted})
+                        (pretty-properties/default-input-option-props {:max-selection 1 :on-selected-f on-selected-f}))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -57,7 +72,7 @@
                  (pretty-properties/default-inner-size-props       {:inner-height :content :inner-width :content})
                  (pretty-properties/default-outer-size-props       {:outer-height :parent :outer-layer :uppermost :outer-width :parent})
                  (assoc :overlay {:fill-color :invert :on-click-f close-popup-f} :on-escape-f close-popup-f))))
-                
+
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -70,26 +85,10 @@
   ;
   ; @return (map)
   [id props select-button]
-  (let [on-click-f  (fn [_] (dynamic-props/update-props! id update :popup-visible? not))
-        get-value-f (-> props :option-group :get-value-f)]
-       (-> select-button (pretty-properties/default-mouse-event-props {:on-click-f  on-click-f})
+  (let [toggle-popup-f (fn [_] (dynamic-props/update-props! id update :popup-visible? not))
+        get-value-f    (-> props :option-group :get-value-f)]
+       (-> select-button (pretty-properties/default-mouse-event-props {:on-click-f  toggle-popup-f})
                          (pretty-properties/default-input-value-props {:get-value-f get-value-f}))))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn option-group-prototype
-  ; @ignore
-  ;
-  ; @param (keyword) id
-  ; @param (map) props
-  ; @param (map) option-group
-  ;
-  ; @return (map)
-  [_ _ option-group]
-  (-> option-group (update :option-default  map/reversed-deep-merge {:hover-color :muted :indent {:horizontal :s :vertical :xxs}})
-                   (update :option-selected map/reversed-deep-merge {:fill-color  :muted})
-                   (pretty-properties/default-input-option-props {:max-selection 1})))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

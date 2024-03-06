@@ -1,14 +1,14 @@
 
 (ns pretty-elements.crumb.views
     (:require [fruits.random.api                :as random]
+              [pretty-accessories.api           :as pretty-accessories]
               [pretty-elements.crumb.attributes :as crumb.attributes]
               [pretty-elements.crumb.prototypes :as crumb.prototypes]
               [pretty-elements.engine.api       :as pretty-elements.engine]
+              [pretty-models.api                :as pretty-models]
               [pretty-presets.engine.api        :as pretty-presets.engine]
-              [pretty-accessories.api :as pretty-accessories]
-              [pretty-models.api             :as pretty-models]
-              [reagent.core :as reagent]
-              [pretty-subitems.api :as pretty-subitems]))
+              [pretty-subitems.api              :as pretty-subitems]
+              [reagent.core                     :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

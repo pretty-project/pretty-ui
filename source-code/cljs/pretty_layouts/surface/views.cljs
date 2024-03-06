@@ -1,15 +1,15 @@
 
 (ns pretty-layouts.surface.views
     (:require [fruits.random.api                 :as random]
+              [pretty-layouts.body.views         :as body.views]
               [pretty-layouts.engine.api         :as pretty-layouts.engine]
-              [pretty-subitems.api         :as pretty-subitems]
+              [pretty-layouts.footer.views       :as footer.views]
+              [pretty-layouts.header.views       :as header.views]
               [pretty-layouts.surface.attributes :as surface.attributes]
               [pretty-layouts.surface.prototypes :as surface.prototypes]
               [pretty-presets.engine.api         :as pretty-presets.engine]
-              [reagent.core :as reagent]
-              [pretty-layouts.footer.views :as footer.views]
-              [pretty-layouts.body.views :as body.views]
-              [pretty-layouts.header.views :as header.views]))
+              [pretty-subitems.api               :as pretty-subitems]
+              [reagent.core                      :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

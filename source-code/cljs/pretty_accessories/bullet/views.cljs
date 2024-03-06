@@ -1,9 +1,9 @@
 
 (ns pretty-accessories.bullet.views
-    (:require [fruits.random.api :as random]
+    (:require [fruits.random.api                    :as random]
               [pretty-accessories.bullet.attributes :as bullet.attributes]
               [pretty-accessories.bullet.prototypes :as bullet.prototypes]
-              [pretty-presets.engine.api :as pretty-presets.engine]))
+              [pretty-presets.engine.api            :as pretty-presets.engine]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

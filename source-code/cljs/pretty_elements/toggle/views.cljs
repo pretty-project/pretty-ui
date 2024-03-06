@@ -1,14 +1,14 @@
 
 (ns pretty-elements.toggle.views
     (:require [fruits.random.api                 :as random]
+              [pretty-accessories.api            :as pretty-accessories]
               [pretty-elements.engine.api        :as pretty-elements.engine]
               [pretty-elements.toggle.attributes :as toggle.attributes]
               [pretty-elements.toggle.prototypes :as toggle.prototypes]
+              [pretty-models.api                 :as pretty-models]
               [pretty-presets.engine.api         :as pretty-presets.engine]
-              [reagent.core :as reagent]
-              [pretty-models.api :as pretty-models]
-              [pretty-subitems.api :as pretty-subitems]
-              [pretty-accessories.api :as pretty-accessories]))
+              [pretty-subitems.api               :as pretty-subitems]
+              [reagent.core                      :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

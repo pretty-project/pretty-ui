@@ -1,6 +1,6 @@
 
 (ns components.vector-item-list.attributes
-    (:require [pretty-attributes.api  :as pretty-attributes]))
+    (:require [pretty-attributes.api :as pretty-attributes]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

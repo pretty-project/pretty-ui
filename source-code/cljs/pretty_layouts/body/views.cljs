@@ -1,11 +1,11 @@
 
 (ns pretty-layouts.body.views
-    (:require [fruits.random.api :as random]
-              [pretty-layouts.engine.api :as pretty-layouts.engine]
+    (:require [fruits.random.api              :as random]
               [pretty-layouts.body.attributes :as body.attributes]
               [pretty-layouts.body.prototypes :as body.prototypes]
-              [pretty-presets.engine.api :as pretty-presets.engine]
-              [reagent.core :as reagent]))
+              [pretty-layouts.engine.api      :as pretty-layouts.engine]
+              [pretty-presets.engine.api      :as pretty-presets.engine]
+              [reagent.core                   :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

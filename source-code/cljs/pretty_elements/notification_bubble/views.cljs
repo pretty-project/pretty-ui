@@ -1,14 +1,14 @@
 
 (ns pretty-elements.notification-bubble.views
     (:require [fruits.random.api                              :as random]
+              [pretty-accessories.api                         :as pretty-accessories]
+              [pretty-elements.adornment-group.views          :as adornment-group.views]
               [pretty-elements.engine.api                     :as pretty-elements.engine]
-              [pretty-elements.adornment-group.views :as adornment-group.views]
               [pretty-elements.notification-bubble.attributes :as notification-bubble.attributes]
               [pretty-elements.notification-bubble.prototypes :as notification-bubble.prototypes]
-              [pretty-presets.engine.api :as pretty-presets.engine]
-              [reagent.core :as reagent]
-              [pretty-accessories.api :as pretty-accessories]
-              [pretty-subitems.api :as pretty-subitems]))
+              [pretty-presets.engine.api                      :as pretty-presets.engine]
+              [pretty-subitems.api                            :as pretty-subitems]
+              [reagent.core                                   :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

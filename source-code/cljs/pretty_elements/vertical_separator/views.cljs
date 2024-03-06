@@ -1,13 +1,13 @@
 
 (ns pretty-elements.vertical-separator.views
     (:require [fruits.random.api                             :as random]
+              [pretty-accessories.api                        :as pretty-accessories]
               [pretty-elements.engine.api                    :as pretty-elements.engine]
               [pretty-elements.vertical-separator.attributes :as vertical-separator.attributes]
               [pretty-elements.vertical-separator.prototypes :as vertical-separator.prototypes]
               [pretty-presets.engine.api                     :as pretty-presets.engine]
-              [reagent.core :as reagent]
-              [pretty-accessories.api :as pretty-accessories]
-              [pretty-subitems.api :as pretty-subitems]))
+              [pretty-subitems.api                           :as pretty-subitems]
+              [reagent.core                                  :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

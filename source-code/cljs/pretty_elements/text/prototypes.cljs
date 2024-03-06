@@ -1,8 +1,8 @@
 
 (ns pretty-elements.text.prototypes
     (:require [pretty-properties.api :as pretty-properties]
-              [pretty-rules.api :as pretty-rules]
-              [pretty-standards.api :as pretty-standards]))
+              [pretty-rules.api      :as pretty-rules]
+              [pretty-standards.api  :as pretty-standards]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

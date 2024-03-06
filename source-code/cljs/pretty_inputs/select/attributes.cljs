@@ -1,8 +1,6 @@
 
 (ns pretty-inputs.select.attributes
-    (:require [dom.api                  :as dom]
-              [pretty-attributes.api    :as pretty-attributes]
-              [pretty-inputs.engine.api :as pretty-inputs.engine]))
+    (:require [pretty-attributes.api :as pretty-attributes]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -10,15 +8,19 @@
 (defn inner-attributes
   ; @ignore
   ;
-  ; @param (keyword) select-id
-  ; @param (map) select-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
-  ; {}
-  [_ select-props]
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
+  [_ props]
   (-> {:class :pi-select--inner}
-      (pretty-attributes/inner-space-attributes select-props)
-      (pretty-attributes/style-attributes  select-props)))
+      (pretty-attributes/flex-attributes        props)
+      (pretty-attributes/focus-event-attributes props)
+      (pretty-attributes/inner-size-attributes  props)
+      (pretty-attributes/inner-space-attributes props)
+      (pretty-attributes/style-attributes       props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -26,14 +28,18 @@
 (defn outer-attributes
   ; @ignore
   ;
-  ; @param (keyword) select-id
-  ; @param (map) select-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
-  ; {}
-  [_ select-props]
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
+  [_ props]
   (-> {:class :pi-select--outer}
-      (pretty-attributes/class-attributes  select-props)
-      (pretty-attributes/outer-space-attributes select-props)
-      (pretty-attributes/state-attributes  select-props)
-      (pretty-attributes/theme-attributes   select-props)))
+      (pretty-attributes/class-attributes          props)
+      (pretty-attributes/inner-position-attributes props)
+      (pretty-attributes/outer-position-attributes props)
+      (pretty-attributes/outer-size-attributes     props)
+      (pretty-attributes/outer-space-attributes    props)
+      (pretty-attributes/state-attributes          props)
+      (pretty-attributes/theme-attributes          props)))

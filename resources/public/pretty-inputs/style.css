@@ -1,58 +1,4 @@
 
-/***** Checkbox *****/
-/*** Wrapper ***/
-
-.pi-checkbox {
-  /* XXX#6668 */
-  width: fit-content;
-}
-
-/*** Wrapper ***/
-
-/*** Options ***/
-
-.pi-checkbox--inner[data-orientation="horizontal"] {
-  column-gap: 24px;
-}
-
-/*** Options ***/
-
-/*** Option ***/
-
-.pi-checkbox--option {
-  display:        flex;
-  gap:            8px;
-  padding-bottom: 6px;
-  padding-top:    6px;
-}
-
-.pi-checkbox--option-button {
-  height: 20px;
-  margin: 2px 0;
-  width:  20px;
-}
-
-.pi-checkbox--option-checkmark {
-  animation-name:     opacity-0-1;
-  animation-duration: .1s;
-  font-size:          16px;
-  line-height:        16px;
-}
-
-.pi-checkbox--option-label {
-  /* XXX#5049 */
-  text-align: left;
-}
-
-.pi-checkbox--option-helper {
-  /* XXX#5049 */
-  text-align: left;
-}
-
-/*** Option ***/
-/***** Checkbox *****/
-
-
 
 /***** Chip-group *****/
 /*** Wrapper ***/
@@ -547,7 +493,7 @@
 /***** Text field *****/
 /*** Inner ***/
 
-.pi-text-field--inner {
+.pi-text-field--inner_ {
   display: flex;
   justify-content: space-between;
 }
@@ -556,7 +502,7 @@
 
 /*** Input ***/
 
-.pi-text-field--input-structure {
+.pi-text-field--input-structure_ {
   flex-grow: 1;
 }
 
@@ -565,7 +511,7 @@
   width: 100%;
 }
 
-.pi-text-field--input {
+.pi-text-field--input_ {
   color:   var( --text-color-default );
   height:  100%;
   padding: 6px 0;
@@ -575,11 +521,11 @@
   font-weight: inherit;
 }
 
-.pi-text-field--input[type="date"] {
+.pi-text-field--input_[type="date"] {
   cursor: text;
 }
 
-textarea.pi-text-field--input {
+textarea.pi-text-field--input_ {
   overflow: hidden;
   resize:   none;
 }
@@ -588,11 +534,11 @@ textarea.pi-text-field--input {
 
 /*** Adornments ***/
 
-.pi-text-field--adornments {
+.pi-text-field--adornments_ {
   padding: 6 12px;
 }
 
-.pi-text-field--adornments-placeholder {
+.pi-text-field--adornments-placeholder_ {
   cursor: text;
   width: 12px;
 }
@@ -601,7 +547,7 @@ textarea.pi-text-field--input {
 
 /*** Placeholder ***/
 
-.pi-text-field--placeholder {
+.pi-text-field--placeholder_ {
   color:       var( --text-color-highlight );
   font-weight: 400;
   left:        0;
@@ -615,7 +561,7 @@ textarea.pi-text-field--input {
 
 /*** Surface ***/
 
-.pi-text-field--surface {
+.pi-text-field--surface_ {
   background-color: var( --fill-color-default );
   left: 0;
   overflow: hidden;
@@ -636,14 +582,14 @@ textarea.pi-text-field--input {
 
 /*** Number field ***/
 
-.pi-text-field--input::-webkit-outer-spin-button,
-.pi-text-field--input::-webkit-inner-spin-button {
+.pi-text-field--input_::-webkit-outer-spin-button,
+.pi-text-field--input_::-webkit-inner-spin-button {
   /* Chrome, Safari, Edge, Opera */
   -webkit-appearance: none;
   margin: 0;
 }
 
-.pi-text-field--input[type="number"][type=number] {
+.pi-text-field--input_[type="number"][type=number] {
   /* Firefox */
   -moz-appearance: textfield;
 }

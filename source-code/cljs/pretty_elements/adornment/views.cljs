@@ -1,14 +1,14 @@
 
 (ns pretty-elements.adornment.views
     (:require [fruits.random.api                    :as random]
+              [pretty-accessories.api               :as pretty-accessories]
               [pretty-elements.adornment.attributes :as adornment.attributes]
               [pretty-elements.adornment.prototypes :as adornment.prototypes]
               [pretty-elements.engine.api           :as pretty-elements.engine]
+              [pretty-models.api                    :as pretty-models]
               [pretty-presets.engine.api            :as pretty-presets.engine]
-              [pretty-accessories.api            :as pretty-accessories]
-              [pretty-models.api              :as pretty-models]
-              [pretty-subitems.api            :as pretty-subitems]
-              [reagent.core :as reagent]))
+              [pretty-subitems.api                  :as pretty-subitems]
+              [reagent.core                         :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

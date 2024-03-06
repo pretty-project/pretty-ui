@@ -7,7 +7,7 @@
               [pretty-elements.menu-bar.prototypes :as menu-bar.prototypes]
               [pretty-elements.menu-item.views     :as menu-item.views]
               [pretty-presets.engine.api           :as pretty-presets.engine]
-              [reagent.core :as reagent]))
+              [reagent.core                        :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

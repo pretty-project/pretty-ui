@@ -4,7 +4,7 @@
               [components.item-list-row.prototypes :as item-list-row.prototypes]
               [fruits.css.api                      :as css]
               [fruits.random.api                   :as random]
-              [multitype-content.api             :as multitype-content]
+              [multitype-content.api               :as multitype-content]
               [pretty-elements.api                 :as pretty-elements]))
 
 ;; ----------------------------------------------------------------------------

@@ -1,12 +1,12 @@
 
 (ns pretty-accessories.tooltip.views
-    (:require [fruits.random.api :as random]
+    (:require [fruits.random.api                     :as random]
+              [pretty-accessories.icon.views         :as icon.views]
+              [pretty-accessories.label.views        :as label.views]
               [pretty-accessories.tooltip.attributes :as tooltip.attributes]
               [pretty-accessories.tooltip.prototypes :as tooltip.prototypes]
-              [pretty-presets.engine.api :as pretty-presets.engine]
-              [pretty-accessories.icon.views :as icon.views]
-              [pretty-accessories.label.views :as label.views]
-              [pretty-subitems.api :as pretty-subitems]))
+              [pretty-presets.engine.api             :as pretty-presets.engine]
+              [pretty-subitems.api                   :as pretty-subitems]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -1,14 +1,14 @@
 
 (ns pretty-inputs.select-button.views
-    (:require [fruits.random.api                 :as random]
+    (:require [fruits.random.api                      :as random]
+              [pretty-accessories.api                 :as pretty-accessories]
+              [pretty-inputs.engine.api               :as pretty-inputs.engine]
               [pretty-inputs.select-button.attributes :as select-button.attributes]
               [pretty-inputs.select-button.prototypes :as select-button.prototypes]
-              [pretty-inputs.engine.api        :as pretty-inputs.engine]
-              [pretty-presets.engine.api :as pretty-presets.engine]
-              [reagent.core :as reagent]
-              [pretty-models.api :as pretty-models]
-              [pretty-accessories.api :as pretty-accessories]
-              [pretty-subitems.api :as pretty-subitems]))
+              [pretty-models.api                      :as pretty-models]
+              [pretty-presets.engine.api              :as pretty-presets.engine]
+              [pretty-subitems.api                    :as pretty-subitems]
+              [reagent.core                           :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

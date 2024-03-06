@@ -2,7 +2,7 @@
 (ns renderers.renderer.views
     (:require [fruits.hiccup.api        :as hiccup]
               [fruits.vector.api        :as vector]
-              [reagent.core :as reagent]
+              [reagent.core             :as reagent]
               [renderers.renderer.utils :as renderer.utils]))
 
 ;; ----------------------------------------------------------------------------

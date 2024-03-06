@@ -1,9 +1,9 @@
 
 (ns pretty-accessories.label.views
-    (:require [fruits.random.api                 :as random]
+    (:require [fruits.random.api                   :as random]
               [pretty-accessories.label.attributes :as label.attributes]
               [pretty-accessories.label.prototypes :as label.prototypes]
-              [pretty-presets.engine.api :as pretty-presets.engine]))
+              [pretty-presets.engine.api           :as pretty-presets.engine]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

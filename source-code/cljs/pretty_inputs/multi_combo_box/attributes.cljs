@@ -1,6 +1,6 @@
 
 (ns pretty-inputs.multi-combo-box.attributes
-    (:require [pretty-attributes.api        :as pretty-attributes]))
+    (:require [pretty-attributes.api :as pretty-attributes]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

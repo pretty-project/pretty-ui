@@ -1,11 +1,11 @@
 
 (ns pretty-layouts.header.views
-    (:require [fruits.random.api :as random]
-              [pretty-layouts.engine.api :as pretty-layouts.engine]
+    (:require [fruits.random.api                :as random]
+              [pretty-layouts.engine.api        :as pretty-layouts.engine]
               [pretty-layouts.header.attributes :as header.attributes]
               [pretty-layouts.header.prototypes :as header.prototypes]
-              [pretty-presets.engine.api :as pretty-presets.engine]
-              [reagent.core :as reagent]))
+              [pretty-presets.engine.api        :as pretty-presets.engine]
+              [reagent.core                     :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

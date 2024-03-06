@@ -3,7 +3,7 @@
     (:require [components.input-block.helpers    :as input-block.helpers]
               [components.input-block.prototypes :as input-block.prototypes]
               [fruits.random.api                 :as random]
-              [multitype-content.api           :as multitype-content]))
+              [multitype-content.api             :as multitype-content]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

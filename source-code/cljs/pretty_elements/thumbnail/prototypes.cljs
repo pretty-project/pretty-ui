@@ -1,11 +1,11 @@
 
 (ns pretty-elements.thumbnail.prototypes
     (:require [pretty-elements.image.prototypes :as image.prototypes]
-              [react-references.api :as react-references]
-              [pretty-properties.api :as pretty-properties]
-              [pretty-standards.api :as pretty-standards]
-              [pretty-subitems.api :as pretty-subitems]
-              [pretty-rules.api :as pretty-rules]))
+              [pretty-properties.api            :as pretty-properties]
+              [pretty-rules.api                 :as pretty-rules]
+              [pretty-standards.api             :as pretty-standards]
+              [pretty-subitems.api              :as pretty-subitems]
+              [react-references.api             :as react-references]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
