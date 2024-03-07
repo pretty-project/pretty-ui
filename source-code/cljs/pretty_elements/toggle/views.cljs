@@ -8,7 +8,8 @@
               [pretty-models.api                 :as pretty-models]
               [pretty-presets.engine.api         :as pretty-presets.engine]
               [pretty-subitems.api               :as pretty-subitems]
-              [reagent.core                      :as reagent]))
+              [reagent.core                      :as reagent]
+              [pretty-models.api :as pretty-models]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -97,13 +98,18 @@
   ;          :fill-color    :highlight
   ;          :href-uri      "/my-uri"
   ;          :indent        {:all :s}}]
+  ;
+  ; @usage
+  ; ;; The shorthand form of the property map is perceived as the ':content' property.
+  ; [toggle "My content"]
   ([props]
    [view (random/generate-keyword) props])
 
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
-       (let [props (pretty-presets.engine/apply-preset           id props)
+       (let [props (pretty-models/use-longhand                   id props :content)
+             props (pretty-presets.engine/apply-preset           id props)
              props (toggle.prototypes/props-prototype            id props)
              props (pretty-elements.engine/element-timeout-props id props)]
             (if (:mounted? props)

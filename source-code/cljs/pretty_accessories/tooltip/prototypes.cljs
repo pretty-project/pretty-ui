@@ -42,4 +42,5 @@
                  (pretty-standards/standard-outer-position-props)
                  (pretty-standards/standard-outer-size-props)
                  (pretty-rules/apply-auto-border-crop)
+                 (pretty-rules/auto-disable-mouse-events)
                  (pretty-subitems/apply-subitem-prototype :label label-prototype-f))))

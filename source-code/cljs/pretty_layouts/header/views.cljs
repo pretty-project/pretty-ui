@@ -5,6 +5,7 @@
               [pretty-layouts.header.attributes :as header.attributes]
               [pretty-layouts.header.prototypes :as header.prototypes]
               [pretty-presets.engine.api        :as pretty-presets.engine]
+              [pretty-models.api :as pretty-models]
               [reagent.core                     :as reagent]))
 
 ;; ----------------------------------------------------------------------------
@@ -51,6 +52,7 @@
   ; [Inner size properties](pretty-core/cljs/pretty-properties/api.html#inner-size-properties)
   ; [Inner space properties](pretty-core/cljs/pretty-properties/api.html#inner-space-properties)
   ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
+  ; [Mouse event properties](pretty-core/cljs/pretty-properties/api.html#mouse-event-properties)
   ; [Outer position properties](pretty-core/cljs/pretty-properties/api.html#outer-position-properties)
   ; [Outer size properties](pretty-core/cljs/pretty-properties/api.html#outer-size-properties)
   ; [Outer space properties](pretty-core/cljs/pretty-properties/api.html#outer-space-properties)
@@ -68,13 +70,18 @@
   ; [header {:content    "My header"
   ;          :fill-color :highlight
   ;          :indent     {:all :s}}]
+  ;
+  ; @usage
+  ; ;; The shorthand form of the property map is perceived as the ':content' property.
+  ; [header "My content"]
   ([props]
    [view (random/generate-keyword) props])
 
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
-       (let [props (pretty-presets.engine/apply-preset id props)
+       (let [props (pretty-models/use-longhand         id props :content)
+             props (pretty-presets.engine/apply-preset id props)
              props (header.prototypes/props-prototype  id props)]
             (if (:mounted? props)
                 [view-lifecycles id props])))))

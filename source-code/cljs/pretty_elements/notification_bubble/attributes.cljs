@@ -40,6 +40,7 @@
       (pretty-attributes/inner-space-attributes      props)
       (pretty-attributes/mouse-event-attributes      props)
       (pretty-attributes/progress-attributes         props)
+      (pretty-attributes/mouse-event-attributes      props)
       (pretty-attributes/style-attributes            props)))
 
 ;; ----------------------------------------------------------------------------

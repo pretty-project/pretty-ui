@@ -42,5 +42,6 @@
                  (pretty-standards/standard-line-props)
                  (pretty-standards/standard-outer-size-props)
                  (pretty-rules/auto-align-scrollable-flex)
+                 (pretty-rules/auto-disable-mouse-events)
                  (pretty-rules/auto-set-mounted)
                  (pretty-subitems/apply-subitem-prototype :label label-prototype-f))))

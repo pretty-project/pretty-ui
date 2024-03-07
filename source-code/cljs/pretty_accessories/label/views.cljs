@@ -3,7 +3,8 @@
     (:require [fruits.random.api                   :as random]
               [pretty-accessories.label.attributes :as label.attributes]
               [pretty-accessories.label.prototypes :as label.prototypes]
-              [pretty-presets.engine.api           :as pretty-presets.engine]))
+              [pretty-presets.engine.api           :as pretty-presets.engine]
+              [pretty-models.api :as pretty-models]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -37,6 +38,7 @@
   ; [Inner position properties](pretty-core/cljs/pretty-properties/api.html#inner-position-properties)
   ; [Inner size properties](pretty-core/cljs/pretty-properties/api.html#inner-size-properties)
   ; [Inner space properties](pretty-core/cljs/pretty-properties/api.html#inner-space-properties)
+  ; [Mouse event properties](pretty-core/cljs/pretty-properties/api.html#mouse-event-properties)
   ; [Outer position properties](pretty-core/cljs/pretty-properties/api.html#outer-position-properties)
   ; [Outer size properties](pretty-core/cljs/pretty-properties/api.html#outer-size-properties)
   ; [Outer space properties](pretty-core/cljs/pretty-properties/api.html#outer-space-properties)
@@ -59,12 +61,16 @@
   ;         :horizontal-align :left
   ;         :outer-width      :xxl}]
   ;
+  ; @usage
+  ; ;; The shorthand form of the property map is perceived as the ':content' property.
+  ; [label "My content"]
   ([props]
    [view (random/generate-keyword) props])
 
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
-       (let [props (pretty-presets.engine/apply-preset id props)
+       (let [props (pretty-models/use-longhand         id props :content)
+             props (pretty-presets.engine/apply-preset id props)
              props (label.prototypes/props-prototype   id props)]
             [label id props]))))

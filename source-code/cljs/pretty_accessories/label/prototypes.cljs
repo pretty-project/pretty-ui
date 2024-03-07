@@ -29,4 +29,5 @@
             (pretty-standards/standard-text-props)
             (pretty-rules/apply-auto-border-crop)
             (pretty-rules/auto-align-scrollable-flex)
+            (pretty-rules/auto-disable-mouse-events)
             (pretty-rules/compose-content)))

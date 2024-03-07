@@ -5,6 +5,23 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn content-attributes
+  ; @ignore
+  ;
+  ; @param (keyword) id
+  ; @param (map) props
+  ;
+  ; @return (map)
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
+  [_ props]
+  (-> {:class :pt-cell--content}
+      (pretty-attributes/font-attributes props)
+      (pretty-attributes/text-attributes props)))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn inner-attributes
   ; @ignore
   ;
@@ -19,11 +36,10 @@
       (pretty-attributes/background-color-attributes props)
       (pretty-attributes/border-attributes           props)
       (pretty-attributes/flex-attributes             props)
-      (pretty-attributes/font-attributes             props)
       (pretty-attributes/inner-size-attributes       props)
       (pretty-attributes/inner-space-attributes      props)
-      (pretty-attributes/style-attributes            props)
-      (pretty-attributes/text-attributes             props)))
+      (pretty-attributes/mouse-event-attributes      props)
+      (pretty-attributes/style-attributes            props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

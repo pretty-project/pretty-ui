@@ -7,6 +7,7 @@
               [pretty-inputs.select-button.prototypes :as select-button.prototypes]
               [pretty-models.api                      :as pretty-models]
               [pretty-presets.engine.api              :as pretty-presets.engine]
+              [pretty-models.api :as pretty-models]
               [pretty-subitems.api                    :as pretty-subitems]
               [reagent.core                           :as reagent]))
 
@@ -94,7 +95,8 @@
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
-       (let [props (pretty-presets.engine/apply-preset       id props)
+       (let [props (pretty-models/use-subitem-longhand       id props :label :content)
+             props (pretty-presets.engine/apply-preset       id props)
              props (select-button.prototypes/props-prototype id props)]
             (if (:mounted? props)
                 [view-lifecycles id props])))))

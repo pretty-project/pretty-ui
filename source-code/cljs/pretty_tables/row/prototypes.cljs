@@ -26,6 +26,7 @@
             (pretty-standards/standard-outer-position-props)
             (pretty-standards/standard-outer-size-props)
             (pretty-rules/apply-auto-border-crop)
+            (pretty-rules/auto-disable-mouse-events)
             (pretty-rules/auto-set-mounted)
             (pretty-subitems/subitem-group<-subitem-default :cells)
             (pretty-subitems/subitem-group<-disabled-state  :cells)

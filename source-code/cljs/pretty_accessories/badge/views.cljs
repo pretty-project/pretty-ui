@@ -6,7 +6,8 @@
               [pretty-accessories.icon.views       :as icon.views]
               [pretty-accessories.label.views      :as label.views]
               [pretty-presets.engine.api           :as pretty-presets.engine]
-              [pretty-subitems.api                 :as pretty-subitems]))
+              [pretty-subitems.api                 :as pretty-subitems]
+              [pretty-models.api :as pretty-models]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -44,6 +45,7 @@
   ; [Inner position properties](pretty-core/cljs/pretty-properties/api.html#inner-position-properties)
   ; [Inner size properties](pretty-core/cljs/pretty-properties/api.html#inner-size-properties)
   ; [Inner space properties](pretty-core/cljs/pretty-properties/api.html#inner-space-properties)
+  ; [Mouse event properties](pretty-core/cljs/pretty-properties/api.html#mouse-event-properties)
   ; [Outer position properties](pretty-core/cljs/pretty-properties/api.html#outer-position-properties)
   ; [Outer size properties](pretty-core/cljs/pretty-properties/api.html#outer-size-properties)
   ; [Outer space properties](pretty-core/cljs/pretty-properties/api.html#outer-space-properties)
@@ -69,6 +71,7 @@
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
-       (let [props (pretty-presets.engine/apply-preset id props)
+       (let [props (pretty-models/use-subitem-longhand id props :label :content)
+             props (pretty-presets.engine/apply-preset id props)
              props (badge.prototypes/props-prototype   id props)]
             [badge id props]))))

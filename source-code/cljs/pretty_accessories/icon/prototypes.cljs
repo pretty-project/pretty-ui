@@ -1,7 +1,8 @@
 
 (ns pretty-accessories.icon.prototypes
     (:require [pretty-properties.api :as pretty-properties]
-              [pretty-standards.api  :as pretty-standards]))
+              [pretty-standards.api  :as pretty-standards]
+              [pretty-rules.api  :as pretty-rules]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -23,5 +24,6 @@
             (pretty-standards/standard-inner-position-props)
             (pretty-standards/standard-inner-size-props)
             (pretty-standards/standard-outer-position-props)
-            (pretty-standards/standard-outer-size-props)))
+            (pretty-standards/standard-outer-size-props)
            ;(pretty-rules/apply-auto-border-crop)
+            (pretty-rules/auto-disable-mouse-events)))

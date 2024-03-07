@@ -47,10 +47,8 @@
   ;
   ; @return (map)
   [id props]
-  (let [option-value-f               (fn [%] (-> % :label :content))
-        placeholder-text-prototype-f (fn [%] (placeholder-text-prototype id props %))]
+  (let [placeholder-text-prototype-f (fn [%] (placeholder-text-prototype id props %))]
        (-> props (pretty-properties/default-flex-props             {:orientation :vertical})
-                 (pretty-properties/default-input-option-props     {:option-value-f option-value-f})
                  (pretty-properties/default-input-validation-props {:validate-when-change? true})
                  (pretty-properties/default-outer-size-props       {:outer-size-unit :full-block})
                  (pretty-standards/standard-flex-props)
@@ -60,6 +58,7 @@
                  (pretty-standards/standard-input-option-props)
                  (pretty-standards/standard-outer-size-props)
                  (pretty-rules/auto-align-scrollable-flex)
+                 (pretty-rules/auto-disable-mouse-events)
                  (pretty-rules/auto-set-mounted)
                  (pretty-subitems/subitem-group<-subitem-default :options)
                  (pretty-subitems/subitem-group<-disabled-state  :options)

@@ -5,7 +5,8 @@
               [pretty-elements.row.attributes :as row.attributes]
               [pretty-elements.row.prototypes :as row.prototypes]
               [pretty-presets.engine.api      :as pretty-presets.engine]
-              [reagent.core                   :as reagent]))
+              [reagent.core                   :as reagent]
+              [pretty-models.api :as pretty-models]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -51,6 +52,7 @@
   ; [Inner size properties](pretty-core/cljs/pretty-properties/api.html#inner-size-properties)
   ; [Inner space properties](pretty-core/cljs/pretty-properties/api.html#inner-space-properties)
   ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
+  ; [Mouse event properties](pretty-core/cljs/pretty-properties/api.html#mouse-event-properties)
   ; [Outer position properties](pretty-core/cljs/pretty-properties/api.html#outer-position-properties)
   ; [Outer size properties](pretty-core/cljs/pretty-properties/api.html#outer-size-properties)
   ; [Outer space properties](pretty-core/cljs/pretty-properties/api.html#outer-space-properties)
@@ -77,13 +79,18 @@
   ;       :vertical-align   :center
   ;       :outer-height     :s
   ;       :outer-width      :5xl}]
+  ;
+  ; @usage
+  ; ;; The shorthand form of the property map is perceived as the ':content' property.
+  ; [row "My content"]
   ([props]
    [view (random/generate-keyword) props])
 
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
-       (let [props (pretty-presets.engine/apply-preset id props)
+       (let [props (pretty-models/use-longhand         id props :content)
+             props (pretty-presets.engine/apply-preset id props)
              props (row.prototypes/props-prototype     id props)]
             (if (:mounted? props)
                 [view-lifecycles id props])))))

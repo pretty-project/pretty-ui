@@ -114,6 +114,7 @@
                  (pretty-standards/standard-outer-position-props)
                  (pretty-standards/standard-outer-size-props)
                 ;(pretty-rules/auto-align-scrollable-flex)
+                 (pretty-rules/auto-disable-mouse-events)
                  (pretty-rules/auto-set-mounted)
                  (pretty-subitems/ensure-subitem           :popup)
                  (pretty-subitems/subitems<-disabled-state :button :header :icon-button :option-group :popup :select-button)

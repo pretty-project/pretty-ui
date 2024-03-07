@@ -42,6 +42,7 @@
                  (pretty-standards/standard-outer-position-props)
                  (pretty-standards/standard-outer-size-props)
                 ;(pretty-rules/auto-align-scrollable-flex)
+                 (pretty-rules/auto-disable-mouse-events)
                  (pretty-rules/auto-set-mounted)
                  (pretty-subitems/subitem-group<-disabled-state :header :option-group)
                  (pretty-subitems/leave-disabled-state          :header :option-group)

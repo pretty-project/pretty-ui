@@ -34,5 +34,6 @@
             (pretty-rules/auto-limit-multiline-count)
             (pretty-rules/auto-set-multiline-height)
             (pretty-rules/auto-align-scrollable-flex)
+            (pretty-rules/auto-disable-mouse-events)
             (pretty-rules/auto-set-mounted)
             (pretty-rules/compose-content)))

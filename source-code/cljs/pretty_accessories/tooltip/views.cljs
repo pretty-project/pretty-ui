@@ -6,6 +6,7 @@
               [pretty-accessories.tooltip.attributes :as tooltip.attributes]
               [pretty-accessories.tooltip.prototypes :as tooltip.prototypes]
               [pretty-presets.engine.api             :as pretty-presets.engine]
+              [pretty-models.api :as pretty-models]
               [pretty-subitems.api                   :as pretty-subitems]))
 
 ;; ----------------------------------------------------------------------------
@@ -44,6 +45,7 @@
   ; [Inner position properties](pretty-core/cljs/pretty-properties/api.html#inner-position-properties)
   ; [Inner size properties](pretty-core/cljs/pretty-properties/api.html#inner-size-properties)
   ; [Inner space properties](pretty-core/cljs/pretty-properties/api.html#inner-space-properties)
+  ; [Mouse event properties](pretty-core/cljs/pretty-properties/api.html#mouse-event-properties)
   ; [Outer position properties](pretty-core/cljs/pretty-properties/api.html#outer-position-properties)
   ; [Outer size properties](pretty-core/cljs/pretty-properties/api.html#outer-size-properties)
   ; [Outer space properties](pretty-core/cljs/pretty-properties/api.html#outer-space-properties)
@@ -69,6 +71,7 @@
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
-       (let [props (pretty-presets.engine/apply-preset id props)
+       (let [props (pretty-models/use-subitem-longhand id props :label :content)
+             props (pretty-presets.engine/apply-preset id props)
              props (tooltip.prototypes/props-prototype id props)]
             [tooltip id props]))))

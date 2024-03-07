@@ -32,7 +32,8 @@
   ;  :select-button (map)(opt)
   ;  ...}
   [id {:keys [button header icon-button option-group popup popup-visible? select-button] :as props}]
-  (let [popup (assoc popup :body {:content [option-group.views/view (pretty-subitems/subitem-id id :option-group) option-group]})]
+  (let [option-group [option-group.views/view (pretty-subitems/subitem-id id :option-group) option-group]
+        popup        (assoc-in popup [:body :content] option-group)]
        [:div (select.attributes/outer-attributes id props)
              [:div (select.attributes/inner-attributes id props)
                    (when header         [header.views/view           (pretty-subitems/subitem-id id :header)        header])
@@ -77,6 +78,7 @@
   ; [Inner size properties](pretty-core/cljs/pretty-properties/api.html#inner-size-properties)
   ; [Inner space properties](pretty-core/cljs/pretty-properties/api.html#inner-space-properties)
   ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
+  ; [Mouse event properties](pretty-core/cljs/pretty-properties/api.html#mouse-event-properties)
   ; [Outer position properties](pretty-core/cljs/pretty-properties/api.html#outer-position-properties)
   ; [Outer size properties](pretty-core/cljs/pretty-properties/api.html#outer-size-properties)
   ; [Outer space properties](pretty-core/cljs/pretty-properties/api.html#outer-space-properties)

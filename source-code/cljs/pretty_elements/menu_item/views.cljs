@@ -8,7 +8,8 @@
               [pretty-models.api                    :as pretty-models]
               [pretty-presets.engine.api            :as pretty-presets.engine]
               [pretty-subitems.api                  :as pretty-subitems]
-              [reagent.core                         :as reagent]))
+              [reagent.core                         :as reagent]
+              [pretty-models.api :as pretty-models]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -100,7 +101,8 @@
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
-       (let [props (pretty-presets.engine/apply-preset   id props)
+       (let [props (pretty-models/use-subitem-longhand   id props :label :content)
+             props (pretty-presets.engine/apply-preset   id props)
              props (menu-item.prototypes/props-prototype id props)]
             (if (:mounted? props)
                 [view-lifecycles id props])))))

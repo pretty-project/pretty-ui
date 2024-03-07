@@ -8,7 +8,8 @@
               [pretty-elements.notification-bubble.prototypes :as notification-bubble.prototypes]
               [pretty-presets.engine.api                      :as pretty-presets.engine]
               [pretty-subitems.api                            :as pretty-subitems]
-              [reagent.core                                   :as reagent]))
+              [reagent.core                                   :as reagent]
+              [pretty-models.api :as pretty-models]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -63,6 +64,7 @@
   ; [Inner size properties](pretty-core/cljs/pretty-properties/api.html#inner-size-properties)
   ; [Inner space properties](pretty-core/cljs/pretty-properties/api.html#inner-space-properties)
   ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
+  ; [Mouse event properties](pretty-core/cljs/pretty-properties/api.html#mouse-event-properties)
   ; [Outer position properties](pretty-core/cljs/pretty-properties/api.html#outer-position-properties)
   ; [Outer size properties](pretty-core/cljs/pretty-properties/api.html#outer-size-properties)
   ; [Outer space properties](pretty-core/cljs/pretty-properties/api.html#outer-space-properties)
@@ -97,13 +99,18 @@
   ;                       :outer-width           :3xl
   ;                       :start-adornment-group {:adornment-default {:fill-color :default :border-color :highlight :border-radius {:all :s}}
   ;                                               :adornments        [{:icon {:icon-name :close}}]}}]
+  ;
+  ; @usage
+  ; ;; The shorthand form of the property map is perceived as the ':content' property.
+  ; [notification-bubble "My content"]
   ([props]
    [view (random/generate-keyword) props])
 
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
-       (let [props (pretty-presets.engine/apply-preset             id props)
+       (let [props (pretty-models/use-longhand                     id props :content)
+             props (pretty-presets.engine/apply-preset             id props)
              props (notification-bubble.prototypes/props-prototype id props)]
             (if (:mounted? props)
                 [view-lifecycles id props])))))

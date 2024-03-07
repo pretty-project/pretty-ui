@@ -46,6 +46,7 @@
                  (pretty-standards/standard-text-props)
                  (pretty-rules/apply-auto-border-crop)
                  (pretty-rules/auto-align-scrollable-flex)
+                 (pretty-rules/auto-disable-mouse-events)
                  (pretty-rules/auto-set-mounted)
                  (pretty-subitems/ensure-subitem           :label)
                  (pretty-subitems/subitems<-disabled-state :start-adornment-group :end-adornment-group)

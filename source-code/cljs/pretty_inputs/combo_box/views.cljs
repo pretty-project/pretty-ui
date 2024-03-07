@@ -66,7 +66,8 @@
   ;  :option-group (map)(opt)
   ;  ...}
   [id {:keys [field header option-group] :as props}]
-  (let [field (assoc field :expandable {:content [option-group.views/view (pretty-subitems/subitem-id id :option-group) option-group]})]
+  (let [option-group [option-group.views/view (pretty-subitems/subitem-id id :option-group) option-group]
+        field        (assoc-in field [:expandable :content] option-group)]
        [:div (combo-box.attributes/outer-attributes id props)
              [:div (combo-box.attributes/inner-attributes id props)
                    (if header [header.views/view (pretty-subitems/subitem-id id :header) header])

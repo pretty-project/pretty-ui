@@ -20,6 +20,7 @@
       (pretty-attributes/focus-event-attributes  props)
       (pretty-attributes/font-attributes         props)
       (pretty-attributes/input-field-attributes  props)
+      (pretty-attributes/input-state-attributes  props)
       (pretty-attributes/react-attributes        props)
       (pretty-attributes/text-attributes         props)))
 
@@ -57,7 +58,6 @@
       (pretty-attributes/flex-attributes             props)
       (pretty-attributes/inner-size-attributes       props)
       (pretty-attributes/inner-space-attributes      props)
-      (pretty-attributes/input-state-attributes      props)
       (pretty-attributes/mouse-event-attributes      props)
       (pretty-attributes/style-attributes            props)))
 

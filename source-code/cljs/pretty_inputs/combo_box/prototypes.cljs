@@ -10,6 +10,20 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn option-group-prototype
+  ; @ignore
+  ;
+  ; @param (keyword) id
+  ; @param (map) props
+  ; @param (map) option-group
+  ;
+  ; @return (map)
+  [_ _ option-group]
+  (-> option-group (pretty-properties/default-outer-size-props {:outer-width :parent})))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn props-prototype
   ; @ignore
   ;
@@ -18,19 +32,21 @@
   ;
   ; @return (map)
   [id props]
-  (-> props (pretty-properties/default-flex-props       {:gap :xs :horizontal-align :left :orientation :vertical})
-            (pretty-properties/default-outer-size-props {:outer-size-unit :full-block})
-            (pretty-standards/standard-flex-props)
-            (pretty-standards/standard-inner-position-props)
-            (pretty-standards/standard-inner-size-props)
-            (pretty-standards/standard-outer-position-props)
-            (pretty-standards/standard-outer-size-props)
-           ;(pretty-rules/auto-align-scrollable-flex)
-            (pretty-rules/auto-set-mounted)
-            (pretty-subitems/ensure-subitem           :field)
-            (pretty-subitems/subitems<-disabled-state :header :field :option-group)
-            (pretty-subitems/leave-disabled-state     :header :field :option-group)))
-
+  (let [option-group-prototype-f (fn [%] (option-group-prototype id props %))]
+       (-> props (pretty-properties/default-flex-props       {:gap :xs :horizontal-align :left :orientation :vertical})
+                 (pretty-properties/default-outer-size-props {:outer-size-unit :full-block})
+                 (pretty-standards/standard-flex-props)
+                 (pretty-standards/standard-inner-position-props)
+                 (pretty-standards/standard-inner-size-props)
+                 (pretty-standards/standard-outer-position-props)
+                 (pretty-standards/standard-outer-size-props)
+                ;(pretty-rules/auto-align-scrollable-flex)
+                 (pretty-rules/auto-disable-mouse-events)
+                 (pretty-rules/auto-set-mounted)
+                 (pretty-subitems/ensure-subitem           :field)
+                 (pretty-subitems/subitems<-disabled-state :header :field :option-group)
+                 (pretty-subitems/leave-disabled-state     :header :field :option-group)
+                 (pretty-subitems/apply-subitem-prototype  :option-group option-group-prototype-f))))
 
 
 

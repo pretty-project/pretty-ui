@@ -10,6 +10,7 @@
               [pretty-inputs.option.views            :as option.views]
               [pretty-presets.engine.api             :as pretty-presets.engine]
               [pretty-subitems.api                   :as pretty-subitems]
+              [pretty-models.api :as pretty-models]
               [reagent.core                          :as reagent]))
 
 ;; ----------------------------------------------------------------------------
@@ -28,8 +29,9 @@
         [pretty-inputs.engine/input-synchronizer  id props]
         [:div (option-group.attributes/inner-attributes id props)
               (letfn [(f0 [option] [option.views/view option])]
+                    [:<> (println props)
                      (cond (-> options vector/not-empty?) (hiccup/put-with [:<>] options f0)
-                           (-> placeholder-text) [pretty-guides/placeholder-text (pretty-subitems/subitem-id id :placeholder-text) placeholder-text]))]])
+                           (-> placeholder-text) [pretty-guides/placeholder-text (pretty-subitems/subitem-id id :placeholder-text) placeholder-text])])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -65,6 +67,7 @@
   ; [Input validation properties](pretty-core/cljs/pretty-properties/api.html#input-validation-properties)
   ; [Input value properties](pretty-core/cljs/pretty-properties/api.html#input-value-properties)
   ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
+  ; [Mouse event properties](pretty-core/cljs/pretty-properties/api.html#mouse-event-properties)
   ; [Outer position properties](pretty-core/cljs/pretty-properties/api.html#outer-position-properties)
   ; [Outer size properties](pretty-core/cljs/pretty-properties/api.html#outer-size-properties)
   ; [Outer space properties](pretty-core/cljs/pretty-properties/api.html#outer-space-properties)
@@ -94,11 +97,10 @@
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
-       ; Applies the prototype function before importing option related properties
-       ; to make the default 'get-option-value-f' property available for the importing functions.
-       (let [props (pretty-presets.engine/apply-preset                 id props)
-             props (option-group.prototypes/props-prototype            id props)
+       (let [props (pretty-models/use-subitem-longhand                 id props :placeholder-text :content)
+             props (pretty-presets.engine/apply-preset                 id props)
              props (pretty-inputs.engine/import-input-option-events    id props)
-             props (pretty-inputs.engine/import-input-option-selection id props)]
+             props (pretty-inputs.engine/import-input-option-selection id props)
+             props (option-group.prototypes/props-prototype            id props)]
             (if (:mounted? props)
                 [view-lifecycles id props])))))

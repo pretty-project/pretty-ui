@@ -10,6 +10,7 @@
               [pretty-layouts.popup.prototypes :as popup.prototypes]
               [pretty-presets.engine.api       :as pretty-presets.engine]
               [pretty-subitems.api             :as pretty-subitems]
+              [pretty-models.api :as pretty-models]
               [reagent.core                    :as reagent]))
 
 ;; ----------------------------------------------------------------------------
@@ -67,19 +68,21 @@
   ; [Background color properties](pretty-core/cljs/pretty-properties/api.html#background-color-properties)
   ; [Border properties](pretty-core/cljs/pretty-properties/api.html#border-properties)
   ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
+  ; [Font properties](pretty-core/cljs/pretty-properties/api.html#font-properties)
   ; [Fullscreen properties](pretty-core/cljs/pretty-properties/api.html#fullscreen-properties)
   ; [Inner position properties](pretty-core/cljs/pretty-properties/api.html#inner-position-properties)
   ; [Inner size properties](pretty-core/cljs/pretty-properties/api.html#inner-size-properties)
   ; [Inner space properties](pretty-core/cljs/pretty-properties/api.html#inner-space-properties)
   ; [Keypress control properties](pretty-core/cljs/pretty-properties/api.html#keypress-control-properties)
   ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
+  ; [Mouse event properties](pretty-core/cljs/pretty-properties/api.html#mouse-event-properties)
   ; [Outer position properties](pretty-core/cljs/pretty-properties/api.html#outer-position-properties)
   ; [Outer size properties](pretty-core/cljs/pretty-properties/api.html#outer-size-properties)
   ; [Outer space properties](pretty-core/cljs/pretty-properties/api.html#outer-space-properties)
   ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
   ; [State properties](pretty-core/cljs/pretty-properties/api.html#state-properties)
-  ; [Structure properties](pretty-core/cljs/pretty-properties/api.html#structure-properties)
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
+  ; [Text properties](pretty-core/cljs/pretty-properties/api.html#text-properties)
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
   ;
   ; @param (keyword)(opt) id
@@ -99,13 +102,20 @@
   ;         :inner-width   :xxs
   ;         :outer-height  :parent
   ;         :outer-width   :parent}]
+  ;
+  ; @usage
+  ; ;; The shorthand form of the property map is perceived as the ':content' property.
+  ; [popup "My content"]
   ([props]
    [view (random/generate-keyword) props])
 
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
-       (let [props (pretty-presets.engine/apply-preset id props)
+       (let [props (pretty-models/use-subitem-longhand id props :body)
+             props (pretty-models/use-subitem-longhand id props :footer)
+             props (pretty-models/use-subitem-longhand id props :header)
+             props (pretty-presets.engine/apply-preset id props)
              props (popup.prototypes/props-prototype   id props)]
             (if (:mounted? props)
                 [view-lifecycles id props])))))

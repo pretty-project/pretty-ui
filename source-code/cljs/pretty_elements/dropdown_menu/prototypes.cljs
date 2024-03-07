@@ -55,6 +55,7 @@
                  (pretty-standards/standard-inner-size-props)
                  (pretty-standards/standard-outer-position-props)
                  (pretty-standards/standard-outer-size-props)
+                 (pretty-rules/auto-disable-mouse-events)
                  (pretty-rules/auto-set-mounted)
                  (pretty-subitems/subitem<-disabled-state :menu-bar :expandable)
                  (pretty-subitems/leave-disabled-state    :menu-bar :expandable)

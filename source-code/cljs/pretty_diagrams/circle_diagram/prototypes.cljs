@@ -22,4 +22,5 @@
             (pretty-standards/standard-outer-position-props)
             (pretty-standards/standard-outer-size-props)
             (pretty-standards/standard-shape-props)
+            (pretty-rules/auto-disable-mouse-events)
             (pretty-rules/auto-set-mounted)))

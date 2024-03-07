@@ -17,7 +17,9 @@
   [_ props]
   (-> {:class :pl-popup--content}
       (pretty-attributes/content-size-attributes props)
-      (pretty-attributes/overflow-attributes     props)))
+      (pretty-attributes/font-attributes         props)
+      (pretty-attributes/overflow-attributes     props)
+      (pretty-attributes/text-attributes         props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -39,6 +41,7 @@
       (pretty-attributes/flex-attributes             props)
       (pretty-attributes/inner-size-attributes       props)
       (pretty-attributes/inner-space-attributes      props)
+      (pretty-attributes/mouse-event-attributes      props)
       (pretty-attributes/style-attributes            props)))
 
 ;; ----------------------------------------------------------------------------

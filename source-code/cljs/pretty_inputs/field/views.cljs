@@ -92,6 +92,7 @@
   ; [Input value properties](pretty-core/cljs/pretty-properties/api.html#input-value-properties)
   ; [Keypress control properties](pretty-core/cljs/pretty-properties/api.html#keypress-control-properties)
   ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
+  ; [Mouse event properties](pretty-core/cljs/pretty-properties/api.html#mouse-event-properties)
   ; [Outer position properties](pretty-core/cljs/pretty-properties/api.html#outer-position-properties)
   ; [Outer size properties](pretty-core/cljs/pretty-properties/api.html#outer-size-properties)
   ; [Outer space properties](pretty-core/cljs/pretty-properties/api.html#outer-space-properties)
@@ -122,9 +123,8 @@
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
-       ; Imports the field related properties before applying the prototype function
-       ; to make the imported field content available for the content related rule functions.
-       (let [props (pretty-presets.engine/apply-preset                        id props)
+       (let [props (pretty-models/use-subitem-longhand                        id props :expandable :content)
+             props (pretty-presets.engine/apply-preset                        id props)
              props (pretty-inputs.engine/import-input-field-displayed-content id props)
              props (pretty-inputs.engine/import-input-field-events            id props)
              props (field.prototypes/props-prototype                          id props)]

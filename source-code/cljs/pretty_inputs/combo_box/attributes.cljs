@@ -81,6 +81,7 @@
       (pretty-attributes/inner-size-attributes       props)
       (pretty-attributes/inner-space-attributes      props)
       (pretty-attributes/input-state-attributes      props)
+      (pretty-attributes/mouse-event-attributes props)
       (pretty-attributes/style-attributes            props)))
 
 ;; ----------------------------------------------------------------------------

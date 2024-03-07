@@ -29,5 +29,6 @@
             (pretty-rules/auto-align-scrollable-flex)
             (pretty-rules/auto-disable-highlight-color)
             (pretty-rules/auto-disable-hover-color)
+            (pretty-rules/auto-disable-mouse-events)
             (pretty-rules/auto-set-mounted)
             (pretty-rules/compose-content)))
