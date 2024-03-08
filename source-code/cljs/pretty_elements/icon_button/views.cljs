@@ -107,8 +107,8 @@
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
-       (let [props (pretty-presets.engine/apply-preset           id props)
-             props (icon-button.prototypes/props-prototype       id props)
-             props (pretty-elements.engine/element-timeout-props id props)]
+       (let [props (pretty-presets.engine/apply-preset                  id props)
+             props (pretty-elements.engine/import-element-timeout-props id props)
+             props (icon-button.prototypes/props-prototype              id props)]
             (if (:mounted? props)
                 [view-lifecycles id props])))))

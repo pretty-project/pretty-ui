@@ -71,7 +71,7 @@
        (-> popup (pretty-properties/default-background-color-props {:fill-color :default})
                  (pretty-properties/default-inner-size-props       {:inner-height :content :inner-width :content})
                  (pretty-properties/default-outer-size-props       {:outer-height :parent :outer-layer :uppermost :outer-width :parent})
-                 (assoc :overlay {:fill-color :invert :on-click-f close-popup-f} :on-escape-f close-popup-f))))
+                 (assoc :overlay {:fill-color :default :on-click-f close-popup-f} :on-escape-f close-popup-f))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -108,9 +108,9 @@
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
-       (let [props (pretty-models/use-longhand                   id props :content)
-             props (pretty-presets.engine/apply-preset           id props)
-             props (toggle.prototypes/props-prototype            id props)
-             props (pretty-elements.engine/element-timeout-props id props)]
+       (let [props (pretty-models/use-longhand                          id props :content)
+             props (pretty-presets.engine/apply-preset                  id props)
+             props (pretty-elements.engine/import-element-timeout-props id props)
+             props (toggle.prototypes/props-prototype                   id props)]
             (if (:mounted? props)
                 [view-lifecycles id props])))))

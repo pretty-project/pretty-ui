@@ -17,8 +17,7 @@
   ;
   ; @return (map)
   [_ _ label]
-  (-> label (pretty-properties/default-font-props {:font-size :s :font-weight :semi-bold})
-            (pretty-properties/default-text-props {:text-color :invert})))
+  (-> label (pretty-properties/default-font-props {:font-size :s :font-weight :semi-bold})))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -32,7 +31,7 @@
   ; @return (map)
   [id props]
   (let [label-prototype-f (fn [%] (label-prototype id props %))]
-       (-> props (pretty-properties/default-background-color-props {:fill-color :invert})
+       (-> props (pretty-properties/default-background-color-props {:fill-color :default})
                  (pretty-properties/default-flex-props             {:orientation :horizontal})
                  (pretty-properties/default-outer-position-props   {:outer-position :tl :outer-position-method :absolute})
                  (pretty-properties/default-outer-size-props       {:outer-height :parent :outer-width :parent :outer-size-unit :quarter-block})

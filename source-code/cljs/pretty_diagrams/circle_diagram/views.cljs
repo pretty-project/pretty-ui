@@ -97,8 +97,8 @@
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
-       (let [props (pretty-presets.engine/apply-preset                id props)
-             props (circle-diagram.prototypes/props-prototype         id props)
-             props (pretty-diagrams.engine/calculate-diagram-data-sum id props)]
+       (let [props (pretty-presets.engine/apply-preset             id props)
+             props (circle-diagram.prototypes/props-prototype      id props)
+             props (pretty-diagrams.engine/import-diagram-data-sum id props)]
             (if (:mounted? props)
                 [view-lifecycles id props])))))

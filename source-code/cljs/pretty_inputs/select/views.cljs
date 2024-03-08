@@ -103,7 +103,7 @@
   ;                         :options [{:label {:content "My option #1"}}
   ;                                   {:label {:content "My option #2"}}
   ;                                   {:label {:content "My option #3"}}]}
-  ;          :popup {:border-crop :auto :border-radius {:all :s}}
+  ;          :popup {:border-crop :auto :border-radius {:all :s} :overlay {:fill-color :invert}}
   ;          :select-button {:label {:content "My select"}}}]
   ([props]
    [view (random/generate-keyword) props])

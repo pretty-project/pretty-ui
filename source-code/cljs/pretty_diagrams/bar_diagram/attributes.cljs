@@ -33,7 +33,7 @@
         datum-width  (css/percent  datum-ratio)]
        (-> {:class :pd-line-diagram--datum}
            (pretty-attributes/background-color-attributes {:fill-color     datum-color})
-           (pretty-attributes/content-size-attributes     {:content-height datum-height :conte-width datum-width}))))
+           (pretty-attributes/content-size-attributes     {:content-height datum-height :content-width datum-width}))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
