@@ -63,5 +63,6 @@
                  (pretty-subitems/subitem-group<-subitem-default :options)
                  (pretty-subitems/subitem-group<-disabled-state  :options)
                  (pretty-subitems/leave-disabled-state           :options)
+                 (pretty-subitems/apply-subitem-longhand         :placeholder :content)
                  (pretty-subitems/apply-group-item-prototype     :options option-prototype)
                  (pretty-subitems/apply-subitem-prototype        :placeholder-text placeholder-text-prototype-f))))

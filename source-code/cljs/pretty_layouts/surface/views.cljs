@@ -9,7 +9,6 @@
               [pretty-layouts.surface.prototypes :as surface.prototypes]
               [pretty-presets.engine.api         :as pretty-presets.engine]
               [pretty-subitems.api               :as pretty-subitems]
-              [pretty-models.api :as pretty-models]
               [reagent.core                      :as reagent]))
 
 ;; ----------------------------------------------------------------------------
@@ -98,10 +97,7 @@
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
-       (let [props (pretty-models/use-subitem-longhand id props :body)
-             props (pretty-models/use-subitem-longhand id props :footer)
-             props (pretty-models/use-subitem-longhand id props :header)
-             props (pretty-presets.engine/apply-preset id props)
+       (let [props (pretty-presets.engine/apply-preset id props)
              props (surface.prototypes/props-prototype id props)]
             (if (:mounted? props)
                 [view-lifecycles id props])))))

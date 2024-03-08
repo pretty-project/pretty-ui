@@ -123,10 +123,9 @@
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
-       (let [props (pretty-models/use-subitem-longhand                        id props :expandable :content)
-             props (pretty-presets.engine/apply-preset                        id props)
-             props (pretty-inputs.engine/import-input-field-displayed-content id props)
-             props (pretty-inputs.engine/import-input-field-events            id props)
-             props (field.prototypes/props-prototype                          id props)]
+       (let [props (pretty-presets.engine/apply-preset             id props)
+             props (pretty-inputs.engine/import-input-field-events id props)
+             props (pretty-inputs.engine/import-input-field-value  id props)
+             props (field.prototypes/props-prototype               id props)]
             (if (:mounted? props)
                 [view-lifecycles id props])))))

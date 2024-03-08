@@ -53,4 +53,5 @@
                  (pretty-rules/auto-disable-mouse-events)
                  (pretty-rules/auto-set-click-effect)
                  (pretty-rules/auto-set-mounted)
+                 (pretty-subitems/apply-subitem-longhand  :label :content)
                  (pretty-subitems/apply-subitem-prototype :label label-prototype-f))))

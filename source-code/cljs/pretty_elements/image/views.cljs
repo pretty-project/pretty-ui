@@ -127,8 +127,7 @@
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
-       (let [props (pretty-models/use-subitem-longhand           id props :label :content)
-             props (pretty-presets.engine/apply-preset           id props)
+       (let [props (pretty-presets.engine/apply-preset           id props)
              props (image.prototypes/props-prototype             id props)
              props (pretty-elements.engine/element-timeout-props id props)
              props (dynamic-props/import-props                   id props)]

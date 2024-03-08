@@ -68,5 +68,7 @@
                  (pretty-rules/auto-set-mounted)
                  (pretty-subitems/subitems<-disabled-state :body :footer :header)
                  (pretty-subitems/leave-disabled-state     :body :footer :header)
+                 (pretty-subitems/apply-subitem-longhand   :footer :content)
+                 (pretty-subitems/apply-subitem-longhand   :header :content)
                  (pretty-subitems/apply-subitem-prototype  :footer footer-prototype-f)
                  (pretty-subitems/apply-subitem-prototype  :header header-prototype-f))))

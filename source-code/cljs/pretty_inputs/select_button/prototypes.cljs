@@ -68,5 +68,6 @@
                  (pretty-rules/auto-set-click-effect)
                  (pretty-rules/auto-set-mounted)
                  (pretty-subitems/ensure-subitem          :icon :label)
+                 (pretty-subitems/apply-subitem-longhand  :label :content)
                  (pretty-subitems/apply-subitem-prototype :icon  icon-prototype-f)
                  (pretty-subitems/apply-subitem-prototype :label label-prototype-f))))

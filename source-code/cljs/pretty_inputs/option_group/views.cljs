@@ -10,7 +10,6 @@
               [pretty-inputs.option.views            :as option.views]
               [pretty-presets.engine.api             :as pretty-presets.engine]
               [pretty-subitems.api                   :as pretty-subitems]
-              [pretty-models.api :as pretty-models]
               [reagent.core                          :as reagent]))
 
 ;; ----------------------------------------------------------------------------
@@ -29,9 +28,8 @@
         [pretty-inputs.engine/input-synchronizer  id props]
         [:div (option-group.attributes/inner-attributes id props)
               (letfn [(f0 [option] [option.views/view option])]
-                    [:<> (println props)
                      (cond (-> options vector/not-empty?) (hiccup/put-with [:<>] options f0)
-                           (-> placeholder-text) [pretty-guides/placeholder-text (pretty-subitems/subitem-id id :placeholder-text) placeholder-text])])]])
+                           (-> placeholder-text) [pretty-guides/placeholder-text (pretty-subitems/subitem-id id :placeholder-text) placeholder-text]))]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -97,10 +95,10 @@
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
-       (let [props (pretty-models/use-subitem-longhand                 id props :placeholder-text :content)
-             props (pretty-presets.engine/apply-preset                 id props)
+       (let [props (pretty-presets.engine/apply-preset                 id props)
              props (pretty-inputs.engine/import-input-option-events    id props)
              props (pretty-inputs.engine/import-input-option-selection id props)
+             props (pretty-inputs.engine/import-input-option-filtering id props)
              props (option-group.prototypes/props-prototype            id props)]
             (if (:mounted? props)
                 [view-lifecycles id props])))))

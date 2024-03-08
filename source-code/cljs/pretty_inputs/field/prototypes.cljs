@@ -67,11 +67,13 @@
   ;
   ; @param (keyword) id
   ; @param (map) props
+  ; {:field-value (string)(opt)
+  ;  ...}
   ; @param (map) placeholder-text
   ;
   ; @return (map)
-  [id props placeholder-text]
-  (if (pretty-inputs.engine/input-field-empty? id props)
+  [_ {:keys [field-value]} placeholder-text]
+  (if (-> field-value empty?)
       (-> placeholder-text (pretty-properties/default-outer-position-props {:outer-position-method :absolute}))))
 
 ;; ----------------------------------------------------------------------------
@@ -105,6 +107,7 @@
                  (pretty-standards/standard-text-props)
                 ;(pretty-rules/apply-auto-border-crop)
                 ;(pretty-rules/auto-align-scrollable-flex)
+                 (pretty-rules/assoc-field-value-as-content)
                  (pretty-rules/auto-count-content-lines)
                  (pretty-rules/auto-limit-multiline-count)
                  (pretty-rules/auto-set-multiline-height)
@@ -113,6 +116,7 @@
                  (pretty-rules/auto-disable-mouse-events)
                  (pretty-rules/generate-input-autofill)
                  (pretty-rules/auto-set-mounted)
+                 (pretty-subitems/apply-subitem-longhand  :expandable :content)
                  (pretty-subitems/apply-subitem-prototype :expandable            expandable-prototype-f)
                  (pretty-subitems/apply-subitem-prototype :placeholder-text      placeholder-text-prototype-f)
                  (pretty-subitems/apply-subitem-prototype :end-adornment-group   end-adornment-group-prototype-f)

@@ -6,7 +6,6 @@
               [pretty-accessories.tooltip.attributes :as tooltip.attributes]
               [pretty-accessories.tooltip.prototypes :as tooltip.prototypes]
               [pretty-presets.engine.api             :as pretty-presets.engine]
-              [pretty-models.api :as pretty-models]
               [pretty-subitems.api                   :as pretty-subitems]))
 
 ;; ----------------------------------------------------------------------------
@@ -71,7 +70,6 @@
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
-       (let [props (pretty-models/use-subitem-longhand id props :label :content)
-             props (pretty-presets.engine/apply-preset id props)
+       (let [props (pretty-presets.engine/apply-preset id props)
              props (tooltip.prototypes/props-prototype id props)]
             [tooltip id props]))))
