@@ -32,7 +32,7 @@
   ;  ...}
   [_ props]
   (-> {:class :pa-icon--inner}
-      (pretty-models/content-model-inner-attributes props)))
+      (pretty-models/container-model-inner-attributes props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -48,4 +48,4 @@
   ;  ...}
   [_ props]
   (-> {:class :pa-icon--outer}
-      (pretty-models/content-model-outer-attributes props)))
+      (pretty-models/container-model-outer-attributes props)))

@@ -6,7 +6,9 @@
               [pretty-accessories.icon.views       :as icon.views]
               [pretty-accessories.label.views      :as label.views]
               [pretty-subitems.api                 :as pretty-subitems]
-              [pretty-accessories.methods.api :as pretty-accessories.methods]))
+              [pretty-accessories.methods.api :as pretty-accessories.methods]
+              [pretty-accessories.engine.api :as pretty-accessories.engine]
+              [reagent.core :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -28,6 +30,17 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn- view-lifecycles
+  ; @ignore
+  ;
+  ; @param (keyword) id
+  ; @param (map) props
+  [id props]
+  ; @note (tutorials#parameterizing)
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-accessories.engine/accessory-did-mount    id props))
+                         :component-will-unmount (fn [_ _] (pretty-accessories.engine/accessory-will-unmount id props))
+                         :reagent-render         (fn [_ props] [cover id props])}))
+
 (defn view
   ; @description
   ; Cover accessory for elements.
@@ -44,6 +57,7 @@
   ; [Inner position properties](pretty-core/cljs/pretty-properties/api.html#inner-position-properties)
   ; [Inner size properties](pretty-core/cljs/pretty-properties/api.html#inner-size-properties)
   ; [Inner space properties](pretty-core/cljs/pretty-properties/api.html#inner-space-properties)
+  ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
   ; [Mouse event properties](pretty-core/cljs/pretty-properties/api.html#mouse-event-properties)
   ; [Outer position properties](pretty-core/cljs/pretty-properties/api.html#outer-position-properties)
   ; [Outer size properties](pretty-core/cljs/pretty-properties/api.html#outer-size-properties)
@@ -71,7 +85,11 @@
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
-       (let [props (pretty-accessories.methods/apply-accessory-shorthand-map id props {:icon :icon-name :label :content})
-             props (pretty-accessories.methods/apply-accessory-preset        id props)
-             props (cover.prototypes/props-prototype                         id props)]
-            [cover id props]))))
+       (let [props (pretty-accessories.methods/apply-accessory-shorthand-map  id props {:icon :icon-name :label :content})
+             props (pretty-accessories.methods/apply-accessory-preset         id props)
+             props (pretty-accessories.methods/import-accessory-dynamic-props id props)
+             props (pretty-accessories.methods/import-accessory-state-events  id props)
+             props (pretty-accessories.methods/import-accessory-state         id props)
+             props (cover.prototypes/props-prototype                          id props)]
+            (if (:mounted? props)
+                [view-lifecycles id props])))))

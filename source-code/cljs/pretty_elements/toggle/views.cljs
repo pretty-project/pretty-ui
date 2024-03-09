@@ -108,7 +108,7 @@
        (let [props (pretty-elements.methods/apply-element-shorthand-key   id props :content)
              props (pretty-elements.methods/apply-element-preset          id props)
              props (pretty-elements.methods/import-element-timeout-events id props)
-             props (pretty-elements.methods/import-element-timeout-state  id props)
+             props (pretty-elements.methods/import-element-timeout        id props)
              props (toggle.prototypes/props-prototype                     id props)]
             (if (:mounted? props)
                 [view-lifecycles id props])))))

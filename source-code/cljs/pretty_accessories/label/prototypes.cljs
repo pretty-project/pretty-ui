@@ -18,7 +18,8 @@
             (pretty-properties/default-font-props       {:font-size :s :font-weight :medium})
             (pretty-properties/default-outer-size-props {:outer-size-unit :half-block})
             (pretty-properties/default-text-props       {:text-selectable? false})
+            (pretty-models/container-model-standard-props)
+            (pretty-models/container-model-rules)
             (pretty-models/content-model-standard-props)
-            (pretty-models/content-model-rules)
-            (pretty-models/text-model-standard-props)
-            (pretty-models/text-model-rules)))
+            (pretty-models/content-model-rules)))
+ 

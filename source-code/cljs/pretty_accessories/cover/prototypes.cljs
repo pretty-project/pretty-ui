@@ -35,6 +35,6 @@
                  (pretty-properties/default-outer-position-props   {:outer-position :tl :outer-position-method :absolute})
                  (pretty-properties/default-outer-size-props       {:outer-height :parent :outer-width :parent :outer-size-unit :quarter-block})
                  (pretty-properties/default-visibility-props       {:opacity :hard})
-                 (pretty-models/content-model-standard-props)
-                 (pretty-models/content-model-rules)
+                 (pretty-models/container-model-standard-props)
+                 (pretty-models/container-model-rules)
                  (pretty-subitems/apply-subitem-prototype :label label-prototype-f))))

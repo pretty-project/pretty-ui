@@ -115,7 +115,7 @@
        (let [props (pretty-elements.methods/apply-element-shorthand-map   id props {:icon :icon-name :label :content})
              props (pretty-elements.methods/apply-element-preset          id props)
              props (pretty-elements.methods/import-element-timeout-events id props)
-             props (pretty-elements.methods/import-element-timeout-state  id props)
+             props (pretty-elements.methods/import-element-timeout        id props)
              props (thumbnail.prototypes/props-prototype                  id props)
              props (dynamic-props/import-props                            id props)]
             (if (:mounted? props)

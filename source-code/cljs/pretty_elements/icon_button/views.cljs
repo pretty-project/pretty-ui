@@ -107,7 +107,7 @@
        (let [props (pretty-elements.methods/apply-element-shorthand-map   id props {:icon :icon-name :label :content})
              props (pretty-elements.methods/apply-element-preset          id props)
              props (pretty-elements.methods/import-element-timeout-events id props)
-             props (pretty-elements.methods/import-element-timeout-state  id props)
+             props (pretty-elements.methods/import-element-timeout        id props)
              props (icon-button.prototypes/props-prototype                id props)]
             (if (:mounted? props)
                 [view-lifecycles id props])))))

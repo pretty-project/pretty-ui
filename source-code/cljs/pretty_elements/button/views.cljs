@@ -107,20 +107,13 @@
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
-       (let [props (pretty-elements.methods/apply-element-shorthand-map      id props {:icon :icon-name :label :content})
-             props (pretty-elements.methods/apply-element-preset             id props)
-
-             props (pretty-elements.methods/import-element-dynamic-props     id props)
-             props (pretty-elements.methods/import-element-active-state      id props)
-             props (pretty-elements.methods/import-element-active-events     id props)
-             props (pretty-elements.methods/import-element-disabled-state    id props)
-             props (pretty-elements.methods/import-element-highlighted-state id props)
-             props (pretty-elements.methods/import-element-hovered-events    id props)
-             props (pretty-elements.methods/import-element-hovered-state     id props)
-
-
-             props (pretty-elements.methods/import-element-timeout-events    id props)
-             props (pretty-elements.methods/import-element-timeout-state     id props)
-             props (button.prototypes/props-prototype                        id props)]
+       (let [props (pretty-elements.methods/apply-element-shorthand-map   id props {:icon :icon-name :label :content})
+             props (pretty-elements.methods/apply-element-preset          id props)
+             props (pretty-elements.methods/import-element-dynamic-props  id props)
+             props (pretty-elements.methods/import-element-state-events   id props)
+             props (pretty-elements.methods/import-element-state          id props)
+             props (pretty-elements.methods/import-element-timeout-events id props)
+             props (pretty-elements.methods/import-element-timeout        id props)
+             props (button.prototypes/props-prototype                     id props)]
             (if (:mounted? props)
                 [view-lifecycles id props])))))
