@@ -7,15 +7,15 @@
               [pretty-inputs.combo-box.attributes :as combo-box.attributes]
               [pretty-inputs.combo-box.env        :as combo-box.env]
               [pretty-inputs.combo-box.prototypes :as combo-box.prototypes]
+              [pretty-inputs.engine.api           :as pretty-inputs.engine]
+              [pretty-inputs.field.views          :as field.views]
+              [pretty-inputs.header.views         :as header.views]
+              [pretty-inputs.option-group.views   :as option-group.views]
               [pretty-inputs.text-field.views     :as text-field.views]
+              [pretty-presets.engine.api          :as pretty-presets.engine]
+              [pretty-subitems.api                :as pretty-subitems]
               [re-frame.api                       :as r]
-              [reagent.core                       :as reagent]
-              [pretty-inputs.engine.api :as pretty-inputs.engine]
-              [pretty-presets.engine.api :as pretty-presets.engine]
-              [pretty-inputs.field.views :as field.views]
-              [pretty-inputs.header.views :as header.views]
-              [pretty-inputs.option-group.views :as option-group.views]
-              [pretty-subitems.api :as pretty-subitems]))
+              [reagent.core                       :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

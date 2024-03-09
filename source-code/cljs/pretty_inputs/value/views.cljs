@@ -4,7 +4,7 @@
               [pretty-accessories.api         :as pretty-accessories]
               [pretty-elements.api            :as pretty-elements]
               [pretty-inputs.engine.api       :as pretty-inputs.engine]
-              [pretty-inputs.methods.api :as pretty-inputs.methods]
+              [pretty-inputs.methods.api      :as pretty-inputs.methods]
               [pretty-inputs.value.attributes :as value.attributes]
               [pretty-inputs.value.prototypes :as value.prototypes]
               [pretty-subitems.api            :as pretty-subitems]
@@ -104,8 +104,11 @@
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
-       (let [props (pretty-inputs.methods/apply-input-shorthand-map id props {:label :content})
-             props (pretty-inputs.methods/apply-input-preset        id props)
-             props (value.prototypes/props-prototype                id props)]
+       (let [props (pretty-inputs.methods/apply-input-shorthand-map  id props {:label :content})
+             props (pretty-inputs.methods/apply-input-preset         id props)
+             props (pretty-inputs.methods/import-input-dynamic-props id props)
+             props (pretty-inputs.methods/import-input-state-events  id props)
+             props (pretty-inputs.methods/import-input-state         id props)
+             props (value.prototypes/props-prototype                 id props)]
             (if (:mounted? props)
                 [view-lifecycles id props])))))

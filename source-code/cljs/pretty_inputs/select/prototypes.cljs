@@ -1,12 +1,12 @@
 
 (ns pretty-inputs.select.prototypes
-    (:require [dynamic-props.api     :as dynamic-props]
-              [fruits.map.api        :as map]
-              [pretty-properties.api :as pretty-properties]
-              [pretty-rules.api      :as pretty-rules]
-              [pretty-standards.api  :as pretty-standards]
-              [pretty-subitems.api   :as pretty-subitems]
-              [pretty-inputs.select.side-effects :as select.side-effects]))
+    (:require [dynamic-props.api                 :as dynamic-props]
+              [fruits.map.api                    :as map]
+              [pretty-inputs.select.side-effects :as select.side-effects]
+              [pretty-properties.api             :as pretty-properties]
+              [pretty-rules.api                  :as pretty-rules]
+              [pretty-standards.api              :as pretty-standards]
+              [pretty-subitems.api               :as pretty-subitems]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

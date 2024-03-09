@@ -1,7 +1,6 @@
 
 (ns pretty-elements.blank.prototypes
-    (:require [pretty-rules.api     :as pretty-rules]
-              [pretty-standards.api :as pretty-standards]))
+    (:require [pretty-models.api     :as pretty-models]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -14,12 +13,7 @@
   ;
   ; @return (map)
   [_ props]
-  (-> props (pretty-standards/standard-font-props)
-            (pretty-standards/standard-inner-position-props)
-            (pretty-standards/standard-inner-size-props)
-            (pretty-standards/standard-outer-position-props)
-            (pretty-standards/standard-outer-size-props)
-            (pretty-standards/standard-text-props)
-            (pretty-rules/auto-disable-mouse-events)
-            (pretty-rules/auto-set-mounted)
-            (pretty-rules/compose-content)))
+  (-> props (pretty-models/container-model-standard-props)
+            (pretty-models/container-model-rules)
+            (pretty-models/content-model-standard-props)
+            (pretty-models/content-model-rules)))

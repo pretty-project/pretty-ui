@@ -1,15 +1,13 @@
 
 (ns pretty-inputs.header.views
-    (:require [dynamic-props.api               :as dynamic-props]
-              [fruits.random.api               :as random]
+    (:require [fruits.random.api               :as random]
               [pretty-accessories.api          :as pretty-accessories]
               [pretty-elements.api             :as pretty-elements]
               [pretty-guides.api               :as pretty-guides]
               [pretty-inputs.engine.api        :as pretty-inputs.engine]
-              [pretty-inputs.methods.api        :as pretty-inputs.methods]
               [pretty-inputs.header.attributes :as header.attributes]
               [pretty-inputs.header.prototypes :as header.prototypes]
-              [pretty-presets.engine.api       :as pretty-presets.engine]
+              [pretty-inputs.methods.api       :as pretty-inputs.methods]
               [pretty-subitems.api             :as pretty-subitems]
               [reagent.core                    :as reagent]))
 
@@ -106,9 +104,11 @@
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
-       (let [props (pretty-presets.engine/apply-preset            id props)
-             props (pretty-inputs.methods/import-input-error-text id props)
-             props (header.prototypes/props-prototype             id props)
-             props (dynamic-props/import-props                    id props)]
+       (let [props (pretty-inputs.methods/apply-input-preset         id props)
+             props (pretty-inputs.methods/import-input-dynamic-props id props)
+             props (pretty-inputs.methods/import-input-error-text    id props)
+             props (pretty-inputs.methods/import-input-state-events  id props)
+             props (pretty-inputs.methods/import-input-state         id props)
+             props (header.prototypes/props-prototype                id props)]
             (if (:mounted? props)
                 [view-lifecycles id props])))))

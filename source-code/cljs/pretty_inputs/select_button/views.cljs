@@ -3,7 +3,7 @@
     (:require [fruits.random.api                      :as random]
               [pretty-accessories.api                 :as pretty-accessories]
               [pretty-inputs.engine.api               :as pretty-inputs.engine]
-              [pretty-inputs.methods.api               :as pretty-inputs.methods]
+              [pretty-inputs.methods.api              :as pretty-inputs.methods]
               [pretty-inputs.select-button.attributes :as select-button.attributes]
               [pretty-inputs.select-button.prototypes :as select-button.prototypes]
               [pretty-models.api                      :as pretty-models]
@@ -92,8 +92,11 @@
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
-       (let [props (pretty-inputs.methods/apply-input-shorthand-map id props {:icon :icon-name :label :content})
-             props (pretty-inputs.methods/apply-input-preset        id props)
-             props (select-button.prototypes/props-prototype        id props)]
+       (let [props (pretty-inputs.methods/apply-input-shorthand-map  id props {:icon :icon-name :label :content})
+             props (pretty-inputs.methods/apply-input-preset         id props)
+             props (pretty-inputs.methods/import-input-dynamic-props id props)
+             props (pretty-inputs.methods/import-input-state-events  id props)
+             props (pretty-inputs.methods/import-input-state         id props)
+             props (select-button.prototypes/props-prototype         id props)]
             (if (:mounted? props)
                 [view-lifecycles id props])))))

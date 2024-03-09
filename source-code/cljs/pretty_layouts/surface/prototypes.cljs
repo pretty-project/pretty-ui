@@ -2,8 +2,7 @@
 (ns pretty-layouts.surface.prototypes
     (:require [pretty-layouts.engine.api :as pretty-layouts.engine]
               [pretty-properties.api     :as pretty-properties]
-              [pretty-rules.api          :as pretty-rules]
-              [pretty-standards.api      :as pretty-standards]
+              [pretty-models.api :as pretty-models]
               [pretty-subitems.api       :as pretty-subitems]))
 
 ;; ----------------------------------------------------------------------------
@@ -51,19 +50,13 @@
   [id props]
   (let [footer-prototype-f (fn [%] (footer-prototype id props %))
         header-prototype-f (fn [%] (header-prototype id props %))]
-       (-> props (pretty-properties/default-content-size-props   {:content-height :grow :content-width :parent})
-                 (pretty-properties/default-flex-props           {:orientation :vertical})
-                        ;(pretty-properties/default-inner-position-props {:inner-position :center :inner-position-method :flex})
-                        ;(pretty-properties/default-outer-position-props {:outer-position :left :outer-position-method :absolute})
+       (-> props (pretty-properties/default-flex-props           {:orientation :vertical})
                  (pretty-properties/default-outer-size-props     {:outer-height :parent :outer-size-unit :screen :outer-width :parent})
-                        ;(pretty-properties/default-overflow-props       {:vertical-overflow :scroll})
-                 (pretty-standards/standard-animation-props)
-                 (pretty-standards/standard-inner-position-props)
-                 (pretty-standards/standard-inner-size-props)
-                 (pretty-standards/standard-outer-position-props)
-                 (pretty-standards/standard-outer-size-props)
-                 (pretty-rules/auto-disable-mouse-events)
-                 (pretty-rules/auto-set-mounted)
+                 (pretty-properties/default-overflow-props       {:vertical-overflow :scroll})
+                 (pretty-models/container-model-standard-props)
+                 (pretty-models/container-model-rules)
+                 (pretty-models/content-model-standard-props)
+                 (pretty-models/content-model-rules)
                  (pretty-subitems/subitems<-disabled-state :body :footer :header)
                  (pretty-subitems/apply-subitem-prototype  :footer footer-prototype-f)
                  (pretty-subitems/apply-subitem-prototype  :header header-prototype-f))))

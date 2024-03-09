@@ -1,17 +1,16 @@
 
 (ns pretty-inputs.select.views
-    (:require [dynamic-props.api                 :as dynamic-props]
-              [fruits.hiccup.api                 :as hiccup]
+    (:require [fruits.hiccup.api                 :as hiccup]
               [fruits.random.api                 :as random]
               [pretty-elements.api               :as pretty-elements]
               [pretty-inputs.engine.api          :as pretty-inputs.engine]
               [pretty-inputs.header.views        :as header.views]
               [pretty-inputs.option-group.views  :as option-group.views]
+              [pretty-inputs.methods.api :as pretty-inputs.methods]
               [pretty-inputs.select-button.views :as select-button.views]
               [pretty-inputs.select.attributes   :as select.attributes]
               [pretty-inputs.select.prototypes   :as select.prototypes]
               [pretty-layouts.api                :as pretty-layouts]
-              [pretty-presets.engine.api         :as pretty-presets.engine]
               [pretty-subitems.api               :as pretty-subitems]
               [reagent.core                      :as reagent]))
 
@@ -112,8 +111,10 @@
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
-       (let [props (pretty-presets.engine/apply-preset id props)
-             props (select.prototypes/props-prototype  id props)
-             props (dynamic-props/import-props         id props)]
+       (let [props (pretty-inputs.methods/apply-input-preset         id props)
+             props (pretty-inputs.methods/import-input-dynamic-props id props)
+             props (pretty-inputs.methods/import-input-state-events  id props)
+             props (pretty-inputs.methods/import-input-state         id props)
+             props (select.prototypes/props-prototype                id props)]
             (if (:mounted? props)
                 [view-lifecycles id props])))))

@@ -1,6 +1,6 @@
 
 (ns pretty-elements.text.attributes
-    (:require [pretty-attributes.api :as pretty-attributes]))
+    (:require [pretty-models.api :as pretty-models]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -16,9 +16,9 @@
   ;  ...}
   [_ props]
   (-> {:class :pe-text--content}
-      (pretty-attributes/content-size-attributes props)
-      (pretty-attributes/font-attributes         props)
-      (pretty-attributes/text-attributes         props)))
+      (pretty-models/container-model-content-attributes props)
+      (pretty-models/content-model-content-attributes   props)
+      (pretty-models/multiline-model-content-attributes props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -34,14 +34,9 @@
   ;  ...}
   [id props]
   (-> {:class :pe-text--inner}
-      (pretty-attributes/background-color-attributes props)
-      (pretty-attributes/border-attributes           props)
-      (pretty-attributes/flex-attributes             props)
-      (pretty-attributes/inner-size-attributes       props)
-      (pretty-attributes/inner-space-attributes      props)
-      (pretty-attributes/mouse-event-attributes      props)
-      (pretty-attributes/state-attributes            props)
-      (pretty-attributes/style-attributes            props)))
+      (pretty-models/container-model-inner-attributes props)
+      (pretty-models/content-model-inner-attributes   props)
+      (pretty-models/multiline-model-inner-attributes props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -57,10 +52,6 @@
   ;  ...}
   [_ props]
   (-> {:class :pe-text--outer}
-      (pretty-attributes/class-attributes          props)
-      (pretty-attributes/inner-position-attributes props)
-      (pretty-attributes/outer-position-attributes props)
-      (pretty-attributes/outer-size-attributes     props)
-      (pretty-attributes/outer-space-attributes    props)
-      (pretty-attributes/theme-attributes          props)
-      (pretty-attributes/visibility-attributes     props)))
+      (pretty-models/container-model-outer-attributes props)
+      (pretty-models/content-model-outer-attributes   props)
+      (pretty-models/multiline-model-outer-attributes props)))

@@ -4,10 +4,10 @@
               [pretty-accessories.api          :as pretty-accessories]
               [pretty-guides.api               :as pretty-guides]
               [pretty-inputs.engine.api        :as pretty-inputs.engine]
+              [pretty-inputs.methods.api       :as pretty-inputs.methods]
               [pretty-inputs.option.attributes :as option.attributes]
               [pretty-inputs.option.prototypes :as option.prototypes]
               [pretty-models.api               :as pretty-models]
-              [pretty-inputs.methods.api       :as pretty-inputs.methods]
               [pretty-subitems.api             :as pretty-subitems]
               [reagent.core                    :as reagent]))
 
@@ -96,8 +96,11 @@
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
-       (let [props (pretty-inputs.methods/apply-input-shorthand-map id props {:icon :icon-name :label :content})
-             props (pretty-inputs.methods/apply-input-preset        id props)
-             props (option.prototypes/props-prototype               id props)]
+       (let [props (pretty-inputs.methods/apply-input-shorthand-map  id props {:icon :icon-name :label :content})
+             props (pretty-inputs.methods/apply-input-preset         id props)
+             props (pretty-inputs.methods/import-input-dynamic-props id props)
+             props (pretty-inputs.methods/import-input-state-events  id props)
+             props (pretty-inputs.methods/import-input-state         id props)
+             props (option.prototypes/props-prototype                id props)]
             (if (:mounted? props)
                 [view-lifecycles id props])))))

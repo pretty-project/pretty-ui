@@ -6,7 +6,7 @@
               [pretty-inputs.option-group.views      :as option-group.views]
               [pretty-inputs.radio-button.attributes :as radio-button.attributes]
               [pretty-inputs.radio-button.prototypes :as radio-button.prototypes]
-              [pretty-presets.engine.api             :as pretty-presets.engine]
+              [pretty-inputs.methods.api :as pretty-inputs.methods]
               [pretty-subitems.api                   :as pretty-subitems]
               [reagent.core                          :as reagent]))
 
@@ -88,7 +88,10 @@
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
-       (let [props (pretty-presets.engine/apply-preset      id props)
-             props (radio-button.prototypes/props-prototype id props)]
+       (let [props (pretty-inputs.methods/apply-input-preset         id props)
+             props (pretty-inputs.methods/import-input-dynamic-props id props)
+             props (pretty-inputs.methods/import-input-state-events  id props)
+             props (pretty-inputs.methods/import-input-state         id props)
+             props (radio-button.prototypes/props-prototype          id props)]
             (if (:mounted? props)
                 [view-lifecycles id props])))))

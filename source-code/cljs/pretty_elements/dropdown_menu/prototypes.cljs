@@ -2,8 +2,7 @@
 (ns pretty-elements.dropdown-menu.prototypes
     (:require [pretty-elements.dropdown-menu.side-effects :as dropdown-menu.side-effects]
               [pretty-properties.api                      :as pretty-properties]
-              [pretty-rules.api                           :as pretty-rules]
-              [pretty-standards.api                       :as pretty-standards]
+              [pretty-models.api :as pretty-models]
               [pretty-subitems.api                        :as pretty-subitems]))
 
 ;; ----------------------------------------------------------------------------
@@ -51,12 +50,8 @@
         expandable-prototype-f (fn [%] (expandable-prototype                        id props %))
         menu-bar-prototype-f   (fn [%] (menu-bar-prototype                          id props %))]
        (-> props (pretty-properties/default-mouse-event-props {:on-mouse-leave-f on-mouse-leave-f})
-                 (pretty-standards/standard-inner-position-props)
-                 (pretty-standards/standard-inner-size-props)
-                 (pretty-standards/standard-outer-position-props)
-                 (pretty-standards/standard-outer-size-props)
-                 (pretty-rules/auto-disable-mouse-events)
-                 (pretty-rules/auto-set-mounted)
+                 (pretty-models/container-model-standard-props)
+                 (pretty-models/container-model-rules)
                  (pretty-subitems/subitem<-disabled-state :menu-bar :expandable)
                  (pretty-subitems/apply-subitem-prototype :expandable expandable-prototype-f)
                  (pretty-subitems/apply-subitem-prototype :menu-bar   menu-bar-prototype-f))))

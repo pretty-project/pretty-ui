@@ -1,10 +1,10 @@
 
 (ns pretty-inputs.option-group.prototypes
-    (:require [pretty-properties.api :as pretty-properties]
+    (:require [fruits.vector.api     :as vector]
+              [pretty-properties.api :as pretty-properties]
               [pretty-rules.api      :as pretty-rules]
               [pretty-standards.api  :as pretty-standards]
-              [pretty-subitems.api   :as pretty-subitems]
-              [fruits.vector.api :as vector]))
+              [pretty-subitems.api   :as pretty-subitems]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

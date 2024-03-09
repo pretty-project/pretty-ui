@@ -1,14 +1,14 @@
 
 (ns pretty-inputs.combo-box.prototypes
-    (:require [fruits.loop.api       :refer [<-walk]]
-              [fruits.noop.api       :refer [return]]
-              [fruits.map.api :as map]
-              [fruits.string.api :as string]
-              [pretty-properties.api :as pretty-properties]
-              [pretty-rules.api      :as pretty-rules]
-              [pretty-standards.api  :as pretty-standards]
-              [pretty-subitems.api  :as pretty-subitems]
-              [pretty-inputs.engine.api :as pretty-inputs.engine]))
+    (:require [fruits.loop.api          :refer [<-walk]]
+              [fruits.map.api           :as map]
+              [fruits.noop.api          :refer [return]]
+              [fruits.string.api        :as string]
+              [pretty-inputs.engine.api :as pretty-inputs.engine]
+              [pretty-properties.api    :as pretty-properties]
+              [pretty-rules.api         :as pretty-rules]
+              [pretty-standards.api     :as pretty-standards]
+              [pretty-subitems.api      :as pretty-subitems]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

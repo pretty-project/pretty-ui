@@ -3,9 +3,9 @@
     (:require [fruits.random.api                    :as random]
               [pretty-accessories.bullet.attributes :as bullet.attributes]
               [pretty-accessories.bullet.prototypes :as bullet.prototypes]
-              [pretty-accessories.methods.api :as pretty-accessories.methods]
-              [pretty-accessories.engine.api :as pretty-accessories.engine]
-              [reagent.core :as reagent]))
+              [pretty-accessories.engine.api        :as pretty-accessories.engine]
+              [pretty-accessories.methods.api       :as pretty-accessories.methods]
+              [reagent.core                         :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -37,29 +37,12 @@
   ; @description
   ; Bullet accessory for elements.
   ;
-  ; @links Implemented properties
-  ; [Animation properties](pretty-core/cljs/pretty-properties/api.html#animation-properties)
-  ; [Background color properties](pretty-core/cljs/pretty-properties/api.html#background-color-properties)
-  ; [Border properties](pretty-core/cljs/pretty-properties/api.html#border-properties)
-  ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
-  ; [Inner position properties](pretty-core/cljs/pretty-properties/api.html#inner-position-properties)
-  ; [Inner size properties](pretty-core/cljs/pretty-properties/api.html#inner-size-properties)
-  ; [Inner space properties](pretty-core/cljs/pretty-properties/api.html#inner-space-properties)
-  ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
-  ; [Mouse event properties](pretty-core/cljs/pretty-properties/api.html#mouse-event-properties)
-  ; [Outer position properties](pretty-core/cljs/pretty-properties/api.html#outer-position-properties)
-  ; [Outer size properties](pretty-core/cljs/pretty-properties/api.html#outer-size-properties)
-  ; [Outer space properties](pretty-core/cljs/pretty-properties/api.html#outer-space-properties)
-  ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
-  ; [State properties](pretty-core/cljs/pretty-properties/api.html#state-properties)
-  ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
-  ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
-  ; [Transformation properties](pretty-core/cljs/pretty-properties/api.html#transformation-properties)
-  ; [Visibility properties](pretty-core/cljs/pretty-properties/api.html#visibility-properties)
+  ; @links Implemented models
+  ; [Plain model](pretty-core/cljs/pretty-models/api.html#plain-model)
   ;
   ; @param (keyword)(opt) id
   ; @param (map) props
-  ; Check out the implemented properties.
+  ; Check out the implemented models.
   ;
   ; @usage (pretty-accessories/bullet.png)
   ; [bullet {:border-radius {:all :xs}

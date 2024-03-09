@@ -1,15 +1,15 @@
 
 (ns pretty-inputs.field.views
-    (:require [fruits.random.api               :as random]
-              [pretty-elements.api :as pretty-elements]
-              [pretty-guides.api               :as pretty-guides]
-              [pretty-inputs.engine.api        :as pretty-inputs.engine]
-              [pretty-inputs.methods.api :as pretty-inputs.methods]
+    (:require [fruits.random.api              :as random]
+              [pretty-elements.api            :as pretty-elements]
+              [pretty-guides.api              :as pretty-guides]
+              [pretty-inputs.engine.api       :as pretty-inputs.engine]
               [pretty-inputs.field.attributes :as field.attributes]
               [pretty-inputs.field.prototypes :as field.prototypes]
-              [pretty-models.api               :as pretty-models]
-              [pretty-subitems.api             :as pretty-subitems]
-              [reagent.core                    :as reagent]))
+              [pretty-inputs.methods.api      :as pretty-inputs.methods]
+              [pretty-models.api              :as pretty-models]
+              [pretty-subitems.api            :as pretty-subitems]
+              [reagent.core                   :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -123,10 +123,13 @@
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
-       (let [props (pretty-inputs.methods/apply-input-shorthand-map id props {:expandable :content :placeholder-text :content})
-             props (pretty-inputs.methods/apply-input-preset        id props)
-             props (pretty-inputs.methods/import-input-field-events id props)
-             props (pretty-inputs.methods/import-input-field-value  id props)
-             props (field.prototypes/props-prototype                id props)]
+       (let [props (pretty-inputs.methods/apply-input-shorthand-map  id props {:expandable :content :placeholder-text :content})
+             props (pretty-inputs.methods/apply-input-preset         id props)
+             props (pretty-inputs.methods/import-input-dynamic-props id props)
+             props (pretty-inputs.methods/import-input-field-events  id props)
+             props (pretty-inputs.methods/import-input-field-value   id props)
+             props (pretty-inputs.methods/import-input-state-events  id props)
+             props (pretty-inputs.methods/import-input-state         id props)
+             props (field.prototypes/props-prototype                 id props)]
             (if (:mounted? props)
                 [view-lifecycles id props])))))

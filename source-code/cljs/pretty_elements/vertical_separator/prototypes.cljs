@@ -1,8 +1,7 @@
 
 (ns pretty-elements.vertical-separator.prototypes
     (:require [pretty-properties.api :as pretty-properties]
-              [pretty-rules.api      :as pretty-rules]
-              [pretty-standards.api  :as pretty-standards]
+              [pretty-models.api :as pretty-models]
               [pretty-subitems.api   :as pretty-subitems]))
 
 ;; ----------------------------------------------------------------------------
@@ -35,13 +34,8 @@
        (-> props (pretty-properties/default-flex-props       {:gap :xs :orientation :vertical})
                  (pretty-properties/default-line-props       {:line-color :muted :line-orientation :vertical :line-size :grow})
                  (pretty-properties/default-outer-size-props {:outer-height :parent :outer-size-unit :full-block :outer-width :content})
-                 (pretty-standards/standard-flex-props)
-                 (pretty-standards/standard-inner-position-props)
-                 (pretty-standards/standard-inner-size-props)
-                 (pretty-standards/standard-outer-position-props)
-                 (pretty-standards/standard-line-props)
-                 (pretty-standards/standard-outer-size-props)
-                 (pretty-rules/auto-align-scrollable-flex)
-                 (pretty-rules/auto-disable-mouse-events)
-                 (pretty-rules/auto-set-mounted)
+                 (pretty-models/container-model-standard-props)
+                 (pretty-models/container-model-rules)
+                 (pretty-models/line-model-standard-props)
+                 (pretty-models/line-model-rules)
                  (pretty-subitems/apply-subitem-prototype :label label-prototype-f))))

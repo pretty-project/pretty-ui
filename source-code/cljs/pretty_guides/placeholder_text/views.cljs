@@ -3,7 +3,9 @@
     (:require [fruits.random.api                         :as random]
               [pretty-guides.placeholder-text.attributes :as placeholder-text.attributes]
               [pretty-guides.placeholder-text.prototypes :as placeholder-text.prototypes]
-              [pretty-guides.methods.api :as pretty-guides.methods]))
+              [pretty-accessories.methods.api :as pretty-accessories.methods]
+              [pretty-accessories.engine.api :as pretty-accessories.engine]
+              [reagent.core :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -23,45 +25,46 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn- view-lifecycles
+  ; @ignore
+  ;
+  ; @param (keyword) id
+  ; @param (map) props
+  [id props]
+  ; @note (tutorials#parameterizing)
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-accessories.engine/accessory-did-mount    id props))
+                         :component-will-unmount (fn [_ _] (pretty-accessories.engine/accessory-will-unmount id props))
+                         :reagent-render         (fn [_ props] [placeholder-text id props])}))
+
 (defn view
   ; @description
   ; Placeholder text guide for inputs.
   ;
-  ; @links Implemented properties
-  ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
-  ; [Content properties](pretty-core/cljs/pretty-properties/api.html#content-properties)
-  ; [Font properties](pretty-core/cljs/pretty-properties/api.html#font-properties)
-  ; [Inner position properties](pretty-core/cljs/pretty-properties/api.html#inner-position-properties)
-  ; [Inner size properties](pretty-core/cljs/pretty-properties/api.html#inner-size-properties)
-  ; [Inner space properties](pretty-core/cljs/pretty-properties/api.html#inner-space-properties)
-  ; [Mouse event properties](pretty-core/cljs/pretty-properties/api.html#mouse-event-properties)
-  ; [Outer position properties](pretty-core/cljs/pretty-properties/api.html#outer-position-properties)
-  ; [Outer size properties](pretty-core/cljs/pretty-properties/api.html#outer-size-properties)
-  ; [Outer space properties](pretty-core/cljs/pretty-properties/api.html#outer-space-properties)
-  ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
-  ; [State properties](pretty-core/cljs/pretty-properties/api.html#state-properties)
-  ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
-  ; [Text properties](pretty-core/cljs/pretty-properties/api.html#text-properties)
-  ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
-  ; [Visibility properties](pretty-core/cljs/pretty-properties/api.html#visibility-properties)
+  ; @links Implemented models
+  ; [Container model](pretty-core/cljs/pretty-models/api.html#container-model)
+  ; [Content model](pretty-core/cljs/pretty-models/api.html#content-model)
   ;
   ; @param (keyword)(opt) id
   ; @param (map) props
-  ; Check out the implemented properties.
+  ; Check out the implemented models.
   ;
   ; @usage (pretty-guides/placeholder-text.png)
   ; [placeholder-text {:content "My placeholder text"}]
   ;
   ; @usage
   ; ;; The shorthand form of the property map is perceived as the ':content' property.
-  ; [placeholder-text "My content"]
+  ; [placeholder-text "My placeholder text"]
   ([props]
    [view (random/generate-keyword) props])
 
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
-       (let [props (pretty-guides.methods/apply-guide-shorthand-key id props :content)
-             props (pretty-guides.methods/apply-guide-preset        id props)
-             props (placeholder-text.prototypes/props-prototype     id props)]
-            [placeholder-text id props]))))
+       (let [props (pretty-accessories.methods/apply-accessory-shorthand-key  id props :content)
+             props (pretty-accessories.methods/apply-accessory-preset         id props)
+             props (pretty-accessories.methods/import-accessory-dynamic-props id props)
+             props (pretty-accessories.methods/import-accessory-state-events  id props)
+             props (pretty-accessories.methods/import-accessory-state         id props)
+             props (placeholder-text.prototypes/props-prototype               id props)]
+            (if (:mounted? props)
+                [view-lifecycles id props])))))

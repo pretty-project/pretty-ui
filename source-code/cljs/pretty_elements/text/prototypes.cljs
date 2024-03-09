@@ -1,8 +1,7 @@
 
 (ns pretty-elements.text.prototypes
     (:require [pretty-properties.api :as pretty-properties]
-              [pretty-rules.api      :as pretty-rules]
-              [pretty-standards.api  :as pretty-standards]))
+              [pretty-models.api :as pretty-models]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -21,19 +20,9 @@
             (pretty-properties/default-font-props       {:font-size :s :font-weight :normal})
             (pretty-properties/default-outer-size-props {:outer-size-unit :full-block})
             (pretty-properties/default-text-props       {:text-overflow :wrap})
-            (pretty-standards/standard-border-props)
-            (pretty-standards/standard-flex-props)
-            (pretty-standards/standard-font-props)
-            (pretty-standards/standard-inner-position-props)
-            (pretty-standards/standard-inner-size-props)
-            (pretty-standards/standard-outer-position-props)
-            (pretty-standards/standard-outer-size-props)
-            (pretty-standards/standard-text-props)
-           ;(pretty-rules/apply-auto-border-crop)
-            (pretty-rules/auto-count-content-lines)
-            (pretty-rules/auto-limit-multiline-count)
-            (pretty-rules/auto-set-multiline-height)
-            (pretty-rules/auto-align-scrollable-flex)
-            (pretty-rules/auto-disable-mouse-events)
-            (pretty-rules/auto-set-mounted)
-            (pretty-rules/compose-content)))
+            (pretty-models/container-model-standard-props)
+            (pretty-models/container-model-rules)
+            (pretty-models/content-model-standard-props)
+            (pretty-models/content-model-rules)
+            (pretty-models/multiline-model-standard-props)
+            (pretty-models/multiline-model-rules)))

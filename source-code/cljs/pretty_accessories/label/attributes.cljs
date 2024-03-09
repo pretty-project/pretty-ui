@@ -16,11 +16,12 @@
   ;  ...}
   [_ props]
   (-> {:class :pa-label--content}
-      (pretty-models/content-model-content-attributes props)))
+      (pretty-models/container-model-content-attributes props)
+      (pretty-models/content-model-content-attributes   props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
- 
+
 (defn inner-attributes
   ; @ignore
   ;
@@ -33,7 +34,8 @@
   ;  ...}
   [_ props]
   (-> {:class :pa-label--inner}
-      (pretty-models/container-model-inner-attributes props)))
+      (pretty-models/container-model-inner-attributes props)
+      (pretty-models/content-model-inner-attributes   props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -49,4 +51,5 @@
   ;  ...}
   [_ props]
   (-> {:class :pa-label--outer}
-      (pretty-models/container-model-outer-attributes props)))
+      (pretty-models/container-model-outer-attributes props)
+      (pretty-models/content-model-outer-attributes   props)))

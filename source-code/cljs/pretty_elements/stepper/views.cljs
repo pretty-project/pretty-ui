@@ -4,7 +4,7 @@
               [pretty-elements.engine.api         :as pretty-elements.engine]
               [pretty-elements.stepper.attributes :as stepper.attributes]
               [pretty-elements.stepper.prototypes :as stepper.prototypes]
-              [pretty-presets.engine.api          :as pretty-presets.engine]
+              [pretty-elements.methods.api :as pretty-elements.methods]
               [reagent.core                       :as reagent]))
 
 ;; ----------------------------------------------------------------------------
@@ -48,7 +48,10 @@
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
-       (let [props (pretty-presets.engine/apply-preset id props)
-             props (stepper.prototypes/props-prototype id props)]
+       (let [props (pretty-elements.methods/apply-element-preset         id props)
+             props (pretty-elements.methods/import-element-dynamic-props id props)
+             props (pretty-elements.methods/import-element-state-events  id props)
+             props (pretty-elements.methods/import-element-state         id props)
+             props (stepper.prototypes/props-prototype                   id props)]
             (if (:mounted? props)
                 [view-lifecycles id props])))))

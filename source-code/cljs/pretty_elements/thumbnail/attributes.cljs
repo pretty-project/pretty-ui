@@ -1,11 +1,11 @@
 
 (ns pretty-elements.thumbnail.attributes
-    (:require [pretty-attributes.api :as pretty-attributes]))
+    (:require [pretty-models.api :as pretty-models]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn thumbnail-canvas-attributes
+(defn canvas-attributes
   ; @ignore
   ;
   ; @param (keyword) id
@@ -16,8 +16,9 @@
   ;  ...}
   [_ props]
   (-> {:class :pe-thumbnail--canvas}
-      (pretty-attributes/background-image-attributes props)
-      (pretty-attributes/content-size-attributes     props)))
+      (pretty-models/clickable-model-content-attributes props)
+      (pretty-models/container-model-content-attributes props)
+      (pretty-models/image-model-content-attributes     props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -33,17 +34,9 @@
   ;  ...}
   [_ props]
   (-> {:class :pe-thumbnail--inner}
-      (pretty-attributes/anchor-attributes           props)
-      (pretty-attributes/background-color-attributes props)
-      (pretty-attributes/border-attributes           props)
-      (pretty-attributes/cursor-attributes           props)
-      (pretty-attributes/flex-attributes             props)
-      (pretty-attributes/inner-size-attributes       props)
-      (pretty-attributes/inner-space-attributes      props)
-      (pretty-attributes/mouse-event-attributes      props)
-      (pretty-attributes/react-attributes            props)
-      (pretty-attributes/state-attributes            props)
-      (pretty-attributes/style-attributes            props)))
+      (pretty-models/clickable-model-inner-attributes props)
+      (pretty-models/container-model-inner-attributes props)
+      (pretty-models/image-model-inner-attributes     props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -59,10 +52,6 @@
   ;  ...}
   [_ props]
   (-> {:class :pe-thumbnail--outer}
-      (pretty-attributes/class-attributes          props)
-      (pretty-attributes/inner-position-attributes props)
-      (pretty-attributes/outer-position-attributes props)
-      (pretty-attributes/outer-size-attributes     props)
-      (pretty-attributes/outer-space-attributes    props)
-      (pretty-attributes/theme-attributes          props)
-      (pretty-attributes/visibility-attributes     props)))
+      (pretty-models/clickable-model-outer-attributes props)
+      (pretty-models/container-model-outer-attributes props)
+      (pretty-models/image-model-outer-attributes     props)))

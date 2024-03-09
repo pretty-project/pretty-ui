@@ -1,12 +1,12 @@
 
 (ns pretty-inputs.field.prototypes
-    (:require [pretty-properties.api :as pretty-properties]
-              [pretty-rules.api      :as pretty-rules]
-              [pretty-standards.api  :as pretty-standards]
-              [pretty-subitems.api  :as pretty-subitems]
-              [pretty-inputs.engine.api  :as pretty-inputs.engine]
-              [react-references.api  :as react-references]
-              [dom.api  :as dom]))
+    (:require [dom.api                  :as dom]
+              [pretty-inputs.engine.api :as pretty-inputs.engine]
+              [pretty-properties.api    :as pretty-properties]
+              [pretty-rules.api         :as pretty-rules]
+              [pretty-standards.api     :as pretty-standards]
+              [pretty-subitems.api      :as pretty-subitems]
+              [react-references.api     :as react-references]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

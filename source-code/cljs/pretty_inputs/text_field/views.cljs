@@ -2,13 +2,13 @@
 (ns pretty-inputs.text-field.views
     (:require [fruits.random.api                   :as random]
               [pretty-inputs.engine.api            :as pretty-inputs.engine]
-              [pretty-inputs.field.views :as field.views]
+              [pretty-inputs.methods.api :as pretty-inputs.methods]
+              [pretty-inputs.field.views           :as field.views]
               [pretty-inputs.header.views          :as header.views]
               [pretty-inputs.text-field.attributes :as text-field.attributes]
               [pretty-inputs.text-field.prototypes :as text-field.prototypes]
-              [pretty-presets.engine.api           :as pretty-presets.engine]
-              [reagent.core                        :as reagent]
-              [pretty-subitems.api :as pretty-subitems]))
+              [pretty-subitems.api                 :as pretty-subitems]
+              [reagent.core                        :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -88,7 +88,10 @@
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
-       (let [props (pretty-presets.engine/apply-preset    id props)
-             props (text-field.prototypes/props-prototype id props)]
+       (let [props (pretty-inputs.methods/apply-input-preset         id props)
+             props (pretty-inputs.methods/import-input-dynamic-props id props)
+             props (pretty-inputs.methods/import-input-state-events  id props)
+             props (pretty-inputs.methods/import-input-state         id props)
+             props (text-field.prototypes/props-prototype            id props)]
             (if (:mounted? props)
                 [view-lifecycles id props])))))

@@ -2,8 +2,7 @@
 (ns pretty-inputs.checkbox.prototypes
     (:require [fruits.map.api        :as map]
               [pretty-properties.api :as pretty-properties]
-              [pretty-rules.api      :as pretty-rules]
-              [pretty-standards.api  :as pretty-standards]
+              [pretty-models.api :as pretty-models]
               [pretty-subitems.api   :as pretty-subitems]))
 
 ;; ----------------------------------------------------------------------------
@@ -36,13 +35,7 @@
   (let [option-group-prototype-f (fn [%] (option-group-prototype id props %))]
        (-> props (pretty-properties/default-flex-props       {:gap :xs :horizontal-align :left :orientation :vertical})
                  (pretty-properties/default-outer-size-props {:outer-size-unit :full-block})
-                 (pretty-standards/standard-flex-props)
-                 (pretty-standards/standard-inner-position-props)
-                 (pretty-standards/standard-inner-size-props)
-                 (pretty-standards/standard-outer-position-props)
-                 (pretty-standards/standard-outer-size-props)
-                ;(pretty-rules/auto-align-scrollable-flex)
-                 (pretty-rules/auto-disable-mouse-events)
-                 (pretty-rules/auto-set-mounted)
+                 (pretty-models/container-model-standard-props)
+                 (pretty-models/container-model-rules)
                  (pretty-subitems/subitem-group<-disabled-state :header :option-group)
                  (pretty-subitems/apply-subitem-prototype       :option-group option-group-prototype-f))))

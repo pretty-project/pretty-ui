@@ -1,9 +1,9 @@
 
 (ns pretty-inputs.select.side-effects
-    (:require [dynamic-props.api     :as dynamic-props]
-              [pretty-inputs.engine.api :as pretty-inputs.engine]
-              [time.api :as time]
-              [pretty-inputs.select.config :as select.config]))
+    (:require [dynamic-props.api           :as dynamic-props]
+              [pretty-inputs.engine.api    :as pretty-inputs.engine]
+              [pretty-inputs.select.config :as select.config]
+              [time.api                    :as time]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -5,7 +5,7 @@
               [fruits.vector.api                     :as vector]
               [pretty-guides.api                     :as pretty-guides]
               [pretty-inputs.engine.api              :as pretty-inputs.engine]
-              [pretty-inputs.methods.api :as pretty-inputs.methods]
+              [pretty-inputs.methods.api             :as pretty-inputs.methods]
               [pretty-inputs.option-group.attributes :as option-group.attributes]
               [pretty-inputs.option-group.prototypes :as option-group.prototypes]
               [pretty-inputs.option.views            :as option.views]
@@ -98,9 +98,12 @@
    (fn [_ props]
        (let [props (pretty-inputs.methods/apply-input-shorthand-map     id props {:placeholder-text :content})
              props (pretty-inputs.methods/apply-input-preset            id props)
+             props (pretty-inputs.methods/import-input-dynamic-props    id props)
              props (pretty-inputs.methods/import-input-option-events    id props)
              props (pretty-inputs.methods/import-input-option-selection id props)
              props (pretty-inputs.methods/import-input-option-filtering id props)
+             props (pretty-inputs.methods/import-input-state-events     id props)
+             props (pretty-inputs.methods/import-input-state            id props)
              props (option-group.prototypes/props-prototype             id props)]
             (if (:mounted? props)
                 [view-lifecycles id props])))))

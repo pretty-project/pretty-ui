@@ -1,11 +1,11 @@
 
 (ns pretty-accessories.marker.views
     (:require [fruits.random.api                    :as random]
+              [pretty-accessories.engine.api        :as pretty-accessories.engine]
               [pretty-accessories.marker.attributes :as marker.attributes]
               [pretty-accessories.marker.prototypes :as marker.prototypes]
-              [pretty-accessories.methods.api :as pretty-accessories.methods]
-              [pretty-accessories.engine.api :as pretty-accessories.engine]
-              [reagent.core :as reagent]))
+              [pretty-accessories.methods.api       :as pretty-accessories.methods]
+              [reagent.core                         :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -37,7 +37,7 @@
   ; @description
   ; Marker accessory for elements.
   ;
-  ; @links Implemented properties
+  ; @links Implemented models
   ; [Animation properties](pretty-core/cljs/pretty-properties/api.html#animation-properties)
   ; [Background color properties](pretty-core/cljs/pretty-properties/api.html#background-color-properties)
   ; [Border properties](pretty-core/cljs/pretty-properties/api.html#border-properties)
@@ -59,7 +59,7 @@
   ;
   ; @param (keyword)(opt) id
   ; @param (map) props
-  ; Check out the implemented properties.
+  ; Check out the implemented models.
   ;
   ; @usage (pretty-accessories/marker.png)
   ; [marker {:border-radius {:all :s}
