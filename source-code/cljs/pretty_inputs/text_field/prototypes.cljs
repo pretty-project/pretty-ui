@@ -27,5 +27,4 @@
             (pretty-rules/auto-disable-mouse-events)
             (pretty-rules/auto-set-mounted)
             (pretty-subitems/ensure-subitem           :field)
-            (pretty-subitems/subitems<-disabled-state :header :field)
-            (pretty-subitems/leave-disabled-state     :header :field)))
+            (pretty-subitems/subitems<-disabled-state :header :field)))

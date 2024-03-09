@@ -5,11 +5,10 @@
               [pretty-elements.engine.api        :as pretty-elements.engine]
               [pretty-elements.toggle.attributes :as toggle.attributes]
               [pretty-elements.toggle.prototypes :as toggle.prototypes]
-              [pretty-models.api                 :as pretty-models]
-              [pretty-presets.engine.api         :as pretty-presets.engine]
               [pretty-subitems.api               :as pretty-subitems]
               [reagent.core                      :as reagent]
-              [pretty-models.api :as pretty-models]))
+              [pretty-models.api :as pretty-models]
+              [pretty-elements.methods.api :as pretty-elements.methods]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -27,8 +26,7 @@
   ;  ...}
   [id {:keys [badge content cover marker tooltip] :as props}]
   [:div (toggle.attributes/outer-attributes id props)
-        [(pretty-models/clickable-auto-tag   id props)
-         (toggle.attributes/inner-attributes id props)
+        [(pretty-models/clickable-model-auto-tag props) (toggle.attributes/inner-attributes id props)
          (if content [:div (toggle.attributes/content-attributes id props) content])
          (if badge   [pretty-accessories/badge   (pretty-subitems/subitem-id id :badge)   badge])
          (if marker  [pretty-accessories/marker  (pretty-subitems/subitem-id id :marker)  marker])
@@ -63,14 +61,11 @@
   ;
   ; @links Implemented properties
   ; [Anchor properties](pretty-core/cljs/pretty-properties/api.html#anchor-properties)
-  ; [Background action properties](pretty-core/cljs/pretty-properties/api.html#background-action-properties)
   ; [Background color properties](pretty-core/cljs/pretty-properties/api.html#background-color-properties)
   ; [Border properties](pretty-core/cljs/pretty-properties/api.html#border-properties)
   ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
   ; [Content properties](pretty-core/cljs/pretty-properties/api.html#content-properties)
-  ; [Clickable state properties](pretty-core/cljs/pretty-properties/api.html#clickable-state-properties)
   ; [Cursor properties](pretty-core/cljs/pretty-properties/api.html#cursor-properties)
-  ; [Effect properties](pretty-core/cljs/pretty-properties/api.html#effect-properties)
   ; [Flex properties](pretty-core/cljs/pretty-properties/api.html#flex-properties)
   ; [Font properties](pretty-core/cljs/pretty-properties/api.html#font-properties)
   ; [Inner position properties](pretty-core/cljs/pretty-properties/api.html#inner-position-properties)
@@ -83,9 +78,11 @@
   ; [Outer size properties](pretty-core/cljs/pretty-properties/api.html#outer-size-properties)
   ; [Outer space properties](pretty-core/cljs/pretty-properties/api.html#outer-space-properties)
   ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
+  ; [State properties](pretty-core/cljs/pretty-properties/api.html#state-properties)
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
   ; [Text properties](pretty-core/cljs/pretty-properties/api.html#text-properties)
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
+  ; [Visibility properties](pretty-core/cljs/pretty-properties/api.html#visibility-properties)
   ;
   ; @param (keyword)(opt) id
   ; @param (map) props
@@ -108,9 +105,10 @@
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
-       (let [props (pretty-models/use-longhand                          id props :content)
-             props (pretty-presets.engine/apply-preset                  id props)
-             props (pretty-elements.engine/import-element-timeout-props id props)
-             props (toggle.prototypes/props-prototype                   id props)]
+       (let [props (pretty-elements.methods/apply-element-shorthand-key   id props :content)
+             props (pretty-elements.methods/apply-element-preset          id props)
+             props (pretty-elements.methods/import-element-timeout-events id props)
+             props (pretty-elements.methods/import-element-timeout-state  id props)
+             props (toggle.prototypes/props-prototype                     id props)]
             (if (:mounted? props)
                 [view-lifecycles id props])))))

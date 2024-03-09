@@ -51,6 +51,7 @@
   ; [State properties](pretty-core/cljs/pretty-properties/api.html#state-properties)
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
+  ; [Visibility properties](pretty-core/cljs/pretty-properties/api.html#visibility-properties)
   ;
   ; @param (keyword)(opt) id
   ; @param (map) props

@@ -1,8 +1,7 @@
 
 (ns pretty-accessories.tooltip.prototypes
     (:require [pretty-properties.api :as pretty-properties]
-              [pretty-rules.api      :as pretty-rules]
-              [pretty-standards.api  :as pretty-standards]
+              [pretty-models.api      :as pretty-models]
               [pretty-subitems.api   :as pretty-subitems]))
 
 ;; ----------------------------------------------------------------------------
@@ -34,13 +33,6 @@
        (-> props (pretty-properties/default-background-color-props {:fill-color :default})
                  (pretty-properties/default-outer-position-props   {:outer-position :right :outer-position-base :external :outer-position-method :absolute :layer :uppermost})
                  (pretty-properties/default-outer-size-props       {:outer-size-unit :quarter-block})
-                 (pretty-standards/standard-animation-props)
-                 (pretty-standards/standard-border-props)
-                 (pretty-standards/standard-inner-position-props)
-                 (pretty-standards/standard-inner-size-props)
-                 (pretty-standards/standard-outer-position-props)
-                 (pretty-standards/standard-outer-size-props)
-                 (pretty-rules/apply-auto-border-crop)
-                 (pretty-rules/auto-disable-mouse-events)
-                 (pretty-subitems/apply-subitem-longhand  :label :content)
+                 (pretty-models/content-model-standard-props)
+                 (pretty-models/content-model-rules)
                  (pretty-subitems/apply-subitem-prototype :label label-prototype-f))))

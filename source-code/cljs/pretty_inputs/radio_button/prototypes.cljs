@@ -46,5 +46,4 @@
                  (pretty-rules/auto-disable-mouse-events)
                  (pretty-rules/auto-set-mounted)
                  (pretty-subitems/subitem-group<-disabled-state :header :option-group)
-                 (pretty-subitems/leave-disabled-state          :header :option-group)
                  (pretty-subitems/apply-subitem-prototype       :option-group option-group-prototype-f))))

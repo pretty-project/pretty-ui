@@ -14,7 +14,7 @@
   ; @param (keyword) id
   ; @param (map) props
   ; {:max-value (number)
-  ;  :strength (percentage)
+  ;  :strength (percent)
   ;  :total-value (number)
   ;  ...}
   ; @param (integer) dex
@@ -24,8 +24,8 @@
   ; {:class (keyword or keywords in vector)
   ;  ...}
   [id {:keys [max-value strength total-value] :as props} dex datum]
-  (let [datum-color  (pretty-diagrams.engine/get-diagram-datum-color id props dex datum)
-        datum-value  (pretty-diagrams.engine/get-diagram-datum-value id props dex datum)
+  (let [datum-color  (pretty-diagrams.engine/diagram-datum-color id props dex datum)
+        datum-value  (pretty-diagrams.engine/diagram-datum-value id props dex datum)
         data-limit   (max max-value total-value)
         datum-ratio  (math/percent data-limit datum-value)
         datum-height (css/percent  strength)
@@ -52,6 +52,7 @@
       (pretty-attributes/inner-size-attributes  props)
       (pretty-attributes/inner-space-attributes props)
       (pretty-attributes/mouse-event-attributes props)
+      (pretty-attributes/state-attributes       props)
       (pretty-attributes/style-attributes       props)))
 
 ;; ----------------------------------------------------------------------------
@@ -73,5 +74,5 @@
       (pretty-attributes/outer-position-attributes props)
       (pretty-attributes/outer-size-attributes     props)
       (pretty-attributes/outer-space-attributes    props)
-      (pretty-attributes/state-attributes          props)
-      (pretty-attributes/theme-attributes          props)))
+      (pretty-attributes/theme-attributes          props)
+      (pretty-attributes/visibility-attributes     props)))

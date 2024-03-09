@@ -4,10 +4,10 @@
               [pretty-elements.api :as pretty-elements]
               [pretty-guides.api               :as pretty-guides]
               [pretty-inputs.engine.api        :as pretty-inputs.engine]
+              [pretty-inputs.methods.api :as pretty-inputs.methods]
               [pretty-inputs.field.attributes :as field.attributes]
               [pretty-inputs.field.prototypes :as field.prototypes]
               [pretty-models.api               :as pretty-models]
-              [pretty-presets.engine.api       :as pretty-presets.engine]
               [pretty-subitems.api             :as pretty-subitems]
               [reagent.core                    :as reagent]))
 
@@ -24,8 +24,7 @@
   [id {:keys [placeholder-text] :as props}]
   [:div (field.attributes/structure-attributes id props)
         (when placeholder-text [pretty-guides/placeholder-text (pretty-subitems/subitem-id id :placeholder-text) placeholder-text])
-        (when :always          [(pretty-models/input-field-auto-tag id props)
-                                (field.attributes/input-attributes  id props)])])
+        (when :always          [(pretty-models/field-model-auto-tag props) (field.attributes/input-attributes id props)])])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -87,7 +86,6 @@
   ; [Inner size properties](pretty-core/cljs/pretty-properties/api.html#inner-size-properties)
   ; [Inner space properties](pretty-core/cljs/pretty-properties/api.html#inner-space-properties)
   ; [Input field properties](pretty-core/cljs/pretty-properties/api.html#input-field-properties)
-  ; [Input state properties](pretty-core/cljs/pretty-properties/api.html#input-state-properties)
   ; [Input validation properties](pretty-core/cljs/pretty-properties/api.html#input-validation-properties)
   ; [Input value properties](pretty-core/cljs/pretty-properties/api.html#input-value-properties)
   ; [Keypress control properties](pretty-core/cljs/pretty-properties/api.html#keypress-control-properties)
@@ -97,9 +95,11 @@
   ; [Outer size properties](pretty-core/cljs/pretty-properties/api.html#outer-size-properties)
   ; [Outer space properties](pretty-core/cljs/pretty-properties/api.html#outer-space-properties)
   ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
+  ; [State properties](pretty-core/cljs/pretty-properties/api.html#state-properties)
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
   ; [Text properties](pretty-core/cljs/pretty-properties/api.html#text-properties)
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
+  ; [Visibility properties](pretty-core/cljs/pretty-properties/api.html#visibility-properties)
   ;
   ; @param (keyword)(opt) id
   ; @param (map) props
@@ -123,9 +123,10 @@
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
-       (let [props (pretty-presets.engine/apply-preset             id props)
-             props (pretty-inputs.engine/import-input-field-events id props)
-             props (pretty-inputs.engine/import-input-field-value  id props)
-             props (field.prototypes/props-prototype               id props)]
+       (let [props (pretty-inputs.methods/apply-input-shorthand-map id props {:expandable :content :placeholder-text :content})
+             props (pretty-inputs.methods/apply-input-preset        id props)
+             props (pretty-inputs.methods/import-input-field-events id props)
+             props (pretty-inputs.methods/import-input-field-value  id props)
+             props (field.prototypes/props-prototype                id props)]
             (if (:mounted? props)
                 [view-lifecycles id props])))))

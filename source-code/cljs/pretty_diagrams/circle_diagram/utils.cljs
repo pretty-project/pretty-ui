@@ -14,7 +14,7 @@
   ; @param (keyword) id
   ; @param (map) props
   ; {:max-value (number)
-  ;  :strength (percentage)
+  ;  :strength (percent)
   ;  :total-value (number)
   ;  ...}
   ; @param (integer) dex
@@ -22,7 +22,7 @@
   ;
   ; @return (string)
   [id {:keys [max-value strength total-value] :as props} dex datum]
-  (let [datum-value   (pretty-diagrams.engine/get-diagram-datum-value id props dex datum)
+  (let [datum-value   (pretty-diagrams.engine/diagram-datum-value id props dex datum)
         data-limit    (max total-value max-value)
         datum-ratio   (math/percent data-limit datum-value)
         median-radius (/ (- circle-diagram.config/CIRCLE-DIAMETER strength) 2)
@@ -44,7 +44,7 @@
   ;
   ; @return (string)
   [id {:keys [max-value total-value] :as props} dex datum]
-  (let [datum-offset    (pretty-diagrams.engine/get-diagram-datum-offset id props dex datum)
+  (let [datum-offset    (pretty-diagrams.engine/diagram-datum-offset id props dex datum)
         data-limit      (max total-value max-value)
         offset-ratio    (math/percent data-limit datum-offset)
         rotation-angle  (math/percent->angle offset-ratio)

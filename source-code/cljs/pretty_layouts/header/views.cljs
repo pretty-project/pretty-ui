@@ -4,9 +4,8 @@
               [pretty-layouts.engine.api        :as pretty-layouts.engine]
               [pretty-layouts.header.attributes :as header.attributes]
               [pretty-layouts.header.prototypes :as header.prototypes]
-              [pretty-presets.engine.api        :as pretty-presets.engine]
-              [pretty-models.api :as pretty-models]
-              [reagent.core                     :as reagent]))
+              [reagent.core                     :as reagent]
+              [pretty-layouts.methods.api :as pretty-layouts.methods]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -61,6 +60,7 @@
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
   ; [Text properties](pretty-core/cljs/pretty-properties/api.html#text-properties)
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
+  ; [Visibility properties](pretty-core/cljs/pretty-properties/api.html#visibility-properties)
   ;
   ; @param (keyword)(opt) id
   ; @param (map) props
@@ -80,8 +80,8 @@
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
-       (let [props (pretty-models/use-longhand         id props :content)
-             props (pretty-presets.engine/apply-preset id props)
-             props (header.prototypes/props-prototype  id props)]
+       (let [props (pretty-layouts.methods/apply-layout-shorthand-key id props :content)
+             props (pretty-layouts.methods/apply-layout-preset        id props)
+             props (header.prototypes/props-prototype                 id props)]
             (if (:mounted? props)
                 [view-lifecycles id props])))))

@@ -118,7 +118,6 @@
                  (pretty-rules/auto-set-mounted)
                  (pretty-subitems/ensure-subitem           :popup)
                  (pretty-subitems/subitems<-disabled-state :button :header :icon-button :option-group :popup :select-button)
-                 (pretty-subitems/leave-disabled-state     :button :header :icon-button :option-group :popup :select-button)
                  (pretty-subitems/apply-subitem-prototype  :button        button-prototype-f)
                  (pretty-subitems/apply-subitem-prototype  :option-group  option-group-prototype-f)
                  (pretty-subitems/apply-subitem-prototype  :icon-button   icon-button-prototype-f)

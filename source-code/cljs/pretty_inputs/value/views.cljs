@@ -4,9 +4,9 @@
               [pretty-accessories.api         :as pretty-accessories]
               [pretty-elements.api            :as pretty-elements]
               [pretty-inputs.engine.api       :as pretty-inputs.engine]
+              [pretty-inputs.methods.api :as pretty-inputs.methods]
               [pretty-inputs.value.attributes :as value.attributes]
               [pretty-inputs.value.prototypes :as value.prototypes]
-              [pretty-presets.engine.api      :as pretty-presets.engine]
               [pretty-subitems.api            :as pretty-subitems]
               [reagent.core                   :as reagent]))
 
@@ -71,6 +71,7 @@
   ; [State properties](pretty-core/cljs/pretty-properties/api.html#state-properties)
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
+  ; [Visibility properties](pretty-core/cljs/pretty-properties/api.html#visibility-properties)
   ;
   ; @param (keyword)(opt) value-id
   ; @param (map) value-props
@@ -103,7 +104,8 @@
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
-       (let [props (pretty-presets.engine/apply-preset id props)
-             props (value.prototypes/props-prototype   id props)]
+       (let [props (pretty-inputs.methods/apply-input-shorthand-map id props {:label :content})
+             props (pretty-inputs.methods/apply-input-preset        id props)
+             props (value.prototypes/props-prototype                id props)]
             (if (:mounted? props)
                 [view-lifecycles id props])))))

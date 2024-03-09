@@ -48,6 +48,4 @@
                  (pretty-rules/auto-disable-mouse-events)
                  (pretty-rules/auto-set-mounted)
                  (pretty-subitems/subitems<-disabled-state :start-adornment-group :end-adornment-group)
-                 (pretty-subitems/leave-disabled-state     :start-adornment-group :end-adornment-group)
-                 (pretty-subitems/apply-subitem-longhand   :label :content)
                  (pretty-subitems/apply-subitem-prototype  :label label-prototype-f))))

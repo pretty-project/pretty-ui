@@ -5,10 +5,9 @@
               [pretty-elements.engine.api             :as pretty-elements.engine]
               [pretty-elements.icon-button.attributes :as icon-button.attributes]
               [pretty-elements.icon-button.prototypes :as icon-button.prototypes]
-              [pretty-models.api                      :as pretty-models]
-              [pretty-presets.engine.api              :as pretty-presets.engine]
               [pretty-subitems.api                    :as pretty-subitems]
               [pretty-models.api :as pretty-models]
+              [pretty-elements.methods.api        :as pretty-elements.methods]
               [reagent.core                           :as reagent]))
 
 ;; ----------------------------------------------------------------------------
@@ -28,8 +27,7 @@
   ;  ...}
   [id {:keys [badge cover icon label marker tooltip] :as props}]
   [:div (icon-button.attributes/outer-attributes id props)
-        [(pretty-models/clickable-auto-tag        id props)
-         (icon-button.attributes/inner-attributes id props)
+        [(pretty-models/clickable-model-auto-tag props) (icon-button.attributes/inner-attributes id props)
          (if icon    [pretty-accessories/icon   (pretty-subitems/subitem-id id :icon)   icon])
          (if label   [pretty-accessories/label  (pretty-subitems/subitem-id id :label)  label])
          (if badge   [pretty-accessories/badge  (pretty-subitems/subitem-id id :badge)  badge])
@@ -67,13 +65,10 @@
   ;
   ; @links Implemented properties
   ; [Anchor properties](pretty-core/cljs/pretty-properties/api.html#anchor-properties)
-  ; [Background action properties](pretty-core/cljs/pretty-properties/api.html#background-action-properties)
   ; [Background color properties](pretty-core/cljs/pretty-properties/api.html#background-color-properties)
   ; [Border properties](pretty-core/cljs/pretty-properties/api.html#border-properties)
   ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
-  ; [Clickable state properties](pretty-core/cljs/pretty-properties/api.html#clickable-state-properties)
   ; [Cursor properties](pretty-core/cljs/pretty-properties/api.html#cursor-properties)
-  ; [Effect properties](pretty-core/cljs/pretty-properties/api.html#effect-properties)
   ; [Flex properties](pretty-core/cljs/pretty-properties/api.html#flex-properties)
   ; [Inner position properties](pretty-core/cljs/pretty-properties/api.html#inner-position-properties)
   ; [Inner size properties](pretty-core/cljs/pretty-properties/api.html#inner-size-properties)
@@ -86,8 +81,10 @@
   ; [Outer space properties](pretty-core/cljs/pretty-properties/api.html#outer-space-properties)
   ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
   ; [Progress properties](pretty-core/cljs/pretty-properties/api.html#progress-properties)
+  ; [State properties](pretty-core/cljs/pretty-properties/api.html#state-properties)
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
+  ; [Visibility properties](pretty-core/cljs/pretty-properties/api.html#visibility-properties)
   ;
   ; @param (keyword)(opt) id
   ; @param (map) props
@@ -107,8 +104,10 @@
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
-       (let [props (pretty-presets.engine/apply-preset                  id props)
-             props (pretty-elements.engine/import-element-timeout-props id props)
-             props (icon-button.prototypes/props-prototype              id props)]
+       (let [props (pretty-elements.methods/apply-element-shorthand-map   id props {:icon :icon-name :label :content})
+             props (pretty-elements.methods/apply-element-preset          id props)
+             props (pretty-elements.methods/import-element-timeout-events id props)
+             props (pretty-elements.methods/import-element-timeout-state  id props)
+             props (icon-button.prototypes/props-prototype                id props)]
             (if (:mounted? props)
                 [view-lifecycles id props])))))

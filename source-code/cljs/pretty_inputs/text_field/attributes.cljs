@@ -61,7 +61,6 @@
                           ;:on-change           on-change-f
                           ;:on-input            on-input-f})
            (pretty-attributes/input-field-attributes        field-props)
-           (pretty-attributes/effect-attributes       field-props)
            (pretty-attributes/react-attributes        field-props)
            (pretty-attributes/inner-size-attributes            field-props)))) ; <- ?? body inkább?
 
@@ -83,6 +82,7 @@
       (pretty-attributes/inner-size-attributes  props)
       (pretty-attributes/inner-space-attributes props)
       (pretty-attributes/mouse-event-attributes props)
+      (pretty-attributes/state-attributes       props)
       (pretty-attributes/style-attributes       props)))
 
 ;; ----------------------------------------------------------------------------
@@ -104,5 +104,5 @@
       (pretty-attributes/outer-position-attributes props)
       (pretty-attributes/outer-size-attributes     props)
       (pretty-attributes/outer-space-attributes    props)
-      (pretty-attributes/state-attributes          props)
-      (pretty-attributes/theme-attributes          props)))
+      (pretty-attributes/theme-attributes          props)
+      (pretty-attributes/visibility-attributes     props)))

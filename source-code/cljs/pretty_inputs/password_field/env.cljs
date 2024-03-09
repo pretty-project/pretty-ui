@@ -12,5 +12,5 @@
   ; @param (map) field-props
   ;
   ; @return (boolean)
-  [field-id _]
-  (pretty-inputs.engine/get-input-state field-id :password-visible?))
+  [field-id _])
+  ;(pretty-inputs.engine/get-input-state field-id :password-visible?))

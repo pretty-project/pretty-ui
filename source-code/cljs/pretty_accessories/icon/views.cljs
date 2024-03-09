@@ -3,7 +3,7 @@
     (:require [fruits.random.api                  :as random]
               [pretty-accessories.icon.attributes :as icon.attributes]
               [pretty-accessories.icon.prototypes :as icon.prototypes]
-              [pretty-presets.engine.api          :as pretty-presets.engine]))
+              [pretty-accessories.methods.api :as pretty-accessories.methods]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -28,6 +28,7 @@
   ; Icon accessory for elements.
   ;
   ; @links Implemented properties
+  ; [Animation properties](pretty-core/cljs/pretty-properties/api.html#animation-properties)
   ; [Background color properties](pretty-core/cljs/pretty-properties/api.html#background-color-properties)
   ; [Border properties](pretty-core/cljs/pretty-properties/api.html#border-properties)
   ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
@@ -44,6 +45,8 @@
   ; [State properties](pretty-core/cljs/pretty-properties/api.html#state-properties)
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
+  ; [Transformation properties](pretty-core/cljs/pretty-properties/api.html#transformation-properties)
+  ; [Visibility properties](pretty-core/cljs/pretty-properties/api.html#visibility-properties)
   ;
   ; @param (keyword)(opt) id
   ; @param (map) props
@@ -51,12 +54,17 @@
   ;
   ; @usage (pretty-accessories/icon.png)
   ; [icon {:icon-name :settings}]
+  ;
+  ; @usage
+  ; ;; The shorthand form of the property map is perceived as the ':icon-name' property.
+  ; [icon :settings]
   ([props]
    [view (random/generate-keyword) props])
 
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
-       (let [props (pretty-presets.engine/apply-preset id props)
-             props (icon.prototypes/props-prototype    id props)]
+       (let [props (pretty-accessories.methods/apply-accessory-shorthand-key id props :icon-name)
+             props (pretty-accessories.methods/apply-accessory-preset        id props)
+             props (icon.prototypes/props-prototype                          id props)]
             [icon id props]))))

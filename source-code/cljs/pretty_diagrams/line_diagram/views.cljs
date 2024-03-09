@@ -3,6 +3,7 @@
     (:require [fruits.hiccup.api                       :as hiccup]
               [fruits.random.api                       :as random]
               [pretty-diagrams.engine.api              :as pretty-diagrams.engine]
+              [pretty-diagrams.methods.api               :as pretty-diagrams.methods]
               [pretty-diagrams.line-diagram.attributes :as line-diagram.attributes]
               [pretty-diagrams.line-diagram.prototypes :as line-diagram.prototypes]
               [pretty-presets.engine.api               :as pretty-presets.engine]
@@ -75,6 +76,7 @@
   ; [State properties](pretty-core/cljs/pretty-properties/api.html#state-properties)
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
+  ; [Visibility properties](pretty-core/cljs/pretty-properties/api.html#visibility-properties)
   ;
   ; @param (keyword)(opt) id
   ; @param (map) props
@@ -95,8 +97,8 @@
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
-       (let [props (pretty-presets.engine/apply-preset             id props)
-             props (line-diagram.prototypes/props-prototype        id props)
-             props (pretty-diagrams.engine/import-diagram-data-sum id props)]
+       (let [props (pretty-presets.engine/apply-preset              id props)
+             props (pretty-diagrams.methods/import-diagram-data-sum id props)
+             props (line-diagram.prototypes/props-prototype         id props)]
             (if (:mounted? props)
                 [view-lifecycles id props])))))

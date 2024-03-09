@@ -5,10 +5,10 @@
               [fruits.vector.api                     :as vector]
               [pretty-guides.api                     :as pretty-guides]
               [pretty-inputs.engine.api              :as pretty-inputs.engine]
+              [pretty-inputs.methods.api :as pretty-inputs.methods]
               [pretty-inputs.option-group.attributes :as option-group.attributes]
               [pretty-inputs.option-group.prototypes :as option-group.prototypes]
               [pretty-inputs.option.views            :as option.views]
-              [pretty-presets.engine.api             :as pretty-presets.engine]
               [pretty-subitems.api                   :as pretty-subitems]
               [reagent.core                          :as reagent]))
 
@@ -73,6 +73,7 @@
   ; [State properties](pretty-core/cljs/pretty-properties/api.html#State-properties)
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
+  ; [Visibility properties](pretty-core/cljs/pretty-properties/api.html#visibility-properties)
   ;
   ; @param (keyword)(opt) id
   ; @param (map) props
@@ -95,10 +96,11 @@
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
-       (let [props (pretty-presets.engine/apply-preset                 id props)
-             props (pretty-inputs.engine/import-input-option-events    id props)
-             props (pretty-inputs.engine/import-input-option-selection id props)
-             props (pretty-inputs.engine/import-input-option-filtering id props)
-             props (option-group.prototypes/props-prototype            id props)]
+       (let [props (pretty-inputs.methods/apply-input-shorthand-map     id props {:placeholder-text :content})
+             props (pretty-inputs.methods/apply-input-preset            id props)
+             props (pretty-inputs.methods/import-input-option-events    id props)
+             props (pretty-inputs.methods/import-input-option-selection id props)
+             props (pretty-inputs.methods/import-input-option-filtering id props)
+             props (option-group.prototypes/props-prototype             id props)]
             (if (:mounted? props)
                 [view-lifecycles id props])))))

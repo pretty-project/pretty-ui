@@ -44,5 +44,4 @@
             (pretty-rules/auto-set-mounted)
             (pretty-subitems/subitem-group<-subitem-default :crumbs)
             (pretty-subitems/subitem-group<-disabled-state  :crumbs)
-            (pretty-subitems/leave-disabled-state           :crumbs)
             (pretty-subitems/apply-group-item-prototype     :crumbs crumb-prototype)))

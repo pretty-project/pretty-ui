@@ -3,8 +3,7 @@
     (:require [fruits.random.api                    :as random]
               [pretty-guides.helper-text.attributes :as helper-text.attributes]
               [pretty-guides.helper-text.prototypes :as helper-text.prototypes]
-              [pretty-presets.engine.api            :as pretty-presets.engine]
-              [pretty-models.api :as pretty-models]))
+              [pretty-guides.methods.api :as pretty-guides.methods]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -44,6 +43,7 @@
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
   ; [Text properties](pretty-core/cljs/pretty-properties/api.html#text-properties)
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
+  ; [Visibility properties](pretty-core/cljs/pretty-properties/api.html#visibility-properties)
   ;
   ; @param (keyword)(opt) id
   ; @param (map) props
@@ -61,7 +61,7 @@
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
-       (let [props (pretty-models/use-longhand             id props :content)
-             props (pretty-presets.engine/apply-preset     id props)
-             props (helper-text.prototypes/props-prototype id props)]
+       (let [props (pretty-guides.methods/apply-guide-shorthand-key id props :content)
+             props (pretty-guides.methods/apply-guide-preset        id props)
+             props (helper-text.prototypes/props-prototype          id props)]
             [helper-text id props]))))

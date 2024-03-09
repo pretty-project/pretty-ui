@@ -3,11 +3,10 @@
     (:require [fruits.random.api                      :as random]
               [pretty-accessories.api                 :as pretty-accessories]
               [pretty-inputs.engine.api               :as pretty-inputs.engine]
+              [pretty-inputs.methods.api               :as pretty-inputs.methods]
               [pretty-inputs.select-button.attributes :as select-button.attributes]
               [pretty-inputs.select-button.prototypes :as select-button.prototypes]
               [pretty-models.api                      :as pretty-models]
-              [pretty-presets.engine.api              :as pretty-presets.engine]
-              [pretty-models.api :as pretty-models]
               [pretty-subitems.api                    :as pretty-subitems]
               [reagent.core                           :as reagent]))
 
@@ -25,8 +24,7 @@
   ;  ...}
   [id {:keys [icon label tooltip] :as props}]
   [:div (select-button.attributes/outer-attributes id props)
-        [(pretty-models/clickable-auto-tag          id props)
-         (select-button.attributes/inner-attributes id props)
+        [(pretty-models/clickable-model-auto-tag props) (select-button.attributes/inner-attributes id props)
          (if label   [pretty-accessories/label   (pretty-subitems/subitem-id id :label)   label])
          (if icon    [pretty-accessories/icon    (pretty-subitems/subitem-id id :icon)    icon])
          (if tooltip [pretty-accessories/tooltip (pretty-subitems/subitem-id id :tooltip) tooltip])]])
@@ -56,13 +54,10 @@
   ; [Tooltip](pretty-ui/cljs/pretty-accessories/api.html#tooltip)
   ;
   ; @links Implemented properties
-  ; [Background action properties](pretty-core/cljs/pretty-properties/api.html#background-action-properties)
   ; [Background color properties](pretty-core/cljs/pretty-properties/api.html#background-color-properties)
   ; [Border properties](pretty-core/cljs/pretty-properties/api.html#border-properties)
   ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
-  ; [Clickable state properties](pretty-core/cljs/pretty-properties/api.html#clickable-state-properties)
   ; [Cursor properties](pretty-core/cljs/pretty-properties/api.html#cursor-properties)
-  ; [Effect properties](pretty-core/cljs/pretty-properties/api.html#effect-properties)
   ; [Flex properties](pretty-core/cljs/pretty-properties/api.html#flex-properties)
   ; [Inner position properties](pretty-core/cljs/pretty-properties/api.html#inner-position-properties)
   ; [Inner size properties](pretty-core/cljs/pretty-properties/api.html#inner-size-properties)
@@ -73,8 +68,10 @@
   ; [Outer size properties](pretty-core/cljs/pretty-properties/api.html#outer-size-properties)
   ; [Outer space properties](pretty-core/cljs/pretty-properties/api.html#outer-space-properties)
   ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
+  ; [State properties](pretty-core/cljs/pretty-properties/api.html#state-properties)
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
+  ; [Visibility properties](pretty-core/cljs/pretty-properties/api.html#visibility-properties)
   ;
   ; @param (keyword)(opt) id
   ; @param (map) props
@@ -95,7 +92,8 @@
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
-       (let [props (pretty-presets.engine/apply-preset       id props)
-             props (select-button.prototypes/props-prototype id props)]
+       (let [props (pretty-inputs.methods/apply-input-shorthand-map id props {:icon :icon-name :label :content})
+             props (pretty-inputs.methods/apply-input-preset        id props)
+             props (select-button.prototypes/props-prototype        id props)]
             (if (:mounted? props)
                 [view-lifecycles id props])))))

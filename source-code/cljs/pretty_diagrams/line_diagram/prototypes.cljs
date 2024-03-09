@@ -17,7 +17,6 @@
   [id props]
   (-> props (pretty-properties/default-flex-props       {:horizontal-align :left :orientation :horizontal})
             (pretty-properties/default-outer-size-props {:outer-size-unit :full-block})
-            (pretty-standards/standard-data-props)
             (pretty-standards/standard-flex-props)
             (pretty-standards/standard-inner-position-props)
             (pretty-standards/standard-inner-size-props)

@@ -43,5 +43,4 @@
             (pretty-rules/auto-set-mounted)
             (pretty-subitems/subitem-group<-subitem-default :rows)
             (pretty-subitems/subitem-group<-disabled-state  :rows)
-            (pretty-subitems/leave-disabled-state           :rows)
             (pretty-subitems/apply-group-item-prototype     :rows row-prototype)))

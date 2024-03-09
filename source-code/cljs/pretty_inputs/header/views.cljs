@@ -6,6 +6,7 @@
               [pretty-elements.api             :as pretty-elements]
               [pretty-guides.api               :as pretty-guides]
               [pretty-inputs.engine.api        :as pretty-inputs.engine]
+              [pretty-inputs.methods.api        :as pretty-inputs.methods]
               [pretty-inputs.header.attributes :as header.attributes]
               [pretty-inputs.header.prototypes :as header.prototypes]
               [pretty-presets.engine.api       :as pretty-presets.engine]
@@ -81,6 +82,7 @@
   ; [State properties](pretty-core/cljs/pretty-properties/api.html#state-properties)
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
+  ; [Visibility properties](pretty-core/cljs/pretty-properties/api.html#visibility-properties)
   ;
   ; @param (keyword)(opt) id
   ; @param (map) props
@@ -104,9 +106,9 @@
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
-       (let [props (pretty-presets.engine/apply-preset           id props)
-             props (header.prototypes/props-prototype            id props)
-             props (dynamic-props/import-props                   id props)
-             props (pretty-inputs.engine/import-input-error-text id props)]
+       (let [props (pretty-presets.engine/apply-preset            id props)
+             props (pretty-inputs.methods/import-input-error-text id props)
+             props (header.prototypes/props-prototype             id props)
+             props (dynamic-props/import-props                    id props)]
             (if (:mounted? props)
                 [view-lifecycles id props])))))

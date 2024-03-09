@@ -4,9 +4,8 @@
               [pretty-elements.engine.api     :as pretty-elements.engine]
               [pretty-elements.row.attributes :as row.attributes]
               [pretty-elements.row.prototypes :as row.prototypes]
-              [pretty-presets.engine.api      :as pretty-presets.engine]
               [reagent.core                   :as reagent]
-              [pretty-models.api :as pretty-models]))
+              [pretty-elements.methods.api :as pretty-elements.methods]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -61,6 +60,7 @@
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
   ; [Text properties](pretty-core/cljs/pretty-properties/api.html#text-properties)
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
+  ; [Visibility properties](pretty-core/cljs/pretty-properties/api.html#visibility-properties)
   ;
   ; @param (keyword)(opt) id
   ; @param (map) props
@@ -89,8 +89,8 @@
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
-       (let [props (pretty-models/use-longhand         id props :content)
-             props (pretty-presets.engine/apply-preset id props)
-             props (row.prototypes/props-prototype     id props)]
+       (let [props (pretty-elements.methods/apply-element-shorthand-key id props :content)
+             props (pretty-elements.methods/apply-element-preset        id props)
+             props (row.prototypes/props-prototype                      id props)]
             (if (:mounted? props)
                 [view-lifecycles id props])))))

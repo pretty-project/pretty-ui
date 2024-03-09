@@ -1,7 +1,6 @@
 
 (ns pretty-presets.api
-    (:require [pretty-presets.default-presets.presets]
-              [pretty-presets.engine.api :as preset-presets.engine]))
+    (:require [pretty-presets.engine.api :as preset-presets.engine]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

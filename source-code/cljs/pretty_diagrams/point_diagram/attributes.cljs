@@ -37,6 +37,7 @@
       (pretty-attributes/inner-size-attributes  props)
       (pretty-attributes/inner-space-attributes props)
       (pretty-attributes/mouse-event-attributes props)
+      (pretty-attributes/state-attributes       props)
       (pretty-attributes/style-attributes       props)))
 
 ;; ----------------------------------------------------------------------------
@@ -58,5 +59,5 @@
       (pretty-attributes/outer-position-attributes props)
       (pretty-attributes/outer-size-attributes     props)
       (pretty-attributes/outer-space-attributes    props)
-      (pretty-attributes/state-attributes          props)
-      (pretty-attributes/theme-attributes          props)))
+      (pretty-attributes/theme-attributes          props)
+      (pretty-attributes/visibility-attributes     props)))

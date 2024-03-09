@@ -13,7 +13,7 @@
   ;
   ; @param (keyword) id
   ; @param (map) props
-  ; {:strength (percentage)
+  ; {:strength (percent)
   ;  ...}
   ; @param (integer) dex
   ; @param (*) datum
@@ -22,13 +22,13 @@
   ; {:class (keyword or keywords in vector)
   ;  ...}
   [id {:keys [strength] :as props} dex datum]
-  (let [datum-color     (pretty-diagrams.engine/get-diagram-datum-color id props dex datum)
-        datum-pattern   (circle-diagram.utils/diagram-datum-pattern     id props dex datum)
-        datum-transform (circle-diagram.utils/diagram-datum-transform   id props dex datum)]
+  (let [datum-color     (pretty-diagrams.engine/diagram-datum-color   id props dex datum)
+        datum-pattern   (circle-diagram.utils/diagram-datum-pattern   id props dex datum)
+        datum-transform (circle-diagram.utils/diagram-datum-transform id props dex datum)]
        (-> {:class :pd-circle-diagram--datum}
-           (pretty-attributes/svg-circle-attributes {:diameter circle-diagram.config/CIRCLE-DIAMETER         :stroke-width strength})
-           (pretty-attributes/svg-stroke-attributes {:stroke-color datum-color :stroke-pattern datum-pattern :stroke-width strength})
-           (pretty-attributes/transform-attributes  {:transform datum-transform}))))
+           (pretty-attributes/svg-circle-attributes     {:diameter circle-diagram.config/CIRCLE-DIAMETER         :stroke-width strength})
+           (pretty-attributes/svg-stroke-attributes     {:stroke-color datum-color :stroke-pattern datum-pattern :stroke-width strength})
+           (pretty-attributes/transformation-attributes {:transform datum-transform}))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -47,6 +47,7 @@
       (pretty-attributes/inner-size-attributes  props)
       (pretty-attributes/inner-space-attributes props)
       (pretty-attributes/mouse-event-attributes props)
+      (pretty-attributes/state-attributes       props)
       (pretty-attributes/style-attributes       props)))
 
 ;; ----------------------------------------------------------------------------
@@ -68,5 +69,5 @@
       (pretty-attributes/outer-position-attributes props)
       (pretty-attributes/outer-size-attributes     props)
       (pretty-attributes/outer-space-attributes    props)
-      (pretty-attributes/state-attributes          props)
-      (pretty-attributes/theme-attributes          props)))
+      (pretty-attributes/theme-attributes          props)
+      (pretty-attributes/visibility-attributes     props)))

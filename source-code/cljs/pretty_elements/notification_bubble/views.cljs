@@ -6,10 +6,9 @@
               [pretty-elements.engine.api                     :as pretty-elements.engine]
               [pretty-elements.notification-bubble.attributes :as notification-bubble.attributes]
               [pretty-elements.notification-bubble.prototypes :as notification-bubble.prototypes]
-              [pretty-presets.engine.api                      :as pretty-presets.engine]
               [pretty-subitems.api                            :as pretty-subitems]
               [reagent.core                                   :as reagent]
-              [pretty-models.api :as pretty-models]))
+              [pretty-elements.methods.api :as pretty-elements.methods]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -74,6 +73,7 @@
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
   ; [Text properties](pretty-core/cljs/pretty-properties/api.html#text-properties)
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
+  ; [Visibility properties](pretty-core/cljs/pretty-properties/api.html#visibility-properties)
   ;
   ; @param (keyword)(opt) id
   ; @param (map) props
@@ -109,8 +109,8 @@
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
-       (let [props (pretty-models/use-longhand                     id props :content)
-             props (pretty-presets.engine/apply-preset             id props)
-             props (notification-bubble.prototypes/props-prototype id props)]
+       (let [props (pretty-elements.methods/apply-element-shorthand-key id props :content)
+             props (pretty-elements.methods/apply-element-preset        id props)
+             props (notification-bubble.prototypes/props-prototype      id props)]
             (if (:mounted? props)
                 [view-lifecycles id props])))))

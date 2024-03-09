@@ -116,7 +116,6 @@
                  (pretty-rules/auto-disable-mouse-events)
                  (pretty-rules/generate-input-autofill)
                  (pretty-rules/auto-set-mounted)
-                 (pretty-subitems/apply-subitem-longhand  :expandable :content)
                  (pretty-subitems/apply-subitem-prototype :expandable            expandable-prototype-f)
                  (pretty-subitems/apply-subitem-prototype :placeholder-text      placeholder-text-prototype-f)
                  (pretty-subitems/apply-subitem-prototype :end-adornment-group   end-adornment-group-prototype-f)

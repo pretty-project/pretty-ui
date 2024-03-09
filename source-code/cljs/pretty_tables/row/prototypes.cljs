@@ -29,5 +29,4 @@
             (pretty-rules/auto-disable-mouse-events)
             (pretty-rules/auto-set-mounted)
             (pretty-subitems/subitem-group<-subitem-default :cells)
-            (pretty-subitems/subitem-group<-disabled-state  :cells)
-            (pretty-subitems/leave-disabled-state           :cells)))
+            (pretty-subitems/subitem-group<-disabled-state  :cells)))

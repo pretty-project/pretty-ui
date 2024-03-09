@@ -1,6 +1,6 @@
 
 (ns pretty-accessories.tooltip.attributes
-    (:require [pretty-attributes.api :as pretty-attributes]))
+    (:require [pretty-models.api :as pretty-models]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -16,13 +16,7 @@
   ;  ...}
   [_ props]
   (-> {:class :pa-tooltip--inner}
-      (pretty-attributes/animation-attributes        props)
-      (pretty-attributes/background-color-attributes props)
-      (pretty-attributes/border-attributes           props)
-      (pretty-attributes/inner-size-attributes       props)
-      (pretty-attributes/inner-space-attributes      props)
-      (pretty-attributes/mouse-event-attributes      props)
-      (pretty-attributes/style-attributes            props)))
+      (pretty-models/content-model-inner-attributes props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -38,10 +32,4 @@
   ;  ...}
   [_ props]
   (-> {:class :pa-tooltip--outer}
-      (pretty-attributes/class-attributes          props)
-      (pretty-attributes/inner-position-attributes props)
-      (pretty-attributes/outer-position-attributes props)
-      (pretty-attributes/outer-size-attributes     props)
-      (pretty-attributes/outer-space-attributes    props)
-      (pretty-attributes/state-attributes          props)
-      (pretty-attributes/theme-attributes          props)))
+      (pretty-models/content-model-outer-attributes props)))

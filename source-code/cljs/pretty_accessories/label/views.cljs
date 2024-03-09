@@ -3,8 +3,7 @@
     (:require [fruits.random.api                   :as random]
               [pretty-accessories.label.attributes :as label.attributes]
               [pretty-accessories.label.prototypes :as label.prototypes]
-              [pretty-presets.engine.api           :as pretty-presets.engine]
-              [pretty-models.api :as pretty-models]))
+              [pretty-accessories.methods.api :as pretty-accessories.methods]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -29,6 +28,7 @@
   ; Label accessory for elements.
   ;
   ; @links Implemented properties
+  ; [Animation properties](pretty-core/cljs/pretty-properties/api.html#animation-properties)
   ; [Background color properties](pretty-core/cljs/pretty-properties/api.html#background-color-properties)
   ; [Border properties](pretty-core/cljs/pretty-properties/api.html#border-properties)
   ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
@@ -47,6 +47,8 @@
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
   ; [Text properties](pretty-core/cljs/pretty-properties/api.html#text-properties)
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
+  ; [Transformation properties](pretty-core/cljs/pretty-properties/api.html#transformation-properties)
+  ; [Visibility properties](pretty-core/cljs/pretty-properties/api.html#visibility-properties)
   ;
   ; @param (keyword)(opt) id
   ; @param (map) props
@@ -70,7 +72,7 @@
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
-       (let [props (pretty-models/use-longhand         id props :content)
-             props (pretty-presets.engine/apply-preset id props)
-             props (label.prototypes/props-prototype   id props)]
+       (let [props (pretty-accessories.methods/apply-accessory-shorthand-key id props :content)
+             props (pretty-accessories.methods/apply-accessory-preset        id props)
+             props (label.prototypes/props-prototype                         id props)]
             [label id props]))))

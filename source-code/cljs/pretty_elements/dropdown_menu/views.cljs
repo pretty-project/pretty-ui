@@ -6,7 +6,7 @@
               [pretty-elements.engine.api               :as pretty-elements.engine]
               [pretty-elements.expandable.views         :as expandable.views]
               [pretty-elements.menu-bar.views           :as menu-bar.views]
-              [pretty-presets.engine.api                :as pretty-presets.engine]
+              [pretty-elements.methods.api :as pretty-elements.methods]
               [pretty-subitems.api                      :as pretty-subitems]
               [reagent.core                             :as reagent]))
 
@@ -63,6 +63,7 @@
   ; [State properties](pretty-core/cljs/pretty-properties/api.html#state-properties)
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
+  ; [Visibility properties](pretty-core/cljs/pretty-properties/api.html#visibility-properties)
   ;
   ; @param (keyword)(opt) id
   ; @param (map) props
@@ -86,7 +87,8 @@
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
-       (let [props (pretty-presets.engine/apply-preset       id props)
-             props (dropdown-menu.prototypes/props-prototype id props)]
+       (let [props (pretty-elements.methods/apply-element-shorthand-map id props {:expandable :content})
+             props (pretty-elements.methods/apply-element-preset        id props)
+             props (dropdown-menu.prototypes/props-prototype            id props)]
             (if (:mounted? props)
                 [view-lifecycles id props])))))

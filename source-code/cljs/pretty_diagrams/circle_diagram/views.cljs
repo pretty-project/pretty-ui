@@ -6,6 +6,7 @@
               [pretty-diagrams.circle-diagram.attributes :as circle-diagram.attributes]
               [pretty-diagrams.circle-diagram.prototypes :as circle-diagram.prototypes]
               [pretty-diagrams.engine.api                :as pretty-diagrams.engine]
+              [pretty-diagrams.methods.api               :as pretty-diagrams.methods]
               [pretty-presets.engine.api                 :as pretty-presets.engine]
               [reagent.core                              :as reagent]))
 
@@ -77,6 +78,7 @@
   ; [State properties](pretty-core/cljs/pretty-properties/api.html#state-properties)
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
+  ; [Visibility properties](pretty-core/cljs/pretty-properties/api.html#visibility-properties)
   ;
   ; @param (keyword)(opt) id
   ; @param (map) props
@@ -97,8 +99,8 @@
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
-       (let [props (pretty-presets.engine/apply-preset             id props)
-             props (circle-diagram.prototypes/props-prototype      id props)
-             props (pretty-diagrams.engine/import-diagram-data-sum id props)]
+       (let [props (pretty-presets.engine/apply-preset              id props)
+             props (pretty-diagrams.methods/import-diagram-data-sum id props)
+             props (circle-diagram.prototypes/props-prototype       id props)]
             (if (:mounted? props)
                 [view-lifecycles id props])))))

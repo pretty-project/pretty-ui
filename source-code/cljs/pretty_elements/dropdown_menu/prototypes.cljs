@@ -58,7 +58,5 @@
                  (pretty-rules/auto-disable-mouse-events)
                  (pretty-rules/auto-set-mounted)
                  (pretty-subitems/subitem<-disabled-state :menu-bar :expandable)
-                 (pretty-subitems/leave-disabled-state    :menu-bar :expandable)
-                 (pretty-subitems/apply-subitem-longhand  :expandable :content)
                  (pretty-subitems/apply-subitem-prototype :expandable expandable-prototype-f)
                  (pretty-subitems/apply-subitem-prototype :menu-bar   menu-bar-prototype-f))))

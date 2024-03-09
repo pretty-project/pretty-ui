@@ -56,7 +56,6 @@
                  (pretty-rules/auto-set-mounted)
                  (pretty-subitems/ensure-subitem           :field)
                  (pretty-subitems/subitems<-disabled-state :header :field :option-group)
-                 (pretty-subitems/leave-disabled-state     :header :field :option-group)
                  (pretty-subitems/apply-subitem-prototype  :option-group option-group-prototype-f))))
 
 

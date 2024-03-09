@@ -7,7 +7,7 @@
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
- 
+
 (defn props-prototype
   ; @ignore
   ;
@@ -27,5 +27,4 @@
             (pretty-rules/auto-disable-mouse-events)
             (pretty-rules/auto-set-mounted)
             (pretty-subitems/subitem-group<-subitem-default :adornments)
-            (pretty-subitems/subitem-group<-disabled-state  :adornments)
-            (pretty-subitems/leave-disabled-state           :adornments)))
+            (pretty-subitems/subitem-group<-disabled-state  :adornments)))

@@ -5,8 +5,8 @@
               [pretty-accessories.label.views        :as label.views]
               [pretty-accessories.tooltip.attributes :as tooltip.attributes]
               [pretty-accessories.tooltip.prototypes :as tooltip.prototypes]
-              [pretty-presets.engine.api             :as pretty-presets.engine]
-              [pretty-subitems.api                   :as pretty-subitems]))
+              [pretty-subitems.api                   :as pretty-subitems]
+              [pretty-accessories.methods.api :as pretty-accessories.methods]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -52,6 +52,8 @@
   ; [State properties](pretty-core/cljs/pretty-properties/api.html#state-properties)
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
+  ; [Transformation properties](pretty-core/cljs/pretty-properties/api.html#transformation-properties)
+  ; [Visibility properties](pretty-core/cljs/pretty-properties/api.html#visibility-properties)
   ;
   ; @param (keyword)(opt) id
   ; @param (map) props
@@ -70,6 +72,7 @@
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
-       (let [props (pretty-presets.engine/apply-preset id props)
-             props (tooltip.prototypes/props-prototype id props)]
+       (let [props (pretty-accessories.methods/apply-accessory-shorthand-map id props {:icon :icon-name :label :content})
+             props (pretty-accessories.methods/apply-accessory-preset        id props)
+             props (tooltip.prototypes/props-prototype                       id props)]
             [tooltip id props]))))

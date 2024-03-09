@@ -48,9 +48,8 @@
   ; @return (map)
   [id props]
   (let [placeholder-text-prototype-f (fn [%] (placeholder-text-prototype id props %))]
-       (-> props (pretty-properties/default-flex-props             {:orientation :vertical})
-                 (pretty-properties/default-input-validation-props {:validate-when-change? true})
-                 (pretty-properties/default-outer-size-props       {:outer-size-unit :full-block})
+       (-> props (pretty-properties/default-flex-props       {:orientation :vertical})
+                 (pretty-properties/default-outer-size-props {:outer-size-unit :full-block})
                  (pretty-standards/standard-flex-props)
                  (pretty-standards/standard-inner-position-props)
                  (pretty-standards/standard-inner-size-props)
@@ -62,7 +61,5 @@
                  (pretty-rules/auto-set-mounted)
                  (pretty-subitems/subitem-group<-subitem-default :options)
                  (pretty-subitems/subitem-group<-disabled-state  :options)
-                 (pretty-subitems/leave-disabled-state           :options)
-                 (pretty-subitems/apply-subitem-longhand         :placeholder :content)
                  (pretty-subitems/apply-group-item-prototype     :options option-prototype)
                  (pretty-subitems/apply-subitem-prototype        :placeholder-text placeholder-text-prototype-f))))

@@ -4,11 +4,11 @@
               [pretty-accessories.api          :as pretty-accessories]
               [pretty-layouts.body.views       :as body.views]
               [pretty-layouts.engine.api       :as pretty-layouts.engine]
+              [pretty-layouts.methods.api :as pretty-layouts.methods]
               [pretty-layouts.footer.views     :as footer.views]
               [pretty-layouts.header.views     :as header.views]
               [pretty-layouts.popup.attributes :as popup.attributes]
               [pretty-layouts.popup.prototypes :as popup.prototypes]
-              [pretty-presets.engine.api       :as pretty-presets.engine]
               [pretty-subitems.api             :as pretty-subitems]
               [reagent.core                    :as reagent]))
 
@@ -83,6 +83,7 @@
   ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
   ; [Text properties](pretty-core/cljs/pretty-properties/api.html#text-properties)
   ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
+  ; [Visibility properties](pretty-core/cljs/pretty-properties/api.html#visibility-properties)
   ;
   ; @param (keyword)(opt) id
   ; @param (map) props
@@ -111,7 +112,8 @@
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
-       (let [props (pretty-presets.engine/apply-preset id props)
-             props (popup.prototypes/props-prototype   id props)]
+       (let [props (pretty-layouts.methods/apply-layout-shorthand-map id props {:body :content :footer :content :header :content})
+             props (pretty-layouts.methods/apply-layout-preset        id props)
+             props (popup.prototypes/props-prototype                  id props)]
             (if (:mounted? props)
                 [view-lifecycles id props])))))
