@@ -3,11 +3,31 @@
     (:require [fruits.seqable.api            :as seqable]
               [keypress-handler.api          :as keypress-handler]
               [pretty-inputs.combo-box.env   :as combo-box.env]
-              [pretty-inputs.combo-box.state :as combo-box.state]
               [re-frame.api                  :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 (defn highlight-next-option!
   ; @ignore
@@ -16,12 +36,12 @@
   ; @param (map) box-props
   [box-id box-props]
   (let [highlighted-option-dex (combo-box.env/get-highlighted-option-dex box-id)
-        rendered-options       (combo-box.env/get-rendered-options       box-id box-props)]
+        rendered-options       (combo-box.env/get-rendered-options       box-id box-props)]))
        ; If no option selected, then the first option must be selected at the first time ...
-       (if (nil? highlighted-option-dex)
-           (swap! combo-box.state/OPTION-HIGHLIGHTS assoc box-id 0)
-           (let [next-option-dex (seqable/next-dex rendered-options highlighted-option-dex)]
-                (swap! combo-box.state/OPTION-HIGHLIGHTS assoc box-id next-option-dex)))))
+       ;(if (nil? highlighted-option-dex))))
+           ;(swap! combo-box.state/OPTION-HIGHLIGHTS assoc box-id 0)
+           ;(let [next-option-dex (seqable/next-dex rendered-options highlighted-option-dex)]
+            ;    (swap! combo-box.state/OPTION-HIGHLIGHTS assoc box-id next-option-dex)))))
 
 (defn highlight-prev-option!
   ; @ignore
@@ -31,15 +51,15 @@
   [box-id box-props]
   (let [highlighted-option-dex (combo-box.env/get-highlighted-option-dex box-id)
         rendered-options       (combo-box.env/get-rendered-options       box-id box-props)
-        prev-option-dex        (seqable/prev-dex rendered-options highlighted-option-dex)]
-       (swap! combo-box.state/OPTION-HIGHLIGHTS assoc box-id prev-option-dex)))
+        prev-option-dex        (seqable/prev-dex rendered-options highlighted-option-dex)]))
+       ;(swap! combo-box.state/OPTION-HIGHLIGHTS assoc box-id prev-option-dex)))
 
 (defn discard-option-highlighter!
   ; @ignore
   ;
   ; @param (keyword) box-id
-  [box-id]
-  (swap! combo-box.state/OPTION-HIGHLIGHTS dissoc box-id))
+  [box-id])
+  ;(swap! combo-box.state/OPTION-HIGHLIGHTS dissoc box-id))
 
 (defn use-selected-option!
   ; @ignore
@@ -88,42 +108,3 @@
   (keypress-handler/dereg-keypress-event! :pretty-inputs.text-field/UP)
   (keypress-handler/dereg-keypress-event! :pretty-inputs.text-field/ESC)
   (keypress-handler/dereg-keypress-event! :pretty-inputs.text-field/ENTER))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; @ignore
-;
-; @param (keyword) box-id
-; @param (map) box-props
-(r/reg-fx :pretty-inputs.combo-box/highlight-next-option! highlight-next-option!)
-
-; @ignore
-;
-; @param (keyword) box-id
-; @param (map) box-props
-(r/reg-fx :pretty-inputs.combo-box/highlight-prev-option! highlight-prev-option!)
-
-; @ignore
-;
-; @param (keyword) box-id
-; @param (map) box-props
-(r/reg-fx :pretty-inputs.combo-box/discard-option-highlighter! discard-option-highlighter!)
-
-; @ignore
-;
-; @param (keyword) box-id
-; @param (map) box-props
-(r/reg-fx :pretty-inputs.combo-box/use-selected-option! use-selected-option!)
-
-; @ignore
-;
-; @param (keyword) box-id
-; @param (map) box-props
-(r/reg-fx :pretty-inputs.combo-box/reg-keypress-events! reg-keypress-events!)
-
-; @ignore
-;
-; @param (keyword) box-id
-; @param (map) box-props
-(r/reg-fx :pretty-inputs.combo-box/dereg-keypress-events! dereg-keypress-events!)

@@ -60,8 +60,8 @@
   ; Line diagram for displaying values on a continuous colored line.
   ;
   ; @links Implemented models
-  ; [Container model](pretty-core/cljs/pretty-models/api.html#container-model)
-  ; [Shape model](pretty-core/cljs/pretty-models/api.html#shape-model)
+  ; [Flex container model](pretty-core/cljs/pretty-models/api.html#flex-container-model)
+  ; [Shape canvas model](pretty-core/cljs/pretty-models/api.html#shape-canvas-model)
   ;
   ; @links Implemented properties
   ; [Data properties](pretty-core/cljs/pretty-properties/api.html#data-properties)

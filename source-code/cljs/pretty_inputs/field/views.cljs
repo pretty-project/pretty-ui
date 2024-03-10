@@ -14,6 +14,14 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(def SHORTHAND-MAP {:expandable            expandable.views/SHORTHAND-MAP
+                    :placeholder-text      placeholder-text.views/SHORTHAND-MAP
+                    :end-adornment-group   adornment-group.views/SHORTHAND-MAP
+                    :start-adornment-group adornment-group.views/SHORTHAND-MAP})
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn- field-structure
   ; @ignore
   ;
@@ -75,38 +83,17 @@
   ; @links Implemented guides
   ; [Placeholder-text](pretty-core/cljs/pretty-guides/api.html#placeholder-text)
   ;
-  ; @links Implemented properties
-  ; [Background color properties](pretty-core/cljs/pretty-properties/api.html#background-color-properties)
-  ; [Border properties](pretty-core/cljs/pretty-properties/api.html#border-properties)
-  ; [Class properties](pretty-core/cljs/pretty-properties/api.html#class-properties)
-  ; [Flex properties](pretty-core/cljs/pretty-properties/api.html#flex-properties)
-  ; [Focus properties](pretty-core/cljs/pretty-properties/api.html#focus-properties)
-  ; [Font properties](pretty-core/cljs/pretty-properties/api.html#font-properties)
-  ; [Inner position properties](pretty-core/cljs/pretty-properties/api.html#inner-position-properties)
-  ; [Inner size properties](pretty-core/cljs/pretty-properties/api.html#inner-size-properties)
-  ; [Inner space properties](pretty-core/cljs/pretty-properties/api.html#inner-space-properties)
-  ; [Input field properties](pretty-core/cljs/pretty-properties/api.html#input-field-properties)
-  ; [Input validation properties](pretty-core/cljs/pretty-properties/api.html#input-validation-properties)
-  ; [Input value properties](pretty-core/cljs/pretty-properties/api.html#input-value-properties)
-  ; [Keypress control properties](pretty-core/cljs/pretty-properties/api.html#keypress-control-properties)
-  ; [Lifecycle properties](pretty-core/cljs/pretty-properties/api.html#lifecycle-properties)
-  ; [Mouse event properties](pretty-core/cljs/pretty-properties/api.html#mouse-event-properties)
-  ; [Outer position properties](pretty-core/cljs/pretty-properties/api.html#outer-position-properties)
-  ; [Outer size properties](pretty-core/cljs/pretty-properties/api.html#outer-size-properties)
-  ; [Outer space properties](pretty-core/cljs/pretty-properties/api.html#outer-space-properties)
-  ; [Preset properties](pretty-core/cljs/pretty-properties/api.html#preset-properties)
-  ; [State properties](pretty-core/cljs/pretty-properties/api.html#state-properties)
-  ; [Style properties](pretty-core/cljs/pretty-properties/api.html#style-properties)
-  ; [Text properties](pretty-core/cljs/pretty-properties/api.html#text-properties)
-  ; [Theme properties](pretty-core/cljs/pretty-properties/api.html#theme-properties)
-  ; [Visibility properties](pretty-core/cljs/pretty-properties/api.html#visibility-properties)
+  ; @links Implemented models
+  ; [Flex container model](pretty-core/cljs/pretty-models/api.html#flex-container-model)
+  ; [Field input model](pretty-core/cljs/pretty-models/api.html#field-input-model)
+  ; [Multiline content model](pretty-core/cljs/pretty-models/api.html#multiline-content-model)
   ;
   ; @param (keyword)(opt) id
   ; @param (map) props
   ; Check out the implemented controls.
   ; Check out the implemented elements.
   ; Check out the implemented guides.
-  ; Check out the implemented properties.
+  ; Check out the implemented models.
   ;
   ; @usage (pretty-inputs/field.png)
   ; [field {:border-radius       {:all :s}
@@ -123,13 +110,14 @@
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
-       (let [props (pretty-inputs.methods/apply-input-shorthand-map  id props {:expandable :content :placeholder-text :content})
-             props (pretty-inputs.methods/apply-input-preset         id props)
-             props (pretty-inputs.methods/import-input-dynamic-props id props)
-             props (pretty-inputs.methods/import-input-field-events  id props)
-             props (pretty-inputs.methods/import-input-field-value   id props)
-             props (pretty-inputs.methods/import-input-state-events  id props)
-             props (pretty-inputs.methods/import-input-state         id props)
-             props (field.prototypes/props-prototype                 id props)]
+       (let [props (pretty-inputs.methods/apply-input-shorthand-map    id props SHORTHAND-MAP)
+             props (pretty-inputs.methods/apply-input-preset           id props)
+             props (pretty-inputs.methods/import-input-dynamic-props   id props)
+             props (pretty-inputs.methods/import-input-field-events    id props)
+             props (pretty-inputs.methods/import-input-field-value     id props)
+             props (pretty-inputs.methods/import-input-focus-reference id props)
+             props (pretty-inputs.methods/import-input-state-events    id props)
+             props (pretty-inputs.methods/import-input-state           id props)
+             props (field.prototypes/props-prototype                   id props)]
             (if (:mounted? props)
                 [view-lifecycles id props])))))

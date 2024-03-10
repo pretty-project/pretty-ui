@@ -38,7 +38,7 @@
   ; Sensor accessory for elements.
   ;
   ; @links Implemented models
-  ; [Plain model](pretty-core/cljs/pretty-models/api.html#plain-model)
+  ; [Plain container model](pretty-core/cljs/pretty-models/api.html#plain-container-model)
   ;
   ; @param (keyword)(opt) id
   ; @param (map) props

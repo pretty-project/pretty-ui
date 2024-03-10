@@ -10,6 +10,11 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(def SHORTHAND-KEY :icon-name)
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn- icon
   ; @ignore
   ;
@@ -41,8 +46,8 @@
   ; Icon accessory for elements.
   ;
   ; @links Implemented models
-  ; [Container model](pretty-core/cljs/pretty-models/api.html#container-model)
-  ; [Icon model](pretty-core/cljs/pretty-models/api.html#icon-model)
+  ; [Flex container model](pretty-core/cljs/pretty-models/api.html#flex-container-model)
+  ; [Icon canvas model](pretty-core/cljs/pretty-models/api.html#icon-canvas-model)
   ;
   ; @param (keyword)(opt) id
   ; @param (map) props
@@ -60,7 +65,7 @@
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
-       (let [props (pretty-accessories.methods/apply-accessory-shorthand-key  id props :icon-name)
+       (let [props (pretty-accessories.methods/apply-accessory-shorthand-key  id props SHORTHAND-KEY)
              props (pretty-accessories.methods/apply-accessory-preset         id props)
              props (pretty-accessories.methods/import-accessory-dynamic-props id props)
              props (pretty-accessories.methods/import-accessory-state-events  id props)

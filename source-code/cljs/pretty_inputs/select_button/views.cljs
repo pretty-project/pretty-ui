@@ -13,6 +13,13 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(def SHORTHAND-MAP {:icon    icon.views/SHORTHAND-MAP
+                    :label   label.views/SHORTHAND-MAP
+                    :tooltip tooltip.views/SHORTHAND-MAP})
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn- select-button
   ; @ignore
   ;
@@ -92,7 +99,7 @@
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
-       (let [props (pretty-inputs.methods/apply-input-shorthand-map  id props {:icon :icon-name :label :content})
+       (let [props (pretty-inputs.methods/apply-input-shorthand-map  id props SHORTHAND-MAP)
              props (pretty-inputs.methods/apply-input-preset         id props)
              props (pretty-inputs.methods/import-input-dynamic-props id props)
              props (pretty-inputs.methods/import-input-state-events  id props)

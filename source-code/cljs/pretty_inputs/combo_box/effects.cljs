@@ -1,7 +1,6 @@
 
 (ns pretty-inputs.combo-box.effects
     (:require [pretty-inputs.combo-box.env    :as combo-box.env]
-              [pretty-inputs.combo-box.events :as combo-box.events]
               [re-frame.api                   :as r :refer [r]]))
 
 ;; ----------------------------------------------------------------------------
@@ -93,7 +92,7 @@
       ; ... stores the highlighted option into the application state,
       ; ... uses the highlighted option as field content,
       ; ... dispatches the :on-type-ended event.
-      {:db   (r combo-box.events/select-option! db box-id box-props option)
+      {;:db   (r combo-box.events/select-option! db box-id box-props option)
        :fx-n [[:pretty-inputs.text-field/hide-surface!             box-id]
               [:pretty-inputs.combo-box/discard-option-highlighter! box-id]
               [:pretty-inputs.combo-box/use-selected-option!        box-id box-props option]]

@@ -37,8 +37,8 @@
   ; @param (map) box-props
   [box-id box-props]
   (let [field-id    (pretty-subitems/subitem-id box-id :text-field)
-        field-props (multi-combo-box.prototypes/field-props-prototype box-id box-props)]
-       [combo-box.views/combo-box field-id field-props]))
+        field-props (multi-combo-box.prototypes/field-props-prototype box-id box-props)]))
+       ;[combo-box.views/combo-box field-id field-props]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -106,6 +106,6 @@
   ([box-id box-props]
    ; @note (tutorials#parameterizing)
    (fn [_ box-props]
-       (let [box-props (multi-combo-box.prototypes/box-props-prototype box-id box-props)
-             box-props (assoc-in box-props [:surface :content] [combo-box.views/combo-box-surface-content box-id box-props])]
+       (let [box-props (multi-combo-box.prototypes/box-props-prototype box-id box-props)]
+             ;box-props (assoc-in box-props [:surface :content] [combo-box.views/combo-box-surface-content box-id box-props])]
             [view-lifecycles box-id box-props]))))

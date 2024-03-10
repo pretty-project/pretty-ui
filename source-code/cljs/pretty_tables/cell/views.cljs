@@ -41,8 +41,8 @@
   ; Table cell element.
   ;
   ; @links Implemented models
-  ; [Container model](pretty-core/cljs/pretty-models/api.html#container-model)
-  ; [Content model](pretty-core/cljs/pretty-models/api.html#content-model)
+  ; [Flex container model](pretty-core/cljs/pretty-models/api.html#flex-container-model)
+  ; [Plain content model](pretty-core/cljs/pretty-models/api.html#plain-content-model)
   ;
   ; @param (keyword)(opt) id
   ; @param (map) props

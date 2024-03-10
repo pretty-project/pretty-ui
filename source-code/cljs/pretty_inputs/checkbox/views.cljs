@@ -13,6 +13,12 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(def SHORTHAND-MAP {:header       header.views/SHORTHAND-MAP
+                    :option-group option-group.views/SHORTHAND-MAP})
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn- checkbox
   ; @ignore
   ;
@@ -50,7 +56,7 @@
   ; [Option-group](pretty-core/cljs/pretty-inputs/api.html#option-group)
   ;
   ; @links Implemented models
-  ; [Container model](pretty-core/cljs/pretty-models/api.html#container-model)
+  ; [Flex container model](pretty-core/cljs/pretty-models/api.html#flex-container-model)
   ;
   ; @param (keyword)(opt) id
   ; @param (map) props
@@ -74,7 +80,8 @@
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
-       (let [props (pretty-inputs.methods/apply-input-preset         id props)
+       (let [props (pretty-inputs.methods/apply-input-shorthand-map  id props SHORTHAND-MAP)
+             props (pretty-inputs.methods/apply-input-preset         id props)
              props (pretty-inputs.methods/import-input-dynamic-props id props)
              props (pretty-inputs.methods/import-input-state-events  id props)
              props (pretty-inputs.methods/import-input-state         id props)

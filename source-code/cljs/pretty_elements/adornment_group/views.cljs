@@ -7,7 +7,13 @@
               [pretty-elements.adornment.views            :as adornment.views]
               [pretty-elements.engine.api                 :as pretty-elements.engine]
               [pretty-elements.methods.api :as pretty-elements.methods]
-              [reagent.core                               :as reagent]))
+              [reagent.core                               :as reagent]
+              [pretty-subitems.api :as pretty-subitems]))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(def SHORTHAND-MAP {:adornments adornment.views/SHORTHAND-MAP})
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -22,8 +28,8 @@
   [id {:keys [adornments] :as props}]
   [:div (adornment-group.attributes/outer-attributes id props)
         [:div (adornment-group.attributes/inner-attributes id props)
-              (letfn [(f0 [adornment] [adornment.views/view adornment])]
-                     (hiccup/put-with [:<>] adornments f0))]])
+              (letfn [(f0 [dex adornment] [adornment.views/view (pretty-subitems/subitem-id id dex) adornment])]
+                     (hiccup/put-with-indexed [:<>] adornments f0))]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -47,7 +53,7 @@
   ; [Adornment](pretty-ui/cljs/pretty-elements/api.html#adornment)
   ;
   ; @links Implemented models
-  ; [Container model](pretty-core/cljs/pretty-models/api.html#container-model)
+  ; [Flex container model](pretty-core/cljs/pretty-models/api.html#flex-container-model)
   ;
   ; @param (keyword)(opt) id
   ; @param (map) props
@@ -69,7 +75,8 @@
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
-       (let [props (pretty-elements.methods/apply-element-preset         id props)
+       (let [props (pretty-elements.methods/apply-element-shorthand-map  id props SHORTHAND-MAP)
+             props (pretty-elements.methods/apply-element-preset         id props)
              props (pretty-elements.methods/import-element-dynamic-props id props)
              props (pretty-elements.methods/import-element-state-events  id props)
              props (pretty-elements.methods/import-element-state         id props)

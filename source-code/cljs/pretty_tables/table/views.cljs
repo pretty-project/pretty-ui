@@ -7,7 +7,8 @@
               [pretty-tables.row.views        :as row.views]
               [pretty-tables.table.attributes :as table.attributes]
               [pretty-tables.table.prototypes :as table.prototypes]
-              [reagent.core                   :as reagent]))
+              [reagent.core                   :as reagent]
+              [pretty-subitems.api :as pretty-subitems]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -22,8 +23,8 @@
   [id {:keys [rows] :as props}]
   [:div (table.attributes/outer-attributes id props)
         [:div (table.attributes/inner-attributes id props)
-              (letfn [(f0 [row] [row.views/view row])]
-                     (hiccup/put-with [:<>] rows f0))]])
+              (letfn [(f0 [dex row] [row.views/view (pretty-subitems/subitem-id id dex) row])]
+                     (hiccup/put-with-indexed [:<>] rows f0))]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -47,7 +48,7 @@
   ; [Row](pretty-ui/cljs/pretty-tables/api.html#row)
   ;
   ; @links Implemented models
-  ; [Container model](pretty-core/cljs/pretty-models/api.html#container-model)
+  ; [Flex container model](pretty-core/cljs/pretty-models/api.html#flex-container-model)
   ;
   ; @param (keyword)(opt) id
   ; @param (map) props

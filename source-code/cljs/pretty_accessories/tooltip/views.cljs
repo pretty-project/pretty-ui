@@ -13,6 +13,12 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(def SHORTHAND-MAP {:icon  icon.views/SHORTHAND-KEY
+                    :label label.views/SHORTHAND-KEY})
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn- tooltip
   ; @ignore
   ;
@@ -50,7 +56,7 @@
   ; [Label](pretty-core/cljs/pretty-accessories/api.html#label)
   ;
   ; @links Implemented models
-  ; [Container model](pretty-core/cljs/pretty-models/api.html#container-model)
+  ; [Flex container model](pretty-core/cljs/pretty-models/api.html#flex-container-model)
   ;
   ; @param (keyword)(opt) id
   ; @param (map) props
@@ -69,7 +75,7 @@
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
-       (let [props (pretty-accessories.methods/apply-accessory-shorthand-map  id props {:icon :icon-name :label :content})
+       (let [props (pretty-accessories.methods/apply-accessory-shorthand-map  id props SHORTHAND-MAP)
              props (pretty-accessories.methods/apply-accessory-preset         id props)
              props (pretty-accessories.methods/import-accessory-dynamic-props id props)
              props (pretty-accessories.methods/import-accessory-state-events  id props)

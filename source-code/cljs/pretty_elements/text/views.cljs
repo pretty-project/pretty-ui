@@ -11,6 +11,11 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(def SHORTHAND-KEY :content)
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn- text
   ; @ignore
   ;
@@ -43,9 +48,8 @@
   ; Customizable text element.
   ;
   ; @links Implemented models
-  ; [Container model](pretty-core/cljs/pretty-models/api.html#container-model)
-  ; [Content model](pretty-core/cljs/pretty-models/api.html#content-model)
-  ; [Multiline model](pretty-core/cljs/pretty-models/api.html#multiline-model)
+  ; [Flex container model](pretty-core/cljs/pretty-models/api.html#flex-container-model)
+  ; [Multiline content model](pretty-core/cljs/pretty-models/api.html#multiline-content-model)
   ;
   ; @param (keyword)(opt) id
   ; @param (map) props
@@ -67,7 +71,7 @@
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
-       (let [props (pretty-elements.methods/apply-element-shorthand-key  id props :content)
+       (let [props (pretty-elements.methods/apply-element-shorthand-key  id props SHORTHAND-KEY)
              props (pretty-elements.methods/apply-element-preset         id props)
              props (pretty-elements.methods/import-element-dynamic-props id props)
              props (pretty-elements.methods/import-element-state-events  id props)

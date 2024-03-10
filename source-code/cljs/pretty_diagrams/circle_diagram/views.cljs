@@ -7,8 +7,8 @@
               [pretty-diagrams.circle-diagram.prototypes :as circle-diagram.prototypes]
               [pretty-diagrams.engine.api                :as pretty-diagrams.engine]
               [pretty-diagrams.methods.api               :as pretty-diagrams.methods]
-              [reagent.core                              :as reagent]))
-
+              [reagent.core                              :as reagent]
+              [pretty-subitems.api :as pretty-subitems]))
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -62,8 +62,8 @@
   ; Circle diagram for displaying values with colored circle sections.
   ;
   ; @links Implemented models
-  ; [Container model](pretty-core/cljs/pretty-models/api.html#container-model)
-  ; [Shape model](pretty-core/cljs/pretty-models/api.html#shape-model)
+  ; [Plain container model](pretty-core/cljs/pretty-models/api.html#plain-container-model)
+  ; [Shape canvas model](pretty-core/cljs/pretty-models/api.html#shape-canvas-model)
   ;
   ; @links Implemented properties
   ; [Data properties](pretty-core/cljs/pretty-properties/api.html#data-properties)

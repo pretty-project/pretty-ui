@@ -10,6 +10,11 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(def SHORTHAND-KEY :content)
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn- helper-text
   ; @ignore
   ;
@@ -41,8 +46,8 @@
   ; Helper text guide for inputs.
   ;
   ; @links Implemented models
-  ; [Container model](pretty-core/cljs/pretty-models/api.html#container-model)
-  ; [Content model](pretty-core/cljs/pretty-models/api.html#content-model)
+  ; [Flex container model](pretty-core/cljs/pretty-models/api.html#flex-container-model)
+  ; [Plain content model](pretty-core/cljs/pretty-models/api.html#plain-content-model)
   ;
   ; @param (keyword)(opt) id
   ; @param (map) props
@@ -60,7 +65,7 @@
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
-       (let [props (pretty-accessories.methods/apply-accessory-shorthand-key  id props :content)
+       (let [props (pretty-accessories.methods/apply-accessory-shorthand-key  id props SHORTHAND-KEY)
              props (pretty-accessories.methods/apply-accessory-preset         id props)
              props (pretty-accessories.methods/import-accessory-dynamic-props id props)
              props (pretty-accessories.methods/import-accessory-state-events  id props)

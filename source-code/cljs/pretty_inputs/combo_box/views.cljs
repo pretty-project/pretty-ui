@@ -1,60 +1,27 @@
 
 (ns pretty-inputs.combo-box.views
-    (:require [fruits.hiccup.api                  :as hiccup]
-              [fruits.loop.api                    :refer [reduce-indexed]]
-              [fruits.random.api                  :as random]
-              [multitype-content.api              :as multitype-content]
+    (:require [fruits.random.api                  :as random]
               [pretty-inputs.combo-box.attributes :as combo-box.attributes]
               [pretty-inputs.combo-box.env        :as combo-box.env]
               [pretty-inputs.combo-box.prototypes :as combo-box.prototypes]
               [pretty-inputs.engine.api           :as pretty-inputs.engine]
+              [pretty-inputs.methods.api :as pretty-inputs.methods]
               [pretty-inputs.field.views          :as field.views]
               [pretty-inputs.header.views         :as header.views]
               [pretty-inputs.option-group.views   :as option-group.views]
               [pretty-inputs.text-field.views     :as text-field.views]
-              [pretty-presets.engine.api          :as pretty-presets.engine]
               [pretty-subitems.api                :as pretty-subitems]
-              [re-frame.api                       :as r]
               [reagent.core                       :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- combo-box-option
-  ; @ignore
-  ;
-  ; @param (keyword) box-id
-  ; @param (map) box-props
-  ; {:option-component (Reagent component symbol)(opt)
-  ;  :option-label-f (function)}
-  ; @param (integer) option-dex
-  ; @param (map) option
-  [box-id {:keys [option-component option-label-f] :as box-props} option-dex option]
-  ; If no 'option-component' is passed, it displays the option in a DIV with the default ':pi-combo-box--option' class.
-  [:button (combo-box.attributes/combo-box-option-attributes box-id box-props option-dex option)
-           (if option-component [option-component box-id box-props option]
-                                [:div {:class :pi-combo-box--option-label}
-                                      (-> option option-label-f multitype-content/compose)])])
+(def SHORTHAND-MAP {:field        field.views/SHORTHAND-MAP
+                    :header       header.views/SHORTHAND-MAP
+                    :option-group option-group.views/SHORTHAND-MAP})
 
-(defn- combo-box-options
-  ; @ignore
-  ;
-  ; @param (keyword) box-id
-  ; @param (map) box-props
-  [box-id box-props]
-  (let [options (combo-box.env/get-rendered-options box-id box-props)]
-       (letfn [(f0 [option-dex option] [combo-box-option box-id box-props option-dex option])]
-              [:div (combo-box.attributes/combo-box-options-attributes box-id box-props)
-                    (hiccup/put-with-indexed [:<>] options f0)])))
-
-(defn- combo-box-surface-content
-  ; @ignore
-  ;
-  ; @param (keyword) box-id
-  ; @param (map) box-props
-  [box-id box-props]
-  [:div (combo-box.attributes/combo-box-surface-content-attributes box-id box-props)
-        [combo-box-options box-id box-props]])
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn- combo-box
   ; @ignore
@@ -117,7 +84,11 @@
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
-       (let [props (pretty-presets.engine/apply-preset   id props)
-             props (combo-box.prototypes/props-prototype id props)]
+       (let [props (pretty-inputs.methods/apply-input-shorthand-map  id props SHORTHAND-MAP)
+             props (pretty-inputs.methods/apply-input-preset         id props)
+             props (pretty-inputs.methods/import-input-dynamic-props id props)
+             props (pretty-inputs.methods/import-input-state-events  id props)
+             props (pretty-inputs.methods/import-input-state         id props)
+             props (combo-box.prototypes/props-prototype             id props)]
             (if (:mounted? props)
                 [view-lifecycles id props])))))

@@ -4,7 +4,6 @@
               [fruits.hiccup.api             :as hiccup]
               [fruits.string.api             :as string]
               [fruits.vector.api             :as vector]
-              [pretty-inputs.combo-box.state :as combo-box.state]
               [pretty-inputs.engine.api      :as pretty-inputs.engine]))
 
 ;; ----------------------------------------------------------------------------
@@ -16,8 +15,8 @@
   ; @param (keyword) box-id
   ;
   ; @return (integer)
-  [box-id]
-  (get @combo-box.state/OPTION-HIGHLIGHTS box-id))
+  [box-id])
+  ;(get @combo-box.state/OPTION-HIGHLIGHTS box-id))
 
 (defn any-option-highlighted?
   ; @ignore

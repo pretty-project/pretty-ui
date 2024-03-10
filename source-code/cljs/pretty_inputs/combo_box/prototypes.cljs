@@ -1,13 +1,10 @@
 
 (ns pretty-inputs.combo-box.prototypes
-    (:require [fruits.loop.api          :refer [<-walk]]
-              [fruits.map.api           :as map]
-              [fruits.noop.api          :refer [return]]
+    (:require [fruits.map.api           :as map]
               [fruits.string.api        :as string]
               [pretty-inputs.engine.api :as pretty-inputs.engine]
               [pretty-properties.api    :as pretty-properties]
-              [pretty-rules.api         :as pretty-rules]
-              [pretty-standards.api     :as pretty-standards]
+              [pretty-models.api :as pretty-models]
               [pretty-subitems.api      :as pretty-subitems]))
 
 ;; ----------------------------------------------------------------------------
@@ -46,14 +43,8 @@
   (let [option-group-prototype-f (fn [%] (option-group-prototype id props %))]
        (-> props (pretty-properties/default-flex-props       {:gap :xs :horizontal-align :left :orientation :vertical})
                  (pretty-properties/default-outer-size-props {:outer-size-unit :full-block})
-                 (pretty-standards/standard-flex-props)
-                 (pretty-standards/standard-inner-position-props)
-                 (pretty-standards/standard-inner-size-props)
-                 (pretty-standards/standard-outer-position-props)
-                 (pretty-standards/standard-outer-size-props)
-                ;(pretty-rules/auto-align-scrollable-flex)
-                 (pretty-rules/auto-disable-mouse-events)
-                 (pretty-rules/auto-set-mounted)
+                 (pretty-models/flex-container-standard-props)
+                 (pretty-models/flex-container-rules)
                  (pretty-subitems/ensure-subitem           :field)
                  (pretty-subitems/subitems<-disabled-state :header :field :option-group)
                  (pretty-subitems/apply-subitem-prototype  :option-group option-group-prototype-f))))

@@ -60,8 +60,8 @@
   ; Bar diagram for displaying values with colored bars.
   ;
   ; @links Implemented models
-  ; [Container model](pretty-core/cljs/pretty-models/api.html#container-model)
-  ; [Shape model](pretty-core/cljs/pretty-models/api.html#shape-model)
+  ; [Plain container model](pretty-core/cljs/pretty-models/api.html#plain-container-model)
+  ; [Shape canvas model](pretty-core/cljs/pretty-models/api.html#shape-canvas-model)
   ;
   ; @links Implemented properties
   ; [Data properties](pretty-core/cljs/pretty-properties/api.html#data-properties)

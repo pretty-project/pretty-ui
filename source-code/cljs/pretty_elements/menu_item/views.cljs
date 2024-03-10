@@ -60,8 +60,8 @@
   ; [Tooltip](pretty-ui/cljs/pretty-accessories/api.html#tooltip)
   ;
   ; @links Implemented models
-  ; [Clickable model](pretty-core/cljs/pretty-models/api.html#clickable-model)
-  ; [Container model](pretty-core/cljs/pretty-models/api.html#container-model)
+  ; [Click control model](pretty-core/cljs/pretty-models/api.html#click-control-model)
+  ; [Flex container model](pretty-core/cljs/pretty-models/api.html#flex-container-model)
   ;
   ; @links Implemented properties
   ; [Dropdown properties](pretty-core/cljs/pretty-properties/api.html#dropdown-properties)

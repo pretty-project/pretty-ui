@@ -1,13 +1,18 @@
 
 (ns pretty-elements.vertical-separator.views
     (:require [fruits.random.api                             :as random]
-              [pretty-accessories.api                        :as pretty-accessories]
+              [pretty-accessories.label.views :as label.views]
               [pretty-elements.engine.api                    :as pretty-elements.engine]
               [pretty-elements.methods.api                   :as pretty-elements.methods]
               [pretty-elements.vertical-separator.attributes :as vertical-separator.attributes]
               [pretty-elements.vertical-separator.prototypes :as vertical-separator.prototypes]
               [pretty-subitems.api                           :as pretty-subitems]
               [reagent.core                                  :as reagent]))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(def SHORTHAND-MAP {:label label.views/SHORTHAND-MAP})
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -23,7 +28,7 @@
   [:div (vertical-separator.attributes/outer-attributes id props)
         [:div (vertical-separator.attributes/inner-attributes id props)
               (when :always [:hr (vertical-separator.attributes/line-attributes id props)])
-              (when label   [pretty-accessories/label (pretty-subitems/subitem-id id :label) label])
+              (when label   [label.views/view (pretty-subitems/subitem-id id :label) label])
               (when :always [:hr (vertical-separator.attributes/line-attributes id props)])]])
 
 ;; ----------------------------------------------------------------------------
@@ -48,8 +53,8 @@
   ; [Label](pretty-core/cljs/pretty-properties/api.html#label)
   ;
   ; @links Implemented models
-  ; [Container model](pretty-core/cljs/pretty-models/api.html#container-model)
-  ; [Line model](pretty-core/cljs/pretty-models/api.html#line-model)
+  ; [Flex container model](pretty-core/cljs/pretty-models/api.html#flex-container-model)
+  ; [Line canvas model](pretty-core/cljs/pretty-models/api.html#line-canvas-model)
   ;
   ; @param (keyword)(opt) id
   ; @param (map) props
@@ -66,7 +71,7 @@
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
-       (let [props (pretty-elements.methods/apply-element-shorthand-map  id props {:label :content})
+       (let [props (pretty-elements.methods/apply-element-shorthand-map  id props SHORTHAND-MAP)
              props (pretty-elements.methods/apply-element-preset         id props)
              props (pretty-elements.methods/import-element-dynamic-props id props)
              props (pretty-elements.methods/import-element-state-events  id props)

@@ -15,6 +15,15 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(def SHORTHAND-MAP {:badge   badge.views/SHORTHAND-MAP
+                    :cover   cover.views/SHORTHAND-MAP
+                    :icon    icon.views/SHORTHAND-KEY
+                    :label   label.views/SHORTHAND-KEY
+                    :tooltip tooltip.views/SHORTHAND-MAP})
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn- thumbnail
   ; @ignore
   ;
@@ -70,9 +79,9 @@
   ; [Tooltip](pretty-ui/cljs/pretty-accessories/api.html#tooltip)
   ;
   ; @links Implemented models
-  ; [Clickable model](pretty-core/cljs/pretty-models/api.html#clickable-model)
-  ; [Container model](pretty-core/cljs/pretty-models/api.html#container-model)
-  ; [Image model](pretty-core/cljs/pretty-models/api.html#image-model)
+  ; [Click control model](pretty-core/cljs/pretty-models/api.html#click-control-model)
+  ; [Flex container model](pretty-core/cljs/pretty-models/api.html#flex-container-model)
+  ; [Image canvas model](pretty-core/cljs/pretty-models/api.html#image-canvas-model)
   ;
   ; @param (keyword)(opt) id
   ; @param (map) props
@@ -93,7 +102,7 @@
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
-       (let [props (pretty-elements.methods/apply-element-shorthand-map    id props {:icon :icon-name :label :content})
+       (let [props (pretty-elements.methods/apply-element-shorthand-map    id props SHORTHAND-MAP)
              props (pretty-elements.methods/apply-element-preset           id props)
              props (pretty-elements.methods/import-element-dynamic-props   id props)
              props (pretty-elements.methods/import-element-focus-reference id props)

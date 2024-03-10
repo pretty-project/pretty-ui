@@ -14,6 +14,14 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(def SHORTHAND-MAP {:error-text  error-text.views/SHORTHAND-MAP
+                    :helper-text helper-text.views/SHORTHAND-MAP
+                    :info-text   info-text.views/SHORTHAND-MAP
+                    :label       label.views/SHORTHAND-MAP})
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn- header
   ; @ignore
   ;
@@ -104,7 +112,8 @@
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
-       (let [props (pretty-inputs.methods/apply-input-preset         id props)
+       (let [props (pretty-inputs.methods/apply-input-shorthand-map    id props SHORTHAND-MAP)
+             props (pretty-inputs.methods/apply-input-preset         id props)
              props (pretty-inputs.methods/import-input-dynamic-props id props)
              props (pretty-inputs.methods/import-input-error-text    id props)
              props (pretty-inputs.methods/import-input-state-events  id props)

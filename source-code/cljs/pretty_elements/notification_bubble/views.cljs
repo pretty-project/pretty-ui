@@ -13,6 +13,14 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(def SHORTHAND-KEY :content)
+(def SHORTHAND-MAP {:cover                 cover.views/SHORTHAND-MAP
+                    :end-adornment-group   adornment-group.views/SHORTHAND-MAP
+                    :start-adornment-group adornment-group.views/SHORTHAND-MAP})
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn- notification-bubble
   ; @ignore
   ;
@@ -52,8 +60,8 @@
   ; [Adornment-group](pretty-ui/cljs/pretty-elements/api.html#adornment-group)
   ;
   ; @links Implemented models
-  ; [Container model](pretty-core/cljs/pretty-models/api.html#container-model)
-  ; [Content model](pretty-core/cljs/pretty-models/api.html#content-model)
+  ; [Flex container model](pretty-core/cljs/pretty-models/api.html#flex-container-model)
+  ; [Plain content model](pretty-core/cljs/pretty-models/api.html#plain-content-model)
   ;
   ; @param (keyword)(opt) id
   ; @param (map) props
@@ -89,7 +97,8 @@
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
-       (let [props (pretty-elements.methods/apply-element-shorthand-key  id props :content)
+       (let [props (pretty-elements.methods/apply-element-shorthand-key  id props SHORTHAND-KEY)
+             props (pretty-elements.methods/apply-element-shorthand-map  id props SHORTHAND-MAP)
              props (pretty-elements.methods/apply-element-preset         id props)
              props (pretty-elements.methods/import-element-dynamic-props id props)
              props (pretty-elements.methods/import-element-state-events  id props)
