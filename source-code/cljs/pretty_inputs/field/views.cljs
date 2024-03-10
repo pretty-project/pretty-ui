@@ -24,7 +24,7 @@
   [id {:keys [placeholder-text] :as props}]
   [:div (field.attributes/structure-attributes id props)
         (when placeholder-text [pretty-guides/placeholder-text (pretty-subitems/subitem-id id :placeholder-text) placeholder-text])
-        (when :always          [(pretty-models/field-model-auto-tag props) (field.attributes/input-attributes id props)])])
+        (when :always          [(pretty-models/field-input-auto-tag props) (field.attributes/input-attributes id props)])])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

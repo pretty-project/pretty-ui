@@ -17,7 +17,7 @@
   [_ props]
   (-> props (pretty-properties/default-flex-props       {:orientation :horizontal :overflow :scroll})
             (pretty-properties/default-outer-size-props {:outer-size-unit :full-block})
-            (pretty-models/container-model-standard-props)
-            (pretty-models/container-model-rules)
+            (pretty-models/flex-container-standard-props)
+            (pretty-models/flex-container-rules)
             (pretty-subitems/subitem-group<-subitem-default :adornments)
             (pretty-subitems/subitem-group<-disabled-state  :adornments)))

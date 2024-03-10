@@ -16,7 +16,7 @@
   ;  ...}
   [_ props]
   (-> {:class :pt-table--inner}
-      (pretty-models/container-model-inner-attributes props)))
+      (pretty-models/flex-container-inner-attributes props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -32,4 +32,4 @@
   ;  ...}
   [_ props]
   (-> {:class :pt-table--outer}
-      (pretty-models/container-model-outer-attributes props)))
+      (pretty-models/flex-container-outer-attributes props)))

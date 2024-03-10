@@ -17,7 +17,7 @@
   [_ props]
   (-> props (pretty-properties/default-flex-props       {:orientation :horizontal :overflow :scroll})
             (pretty-properties/default-outer-size-props {:outer-height :content :outer-size-unit :double-block :outer-width :content})
-            (pretty-models/container-model-standard-props)
-            (pretty-models/container-model-rules)
+            (pretty-models/flex-container-standard-props)
+            (pretty-models/flex-container-rules)
             (pretty-subitems/subitem-group<-subitem-default :menu-items)
             (pretty-subitems/subitem-group<-disabled-state  :menu-items)))

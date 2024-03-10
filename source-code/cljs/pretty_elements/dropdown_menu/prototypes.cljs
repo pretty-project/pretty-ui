@@ -50,8 +50,8 @@
         expandable-prototype-f (fn [%] (expandable-prototype                        id props %))
         menu-bar-prototype-f   (fn [%] (menu-bar-prototype                          id props %))]
        (-> props (pretty-properties/default-mouse-event-props {:on-mouse-leave-f on-mouse-leave-f})
-                 (pretty-models/container-model-standard-props)
-                 (pretty-models/container-model-rules)
+                 (pretty-models/flex-container-standard-props)
+                 (pretty-models/flex-container-rules)
                  (pretty-subitems/subitem<-disabled-state :menu-bar :expandable)
                  (pretty-subitems/apply-subitem-prototype :expandable expandable-prototype-f)
                  (pretty-subitems/apply-subitem-prototype :menu-bar   menu-bar-prototype-f))))

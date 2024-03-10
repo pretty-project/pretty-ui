@@ -17,5 +17,5 @@
   (-> props (pretty-properties/default-animation-props        {:animation-duration 2000 :animation-mode :repeat :animation-name :pulse})
             (pretty-properties/default-background-color-props {:fill-color :highlight})
             (pretty-properties/default-outer-size-props       {:outer-height :s :outer-width :s :outer-size-unit :full-block})
-            (pretty-models/plain-model-standard-props)
-            (pretty-models/plain-model-rules)))
+            (pretty-models/plain-container-standard-props)
+            (pretty-models/plain-container-rules)))

@@ -16,7 +16,7 @@
   ;  ...}
   [_ props]
   (-> {:class :pt-row--inner}
-      (pretty-models/container-model-inner-attributes props)))
+      (pretty-models/grid-container-inner-attributes props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -32,4 +32,4 @@
   ;  ...}
   [_ props]
   (-> {:class :pt-row--outer}
-      (pretty-models/container-model-outer-attributes props)))
+      (pretty-models/grid-container-outer-attributes props)))

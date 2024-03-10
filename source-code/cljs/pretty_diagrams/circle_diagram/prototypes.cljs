@@ -15,7 +15,7 @@
   ; @return (map)
   [_ props]
   (-> props (pretty-properties/default-outer-size-props {:outer-size-unit :full-block})
-            (pretty-models/container-model-standard-props)
-            (pretty-models/container-model-rules)
-            (pretty-models/shape-model-standard-props)
-            (pretty-models/shape-model-rules)))
+            (pretty-models/plain-container-standard-props)
+            (pretty-models/plain-container-rules)
+            (pretty-models/shape-canvas-standard-props)
+            (pretty-models/shape-canvas-rules)))

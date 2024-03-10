@@ -16,7 +16,7 @@
   ;  ...}
   [_ props]
   (-> {:class :pe-ghost--inner}
-      (pretty-models/plain-model-inner-attributes props)))
+      (pretty-models/plain-container-inner-attributes props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -32,4 +32,4 @@
   ;  ...}
   [_ props]
   (-> {:class :pe-ghost--outer}
-      (pretty-models/plain-model-outer-attributes props)))
+      (pretty-models/plain-container-outer-attributes props)))

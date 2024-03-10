@@ -16,7 +16,7 @@
   [id props]
   (-> props (pretty-properties/default-flex-props       {:horizontal-align :left :orientation :horizontal})
             (pretty-properties/default-outer-size-props {:outer-size-unit :full-block})
-            (pretty-models/container-model-standard-props)
-            (pretty-models/container-model-rules)
-            (pretty-models/shape-model-standard-props)
-            (pretty-models/shape-model-rules)))
+            (pretty-models/flex-container-standard-props)
+            (pretty-models/flex-container-rules)
+            (pretty-models/shape-canvas-standard-props)
+            (pretty-models/shape-canvas-rules)))

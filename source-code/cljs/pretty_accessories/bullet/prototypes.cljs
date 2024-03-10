@@ -16,5 +16,5 @@
   [_ props]
   (-> props (pretty-properties/default-background-color-props {:fill-color :muted})
             (pretty-properties/default-outer-size-props       {:outer-height :xxs :outer-width :xxs :outer-size-unit :quarter-block})
-            (pretty-models/plain-model-standard-props)
-            (pretty-models/plain-model-rules)))
+            (pretty-models/plain-container-standard-props)
+            (pretty-models/plain-container-rules)))

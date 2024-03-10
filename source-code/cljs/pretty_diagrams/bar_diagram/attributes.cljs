@@ -50,8 +50,8 @@
   ;  ...}
   [_ props]
   (-> {:class :pd-bar-diagram--inner}
-      (pretty-models/container-model-inner-attributes props)
-      (pretty-models/shape-model-inner-attributes     props)))
+      (pretty-models/plain-container-inner-attributes props)
+      (pretty-models/shape-canvas-inner-attributes    props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -67,5 +67,5 @@
   ;  ...}
   [_ props]
   (-> {:class :pd-bar-diagram--outer}
-      (pretty-models/container-model-outer-attributes props)
-      (pretty-models/shape-model-outer-attributes     props)))
+      (pretty-models/plain-container-outer-attributes props)
+      (pretty-models/shape-canvas-outer-attributes    props)))

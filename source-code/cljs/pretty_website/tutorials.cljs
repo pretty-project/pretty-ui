@@ -180,7 +180,7 @@
 
 
 
-; @tutorial Options and option paths of optionable inputs
+; @tutorial Options and option paths of selectable inputs
 ;
 ; Pretty UI inputs can take their selectable options as ...
 ; ... the provided ':options' parameter (as primary source),
@@ -188,9 +188,9 @@
 
 
 
-; @tutorial Output values of optionable inputs
+; @tutorial Output values of selectable inputs
 ;
-; - If an optionable input ...
+; - If an selectable input ...
 ;   ... got a single option to select, its output is a single value.
 ;   ... got multiple options to select, its output is a vector of selected options.
 ;

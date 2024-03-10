@@ -16,7 +16,7 @@
   [_ props]
   (-> props (pretty-properties/default-flex-props       {:orientation :horizontal})
             (pretty-properties/default-outer-size-props {:outer-size-unit :full-block})
-            (pretty-models/clickable-model-standard-props)
-            (pretty-models/clickable-model-rules)
-            (pretty-models/container-model-standard-props)
-            (pretty-models/container-model-rules)))
+            (pretty-models/click-control-standard-props)
+            (pretty-models/click-control-rules)
+            (pretty-models/flex-container-standard-props)
+            (pretty-models/flex-container-rules)))

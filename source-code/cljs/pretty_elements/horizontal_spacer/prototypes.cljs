@@ -16,5 +16,5 @@
   [_ props]
   (-> props (pretty-properties/default-flex-props       {:shrink 0})
             (pretty-properties/default-outer-size-props {:outer-height :s :outer-width :auto :outer-size-unit :quarter-block})
-            (pretty-models/plain-model-standard-props)
-            (pretty-models/plain-model-rules)))
+            (pretty-models/plain-container-standard-props)
+            (pretty-models/plain-container-rules)))

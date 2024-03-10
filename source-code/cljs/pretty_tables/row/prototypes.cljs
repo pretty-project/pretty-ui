@@ -19,7 +19,7 @@
   [_ {:keys [cells] :as props}]
   (-> props (pretty-properties/default-grid-props       {:row-template :even :row-count (count cells)})
             (pretty-properties/default-outer-size-props {:outer-height :content :outer-width :auto :outer-size-unit :double-block})
-            (pretty-models/container-model-standard-props)
-            (pretty-models/container-model-rules)
+            (pretty-models/grid-container-standard-props)
+            (pretty-models/grid-container-rules)
             (pretty-subitems/subitem-group<-subitem-default :cells)
             (pretty-subitems/subitem-group<-disabled-state  :cells)))

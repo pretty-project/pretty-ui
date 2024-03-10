@@ -23,7 +23,7 @@
   ;  ...}
   [id {:keys [bullet label] :as props}]
   [:div (crumb.attributes/outer-attributes id props)
-        [(pretty-models/clickable-model-auto-tag props) (crumb.attributes/inner-attributes id props)
+        [(pretty-models/click-control-auto-tag props) (crumb.attributes/inner-attributes id props)
          (if bullet [pretty-accessories/bullet (pretty-subitems/subitem-id id :bullet) bullet])
          (if label  [pretty-accessories/label  (pretty-subitems/subitem-id id :label)  label])]])
 

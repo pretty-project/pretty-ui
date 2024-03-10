@@ -23,7 +23,7 @@
   ;  ...}
   [id {:keys [label tooltip] :as props}]
   [:div (chip.attributes/outer-attributes id props)
-        [(pretty-models/clickable-model-auto-tag props) (chip.attributes/inner-attributes id props)
+        [(pretty-models/click-control-auto-tag props) (chip.attributes/inner-attributes id props)
          (if label   [pretty-accessories/label   (pretty-subitems/subitem-id id :label)   label])
          (if tooltip [pretty-accessories/tooltip (pretty-subitems/subitem-id id :tooltip) tooltip])]])
 

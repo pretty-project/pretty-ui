@@ -25,7 +25,7 @@
   ;  ...}
   [id {:keys [helper-text icon label] :as props}]
   [:div (option.attributes/outer-attributes id props)
-        [(pretty-models/clickable-model-auto-tag props) (option.attributes/inner-attributes id props)
+        [(pretty-models/click-control-auto-tag props) (option.attributes/inner-attributes id props)
          (if icon  [:div {:class :pi-option--checkmark} [pretty-accessories/icon   (pretty-subitems/subitem-id id :icon)        icon]])
          (if label [:div {:class :pi-option--content}   [pretty-accessories/label  (pretty-subitems/subitem-id id :label)       label]])
          (if helper-text                                [pretty-guides/helper-text (pretty-subitems/subitem-id id :helper-text) helper-text])]])
@@ -46,7 +46,7 @@
 
 (defn view
   ; @description
-  ; Customizable option element for optionable inputs.
+  ; Customizable option element for selectable inputs.
   ;
   ; @links Implemented accessories
   ; [Icon](pretty-core/cljs/pretty-accessories/api.html#icon)

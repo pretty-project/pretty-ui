@@ -16,8 +16,8 @@
   ;  ...}
   [_ props]
   (-> {:class :pe-menu-item--inner}
-      (pretty-models/clickable-model-inner-attributes props)
-      (pretty-models/container-model-inner-attributes props)))
+      (pretty-models/click-control-inner-attributes  props)
+      (pretty-models/flex-container-inner-attributes props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -33,5 +33,5 @@
   ;  ...}
   [_ props]
   (-> {:class :pe-menu-item--outer}
-      (pretty-models/clickable-model-outer-attributes props)
-      (pretty-models/container-model-outer-attributes props)))
+      (pretty-models/click-control-outer-attributes  props)
+      (pretty-models/flex-container-outer-attributes props)))

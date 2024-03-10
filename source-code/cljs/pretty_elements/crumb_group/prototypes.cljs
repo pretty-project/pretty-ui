@@ -32,8 +32,8 @@
   [_ props]
   (-> props (pretty-properties/default-flex-props       {:gap :xs :orientation :horizontal :overflow :scroll})
             (pretty-properties/default-outer-size-props {:outer-size-unit :full-block})
-            (pretty-models/container-model-standard-props)
-            (pretty-models/container-model-rules)
+            (pretty-models/flex-container-standard-props)
+            (pretty-models/flex-container-rules)
             (pretty-subitems/subitem-group<-subitem-default :crumbs)
             (pretty-subitems/subitem-group<-disabled-state  :crumbs)
             (pretty-subitems/apply-group-item-prototype     :crumbs crumb-prototype)))

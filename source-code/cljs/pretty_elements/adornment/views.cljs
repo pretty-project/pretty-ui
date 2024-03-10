@@ -26,7 +26,7 @@
   ;  ...}
   [id {:keys [cover icon label tooltip] :as props}]
   [:div (adornment.attributes/outer-attributes id props)
-        [(pretty-models/clickable-model-auto-tag props) (adornment.attributes/inner-attributes id props)
+        [(pretty-models/click-control-auto-tag props) (adornment.attributes/inner-attributes id props)
          (cond label   [pretty-accessories/label   (pretty-subitems/subitem-id id :label)   label]
                icon    [pretty-accessories/icon    (pretty-subitems/subitem-id id :icon)    icon])
          (when cover   [pretty-accessories/cover   (pretty-subitems/subitem-id id :cover)   cover])

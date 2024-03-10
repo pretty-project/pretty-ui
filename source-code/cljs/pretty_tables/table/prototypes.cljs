@@ -30,8 +30,8 @@
   [_ props]
   (-> props (pretty-properties/default-flex-props       {:orientation :vertical :vertical-align :top})
             (pretty-properties/default-outer-size-props {:outer-height :content :outer-width :auto :outer-size-unit :double-block})
-            (pretty-models/container-model-standard-props)
-            (pretty-models/container-model-rules)
+            (pretty-models/flex-container-standard-props)
+            (pretty-models/flex-container-rules)
             (pretty-subitems/subitem-group<-subitem-default :rows)
             (pretty-subitems/subitem-group<-disabled-state  :rows)
             (pretty-subitems/apply-group-item-prototype     :rows row-prototype)))

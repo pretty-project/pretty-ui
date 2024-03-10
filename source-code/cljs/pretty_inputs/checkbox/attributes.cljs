@@ -16,7 +16,7 @@
   ;  ...}
   [_ props]
   (-> {:class :pi-checkbox--inner}
-      (pretty-models/container-model-inner-attributes props)))
+      (pretty-models/flex-container-inner-attributes props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -32,4 +32,4 @@
   ;  ...}
   [_ props]
   (-> {:class :pi-checkbox--outer}
-      (pretty-models/container-model-outer-attributes props)))
+      (pretty-models/flex-container-outer-attributes props)))

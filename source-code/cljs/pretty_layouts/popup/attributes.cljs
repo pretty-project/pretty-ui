@@ -16,8 +16,8 @@
   ;  ...}
   [_ props]
   (-> {:class :pl-popup--content}
-      (pretty-models/container-model-content-attributes props)
-      (pretty-models/content-model-content-attributes   props)))
+      (pretty-models/flex-container-content-attributes props)
+      (pretty-models/plain-content-content-attributes  props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -33,8 +33,8 @@
   ;  ...}
   [id props]
   (-> {:class :pl-popup--inner}
-      (pretty-models/container-model-inner-attributes props)
-      (pretty-models/content-model-inner-attributes   props)))
+      (pretty-models/flex-container-inner-attributes props)
+      (pretty-models/plain-content-inner-attributes  props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -50,5 +50,5 @@
   ;  ...}
   [_ props]
   (-> {:class :pl-popup--outer}
-      (pretty-models/container-model-outer-attributes props)
-      (pretty-models/content-model-outer-attributes   props)))
+      (pretty-models/flex-container-outer-attributes props)
+      (pretty-models/plain-content-outer-attributes  props)))

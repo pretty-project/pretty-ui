@@ -16,8 +16,8 @@
   ;  ...}
   [_ props]
   (-> {:class :pe-row--content}
-      (pretty-models/container-model-content-attributes props)
-      (pretty-models/content-model-content-attributes   props)))
+      (pretty-models/flex-content-content-attributes    props)
+      (pretty-models/plain-container-content-attributes props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -33,8 +33,8 @@
   ;  ...}
   [_ props]
   (-> {:class :pe-row--inner}
-      (pretty-models/container-model-inner-attributes props)
-      (pretty-models/content-model-inner-attributes   props)))
+      (pretty-models/flex-content-inner-attributes    props)
+      (pretty-models/plain-container-inner-attributes props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -50,5 +50,5 @@
   ;  ...}
   [_ props]
   (-> {:class :pe-row--outer}
-      (pretty-models/container-model-outer-attributes props)
-      (pretty-models/content-model-outer-attributes   props)))
+      (pretty-models/flex-content-outer-attributes    props)
+      (pretty-models/plain-container-outer-attributes props)))

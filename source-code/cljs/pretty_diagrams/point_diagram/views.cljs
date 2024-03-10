@@ -67,9 +67,13 @@
   ; [Container model](pretty-core/cljs/pretty-models/api.html#container-model)
   ; [Shape model](pretty-core/cljs/pretty-models/api.html#shape-model)
   ;
+  ; @links Implemented properties
+  ; [Data properties](pretty-core/cljs/pretty-properties/api.html#data-properties)
+  ;
   ; @param (keyword)(opt) id
   ; @param (map) props
   ; Check out the implemented models.
+  ; Check out the implemented properties.
   ;
   ; @usage (pretty-diagrams/point-diagram.png)
   ; ...

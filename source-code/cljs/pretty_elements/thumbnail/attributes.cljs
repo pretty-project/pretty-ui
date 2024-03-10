@@ -16,9 +16,9 @@
   ;  ...}
   [_ props]
   (-> {:class :pe-thumbnail--canvas}
-      (pretty-models/clickable-model-content-attributes props)
-      (pretty-models/container-model-content-attributes props)
-      (pretty-models/image-model-content-attributes     props)))
+      (pretty-models/click-control-content-attributes  props)
+      (pretty-models/flex-container-content-attributes props)
+      (pretty-models/image-canvas-content-attributes   props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -34,9 +34,9 @@
   ;  ...}
   [_ props]
   (-> {:class :pe-thumbnail--inner}
-      (pretty-models/clickable-model-inner-attributes props)
-      (pretty-models/container-model-inner-attributes props)
-      (pretty-models/image-model-inner-attributes     props)))
+      (pretty-models/click-control-inner-attributes  props)
+      (pretty-models/flex-container-inner-attributes props)
+      (pretty-models/image-canvas-inner-attributes   props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -52,6 +52,6 @@
   ;  ...}
   [_ props]
   (-> {:class :pe-thumbnail--outer}
-      (pretty-models/clickable-model-outer-attributes props)
-      (pretty-models/container-model-outer-attributes props)
-      (pretty-models/image-model-outer-attributes     props)))
+      (pretty-models/click-control-outer-attributes  props)
+      (pretty-models/flex-container-outer-attributes props)
+      (pretty-models/image-canvas-outer-attributes   props)))

@@ -33,6 +33,6 @@
   (let [label-prototype-f (fn [%] (label-prototype id props %))]
        (-> props (pretty-properties/default-background-color-props {:fill-color :primary})
                  (pretty-properties/default-outer-size-props       {:outer-size-unit :full-block})
-                 (pretty-models/container-model-standard-props)
-                 (pretty-models/container-model-rules)
+                 (pretty-models/flex-container-standard-props)
+                 (pretty-models/flex-container-rules)
                  (pretty-subitems/apply-subitem-prototype :label label-prototype-f))))

@@ -27,7 +27,7 @@
   ;  ...}
   [id {:keys [badge cover icon label marker tooltip] :as props}]
   [:div (icon-button.attributes/outer-attributes id props)
-        [(pretty-models/clickable-model-auto-tag props) (icon-button.attributes/inner-attributes id props)
+        [(pretty-models/click-control-auto-tag props) (icon-button.attributes/inner-attributes id props)
          (if icon    [pretty-accessories/icon   (pretty-subitems/subitem-id id :icon)   icon])
          (if label   [pretty-accessories/label  (pretty-subitems/subitem-id id :label)  label])
          (if badge   [pretty-accessories/badge  (pretty-subitems/subitem-id id :badge)  badge])

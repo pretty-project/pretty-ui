@@ -13,7 +13,7 @@
   ;
   ; @return (map)
   [_ props]
-  (-> props (pretty-models/container-model-standard-props)
-            (pretty-models/container-model-rules)
-            (pretty-models/content-model-standard-props)
-            (pretty-models/content-model-rules)))
+  (-> props (pretty-models/flex-container-standard-props)
+            (pretty-models/flex-container-rules)
+            (pretty-models/plain-content-standard-props)
+            (pretty-models/plain-content-rules)))

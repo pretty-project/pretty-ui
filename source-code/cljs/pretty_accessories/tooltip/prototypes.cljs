@@ -33,6 +33,6 @@
        (-> props (pretty-properties/default-background-color-props {:fill-color :default})
                  (pretty-properties/default-outer-position-props   {:outer-position :right :outer-position-base :external :outer-position-method :absolute :layer :uppermost})
                  (pretty-properties/default-outer-size-props       {:outer-size-unit :quarter-block})
-                 (pretty-models/container-model-standard-props)
-                 (pretty-models/container-model-rules)
+                 (pretty-models/flex-container-standard-props)
+                 (pretty-models/flex-container-rules)
                  (pretty-subitems/apply-subitem-prototype :label label-prototype-f))))

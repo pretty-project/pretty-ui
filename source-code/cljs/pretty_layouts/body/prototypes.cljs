@@ -16,7 +16,7 @@
   [_ props]
   (-> props (pretty-properties/default-flex-props       {:orientation :horizontal})
             (pretty-properties/default-outer-size-props {:outer-height :content :outer-width :parent :outer-size-unit :full-block})
-            (pretty-models/container-model-standard-props)
-            (pretty-models/container-model-rules)
-            (pretty-models/content-model-standard-props)
-            (pretty-models/content-model-rules)))
+            (pretty-models/flex-container-standard-props)
+            (pretty-models/flex-container-rules)
+            (pretty-models/plain-content-standard-props)
+            (pretty-models/plain-content-rules)))

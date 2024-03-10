@@ -36,7 +36,7 @@
   (let [option-group-prototype-f (fn [%] (option-group-prototype id props %))]
        (-> props (pretty-properties/default-flex-props       {:gap :xs :horizontal-align :left :orientation :vertical})
                  (pretty-properties/default-outer-size-props {:outer-size-unit :full-block})
-                 (pretty-models/container-model-standard-props)
-                 (pretty-models/container-model-rules)
+                 (pretty-models/flex-container-standard-props)
+                 (pretty-models/flex-container-rules)
                  (pretty-subitems/subitem-group<-disabled-state :header :option-group)
                  (pretty-subitems/apply-subitem-prototype       :option-group option-group-prototype-f))))

@@ -14,9 +14,10 @@
   ;
   ; @return (map)
   [_ props]
-  (-> props (pretty-properties/default-outer-size-props {:outer-size-unit :double-block})
-            (pretty-properties/default-text-props       {:text-selectable? false})
-            (pretty-models/container-model-standard-props)
-            (pretty-models/container-model-rules)
-            (pretty-models/content-model-standard-props)
-            (pretty-models/content-model-rules)))
+  (-> props (pretty-properties/default-flex-props         {:orientation :vertical :vertical-align :top})
+            (pretty-properties/default-content-size-props {:content-height :parent :content-width :parent})
+            (pretty-properties/default-outer-size-props   {:outer-size-unit :double-block})
+            (pretty-models/flex-content-standard-props)
+            (pretty-models/flex-content-rules)
+            (pretty-models/plain-container-standard-props)
+            (pretty-models/plain-container-rules)))

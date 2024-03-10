@@ -16,7 +16,7 @@
   ;  ...}
   [_ props]
   (-> {:class :pe-stepper--inner}
-      (pretty-models/container-model-inner-attributes props)))
+      (pretty-models/flex-container-inner-attributes props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -32,4 +32,4 @@
   ;  ...}
   [_ props]
   (-> {:class :pe-stepper--outer}
-      (pretty-models/container-model-outer-attributes props)))
+      (pretty-models/flex-container-outer-attributes props)))

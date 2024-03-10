@@ -31,7 +31,7 @@
   ;  ...}
   [id {:keys [badge cover icon label loaded? marker sensor tooltip] :as props}]
   [:div (thumbnail.attributes/outer-attributes id props)
-        [(pretty-models/clickable-model-auto-tag props) (thumbnail.attributes/inner-attributes id props)
+        [(pretty-models/click-control-auto-tag props) (thumbnail.attributes/inner-attributes id props)
          (when   loaded? [:div (thumbnail.attributes/canvas-attributes id props)])
          (if-not loaded? [lazy-loader/image-sensor   (pretty-subitems/subitem-id id :sensor)  sensor])
          (if-not loaded? [pretty-accessories/icon    (pretty-subitems/subitem-id id :icon)    icon])

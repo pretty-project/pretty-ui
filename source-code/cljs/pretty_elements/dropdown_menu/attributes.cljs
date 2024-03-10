@@ -16,7 +16,7 @@
   ;  ...}
   [_ props]
   (-> {:class :pe-dropdown-menu--inner}
-      (pretty-models/container-model-inner-attributes props)))
+      (pretty-models/flex-container-inner-attributes props)))
 
 (defn outer-attributes
   ; @ignore
@@ -29,4 +29,4 @@
   ;  ...}
   [_ props]
   (-> {:class :pe-dropdown-menu--outer}
-      (pretty-models/container-model-outer-attributes props)))
+      (pretty-models/flex-container-outer-attributes props)))

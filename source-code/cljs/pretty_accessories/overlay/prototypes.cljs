@@ -18,5 +18,5 @@
             (pretty-properties/default-outer-position-props   {:outer-position :tl :outer-position-method :absolute})
             (pretty-properties/default-outer-size-props       {:outer-height :parent :outer-width :parent :outer-size-unit :full-block})
             (pretty-properties/default-visibility-props       {:opacity :medium})
-            (pretty-models/plain-model-standard-props)
-            (pretty-models/plain-model-rules)))
+            (pretty-models/plain-container-standard-props)
+            (pretty-models/plain-container-rules)))

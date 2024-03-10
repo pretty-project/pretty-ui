@@ -16,9 +16,9 @@
   ;  ...}
   [_ props]
   (-> {:class :pe-toggle--content}
-      (pretty-models/clickable-model-content-attributes props)
-      (pretty-models/container-model-content-attributes props)
-      (pretty-models/content-model-content-attributes   props)))
+      (pretty-models/click-control-content-attributes   props)
+      (pretty-models/flex-content-content-attributes    props)
+      (pretty-models/plain-container-content-attributes props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -34,9 +34,9 @@
   ;  ...}
   [_ props]
   (-> {:class :pe-toggle--inner}
-      (pretty-models/clickable-model-inner-attributes props)
-      (pretty-models/container-model-inner-attributes props)
-      (pretty-models/content-model-inner-attributes   props)))
+      (pretty-models/click-control-inner-attributes   props)
+      (pretty-models/flex-content-inner-attributes    props)
+      (pretty-models/plain-container-inner-attributes props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -52,6 +52,6 @@
   ;  ...}
   [_ props]
   (-> {:class :pe-toggle--outer}
-      (pretty-models/clickable-model-outer-attributes props)
-      (pretty-models/container-model-outer-attributes props)
-      (pretty-models/content-model-outer-attributes   props)))
+      (pretty-models/click-control-outer-attributes   props)
+      (pretty-models/flex-content-outer-attributes    props)
+      (pretty-models/plain-container-outer-attributes props)))

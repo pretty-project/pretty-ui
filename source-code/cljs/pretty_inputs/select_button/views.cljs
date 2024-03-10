@@ -24,7 +24,7 @@
   ;  ...}
   [id {:keys [icon label tooltip] :as props}]
   [:div (select-button.attributes/outer-attributes id props)
-        [(pretty-models/clickable-model-auto-tag props) (select-button.attributes/inner-attributes id props)
+        [(pretty-models/click-control-auto-tag props) (select-button.attributes/inner-attributes id props)
          (if label   [pretty-accessories/label   (pretty-subitems/subitem-id id :label)   label])
          (if icon    [pretty-accessories/icon    (pretty-subitems/subitem-id id :icon)    icon])
          (if tooltip [pretty-accessories/tooltip (pretty-subitems/subitem-id id :tooltip) tooltip])]])
