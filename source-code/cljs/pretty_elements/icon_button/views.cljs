@@ -1,7 +1,12 @@
 
 (ns pretty-elements.icon-button.views
     (:require [fruits.random.api                      :as random]
-              [pretty-accessories.api                 :as pretty-accessories]
+              [pretty-accessories.label.views :as label.views]
+              [pretty-accessories.icon.views :as icon.views]
+              [pretty-accessories.badge.views :as badge.views]
+              [pretty-accessories.marker.views :as marker.views]
+              [pretty-accessories.cover.views :as cover.views]
+              [pretty-accessories.tooltip.views :as tooltip.views]
               [pretty-elements.engine.api             :as pretty-elements.engine]
               [pretty-elements.icon-button.attributes :as icon-button.attributes]
               [pretty-elements.icon-button.prototypes :as icon-button.prototypes]
@@ -37,12 +42,12 @@
   [id {:keys [badge cover icon label marker tooltip] :as props}]
   [:div (icon-button.attributes/outer-attributes id props)
         [(pretty-models/click-control-auto-tag props) (icon-button.attributes/inner-attributes id props)
-         (if icon    [pretty-accessories/icon   (pretty-subitems/subitem-id id :icon)   icon])
-         (if label   [pretty-accessories/label  (pretty-subitems/subitem-id id :label)  label])
-         (if badge   [pretty-accessories/badge  (pretty-subitems/subitem-id id :badge)  badge])
-         (if marker  [pretty-accessories/marker (pretty-subitems/subitem-id id :marker) marker])
-         (if cover   [pretty-accessories/cover  (pretty-subitems/subitem-id id :cover)  cover])
-         (if tooltip [pretty-accessories/cover  (pretty-subitems/subitem-id id :cover)  cover])]])
+         (if icon    [icon.views/view    (pretty-subitems/subitem-id id :icon)   icon])
+         (if label   [label.views/view   (pretty-subitems/subitem-id id :label)  label])
+         (if badge   [badge.views/view   (pretty-subitems/subitem-id id :badge)  badge])
+         (if marker  [marker.views/view  (pretty-subitems/subitem-id id :marker) marker])
+         (if cover   [cover.views/view   (pretty-subitems/subitem-id id :cover)  cover])
+         (if tooltip [tooltip.views/view (pretty-subitems/subitem-id id :cover)  cover])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

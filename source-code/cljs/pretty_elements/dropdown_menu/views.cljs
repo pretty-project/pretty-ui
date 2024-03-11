@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(def SHORTHAND-MAP {:expandable expandable.views/SHORTHAND-MAP
+(def SHORTHAND-MAP {:expandable expandable.views/SHORTHAND-KEY
                     :menu-bar   menu-bar.views/SHORTHAND-MAP})
 
 ;; ----------------------------------------------------------------------------

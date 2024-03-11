@@ -1,7 +1,7 @@
 
 (ns pretty-layouts.sidebar.views
     (:require [fruits.random.api                 :as random]
-              [pretty-accessories.api            :as pretty-accessories]
+              [pretty-accessories.overlay.views :as overlay.views]
               [pretty-layouts.body.views         :as body.views]
               [pretty-layouts.engine.api         :as pretty-layouts.engine]
               [pretty-layouts.footer.views       :as footer.views]
@@ -11,6 +11,13 @@
               [pretty-layouts.sidebar.prototypes :as sidebar.prototypes]
               [pretty-subitems.api               :as pretty-subitems]
               [reagent.core                      :as reagent]))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(def SHORTHAND-MAP {:body   body.views/SHORTHAND-KEY
+                    :footer footer.views/SHORTHAND-KEY
+                    :header header.views/SHORTHAND-KEY})
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -27,7 +34,7 @@
   ;  ...}
   [id {:keys [body footer header overlay] :as props}]
   [:div (sidebar.attributes/outer-attributes id props)
-        (if overlay [pretty-accessories/overlay (pretty-subitems/subitem-id id :overlay) overlay])
+        (if overlay [overlay.views/view (pretty-subitems/subitem-id id :overlay) overlay])
         [:div (sidebar.attributes/inner-attributes id props)
               (if header [header.views/view (pretty-subitems/subitem-id id :header) header])
               (if body   [:div (sidebar.attributes/content-attributes id props)
@@ -95,7 +102,7 @@
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
-       (let [props (pretty-layouts.methods/apply-layout-shorthand-map  id props {:body :content :footer :content :header :content})
+       (let [props (pretty-layouts.methods/apply-layout-shorthand-map  id props SHORTHAND-MAP)
              props (pretty-layouts.methods/apply-layout-preset         id props)
              props (pretty-layouts.methods/import-layout-dynamic-props id props)
              props (pretty-layouts.methods/import-layout-state-events  id props)

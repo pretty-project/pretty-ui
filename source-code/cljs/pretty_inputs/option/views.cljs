@@ -1,8 +1,9 @@
 
 (ns pretty-inputs.option.views
     (:require [fruits.random.api               :as random]
-              [pretty-accessories.api          :as pretty-accessories]
-              [pretty-guides.api               :as pretty-guides]
+              [pretty-accessories.icon.views :as icon.views]
+              [pretty-accessories.label.views :as label.views]
+              [pretty-guides.helper-text.views :as helper-text.views]
               [pretty-inputs.engine.api        :as pretty-inputs.engine]
               [pretty-inputs.methods.api       :as pretty-inputs.methods]
               [pretty-inputs.option.attributes :as option.attributes]
@@ -14,9 +15,9 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(def SHORTHAND-MAP {:helper-text helper-text.views/SHORTHAND-MAP
-                    :icon        icon.views/SHORTHAND-MAP
-                    :label       label.views/SHORTHAND-MAP})
+(def SHORTHAND-MAP {:helper-text helper-text.views/SHORTHAND-KEY
+                    :icon        icon.views/SHORTHAND-KEY
+                    :label       label.views/SHORTHAND-KEY})
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -33,9 +34,9 @@
   [id {:keys [helper-text icon label] :as props}]
   [:div (option.attributes/outer-attributes id props)
         [(pretty-models/click-control-auto-tag props) (option.attributes/inner-attributes id props)
-         (if icon  [:div {:class :pi-option--checkmark} [pretty-accessories/icon   (pretty-subitems/subitem-id id :icon)        icon]])
-         (if label [:div {:class :pi-option--content}   [pretty-accessories/label  (pretty-subitems/subitem-id id :label)       label]])
-         (if helper-text                                [pretty-guides/helper-text (pretty-subitems/subitem-id id :helper-text) helper-text])]])
+         (if icon  [:div {:class :pi-option--checkmark} [icon.views/view        (pretty-subitems/subitem-id id :icon)        icon]])
+         (if label [:div {:class :pi-option--content}   [label.views/view       (pretty-subitems/subitem-id id :label)       label]])
+         (if helper-text                                [helper-text.views/view (pretty-subitems/subitem-id id :helper-text) helper-text])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

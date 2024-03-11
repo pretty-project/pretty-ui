@@ -3,7 +3,12 @@
     (:require [dynamic-props.api                    :as dynamic-props]
               [fruits.random.api                    :as random]
               [lazy-loader.api                      :as lazy-loader]
-              [pretty-accessories.api               :as pretty-accessories]
+              [pretty-accessories.label.views :as label.views]
+              [pretty-accessories.tooltip.views :as tooltip.views]
+              [pretty-accessories.marker.views :as marker.views]
+              [pretty-accessories.badge.views :as badge.views]
+              [pretty-accessories.icon.views :as icon.views]
+              [pretty-accessories.cover.views :as cover.views]
               [pretty-elements.engine.api           :as pretty-elements.engine]
               [pretty-elements.methods.api          :as pretty-elements.methods]
               [pretty-elements.thumbnail.attributes :as thumbnail.attributes]
@@ -42,13 +47,13 @@
   [:div (thumbnail.attributes/outer-attributes id props)
         [(pretty-models/click-control-auto-tag props) (thumbnail.attributes/inner-attributes id props)
          (when   loaded? [:div (thumbnail.attributes/canvas-attributes id props)])
-         (if-not loaded? [lazy-loader/image-sensor   (pretty-subitems/subitem-id id :sensor)  sensor])
-         (if-not loaded? [pretty-accessories/icon    (pretty-subitems/subitem-id id :icon)    icon])
-         (when   label   [pretty-accessories/label   (pretty-subitems/subitem-id id :label)   label])
-         (when   badge   [pretty-accessories/badge   (pretty-subitems/subitem-id id :badge)   badge])
-         (when   marker  [pretty-accessories/marker  (pretty-subitems/subitem-id id :marker)  marker])
-         (when   cover   [pretty-accessories/cover   (pretty-subitems/subitem-id id :cover)   cover])
-         (when   tooltip [pretty-accessories/tooltip (pretty-subitems/subitem-id id :tooltip) tooltip])]])
+         (if-not loaded? [lazy-loader/image-sensor (pretty-subitems/subitem-id id :sensor)  sensor])
+         (if-not loaded? [icon.views/view          (pretty-subitems/subitem-id id :icon)    icon])
+         (when   label   [label.views/view         (pretty-subitems/subitem-id id :label)   label])
+         (when   badge   [badge.views/view         (pretty-subitems/subitem-id id :badge)   badge])
+         (when   marker  [marker.views/view        (pretty-subitems/subitem-id id :marker)  marker])
+         (when   cover   [cover.views/view         (pretty-subitems/subitem-id id :cover)   cover])
+         (when   tooltip [tooltip.views/view       (pretty-subitems/subitem-id id :tooltip) tooltip])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

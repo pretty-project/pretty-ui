@@ -13,6 +13,11 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(def SHORTHAND-MAP {:cells cell.views/SHORTHAND-KEY})
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn- row
   ; @ignore
   ;
@@ -70,7 +75,7 @@
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
-       (let [props (pretty-elements.methods/apply-element-shorthand-map  id props {:cells :content})
+       (let [props (pretty-elements.methods/apply-element-shorthand-map  id props SHORTHAND-MAP)
              props (pretty-elements.methods/apply-element-preset         id props)
              props (pretty-elements.methods/import-element-dynamic-props id props)
              props (pretty-elements.methods/import-element-state-events  id props)

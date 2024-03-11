@@ -1,7 +1,8 @@
 
 (ns pretty-elements.chip.views
     (:require [fruits.random.api               :as random]
-              [pretty-accessories.api          :as pretty-accessories]
+              [pretty-accessories.label.views :as label.views]
+              [pretty-accessories.tooltip.views :as tooltip.views]
               [pretty-elements.chip.attributes :as chip.attributes]
               [pretty-elements.chip.prototypes :as chip.prototypes]
               [pretty-elements.engine.api      :as pretty-elements.engine]
@@ -13,7 +14,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(def SHORTHAND-MAP {:label   label.views/SHORTHAND-MAP
+(def SHORTHAND-MAP {:label   label.views/SHORTHAND-KEY
                     :tooltip tooltip.views/SHORTHAND-MAP})
 
 ;; ----------------------------------------------------------------------------
@@ -30,8 +31,8 @@
   [id {:keys [label tooltip] :as props}]
   [:div (chip.attributes/outer-attributes id props)
         [(pretty-models/click-control-auto-tag props) (chip.attributes/inner-attributes id props)
-         (if label   [pretty-accessories/label   (pretty-subitems/subitem-id id :label)   label])
-         (if tooltip [pretty-accessories/tooltip (pretty-subitems/subitem-id id :tooltip) tooltip])]])
+         (if label   [label.views/view   (pretty-subitems/subitem-id id :label)   label])
+         (if tooltip [tooltip.views/view (pretty-subitems/subitem-id id :tooltip) tooltip])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

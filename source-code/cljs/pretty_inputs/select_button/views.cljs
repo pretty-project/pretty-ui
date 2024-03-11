@@ -1,7 +1,9 @@
 
 (ns pretty-inputs.select-button.views
     (:require [fruits.random.api                      :as random]
-              [pretty-accessories.api                 :as pretty-accessories]
+              [pretty-accessories.icon.views :as icon.views]
+              [pretty-accessories.label.views :as label.views]
+              [pretty-accessories.tooltip.views :as tooltip.views]
               [pretty-inputs.engine.api               :as pretty-inputs.engine]
               [pretty-inputs.methods.api              :as pretty-inputs.methods]
               [pretty-inputs.select-button.attributes :as select-button.attributes]
@@ -13,8 +15,8 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(def SHORTHAND-MAP {:icon    icon.views/SHORTHAND-MAP
-                    :label   label.views/SHORTHAND-MAP
+(def SHORTHAND-MAP {:icon    icon.views/SHORTHAND-KEY
+                    :label   label.views/SHORTHAND-KEY
                     :tooltip tooltip.views/SHORTHAND-MAP})
 
 ;; ----------------------------------------------------------------------------
@@ -32,9 +34,9 @@
   [id {:keys [icon label tooltip] :as props}]
   [:div (select-button.attributes/outer-attributes id props)
         [(pretty-models/click-control-auto-tag props) (select-button.attributes/inner-attributes id props)
-         (if label   [pretty-accessories/label   (pretty-subitems/subitem-id id :label)   label])
-         (if icon    [pretty-accessories/icon    (pretty-subitems/subitem-id id :icon)    icon])
-         (if tooltip [pretty-accessories/tooltip (pretty-subitems/subitem-id id :tooltip) tooltip])]])
+         (if label   [label.views/view   (pretty-subitems/subitem-id id :label)   label])
+         (if icon    [icon.views/view    (pretty-subitems/subitem-id id :icon)    icon])
+         (if tooltip [tooltip.views/view (pretty-subitems/subitem-id id :tooltip) tooltip])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

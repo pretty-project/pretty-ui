@@ -14,6 +14,13 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(def SHORTHAND-MAP {:body   body.views/SHORTHAND-KEY
+                    :footer footer.views/SHORTHAND-KEY
+                    :header header.views/SHORTHAND-KEY})
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn- surface
   ; @ignore
   ;
@@ -77,7 +84,7 @@
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
-       (let [props (pretty-layouts.methods/apply-layout-shorthand-map  id props {:body :content :footer :content :header :content})
+       (let [props (pretty-layouts.methods/apply-layout-shorthand-map  id props SHORTHAND-MAP)
              props (pretty-layouts.methods/apply-layout-preset         id props)
              props (pretty-layouts.methods/import-layout-dynamic-props id props)
              props (pretty-layouts.methods/import-layout-state-events  id props)

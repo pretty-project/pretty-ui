@@ -1,7 +1,8 @@
 
 (ns pretty-elements.crumb.views
     (:require [fruits.random.api                :as random]
-              [pretty-accessories.api           :as pretty-accessories]
+              [pretty-accessories.label.views :as label.views]
+              [pretty-accessories.bullet.views :as bullet.views]
               [pretty-elements.crumb.attributes :as crumb.attributes]
               [pretty-elements.crumb.prototypes :as crumb.prototypes]
               [pretty-elements.engine.api       :as pretty-elements.engine]
@@ -13,7 +14,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(def SHORTHAND-MAP {:label label.views/SHORTHAND-MAP})
+(def SHORTHAND-MAP {:label label.views/SHORTHAND-KEY})
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -29,8 +30,8 @@
   [id {:keys [bullet label] :as props}]
   [:div (crumb.attributes/outer-attributes id props)
         [(pretty-models/click-control-auto-tag props) (crumb.attributes/inner-attributes id props)
-         (if bullet [pretty-accessories/bullet (pretty-subitems/subitem-id id :bullet) bullet])
-         (if label  [pretty-accessories/label  (pretty-subitems/subitem-id id :label)  label])]])
+         (if bullet [bullet.views/view (pretty-subitems/subitem-id id :bullet) bullet])
+         (if label  [label.views/view  (pretty-subitems/subitem-id id :label)  label])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

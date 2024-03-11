@@ -1,8 +1,8 @@
 
 (ns pretty-inputs.value.views
     (:require [fruits.random.api              :as random]
-              [pretty-accessories.api         :as pretty-accessories]
-              [pretty-elements.api            :as pretty-elements]
+              [pretty-accessories.label.views :as label.views]
+              [pretty-elements.adornment-group.views :as adornment-group.views]
               [pretty-inputs.engine.api       :as pretty-inputs.engine]
               [pretty-inputs.methods.api      :as pretty-inputs.methods]
               [pretty-inputs.value.attributes :as value.attributes]
@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(def SHORTHAND-MAP {:label                 label.views/SHORTHAND-MAP
+(def SHORTHAND-MAP {:label                 label.views/SHORTHAND-KEY
                     :end-adornment-group   adornment-group.views/SHORTHAND-MAP
                     :start-adornment-group adornment-group.views/SHORTHAND-MAP})
 
@@ -32,9 +32,9 @@
   [id {:keys [end-adornment-group label start-adornment-group] :as props}]
   [:div (value.attributes/outer-attributes       id props)
         [:div (value.attributes/inner-attributes id props)
-              [:<> (if start-adornment-group [pretty-elements/adornment-group (pretty-subitems/subitem-id id :start-adornment-group) start-adornment-group])
-                   (if label                 [pretty-accessories/label        (pretty-subitems/subitem-id id :label)                 label])
-                   (if end-adornment-group   [pretty-elements/adornment-group (pretty-subitems/subitem-id id :end-adornment-group)   end-adornment-group])]]])
+              [:<> (if start-adornment-group [adornment-group.views/view (pretty-subitems/subitem-id id :start-adornment-group) start-adornment-group])
+                   (if label                 [label.views/view           (pretty-subitems/subitem-id id :label)                 label])
+                   (if end-adornment-group   [adornment-group.views/view (pretty-subitems/subitem-id id :end-adornment-group)   end-adornment-group])]]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

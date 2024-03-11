@@ -1,8 +1,9 @@
 
 (ns pretty-inputs.field.views
     (:require [fruits.random.api              :as random]
-              [pretty-elements.api            :as pretty-elements]
-              [pretty-guides.api              :as pretty-guides]
+              [pretty-elements.expandable.views :as expandable.views]
+              [pretty-elements.adornment-group.views :as adornment-group.views]
+              [pretty-guides.placeholder-text.views :as placeholder-text.views]
               [pretty-inputs.engine.api       :as pretty-inputs.engine]
               [pretty-inputs.field.attributes :as field.attributes]
               [pretty-inputs.field.prototypes :as field.prototypes]
@@ -14,8 +15,8 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(def SHORTHAND-MAP {:expandable            expandable.views/SHORTHAND-MAP
-                    :placeholder-text      placeholder-text.views/SHORTHAND-MAP
+(def SHORTHAND-MAP {:expandable            expandable.views/SHORTHAND-KEY
+                    :placeholder-text      placeholder-text.views/SHORTHAND-KEY
                     :end-adornment-group   adornment-group.views/SHORTHAND-MAP
                     :start-adornment-group adornment-group.views/SHORTHAND-MAP})
 
@@ -31,7 +32,7 @@
   ;  ...}
   [id {:keys [placeholder-text] :as props}]
   [:div (field.attributes/structure-attributes id props)
-        (when placeholder-text [pretty-guides/placeholder-text (pretty-subitems/subitem-id id :placeholder-text) placeholder-text])
+        (when placeholder-text [placeholder-text.views/view (pretty-subitems/subitem-id id :placeholder-text) placeholder-text])
         (when :always          [(pretty-models/field-input-auto-tag props) (field.attributes/input-attributes id props)])])
 
 ;; ----------------------------------------------------------------------------
@@ -50,10 +51,10 @@
   [:div (field.attributes/outer-attributes id props)
         [pretty-inputs.engine/input-synchronizer id props]
         [:div (field.attributes/inner-attributes id props)
-              (when start-adornment-group [pretty-elements/adornment-group (pretty-subitems/subitem-id id :start-adornment-group) start-adornment-group])
-              (when :always               [field-structure                 (pretty-subitems/subitem-id id :structure)             props])
-              (when end-adornment-group   [pretty-elements/adornment-group (pretty-subitems/subitem-id id :end-adornment-group)   end-adornment-group])
-              (when expandable            [pretty-elements/expandable      (pretty-subitems/subitem-id id :expandable)            expandable])]])
+              (when start-adornment-group [adornment-group.views/view (pretty-subitems/subitem-id id :start-adornment-group) start-adornment-group])
+              (when :always               [field-structure            (pretty-subitems/subitem-id id :structure)             props])
+              (when end-adornment-group   [adornment-group.views/view (pretty-subitems/subitem-id id :end-adornment-group)   end-adornment-group])
+              (when expandable            [expandable.views/view      (pretty-subitems/subitem-id id :expandable)            expandable])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -1,7 +1,7 @@
 
 (ns pretty-elements.horizontal-separator.views
     (:require [fruits.random.api                               :as random]
-              [pretty-accessories.api                          :as pretty-accessories]
+              [pretty-accessories.label.views :as label.views]
               [pretty-elements.engine.api                      :as pretty-elements.engine]
               [pretty-elements.horizontal-separator.attributes :as horizontal-separator.attributes]
               [pretty-elements.horizontal-separator.prototypes :as horizontal-separator.prototypes]
@@ -12,7 +12,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(def SHORTHAND-MAP {:label label.views/SHORTHAND-MAP})
+(def SHORTHAND-MAP {:label label.views/SHORTHAND-KEY})
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -28,7 +28,7 @@
   [:div (horizontal-separator.attributes/outer-attributes id props)
         [:div (horizontal-separator.attributes/inner-attributes id props)
               (when :always [:hr (horizontal-separator.attributes/line-attributes id props)])
-              (when label   [pretty-accessories/label (pretty-subitems/subitem-id id :label) label])
+              (when label   [label.views/view (pretty-subitems/subitem-id id :label) label])
               (when :always [:hr (horizontal-separator.attributes/line-attributes id props)])]])
 
 ;; ----------------------------------------------------------------------------

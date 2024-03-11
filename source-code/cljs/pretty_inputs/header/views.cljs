@@ -1,9 +1,12 @@
 
 (ns pretty-inputs.header.views
     (:require [fruits.random.api               :as random]
-              [pretty-accessories.api          :as pretty-accessories]
-              [pretty-elements.api             :as pretty-elements]
-              [pretty-guides.api               :as pretty-guides]
+              [pretty-accessories.label.views :as label.views]
+              [pretty-accessories.marker.views :as marker.views]
+              [pretty-elements.header.views :as header.views]
+              [pretty-guides.helper-text.views :as helper-text.views]
+              [pretty-guides.error-text.views :as error-text.views]
+              [pretty-guides.info-text.views :as info-text.views]
               [pretty-inputs.engine.api        :as pretty-inputs.engine]
               [pretty-inputs.header.attributes :as header.attributes]
               [pretty-inputs.header.prototypes :as header.prototypes]
@@ -14,10 +17,10 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(def SHORTHAND-MAP {:error-text  error-text.views/SHORTHAND-MAP
-                    :helper-text helper-text.views/SHORTHAND-MAP
-                    :info-text   info-text.views/SHORTHAND-MAP
-                    :label       label.views/SHORTHAND-MAP})
+(def SHORTHAND-MAP {:error-text  error-text.views/SHORTHAND-KEY
+                    :helper-text helper-text.views/SHORTHAND-KEY
+                    :info-text   info-text.views/SHORTHAND-KEY
+                    :label       label.views/SHORTHAND-KEY})
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -39,11 +42,11 @@
   ; ... it is always the best idea to use an explicit label instead of an implicit label.
   [:div (header.attributes/outer-attributes id props)
         [:div (header.attributes/inner-attributes id props)
-              (if label              [pretty-elements/header    (pretty-subitems/subitem-id id :label)       label])
-              (if info-text-visible? [pretty-guides/info-text   (pretty-subitems/subitem-id id :info-text)   info-text])
-              (if helper-text        [pretty-guides/helper-text (pretty-subitems/subitem-id id :helper-text) helper-text])
-              (if error-text         [pretty-guides/error-text  (pretty-subitems/subitem-id id :error-text)  error-text])
-              (if marker             [pretty-accessories/marker (pretty-subitems/subitem-id id :marker)      marker])]])
+              (if label              [header.views/view      (pretty-subitems/subitem-id id :label)       label])
+              (if info-text-visible? [info-text.views/view   (pretty-subitems/subitem-id id :info-text)   info-text])
+              (if helper-text        [helper-text.views/view (pretty-subitems/subitem-id id :helper-text) helper-text])
+              (if error-text         [error-text.views/view  (pretty-subitems/subitem-id id :error-text)  error-text])
+              (if marker             [marker.views/view      (pretty-subitems/subitem-id id :marker)      marker])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -112,7 +115,7 @@
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
-       (let [props (pretty-inputs.methods/apply-input-shorthand-map    id props SHORTHAND-MAP)
+       (let [props (pretty-inputs.methods/apply-input-shorthand-map  id props SHORTHAND-MAP)
              props (pretty-inputs.methods/apply-input-preset         id props)
              props (pretty-inputs.methods/import-input-dynamic-props id props)
              props (pretty-inputs.methods/import-input-error-text    id props)

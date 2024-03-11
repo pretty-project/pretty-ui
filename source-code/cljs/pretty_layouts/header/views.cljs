@@ -10,6 +10,11 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(def SHORTHAND-KEY :content)
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn- header
   ; @ignore
   ;
@@ -62,7 +67,7 @@
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
-       (let [props (pretty-layouts.methods/apply-layout-shorthand-key  id props :content)
+       (let [props (pretty-layouts.methods/apply-layout-shorthand-key  id props SHORTHAND-KEY)
              props (pretty-layouts.methods/apply-layout-preset         id props)
              props (pretty-layouts.methods/import-layout-dynamic-props id props)
              props (pretty-layouts.methods/import-layout-state-events  id props)

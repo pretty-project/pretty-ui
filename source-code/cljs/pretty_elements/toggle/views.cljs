@@ -1,7 +1,10 @@
 
 (ns pretty-elements.toggle.views
     (:require [fruits.random.api                 :as random]
-              [pretty-accessories.api            :as pretty-accessories]
+              [pretty-accessories.cover.views :as cover.views]
+              [pretty-accessories.badge.views :as badge.views]
+              [pretty-accessories.tooltip.views :as tooltip.views]
+              [pretty-accessories.marker.views :as marker.views]
               [pretty-elements.engine.api        :as pretty-elements.engine]
               [pretty-elements.methods.api       :as pretty-elements.methods]
               [pretty-elements.toggle.attributes :as toggle.attributes]
@@ -36,10 +39,10 @@
   [:div (toggle.attributes/outer-attributes id props)
         [(pretty-models/click-control-auto-tag props) (toggle.attributes/inner-attributes id props)
          (if content [:div (toggle.attributes/content-attributes id props) content])
-         (if badge   [pretty-accessories/badge   (pretty-subitems/subitem-id id :badge)   badge])
-         (if marker  [pretty-accessories/marker  (pretty-subitems/subitem-id id :marker)  marker])
-         (if cover   [pretty-accessories/cover   (pretty-subitems/subitem-id id :cover)   cover])
-         (if tooltip [pretty-accessories/tooltip (pretty-subitems/subitem-id id :tooltip) tooltip])]])
+         (if badge   [badge.views/view   (pretty-subitems/subitem-id id :badge)   badge])
+         (if marker  [marker.views/view  (pretty-subitems/subitem-id id :marker)  marker])
+         (if cover   [cover.views/view   (pretty-subitems/subitem-id id :cover)   cover])
+         (if tooltip [tooltip.views/view (pretty-subitems/subitem-id id :tooltip) tooltip])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

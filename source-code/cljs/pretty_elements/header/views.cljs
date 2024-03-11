@@ -1,7 +1,7 @@
 
 (ns pretty-elements.header.views
     (:require [fruits.random.api                     :as random]
-              [pretty-accessories.api                :as pretty-accessories]
+              [pretty-accessories.label.views :as label.views]
               [pretty-elements.adornment-group.views :as adornment-group.views]
               [pretty-elements.engine.api            :as pretty-elements.engine]
               [pretty-elements.header.attributes     :as header.attributes]
@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(def SHORTHAND-MAP {:label                 label.views/SHORTHAND-MAP
+(def SHORTHAND-MAP {:label                 label.views/SHORTHAND-KEY
                     :end-adornment-group   adornment-group.views/SHORTHAND-MAP
                     :start-adornment-group adornment-group.views/SHORTHAND-MAP})
 
@@ -33,7 +33,7 @@
   [:div (header.attributes/outer-attributes id props)
         [:div (header.attributes/inner-attributes id props)
               (if start-adornment-group [adornment-group.views/view (pretty-subitems/subitem-id id :start-adornment-group) start-adornment-group])
-              (if label                 [pretty-accessories/label   (pretty-subitems/subitem-id id :label)                 label])
+              (if label                 [label.views/view           (pretty-subitems/subitem-id id :label)                 label])
               (if end-adornment-group   [adornment-group.views/view (pretty-subitems/subitem-id id :end-adornment-group)   end-adornment-group])]])
 
 ;; ----------------------------------------------------------------------------

@@ -1,7 +1,6 @@
 
 (ns pretty-inputs.combo-box.prototypes
-    (:require [fruits.map.api           :as map]
-              [fruits.string.api        :as string]
+    (:require [fruits.string.api        :as string]
               [pretty-inputs.engine.api :as pretty-inputs.engine]
               [pretty-properties.api    :as pretty-properties]
               [pretty-models.api :as pretty-models]
@@ -21,11 +20,10 @@
   ;
   ; @return (map)
   [id {:keys [field]} option-group]
-  (let [field-id          (pretty-subitems/subitem-id id :field)
-        field-content     (pretty-inputs.engine/get-input-field-displayed-content field-id field)
-        option-longhand-f (fn [%] (map/to-longhand % :content))
-        option-compare-f  (fn [%] (string/starts-with? % field-content {:case-sensitive? false}))
-        option-filter-f   (fn [%] (-> % :label option-longhand-f :content option-compare-f))]
+  (let [field-id         (pretty-subitems/subitem-id id :field)
+        field-content    (pretty-inputs.engine/get-input-field-displayed-content field-id field)
+        option-compare-f (fn [%] (string/starts-with? % field-content {:case-sensitive? false}))
+        option-filter-f  (fn [%] (-> % :label :content option-compare-f))]
        (-> option-group (pretty-properties/default-input-option-props {:option-filter-f option-filter-f})
                         (pretty-properties/default-outer-size-props   {:outer-width :parent}))))
 

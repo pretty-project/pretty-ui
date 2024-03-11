@@ -10,6 +10,11 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(def SHORTHAND-KEY :content)
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn- cell
   ; @ignore
   ;
@@ -64,7 +69,7 @@
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
-       (let [props (pretty-elements.methods/apply-element-shorthand-key  id props :content)
+       (let [props (pretty-elements.methods/apply-element-shorthand-key  id props SHORTHAND-KEY)
              props (pretty-elements.methods/apply-element-preset         id props)
              props (pretty-elements.methods/import-element-dynamic-props id props)
              props (pretty-elements.methods/import-element-state-events  id props)

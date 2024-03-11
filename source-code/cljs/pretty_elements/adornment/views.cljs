@@ -1,7 +1,10 @@
 
 (ns pretty-elements.adornment.views
     (:require [fruits.random.api                    :as random]
-              [pretty-accessories.api               :as pretty-accessories]
+              [pretty-accessories.label.views :as label.views]
+              [pretty-accessories.cover.views :as cover.views]
+              [pretty-accessories.icon.views :as icon.views]
+              [pretty-accessories.tooltip.views :as tooltip.views]
               [pretty-elements.adornment.attributes :as adornment.attributes]
               [pretty-elements.adornment.prototypes :as adornment.prototypes]
               [pretty-elements.engine.api           :as pretty-elements.engine]
@@ -35,10 +38,10 @@
   [id {:keys [cover icon label tooltip] :as props}]
   [:div (adornment.attributes/outer-attributes id props)
         [(pretty-models/click-control-auto-tag props) (adornment.attributes/inner-attributes id props)
-         (cond label   [pretty-accessories/label   (pretty-subitems/subitem-id id :label)   label]
-               icon    [pretty-accessories/icon    (pretty-subitems/subitem-id id :icon)    icon])
-         (when cover   [pretty-accessories/cover   (pretty-subitems/subitem-id id :cover)   cover])
-         (when tooltip [pretty-accessories/tooltip (pretty-subitems/subitem-id id :tooltip) tooltip])]])
+         (cond label   [label.views/view   (pretty-subitems/subitem-id id :label)   label]
+               icon    [icon.views/view    (pretty-subitems/subitem-id id :icon)    icon])
+         (when cover   [cover.views/view   (pretty-subitems/subitem-id id :cover)   cover])
+         (when tooltip [tooltip.views/view (pretty-subitems/subitem-id id :tooltip) tooltip])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

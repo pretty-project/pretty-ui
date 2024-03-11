@@ -2,7 +2,8 @@
 (ns pretty-inputs.select.views
     (:require [fruits.hiccup.api                 :as hiccup]
               [fruits.random.api                 :as random]
-              [pretty-elements.api               :as pretty-elements]
+              [pretty-elements.button.views :as button.views]
+              [pretty-elements.icon-button.views :as icon-button.views]
               [pretty-inputs.engine.api          :as pretty-inputs.engine]
               [pretty-inputs.header.views        :as header.views]
               [pretty-inputs.option-group.views  :as option-group.views]
@@ -10,7 +11,7 @@
               [pretty-inputs.select-button.views :as select-button.views]
               [pretty-inputs.select.attributes   :as select.attributes]
               [pretty-inputs.select.prototypes   :as select.prototypes]
-              [pretty-layouts.api                :as pretty-layouts]
+              [pretty-layouts.popup.views :as popup.views]
               [pretty-subitems.api               :as pretty-subitems]
               [reagent.core                      :as reagent]))
 
@@ -45,11 +46,11 @@
         popup        (assoc-in popup [:body :content] option-group)]
        [:div (select.attributes/outer-attributes id props)
              [:div (select.attributes/inner-attributes id props)
-                   (when header         [header.views/view           (pretty-subitems/subitem-id id :header)        header])
-                   (cond button         [pretty-elements/button      (pretty-subitems/subitem-id id :button)        button]
-                         icon-button    [pretty-elements/icon-button (pretty-subitems/subitem-id id :icon-button)   icon-button]
-                         select-button  [select-button.views/view    (pretty-subitems/subitem-id id :select-button) select-button])
-                   (when popup-visible? [pretty-layouts/popup        (pretty-subitems/subitem-id id :popup)         popup])]]))
+                   (when header         [header.views/view        (pretty-subitems/subitem-id id :header)        header])
+                   (cond button         [button.views/view        (pretty-subitems/subitem-id id :button)        button]
+                         icon-button    [icon-button.views/view   (pretty-subitems/subitem-id id :icon-button)   icon-button]
+                         select-button  [select-button.views/view (pretty-subitems/subitem-id id :select-button) select-button])
+                   (when popup-visible? [popup.views/view         (pretty-subitems/subitem-id id :popup)         popup])]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

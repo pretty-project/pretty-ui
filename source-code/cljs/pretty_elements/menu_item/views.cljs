@@ -1,7 +1,11 @@
 
 (ns pretty-elements.menu-item.views
     (:require [fruits.random.api                    :as random]
-              [pretty-accessories.api               :as pretty-accessories]
+              [pretty-accessories.label.views :as label.views]
+              [pretty-accessories.marker.views :as marker.views]
+              [pretty-accessories.icon.views :as icon.views]
+              [pretty-accessories.tooltip.views :as tooltip.views]
+              [pretty-accessories.badge.views :as badge.views]
               [pretty-elements.engine.api           :as pretty-elements.engine]
               [pretty-elements.menu-item.attributes :as menu-item.attributes]
               [pretty-elements.menu-item.prototypes :as menu-item.prototypes]
@@ -9,6 +13,14 @@
               [pretty-models.api                    :as pretty-models]
               [pretty-subitems.api                  :as pretty-subitems]
               [reagent.core                         :as reagent]))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(def SHORTHAND-MAP {:badge   badge.views/SHORTHAND-MAP
+                    :icon    icon.views/SHORTHAND-KEY
+                    :label   label.views/SHORTHAND-KEY
+                    :tooltip tooltip.views/SHORTHAND-MAP})
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -27,11 +39,11 @@
   [id {:keys [badge icon label marker tooltip] :as props}]
   [:div (menu-item.attributes/outer-attributes id props)
         [(pretty-models/click-control-auto-tag props) (menu-item.attributes/inner-attributes id props)
-         (if label   [pretty-accessories/label   (pretty-subitems/subitem-id id :label)   label])
-         (if icon    [pretty-accessories/icon    (pretty-subitems/subitem-id id :icon)    icon])
-         (if badge   [pretty-accessories/badge   (pretty-subitems/subitem-id id :badge)   badge])
-         (if marker  [pretty-accessories/marker  (pretty-subitems/subitem-id id :marker)  marker])
-         (if tooltip [pretty-accessories/tooltip (pretty-subitems/subitem-id id :tooltip) tooltip])]])
+         (if label   [label.views/view   (pretty-subitems/subitem-id id :label)   label])
+         (if icon    [icon.views/view    (pretty-subitems/subitem-id id :icon)    icon])
+         (if badge   [badge.views/view   (pretty-subitems/subitem-id id :badge)   badge])
+         (if marker  [marker.views/view  (pretty-subitems/subitem-id id :marker)  marker])
+         (if tooltip [tooltip.views/view (pretty-subitems/subitem-id id :tooltip) tooltip])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -84,7 +96,7 @@
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
-       (let [props (pretty-elements.methods/apply-element-shorthand-map    id props {:icon :icon-name :label :content})
+       (let [props (pretty-elements.methods/apply-element-shorthand-map    id props SHORTHAND-MAP)
              props (pretty-elements.methods/apply-element-preset           id props)
              props (pretty-elements.methods/import-element-dynamic-props   id props)
              props (pretty-elements.methods/import-element-focus-reference id props)

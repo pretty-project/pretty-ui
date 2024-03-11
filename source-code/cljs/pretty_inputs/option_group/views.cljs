@@ -3,7 +3,7 @@
     (:require [fruits.hiccup.api                     :as hiccup]
               [fruits.random.api                     :as random]
               [fruits.vector.api                     :as vector]
-              [pretty-guides.api                     :as pretty-guides]
+              [pretty-guides.placeholder-text.views :as placeholder-text.views]
               [pretty-inputs.engine.api              :as pretty-inputs.engine]
               [pretty-inputs.methods.api             :as pretty-inputs.methods]
               [pretty-inputs.option-group.attributes :as option-group.attributes]
@@ -16,7 +16,7 @@
 ;; ----------------------------------------------------------------------------
 
 (def SHORTHAND-MAP {:options          option.views/SHORTHAND-MAP
-                    :placeholder-text placeholder-text.views/SHORTHAND-MAP})
+                    :placeholder-text placeholder-text.views/SHORTHAND-KEY})
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -35,7 +35,7 @@
         [:div (option-group.attributes/inner-attributes id props)
               (letfn [(f0 [dex option] [option.views/view (pretty-subitems/subitem-id id dex) option])]
                      (cond (-> options vector/not-empty?) (hiccup/put-with-indexed [:<>] options f0)
-                           (-> placeholder-text) [pretty-guides/placeholder-text (pretty-subitems/subitem-id id :placeholder-text) placeholder-text]))]])
+                           (-> placeholder-text) [placeholder-text.views/view (pretty-subitems/subitem-id id :placeholder-text) placeholder-text]))]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

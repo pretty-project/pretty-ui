@@ -1,7 +1,6 @@
 
 (ns pretty-elements.notification-bubble.views
     (:require [fruits.random.api                              :as random]
-              [pretty-accessories.api                         :as pretty-accessories]
               [pretty-elements.adornment-group.views          :as adornment-group.views]
               [pretty-elements.engine.api                     :as pretty-elements.engine]
               [pretty-elements.methods.api                    :as pretty-elements.methods]
@@ -14,8 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (def SHORTHAND-KEY :content)
-(def SHORTHAND-MAP {:cover                 cover.views/SHORTHAND-MAP
-                    :end-adornment-group   adornment-group.views/SHORTHAND-MAP
+(def SHORTHAND-MAP {:end-adornment-group   adornment-group.views/SHORTHAND-MAP
                     :start-adornment-group adornment-group.views/SHORTHAND-MAP})
 
 ;; ----------------------------------------------------------------------------
@@ -27,11 +25,10 @@
   ; @param (keyword) id
   ; @param (map) props
   ; {:content (multitype-content)(opt)
-  ;  :cover (map)(opt)
   ;  :end-adornment-group (map)(opt)
   ;  :start-adornment-group (map)(opt)
   ;  ...}
-  [id {:keys [content cover end-adornment-group start-adornment-group] :as props}]
+  [id {:keys [content end-adornment-group start-adornment-group] :as props}]
   [:div (notification-bubble.attributes/outer-attributes id props)
         [:div (notification-bubble.attributes/inner-attributes id props)
               (if start-adornment-group [adornment-group.views/view (pretty-subitems/subitem-id id :start-adornment-group) start-adornment-group])
