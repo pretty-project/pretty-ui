@@ -23,7 +23,7 @@
   [group-id {:keys [initial-options options options-path] :as group-props} field-dex]
   (let [field-key   (multi-field.utils/field-dex->react-key       group-id group-props field-dex)
         field-id    (multi-field.utils/field-dex->field-id        group-id group-props field-dex)
-        field-props (multi-field.prototypes/field-props-prototype group-id group-props field-dex)]
+        field-props (multi-field.prototypes/field-prototype group-id group-props field-dex)]
        [:div {:class :pi-multi-field--text-field :key field-key}
              (if (or initial-options options options-path)
                  [combo-box.views/view  field-id field-props]
@@ -77,5 +77,5 @@
   ([group-id group-props]
    ; @note (tutorials#parameterizing)
    (fn [_ group-props]
-       (let [group-props (multi-field.prototypes/group-props-prototype group-id group-props)]
+       (let [group-props (multi-field.prototypes/props-prototype group-id group-props)]
             [view-lifecycles group-id group-props]))))

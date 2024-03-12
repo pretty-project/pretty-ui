@@ -25,7 +25,7 @@
   [id {:keys [icon-name] :as props}]
   [:div (icon.attributes/outer-attributes id props)
         [:div (icon.attributes/inner-attributes id props)
-              [:i (icon.attributes/content-attributes id props) icon-name]]])
+              [:i (icon.attributes/body-attributes id props) icon-name]]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

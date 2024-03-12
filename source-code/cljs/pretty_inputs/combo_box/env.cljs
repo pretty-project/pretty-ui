@@ -71,9 +71,9 @@
   ; When the surface is visible without displaying options, it's mounted into the
   ; React tree but invisible for the user because it has no content.
   ; The problem is that when the user presses the ESC button while the surface is mounted
-  ; but not really visible (it has {:visible? true} state but not displays any options),
+  ; but not really visible (it has {:visible? true} state but doesn't display any option),
   ; pressing the ESC button set the {:visible? false} state to the surface and
-  ; that causes no noticeable changes on the UI.
+  ; it doesn't cause any noticeable change on the UI.
   ;
   ; After the surface stepped into the {:visible? false} state, the second press
   ; of the ESC button implements the original ESC event of the text-field and

@@ -11,7 +11,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn label-props-prototype
+(defn label-prototype
   ; @ignore
   ;
   ; @param (keyword) id
@@ -40,8 +40,8 @@
   ;
   ; @return (map)
   [id props]
-  (let [on-mouse-up-f           (fn [_] (pretty-inputs.engine/focus-input! id props))
-        label-props-prototype-f (fn [%] (label-props-prototype             id props %))]
+  (let [on-mouse-up-f     (fn [_] (pretty-inputs.engine/focus-input! id props))
+        label-prototype-f (fn [%] (label-prototype                   id props %))]
        (-> props (pretty-properties/default-flex-props        {:horizontal-align :left :orientation :vertical})
                  (pretty-properties/default-mouse-event-props {:on-mouse-up-f on-mouse-up-f})
                  (pretty-properties/default-outer-size-props  {:outer-size-unit :full-block})
@@ -54,4 +54,4 @@
                  (pretty-rules/auto-disable-mouse-events)
                  (pretty-rules/auto-set-mounted)
                  (pretty-subitems/ensure-subitem          :label)
-                 (pretty-subitems/apply-subitem-prototype :label label-props-prototype-f))))
+                 (pretty-subitems/apply-subitem-prototype :label label-prototype-f))))

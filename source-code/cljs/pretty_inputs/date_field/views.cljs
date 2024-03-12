@@ -27,5 +27,5 @@
   ([field-id field-props]
    ; @note (tutorials#parameterizing)
    (fn [_ field-props]
-       (let [field-props (date-field.prototypes/field-props-prototype field-id field-props)]
+       (let [field-props (date-field.prototypes/props-prototype field-id field-props)]
             [text-field.views/view field-id field-props]))))

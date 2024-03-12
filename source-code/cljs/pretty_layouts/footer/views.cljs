@@ -14,7 +14,7 @@
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
- 
+
 (defn- footer
   ; @ignore
   ;
@@ -25,7 +25,7 @@
   [id {:keys [content] :as props}]
   [:div (footer.attributes/outer-attributes id props)
         [:div (footer.attributes/inner-attributes id props)
-              [:div (footer.attributes/content-attributes id props) content]]])
+              [:div (footer.attributes/body-attributes id props) content]]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

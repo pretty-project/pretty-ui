@@ -27,7 +27,7 @@
   [id {:keys [content expanded?] :as props}]
   [:div (expandable.attributes/outer-attributes id props)
         [:div (expandable.attributes/inner-attributes id props)
-              [:div (expandable.attributes/content-attributes id props) content]]])
+              [:div (expandable.attributes/body-attributes id props) content]]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

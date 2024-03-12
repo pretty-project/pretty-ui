@@ -16,9 +16,9 @@
   ;  ...}
   [_ props]
   (-> {:class :pe-thumbnail--canvas}
-      (pretty-models/click-control-content-attributes  props)
-      (pretty-models/flex-container-content-attributes props)
-      (pretty-models/image-canvas-content-attributes   props)))
+      (pretty-models/click-control-body-attributes  props)
+      (pretty-models/flex-container-body-attributes props)
+      (pretty-models/image-canvas-body-attributes   props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

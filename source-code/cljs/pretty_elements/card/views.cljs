@@ -38,7 +38,7 @@
   [id {:keys [badge content cover marker tooltip] :as props}]
   [:div (card.attributes/outer-attributes id props)
         [(pretty-models/click-control-auto-tag props) (card.attributes/inner-attributes id props)
-         (if content [:div (card.attributes/content-attributes id props) content])
+         (if content [:div (card.attributes/body-attributes id props) content])
          (if badge   [badge.views/view   (pretty-subitems/subitem-id id :badge)   badge])
          (if marker  [marker.views/view  (pretty-subitems/subitem-id id :marker)  marker])
          (if cover   [cover.views/view   (pretty-subitems/subitem-id id :cover)   cover])

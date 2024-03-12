@@ -25,7 +25,7 @@
   [id {:keys [content] :as props}]
   [:div (error-text.attributes/outer-attributes id props)
         [:div (error-text.attributes/inner-attributes id props)
-              [:div (error-text.attributes/content-attributes id props) content]]])
+              [:div (error-text.attributes/body-attributes id props) content]]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

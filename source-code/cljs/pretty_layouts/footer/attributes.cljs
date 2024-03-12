@@ -5,7 +5,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn content-attributes
+(defn body-attributes
   ; @ignore
   ;
   ; @param (keyword) id
@@ -16,8 +16,8 @@
   ;  ...}
   [_ props]
   (-> {:class :pl-footer--content}
-      (pretty-models/flex-container-content-attributes props)
-      (pretty-models/plain-content-content-attributes  props)))
+      (pretty-models/flex-container-body-attributes props)
+      (pretty-models/plain-content-body-attributes  props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

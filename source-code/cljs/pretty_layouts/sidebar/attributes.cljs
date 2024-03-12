@@ -16,8 +16,8 @@
   ;  ...}
   [_ props]
   (-> {:class :pl-sidebar--scroll-container}
-      (pretty-models/flex-container-content-attributes props)
-      (pretty-models/plain-content-content-attributes  props)))
+      (pretty-models/flex-container-body-attributes props)
+      (pretty-models/plain-content-body-attributes  props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

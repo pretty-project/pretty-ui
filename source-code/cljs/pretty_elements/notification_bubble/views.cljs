@@ -32,7 +32,7 @@
   [:div (notification-bubble.attributes/outer-attributes id props)
         [:div (notification-bubble.attributes/inner-attributes id props)
               (if start-adornment-group [adornment-group.views/view (pretty-subitems/subitem-id id :start-adornment-group) start-adornment-group])
-              (if content               [:div (notification-bubble.attributes/content-attributes id props) content])
+              (if content               [:div (notification-bubble.attributes/body-attributes id props) content])
               (if end-adornment-group   [adornment-group.views/view (pretty-subitems/subitem-id id :end-adornment-group) end-adornment-group])]])
 
 ;; ----------------------------------------------------------------------------

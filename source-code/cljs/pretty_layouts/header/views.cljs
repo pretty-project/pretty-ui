@@ -14,7 +14,7 @@
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
- 
+
 (defn- header
   ; @ignore
   ;
@@ -25,7 +25,7 @@
   [id {:keys [content] :as props}]
   [:div (header.attributes/outer-attributes id props)
         [:div (header.attributes/inner-attributes id props)
-              [:div (header.attributes/content-attributes id props) content]]])
+              [:div (header.attributes/body-attributes id props) content]]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

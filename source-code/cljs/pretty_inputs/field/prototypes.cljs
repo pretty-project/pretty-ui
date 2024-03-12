@@ -52,9 +52,9 @@
   [id props expandable]
   (let [on-mouse-down-f (fn [e] (dom/prevent-default e))
         on-mouse-up-f   (fn [_] (pretty-inputs.engine/focus-input! id props))]
-       (if "(pretty-inputs.engine/input-focused? id props)"
+       (if (pretty-inputs.engine/input-focused? id props)
            (-> expandable (pretty-properties/default-mouse-event-props    {:on-mouse-down-f on-mouse-down-f :on-mouse-up-f on-mouse-up-f})
-                          (pretty-properties/default-outer-position-props {:outer-position :bottom :outer-position-base :external :outer-position-method :absolute})
+                          (pretty-properties/default-outer-position-props {:outer-position :bottom :outer-position-base :external :outer-position-method :absolute :outer-layer :uppermost})
                           (pretty-properties/default-outer-size-props     {:outer-width :parent})))))
 
 ;; ----------------------------------------------------------------------------

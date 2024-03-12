@@ -16,9 +16,9 @@
   ;  ...}
   [_ props]
   (-> {:class :pi-field--input}
-      (pretty-models/flex-container-content-attributes    props)
-      (pretty-models/field-input-content-attributes       props)
-      (pretty-models/multiline-content-content-attributes props)))
+      (pretty-models/flex-container-body-attributes    props)
+      (pretty-models/field-input-body-attributes       props)
+      (pretty-models/multiline-content-body-attributes props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

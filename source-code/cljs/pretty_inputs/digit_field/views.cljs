@@ -96,6 +96,6 @@
   ([field-id field-props]
    ; @note (tutorials#parameterizing)
    (fn [_ field-props]
-       (let [field-props (pretty-presets.engine/apply-preset           field-id field-props)
-             field-props (digit-field.prototypes/field-props-prototype field-id field-props)]
+       (let [field-props (pretty-presets.engine/apply-preset     field-id field-props)
+             field-props (digit-field.prototypes/props-prototype field-id field-props)]
             [view-lifecycles field-id field-props]))))

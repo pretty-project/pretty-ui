@@ -25,7 +25,7 @@
   [id {:keys [content] :as props}]
   [:div (body.attributes/outer-attributes id props)
         [:div (body.attributes/inner-attributes id props)
-              [:div (body.attributes/content-attributes id props) content]]])
+              [:div (body.attributes/body-attributes id props) content]]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

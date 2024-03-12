@@ -5,7 +5,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn content-attributes
+(defn body-attributes
   ; @ignore
   ;
   ; @param (keyword) id
@@ -16,9 +16,9 @@
   ;  ...}
   [_ props]
   (-> {:class :pe-toggle--content}
-      (pretty-models/click-control-content-attributes   props)
-      (pretty-models/flex-content-content-attributes    props)
-      (pretty-models/plain-container-content-attributes props)))
+      (pretty-models/click-control-body-attributes   props)
+      (pretty-models/flex-content-body-attributes    props)
+      (pretty-models/plain-container-body-attributes props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

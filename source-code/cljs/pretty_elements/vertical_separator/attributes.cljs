@@ -16,8 +16,8 @@
   ;  ...}
   [_ props]
   (-> {:class :pe-vertical-separator--line}
-      (pretty-models/flex-container-content-attributes props)
-      (pretty-models/line-canvas-content-attributes    props)))
+      (pretty-models/flex-container-body-attributes props)
+      (pretty-models/line-canvas-body-attributes    props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

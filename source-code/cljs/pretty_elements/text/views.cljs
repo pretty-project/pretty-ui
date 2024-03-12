@@ -26,7 +26,7 @@
   [id {:keys [content] :as props}]
   [:div (text.attributes/outer-attributes id props)
         [:div (text.attributes/inner-attributes id props)
-              [:div (text.attributes/content-attributes id props)
+              [:div (text.attributes/body-attributes id props)
                     (hiccup/parse-newlines [:<> content])]]])
 
 ;; ----------------------------------------------------------------------------
