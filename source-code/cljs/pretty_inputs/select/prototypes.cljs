@@ -1,12 +1,11 @@
 
 (ns pretty-inputs.select.prototypes
     (:require [dynamic-props.api                 :as dynamic-props]
-              [fruits.map.api                    :as map]
               [pretty-inputs.select.side-effects :as select.side-effects]
               [pretty-properties.api             :as pretty-properties]
-              [pretty-rules.api                  :as pretty-rules]
-              [pretty-standards.api              :as pretty-standards]
-              [pretty-subitems.api               :as pretty-subitems]))
+              [pretty-models.api                  :as pretty-models]
+              [pretty-subitems.api               :as pretty-subitems]
+              [form-validator.api :as form-validator]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -20,8 +19,24 @@
   ;
   ; @return (map)
   [id _ button]
-  (let [toggle-popup-f (fn [_] (dynamic-props/update-props! id update :popup-visible? not))]
-       (-> button (pretty-properties/default-mouse-event-props {:on-click-f toggle-popup-f}))))
+  (let [on-click-f (fn [_] (dynamic-props/update-props! id update :popup-visible? not))]
+       (-> button (pretty-properties/merge-event-fn :on-click-f on-click-f))))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn header-prototype
+  ; @ignore
+  ;
+  ; @param (keyword) id
+  ; @param (map) props
+  ; @param (map) header
+  ;
+  ; @return (map)
+  [id _ header]
+  (let [option-group-id    (pretty-subitems/subitem-id id :option-group)
+        option-group-error (form-validator/get-input-error option-group-id)]
+       (-> header (assoc-in [:error-text :content] option-group-error))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -35,8 +50,8 @@
   ;
   ; @return (map)
   [id _ icon-button]
-  (let [toggle-popup-f (fn [_] (dynamic-props/update-props! id update :popup-visible? not))]
-       (-> icon-button (pretty-properties/default-mouse-event-props {:on-click-f toggle-popup-f}))))
+  (let [on-click-f (fn [_] (dynamic-props/update-props! id update :popup-visible? not))]
+       (-> icon-button (pretty-properties/merge-event-fn :on-click-f on-click-f))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -50,10 +65,27 @@
   ;
   ; @return (map)
   [id props option-group]
-  (let [on-selected-f (fn [%] (if-let [f (:on-selected-f option-group)] (f %)) (select.side-effects/auto-close-popup! id props))]
-       (-> option-group (update :option-default  map/reversed-deep-merge {:hover-color :muted :indent {:horizontal :s :vertical :xxs}})
-                        (update :option-selected map/reversed-deep-merge {:fill-color  :muted})
-                        (pretty-properties/default-input-option-props {:max-selection 1 :on-selected-f on-selected-f}))))
+  (let [on-selected-f (fn [_] (select.side-effects/auto-close-popup! id props))]
+       (-> option-group (pretty-properties/default-input-option-props {:option-default  {:hover-color :muted :indent {:horizontal :s :vertical :xxs}}})
+                        (pretty-properties/default-input-option-props {:option-selected {:fill-color  :muted}})
+                        (pretty-properties/default-input-option-props {:max-selection 1})
+                        (pretty-properties/merge-event-fn :on-selected-f on-selected-f))))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn overlay-prototype
+  ; @ignore
+  ;
+  ; @param (keyword) id
+  ; @param (map) props
+  ; @param (map) overlay
+  ;
+  ; @return (map)
+  [id _ overlay]
+  (let [on-click-f (fn [_] (dynamic-props/update-props! id dissoc :popup-visible?))]
+       (-> overlay (pretty-properties/default-background-color-props {:fill-color :default})
+                   (pretty-properties/merge-event-fn :on-click-f on-click-f))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -66,12 +98,15 @@
   ; @param (map) popup
   ;
   ; @return (map)
-  [id _ popup]
-  (let [close-popup-f (fn [_] (dynamic-props/update-props! id dissoc :popup-visible?))]
+  [id props popup]
+  (let [on-escape-f         (fn [_] (dynamic-props/update-props! id dissoc :popup-visible?))
+        overlay-prototype-f (fn [%] (overlay-prototype           id props %))]
        (-> popup (pretty-properties/default-background-color-props {:fill-color :default})
                  (pretty-properties/default-inner-size-props       {:inner-height :content :inner-width :content})
                  (pretty-properties/default-outer-size-props       {:outer-height :parent :outer-layer :uppermost :outer-width :parent})
-                 (assoc :overlay {:fill-color :default :on-click-f close-popup-f} :on-escape-f close-popup-f))))
+                 (pretty-properties/merge-event-fn        :on-escape-f on-escape-f)
+                 (pretty-subitems/ensure-subitems         :overlay)
+                 (pretty-subitems/apply-subitem-prototype :overlay overlay-prototype-f))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -85,10 +120,10 @@
   ;
   ; @return (map)
   [id props select-button]
-  (let [toggle-popup-f (fn [_] (dynamic-props/update-props! id update :popup-visible? not))
-        get-value-f    (-> props :option-group :get-value-f)]
-       (-> select-button (pretty-properties/default-mouse-event-props {:on-click-f  toggle-popup-f})
-                         (pretty-properties/default-input-value-props {:get-value-f get-value-f}))))
+  (let [on-click-f  (fn [_] (dynamic-props/update-props! id update :popup-visible? not))
+        get-value-f (-> props :option-group :get-value-f)]
+       (-> select-button (pretty-properties/default-input-value-props {:get-value-f get-value-f})
+                         (pretty-properties/merge-event-fn :on-click-f on-click-f))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -103,23 +138,19 @@
   [id props]
   (let [button-prototype-f        (fn [%] (button-prototype        id props %))
         option-group-prototype-f  (fn [%] (option-group-prototype  id props %))
+        header-prototype-f        (fn [%] (header-prototype        id props %))
         icon-button-prototype-f   (fn [%] (icon-button-prototype   id props %))
         popup-prototype-f         (fn [%] (popup-prototype         id props %))
         select-button-prototype-f (fn [%] (select-button-prototype id props %))]
        (-> props (pretty-properties/default-flex-props       {:gap :xs :horizontal-align :left :orientation :vertical})
                  (pretty-properties/default-outer-size-props {:outer-size-unit :full-block})
-                 (pretty-standards/standard-flex-props)
-                 (pretty-standards/standard-inner-position-props)
-                 (pretty-standards/standard-inner-size-props)
-                 (pretty-standards/standard-outer-position-props)
-                 (pretty-standards/standard-outer-size-props)
-                ;(pretty-rules/auto-align-scrollable-flex)
-                 (pretty-rules/auto-disable-mouse-events)
-                 (pretty-rules/auto-set-mounted)
-                 (pretty-subitems/ensure-subitem           :popup)
+                 (pretty-models/flex-container-standard-props)
+                 (pretty-models/flex-container-rules)
+                 (pretty-subitems/ensure-subitems          :popup)
                  (pretty-subitems/subitems<-disabled-state :button :header :icon-button :option-group :popup :select-button)
                  (pretty-subitems/apply-subitem-prototype  :button        button-prototype-f)
                  (pretty-subitems/apply-subitem-prototype  :option-group  option-group-prototype-f)
+                 (pretty-subitems/apply-subitem-prototype  :header        header-prototype-f)
                  (pretty-subitems/apply-subitem-prototype  :icon-button   icon-button-prototype-f)
                  (pretty-subitems/apply-subitem-prototype  :popup         popup-prototype-f)
                  (pretty-subitems/apply-subitem-prototype  :select-button select-button-prototype-f))))

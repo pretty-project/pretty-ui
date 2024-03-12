@@ -4,10 +4,18 @@
               [pretty-inputs.counter.attributes :as counter.attributes]
               [pretty-inputs.counter.prototypes :as counter.prototypes]
               [pretty-inputs.engine.api         :as pretty-inputs.engine]
-              [pretty-inputs.header.views       :as header.views]
-              [pretty-presets.engine.api        :as pretty-presets.engine]
-              [re-frame.api                     :as r]
+              [pretty-inputs.methods.api         :as pretty-inputs.methods]
+              [pretty-elements.button.views :as button.views]
+              [pretty-accessories.label.views :as label.views]
+              [pretty-subitems.api :as pretty-subitems]
               [reagent.core                     :as reagent]))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(def SHORTHAND-MAP {:end-button   button.views/SHORTHAND-MAP
+                    :label        label.views/SHORTHAND-KEY
+                    :start-button button.views/SHORTHAND-MAP})
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -15,19 +23,19 @@
 (defn- counter
   ; @ignore
   ;
-  ; @param (keyword) counter-id
-  ; @param (map) counter-props
-  ; {}
-  [counter-id {:keys [resetable? value-path] :as counter-props}]
-  [:div (counter.attributes/outer-attributes   counter-id counter-props)
-        [pretty-inputs.header.views/view         counter-id counter-props]
-        [pretty-inputs.engine/input-synchronizer counter-id counter-props]
-        [:div (counter.attributes/inner-attributes counter-id counter-props)
-              [:button (counter.attributes/decrease-button-attributes counter-id counter-props)]
-              (let [value @(r/subscribe [:get-item value-path])]
-                   [:div {:class :pi-counter--value} value])
-              [:button (counter.attributes/increase-button-attributes counter-id counter-props)]
-              (if resetable? [:button (counter.attributes/reset-button-attributes counter-id counter-props)])]])
+  ; @param (keyword) id
+  ; @param (map) props
+  ; {:end-button (map)(opt)
+  ;  :label (map)(opt)
+  ;  :start-button (map)(opt)
+  ;  ...}
+  [id {:keys [end-button label start-button] :as props}]
+  [:div (counter.attributes/outer-attributes   id props)
+        [pretty-inputs.engine/input-synchronizer id props]
+        [:div (counter.attributes/inner-attributes id props)
+              (if start-button [button.views/view (pretty-subitems/subitem-id id :start-button) start-button])
+              (if label        [label.views/view  (pretty-subitems/subitem-id id :label)        label])
+              (if end-button   [button.views/view (pretty-subitems/subitem-id id :end-button)   end-button])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -35,57 +43,30 @@
 (defn- view-lifecycles
   ; @ignore
   ;
-  ; @param (keyword) counter-id
-  ; @param (map) counter-props
-  [counter-id counter-props]
+  ; @param (keyword) id
+  ; @param (map) props
+  [id props]
   ; @note (tutorials#parameterizing)
-  (reagent/create-class {:component-did-mount (fn [_ _] (r/dispatch [:pretty-inputs.counter/counter-did-mount counter-id counter-props]))
-                         :reagent-render      (fn [_ counter-props] [counter counter-id counter-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-inputs.engine/input-did-mount    id props))
+                         :component-will-unmount (fn [_ _] (pretty-inputs.engine/input-will-unmount id props))
+                         :reagent-render         (fn [_ props] [counter id props])}))
 
 (defn view
-  ; @param (keyword)(opt) counter-id
-  ; @param (map) counter-props
-  ; {:border-color (keyword or string)(opt)
-  ;   Default: :default
-  ;  :border-radius (map)(opt)
-  ;   {:all, :tl, :tr, :br, :bl (keyword, px or string)(opt)}
-  ;   Default: {:all :m}
-  ;  :border-width (keyword, px or string)(opt)
-  ;   Default: :xs
-  ;  :class (keyword or keywords in vector)(opt)
-  ;  :disabled? (boolean)(opt)
-  ;  :helper (multitype-content)(opt)
-  ;  :indent (map)(opt)
-  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :info (multitype-content)(opt)
-  ;  :initial-value (integer)(opt)
-  ;   Default: 0
-  ;  :label (multitype-content)(opt)
-  ;  :marker (map)(opt)
-  ;  :max-value (integer)(opt)
-  ;  :min-value (integer)(opt)
-  ;  :on-mount-f (function)(opt)
-  ;  :on-unmount-f (function)(opt)
-  ;  :outdent (map)(opt)
-  ;   {:all, :bottom, :left, :right, :top, :horizontal, :vertical (keyword, px or string)(opt)}
-  ;  :preset (keyword)(opt)
-  ;  :resetable? (boolean)(opt)
-  ;   Default: false
-  ;  :style (map)(opt)
-  ;  :theme (keyword)(opt)
-  ;  :value-path (Re-Frame path vector)(opt)}
+  ; @param (keyword)(opt) id
+  ; @param (map) props
   ;
-  ; @usage
-  ; [counter {...}]
-  ;
-  ; @usage
-  ; [counter :my-counter {...}]
-  ([counter-props]
-   [view (random/generate-keyword) counter-props])
+  ; @usage (pretty-inputs/counter.png)
+  ([props]
+   [view (random/generate-keyword) props])
 
-  ([counter-id counter-props]
+  ([id props]
    ; @note (tutorials#parameterizing)
-   (fn [_ counter-props]
-       (let [counter-props (pretty-presets.engine/apply-preset counter-id counter-props)
-             counter-props (counter.prototypes/props-prototype counter-id counter-props)]
-            [view-lifecycles counter-id counter-props]))))
+   (fn [_ props]
+       (let [props (pretty-inputs.methods/apply-input-shorthand-map  id props SHORTHAND-MAP)
+             props (pretty-inputs.methods/apply-input-preset         id props)
+             props (pretty-inputs.methods/import-input-dynamic-props id props)
+             props (pretty-inputs.methods/import-input-state-events  id props)
+             props (pretty-inputs.methods/import-input-state         id props)
+             props (counter.prototypes/props-prototype               id props)]
+            (if (:mounted? props)
+                [view-lifecycles id props])))))

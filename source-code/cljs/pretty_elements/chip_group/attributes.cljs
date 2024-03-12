@@ -1,5 +1,5 @@
 
-(ns pretty-inputs.select.attributes
+(ns pretty-elements.chip-group.attributes
     (:require [pretty-models.api :as pretty-models]))
 
 ;; ----------------------------------------------------------------------------
@@ -15,7 +15,7 @@
   ; {:class (keyword or keywords in vector)
   ;  ...}
   [_ props]
-  (-> {:class :pi-select--inner}
+  (-> {:class :pe-chip-group--inner}
       (pretty-models/flex-container-inner-attributes props)))
 
 ;; ----------------------------------------------------------------------------
@@ -31,5 +31,5 @@
   ; {:class (keyword or keywords in vector)
   ;  ...}
   [_ props]
-  (-> {:class :pi-select--outer}
+  (-> {:class :pe-chip-group--outer}
       (pretty-models/flex-container-outer-attributes props)))

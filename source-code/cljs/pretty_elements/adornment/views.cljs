@@ -102,3 +102,4 @@
              props (adornment.prototypes/props-prototype                   id props)]
             (if (:mounted? props)
                 [view-lifecycles id props])))))
+ 

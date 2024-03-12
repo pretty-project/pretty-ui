@@ -64,7 +64,7 @@
 
 (defn view
   ; @description
-  ; Header element for inputs with optional helper text, info text and automatically subscribed error text.
+  ; Header element for inputs with optional error text, helper text, and info text.
   ;
   ; @links Implemented accessories
   ; [Label](pretty-core/cljs/pretty-accessories/api.html#label)
@@ -104,11 +104,6 @@
   ;          :helper-text {:content "My helper text"}
   ;          :error-text  {:content "My error text"}
   ;          :info-text   {:content "My info text"}}]
-  ;
-  ; @usage
-  ; ;; To associate a header to an input (to subscribe to its error text), use the same ID for both.
-  ; [:<> [header     :my-field {...}]
-  ;      [text-field :my-field {...}]]
   ([props]
    [view (random/generate-keyword) props])
 
@@ -118,7 +113,6 @@
        (let [props (pretty-inputs.methods/apply-input-shorthand-map  id props SHORTHAND-MAP)
              props (pretty-inputs.methods/apply-input-preset         id props)
              props (pretty-inputs.methods/import-input-dynamic-props id props)
-             props (pretty-inputs.methods/import-input-error-text    id props)
              props (pretty-inputs.methods/import-input-state-events  id props)
              props (pretty-inputs.methods/import-input-state         id props)
              props (header.prototypes/props-prototype                id props)]

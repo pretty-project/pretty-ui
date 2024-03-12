@@ -63,6 +63,6 @@
                  (pretty-rules/auto-disable-cursor)
                  (pretty-rules/auto-disable-mouse-events)
                  (pretty-rules/auto-set-mounted)
-                 (pretty-subitems/ensure-subitem          :icon :label)
+                 (pretty-subitems/ensure-subitems         :icon :label)
                  (pretty-subitems/apply-subitem-prototype :icon  icon-prototype-f)
                  (pretty-subitems/apply-subitem-prototype :label label-prototype-f))))

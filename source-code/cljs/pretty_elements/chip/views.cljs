@@ -5,6 +5,7 @@
               [pretty-accessories.tooltip.views :as tooltip.views]
               [pretty-elements.chip.attributes :as chip.attributes]
               [pretty-elements.chip.prototypes :as chip.prototypes]
+              [pretty-elements.adornment-group.views :as adornment-group.views]
               [pretty-elements.engine.api      :as pretty-elements.engine]
               [pretty-elements.methods.api     :as pretty-elements.methods]
               [pretty-models.api               :as pretty-models]
@@ -14,9 +15,11 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(def SHORTHAND-MAP {:label   label.views/SHORTHAND-KEY
-                    :tooltip tooltip.views/SHORTHAND-MAP})
-
+(def SHORTHAND-MAP {:end-adornment-group   adornment-group.views/SHORTHAND-MAP
+                    :label                 label.views/SHORTHAND-KEY
+                    :start-adornment-group adornment-group.views/SHORTHAND-MAP
+                    :tooltip               tooltip.views/SHORTHAND-MAP})
+ 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -25,14 +28,18 @@
   ;
   ; @param (keyword) id
   ; @param (map) props
-  ; {:label (map)(opt)
+  ; {:end-adornment-group (map)(opt)
+  ;  :label (map)(opt)
+  ;  :start-adornment-group (map)(opt)
   ;  :tooltip (map)(opt)
   ;  ...}
-  [id {:keys [label tooltip] :as props}]
+  [id {:keys [end-adornment-group label start-adornment-group tooltip] :as props}]
   [:div (chip.attributes/outer-attributes id props)
-        [(pretty-models/click-control-auto-tag props) (chip.attributes/inner-attributes id props)
-         (if label   [label.views/view   (pretty-subitems/subitem-id id :label)   label])
-         (if tooltip [tooltip.views/view (pretty-subitems/subitem-id id :tooltip) tooltip])]])
+        [:div (chip.attributes/inner-attributes id props)
+              (if start-adornment-group [adornment-group.views/view (pretty-subitems/subitem-id id :start-adornment-group) start-adornment-group])
+              (if label                 [label.views/view           (pretty-subitems/subitem-id id :label)                 label])
+              (if end-adornment-group   [adornment-group.views/view (pretty-subitems/subitem-id id :end-adornment-group)   end-adornment-group])
+              (if tooltip               [tooltip.views/view         (pretty-subitems/subitem-id id :tooltip)               tooltip])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -56,27 +63,20 @@
   ; [Label](pretty-ui/cljs/pretty-accessories/api.html#label)
   ; [Tooltip](pretty-ui/cljs/pretty-accessories/api.html#tooltip)
   ;
+  ; @links Implemented elements
+  ; [Adornment-group](pretty-ui/cljs/pretty-elements/api.html#adornment-group)
+  ;
   ; @links Implemented models
   ; [Flex container model](pretty-core/cljs/pretty-models/api.html#flex-container-model)
   ;
   ; @param (keyword)(opt) id
   ; @param (map) props
   ; Check out the implemented accessories.
+  ; Check out the implemented elements.
   ; Check out the implemented models.
   ;
   ; @usage (pretty-elements/chip.png)
-  ; [chip {:border-radius {:all :s}
-  ;        :fill-color    :primary
-  ;        :indent        {:horizontal :s}
-  ;        :label         {:content "My chip #1" :font-weight :semi-bold}
-  ;        :outer-width   :l}]
-  ;
-  ; [chip {:border-color  :highlight
-  ;        :border-radius {:all :s}
-  ;        :fill-color    :highlight
-  ;        :indent        {:horizontal :s}
-  ;        :label         {:content "My chip #2" :font-weight :semi-bold}
-  ;        :outer-width   :l}]
+  ; ...
   ([props]
    [view (random/generate-keyword) props])
 

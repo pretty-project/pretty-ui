@@ -1,11 +1,8 @@
 
 (ns pretty-inputs.header.prototypes
-    (:require [fruits.vector.api               :as vector]
-              [pretty-inputs.engine.api        :as pretty-inputs.engine]
-              [pretty-inputs.header.adornments :as header.adornments]
+    (:require [pretty-inputs.header.adornments :as header.adornments]
               [pretty-properties.api           :as pretty-properties]
-              [pretty-rules.api                :as pretty-rules]
-              [pretty-standards.api            :as pretty-standards]
+              [pretty-models.api :as pretty-models]
               [pretty-subitems.api             :as pretty-subitems]))
 
 ;; ----------------------------------------------------------------------------
@@ -40,18 +37,10 @@
   ;
   ; @return (map)
   [id props]
-  (let [on-mouse-up-f     (fn [_] (pretty-inputs.engine/focus-input! id props))
-        label-prototype-f (fn [%] (label-prototype                   id props %))]
+  (let [label-prototype-f (fn [%] (label-prototype id props %))]
        (-> props (pretty-properties/default-flex-props        {:horizontal-align :left :orientation :vertical})
-                 (pretty-properties/default-mouse-event-props {:on-mouse-up-f on-mouse-up-f})
                  (pretty-properties/default-outer-size-props  {:outer-size-unit :full-block})
-                 (pretty-standards/standard-flex-props)
-                 (pretty-standards/standard-inner-position-props)
-                 (pretty-standards/standard-inner-size-props)
-                 (pretty-standards/standard-outer-position-props)
-                 (pretty-standards/standard-outer-size-props)
-                 (pretty-rules/auto-align-scrollable-flex)
-                 (pretty-rules/auto-disable-mouse-events)
-                 (pretty-rules/auto-set-mounted)
-                 (pretty-subitems/ensure-subitem          :label)
+                 (pretty-models/flex-container-standard-props)
+                 (pretty-models/flex-container-rules)
+                 (pretty-subitems/ensure-subitems         :label)
                  (pretty-subitems/apply-subitem-prototype :label label-prototype-f))))

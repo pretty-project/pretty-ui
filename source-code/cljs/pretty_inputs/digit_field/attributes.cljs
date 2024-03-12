@@ -1,6 +1,6 @@
 
 (ns pretty-inputs.digit-field.attributes
-    (:require [pretty-attributes.api :as pretty-attributes]))
+    (:require [pretty-models.api :as pretty-models]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -8,16 +8,15 @@
 (defn inner-attributes
   ; @ignore
   ;
-  ; @param (keyword) field-id
-  ; @param (map) field-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}
-  [_ field-props]
+  [_ props]
   (-> {:class :pi-digit-field--inner}
-      (pretty-attributes/inner-space-attributes field-props)
-      (pretty-attributes/style-attributes       field-props)))
+      (pretty-models/flex-container-inner-attributes props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -25,14 +24,12 @@
 (defn outer-attributes
   ; @ignore
   ;
-  ; @param (keyword) field-id
-  ; @param (map) field-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
-  ; {}
-  [_ field-props]
+  ; {:class (keyword or keywords in vector)
+  ;  ...}
+  [_ props]
   (-> {:class :pi-digit-field--outer}
-      (pretty-attributes/class-attributes  field-props)
-      (pretty-attributes/outer-space-attributes field-props)
-      (pretty-attributes/state-attributes  field-props)
-      (pretty-attributes/theme-attributes   field-props)))
+      (pretty-models/flex-container-outer-attributes props)))

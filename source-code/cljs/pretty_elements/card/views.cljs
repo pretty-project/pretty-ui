@@ -81,9 +81,8 @@
   ; Check out the implemented models.
   ;
   ; @usage (pretty-elements/card.png)
-  ; [card {:border-color     :primary
+  ; [card {:border-color     :muted
   ;        :border-radius    {:all :m}
-  ;        :border-width     :xs
   ;        :content          "My card"
   ;        :fill-color       :highlight
   ;        :horizontal-align :center

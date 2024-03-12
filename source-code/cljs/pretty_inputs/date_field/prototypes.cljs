@@ -7,10 +7,9 @@
 (defn props-prototype
   ; @ignore
   ;
-  ; @param (keyword) field-id
-  ; @param (map) field-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
-  ; {:type (keyword)}
-  [_ field-props]
-  (merge field-props {:type :date}))
+  [_ props]
+  (-> props))

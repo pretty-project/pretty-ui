@@ -2,14 +2,12 @@
 (ns pretty-inputs.combo-box.views
     (:require [fruits.random.api                  :as random]
               [pretty-inputs.combo-box.attributes :as combo-box.attributes]
-              [pretty-inputs.combo-box.env        :as combo-box.env]
               [pretty-inputs.combo-box.prototypes :as combo-box.prototypes]
               [pretty-inputs.engine.api           :as pretty-inputs.engine]
               [pretty-inputs.methods.api :as pretty-inputs.methods]
               [pretty-inputs.field.views          :as field.views]
               [pretty-inputs.header.views         :as header.views]
               [pretty-inputs.option-group.views   :as option-group.views]
-              [pretty-inputs.text-field.views     :as text-field.views]
               [pretty-subitems.api                :as pretty-subitems]
               [reagent.core                       :as reagent]))
 
@@ -55,29 +53,24 @@
                          :reagent-render         (fn [_ props] [combo-box id props])}))
 
 (defn view
+  ; @description
+  ; Combo box style input.
+  ;
+  ; @links Implemented inputs
+  ; [Field](pretty-core/cljs/pretty-inputs/api.html#field)
+  ; [Header](pretty-core/cljs/pretty-inputs/api.html#header)
+  ; [Option-group](pretty-core/cljs/pretty-inputs/api.html#option-group)
+  ;
+  ; @links Implemented models
+  ; [Flex container model](pretty-core/cljs/pretty-models/api.html#flex-container-model)
+  ;
   ; @param (keyword)(opt) box-id
   ; @param (map) box-props
-  ; {:field-content-f (function)(opt)
-  ;   Default: return
-  ;  :field-value-f (function)(opt)
-  ;   Default: return
-  ;  :initial-options (vector)(opt)
-  ;  :max-selection (integer)(opt)
-  ;  :on-select (Re-Frame metamorphic-event)(opt)
-  ;  :option-component (Reagent component symbol)(opt)
-  ;   Default: pretty-inputs.combo-box.views/default-option-component
-  ;  :option-label-f (function)(opt)
-  ;   Default: return
-  ;  :option-value-f (function)(opt)
-  ;   Default: return
-  ;  :options (vector)(opt)
-  ;  :options-path (Re-Frame path vector)(opt)}
+  ; Check out the implemented inputs.
+  ; Check out the implemented models.
   ;
-  ; @usage
-  ; [combo-box {...}]
-  ;
-  ; @usage
-  ; [combo-box :my-combo-box {...}]
+  ; @usage (pretty-inputs/combo-box.png)
+  ; ...
   ([props]
    [view (random/generate-keyword) props])
 

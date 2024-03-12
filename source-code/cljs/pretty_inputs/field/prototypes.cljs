@@ -20,7 +20,8 @@
   [id props end-adornment-group]
   (let [on-mouse-down-f (fn [e] (dom/prevent-default e))
         on-mouse-up-f   (fn [_] (pretty-inputs.engine/focus-input! id props))]
-       (-> end-adornment-group (pretty-properties/default-mouse-event-props {:on-mouse-down-f on-mouse-down-f :on-mouse-up-f on-mouse-up-f}))))
+       (-> end-adornment-group (pretty-properties/merge-event-fn :on-mouse-down-f on-mouse-down-f)
+                               (pretty-properties/merge-event-fn :on-mouse-up-f   on-mouse-up-f))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -36,7 +37,8 @@
   [id props start-adornment-group]
   (let [on-mouse-down-f (fn [e] (dom/prevent-default e))
         on-mouse-up-f   (fn [_] (pretty-inputs.engine/focus-input! id props))]
-       (-> start-adornment-group (pretty-properties/default-mouse-event-props {:on-mouse-down-f on-mouse-down-f :on-mouse-up-f on-mouse-up-f}))))
+       (-> start-adornment-group (pretty-properties/merge-event-fn :on-mouse-down-f on-mouse-down-f)
+                                 (pretty-properties/merge-event-fn :on-mouse-up-f   on-mouse-up-f))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -53,9 +55,10 @@
   (let [on-mouse-down-f (fn [e] (dom/prevent-default e))
         on-mouse-up-f   (fn [_] (pretty-inputs.engine/focus-input! id props))]
        (if (pretty-inputs.engine/input-focused? id props)
-           (-> expandable (pretty-properties/default-mouse-event-props    {:on-mouse-down-f on-mouse-down-f :on-mouse-up-f on-mouse-up-f})
-                          (pretty-properties/default-outer-position-props {:outer-position :bottom :outer-position-base :external :outer-position-method :absolute :outer-layer :uppermost})
-                          (pretty-properties/default-outer-size-props     {:outer-width :parent})))))
+           (-> expandable (pretty-properties/default-outer-position-props {:outer-position :bottom :outer-position-base :external :outer-position-method :absolute :outer-layer :uppermost})
+                          (pretty-properties/default-outer-size-props     {:outer-width :parent})
+                          (pretty-properties/merge-event-fn :on-mouse-down-f on-mouse-down-f)
+                          (pretty-properties/merge-event-fn :on-mouse-up-f   on-mouse-up-f)))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

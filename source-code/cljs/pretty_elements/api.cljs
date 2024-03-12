@@ -6,6 +6,7 @@
               [pretty-elements.card.views                 :as card.views]
               [pretty-elements.blank.views :as blank.views]
               [pretty-elements.chip.views                 :as chip.views]
+              [pretty-elements.chip-group.views :as chip-group.views]
               [pretty-elements.column.views               :as column.views]
               [pretty-elements.crumb-group.views          :as crumb-group.views]
               [pretty-elements.crumb.views                :as crumb.views]
@@ -76,6 +77,7 @@
 (def button               button.views/view)
 (def card                 card.views/view)
 (def chip                 chip.views/view)
+(def chip-group           chip-group.views/view)
 (def column               column.views/view)
 (def crumb                crumb.views/view)
 (def crumb-group          crumb-group.views/view)

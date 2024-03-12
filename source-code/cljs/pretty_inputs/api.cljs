@@ -19,9 +19,7 @@
               [pretty-inputs.select-button.views   :as select-button.views]
               [pretty-inputs.select.views          :as select.views]
               [pretty-inputs.slider.views          :as slider.views]
-              [pretty-inputs.text-field.views      :as text-field.views]
-              [pretty-inputs.value-group.views     :as value-group.views]
-              [pretty-inputs.value.views           :as value.views]))
+              [pretty-inputs.text-field.views      :as text-field.views]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -47,5 +45,3 @@
 (def select-button   select-button.views/view)
 (def slider          slider.views/view)
 (def text-field      text-field.views/view)
-(def value           value.views/view)
-(def value-group     value-group.views/view)

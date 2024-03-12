@@ -7,9 +7,9 @@
 (defn props-prototype
   ; @ignore
   ;
-  ; @param (keyword) field-id
-  ; @param (map) field-props
+  ; @param (keyword) id
+  ; @param (map) props
   ;
   ; @return (map)
-  [_ field-props]
-  (-> field-props))
+  [_ props]
+  (-> props))
