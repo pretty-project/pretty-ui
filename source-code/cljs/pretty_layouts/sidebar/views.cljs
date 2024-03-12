@@ -37,10 +37,10 @@
         (if overlay [overlay.views/view (pretty-subitems/subitem-id id :overlay) overlay])
         [:div (sidebar.attributes/inner-attributes id props)
               (if header [header.views/view (pretty-subitems/subitem-id id :header) header])
-              (if body   [:div (sidebar.attributes/content-attributes id props)
-                               (if header [pretty-layouts.engine/layout-overlap-sensor (pretty-subitems/subitem-id id :header-sensor) header])
-                               (if body   [body.views/view                             (pretty-subitems/subitem-id id :body)          body])
-                               (if footer [pretty-layouts.engine/layout-overlap-sensor (pretty-subitems/subitem-id id :footer-sensor) footer])])
+              (if body   [:div (sidebar.attributes/scroll-container-attributes id props)
+                               [pretty-layouts.engine/layout-header-sensor id props]
+                               [body.views/view (pretty-subitems/subitem-id id :body) body]
+                               [pretty-layouts.engine/layout-footer-sensor id props]])
               (if footer [footer.views/view (pretty-subitems/subitem-id id :footer) footer])]])
 
 ;; ----------------------------------------------------------------------------

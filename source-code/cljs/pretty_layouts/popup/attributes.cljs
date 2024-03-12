@@ -5,7 +5,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn content-attributes
+(defn scroll-container-attributes
   ; @ignore
   ;
   ; @param (keyword) id
@@ -15,7 +15,7 @@
   ; {:class (keyword or keywords in vector)
   ;  ...}
   [_ props]
-  (-> {:class :pl-popup--content}
+  (-> {:class :pl-popup--scroll-container}
       (pretty-models/flex-container-content-attributes props)
       (pretty-models/plain-content-content-attributes  props)))
 

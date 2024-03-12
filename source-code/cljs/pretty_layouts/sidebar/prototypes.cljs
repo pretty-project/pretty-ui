@@ -1,9 +1,8 @@
 
 (ns pretty-layouts.sidebar.prototypes
-    (:require [pretty-layouts.engine.api :as pretty-layouts.engine]
-              [pretty-properties.api     :as pretty-properties]
+    (:require [pretty-properties.api :as pretty-properties]
               [pretty-models.api :as pretty-models]
-              [pretty-subitems.api       :as pretty-subitems]))
+              [pretty-subitems.api :as pretty-subitems]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -13,13 +12,14 @@
   ;
   ; @param (keyword) id
   ; @param (map) props
+  ; {:footer-overlapping? (boolean)(opt)
+  ;  ...}
   ; @param (map) footer
   ;
   ; @return (map)
-  [id _ footer]
-  (if (pretty-layouts.engine/layout-sensor-overlapping?  (pretty-subitems/subitem-id id :footer-sensor) footer)
-      (-> footer (pretty-properties/default-border-props {:border-color :default     :border-position :top :border-width :xxs}))
-      (-> footer (pretty-properties/default-border-props {:border-color :transparent :border-position :top :border-width :xxs}))))
+  [id {:keys [footer-overlapping?]} footer]
+  (if footer-overlapping? (-> footer (pretty-properties/default-border-props {:border-color :default     :border-position :top :border-width :xxs}))
+                          (-> footer (pretty-properties/default-border-props {:border-color :transparent :border-position :top :border-width :xxs}))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -29,13 +29,14 @@
   ;
   ; @param (keyword) id
   ; @param (map) props
+  ; {:header-overlapping? (boolean)(opt)
+  ;  ...}
   ; @param (map) header
   ;
   ; @return (map)
-  [id _ header]
-  (if (pretty-layouts.engine/layout-sensor-overlapping?  (pretty-subitems/subitem-id id :header-sensor) header)
-      (-> header (pretty-properties/default-border-props {:border-color :default     :border-position :bottom :border-width :xxs}))
-      (-> header (pretty-properties/default-border-props {:border-color :transparent :border-position :bottom :border-width :xxs}))))
+  [id {:keys [header-overlapping?]} header]
+  (if header-overlapping? (-> header (pretty-properties/default-border-props {:border-color :default     :border-position :bottom :border-width :xxs}))
+                          (-> header (pretty-properties/default-border-props {:border-color :transparent :border-position :bottom :border-width :xxs}))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

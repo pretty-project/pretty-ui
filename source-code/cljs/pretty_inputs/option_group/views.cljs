@@ -15,7 +15,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(def SHORTHAND-MAP {:options          option.views/SHORTHAND-MAP
+(def SHORTHAND-MAP {:options [option.views/SHORTHAND-MAP]
                     :placeholder-text placeholder-text.views/SHORTHAND-KEY})
 
 ;; ----------------------------------------------------------------------------
