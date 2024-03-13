@@ -2,7 +2,7 @@
 (ns pretty-inputs.multi-field.events
     (:require [fruits.vector.api              :as vector]
               [pretty-inputs.multi-field.subs :as multi-field.subs]
-              [re-frame.api                   :refer [r]]))
+              [re-frame.extra.api :refer [r]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

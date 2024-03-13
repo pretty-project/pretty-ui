@@ -2,7 +2,7 @@
 (ns pretty-inputs.slider.side-effects
     (:require [dom.api                    :as dom]
               [pretty-inputs.slider.state :as slider.state]
-              [re-frame.api               :as r]
+              [re-frame.extra.api :as r]
               [window.api                 :as window]))
 
 ;; ----------------------------------------------------------------------------

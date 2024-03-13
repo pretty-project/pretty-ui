@@ -16,7 +16,7 @@
 
 (ns x.ui.renderer.subs
     (:require [fruits.vector.api     :as vector]
-              [re-frame.api          :as r :refer [r]]
+              [re-frame.extra.api :as r :refer [r]]
               [x.ui.renderer.config  :as renderer.config]
               [x.ui.renderer.helpers :as renderer.helpers]))
 

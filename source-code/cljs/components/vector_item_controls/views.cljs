@@ -4,7 +4,7 @@
               [fruits.random.api                          :as random]
               [fruits.vector.api                          :as vector]
               [pretty-elements.api                        :as pretty-elements]
-              [re-frame.api                               :as r]))
+              [re-frame.extra.api :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

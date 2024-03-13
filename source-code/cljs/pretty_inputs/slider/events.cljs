@@ -1,7 +1,7 @@
 
 (ns pretty-inputs.slider.events
     (:require ;[pretty-inputs.input.events :as input.events]
-              [re-frame.api :as r :refer [r]]))
+              [re-frame.extra.api :as r :refer [r]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

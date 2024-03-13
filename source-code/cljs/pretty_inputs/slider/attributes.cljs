@@ -4,7 +4,7 @@
               [pretty-attributes.api             :as pretty-attributes]
               [pretty-inputs.slider.side-effects :as slider.side-effects]
               [pretty-inputs.slider.state        :as slider.state]
-              [re-frame.api                      :as r]))
+              [re-frame.extra.api :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

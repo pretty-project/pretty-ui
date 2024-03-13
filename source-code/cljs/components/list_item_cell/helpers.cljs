@@ -1,7 +1,7 @@
 
 (ns components.list-item-cell.helpers
     (:require [fruits.css.api :as css]
-              [re-frame.api   :as r]))
+              [re-frame.extra.api :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

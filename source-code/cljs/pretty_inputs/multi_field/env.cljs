@@ -2,7 +2,7 @@
 (ns pretty-inputs.multi-field.env
     (:require [fruits.vector.api     :as vector]
               [multitype-content.api :as multitype-content]
-              [re-frame.api          :as r]))
+              [re-frame.extra.api :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

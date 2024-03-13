@@ -1,7 +1,7 @@
 
 (ns components.consent-dialog.effects
     (:require [components.consent-dialog.views :as consent-dialog.views]
-              [re-frame.api                    :as r]))
+              [re-frame.extra.api :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -13,7 +13,7 @@
   ;  :label (multitype-content)(opt)
   ;  :primary-button (map)(opt)
   ;  :secondary-button (map)(opt)}
-  [r/event-vector<-id]
+  [r/ensure-subject-id]
   (fn [{:keys [db]} [_ dialog-id dialog-props]]
       [:x.ui/render-popup! :components.consent-dialog/view
                            {:content [consent-dialog.views/view dialog-id dialog-props]}]))

@@ -16,7 +16,7 @@
 
 (ns x.ui.renderer.events
     (:require [fruits.vector.api     :as vector]
-              [re-frame.api          :as r :refer [r]]
+              [re-frame.extra.api :as r :refer [r]]
               [re-frame.db.api       :as r.db]
               [time.api              :as time]
               [x.ui.renderer.helpers :as renderer.helpers]))

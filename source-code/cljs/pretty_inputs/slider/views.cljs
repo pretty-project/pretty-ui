@@ -5,7 +5,7 @@
               [pretty-inputs.slider.attributes :as slider.attributes]
               [pretty-inputs.slider.prototypes :as slider.prototypes]
               [pretty-presets.engine.api       :as pretty-presets.engine]
-              [re-frame.api                    :as r]
+              [re-frame.extra.api :as r]
               [reagent.core                    :as reagent]))
 
 ;; ----------------------------------------------------------------------------

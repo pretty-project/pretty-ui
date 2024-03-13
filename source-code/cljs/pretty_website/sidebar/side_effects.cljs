@@ -1,7 +1,7 @@
 
 (ns pretty-website.sidebar.side-effects
     (:require [pretty-website.sidebar.state :as sidebar.state]
-              [re-frame.api                 :as r]
+              [re-frame.extra.api :as r]
               [scroll-lock.api              :as scroll-lock]))
 
 ;; ----------------------------------------------------------------------------

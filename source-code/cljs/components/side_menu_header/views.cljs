@@ -5,7 +5,7 @@
               [fruits.string.api                      :as string]
               [pretty-elements.api                    :as pretty-elements]
               [pretty-elements.api                    :as pretty-elements]
-              [re-frame.api                           :as r]))
+              [re-frame.extra.api :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

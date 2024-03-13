@@ -3,7 +3,7 @@
     (:require [components.copyright-label.prototypes :as copyright-label.prototypes]
               [fruits.random.api                     :as random]
               [pretty-elements.api                   :as pretty-elements]
-              [re-frame.api                          :as r]))
+              [re-frame.extra.api :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

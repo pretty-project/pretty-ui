@@ -1,7 +1,7 @@
 
 (ns components.context-menu.effects
     (:require [components.context-menu.views :as context-menu.views]
-              [re-frame.api                  :as r]))
+              [re-frame.extra.api :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -21,7 +21,7 @@
   ;
   ; @usage
   ; [:components.context-menu/render-menu! :my-menu {...}]
-  [r/event-vector<-id]
+  [r/ensure-subject-id]
   (fn [{:keys [db]} [_ menu-id menu-props]]
       [:x.ui/render-popup! :components.context-menu/view
                            {:content [context-menu.views/view menu-id menu-props]}]))
