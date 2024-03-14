@@ -15,7 +15,7 @@ If the surface of the combo-box ...
 ... displays options, pressing the ESC button:
     - hides the expandable.
     - discards the highlight on the highlighted option.
-... doesn't display any options, pressing the ESC button:
+... does not display any options, pressing the ESC button:
     - fires the original ESC event of the text-field.
 
 ### ENTER pressed
