@@ -1,9 +1,9 @@
 
 (ns pretty-inputs.select-button.views
     (:require [fruits.random.api                      :as random]
-              [pretty-accessories.icon.views :as icon.views]
-              [pretty-accessories.label.views :as label.views]
-              [pretty-accessories.tooltip.views :as tooltip.views]
+              [pretty-accessories.icon.views          :as icon.views]
+              [pretty-accessories.label.views         :as label.views]
+              [pretty-accessories.tooltip.views       :as tooltip.views]
               [pretty-inputs.engine.api               :as pretty-inputs.engine]
               [pretty-inputs.methods.api              :as pretty-inputs.methods]
               [pretty-inputs.select-button.attributes :as select-button.attributes]

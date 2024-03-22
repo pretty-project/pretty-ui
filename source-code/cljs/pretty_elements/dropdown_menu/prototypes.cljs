@@ -1,8 +1,8 @@
 
 (ns pretty-elements.dropdown-menu.prototypes
     (:require [pretty-elements.dropdown-menu.side-effects :as dropdown-menu.side-effects]
+              [pretty-models.api                          :as pretty-models]
               [pretty-properties.api                      :as pretty-properties]
-              [pretty-models.api :as pretty-models]
               [pretty-subitems.api                        :as pretty-subitems]))
 
 ;; ----------------------------------------------------------------------------

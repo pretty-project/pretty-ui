@@ -4,7 +4,7 @@
               [pretty-elements.engine.api       :as pretty-elements.engine]
               [pretty-elements.ghost.attributes :as ghost.attributes]
               [pretty-elements.ghost.prototypes :as ghost.prototypes]
-              [pretty-elements.methods.api :as pretty-elements.methods]
+              [pretty-elements.methods.api      :as pretty-elements.methods]
               [reagent.core                     :as reagent]))
 
 ;; ----------------------------------------------------------------------------

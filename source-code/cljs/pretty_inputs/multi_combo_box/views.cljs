@@ -2,7 +2,7 @@
 (ns pretty-inputs.multi-combo-box.views
     (:require [fruits.random.api                        :as random]
               [pretty-inputs.engine.api                 :as pretty-inputs.engine]
-              [pretty-inputs.methods.api                 :as pretty-inputs.methods]
+              [pretty-inputs.methods.api                :as pretty-inputs.methods]
               [pretty-inputs.multi-combo-box.attributes :as multi-combo-box.attributes]
               [pretty-inputs.multi-combo-box.prototypes :as multi-combo-box.prototypes]
               [pretty-subitems.api                      :as pretty-subitems]

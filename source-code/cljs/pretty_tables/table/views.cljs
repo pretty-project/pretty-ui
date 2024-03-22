@@ -3,12 +3,12 @@
     (:require [fruits.hiccup.api              :as hiccup]
               [fruits.random.api              :as random]
               [pretty-elements.engine.api     :as pretty-elements.engine]
-              [pretty-elements.methods.api :as pretty-elements.methods]
+              [pretty-elements.methods.api    :as pretty-elements.methods]
+              [pretty-subitems.api            :as pretty-subitems]
               [pretty-tables.row.views        :as row.views]
               [pretty-tables.table.attributes :as table.attributes]
               [pretty-tables.table.prototypes :as table.prototypes]
-              [reagent.core                   :as reagent]
-              [pretty-subitems.api :as pretty-subitems]))
+              [reagent.core                   :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

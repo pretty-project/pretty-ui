@@ -3,7 +3,7 @@
     (:require [fruits.hiccup.api                     :as hiccup]
               [fruits.random.api                     :as random]
               [fruits.vector.api                     :as vector]
-              [pretty-guides.placeholder-text.views :as placeholder-text.views]
+              [pretty-guides.placeholder-text.views  :as placeholder-text.views]
               [pretty-inputs.engine.api              :as pretty-inputs.engine]
               [pretty-inputs.methods.api             :as pretty-inputs.methods]
               [pretty-inputs.option-group.attributes :as option-group.attributes]

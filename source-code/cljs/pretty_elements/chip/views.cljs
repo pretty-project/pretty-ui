@@ -1,16 +1,16 @@
 
 (ns pretty-elements.chip.views
-    (:require [fruits.random.api               :as random]
-              [pretty-accessories.label.views :as label.views]
-              [pretty-accessories.tooltip.views :as tooltip.views]
-              [pretty-elements.chip.attributes :as chip.attributes]
-              [pretty-elements.chip.prototypes :as chip.prototypes]
+    (:require [fruits.random.api                     :as random]
+              [pretty-accessories.label.views        :as label.views]
+              [pretty-accessories.tooltip.views      :as tooltip.views]
               [pretty-elements.adornment-group.views :as adornment-group.views]
-              [pretty-elements.engine.api      :as pretty-elements.engine]
-              [pretty-elements.methods.api     :as pretty-elements.methods]
-              [pretty-models.api               :as pretty-models]
-              [pretty-subitems.api             :as pretty-subitems]
-              [reagent.core                    :as reagent]))
+              [pretty-elements.chip.attributes       :as chip.attributes]
+              [pretty-elements.chip.prototypes       :as chip.prototypes]
+              [pretty-elements.engine.api            :as pretty-elements.engine]
+              [pretty-elements.methods.api           :as pretty-elements.methods]
+              [pretty-models.api                     :as pretty-models]
+              [pretty-subitems.api                   :as pretty-subitems]
+              [reagent.core                          :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

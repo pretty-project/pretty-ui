@@ -1,9 +1,9 @@
 
 (ns pretty-inputs.counter.prototypes
-    (:require [pretty-properties.api :as pretty-properties]
-              [pretty-subitems.api :as pretty-subitems]
-              [pretty-models.api :as pretty-models]
-              [pretty-inputs.engine.api :as pretty-inputs.engine]))
+    (:require [pretty-inputs.engine.api :as pretty-inputs.engine]
+              [pretty-models.api        :as pretty-models]
+              [pretty-properties.api    :as pretty-properties]
+              [pretty-subitems.api      :as pretty-subitems]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

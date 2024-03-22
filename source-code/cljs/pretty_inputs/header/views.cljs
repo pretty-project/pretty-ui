@@ -1,12 +1,12 @@
 
 (ns pretty-inputs.header.views
     (:require [fruits.random.api               :as random]
-              [pretty-accessories.label.views :as label.views]
+              [pretty-accessories.label.views  :as label.views]
               [pretty-accessories.marker.views :as marker.views]
-              [pretty-elements.header.views :as header.views]
+              [pretty-elements.header.views    :as header.views]
+              [pretty-guides.error-text.views  :as error-text.views]
               [pretty-guides.helper-text.views :as helper-text.views]
-              [pretty-guides.error-text.views :as error-text.views]
-              [pretty-guides.info-text.views :as info-text.views]
+              [pretty-guides.info-text.views   :as info-text.views]
               [pretty-inputs.engine.api        :as pretty-inputs.engine]
               [pretty-inputs.header.attributes :as header.attributes]
               [pretty-inputs.header.prototypes :as header.prototypes]

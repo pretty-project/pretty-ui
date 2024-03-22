@@ -7,8 +7,8 @@
               [pretty-diagrams.circle-diagram.prototypes :as circle-diagram.prototypes]
               [pretty-diagrams.engine.api                :as pretty-diagrams.engine]
               [pretty-diagrams.methods.api               :as pretty-diagrams.methods]
-              [reagent.core                              :as reagent]
-              [pretty-subitems.api :as pretty-subitems]))
+              [pretty-subitems.api                       :as pretty-subitems]
+              [reagent.core                              :as reagent]))
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 

@@ -1,7 +1,7 @@
 
 (ns pretty-elements.horizontal-separator.views
     (:require [fruits.random.api                               :as random]
-              [pretty-accessories.label.views :as label.views]
+              [pretty-accessories.label.views                  :as label.views]
               [pretty-elements.engine.api                      :as pretty-elements.engine]
               [pretty-elements.horizontal-separator.attributes :as horizontal-separator.attributes]
               [pretty-elements.horizontal-separator.prototypes :as horizontal-separator.prototypes]

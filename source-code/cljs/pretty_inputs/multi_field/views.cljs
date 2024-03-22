@@ -8,7 +8,7 @@
               [pretty-inputs.multi-field.prototypes :as multi-field.prototypes]
               [pretty-inputs.multi-field.utils      :as multi-field.utils]
               [pretty-inputs.text-field.views       :as text-field.views]
-              [re-frame.extra.api :as r]
+              [re-frame.extra.api                   :as r]
               [reagent.core                         :as reagent]))
 
 ;; ----------------------------------------------------------------------------

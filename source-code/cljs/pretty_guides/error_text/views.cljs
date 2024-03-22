@@ -1,11 +1,11 @@
 
 (ns pretty-guides.error-text.views
     (:require [fruits.random.api                   :as random]
+              [pretty-accessories.engine.api       :as pretty-accessories.engine]
+              [pretty-accessories.methods.api      :as pretty-accessories.methods]
               [pretty-guides.error-text.attributes :as error-text.attributes]
               [pretty-guides.error-text.prototypes :as error-text.prototypes]
-              [pretty-accessories.methods.api :as pretty-accessories.methods]
-              [pretty-accessories.engine.api :as pretty-accessories.engine]
-              [reagent.core :as reagent]))
+              [reagent.core                        :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

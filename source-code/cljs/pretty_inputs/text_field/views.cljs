@@ -2,9 +2,9 @@
 (ns pretty-inputs.text-field.views
     (:require [fruits.random.api                   :as random]
               [pretty-inputs.engine.api            :as pretty-inputs.engine]
-              [pretty-inputs.methods.api :as pretty-inputs.methods]
               [pretty-inputs.field.views           :as field.views]
               [pretty-inputs.header.views          :as header.views]
+              [pretty-inputs.methods.api           :as pretty-inputs.methods]
               [pretty-inputs.text-field.attributes :as text-field.attributes]
               [pretty-inputs.text-field.prototypes :as text-field.prototypes]
               [pretty-subitems.api                 :as pretty-subitems]

@@ -1,7 +1,7 @@
 
 (ns pretty-elements.vertical-separator.views
     (:require [fruits.random.api                             :as random]
-              [pretty-accessories.label.views :as label.views]
+              [pretty-accessories.label.views                :as label.views]
               [pretty-elements.engine.api                    :as pretty-elements.engine]
               [pretty-elements.methods.api                   :as pretty-elements.methods]
               [pretty-elements.vertical-separator.attributes :as vertical-separator.attributes]

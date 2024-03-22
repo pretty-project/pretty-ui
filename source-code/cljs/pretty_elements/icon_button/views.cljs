@@ -1,12 +1,12 @@
 
 (ns pretty-elements.icon-button.views
     (:require [fruits.random.api                      :as random]
-              [pretty-accessories.label.views :as label.views]
-              [pretty-accessories.icon.views :as icon.views]
-              [pretty-accessories.badge.views :as badge.views]
-              [pretty-accessories.marker.views :as marker.views]
-              [pretty-accessories.cover.views :as cover.views]
-              [pretty-accessories.tooltip.views :as tooltip.views]
+              [pretty-accessories.badge.views         :as badge.views]
+              [pretty-accessories.cover.views         :as cover.views]
+              [pretty-accessories.icon.views          :as icon.views]
+              [pretty-accessories.label.views         :as label.views]
+              [pretty-accessories.marker.views        :as marker.views]
+              [pretty-accessories.tooltip.views       :as tooltip.views]
               [pretty-elements.engine.api             :as pretty-elements.engine]
               [pretty-elements.icon-button.attributes :as icon-button.attributes]
               [pretty-elements.icon-button.prototypes :as icon-button.prototypes]

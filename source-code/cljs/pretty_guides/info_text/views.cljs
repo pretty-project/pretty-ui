@@ -1,11 +1,11 @@
 
 (ns pretty-guides.info-text.views
     (:require [fruits.random.api                  :as random]
+              [pretty-accessories.engine.api      :as pretty-accessories.engine]
+              [pretty-accessories.methods.api     :as pretty-accessories.methods]
               [pretty-guides.info-text.attributes :as info-text.attributes]
               [pretty-guides.info-text.prototypes :as info-text.prototypes]
-              [pretty-accessories.methods.api :as pretty-accessories.methods]
-              [pretty-accessories.engine.api :as pretty-accessories.engine]
-              [reagent.core :as reagent]))
+              [reagent.core                       :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

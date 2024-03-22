@@ -1,8 +1,8 @@
 
 (ns pretty-inputs.header.prototypes
     (:require [pretty-inputs.header.adornments :as header.adornments]
+              [pretty-models.api               :as pretty-models]
               [pretty-properties.api           :as pretty-properties]
-              [pretty-models.api :as pretty-models]
               [pretty-subitems.api             :as pretty-subitems]))
 
 ;; ----------------------------------------------------------------------------

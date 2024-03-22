@@ -1,10 +1,10 @@
 
 (ns pretty-inputs.radio-button.prototypes
-    (:require [fruits.map.api        :as map]
+    (:require [form-validator.api    :as form-validator]
+              [fruits.map.api        :as map]
+              [pretty-models.api     :as pretty-models]
               [pretty-properties.api :as pretty-properties]
-              [pretty-models.api :as pretty-models]
-              [pretty-subitems.api   :as pretty-subitems]
-              [form-validator.api :as form-validator]))
+              [pretty-subitems.api   :as pretty-subitems]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

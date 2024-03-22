@@ -1,11 +1,11 @@
 
 (ns pretty-inputs.combo-box.prototypes
-    (:require [fruits.string.api        :as string]
+    (:require [form-validator.api       :as form-validator]
+              [fruits.string.api        :as string]
               [pretty-inputs.engine.api :as pretty-inputs.engine]
+              [pretty-models.api        :as pretty-models]
               [pretty-properties.api    :as pretty-properties]
-              [pretty-models.api :as pretty-models]
-              [pretty-subitems.api      :as pretty-subitems]
-              [form-validator.api :as form-validator]))
+              [pretty-subitems.api      :as pretty-subitems]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -2,8 +2,8 @@
 (ns pretty-inputs.field.prototypes
     (:require [dom.api                  :as dom]
               [pretty-inputs.engine.api :as pretty-inputs.engine]
+              [pretty-models.api        :as pretty-models]
               [pretty-properties.api    :as pretty-properties]
-              [pretty-models.api :as pretty-models]
               [pretty-subitems.api      :as pretty-subitems]))
 
 ;; ----------------------------------------------------------------------------

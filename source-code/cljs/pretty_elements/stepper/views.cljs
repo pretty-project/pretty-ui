@@ -2,9 +2,9 @@
 (ns pretty-elements.stepper.views
     (:require [fruits.random.api                  :as random]
               [pretty-elements.engine.api         :as pretty-elements.engine]
+              [pretty-elements.methods.api        :as pretty-elements.methods]
               [pretty-elements.stepper.attributes :as stepper.attributes]
               [pretty-elements.stepper.prototypes :as stepper.prototypes]
-              [pretty-elements.methods.api :as pretty-elements.methods]
               [reagent.core                       :as reagent]))
 
 ;; ----------------------------------------------------------------------------

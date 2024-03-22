@@ -1,8 +1,8 @@
 
 (ns pretty-elements.crumb.views
     (:require [fruits.random.api                :as random]
-              [pretty-accessories.label.views :as label.views]
-              [pretty-accessories.bullet.views :as bullet.views]
+              [pretty-accessories.bullet.views  :as bullet.views]
+              [pretty-accessories.label.views   :as label.views]
               [pretty-elements.crumb.attributes :as crumb.attributes]
               [pretty-elements.crumb.prototypes :as crumb.prototypes]
               [pretty-elements.engine.api       :as pretty-elements.engine]

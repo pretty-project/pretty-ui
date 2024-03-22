@@ -1,17 +1,17 @@
 
 (ns pretty-elements.card.views
-    (:require [fruits.random.api               :as random]
-              [pretty-accessories.cover.views :as cover.views]
+    (:require [fruits.random.api                :as random]
+              [pretty-accessories.badge.views   :as badge.views]
+              [pretty-accessories.cover.views   :as cover.views]
+              [pretty-accessories.marker.views  :as marker.views]
               [pretty-accessories.tooltip.views :as tooltip.views]
-              [pretty-accessories.marker.views :as marker.views]
-              [pretty-accessories.badge.views :as badge.views]
-              [pretty-elements.card.attributes :as card.attributes]
-              [pretty-elements.card.prototypes :as card.prototypes]
-              [pretty-elements.engine.api      :as pretty-elements.engine]
-              [pretty-elements.methods.api     :as pretty-elements.methods]
-              [pretty-models.api               :as pretty-models]
-              [pretty-subitems.api             :as pretty-subitems]
-              [reagent.core                    :as reagent]))
+              [pretty-elements.card.attributes  :as card.attributes]
+              [pretty-elements.card.prototypes  :as card.prototypes]
+              [pretty-elements.engine.api       :as pretty-elements.engine]
+              [pretty-elements.methods.api      :as pretty-elements.methods]
+              [pretty-models.api                :as pretty-models]
+              [pretty-subitems.api              :as pretty-subitems]
+              [reagent.core                     :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

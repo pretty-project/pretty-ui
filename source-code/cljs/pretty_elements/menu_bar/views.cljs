@@ -6,9 +6,9 @@
               [pretty-elements.menu-bar.attributes :as menu-bar.attributes]
               [pretty-elements.menu-bar.prototypes :as menu-bar.prototypes]
               [pretty-elements.menu-item.views     :as menu-item.views]
-              [pretty-elements.methods.api :as pretty-elements.methods]
-              [reagent.core                        :as reagent]
-              [pretty-subitems.api :as pretty-subitems]))
+              [pretty-elements.methods.api         :as pretty-elements.methods]
+              [pretty-subitems.api                 :as pretty-subitems]
+              [reagent.core                        :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

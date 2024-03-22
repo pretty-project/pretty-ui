@@ -1,7 +1,7 @@
 
 (ns pretty-elements.header.views
     (:require [fruits.random.api                     :as random]
-              [pretty-accessories.label.views :as label.views]
+              [pretty-accessories.label.views        :as label.views]
               [pretty-elements.adornment-group.views :as adornment-group.views]
               [pretty-elements.engine.api            :as pretty-elements.engine]
               [pretty-elements.header.attributes     :as header.attributes]

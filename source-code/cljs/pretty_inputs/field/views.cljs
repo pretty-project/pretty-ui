@@ -1,16 +1,16 @@
 
 (ns pretty-inputs.field.views
-    (:require [fruits.random.api              :as random]
-              [pretty-elements.expandable.views :as expandable.views]
+    (:require [fruits.random.api                     :as random]
               [pretty-elements.adornment-group.views :as adornment-group.views]
-              [pretty-guides.placeholder-text.views :as placeholder-text.views]
-              [pretty-inputs.engine.api       :as pretty-inputs.engine]
-              [pretty-inputs.field.attributes :as field.attributes]
-              [pretty-inputs.field.prototypes :as field.prototypes]
-              [pretty-inputs.methods.api      :as pretty-inputs.methods]
-              [pretty-models.api              :as pretty-models]
-              [pretty-subitems.api            :as pretty-subitems]
-              [reagent.core                   :as reagent]))
+              [pretty-elements.expandable.views      :as expandable.views]
+              [pretty-guides.placeholder-text.views  :as placeholder-text.views]
+              [pretty-inputs.engine.api              :as pretty-inputs.engine]
+              [pretty-inputs.field.attributes        :as field.attributes]
+              [pretty-inputs.field.prototypes        :as field.prototypes]
+              [pretty-inputs.methods.api             :as pretty-inputs.methods]
+              [pretty-models.api                     :as pretty-models]
+              [pretty-subitems.api                   :as pretty-subitems]
+              [reagent.core                          :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -2,9 +2,9 @@
 (ns pretty-elements.vertical-spacer.views
     (:require [fruits.random.api                          :as random]
               [pretty-elements.engine.api                 :as pretty-elements.engine]
+              [pretty-elements.methods.api                :as pretty-elements.methods]
               [pretty-elements.vertical-spacer.attributes :as vertical-spacer.attributes]
               [pretty-elements.vertical-spacer.prototypes :as vertical-spacer.prototypes]
-              [pretty-elements.methods.api :as pretty-elements.methods]
               [reagent.core                               :as reagent]))
 
 ;; ----------------------------------------------------------------------------

@@ -4,8 +4,8 @@
               [pretty-inputs.checkbox.attributes :as checkbox.attributes]
               [pretty-inputs.checkbox.prototypes :as checkbox.prototypes]
               [pretty-inputs.engine.api          :as pretty-inputs.engine]
-              [pretty-inputs.methods.api :as pretty-inputs.methods]
               [pretty-inputs.header.views        :as header.views]
+              [pretty-inputs.methods.api         :as pretty-inputs.methods]
               [pretty-inputs.option-group.views  :as option-group.views]
               [pretty-subitems.api               :as pretty-subitems]
               [reagent.core                      :as reagent]))

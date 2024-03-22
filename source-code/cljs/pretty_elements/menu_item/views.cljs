@@ -1,11 +1,11 @@
 
 (ns pretty-elements.menu-item.views
     (:require [fruits.random.api                    :as random]
-              [pretty-accessories.label.views :as label.views]
-              [pretty-accessories.marker.views :as marker.views]
-              [pretty-accessories.icon.views :as icon.views]
-              [pretty-accessories.tooltip.views :as tooltip.views]
-              [pretty-accessories.badge.views :as badge.views]
+              [pretty-accessories.badge.views       :as badge.views]
+              [pretty-accessories.icon.views        :as icon.views]
+              [pretty-accessories.label.views       :as label.views]
+              [pretty-accessories.marker.views      :as marker.views]
+              [pretty-accessories.tooltip.views     :as tooltip.views]
               [pretty-elements.engine.api           :as pretty-elements.engine]
               [pretty-elements.menu-item.attributes :as menu-item.attributes]
               [pretty-elements.menu-item.prototypes :as menu-item.prototypes]

@@ -2,7 +2,7 @@
 (ns pretty-tables.cell.views
     (:require [fruits.random.api             :as random]
               [pretty-elements.engine.api    :as pretty-elements.engine]
-              [pretty-elements.methods.api :as pretty-elements.methods]
+              [pretty-elements.methods.api   :as pretty-elements.methods]
               [pretty-tables.cell.attributes :as cell.attributes]
               [pretty-tables.cell.prototypes :as cell.prototypes]
               [reagent.core                  :as reagent]))

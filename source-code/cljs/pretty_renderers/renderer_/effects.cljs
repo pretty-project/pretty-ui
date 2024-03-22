@@ -16,8 +16,8 @@
 
 (ns x.ui.renderer.effects
     (:require [fruits.hiccup.api     :as hiccup]
-              [re-frame.extra.api :as r :refer [r]]
               [re-frame.db.api       :as r.db]
+              [re-frame.extra.api    :as r :refer [r]]
               [x.ui.renderer.config  :as renderer.config]
               [x.ui.renderer.events  :as renderer.events]
               [x.ui.renderer.helpers :as renderer.helpers]

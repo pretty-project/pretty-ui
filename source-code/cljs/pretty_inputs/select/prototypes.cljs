@@ -1,11 +1,11 @@
 
 (ns pretty-inputs.select.prototypes
     (:require [dynamic-props.api                 :as dynamic-props]
+              [form-validator.api                :as form-validator]
               [pretty-inputs.select.side-effects :as select.side-effects]
+              [pretty-models.api                 :as pretty-models]
               [pretty-properties.api             :as pretty-properties]
-              [pretty-models.api                  :as pretty-models]
-              [pretty-subitems.api               :as pretty-subitems]
-              [form-validator.api :as form-validator]))
+              [pretty-subitems.api               :as pretty-subitems]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

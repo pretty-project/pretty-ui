@@ -1,13 +1,13 @@
 
 (ns pretty-inputs.counter.views
     (:require [fruits.random.api                :as random]
+              [pretty-accessories.label.views   :as label.views]
+              [pretty-elements.button.views     :as button.views]
               [pretty-inputs.counter.attributes :as counter.attributes]
               [pretty-inputs.counter.prototypes :as counter.prototypes]
               [pretty-inputs.engine.api         :as pretty-inputs.engine]
-              [pretty-inputs.methods.api         :as pretty-inputs.methods]
-              [pretty-elements.button.views :as button.views]
-              [pretty-accessories.label.views :as label.views]
-              [pretty-subitems.api :as pretty-subitems]
+              [pretty-inputs.methods.api        :as pretty-inputs.methods]
+              [pretty-subitems.api              :as pretty-subitems]
               [reagent.core                     :as reagent]))
 
 ;; ----------------------------------------------------------------------------

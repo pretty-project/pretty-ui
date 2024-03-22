@@ -1,10 +1,10 @@
 
 (ns pretty-elements.toggle.views
     (:require [fruits.random.api                 :as random]
-              [pretty-accessories.cover.views :as cover.views]
-              [pretty-accessories.badge.views :as badge.views]
-              [pretty-accessories.tooltip.views :as tooltip.views]
-              [pretty-accessories.marker.views :as marker.views]
+              [pretty-accessories.badge.views    :as badge.views]
+              [pretty-accessories.cover.views    :as cover.views]
+              [pretty-accessories.marker.views   :as marker.views]
+              [pretty-accessories.tooltip.views  :as tooltip.views]
               [pretty-elements.engine.api        :as pretty-elements.engine]
               [pretty-elements.methods.api       :as pretty-elements.methods]
               [pretty-elements.toggle.attributes :as toggle.attributes]

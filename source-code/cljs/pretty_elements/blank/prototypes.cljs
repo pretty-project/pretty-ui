@@ -1,6 +1,6 @@
 
 (ns pretty-elements.blank.prototypes
-    (:require [pretty-models.api     :as pretty-models]))
+    (:require [pretty-models.api :as pretty-models]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

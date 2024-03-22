@@ -1,6 +1,6 @@
 
 (ns pretty-inputs.date-field.views
-    (:require [fruits.random.api :as random]
+    (:require [fruits.random.api                   :as random]
               [pretty-inputs.date-field.prototypes :as date-field.prototypes]))
 
 ;; ----------------------------------------------------------------------------

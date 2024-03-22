@@ -1,7 +1,7 @@
 
 (ns components.context-menu.effects
     (:require [components.context-menu.views :as context-menu.views]
-              [re-frame.extra.api :as r]))
+              [re-frame.extra.api            :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

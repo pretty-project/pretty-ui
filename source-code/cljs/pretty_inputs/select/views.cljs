@@ -2,16 +2,16 @@
 (ns pretty-inputs.select.views
     (:require [fruits.hiccup.api                 :as hiccup]
               [fruits.random.api                 :as random]
-              [pretty-elements.button.views :as button.views]
+              [pretty-elements.button.views      :as button.views]
               [pretty-elements.icon-button.views :as icon-button.views]
               [pretty-inputs.engine.api          :as pretty-inputs.engine]
               [pretty-inputs.header.views        :as header.views]
+              [pretty-inputs.methods.api         :as pretty-inputs.methods]
               [pretty-inputs.option-group.views  :as option-group.views]
-              [pretty-inputs.methods.api :as pretty-inputs.methods]
               [pretty-inputs.select-button.views :as select-button.views]
               [pretty-inputs.select.attributes   :as select.attributes]
               [pretty-inputs.select.prototypes   :as select.prototypes]
-              [pretty-layouts.popup.views :as popup.views]
+              [pretty-layouts.popup.views        :as popup.views]
               [pretty-subitems.api               :as pretty-subitems]
               [reagent.core                      :as reagent]))
 

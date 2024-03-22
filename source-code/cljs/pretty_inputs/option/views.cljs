@@ -1,8 +1,8 @@
 
 (ns pretty-inputs.option.views
     (:require [fruits.random.api               :as random]
-              [pretty-accessories.icon.views :as icon.views]
-              [pretty-accessories.label.views :as label.views]
+              [pretty-accessories.icon.views   :as icon.views]
+              [pretty-accessories.label.views  :as label.views]
               [pretty-guides.helper-text.views :as helper-text.views]
               [pretty-inputs.engine.api        :as pretty-inputs.engine]
               [pretty-inputs.methods.api       :as pretty-inputs.methods]

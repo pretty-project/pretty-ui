@@ -1,7 +1,7 @@
 
 (ns pretty-layouts.sidebar.views
     (:require [fruits.random.api                 :as random]
-              [pretty-accessories.overlay.views :as overlay.views]
+              [pretty-accessories.overlay.views  :as overlay.views]
               [pretty-layouts.body.views         :as body.views]
               [pretty-layouts.engine.api         :as pretty-layouts.engine]
               [pretty-layouts.footer.views       :as footer.views]

@@ -1,8 +1,8 @@
 
 (ns pretty-elements.thumbnail.prototypes
     (:require [pretty-elements.image.prototypes :as image.prototypes]
+              [pretty-models.api                :as pretty-models]
               [pretty-properties.api            :as pretty-properties]
-              [pretty-models.api :as pretty-models]
               [pretty-subitems.api              :as pretty-subitems]))
 
 ;; ----------------------------------------------------------------------------

@@ -1,16 +1,16 @@
 
 (ns pretty-layouts.popup.views
-    (:require [fruits.random.api               :as random]
+    (:require [fruits.random.api                :as random]
               [pretty-accessories.overlay.views :as overlay.views]
-              [pretty-layouts.body.views       :as body.views]
-              [pretty-layouts.engine.api       :as pretty-layouts.engine]
-              [pretty-layouts.footer.views     :as footer.views]
-              [pretty-layouts.header.views     :as header.views]
-              [pretty-layouts.methods.api      :as pretty-layouts.methods]
-              [pretty-layouts.popup.attributes :as popup.attributes]
-              [pretty-layouts.popup.prototypes :as popup.prototypes]
-              [pretty-subitems.api             :as pretty-subitems]
-              [reagent.core                    :as reagent]))
+              [pretty-layouts.body.views        :as body.views]
+              [pretty-layouts.engine.api        :as pretty-layouts.engine]
+              [pretty-layouts.footer.views      :as footer.views]
+              [pretty-layouts.header.views      :as header.views]
+              [pretty-layouts.methods.api       :as pretty-layouts.methods]
+              [pretty-layouts.popup.attributes  :as popup.attributes]
+              [pretty-layouts.popup.prototypes  :as popup.prototypes]
+              [pretty-subitems.api              :as pretty-subitems]
+              [reagent.core                     :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

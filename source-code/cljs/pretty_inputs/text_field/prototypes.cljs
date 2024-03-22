@@ -1,9 +1,9 @@
 
 (ns pretty-inputs.text-field.prototypes
-    (:require [pretty-properties.api :as pretty-properties]
-              [pretty-models.api :as pretty-models]
-              [pretty-subitems.api :as pretty-subitems]
-              [form-validator.api :as form-validator]))
+    (:require [form-validator.api    :as form-validator]
+              [pretty-models.api     :as pretty-models]
+              [pretty-properties.api :as pretty-properties]
+              [pretty-subitems.api   :as pretty-subitems]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

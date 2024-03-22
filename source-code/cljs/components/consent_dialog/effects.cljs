@@ -1,7 +1,7 @@
 
 (ns components.consent-dialog.effects
     (:require [components.consent-dialog.views :as consent-dialog.views]
-              [re-frame.extra.api :as r]))
+              [re-frame.extra.api              :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

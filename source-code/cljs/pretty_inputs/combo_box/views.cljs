@@ -4,9 +4,9 @@
               [pretty-inputs.combo-box.attributes :as combo-box.attributes]
               [pretty-inputs.combo-box.prototypes :as combo-box.prototypes]
               [pretty-inputs.engine.api           :as pretty-inputs.engine]
-              [pretty-inputs.methods.api :as pretty-inputs.methods]
               [pretty-inputs.field.views          :as field.views]
               [pretty-inputs.header.views         :as header.views]
+              [pretty-inputs.methods.api          :as pretty-inputs.methods]
               [pretty-inputs.option-group.views   :as option-group.views]
               [pretty-subitems.api                :as pretty-subitems]
               [reagent.core                       :as reagent]))

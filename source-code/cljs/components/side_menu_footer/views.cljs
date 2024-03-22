@@ -5,7 +5,7 @@
               [fruits.random.api                      :as random]
               [fruits.string.api                      :as string]
               [pretty-elements.api                    :as pretty-elements]
-              [re-frame.extra.api :as r]))
+              [re-frame.extra.api                     :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

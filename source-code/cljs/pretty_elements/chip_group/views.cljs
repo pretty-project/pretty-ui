@@ -1,14 +1,14 @@
 
 (ns pretty-elements.chip-group.views
-    (:require [fruits.hiccup.api                          :as hiccup]
-              [fruits.random.api                          :as random]
+    (:require [fruits.hiccup.api                     :as hiccup]
+              [fruits.random.api                     :as random]
               [pretty-elements.chip-group.attributes :as chip-group.attributes]
               [pretty-elements.chip-group.prototypes :as chip-group.prototypes]
               [pretty-elements.chip.views            :as chip.views]
-              [pretty-elements.engine.api                 :as pretty-elements.engine]
-              [pretty-elements.methods.api :as pretty-elements.methods]
-              [reagent.core                               :as reagent]
-              [pretty-subitems.api :as pretty-subitems]))
+              [pretty-elements.engine.api            :as pretty-elements.engine]
+              [pretty-elements.methods.api           :as pretty-elements.methods]
+              [pretty-subitems.api                   :as pretty-subitems]
+              [reagent.core                          :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

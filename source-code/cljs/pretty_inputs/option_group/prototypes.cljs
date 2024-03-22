@@ -1,8 +1,8 @@
 
 (ns pretty-inputs.option-group.prototypes
     (:require [fruits.vector.api     :as vector]
+              [pretty-models.api     :as pretty-models]
               [pretty-properties.api :as pretty-properties]
-              [pretty-models.api :as pretty-models]
               [pretty-subitems.api   :as pretty-subitems]))
 
 ;; ----------------------------------------------------------------------------

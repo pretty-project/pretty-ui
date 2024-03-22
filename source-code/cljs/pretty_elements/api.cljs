@@ -2,11 +2,11 @@
 (ns pretty-elements.api
     (:require [pretty-elements.adornment-group.views      :as adornment-group.views]
               [pretty-elements.adornment.views            :as adornment.views]
+              [pretty-elements.blank.views                :as blank.views]
               [pretty-elements.button.views               :as button.views]
               [pretty-elements.card.views                 :as card.views]
-              [pretty-elements.blank.views :as blank.views]
+              [pretty-elements.chip-group.views           :as chip-group.views]
               [pretty-elements.chip.views                 :as chip.views]
-              [pretty-elements.chip-group.views :as chip-group.views]
               [pretty-elements.column.views               :as column.views]
               [pretty-elements.crumb-group.views          :as crumb-group.views]
               [pretty-elements.crumb.views                :as crumb.views]

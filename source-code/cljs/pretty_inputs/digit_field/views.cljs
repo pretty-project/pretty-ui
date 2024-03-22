@@ -4,7 +4,7 @@
               [pretty-inputs.digit-field.attributes :as digit-field.attributes]
               [pretty-inputs.digit-field.prototypes :as digit-field.prototypes]
               [pretty-inputs.engine.api             :as pretty-inputs.engine]
-              [pretty-inputs.methods.api             :as pretty-inputs.methods]
+              [pretty-inputs.methods.api            :as pretty-inputs.methods]
               [reagent.core                         :as reagent]))
 
 ;; ----------------------------------------------------------------------------

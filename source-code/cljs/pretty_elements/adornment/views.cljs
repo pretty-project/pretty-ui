@@ -1,10 +1,10 @@
 
 (ns pretty-elements.adornment.views
     (:require [fruits.random.api                    :as random]
-              [pretty-accessories.label.views :as label.views]
-              [pretty-accessories.cover.views :as cover.views]
-              [pretty-accessories.icon.views :as icon.views]
-              [pretty-accessories.tooltip.views :as tooltip.views]
+              [pretty-accessories.cover.views       :as cover.views]
+              [pretty-accessories.icon.views        :as icon.views]
+              [pretty-accessories.label.views       :as label.views]
+              [pretty-accessories.tooltip.views     :as tooltip.views]
               [pretty-elements.adornment.attributes :as adornment.attributes]
               [pretty-elements.adornment.prototypes :as adornment.prototypes]
               [pretty-elements.engine.api           :as pretty-elements.engine]

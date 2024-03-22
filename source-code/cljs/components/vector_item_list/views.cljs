@@ -5,7 +5,7 @@
               [components.vector-item-list.prototypes :as vector-item-list.prototypes]
               [fruits.random.api                      :as random]
               [pretty-elements.api                    :as pretty-elements]
-              [re-frame.extra.api :as r]))
+              [re-frame.extra.api                     :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

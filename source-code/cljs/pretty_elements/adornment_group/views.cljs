@@ -6,9 +6,9 @@
               [pretty-elements.adornment-group.prototypes :as adornment-group.prototypes]
               [pretty-elements.adornment.views            :as adornment.views]
               [pretty-elements.engine.api                 :as pretty-elements.engine]
-              [pretty-elements.methods.api :as pretty-elements.methods]
-              [reagent.core                               :as reagent]
-              [pretty-subitems.api :as pretty-subitems]))
+              [pretty-elements.methods.api                :as pretty-elements.methods]
+              [pretty-subitems.api                        :as pretty-subitems]
+              [reagent.core                               :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
