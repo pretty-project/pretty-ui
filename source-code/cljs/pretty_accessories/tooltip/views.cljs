@@ -65,8 +65,8 @@
   ;
   ; @usage (pretty-accessories/tooltip.png)
   ; [tooltip {:border-radius {:all :s}
-  ;           :label         {:content "My tooltip" :text-color :invert}
-  ;           :fill-color    :invert
+  ;           :label         {:content "My tooltip" :text-color :inverse}
+  ;           :fill-color    :inverse
   ;           :indent        {:all :xxs}
   ;           :position      :br}]
   ([props]
@@ -76,7 +76,7 @@
    ; @note (tutorials#parameterizing)
    (fn [_ props]
        (let [props (pretty-accessories.methods/apply-accessory-shorthand-map  id props SHORTHAND-MAP)
-             props (pretty-accessories.methods/apply-accessory-preset         id props)
+             props (pretty-accessories.methods/apply-accessory-presets        id props)
              props (pretty-accessories.methods/import-accessory-dynamic-props id props)
              props (pretty-accessories.methods/import-accessory-state-events  id props)
              props (pretty-accessories.methods/import-accessory-state         id props)

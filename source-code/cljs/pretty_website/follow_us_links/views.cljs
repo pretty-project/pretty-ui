@@ -79,6 +79,6 @@
   ([links-id links-props]
    ; @note (tutorials#parameterizing)
    (fn [_ links-props]
-       (let [links-props (pretty-presets.engine/apply-preset               links-id links-props)
+       (let [links-props (pretty-presets.engine/apply-presets              links-id links-props)
              links-props (follow-us-links.prototypes/links-props-prototype links-id links-props)]
             [view-lifecycles links-id links-props]))))

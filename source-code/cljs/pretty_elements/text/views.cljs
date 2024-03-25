@@ -49,7 +49,7 @@
   ;
   ; @links Implemented models
   ; [Flex container model](pretty-core/cljs/pretty-models/api.html#flex-container-model)
-  ; [Multiline content model](pretty-core/cljs/pretty-models/api.html#multiline-content-model)
+  ; [Plain content model](pretty-core/cljs/pretty-models/api.html#plain-content-model)
   ;
   ; @param (keyword)(opt) id
   ; @param (map) props
@@ -72,7 +72,7 @@
    ; @note (tutorials#parameterizing)
    (fn [_ props]
        (let [props (pretty-elements.methods/apply-element-shorthand-key  id props SHORTHAND-KEY)
-             props (pretty-elements.methods/apply-element-preset         id props)
+             props (pretty-elements.methods/apply-element-presets        id props)
              props (pretty-elements.methods/import-element-dynamic-props id props)
              props (pretty-elements.methods/import-element-state-events  id props)
              props (pretty-elements.methods/import-element-state         id props)

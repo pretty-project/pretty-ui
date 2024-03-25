@@ -45,14 +45,14 @@
   ; Check out the implemented models.
   ;
   ; @usage (pretty-accessories/overlay.png)
-  ; [overlay {:fill-color :invert}]
+  ; [overlay {:fill-color :inverse}]
   ([props]
    [view (random/generate-keyword) props])
 
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
-       (let [props (pretty-accessories.methods/apply-accessory-preset         id props)
+       (let [props (pretty-accessories.methods/apply-accessory-presets        id props)
              props (pretty-accessories.methods/import-accessory-dynamic-props id props)
              props (pretty-accessories.methods/import-accessory-state-events  id props)
              props (pretty-accessories.methods/import-accessory-state         id props)

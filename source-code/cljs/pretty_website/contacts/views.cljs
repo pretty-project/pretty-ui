@@ -104,6 +104,6 @@
   ([contacts-id contacts-props]
    ; @note (tutorials#parameterizing)
    (fn [_ contacts-props]
-       (let [contacts-props (pretty-presets.engine/apply-preset           contacts-id contacts-props)
+       (let [contacts-props (pretty-presets.engine/apply-presets          contacts-id contacts-props)
              contacts-props (contacts.prototypes/contacts-props-prototype contacts-id contacts-props)]
             [view-lifecycles contacts-id contacts-props]))))

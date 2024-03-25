@@ -28,7 +28,8 @@
               [pretty-elements.thumbnail.views            :as thumbnail.views]
               [pretty-elements.toggle.views               :as toggle.views]
               [pretty-elements.vertical-separator.views   :as vertical-separator.views]
-              [pretty-elements.vertical-spacer.views      :as vertical-spacer.views]))
+              [pretty-elements.vertical-spacer.views      :as vertical-spacer.views]
+              [pretty-elements.anchor.views :as anchor.views]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -73,6 +74,7 @@
 ; @redirect (*/view)
 (def adornment            adornment.views/view)
 (def adornment-group      adornment-group.views/view)
+(def anchor               anchor.views/view)
 (def blank                blank.views/view)
 (def button               button.views/view)
 (def card                 card.views/view)

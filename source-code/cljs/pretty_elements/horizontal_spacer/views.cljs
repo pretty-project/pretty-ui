@@ -52,7 +52,7 @@
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
-       (let [props (pretty-elements.methods/apply-element-preset         id props)
+       (let [props (pretty-elements.methods/apply-element-presets        id props)
              props (pretty-elements.methods/import-element-dynamic-props id props)
              props (pretty-elements.methods/import-element-state-events  id props)
              props (pretty-elements.methods/import-element-state         id props)

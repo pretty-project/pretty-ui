@@ -12,18 +12,18 @@
               [pretty-elements.engine.api        :as pretty-elements.engine]
               [pretty-elements.methods.api       :as pretty-elements.methods]
               [pretty-models.api                 :as pretty-models]
-              [pretty-models.api                 :as pretty-models]
               [pretty-subitems.api               :as pretty-subitems]
               [reagent.core                      :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(def SHORTHAND-MAP {:badge   badge.views/SHORTHAND-MAP
-                    :cover   cover.views/SHORTHAND-MAP
-                    :icon    icon.views/SHORTHAND-KEY
-                    :label   label.views/SHORTHAND-KEY
-                    :tooltip tooltip.views/SHORTHAND-MAP})
+(def SHORTHAND-MAP {:badge      badge.views/SHORTHAND-MAP
+                    :cover      cover.views/SHORTHAND-MAP
+                    :end-icon   icon.views/SHORTHAND-KEY
+                    :label      label.views/SHORTHAND-KEY
+                    :start-icon icon.views/SHORTHAND-KEY
+                    :tooltip    tooltip.views/SHORTHAND-MAP})
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -35,20 +35,22 @@
   ; @param (map) props
   ; {:badge (map)(opt)
   ;  :cover (map)(opt)
-  ;  :icon (map)(opt)
+  ;  :end-icon (map)(opt)
   ;  :label (map)(opt)
   ;  :marker (map)(opt)
+  ;  :start-icon (map)(opt)
   ;  :tooltip (map)(opt)
   ;  ...}
-  [id {:keys [badge cover icon label marker tooltip] :as props}]
+  [id {:keys [badge cover end-icon label marker start-icon tooltip] :as props}]
   [:div (button.attributes/outer-attributes id props)
         [(pretty-models/click-control-auto-tag props) (button.attributes/inner-attributes id props)
-         (if label   [label.views/view   (pretty-subitems/subitem-id id :label)   label])
-         (if icon    [icon.views/view    (pretty-subitems/subitem-id id :icon)    icon])
-         (if badge   [badge.views/view   (pretty-subitems/subitem-id id :badge)   badge])
-         (if marker  [marker.views/view  (pretty-subitems/subitem-id id :marker)  marker])
-         (if cover   [cover.views/view   (pretty-subitems/subitem-id id :cover)   cover])
-         (if tooltip [tooltip.views/view (pretty-subitems/subitem-id id :tooltip) tooltip])]])
+         (if start-icon [icon.views/view    (pretty-subitems/subitem-id id :start-icon) start-icon])
+         (if label      [label.views/view   (pretty-subitems/subitem-id id :label)      label])
+         (if end-icon   [icon.views/view    (pretty-subitems/subitem-id id :end-icon)   end-icon])
+         (if badge      [badge.views/view   (pretty-subitems/subitem-id id :badge)      badge])
+         (if marker     [marker.views/view  (pretty-subitems/subitem-id id :marker)     marker])
+         (if cover      [cover.views/view   (pretty-subitems/subitem-id id :cover)      cover])
+         (if tooltip    [tooltip.views/view (pretty-subitems/subitem-id id :tooltip)    tooltip])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -90,9 +92,10 @@
   ; @usage (pretty-elements/button.png)
   ; [button {:border-color  :highlight
   ;          :border-radius {:all :l}
+  ;          ;; start-icon  {:icon-name :people}
+  ;          :end-icon      {:icon-name :people}
   ;          :fill-color    :highlight
   ;          :gap           :auto
-  ;          :icon          {:icon-name :people}
   ;          :indent        {:horizontal :s :vertical :xxs}
   ;          :label         {:content "My button"}
   ;          :outer-width   :5xl}]
@@ -103,7 +106,7 @@
    ; @note (tutorials#parameterizing)
    (fn [_ props]
        (let [props (pretty-elements.methods/apply-element-shorthand-map    id props SHORTHAND-MAP)
-             props (pretty-elements.methods/apply-element-preset           id props)
+             props (pretty-elements.methods/apply-element-presets          id props)
              props (pretty-elements.methods/import-element-dynamic-props   id props)
              props (pretty-elements.methods/import-element-focus-reference id props)
              props (pretty-elements.methods/import-element-state-events    id props)

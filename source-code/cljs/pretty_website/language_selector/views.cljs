@@ -73,6 +73,6 @@
   ([selector-id selector-props]
    ; @note (tutorials#parameterizing)
    (fn [_ selector-props]
-       (let [selector-props (pretty-presets.engine/apply-preset                    selector-id selector-props)
+       (let [selector-props (pretty-presets.engine/apply-presets                   selector-id selector-props)
              selector-props (language-selector.prototypes/selector-props-prototype selector-id selector-props)]
             [view-lifecycles selector-id selector-props]))))

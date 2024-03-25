@@ -8,6 +8,20 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn field-prototype
+  ; @ignore
+  ;
+  ; @param (keyword) id
+  ; @param (map) props
+  ; @param (map) field
+  ;
+  ; @return (map)
+  [_ _ field]
+  (-> field (pretty-properties/default-outer-size-props {:outer-width :parent})))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn header-prototype
   ; @ignore
   ;
@@ -32,11 +46,13 @@
   ;
   ; @return (map)
   [id props]
-  (let [header-prototype-f (fn [%] (header-prototype id props %))]
+  (let [field-prototype-f  (fn [%] (field-prototype  id props %))
+        header-prototype-f (fn [%] (header-prototype id props %))]
        (-> props (pretty-properties/default-flex-props       {:gap :xs :horizontal-align :left :orientation :vertical})
                  (pretty-properties/default-outer-size-props {:outer-size-unit :full-block})
                  (pretty-models/flex-container-standard-props)
                  (pretty-models/flex-container-rules)
                  (pretty-subitems/ensure-subitems          :field)
                  (pretty-subitems/subitems<-disabled-state :header :field)
+                 (pretty-subitems/apply-subitem-prototype  :field  field-prototype-f)
                  (pretty-subitems/apply-subitem-prototype  :header header-prototype-f))))

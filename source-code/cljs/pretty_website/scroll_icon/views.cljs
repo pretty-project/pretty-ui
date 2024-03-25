@@ -61,6 +61,6 @@
   ([icon-id icon-props]
    ; @note (tutorials#parameterizing)
    (fn [_ icon-props]
-       (let [icon-props (pretty-presets.engine/apply-preset          icon-id icon-props)
+       (let [icon-props (pretty-presets.engine/apply-presets         icon-id icon-props)
              icon-props (scroll-icon.prototypes/icon-props-prototype icon-id icon-props)]
             [view-lifecycles icon-id icon-props]))))

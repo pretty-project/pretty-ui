@@ -1,5 +1,5 @@
 
-(ns pretty-elements.text.prototypes
+(ns pretty-elements.anchor.prototypes
     (:require [pretty-models.api     :as pretty-models]
               [pretty-properties.api :as pretty-properties]))
 
@@ -14,12 +14,9 @@
   ;
   ; @return (map)
   [_ props]
-  ; @bug (pretty-elements.header.prototypes#9811)
-  (-> props (pretty-properties/default-content-props    {:content-placeholder "\u00A0"})
-            (pretty-properties/default-flex-props       {:orientation :horizontal})
-            (pretty-properties/default-font-props       {:font-size :s :font-weight :normal})
-            (pretty-properties/default-outer-size-props {:outer-size-unit :full-block})
-            (pretty-properties/default-text-props       {:text-overflow :wrap})
+  (-> props (pretty-properties/default-outer-size-props {:outer-size-unit :full-block})
+            (pretty-models/click-control-standard-props)
+            (pretty-models/click-control-rules)
             (pretty-models/flex-container-standard-props)
             (pretty-models/flex-container-rules)
             (pretty-models/plain-content-standard-props)

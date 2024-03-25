@@ -114,7 +114,7 @@
   ;                         :options [{:label {:content "My option #1"}}
   ;                                   {:label {:content "My option #2"}}
   ;                                   {:label {:content "My option #3"}}]}
-  ;          :popup {:border-crop :auto :border-radius {:all :s} :overlay {:fill-color :invert}}
+  ;          :popup {:border-crop :auto :border-radius {:all :s} :overlay {:fill-color :inverse}}
   ;          :select-button {:label {:content "My select"}}}]
   ([props]
    [view (random/generate-keyword) props])
@@ -123,7 +123,7 @@
    ; @note (tutorials#parameterizing)
    (fn [_ props]
        (let [props (pretty-inputs.methods/apply-input-shorthand-map  id props SHORTHAND-MAP)
-             props (pretty-inputs.methods/apply-input-preset         id props)
+             props (pretty-inputs.methods/apply-input-presets        id props)
              props (pretty-inputs.methods/import-input-dynamic-props id props)
              props (pretty-inputs.methods/import-input-state-events  id props)
              props (pretty-inputs.methods/import-input-state         id props)

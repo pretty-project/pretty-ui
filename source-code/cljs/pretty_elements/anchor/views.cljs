@@ -1,14 +1,10 @@
 
-(ns pretty-elements.toggle.views
+(ns pretty-elements.anchor.views
     (:require [fruits.random.api                 :as random]
-              [pretty-accessories.badge.views    :as badge.views]
-              [pretty-accessories.cover.views    :as cover.views]
-              [pretty-accessories.marker.views   :as marker.views]
-              [pretty-accessories.tooltip.views  :as tooltip.views]
+              [pretty-elements.anchor.attributes :as anchor.attributes]
+              [pretty-elements.anchor.prototypes :as anchor.prototypes]
               [pretty-elements.engine.api        :as pretty-elements.engine]
               [pretty-elements.methods.api       :as pretty-elements.methods]
-              [pretty-elements.toggle.attributes :as toggle.attributes]
-              [pretty-elements.toggle.prototypes :as toggle.prototypes]
               [pretty-models.api                 :as pretty-models]
               [pretty-subitems.api               :as pretty-subitems]
               [reagent.core                      :as reagent]))
@@ -17,32 +13,21 @@
 ;; ----------------------------------------------------------------------------
 
 (def SHORTHAND-KEY :content)
-(def SHORTHAND-MAP {:badge   badge.views/SHORTHAND-MAP
-                    :cover   cover.views/SHORTHAND-MAP
-                    :tooltip tooltip.views/SHORTHAND-MAP})
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- toggle
+(defn- anchor
   ; @ignore
   ;
   ; @param (keyword) id
   ; @param (map) props
-  ; {:badge (map)(opt)
-  ;  :content (multitype-content)(opt)
-  ;  :cover (map)(opt)
-  ;  :marker (map)(opt)
-  ;  :tooltip (map)(opt)
+  ; {:content (multitype-content)(opt)
   ;  ...}
-  [id {:keys [badge content cover marker tooltip] :as props}]
-  [:div (toggle.attributes/outer-attributes id props)
-        [(pretty-models/click-control-auto-tag props) (toggle.attributes/inner-attributes id props)
-         (if content [:div (toggle.attributes/body-attributes id props) content])
-         (if badge   [badge.views/view   (pretty-subitems/subitem-id id :badge)   badge])
-         (if marker  [marker.views/view  (pretty-subitems/subitem-id id :marker)  marker])
-         (if cover   [cover.views/view   (pretty-subitems/subitem-id id :cover)   cover])
-         (if tooltip [tooltip.views/view (pretty-subitems/subitem-id id :tooltip) tooltip])]])
+  [id {:keys [content] :as props}]
+  [:div (anchor.attributes/outer-attributes id props)
+        [:a (anchor.attributes/inner-attributes id props)
+            [:div (anchor.attributes/body-attributes id props) content]]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -58,38 +43,32 @@
   (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-elements.engine/element-did-mount    id props))
                          :component-will-unmount (fn [_ _] (pretty-elements.engine/element-will-unmount id props))
                          :component-did-update   (fn [%]   (pretty-elements.engine/element-did-update   id props %))
-                         :reagent-render         (fn [_ props] [toggle id props])}))
+                         :reagent-render         (fn [_ props] [anchor id props])}))
 
 (defn view
   ; @description
-  ; Clickable wrapper element with optional keypress control and timeout lock.
-  ;
-  ; @links Implemented accessories
-  ; [Badge](pretty-ui/cljs/pretty-accessories/api.html#badge)
-  ; [Cover](pretty-ui/cljs/pretty-accessories/api.html#cover)
-  ; [Marker](pretty-ui/cljs/pretty-accessories/api.html#marker)
-  ; [Tooltip](pretty-ui/cljs/pretty-accessories/api.html#tooltip)
+  ; Inline anchor element.
   ;
   ; @links Implemented models
   ; [Click control model](pretty-core/cljs/pretty-models/api.html#click-control-model)
-  ; [Flex content model](pretty-core/cljs/pretty-models/api.html#flex-content-model)
-  ; [Plain container model](pretty-core/cljs/pretty-models/api.html#plain-container-model)
+  ; [Flex container model](pretty-core/cljs/pretty-models/api.html#flex-container-model)
+  ; [Plain content model](pretty-core/cljs/pretty-models/api.html#plain-content-model)
   ;
   ; @param (keyword)(opt) id
   ; @param (map) props
-  ; Check out the implemented accessories.
   ; Check out the implemented models.
   ;
-  ; @usage (pretty-elements/toggle.png)
-  ; [toggle {:border-radius {:all :m}
-  ;          :content       "My toggle"
+  ; @usage (pretty-elements/anchor.png)
+  ; [anchor {:border-color  :highlight
+  ;          :border-radius {:all :l}
   ;          :fill-color    :highlight
-  ;          :href-uri      "/my-uri"
-  ;          :indent        {:all :s}}]
+  ;          :indent        {:horizontal :s :vertical :xxs}
+  ;          :content       "My anchor"
+  ;          :outer-width   :5xl}]
   ;
   ; @usage
   ; ;; The shorthand form of the property map is perceived as the ':content' property.
-  ; [toggle "My toggle"]
+  ; [anchor "My anchor"]
   ([props]
    [view (random/generate-keyword) props])
 
@@ -97,7 +76,6 @@
    ; @note (tutorials#parameterizing)
    (fn [_ props]
        (let [props (pretty-elements.methods/apply-element-shorthand-key    id props SHORTHAND-KEY)
-             props (pretty-elements.methods/apply-element-shorthand-map    id props SHORTHAND-MAP)
              props (pretty-elements.methods/apply-element-presets          id props)
              props (pretty-elements.methods/import-element-dynamic-props   id props)
              props (pretty-elements.methods/import-element-focus-reference id props)
@@ -105,6 +83,6 @@
              props (pretty-elements.methods/import-element-state           id props)
              props (pretty-elements.methods/import-element-timeout-events  id props)
              props (pretty-elements.methods/import-element-timeout         id props)
-             props (toggle.prototypes/props-prototype                      id props)]
+             props (anchor.prototypes/props-prototype                      id props)]
             (if (:mounted? props)
                 [view-lifecycles id props])))))

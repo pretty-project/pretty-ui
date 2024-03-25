@@ -88,7 +88,7 @@
   ([id props]
    ; @note (tutorials#parameterizing)
    (fn [_ props]
-       (let [props (pretty-diagrams.methods/apply-diagram-preset         id props)
+       (let [props (pretty-diagrams.methods/apply-diagram-presets        id props)
              props (pretty-diagrams.methods/import-diagram-dynamic-props id props)
              props (pretty-diagrams.methods/import-diagram-data-sum      id props)
              props (pretty-diagrams.methods/import-diagram-state-events  id props)

@@ -76,7 +76,7 @@
    ; @note (tutorials#parameterizing)
    (fn [_ props]
        (let [props (pretty-elements.methods/apply-element-shorthand-map    id props SHORTHAND-MAP)
-             props (pretty-elements.methods/apply-element-preset           id props)
+             props (pretty-elements.methods/apply-element-presets          id props)
              props (pretty-elements.methods/import-element-dynamic-props   id props)
              props (pretty-elements.methods/import-element-focus-reference id props)
              props (pretty-elements.methods/import-element-state-events    id props)

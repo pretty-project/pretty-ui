@@ -4,8 +4,6 @@
               [pretty-inputs.engine.api        :as pretty-inputs.engine]
               [pretty-inputs.slider.attributes :as slider.attributes]
               [pretty-inputs.slider.prototypes :as slider.prototypes]
-              [pretty-presets.engine.api       :as pretty-presets.engine]
-              [re-frame.extra.api              :as r]
               [reagent.core                    :as reagent]))
 
 ;; ----------------------------------------------------------------------------
@@ -35,8 +33,7 @@
   ; @param (map) slider-props
   [slider-id slider-props]
   ; @note (tutorials#parameterizing)
-  (reagent/create-class {:component-did-mount (fn [_ _] (r/dispatch [:pretty-inputs.slider/slider-did-mount slider-id slider-props]))
-                         :reagent-render      (fn [_ slider-props] [slider slider-id slider-props])}))
+  (reagent/create-class {:reagent-render (fn [_ slider-props] [slider slider-id slider-props])}))
 
 (defn view
   ; @important
@@ -78,6 +75,6 @@
   ([slider-id slider-props]
    ; @note (tutorials#parameterizing)
    (fn [_ slider-props]
-       (let [slider-props (pretty-presets.engine/apply-preset       slider-id slider-props)
+       (let [;slider-props (pretty-presets.engine/apply-presets      slider-id slider-props)
              slider-props (slider.prototypes/slider-props-prototype slider-id slider-props)]
             [view-lifecycles slider-id slider-props]))))

@@ -50,7 +50,7 @@
   ; @param (keyword)(opt) sidebar-id
   ; @param (map) sidebar-props
   ; {:border-color (keyword or string)(opt)
-  ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+  ;   :default, :highlight, :inverse, :muted, :primary, :secondary, :success, :warning
   ;  :border-position (keyword)(opt)
   ;   :left, :right
   ;  :border-width (keyword, px or string)(opt)
@@ -86,6 +86,6 @@
   ([sidebar-id sidebar-props]
    ; @note (tutorials#parameterizing)
    (fn [_ sidebar-props]
-       (let [sidebar-props (pretty-presets.engine/apply-preset         sidebar-id sidebar-props)
+       (let [sidebar-props (pretty-presets.engine/apply-presets        sidebar-id sidebar-props)
              sidebar-props (sidebar.prototypes/sidebar-props-prototype sidebar-id sidebar-props)]
             [view-lifecycles sidebar-id sidebar-props]))))

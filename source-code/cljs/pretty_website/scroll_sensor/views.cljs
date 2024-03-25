@@ -61,6 +61,6 @@
   ([sensor-id sensor-props]
    ; @note (tutorials#parameterizing)
    (fn [_ sensor-props]
-       (let [sensor-props (pretty-presets.engine/apply-preset              sensor-id sensor-props)
+       (let [sensor-props (pretty-presets.engine/apply-presets             sensor-id sensor-props)
              sensor-props (scroll-sensor.prototypes/sensor-props-prototype sensor-id sensor-props)]
             [scroll-sensor sensor-id sensor-props]))))

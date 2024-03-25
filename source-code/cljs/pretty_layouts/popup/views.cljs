@@ -88,7 +88,7 @@
   ; [popup {:body          {:content "My body" :fill-color :highlight :outer-height :parent}
   ;         :header        {:content "My header"}
   ;         :footer        {:content "My footer"}
-  ;         :overlay       {:fill-color :invert}
+  ;         :overlay       {:fill-color :inverse}
   ;         :border-radius {:all :m}
   ;         :fill-color    :default
   ;         :inner-height  :xxs
@@ -102,7 +102,7 @@
    ; @note (tutorials#parameterizing)
    (fn [_ props]
        (let [props (pretty-layouts.methods/apply-layout-shorthand-map  id props SHORTHAND-MAP)
-             props (pretty-layouts.methods/apply-layout-preset         id props)
+             props (pretty-layouts.methods/apply-layout-presets        id props)
              props (pretty-layouts.methods/import-layout-dynamic-props id props)
              props (pretty-layouts.methods/import-layout-state-events  id props)
              props (pretty-layouts.methods/import-layout-state         id props)

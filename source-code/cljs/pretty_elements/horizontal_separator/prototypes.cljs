@@ -31,9 +31,9 @@
   ; @return (map)
   [id props]
   (let [label-prototype-f (fn [%] (label-prototype id props %))]
-       (-> props (pretty-properties/default-flex-props       {:orientation :horizontal})
+       (-> props (pretty-properties/default-flex-props       {:gap :xs :orientation :horizontal})
                  (pretty-properties/default-line-props       {:line-color :muted :line-orientation :horizontal :line-size :grow})
-                 (pretty-properties/default-outer-size-props {:outer-height :content :outer-width :auto :outer-size-unit :full-block})
+                 (pretty-properties/default-outer-size-props {:outer-height :content :outer-size-unit :full-block :outer-width :parent})
                  (pretty-models/flex-container-standard-props)
                  (pretty-models/flex-container-rules)
                  (pretty-models/line-canvas-standard-props)

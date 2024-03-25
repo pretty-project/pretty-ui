@@ -66,7 +66,7 @@
    ; @note (tutorials#parameterizing)
    (fn [_ props]
        (let [props (pretty-accessories.methods/apply-accessory-shorthand-key  id props SHORTHAND-KEY)
-             props (pretty-accessories.methods/apply-accessory-preset         id props)
+             props (pretty-accessories.methods/apply-accessory-presets        id props)
              props (pretty-accessories.methods/import-accessory-dynamic-props id props)
              props (pretty-accessories.methods/import-accessory-state-events  id props)
              props (pretty-accessories.methods/import-accessory-state         id props)
