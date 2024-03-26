@@ -73,6 +73,7 @@
   ;                       :get-value-f         #(deref  MY-ATOM)
   ;                       :set-value-f         #(reset! MY-ATOM %)
   ;                       :placeholder-text    {:content "My placeholder text"}
+  ;                       ;; start-adornment-group {...}
   ;                       :end-adornment-group {:adornment-default {:icon {:icon-size :m}}
   ;                                             :adornments [{:icon {:icon-name :close}}]}}]
   ([props]

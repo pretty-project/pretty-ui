@@ -71,22 +71,13 @@
   ;
   ; @usage (pretty-elements/header.png)
   ; [header {:border-color          :primary
-  ;          :label                 {:content "My header #1"}
+  ;          :label                 {:content "My header"}
   ;          :border-position       :bottom
   ;          :border-width          :xs
   ;          :gap                   :auto
   ;          :horizontal-align      :left
   ;          :outer-width           :xxl
-  ;          :start-adornment-group {:adornment-default {:icon {:icon-color :default}}}
-  ;                                  :adornments        [{:icon {:icon-name :star}}]}]
-  ;
-  ; [header {:border-color        :secondary
-  ;          :label               {:content "My header #2"}
-  ;          :border-position     :bottom
-  ;          :border-width        :xs
-  ;          :gap                 :auto
-  ;          :horizontal-align    :left
-  ;          :outer-width         :xxl
+  ;          ;; start-adornment-group {...}
   ;          :end-adornment-group {:adornment-default {:icon {:icon-color :default}}}
   ;                                :adornments        [{:icon {:icon-name :star}}]}]
   ([props]

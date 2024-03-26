@@ -1,29 +1,91 @@
 
 (ns pretty-inputs.number-field.views
-    (:require [fruits.random.api                     :as random]
+    (:require [fruits.random.api                   :as random]
+              [pretty-inputs.engine.api            :as pretty-inputs.engine]
+              [pretty-inputs.field.views           :as field.views]
+              [pretty-inputs.header.views          :as header.views]
+              [pretty-inputs.methods.api           :as pretty-inputs.methods]
+              [pretty-inputs.number-field.attributes :as number-field.attributes]
               [pretty-inputs.number-field.prototypes :as number-field.prototypes]
-              [pretty-inputs.text-field.views        :as text-field.views]))
+              [pretty-subitems.api                 :as pretty-subitems]
+              [reagent.core                        :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+(def SHORTHAND-MAP {:field  field.views/SHORTHAND-MAP
+                    :header header.views/SHORTHAND-MAP})
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- number-field
+  ; @ignore
+  ;
+  ; @param (keyword) id
+  ; @param (map) props
+  ; {field (map)(opt)
+  ;  :header (map)(opt)
+  ;  ...}
+  [id {:keys [field header] :as props}]
+  [:div (number-field.attributes/outer-attributes id props)
+        [:div (number-field.attributes/inner-attributes id props)
+              (if header [header.views/view (pretty-subitems/subitem-id id :header) header])
+              (if field  [field.views/view  (pretty-subitems/subitem-id id :field)  field])]])
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- view-lifecycles
+  ; @ignore
+  ;
+  ; @param (keyword) id
+  ; @param (map) props
+  [id props]
+  ; @note (tutorials#parameterizing)
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-inputs.engine/pseudo-input-did-mount    id props))
+                         :component-will-unmount (fn [_ _] (pretty-inputs.engine/pseudo-input-will-unmount id props))
+                         :reagent-render         (fn [_ props] [number-field id props])}))
 
 (defn view
-  ; @note
-  ; For more information, check out the documentation of the ['text-field'](#text-field) input.
+  ; @description
+  ; Number field input.
   ;
-  ; @param (keyword)(opt) field-id
-  ; @param (map) field-props
+  ; @links Implemented inputs
+  ; [Field](pretty-core/cljs/pretty-inputs/api.html#field)
+  ; [Header](pretty-core/cljs/pretty-inputs/api.html#header)
   ;
-  ; @usage
-  ; [number-field {...}]
+  ; @links Implemented models
+  ; [Flex container model](pretty-core/cljs/pretty-models/api.html#flex-container-model)
   ;
-  ; @usage
-  ; [number-field :my-number-field {...}]
-  ([field-props]
-   [view (random/generate-keyword) field-props])
+  ; @param (keyword)(opt) id
+  ; @param (map) props
+  ; Check out the implemented inputs.
+  ; Check out the implemented models.
+  ;
+  ; @usage (pretty-inputs/number-field.png)
+  ; [number-field {:header {:label       {:content "My number field"}
+  ;                         :helper-text {:content "My helper text"}
+  ;                         :info-text   {:content "My info text"}}
+  ;                :field  {:border-radius       {:all :s}
+  ;                         :fill-color          :highlight
+  ;                         :indent              {:all :xs}
+  ;                         :get-value-f         #(deref  MY-ATOM)
+  ;                         :set-value-f         #(reset! MY-ATOM %)
+  ;                         ;; start-adornment-group {...}
+  ;                         :end-adornment-group {:adornment-default {:icon {:icon-size :m}}
+  ;                                               :adornments [{:icon {:icon-name :close}}]}}]
+  ([props]
+   [view (random/generate-keyword) props])
 
-  ([field-id field-props]
+  ([id props]
    ; @note (tutorials#parameterizing)
-   (fn [_ field-props]
-       (let [field-props (number-field.prototypes/field-props-prototype field-id field-props)]
-            [text-field.views/view field-id field-props]))))
+   (fn [_ props]
+       (let [props (pretty-inputs.methods/apply-input-shorthand-map  id props SHORTHAND-MAP)
+             props (pretty-inputs.methods/apply-input-presets        id props)
+             props (pretty-inputs.methods/import-input-dynamic-props id props)
+             props (pretty-inputs.methods/import-input-state-events  id props)
+             props (pretty-inputs.methods/import-input-state         id props)
+             props (number-field.prototypes/props-prototype          id props)]
+            (if (:mounted? props)
+                [view-lifecycles id props])))))

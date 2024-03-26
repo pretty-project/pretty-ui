@@ -66,24 +66,16 @@
   ; Check out the implemented models.
   ;
   ; @usage (pretty-elements/notification-bubble.png)
-  ; [notification-bubble {:border-radius       {:all :m}
-  ;                       :content             "My notification bubble #1"
-  ;                       :fill-color          :primary
+  ; [notification-bubble {:border-color        :highlight
+  ;                       :border-radius       {:all :m}
+  ;                       :content             "My notification bubble"
+  ;                       :fill-color          :highlight
   ;                       :indent              {:horizontal :s}
   ;                       :outer-height        :xs
   ;                       :outer-width         :3xl
+  ;                       ;; start-adornment-group {...}
   ;                       :end-adornment-group {:adornment-default {:fill-color :highlight :border-radius {:all :s}}
   ;                                             :adornments        [{:icon {:icon-name :close}}]}}]
-  ;
-  ; [notification-bubble {:border-color          :highlight
-  ;                       :border-radius         {:all :m}
-  ;                       :content               "My notification bubble #2"
-  ;                       :fill-color            :highlight
-  ;                       :indent                {:horizontal :s}
-  ;                       :outer-height          :xs
-  ;                       :outer-width           :3xl
-  ;                       :start-adornment-group {:adornment-default {:fill-color :default :border-color :highlight :border-radius {:all :s}}
-  ;                                               :adornments        [{:icon {:icon-name :close}}]}}]
   ;
   ; @usage
   ; ;; The shorthand form of the property map is perceived as the ':content' property.

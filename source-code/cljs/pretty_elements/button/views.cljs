@@ -92,7 +92,7 @@
   ; @usage (pretty-elements/button.png)
   ; [button {:border-color  :highlight
   ;          :border-radius {:all :l}
-  ;          ;; start-icon  {:icon-name :people}
+  ;          ;; start-icon  {...}
   ;          :end-icon      {:icon-name :people}
   ;          :fill-color    :highlight
   ;          :gap           :auto

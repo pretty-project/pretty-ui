@@ -1,10 +1,20 @@
 
 (ns pretty-inputs.password-field.views
-    (:require [fruits.random.api                         :as random]
-              [pretty-inputs.password-field.prototypes   :as password-field.prototypes]
-              [pretty-inputs.password-field.side-effects :as password-field.side-effects]
-              [pretty-inputs.text-field.views            :as text-field.views]
-              [reagent.core                              :as reagent]))
+    (:require [fruits.random.api                   :as random]
+              [pretty-inputs.engine.api            :as pretty-inputs.engine]
+              [pretty-inputs.field.views           :as field.views]
+              [pretty-inputs.header.views          :as header.views]
+              [pretty-inputs.methods.api           :as pretty-inputs.methods]
+              [pretty-inputs.password-field.attributes :as password-field.attributes]
+              [pretty-inputs.password-field.prototypes :as password-field.prototypes]
+              [pretty-subitems.api                 :as pretty-subitems]
+              [reagent.core                        :as reagent]))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(def SHORTHAND-MAP {:field  field.views/SHORTHAND-MAP
+                    :header header.views/SHORTHAND-MAP})
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -12,10 +22,16 @@
 (defn- password-field
   ; @ignore
   ;
-  ; @param (keyword) field-id
-  ; @param (map) field-props
-  [field-id field-props]
-  [text-field.views/view field-id field-props])
+  ; @param (keyword) id
+  ; @param (map) props
+  ; {field (map)(opt)
+  ;  :header (map)(opt)
+  ;  ...}
+  [id {:keys [field header] :as props}]
+  [:div (password-field.attributes/outer-attributes id props)
+        [:div (password-field.attributes/inner-attributes id props)
+              (if header [header.views/view (pretty-subitems/subitem-id id :header) header])
+              (if field  [field.views/view  (pretty-subitems/subitem-id id :field)  field])]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -23,30 +39,53 @@
 (defn- view-lifecycles
   ; @ignore
   ;
-  ; @param (keyword) field-id
-  ; @param (map) field-props
-  [field-id field-props]
+  ; @param (keyword) id
+  ; @param (map) props
+  [id props]
   ; @note (tutorials#parameterizing)
-  (reagent/create-class {:component-will-unmount (fn [_ _] (password-field.side-effects/field-will-unmount field-id field-props))
-                         :reagent-render         (fn [_ field-props] [password-field field-id field-props])}))
+  (reagent/create-class {:component-did-mount    (fn [_ _] (pretty-inputs.engine/pseudo-input-did-mount    id props))
+                         :component-will-unmount (fn [_ _] (pretty-inputs.engine/pseudo-input-will-unmount id props))
+                         :reagent-render         (fn [_ props] [password-field id props])}))
 
 (defn view
-  ; @note
-  ; For more information, check out the documentation of the ['text-field'](#text-field) input.
+  ; @description
+  ; Password field input.
   ;
-  ; @param (keyword)(opt) field-id
-  ; @param (map) field-props
+  ; @links Implemented inputs
+  ; [Field](pretty-core/cljs/pretty-inputs/api.html#field)
+  ; [Header](pretty-core/cljs/pretty-inputs/api.html#header)
   ;
-  ; @usage
-  ; [password-field {...}]
+  ; @links Implemented models
+  ; [Flex container model](pretty-core/cljs/pretty-models/api.html#flex-container-model)
   ;
-  ; @usage
-  ; [password-field :my-password-field {...}]
-  ([field-props]
-   [view (random/generate-keyword) field-props])
+  ; @param (keyword)(opt) id
+  ; @param (map) props
+  ; Check out the implemented inputs.
+  ; Check out the implemented models.
+  ;
+  ; @usage (pretty-inputs/password-field.png)
+  ; [password-field {:header {:label       {:content "My password field"}
+  ;                           :helper-text {:content "My helper text"}
+  ;                           :info-text   {:content "My info text"}}
+  ;                  :field  {:border-radius       {:all :s}
+  ;                           :fill-color          :highlight
+  ;                           :indent              {:all :xs}
+  ;                           :get-value-f         #(deref  MY-ATOM)
+  ;                           :set-value-f         #(reset! MY-ATOM %)
+  ;                           ;; start-adornment-group {...}
+  ;                           :end-adornment-group {:adornment-default {:icon {:icon-size :m}}
+  ;                                                 :adornments [{:icon {:icon-name :close}}]}}]
+  ([props]
+   [view (random/generate-keyword) props])
 
-  ([field-id field-props]
+  ([id props]
    ; @note (tutorials#parameterizing)
-   (fn [_ field-props]
-       (let [field-props (password-field.prototypes/field-props-prototype field-id field-props)]
-            [view-lifecycles field-id field-props]))))
+   (fn [_ props]
+       (let [props (pretty-inputs.methods/apply-input-shorthand-map  id props SHORTHAND-MAP)
+             props (pretty-inputs.methods/apply-input-presets        id props)
+             props (pretty-inputs.methods/import-input-dynamic-props id props)
+             props (pretty-inputs.methods/import-input-state-events  id props)
+             props (pretty-inputs.methods/import-input-state         id props)
+             props (password-field.prototypes/props-prototype        id props)]
+            (if (:mounted? props)
+                [view-lifecycles id props])))))

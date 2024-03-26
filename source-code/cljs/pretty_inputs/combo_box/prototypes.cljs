@@ -5,7 +5,8 @@
               [pretty-inputs.engine.api :as pretty-inputs.engine]
               [pretty-models.api        :as pretty-models]
               [pretty-properties.api    :as pretty-properties]
-              [pretty-subitems.api      :as pretty-subitems]))
+              [pretty-subitems.api      :as pretty-subitems]
+              [fruits.map.api :as map]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -21,7 +22,7 @@
   [id _ header]
   (let [field-id    (pretty-subitems/subitem-id id :field)
         field-error (form-validator/get-input-error field-id)]
-       (-> header (assoc-in [:error-text :content] field-error))))
+       (-> header (map/use-default-values {:error-text field-error}))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
