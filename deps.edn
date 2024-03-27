@@ -1,13 +1,13 @@
 
 {:paths ["resources" "source-code/cljs"]
  :deps  {bithandshake/cljc-fruits      {:git/url "https://github.com/bithandshake/cljc-fruits"
-                                        :sha     "6f9aeb18bcd0b38f80574aab83490a68216c39d6"}
+                                        :sha     "d29c314aa255da9ab37db81122072b19ff59027e"}
          mt-utilities/cljc-time        {:git/url "https://github.com/mt-utilities/cljc-time"
-                                        :sha     "e9a97af76587f5f681bc44f3e29318fab95ec9f6"}
+                                        :sha     "13c937dbbbf946bddba03dbd48f182536d915dd4"}
          mt-utilities/cljs-dom         {:git/url "https://github.com/mt-utilities/cljs-dom"
-                                        :sha     "934bd9510c4a81ba696b2397b79d2d385231c0cc"}
+                                        :sha     "d1246ec0819821934e8460b20c0e8d7ff012fb0d"}
          org.clojure/clojurescript     {:mvn/version "1.10.891"}
          pretty-project/pretty-core    {:git/url "https://github.com/pretty-project/pretty-core"
-                                        :sha     "3f8129bf67aca6529eecad3e4a56224402731c17"}
+                                        :sha     "6f584b32869d135d03a4f98c93df2f97d5df70ad"}
          pretty-project/pretty-engines {:git/url "https://github.com/pretty-project/pretty-engines"
-                                        :sha     "a9b3dced238c6aad875ad2b343692e6a80064e60"}}}
+                                        :sha     "aaf5f7eaa21cfd3aafa5d25dc68079d0bd4090ab"}}}

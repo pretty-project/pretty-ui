@@ -10,7 +10,7 @@
 
 (defn mount-renderer!
   ; @description
-  ; Mounts the the 'content-renderer' component.
+  ; Mounts the 'content-renderer' component.
   ;
   ; @param (keyword) id
   ;
@@ -23,7 +23,7 @@
 (defn unmount-renderer!
   ; @description
   ; Unmounts the 'content-renderer' component.
-  ; 
+  ;
   ; @param (keyword) id
   ;
   ; @usage
