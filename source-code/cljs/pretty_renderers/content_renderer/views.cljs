@@ -1,12 +1,12 @@
 
 (ns pretty-renderers.content-renderer.views
-    (:require [fruits.random.api                 :as random]
+    (:require [fruits.random.api                            :as random]
               [pretty-renderers.content-renderer.attributes :as content-renderer.attributes]
               [pretty-renderers.content-renderer.prototypes :as content-renderer.prototypes]
-              [pretty-renderers.engine.api        :as pretty-renderers.engine]
-              [pretty-renderers.methods.api       :as pretty-renderers.methods]
-              [reagent.core                      :as reagent]
-              [transition-controller.api :as transition-controller]))
+              [pretty-renderers.engine.api                  :as pretty-renderers.engine]
+              [pretty-renderers.methods.api                 :as pretty-renderers.methods]
+              [reagent.core                                 :as reagent]
+              [transition-controller.api                    :as transition-controller]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

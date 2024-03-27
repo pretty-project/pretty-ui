@@ -1,10 +1,10 @@
 
 (ns pretty-inputs.number-field.prototypes
     (:require [form-validator.api    :as form-validator]
+              [fruits.map.api        :as map]
               [pretty-models.api     :as pretty-models]
               [pretty-properties.api :as pretty-properties]
-              [pretty-subitems.api   :as pretty-subitems]
-              [fruits.map.api :as map]))
+              [pretty-subitems.api   :as pretty-subitems]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -2,6 +2,7 @@
 (ns pretty-elements.api
     (:require [pretty-elements.adornment-group.views      :as adornment-group.views]
               [pretty-elements.adornment.views            :as adornment.views]
+              [pretty-elements.anchor.views               :as anchor.views]
               [pretty-elements.blank.views                :as blank.views]
               [pretty-elements.button.views               :as button.views]
               [pretty-elements.card.views                 :as card.views]
@@ -28,8 +29,7 @@
               [pretty-elements.thumbnail.views            :as thumbnail.views]
               [pretty-elements.toggle.views               :as toggle.views]
               [pretty-elements.vertical-separator.views   :as vertical-separator.views]
-              [pretty-elements.vertical-spacer.views      :as vertical-spacer.views]
-              [pretty-elements.anchor.views :as anchor.views]))
+              [pretty-elements.vertical-spacer.views      :as vertical-spacer.views]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

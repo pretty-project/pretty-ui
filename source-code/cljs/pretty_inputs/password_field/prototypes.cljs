@@ -1,13 +1,13 @@
 
 (ns pretty-inputs.password-field.prototypes
-    (:require [form-validator.api    :as form-validator]
-              [pretty-models.api     :as pretty-models]
-              [pretty-properties.api :as pretty-properties]
-              [pretty-subitems.api   :as pretty-subitems]
-              [dynamic-props.api   :as dynamic-props]
-              [fruits.map.api :as map]
-              [fruits.vector.api :as vector]
-              [pretty-inputs.password-field.adornments :as password-field.adornments]))
+    (:require [dynamic-props.api                       :as dynamic-props]
+              [form-validator.api                      :as form-validator]
+              [fruits.map.api                          :as map]
+              [fruits.vector.api                       :as vector]
+              [pretty-inputs.password-field.adornments :as password-field.adornments]
+              [pretty-models.api                       :as pretty-models]
+              [pretty-properties.api                   :as pretty-properties]
+              [pretty-subitems.api                     :as pretty-subitems]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

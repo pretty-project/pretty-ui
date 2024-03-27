@@ -1,6 +1,6 @@
 
 (ns pretty-inputs.multi-field.env
-    (:require [fruits.vector.api :as vector]
+    (:require [fruits.vector.api  :as vector]
               [re-frame.extra.api :as r]))
 
 ;; ----------------------------------------------------------------------------

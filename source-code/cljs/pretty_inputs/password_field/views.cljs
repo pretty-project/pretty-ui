@@ -1,14 +1,14 @@
 
 (ns pretty-inputs.password-field.views
-    (:require [fruits.random.api                   :as random]
-              [pretty-inputs.engine.api            :as pretty-inputs.engine]
-              [pretty-inputs.field.views           :as field.views]
-              [pretty-inputs.header.views          :as header.views]
-              [pretty-inputs.methods.api           :as pretty-inputs.methods]
+    (:require [fruits.random.api                       :as random]
+              [pretty-inputs.engine.api                :as pretty-inputs.engine]
+              [pretty-inputs.field.views               :as field.views]
+              [pretty-inputs.header.views              :as header.views]
+              [pretty-inputs.methods.api               :as pretty-inputs.methods]
               [pretty-inputs.password-field.attributes :as password-field.attributes]
               [pretty-inputs.password-field.prototypes :as password-field.prototypes]
-              [pretty-subitems.api                 :as pretty-subitems]
-              [reagent.core                        :as reagent]))
+              [pretty-subitems.api                     :as pretty-subitems]
+              [reagent.core                            :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
