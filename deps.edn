@@ -10,4 +10,4 @@
          pretty-project/pretty-core    {:git/url "https://github.com/pretty-project/pretty-core"
                                         :sha     "3f8129bf67aca6529eecad3e4a56224402731c17"}
          pretty-project/pretty-engines {:git/url "https://github.com/pretty-project/pretty-engines"
-                                        :sha     "66423372f32acbc55ff373a0bbacc942e554d193"}}}
+                                        :sha     "e72a8c5fb7ebae26ebab157913aa8331354ce402"}}}
