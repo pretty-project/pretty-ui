@@ -1,8 +1,7 @@
 
 (ns pretty-inputs.multi-field.env
-    (:require [fruits.vector.api     :as vector]
-              [multitype-content.api :as multitype-content]
-              [re-frame.extra.api    :as r]))
+    (:require [fruits.vector.api :as vector]
+              [re-frame.extra.api :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -70,8 +69,9 @@
   (cond (and label (group-props->single-field? group-id group-props field-dex))
         (->  label)
         ; Multi-field label
-        (and label (group-props->multi-field? group-id group-props field-dex))
-        (multitype-content/compose {:content label :suffix (str " #" (inc field-dex))})))
+        (and label (group-props->multi-field? group-id group-props field-dex))))
+        ; multitype-content is removed from deps.edn. Put back in case if needed.
+        ;(multitype-content/compose {:content label :suffix (str " #" (inc field-dex))})))
 
 (defn field-dex->control-adornments
   ; @ignore

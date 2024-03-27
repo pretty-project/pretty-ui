@@ -1,43 +1,13 @@
 
 {:paths ["resources" "source-code/cljs"]
- :deps  {mt-app-kit/cljs-auto-title            {:git/url "https://github.com/mt-app-kit/cljs-auto-title"
-                                                :sha     "a305a38926073d79371aef0073e4a8154580a40a"}
-         mt-app-kit/cljs-intersection-observer {:git/url "https://github.com/mt-app-kit/cljs-intersection-observer"
-                                                :sha     "1ed9ba80ef56620fe80af7483b4308f96cd6c30c"}
-         mt-app-kit/cljc-app-dictionary        {:git/url "https://github.com/mt-app-kit/cljc-app-dictionary"
-                                                :sha     "1ed9ba80ef56620fe80af7483b4308f96cd6c30c"}
-         mt-app-kit/cljc-multitype-content     {:git/url "https://github.com/mt-app-kit/cljc-multitype-content"
-                                                :sha     "1ed9ba80ef56620fe80af7483b4308f96cd6c30c"}
-         mt-app-kit/cljs-keypress-handler      {:git/url "https://github.com/mt-app-kit/cljs-keypress-handler"
-                                                :sha     "6aad38ebee217a35c63ea59ac0c6eb5892a996ab"}
-         mt-app-kit/cljs-scroll-lock           {:git/url "https://github.com/mt-app-kit/cljs-scroll-lock"
-                                                :sha     "1ed9ba80ef56620fe80af7483b4308f96cd6c30c"}
-         mt-app-kit/cljs-window-observer       {:git/url "https://github.com/mt-app-kit/cljs-window-observer"
-                                                :sha     "1ed9ba80ef56620fe80af7483b4308f96cd6c30c"}
-         mt-utilities/cljc-fruits              {:git/url "https://github.com/mt-utilities/cljc-fruits"
-                                                :sha     "6b5c9c060bdff84d0cd0bce908b64b268e5e6f0e"}
-         mt-utilities/cljc-time                {:git/url "https://github.com/mt-utilities/cljc-time"
-                                                :sha     "a305a38926073d79371aef0073e4a8154580a40a"}
-         mt-utilities/cljs-dom                 {:git/url "https://github.com/mt-utilities/cljs-dom"
-                                                :sha     "1ed9ba80ef56620fe80af7483b4308f96cd6c30c"}
-         org.clojure/clojurescript             {:mvn/version "1.10.891"}
-         pretty-project/pretty-css             {:git/url "https://github.com/pretty-project/pretty-css"
-                                                :sha     "60263cf287ff73702b68390cdb59efac0e1a1a5a"}
-         pretty-project/pretty-icons           {:git/url "https://github.com/pretty-project/pretty-icons"
-                                                :sha     "60263cf287ff73702b68390cdb59efac0e1a1a5a"}
-         pretty-project/pretty-normalizer      {:git/url "https://github.com/pretty-project/pretty-normalizer"
-                                                :sha     "60263cf287ff73702b68390cdb59efac0e1a1a5a"}}}
-
-; + state-synchronizer
-; + activity-listener
-; + countdown-timer
-; + transition-controller
-; + dynamic-props
-; + react-references
-; + lazy-loader
-; + reagent/reagent
-; + render-synchronizer
-; + pretty-core, pretty-engines ...
-
-; intersection-observer és hasnolok átkölzötek a pretty-engines-be
-; window-observer kell?
+ :deps  {mt-utilities/cljc-fruits      {:git/url "https://github.com/mt-utilities/cljc-fruits"
+                                        :sha     "6b5c9c060bdff84d0cd0bce908b64b268e5e6f0e"}
+         mt-utilities/cljc-time        {:git/url "https://github.com/mt-utilities/cljc-time"
+                                        :sha     "a305a38926073d79371aef0073e4a8154580a40a"}
+         mt-utilities/cljs-dom         {:git/url "https://github.com/mt-utilities/cljs-dom"
+                                        :sha     "1ed9ba80ef56620fe80af7483b4308f96cd6c30c"}
+         org.clojure/clojurescript     {:mvn/version "1.10.891"}
+         pretty-project/pretty-core    {:git/url "https://github.com/pretty-project/pretty-core"
+                                        :sha     "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"}
+         pretty-project/pretty-engines {:git/url "https://github.com/pretty-project/pretty-engines"
+                                        :sha     "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"}}}
