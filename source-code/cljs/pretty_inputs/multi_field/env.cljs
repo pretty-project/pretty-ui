@@ -64,12 +64,12 @@
   ; @param (integer) field-dex
   ;
   ; @return (multitype-content)
-  [group-id {:keys [label] :as group-props} field-dex]
+  [group-id {:keys [label] :as group-props} field-dex])
         ; Single-field label
-  (cond (and label (group-props->single-field? group-id group-props field-dex))
-        (->  label)
+  ;(cond (and label (group-props->single-field? group-id group-props field-dex))
+  ;      (->  label)
         ; Multi-field label
-        (and label (group-props->multi-field? group-id group-props field-dex))))
+  ;      (and label (group-props->multi-field? group-id group-props field-dex))])
         ; multitype-content is removed from deps.edn. Put back in case if needed.
         ;(multitype-content/compose {:content label :suffix (str " #" (inc field-dex))})))
 
