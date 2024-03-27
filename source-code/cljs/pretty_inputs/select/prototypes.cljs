@@ -5,7 +5,8 @@
               [pretty-inputs.select.side-effects :as select.side-effects]
               [pretty-models.api                 :as pretty-models]
               [pretty-properties.api             :as pretty-properties]
-              [pretty-subitems.api               :as pretty-subitems]))
+              [pretty-subitems.api               :as pretty-subitems]
+              [fruits.hiccup.api :as hiccup]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -20,7 +21,7 @@
   ; @return (map)
   [id _ button]
   (let [on-click-f (fn [_] (dynamic-props/update-props! id update :popup-visible? not))]
-       (-> button (pretty-properties/merge-event-fn :on-click-f on-click-f))))
+       (-> button (hiccup/merge-event-fn :on-click-f on-click-f))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -51,7 +52,7 @@
   ; @return (map)
   [id _ icon-button]
   (let [on-click-f (fn [_] (dynamic-props/update-props! id update :popup-visible? not))]
-       (-> icon-button (pretty-properties/merge-event-fn :on-click-f on-click-f))))
+       (-> icon-button (hiccup/merge-event-fn :on-click-f on-click-f))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -69,7 +70,7 @@
        (-> option-group (pretty-properties/default-input-option-props {:option-default  {:hover-color :muted :indent {:horizontal :s :vertical :xxs}}})
                         (pretty-properties/default-input-option-props {:option-selected {:fill-color  :muted}})
                         (pretty-properties/default-input-option-props {:max-selection 1})
-                        (pretty-properties/merge-event-fn :on-selected-f on-selected-f))))
+                        (hiccup/merge-event-fn :on-selected-f on-selected-f))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -85,7 +86,7 @@
   [id _ overlay]
   (let [on-click-f (fn [_] (dynamic-props/update-props! id dissoc :popup-visible?))]
        (-> overlay (pretty-properties/default-background-color-props {:fill-color :default})
-                   (pretty-properties/merge-event-fn :on-click-f on-click-f))))
+                   (hiccup/merge-event-fn :on-click-f on-click-f))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -104,7 +105,7 @@
        (-> popup (pretty-properties/default-background-color-props {:fill-color :default})
                  (pretty-properties/default-inner-size-props       {:inner-height :content :inner-width :content})
                  (pretty-properties/default-outer-size-props       {:outer-height :parent :outer-layer :uppermost :outer-width :parent})
-                 (pretty-properties/merge-event-fn        :on-escape-f on-escape-f)
+                 (hiccup/merge-event-fn                   :on-escape-f on-escape-f)
                  (pretty-subitems/ensure-subitems         :overlay)
                  (pretty-subitems/apply-subitem-prototype :overlay overlay-prototype-f))))
 
@@ -123,7 +124,7 @@
   (let [on-click-f  (fn [_] (dynamic-props/update-props! id update :popup-visible? not))
         get-value-f (-> props :option-group :get-value-f)]
        (-> select-button (pretty-properties/default-input-value-props {:get-value-f get-value-f})
-                         (pretty-properties/merge-event-fn :on-click-f on-click-f))))
+                         (hiccup/merge-event-fn :on-click-f on-click-f))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

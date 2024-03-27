@@ -1,16 +1,17 @@
 
 (ns pretty-renderers.content-renderer.attributes
-    (:require [pretty-models.api :as pretty-models]))
+    (:require [pretty-attributes.api :as pretty-attributes]
+              [pretty-models.api :as pretty-models]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn body-attributes
+(defn body-attributes ;????
   ; @ignore
   ;
   ; @param (keyword) id
   ; @param (map) props
-  ;
+  ; 
   ; @return (map)
   ; {:class (keyword or keywords in vector)
   ;  ...}

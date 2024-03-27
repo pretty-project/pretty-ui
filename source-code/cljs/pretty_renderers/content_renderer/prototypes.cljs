@@ -1,7 +1,7 @@
 
 (ns pretty-renderers.content-renderer.prototypes
-    (:require [pretty-models.api     :as pretty-models]
-              [pretty-properties.api :as pretty-properties]))
+    (:require [pretty-properties.api :as pretty-properties]
+              [pretty-models.api :as pretty-models]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -21,3 +21,4 @@
             (pretty-models/flex-content-rules)
             (pretty-models/plain-container-standard-props)
             (pretty-models/plain-container-rules)))
+ 

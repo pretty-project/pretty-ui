@@ -1,0 +1,47 @@
+
+/***** Content-renderer *****/
+/*** Inner ***/
+
+.pr-content-renderer--inner {
+  /* Fade animations use the translateX function.
+   * The '{overflow: hidden}' setting ensures that the content appear/disappear within(!) the renderer body. */
+  overflow: hidden;
+}
+
+/*** Inner ***/
+
+/*** Body ***/
+
+.pr-content-renderer--body {
+  animation-fill-mode: both;
+  animation-duration:  350ms;
+}
+
+:not(:only-child).pr-content-renderer--body.tc-exit-active {
+  /* In case the renderer already contains the new content; disappearing former content must be absolutely positioned
+   * in order to make space for the new content. */
+  left:     0;
+  position: absolute;
+  top:      0;
+}
+
+:not([data-animation-direction]) .pr-content-renderer--body.tc-exit-active {
+  /* Contents disappearing without animation must be transparent until they are unmounted from the React tree. */
+  opacity: 0
+}
+
+[data-animation-direction="ltr"] .pr-content-renderer--body.tc-appear-active { animation-name: fade-in-ltr;  }
+[data-animation-direction="ltr"] .pr-content-renderer--body.tc-enter-active  { animation-name: fade-in-ltr;  }
+[data-animation-direction="ltr"] .pr-content-renderer--body.tc-exit-active   { animation-name: fade-out-ltr; }
+[data-animation-direction="rtl"] .pr-content-renderer--body.tc-appear-active { animation-name: fade-in-rtl;  }
+[data-animation-direction="rtl"] .pr-content-renderer--body.tc-enter-active  { animation-name: fade-in-rtl;  }
+[data-animation-direction="rtl"] .pr-content-renderer--body.tc-exit-active   { animation-name: fade-out-rtl; }
+[data-animation-direction="ttb"] .pr-content-renderer--body.tc-appear-active { animation-name: fade-in-ttb;  }
+[data-animation-direction="ttb"] .pr-content-renderer--body.tc-enter-active  { animation-name: fade-in-ttb;  }
+[data-animation-direction="ttb"] .pr-content-renderer--body.tc-exit-active   { animation-name: fade-out-ttb; }
+[data-animation-direction="btt"] .pr-content-renderer--body.tc-appear-active { animation-name: fade-in-btt;  }
+[data-animation-direction="btt"] .pr-content-renderer--body.tc-enter-active  { animation-name: fade-in-btt;  }
+[data-animation-direction="btt"] .pr-content-renderer--body.tc-exit-active   { animation-name: fade-out-btt; }
+
+/*** Body ***/
+/***** Content-renderer *****/
