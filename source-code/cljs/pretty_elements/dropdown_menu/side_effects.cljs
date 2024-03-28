@@ -34,5 +34,5 @@
   ; @param (keyword) id
   ; @param (multitype-content) dropdown-content
   [id dropdown-content]
-  (dynamic-props/update-props!             (pretty-subitems/subitem-id id :expandable) assoc :content dropdown-content)
+  (component-props/update-props!           (pretty-subitems/subitem-id id :expandable) assoc :content dropdown-content)
   (expandable.side-effects/expand-content! (pretty-subitems/subitem-id id :expandable)))

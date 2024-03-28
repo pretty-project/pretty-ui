@@ -17,7 +17,7 @@
   ;
   ; @return (map)
   [id _]
-  (dynamic-props/update-props! id update :popup-visible? not))
+  (component-props/update-props! id update :popup-visible? not))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

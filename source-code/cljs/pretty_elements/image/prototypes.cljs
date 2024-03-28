@@ -22,8 +22,8 @@
   ; {:on-load-f (function)
   ;  :uri (string)}
   [id {:keys [background-uri]} _]
-  (let [on-load-f (fn [_] (dynamic-props/merge-props! id {:animation-duration nil :animation-name nil :animation-repeat nil})
-                          (dynamic-props/merge-props! id {:loaded? true}))]
+  (let [on-load-f (fn [_] (component-props/merge-props! id {:animation-duration nil :animation-name nil :animation-repeat nil})
+                          (component-props/merge-props! id {:loaded? true}))]
        {:on-load-f on-load-f
         :uri       background-uri}))
 

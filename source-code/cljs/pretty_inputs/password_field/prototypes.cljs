@@ -23,7 +23,7 @@
   ; @return (map)
   [id props field]
   (let [toggle-visibility-adornment (password-field.adornments/toggle-visibility-adornment id props)
-        password-visible?           (dynamic-props/get-prop id :password-visible?)]
+        password-visible?           (component-props/get-prop id :password-visible?)]
        (-> field (pretty-properties/default-outer-size-props {:outer-width :parent})
                  (map/use-default-values {:placeholder-text "••••••••"})
                  (map/use-default-values {:field-type (if password-visible? :text :password)})

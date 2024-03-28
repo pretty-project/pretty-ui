@@ -19,7 +19,7 @@
   ; [content-renderer :my-content-renderer {...}]
   ; (mount-renderer! :my-content-renderer)
   [id]
-  (dynamic-props/update-props! id assoc :mounted? true))
+  (component-props/update-props! id assoc :mounted? true))
 
 (defn unmount-renderer!
   ; @description
@@ -31,7 +31,7 @@
   ; [content-renderer :my-content-renderer {...}]
   ; (unmount-render! :my-content-renderer)
   [id]
-  (dynamic-props/update-props! id assoc :mounted? false))
+  (component-props/update-props! id assoc :mounted? false))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -74,7 +74,7 @@
    ; the given content as its initial content (the given content is stored as a dynamic property).
    (let [content [:div {:class :pr-content-renderer--body} (multitype-content/compose content)]
          dynamic-props {:animation-direction animation-direction :content content}]
-        (dynamic-props/merge-props! id dynamic-props)
+        (component-props/merge-props! id dynamic-props)
         (if (content-renderer.env/renderer-mounted? id)
             (transition-controller/set-content! id content)
             (mount-renderer!                    id)))))
@@ -126,7 +126,7 @@
    ; @note (pretty-renderers.content-renderer.env#0018)
    ; @note (#0015)
    (let [dynamic-props {:animation-direction animation-direction}]
-        (dynamic-props/merge-props! id dynamic-props)
+        (component-props/merge-props! id dynamic-props)
         (if (content-renderer.env/renderer-mounted? id)
             (transition-controller/show-content! id)
             (mount-renderer!                     id)))))
@@ -153,6 +153,6 @@
    ; @note (pretty-renderers.content-renderer.env#0018)
    ; @note (#0015)
    (let [dynamic-props {:animation-direction animation-direction}]
-        (dynamic-props/merge-props! id dynamic-props)
+        (component-props/merge-props! id dynamic-props)
         (if (content-renderer.env/renderer-mounted? id)
             (transition-controller/hide-content! id)))))

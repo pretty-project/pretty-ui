@@ -1,7 +1,6 @@
 
 (ns pretty-elements.image.views
     (:require [component-props.api :as component-props]
-              [dynamic-props.api                :as dynamic-props]
               [fruits.random.api                :as random]
               [lazy-loader.api                  :as lazy-loader]
               [pretty-accessories.badge.views   :as badge.views]
@@ -127,7 +126,6 @@
              props (pretty-elements.methods/import-element-state           id props)
              props (pretty-elements.methods/import-element-timeout-events  id props)
              props (pretty-elements.methods/import-element-timeout         id props)
-             props (image.prototypes/props-prototype                       id props)
-             props (dynamic-props/import-props                             id props)]
+             props (image.prototypes/props-prototype                       id props)]
             (if (:mounted? props)
                 [view-lifecycles id props])))))

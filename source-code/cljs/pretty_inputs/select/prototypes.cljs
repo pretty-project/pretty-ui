@@ -21,7 +21,7 @@
   ;
   ; @return (map)
   [id _ button]
-  (let [on-click-f (fn [_] (dynamic-props/update-props! id update :popup-visible? not))]
+  (let [on-click-f (fn [_] (component-props/update-props! id update :popup-visible? not))]
        (-> button (hiccup/merge-event-fn :on-click-f on-click-f))))
 
 ;; ----------------------------------------------------------------------------
@@ -52,7 +52,7 @@
   ;
   ; @return (map)
   [id _ icon-button]
-  (let [on-click-f (fn [_] (dynamic-props/update-props! id update :popup-visible? not))]
+  (let [on-click-f (fn [_] (component-props/update-props! id update :popup-visible? not))]
        (-> icon-button (hiccup/merge-event-fn :on-click-f on-click-f))))
 
 ;; ----------------------------------------------------------------------------
@@ -85,7 +85,7 @@
   ;
   ; @return (map)
   [id _ overlay]
-  (let [on-click-f (fn [_] (dynamic-props/update-props! id dissoc :popup-visible?))]
+  (let [on-click-f (fn [_] (component-props/update-props! id dissoc :popup-visible?))]
        (-> overlay (pretty-properties/default-background-color-props {:fill-color :default})
                    (hiccup/merge-event-fn :on-click-f on-click-f))))
 
@@ -101,7 +101,7 @@
   ;
   ; @return (map)
   [id props popup]
-  (let [on-escape-f         (fn [_] (dynamic-props/update-props! id dissoc :popup-visible?))
+  (let [on-escape-f         (fn [_] (component-props/update-props! id dissoc :popup-visible?))
         overlay-prototype-f (fn [%] (overlay-prototype           id props %))]
        (-> popup (pretty-properties/default-background-color-props {:fill-color :default})
                  (pretty-properties/default-inner-size-props       {:inner-height :content :inner-width :content})
@@ -122,7 +122,7 @@
   ;
   ; @return (map)
   [id props select-button]
-  (let [on-click-f  (fn [_] (dynamic-props/update-props! id update :popup-visible? not))
+  (let [on-click-f  (fn [_] (component-props/update-props! id update :popup-visible? not))
         get-value-f (-> props :option-group :get-value-f)]
        (-> select-button (pretty-properties/default-input-value-props {:get-value-f get-value-f})
                          (hiccup/merge-event-fn :on-click-f on-click-f))))

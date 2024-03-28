@@ -16,7 +16,7 @@
   ; [expandable :my-expandable {...}]
   ; (expand-content! :my-expandable)
   [id]
-  (dynamic-props/update-props! id assoc :mounted? true))
+  (component-props/update-props! id assoc :mounted? true))
 
 (defn collapse-content!
   ; @description
@@ -28,4 +28,4 @@
   ; [expandable :my-expandable {...}]
   ; (collapse-content! :my-expandable)
   [id]
-  (dynamic-props/update-props! id assoc :mounted? false))
+  (component-props/update-props! id assoc :mounted? false))

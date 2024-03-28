@@ -16,7 +16,7 @@
   ; {:icon (map)
   ;  :on-click-f (function)}
   [id _]
-  (let [on-click-f (fn [_] (dynamic-props/update-props! id update :password-visible? not))]
-       (if (dynamic-props/get-prop id :password-visible?)
+  (let [on-click-f (fn [_] (component-props/update-props! id update :password-visible? not))]
+       (if (component-props/get-prop id :password-visible?)
            {:icon {:icon-name :visibility_off :icon-family :material-symbols-filled} :on-click-f on-click-f}
            {:icon {:icon-name :visibility     :icon-family :material-symbols-filled} :on-click-f on-click-f})))
