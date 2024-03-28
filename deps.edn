@@ -1,17 +1,17 @@
 
 {:paths ["resources" "source-code/cljs"]
  :deps  {bithandshake/cljc-fruits        {:git/url "https://github.com/bithandshake/cljc-fruits"
-                                          :sha     "59968ce34d5d8a7b84855cf13e3da48783c621ef"}
+                                          :sha     "b1da55fed415edb4febdb44a27ed6ed5d62daca5"}
          mt-app-kit/cljs-component-props {:git/url "https://github.com/mt-app-kit/cljs-component-props"
-                                          :sha     "784d185e308c469358c4504427f5dfa4747d4fb4"}
+                                          :sha     "65ea0638bb34a76374cb0088f35f191711fd99c2"}
          mt-app-kit/cljs-lazy-loader     {:git/url "https://github.com/mt-app-kit/cljs-lazy-loader"
-                                          :sha     "9eafb6d76b68c27909742cbe7b4fc8113f07e1e2"}
+                                          :sha     "15e4e7c2744316b8500b2e40daa33eec63b93215"}
          mt-utilities/cljc-time          {:git/url "https://github.com/mt-utilities/cljc-time"
-                                          :sha     "29762b2b61b70c04c2cb8aed7ed43fbff052efab"}
+                                          :sha     "65d878b8a1dada46beb9bf1926d4c89468c2efa2"}
          mt-utilities/cljs-dom           {:git/url "https://github.com/mt-utilities/cljs-dom"
-                                          :sha     "dd62c1ff883d2fc3ae1c64928958ebc9e8a1ea8e"}
+                                          :sha     "e64202d5a02fb806db36e7eeb28a774f5928eec7"}
          org.clojure/clojurescript       {:mvn/version "1.10.891"}
          pretty-project/pretty-core      {:git/url "https://github.com/pretty-project/pretty-core"
-                                          :sha     "99a5f5dee15b0c9fe09ef771584ce546fc6d1283"}
+                                          :sha     "cbecd9a92568c921eb11ca88e757b1f5d770c80f"}
          pretty-project/pretty-engines   {:git/url "https://github.com/pretty-project/pretty-engines"
-                                          :sha     "22668da9bb13a92950a03750b4689a117b518126"}}}
+                                          :sha     "f1bb7a2d8dfca1f967c1689187f17dba02bb562d"}}}
