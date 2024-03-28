@@ -1,7 +1,6 @@
 
 (ns pretty-inputs.select.prototypes
     (:require [component-props.api :as component-props]
-              [dynamic-props.api                 :as dynamic-props]
               [form-validator.api                :as form-validator]
               [pretty-inputs.select.side-effects :as select.side-effects]
               [pretty-models.api                 :as pretty-models]

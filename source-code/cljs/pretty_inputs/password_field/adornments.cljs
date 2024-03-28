@@ -1,7 +1,6 @@
 
 (ns pretty-inputs.password-field.adornments
-    (:require [component-props.api :as component-props]
-              [dynamic-props.api :as dynamic-props]))
+    (:require [component-props.api :as component-props]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
