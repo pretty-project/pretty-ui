@@ -21,8 +21,8 @@
   [id props end-adornment-group]
   (let [on-mouse-down-f (fn [e] (dom/prevent-default e))
         on-mouse-up-f   (fn [_] (pretty-inputs.engine/focus-input! id props))]
-       (-> end-adornment-group))) ;(hiccup/merge-event-fn :on-mouse-down-f on-mouse-down-f)
-                               ;(hiccup/merge-event-fn :on-mouse-up-f   on-mouse-up-f))))
+       (-> end-adornment-group (hiccup/merge-event-fn :on-mouse-down-f on-mouse-down-f)
+                               (hiccup/merge-event-fn :on-mouse-up-f   on-mouse-up-f))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
