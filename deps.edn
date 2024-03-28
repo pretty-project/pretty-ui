@@ -3,11 +3,11 @@
  :deps  {bithandshake/cljc-fruits      {:git/url "https://github.com/bithandshake/cljc-fruits"
                                         :sha     "fcd4ebfed6cc44486464b5d619bef88d620c7f6a"}
          mt-utilities/cljc-time        {:git/url "https://github.com/mt-utilities/cljc-time"
-                                        :sha     "798bb57c5d0d421618bcef7071d49580e16b61aa"}
+                                        :sha     "66a0d8c02a26d9cfe4b1bfbae1b30989d5595864"}
          mt-utilities/cljs-dom         {:git/url "https://github.com/mt-utilities/cljs-dom"
                                         :sha     "54c012e012889a287bb16b35df2d8f87e648159f"}
          org.clojure/clojurescript     {:mvn/version "1.10.891"}
          pretty-project/pretty-core    {:git/url "https://github.com/pretty-project/pretty-core"
                                         :sha     "3e5f2f9d33230bcb703bf0762778c4da8bcf5d6b"}
          pretty-project/pretty-engines {:git/url "https://github.com/pretty-project/pretty-engines"
-                                        :sha     "5e661eb4e3a0778bdc0428247bdfdebc3a883700"}}}
+                                        :sha     "fb6e07657a30ebab94ef0a8937473fcb469da44c"}}}
