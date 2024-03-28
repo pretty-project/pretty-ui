@@ -2,6 +2,8 @@
 {:paths ["resources" "source-code/cljs"]
  :deps  {bithandshake/cljc-fruits      {:git/url "https://github.com/bithandshake/cljc-fruits"
                                         :sha     "fcd4ebfed6cc44486464b5d619bef88d620c7f6a"}
+         mt-app-kit/cljs-lazy-loader   {:git/url "https://github.com/mt-app-kit/cljs-lazy-loader"
+                                        :sha     "90952d7010b652d348576b243d4a8d507e1063e5"}
          mt-utilities/cljc-time        {:git/url "https://github.com/mt-utilities/cljc-time"
                                         :sha     "66a0d8c02a26d9cfe4b1bfbae1b30989d5595864"}
          mt-utilities/cljs-dom         {:git/url "https://github.com/mt-utilities/cljs-dom"
