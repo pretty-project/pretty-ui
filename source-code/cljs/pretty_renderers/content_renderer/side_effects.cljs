@@ -1,7 +1,6 @@
 
 (ns pretty-renderers.content-renderer.side-effects
     (:require [component-props.api :as component-props]
-              [dynamic-props.api :as dynamic-props]
               [multitype-content.api :as multitype-content]
               [pretty-renderers.content-renderer.env :as content-renderer.env]
               [transition-controller.api :as transition-controller]))
