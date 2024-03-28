@@ -101,7 +101,7 @@
              props (pretty-elements.methods/import-element-dynamic-props   id props)
              props (pretty-elements.methods/import-element-focus-reference id props)
              props (pretty-elements.methods/import-element-state-events    id props)
-             props (pretty-elements.methods/import-element-state           id props)
+             props (pretty-elements.methods/import-element-states          id props)
              props (menu-item.prototypes/props-prototype                   id props)]
             (if (:mounted? props)
                 [view-lifecycles id props])))))

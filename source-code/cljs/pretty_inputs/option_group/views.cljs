@@ -99,7 +99,7 @@
              props (pretty-inputs.methods/import-input-option-highlighting id props)
              props (pretty-inputs.methods/import-input-option-selection    id props)
              props (pretty-inputs.methods/import-input-state-events        id props)
-             props (pretty-inputs.methods/import-input-state               id props)
+             props (pretty-inputs.methods/import-input-states              id props)
              props (option-group.prototypes/props-prototype                id props)]
             (if (:mounted? props)
                 [view-lifecycles id props])))))

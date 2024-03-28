@@ -110,7 +110,7 @@
              props (pretty-elements.methods/import-element-dynamic-props   id props)
              props (pretty-elements.methods/import-element-focus-reference id props)
              props (pretty-elements.methods/import-element-state-events    id props)
-             props (pretty-elements.methods/import-element-state           id props)
+             props (pretty-elements.methods/import-element-states          id props)
              props (pretty-elements.methods/import-element-timeout-events  id props)
              props (pretty-elements.methods/import-element-timeout         id props)
              props (button.prototypes/props-prototype                      id props)]

@@ -92,7 +92,7 @@
              props (pretty-diagrams.methods/import-diagram-dynamic-props id props)
              props (pretty-diagrams.methods/import-diagram-data-sum      id props)
              props (pretty-diagrams.methods/import-diagram-state-events  id props)
-             props (pretty-diagrams.methods/import-diagram-state         id props)
+             props (pretty-diagrams.methods/import-diagram-states        id props)
              props (circle-diagram.prototypes/props-prototype            id props)]
             (if (:mounted? props)
                 [view-lifecycles id props])))))

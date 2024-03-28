@@ -72,7 +72,7 @@
              props (pretty-elements.methods/apply-element-presets        id props)
              props (pretty-elements.methods/import-element-dynamic-props id props)
              props (pretty-elements.methods/import-element-state-events  id props)
-             props (pretty-elements.methods/import-element-state         id props)
+             props (pretty-elements.methods/import-element-states        id props)
              props (chip-group.prototypes/props-prototype                id props)]
             (if (:mounted? props)
                 [view-lifecycles id props])))))

@@ -86,7 +86,7 @@
              props (pretty-inputs.methods/apply-input-presets        id props)
              props (pretty-inputs.methods/import-input-dynamic-props id props)
              props (pretty-inputs.methods/import-input-state-events  id props)
-             props (pretty-inputs.methods/import-input-state         id props)
+             props (pretty-inputs.methods/import-input-states        id props)
              props (text-field.prototypes/props-prototype            id props)]
             (if (:mounted? props)
                 [view-lifecycles id props])))))

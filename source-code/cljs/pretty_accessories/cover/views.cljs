@@ -77,7 +77,7 @@
              props (pretty-accessories.methods/apply-accessory-presets        id props)
              props (pretty-accessories.methods/import-accessory-dynamic-props id props)
              props (pretty-accessories.methods/import-accessory-state-events  id props)
-             props (pretty-accessories.methods/import-accessory-state         id props)
+             props (pretty-accessories.methods/import-accessory-states        id props)
              props (cover.prototypes/props-prototype                          id props)]
             (if (:mounted? props)
                 [view-lifecycles id props])))))

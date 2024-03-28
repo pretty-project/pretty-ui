@@ -119,7 +119,7 @@
              props (pretty-inputs.methods/import-input-field-value     id props)
              props (pretty-inputs.methods/import-input-focus-reference id props)
              props (pretty-inputs.methods/import-input-state-events    id props)
-             props (pretty-inputs.methods/import-input-state           id props)
+             props (pretty-inputs.methods/import-input-states          id props)
              props (field.prototypes/props-prototype                   id props)]
             (if (:mounted? props)
                 [view-lifecycles id props])))))

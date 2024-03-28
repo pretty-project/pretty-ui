@@ -105,7 +105,7 @@
              props (pretty-layouts.methods/apply-layout-presets        id props)
              props (pretty-layouts.methods/import-layout-dynamic-props id props)
              props (pretty-layouts.methods/import-layout-state-events  id props)
-             props (pretty-layouts.methods/import-layout-state         id props)
+             props (pretty-layouts.methods/import-layout-states        id props)
              props (popup.prototypes/props-prototype                   id props)]
             (if (:mounted? props)
                 [view-lifecycles id props])))))

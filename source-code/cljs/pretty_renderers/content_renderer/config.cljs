@@ -8,4 +8,3 @@
 ;
 ; @constant (ms)
 (def TRANSITION-DURATION 500)
- 
