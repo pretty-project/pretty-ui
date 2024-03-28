@@ -1,6 +1,7 @@
 
 (ns pretty-inputs.header.adornments
-    (:require [dynamic-props.api :as dynamic-props]))
+    (:require [component-props.api :as component-props]
+              [dynamic-props.api :as dynamic-props]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

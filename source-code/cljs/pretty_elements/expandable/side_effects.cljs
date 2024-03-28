@@ -1,6 +1,7 @@
 
 (ns pretty-elements.expandable.side-effects
-    (:require [dynamic-props.api :as dynamic-props]))
+    (:require [component-props.api :as component-props]
+              [dynamic-props.api :as dynamic-props]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

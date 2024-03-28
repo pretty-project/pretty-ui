@@ -1,6 +1,7 @@
 
 (ns pretty-inputs.password-field.prototypes
-    (:require [dynamic-props.api                       :as dynamic-props]
+    (:require [component-props.api :as component-props]
+              [dynamic-props.api                       :as dynamic-props]
               [form-validator.api                      :as form-validator]
               [fruits.map.api                          :as map]
               [fruits.vector.api                       :as vector]

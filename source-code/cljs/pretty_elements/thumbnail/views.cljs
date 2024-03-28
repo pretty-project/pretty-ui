@@ -1,6 +1,7 @@
 
 (ns pretty-elements.thumbnail.views
-    (:require [dynamic-props.api                    :as dynamic-props]
+    (:require [component-props.api :as component-props]
+              [dynamic-props.api                    :as dynamic-props]
               [fruits.random.api                    :as random]
               [lazy-loader.api                      :as lazy-loader]
               [pretty-accessories.badge.views       :as badge.views]
