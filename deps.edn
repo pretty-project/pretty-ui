@@ -4,7 +4,7 @@
                                           :sha     "fa570cb14ff958b9dc3d16649ab14c21d113e655"}
          ; Kell?
          mt-app-kit/cljs-component-props {:git/url "https://github.com/mt-app-kit/cljs-component-props"
-                                          :sha     "50633f4d2c69711e610f48ad245622668f5fb238"}
+                                          :sha     "0a30d5e59b6cb5106cfebd03bbf2ab17811ec045"}
 
          mt-app-kit/cljs-lazy-loader     {:git/url "https://github.com/mt-app-kit/cljs-lazy-loader"
                                           :sha     "8e85a5b9ef2860269fbf6b0ca4e65a3fc4a17d1f"}
@@ -16,4 +16,4 @@
          pretty-project/pretty-core      {:git/url "https://github.com/pretty-project/pretty-core"
                                           :sha     "70d6b353ed9ae162a2a89c49e47f7e4c48e1cdc3"}
          pretty-project/pretty-engines   {:git/url "https://github.com/pretty-project/pretty-engines"
-                                          :sha     "98e100172f03759d787b1ef9bb904c1e429f54db"}}}
+                                          :sha     "bb77b73d6c61a9eefc49adacccfd97ce0653b0f9"}}}
