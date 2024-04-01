@@ -16,7 +16,7 @@
   [_ props]
   (-> props (pretty-properties/default-font-props       {:font-size :xs :font-weight :normal})
             (pretty-properties/default-outer-size-props {:outer-size-unit :quarter-block})
-            (pretty-properties/default-text-props       {:text-color :muted :text-selectable? false})
+            (pretty-properties/default-text-props       {:text-color :muted :text-overflow :ellipsis :text-selectable? false})
             (pretty-models/flex-container-standard-props)
             (pretty-models/flex-container-rules)
             (pretty-models/plain-content-standard-props)
